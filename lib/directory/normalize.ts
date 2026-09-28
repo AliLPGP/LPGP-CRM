@@ -191,15 +191,23 @@ export function spType(category: string | null | undefined, industry?: string | 
 }
 
 /** "17 fund(s) incl. A, B, C" → { count: 17, names: [A, B, C] }. */
+/** A comma-separated piece that finishes the fund before it ("3G FUND VI, L.P.")
+ *  rather than naming a fund of its own. */
+const FUND_NAME_TAIL =
+  /^(L\.?\s?P\.?|L\.?\s?L\.?\s?L?\.?\s?[CP]\.?|LTD\.?|LIMITED|INC\.?|CORP\.?|CO\.?|PLC|SPC|S\.?\s?C\.?\s?S\.?\s?P?\.?|S\.?\s?C\.?\s?A\.?|S\.?\s?A\.?|S\.?\s?[AÀ]\.?\s?R\.?\s?L\.?|SLP|GMBH\b.*|KG|AG|N\.?\s?V\.?|B\.?\s?V\.?|SICA[VF]\b.*|RAIF|FCPR?\b.*|A\s+(SERIES|SUB-FUND|COMPARTMENT)\s+OF\b.*|SERIES\s+[A-Z0-9-]+)$/i;
+
 export function parseFundSummary(value: unknown): { count: number; names: string[] } {
   const s = str(value);
   if (!s) return { count: 0, names: [] };
   const m = s.match(/^(\d+)\s+fund\(s\)\s*(?:incl\.?\s*(.*))?$/i);
   if (!m) return { count: 1, names: [s] };
-  const names = (m[2] ?? "")
-    .split(/,\s+(?=[A-Z0-9])/)
-    .map((n) => n.replace(/\s+/g, " ").trim())
-    .filter(Boolean);
+  const names: string[] = [];
+  for (const piece of (m[2] ?? "").split(/,\s+(?=[A-Z0-9])/)) {
+    const part = piece.replace(/\s+/g, " ").trim();
+    if (!part) continue;
+    if (names.length && FUND_NAME_TAIL.test(part)) names[names.length - 1] += `, ${part}`;
+    else names.push(part);
+  }
   return { count: Number(m[1]) || names.length, names };
 }
 

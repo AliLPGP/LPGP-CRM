@@ -123,6 +123,17 @@ export type Fund = {
   geography: string | null;
   status: string | null;
   created_at: string;
+  // Directory columns (0013/0014); absent on an older database.
+  external_key?: string | null;
+  manager_name?: string | null;
+  source?: string | null;
+  name_filed?: string | null;
+  vehicle_kind?: string | null;
+  domicile?: string | null;
+  currency?: string | null;
+  service_providers?: { role: string; key: string; brand: string }[] | null;
+  filed?: string | null;
+  source_url?: string | null;
 };
 
 export type FundManager = { id: string; name: string; category: Category; domain: string | null };
@@ -143,6 +154,14 @@ export type FundCommitment = {
   amount_usd: number | null;
   commitment_date: string | null;
   lp: { id: string; name: string; category: Category } | null;
+  // Disclosed commitments keep their own currency and the source (0013).
+  amount?: number | null;
+  currency?: string | null;
+  amount_text?: string | null;
+  commitment_date_text?: string | null;
+  disclosure_type?: string | null;
+  source_url?: string | null;
+  lp_name?: string | null;
 };
 
 // A commitment as seen from an LP (which fund they backed).

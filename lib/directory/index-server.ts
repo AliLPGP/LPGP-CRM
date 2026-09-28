@@ -21,7 +21,7 @@ export const DIRECTORY_TAG = "directory";
 const BASE_COLUMNS =
   "id, name, category, sub_type, domain, city, country, region, aum_usd, description, in_portfolio";
 
-const RICH_COLUMNS = `${BASE_COLUMNS}, directory_vertical, state, employee_count, adv_employee_count, founded_year, adv_firm_type, private_fund_count, regulatory_aum_usd, brand_aum_total_usd, private_fund_gross_assets, total_assets_usd, industry, service_lines, lifecycle, discloses_commitments, source`;
+const RICH_COLUMNS = `${BASE_COLUMNS}, directory_vertical, state, employee_count, adv_employee_count, founded_year, adv_firm_type, adv_last_filed, private_fund_count, regulatory_aum_usd, brand_aum_total_usd, private_fund_gross_assets, total_assets_usd, industry, service_lines, lifecycle, discloses_commitments, source`;
 
 type CompanyRow = {
   id: string;
@@ -41,6 +41,7 @@ type CompanyRow = {
   adv_employee_count?: number | null;
   founded_year?: number | null;
   adv_firm_type?: string | null;
+  adv_last_filed?: string | null;
   private_fund_count?: number | null;
   regulatory_aum_usd?: number | null;
   brand_aum_total_usd?: number | null;
@@ -182,6 +183,26 @@ async function buildIndex(): Promise<DirectoryIndex> {
   }
   for (const [bi, set] of brandClients) brands[bi].clients = set.size;
 
+  // Funds on file per manager — Form ADV's named funds and any others. A
+  // failed read only costs the counts, not the index.
+  const funds = schemaReady
+    ? ((await fetchAll<{ company_id: string | null }>((from, to, first) =>
+        supabase
+          .from("funds")
+          .select("id, company_id", first ? { count: "exact" } : undefined)
+          .not("company_id", "is", null)
+          .order("id")
+          .range(from, to),
+      )) ?? [])
+    : [];
+  const fundCount = new Map<string, number>();
+  for (const f of funds) if (f.company_id) fundCount.set(f.company_id, (fundCount.get(f.company_id) ?? 0) + 1);
+
+  let advThrough: string | null = null;
+  for (const c of companies) {
+    if (c.adv_last_filed && (!advThrough || c.adv_last_filed > advThrough)) advThrough = c.adv_last_filed;
+  }
+
   const records: DirectoryRecord[] = companies.map((c) => {
     const { aum, kind } = aumOf(c);
     const adv = c.adv_firm_type === "Registered" || c.adv_firm_type === "ERA" ? c.adv_firm_type : null;
@@ -213,10 +234,11 @@ async function buildIndex(): Promise<DirectoryIndex> {
       directory: c.source === "master_directory",
       providers: providersByClient.get(c.id) ?? [],
       clientCount: clientsByProvider.get(c.id)?.size ?? 0,
+      funds: fundCount.get(c.id) ?? 0,
     };
   });
 
-  const index = { generatedAt: new Date().toISOString(), schemaReady, records, brands };
+  const index = { generatedAt: new Date().toISOString(), schemaReady, advThrough, records, brands };
   if (!schemaReady) {
     // Served, but not cached: once the migration runs, the next request
     // should see the new columns rather than an hour-old snapshot without them.
@@ -228,7 +250,7 @@ async function buildIndex(): Promise<DirectoryIndex> {
 
 let pendingIndex: DirectoryIndex | null = null;
 
-const cachedIndex = unstable_cache(buildIndex, ["directory-index-v1"], {
+const cachedIndex = unstable_cache(buildIndex, ["directory-index-v2"], {
   tags: [DIRECTORY_TAG],
   revalidate: 3600,
 });

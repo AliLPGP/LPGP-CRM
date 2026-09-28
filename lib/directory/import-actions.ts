@@ -7,7 +7,7 @@ import { chunk, fetchAll } from "../supabase/paged";
 import { DIRECTORY_TAG } from "./index-server";
 import { normDomain, normName } from "./normalize";
 import { providerBrand, ROLE_LABEL, type ProviderRole } from "./providers";
-import type { DirCommitment, DirCompany, DirContact, DirRelationship } from "./transform";
+import type { DirCommitment, DirCompany, DirContact, DirFund, DirRelationship } from "./transform";
 
 // Server half of Import -> Master directory. The browser parses the workbook
 // (lib/directory/transform.ts) and sends rows here in chunks, phase by phase:
@@ -401,6 +401,58 @@ export async function importDirectoryRelationships(
   return { ok: true, created: written, updated: 0, skipped };
 }
 
+// --- Form ADV fund lineup ------------------------------------------------------------
+
+export async function importDirectoryFunds(
+  rows: DirFund[],
+  companyIds: Record<string, string>,
+): Promise<PhaseResult> {
+  const g = await guard();
+  if (!g.ok) return { ok: false, error: g.error, created: 0, updated: 0, skipped: 0 };
+  const { supabase } = g;
+
+  const roles = Object.keys(ROLE_LABEL) as ProviderRole[];
+  const payload: Row[] = [];
+  let skipped = 0;
+  for (const f of rows) {
+    const companyId = companyIds[f.gp_ext];
+    const key = text(f.external_key, 300);
+    const name = text(f.name, 300);
+    if (!companyId || !key || !name) {
+      skipped += 1;
+      continue;
+    }
+    const providers = (Array.isArray(f.providers) ? f.providers : [])
+      .filter((p) => p && roles.includes(p.role) && typeof p.key === "string" && typeof p.brand === "string")
+      .slice(0, 40)
+      .map((p) => ({ role: p.role, key: p.key.slice(0, 200), brand: p.brand.slice(0, 200) }));
+    payload.push({
+      external_key: key,
+      company_id: companyId,
+      name,
+      name_filed: text(f.name_filed, 300),
+      vehicle_kind: text(f.vehicle_kind, 40),
+      domicile: text(f.domicile, 80),
+      currency: text(f.currency, 8),
+      service_providers: providers,
+      filed: text(f.filed, 120),
+      source_url: text(f.source_url, 500),
+      source: "form_adv",
+    });
+  }
+
+  let written = 0;
+  for (const batch of chunk(payload, 500)) {
+    const { error } = await supabase.from("funds").upsert(batch, { onConflict: "external_key" });
+    if (error) {
+      const hint = /column/i.test(error.message) ? " — has migration 0014 (sql-parts/3-directory) been run?" : "";
+      return { ok: false, error: `Funds: ${error.message}${hint}`, created: written, updated: 0, skipped };
+    }
+    written += batch.length;
+  }
+  return { ok: true, created: written, updated: 0, skipped };
+}
+
 // --- LP -> GP commitments ------------------------------------------------------------
 
 export async function importDirectoryCommitments(
@@ -432,6 +484,16 @@ export async function importDirectoryCommitments(
     return (hits.find((h) => h.category === "GP") ?? hits[0])?.id ?? null;
   };
 
+  // The manager's own Form ADV fund, loaded by the funds phase before this one.
+  const advKeys = [
+    ...new Set(rows.map((r) => r.adv_fund_key).filter((k): k is string => typeof k === "string" && k.startsWith("advfund:"))),
+  ];
+  const advFundIds = new Map<string, string>();
+  for (const keys of chunk(advKeys, 150)) {
+    const { data } = await supabase.from("funds").select("id, external_key").in("external_key", keys);
+    for (const f of data ?? []) advFundIds.set(f.external_key as string, f.id as string);
+  }
+
   const fundRows = new Map<string, Row>();
   const prepared: { r: DirCommitment; lpId: string; gpId: string | null; fundKey: string | null }[] = [];
   let skipped = 0;
@@ -444,6 +506,10 @@ export async function importDirectoryCommitments(
     }
     const gpId = managerId(r);
     const fundName = text(r.fund_name, 300);
+    if (r.adv_fund_key && advFundIds.has(r.adv_fund_key)) {
+      prepared.push({ r, lpId, gpId, fundKey: r.adv_fund_key });
+      continue;
+    }
     const named = fundName && r.gp_name && !r.gp_name.startsWith("(");
     const fundKey = named ? `alloc-fund:${gpId ?? normName(r.gp_name)}:${normName(fundName)}` : null;
     if (fundKey && !fundRows.has(fundKey)) {
@@ -458,7 +524,7 @@ export async function importDirectoryCommitments(
     prepared.push({ r, lpId, gpId, fundKey });
   }
 
-  const fundIds = new Map<string, string>();
+  const fundIds = new Map<string, string>(advFundIds);
   for (const batch of chunk([...fundRows.values()], 200)) {
     const { data, error } = await supabase
       .from("funds")
@@ -515,6 +581,8 @@ export async function finishDirectoryImport(input: {
   relationshipKeys: string[];
   /** Same for commitments, so a corrected row replaces the old one. */
   commitmentKeys: string[];
+  /** Same for Form ADV funds. Omitted by an import that didn't load funds. */
+  fundKeys?: string[];
   removeSamples: boolean;
 }): Promise<FinishResult> {
   const g = await guard();
@@ -554,6 +622,33 @@ export async function finishDirectoryImport(input: {
     for (const ids of chunk(stale, 200)) {
       const { error } = await supabase.from("commitments").delete().in("id", ids);
       if (!error) pruned += ids.length;
+    }
+  }
+
+  // A fund no longer on the manager's filing goes too — unless a disclosed
+  // commitment points at it, which would otherwise be deleted with it.
+  const keepFunds = new Set(strings(input.fundKeys, 100_000));
+  if (keepFunds.size) {
+    const filedFunds =
+      (await fetchAll<{ id: string; external_key: string | null }>((from, to, first) =>
+        supabase
+          .from("funds")
+          .select("id, external_key", first ? { count: "exact" } : undefined)
+          .eq("source", "form_adv")
+          .order("id")
+          .range(from, to),
+      )) ?? [];
+    const stale = filedFunds.filter((f) => !f.external_key || !keepFunds.has(f.external_key)).map((f) => f.id);
+    if (stale.length) {
+      const referenced = new Set<string>();
+      for (const ids of chunk(stale, 150)) {
+        const { data } = await supabase.from("commitments").select("fund_id").in("fund_id", ids);
+        for (const c of data ?? []) if (c.fund_id) referenced.add(c.fund_id as string);
+      }
+      for (const ids of chunk(stale.filter((id) => !referenced.has(id)), 200)) {
+        const { error } = await supabase.from("funds").delete().in("id", ids);
+        if (!error) pruned += ids.length;
+      }
     }
   }
 

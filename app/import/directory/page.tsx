@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getSessionUser } from "@/lib/auth";
-import { countSampleRows, getLastDirectoryImport, probeDirectorySchema } from "@/lib/directory/queries";
+import { countSampleRows } from "@/lib/directory/queries";
+import { getDirectorySetup, missingSql } from "@/lib/directory/setup";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { DirectoryImport } from "@/components/directory/directory-import";
+import { DirectorySetupPanel } from "@/components/directory/directory-setup";
 import { PageHeader } from "@/components/page-header";
 import { SetupNotice } from "@/components/setup-notice";
 import { timeAgo } from "@/lib/utils";
@@ -12,12 +14,10 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Import the Master Directory — LPGP Connect" };
 
 export default async function DirectoryImportPage() {
-  const [user, samples, last, schemaReady] = await Promise.all([
-    getSessionUser(),
-    countSampleRows(),
-    getLastDirectoryImport(),
-    probeDirectorySchema(),
-  ]);
+  const [user, samples, setup] = await Promise.all([getSessionUser(), countSampleRows(), getDirectorySetup()]);
+  const isAdmin = user?.role === "admin";
+  const parts = isAdmin ? await missingSql(setup) : [];
+  const last = setup.lastImport;
 
   return (
     <div className="mx-auto max-w-5xl px-4 md:px-6 py-8 space-y-6">
@@ -27,16 +27,29 @@ export default async function DirectoryImportPage() {
       <PageHeader
         eyebrow="Intelligence database"
         title="Import the Master Directory"
-        description="Loads the team's capture workbook — every firm, key contact, Form ADV provider link and LP commitment — into the database behind Discover. Safe to run again with each new edition."
+        description="Loads the team's capture workbook — every firm, key contact, Form ADV provider link, named fund and LP commitment — into the database behind Discover. Safe to run again with each new edition."
       />
       {!isSupabaseConfigured() ? <SetupNotice /> : null}
+      {setup.configured && parts.length ? (
+        <DirectorySetupPanel
+          state={{
+            sqlDone: false,
+            fundsOnly: setup.directory && !setup.funds,
+            lastImport: last,
+            sqlEditorUrl: setup.sqlEditorUrl,
+          }}
+          parts={parts}
+          isAdmin={isAdmin}
+          showImportStep={false}
+        />
+      ) : null}
       {last ? (
         <p className="text-sm text-muted-foreground">
-          Last imported {timeAgo(last.created_at)}
+          Last imported {timeAgo(last.at)}
           {last.filename ? <> from <span className="font-medium text-foreground">{last.filename}</span></> : null}.
         </p>
       ) : null}
-      <DirectoryImport isAdmin={user?.role === "admin"} schemaReady={schemaReady} samples={samples} />
+      <DirectoryImport isAdmin={isAdmin} schemaReady={setup.directory} fundsReady={setup.funds} samples={samples} />
     </div>
   );
 }

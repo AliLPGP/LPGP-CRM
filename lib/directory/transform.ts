@@ -14,6 +14,16 @@
 // Pure: takes sheets as arrays of rows (what SheetJS `sheet_to_json` with
 // `header: 1` returns), so it runs in the browser and in Node alike.
 
+import {
+  fundCurrency,
+  fundDisplayName,
+  fundDomicile,
+  fundSlug,
+  nameCasing,
+  vehicleKind,
+  type FundProvider,
+  type VehicleKind,
+} from "./funds";
 import { parseLocation } from "./geo";
 import {
   amountIn,
@@ -128,6 +138,23 @@ export type DirRelationship = {
   source_url: string | null;
 };
 
+/** A private fund a GP names on Form ADV Schedule D. */
+export type DirFund = {
+  external_key: string;
+  gp_ext: string;
+  /** Title case, with the manager's own spelling of its name. */
+  name: string;
+  /** Exactly as filed. */
+  name_filed: string;
+  vehicle_kind: VehicleKind | null;
+  domicile: string | null;
+  currency: string | null;
+  /** Providers the filing ties this fund to, one per brand and role. */
+  providers: FundProvider[];
+  filed: string | null;
+  source_url: string | null;
+};
+
 export type DirCommitment = {
   external_key: string;
   lp_ext: string;
@@ -135,6 +162,8 @@ export type DirCommitment = {
   gp_ext: string | null;
   gp_name: string;
   fund_name: string | null;
+  /** The manager's Form ADV fund of the same name, when it files one. */
+  adv_fund_key: string | null;
   amount: number | null;
   currency: string | null;
   amount_text: string | null;
@@ -157,6 +186,9 @@ export type DirectoryStats = {
   relationships: number;
   providerBrands: number;
   linkedProviderBrands: number;
+  /** Named private funds from Form ADV, and the managers that name them. */
+  funds: number;
+  fundManagers: number;
   commitments: number;
   withAdv: number;
   withAum: number;
@@ -168,6 +200,7 @@ export type DirectoryBundle = {
   companies: DirCompany[];
   contacts: DirContact[];
   relationships: DirRelationship[];
+  funds: DirFund[];
   commitments: DirCommitment[];
   /** Every workbook id → the id of the record it merged into. */
   aliases: Record<string, string>;
@@ -589,6 +622,8 @@ export function transformDirectory(sheets: Sheets): DirectoryBundle {
   // --- Form ADV provider links ---------------------------------------------------------
   const relRecords = records(findSheet(sheets, "gp to sp relationships", "relationships"), "gp_provider_id");
   const relMap = new Map<string, DirRelationship>();
+  const fundMap = new Map<string, DirFund>();
+  const casingByGp = new Map<string, Map<string, string>>();
   let relationshipRows = 0;
   let unmatchedClients = 0;
   const brands = new Set<string>();
@@ -611,6 +646,34 @@ export function transformDirectory(sheets: Sheets): DirectoryBundle {
     const key = `adv:${clientExt}:${role}:${brand.key}`;
     const funds = parseFundSummary(rec.fund_name);
     const location = parseLocation(str(rec.sp_location)).label;
+
+    // Every fund the row names, with this provider in this role.
+    if (!casingByGp.has(clientExt)) casingByGp.set(clientExt, nameCasing(companyByExt.get(clientExt)?.name));
+    for (const filed of funds.names) {
+      const slug = fundSlug(filed);
+      if (!slug) continue;
+      const fundExt = `advfund:${clientExt}:${slug}`;
+      let fund = fundMap.get(fundExt);
+      if (!fund) {
+        fund = {
+          external_key: fundExt,
+          gp_ext: clientExt,
+          name: fundDisplayName(filed, casingByGp.get(clientExt)),
+          name_filed: filed,
+          vehicle_kind: vehicleKind(filed),
+          domicile: fundDomicile(filed),
+          currency: fundCurrency(filed),
+          providers: [],
+          filed: str(rec.adv_filing_date),
+          source_url: toUrl(str(rec.source_url)),
+        };
+        fundMap.set(fundExt, fund);
+      }
+      if (role !== "other" && !fund.providers.some((p) => p.role === role && p.key === brand.key)) {
+        fund.providers.push({ role, key: brand.key, brand: brand.name });
+      }
+    }
+
     const existing = relMap.get(key);
     if (existing) {
       if (!existing.provider_entities.includes(spName)) existing.provider_entities.push(spName);
@@ -672,6 +735,12 @@ export function transformDirectory(sheets: Sheets): DirectoryBundle {
     return null;
   };
 
+  const fundsBySlug = new Map<string, DirFund[]>();
+  for (const f of fundMap.values()) {
+    const slug = f.external_key.slice(f.external_key.indexOf(":", "advfund:".length) + 1);
+    fundsBySlug.set(slug, [...(fundsBySlug.get(slug) ?? []), f]);
+  }
+
   const commitments: DirCommitment[] = [];
   const allocRecords = records(findSheet(sheets, "lp to gp allocations", "allocations"), "lp_provider_id");
   for (const rec of allocRecords) {
@@ -708,13 +777,25 @@ export function transformDirectory(sheets: Sheets): DirectoryBundle {
     const gp = placeholder ? null : findByName(gpName, "GP");
     const fundName = str(rec.fund_name);
     const dateText = str(rec.commitment_date);
+    // The same vehicle on a manager's own Form ADV: one fund, two sources. A
+    // name only one filer uses also settles which directory firm the manager is.
+    const slug = fundName ? fundSlug(fundName) : "";
+    const advFund = !slug
+      ? undefined
+      : gp
+        ? fundMap.get(`advfund:${gp.external_id}:${slug}`)
+        : (() => {
+            const hits = fundsBySlug.get(slug) ?? [];
+            return hits.length === 1 ? hits[0] : undefined;
+          })();
     commitments.push({
       external_key: `alloc:${lpExt}:${normName(gpName) || "undisclosed"}:${normName(fundName) || "aggregate"}`,
       lp_ext: lpExt,
       lp_name: lp.name,
-      gp_ext: gp?.external_id ?? null,
+      gp_ext: gp?.external_id ?? advFund?.gp_ext ?? null,
       gp_name: gpName,
       fund_name: fundName,
+      adv_fund_key: advFund?.external_key ?? null,
       amount: amountIn(rec.commitment_amount),
       currency: str(rec.currency)?.toUpperCase() ?? null,
       amount_text: str(rec.commitment_amount),
@@ -743,6 +824,8 @@ export function transformDirectory(sheets: Sheets): DirectoryBundle {
     relationships: relationships.length,
     providerBrands: brands.size,
     linkedProviderBrands: new Set(relationships.filter((r) => r.provider_ext).map((r) => r.provider_key)).size,
+    funds: fundMap.size,
+    fundManagers: new Set([...fundMap.values()].map((f) => f.gp_ext)).size,
     commitments: commitmentMap.size,
     withAdv: companies.filter((c) => c.sec_crd || c.adv_matched_entity).length,
     withAum: companies.filter((c) => c.regulatory_aum_usd || c.brand_aum_total_usd || c.total_assets_usd).length,
@@ -754,6 +837,7 @@ export function transformDirectory(sheets: Sheets): DirectoryBundle {
     companies,
     contacts,
     relationships,
+    funds: [...fundMap.values()],
     commitments: [...commitmentMap.values()],
     aliases,
     stats,

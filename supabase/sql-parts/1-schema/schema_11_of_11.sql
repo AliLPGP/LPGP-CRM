@@ -50,3 +50,19 @@ drop policy if exists "saved_searches_read" on public.saved_searches;
 create policy "saved_searches_read" on public.saved_searches for select using (true);
 drop policy if exists "directory_imports_read" on public.directory_imports;
 create policy "directory_imports_read" on public.directory_imports for select using (true);
+
+-- ##################################################################
+-- ## Fund lineup: private funds named on Form ADV Schedule D, with
+-- ## the providers each filing ties them to (0014)
+-- ##################################################################
+
+alter table public.funds
+  add column if not exists name_filed        text,  -- exactly as filed
+  add column if not exists vehicle_kind      text,  -- from the name: Feeder, Co-investment, Master ...
+  add column if not exists domicile          text,  -- only when the legal form fixes it (SCSp, ICAV)
+  add column if not exists currency          text,  -- a currency class the name states
+  add column if not exists service_providers jsonb not null default '[]'::jsonb, -- [{role, key, brand}]
+  add column if not exists filed             text,  -- which ADV filings named it
+  add column if not exists source_url        text;
+
+create index if not exists funds_source_idx on public.funds (source);

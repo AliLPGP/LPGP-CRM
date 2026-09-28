@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // The directory setup panel reads the SQL it asks an admin to paste.
+  outputFileTracingIncludes: {
+    "/database": ["./supabase/sql-parts/3-directory/*.sql", "./supabase/migrations/0014_fund_lineup.sql"],
+    "/import/directory": ["./supabase/sql-parts/3-directory/*.sql", "./supabase/migrations/0014_fund_lineup.sql"],
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "logo.clearbit.com" },

@@ -425,3 +425,67 @@ export async function getBrandLinks(key: string): Promise<BrandLink[]> {
     provider_locations: r.provider_locations ?? [],
   }));
 }
+
+export type CompanyFund = {
+  id: string;
+  name: string;
+  name_filed: string | null;
+  vehicle_kind: string | null;
+  domicile: string | null;
+  currency: string | null;
+  vintage_year: number | null;
+  fund_size_usd: number | null;
+  target_size_usd: number | null;
+  strategy: string | null;
+  status: string | null;
+  source: string | null;
+  filed: string | null;
+  source_url: string | null;
+  service_providers: { role: string; key: string; brand: string }[];
+};
+
+/** A manager's funds: the Form ADV lineup plus any added by hand. */
+export async function getCompanyFunds(companyId: string): Promise<CompanyFund[]> {
+  const supabase = getReadClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase.from("funds").select("*").eq("company_id", companyId).limit(2000);
+  if (error || !data) return [];
+  return (data as Record<string, unknown>[])
+    .map((f) => ({
+      id: f.id as string,
+      name: f.name as string,
+      name_filed: (f.name_filed as string | null) ?? null,
+      vehicle_kind: (f.vehicle_kind as string | null) ?? null,
+      domicile: (f.domicile as string | null) ?? null,
+      currency: (f.currency as string | null) ?? null,
+      vintage_year: (f.vintage_year as number | null) ?? null,
+      fund_size_usd: (f.fund_size_usd as number | null) ?? null,
+      target_size_usd: (f.target_size_usd as number | null) ?? null,
+      strategy: (f.strategy as string | null) ?? null,
+      status: (f.status as string | null) ?? null,
+      source: (f.source as string | null) ?? null,
+      filed: (f.filed as string | null) ?? null,
+      source_url: (f.source_url as string | null) ?? null,
+      service_providers: Array.isArray(f.service_providers)
+        ? (f.service_providers as { role: string; key: string; brand: string }[])
+        : [],
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** The latest publicly disclosed LP commitments, newest first. */
+export async function getRecentCommitments(
+  limit = 12,
+): Promise<(DisclosedCommitment & { fund_label: string | null; lp_label: string | null; gp_label: string | null })[]> {
+  const supabase = getReadClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("commitments")
+    .select(COMMITMENT_COLUMNS)
+    .eq("source", "lp_disclosure")
+    .order("commitment_year", { ascending: false, nullsFirst: false })
+    .order("commitment_date", { ascending: false, nullsFirst: false })
+    .limit(limit);
+  if (error || !data) return [];
+  return nameCommitments(data as DisclosedCommitment[]);
+}

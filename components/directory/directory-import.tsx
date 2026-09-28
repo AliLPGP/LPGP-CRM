@@ -2,20 +2,13 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  CheckCircle2,
-  FileSpreadsheet,
-  GitMerge,
-  Loader2,
-  TriangleAlert,
-  Upload,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, FileSpreadsheet, GitMerge, Loader2, Upload } from "lucide-react";
 import {
   finishDirectoryImport,
   importDirectoryCommitments,
   importDirectoryCompanies,
   importDirectoryContacts,
+  importDirectoryFunds,
   importDirectoryRelationships,
 } from "@/lib/directory/import-actions";
 import { transformDirectory, type DirectoryBundle } from "@/lib/directory/transform";
@@ -25,12 +18,15 @@ import { cn } from "@/lib/utils";
 
 type Parsed = { fileName: string; bundle: DirectoryBundle };
 
-type Phase = "companies" | "contacts" | "relationships" | "commitments" | "finish";
+type Phase = "companies" | "contacts" | "relationships" | "funds" | "commitments" | "finish";
+
+const PHASES: Phase[] = ["companies", "contacts", "relationships", "funds", "commitments", "finish"];
 
 const PHASE_LABEL: Record<Phase, string> = {
   companies: "Firms",
   contacts: "Key contacts",
   relationships: "Form ADV provider links",
+  funds: "Form ADV fund lineup",
   commitments: "LP commitments",
   finish: "Tidying up",
 };
@@ -41,6 +37,7 @@ type Outcome = {
   companies: { created: number; updated: number };
   contacts: { created: number; updated: number };
   relationships: number;
+  advFunds: number;
   commitments: number;
   funds: number;
   pruned: number;
@@ -58,10 +55,13 @@ function pick(ids: Record<string, string>, keys: (string | null)[]): Record<stri
 export function DirectoryImport({
   isAdmin,
   schemaReady,
+  fundsReady,
   samples,
 }: {
   isAdmin: boolean;
   schemaReady: boolean;
+  /** Migration 0014 has run: the fund lineup can load. */
+  fundsReady: boolean;
   samples: { relationships: number; commitments: number };
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -118,6 +118,7 @@ export function DirectoryImport({
       companies: { created: 0, updated: 0 },
       contacts: { created: 0, updated: 0 },
       relationships: 0,
+      advFunds: 0,
       commitments: 0,
       funds: 0,
       pruned: 0,
@@ -169,6 +170,18 @@ export function DirectoryImport({
         result.relationships += r.created;
       }
 
+      if (fundsReady) {
+        phase = "funds";
+        const fundChunks = chunk(bundle.funds, 700);
+        for (let i = 0; i < fundChunks.length; i++) {
+          setProgress({ phase: "funds", done: i, total: fundChunks.length });
+          const part = fundChunks[i];
+          const r = await importDirectoryFunds(part, pick(ids, part.map((x) => x.gp_ext)));
+          if (!r.ok) return fail("funds", r.error);
+          result.advFunds += r.created;
+        }
+      }
+
       phase = "commitments";
       setProgress({ phase: "commitments", done: 0, total: 1 });
       const c = await importDirectoryCommitments(
@@ -187,6 +200,7 @@ export function DirectoryImport({
         result: result as unknown as Record<string, unknown>,
         relationshipKeys: bundle.relationships.map((r) => r.external_key),
         commitmentKeys: bundle.commitments.map((c) => c.external_key),
+        fundKeys: fundsReady ? bundle.funds.map((x) => x.external_key) : undefined,
         removeSamples,
       });
       if (!f.ok) return fail("finish", f.error);
@@ -216,18 +230,6 @@ export function DirectoryImport({
 
   return (
     <div className="space-y-6">
-      {!schemaReady ? (
-        <div className="flex gap-3 rounded-2xl border border-[var(--warning)]/40 bg-[var(--warning-soft)] p-4 text-sm">
-          <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-[var(--warning)]" />
-          <div>
-            <p className="font-medium">Run the directory SQL first</p>
-            <p className="mt-1 text-muted-foreground">
-              Paste <code className="font-mono text-xs">supabase/sql-parts/3-directory/</code> parts 1–4
-              into the Supabase SQL editor, in order. They add the columns this import fills.
-            </p>
-          </div>
-        </div>
-      ) : null}
 
       <div
         onDragOver={(e) => {
@@ -281,11 +283,12 @@ export function DirectoryImport({
               <h2 className="font-semibold">{parsed.fileName}</h2>
               <span className="text-sm text-muted-foreground">— what this import will bring in</span>
             </div>
-            <div className="grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-px bg-border sm:grid-cols-3">
               {[
                 { label: "Firms", value: fmt(totalFirms), sub: `GP ${fmt(stats.companies.GP)} · LP ${fmt(stats.companies.LP)} · SP ${fmt(stats.companies.SP)} · Unclassified ${fmt(stats.companies.UN)}` },
                 { label: "Key contacts", value: fmt(stats.contacts), sub: `${fmt(stats.connectableContacts)} with a direct email in your master sheet` },
                 { label: "Form ADV provider links", value: fmt(stats.relationships), sub: `${fmt(stats.relationshipRows)} filing rows → ${fmt(stats.providerBrands)} provider brands` },
+                { label: "Named funds", value: fmt(stats.funds), sub: `private funds ${fmt(stats.fundManagers)} managers list on Form ADV, with their providers` },
                 { label: "LP commitments", value: fmt(stats.commitments), sub: "public disclosures, amounts in their own currency" },
                 { label: "Form ADV facts", value: fmt(stats.withAdv), sub: "firms with a CRD, entity and filing date" },
                 { label: "Size on record", value: fmt(stats.withAum), sub: "firms with regulatory AUM or total assets" },
@@ -390,9 +393,8 @@ export function DirectoryImport({
                     className="h-full rounded-full bg-[var(--chart-bar)] transition-all"
                     style={{
                       width: `${Math.round(
-                        ((["companies", "contacts", "relationships", "commitments", "finish"].indexOf(progress.phase) +
-                          (progress.total ? progress.done / progress.total : 0)) /
-                          5) *
+                        ((PHASES.indexOf(progress.phase) + (progress.total ? progress.done / progress.total : 0)) /
+                          PHASES.length) *
                           100,
                       )}%`,
                     }}
@@ -423,6 +425,9 @@ export function DirectoryImport({
             <li>
               <span className="figure">{fmt(outcome.relationships)}</span> Form ADV provider links
               {outcome.pruned ? ` (${fmt(outcome.pruned)} stale rows removed)` : ""}
+            </li>
+            <li>
+              <span className="figure">{fmt(outcome.advFunds)}</span> named funds from Form ADV
             </li>
             <li>
               <span className="figure">{fmt(outcome.commitments)}</span> commitments across{" "}

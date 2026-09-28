@@ -226,7 +226,11 @@ export async function getCommitmentsForFund(fundId: string): Promise<FundCommitm
   const supabase = getReadClient();
   if (!supabase) return [];
   const { data } = await supabase.from("commitments").select("*").eq("fund_id", fundId);
-  const rows = (data as { id: string; lp_company_id: string | null; amount_usd: number | null; commitment_date: string | null }[]) ?? [];
+  const rows =
+    (data as ({ id: string; lp_company_id: string | null; amount_usd: number | null; commitment_date: string | null } & Partial<
+      Record<"amount", number | null> &
+        Record<"currency" | "amount_text" | "commitment_date_text" | "disclosure_type" | "source_url" | "lp_name", string | null>
+    >)[]) ?? [];
   const lps = await managerMap(supabase, rows.map((r) => r.lp_company_id).filter(Boolean) as string[]);
   return rows
     .map((r) => ({
@@ -234,8 +238,21 @@ export async function getCommitmentsForFund(fundId: string): Promise<FundCommitm
       amount_usd: r.amount_usd,
       commitment_date: r.commitment_date,
       lp: r.lp_company_id ? lps.get(r.lp_company_id) ?? null : null,
+      amount: r.amount ?? null,
+      currency: r.currency ?? null,
+      amount_text: r.amount_text ?? null,
+      commitment_date_text: r.commitment_date_text ?? null,
+      disclosure_type: r.disclosure_type ?? null,
+      source_url: r.source_url ?? null,
+      lp_name: r.lp_name ?? null,
     }))
-    .sort((a, b) => (b.amount_usd ?? 0) - (a.amount_usd ?? 0));
+    // Largest first within each currency; amounts in different currencies
+    // are never compared.
+    .sort(
+      (a, b) =>
+        (a.currency ?? "USD").localeCompare(b.currency ?? "USD") ||
+        (b.amount_usd ?? b.amount ?? 0) - (a.amount_usd ?? a.amount ?? 0),
+    );
 }
 
 export async function getCommitmentsForLp(lpCompanyId: string): Promise<LpCommitment[]> {

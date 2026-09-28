@@ -24,6 +24,9 @@ Every company belongs to exactly one of three categories:
 - **SP** — Solution Providers / vendors: audit & advisory (KPMG), banks (MUFG),
   fund administrators (Apex), law firms (Kirkland & Ellis).
 
+Firms the Master Directory hasn't classified wait in a fourth, holding book —
+**UN** (Unclassified) — until someone places them from the firm's profile.
+
 ## Stack
 
 Next.js 16 (App Router) · React 19 · TypeScript strict · Tailwind v4 ·
@@ -55,9 +58,75 @@ boundaries and keeps comment text ASCII.
 - **My deals** (0012) — `ops_links.entity_type` gains `user`. A salesperson
   claiming a tracker deal is a link owned by their profile, so nothing about
   the money is copied into Supabase.
+- **Directory intelligence** (0013) — the Master Directory workbook's columns
+  on `companies` (workbook ids, Form ADV facts, LP disclosures, SP service
+  lines, sources), provenance on `contacts`, brand-level Form ADV links on
+  `service_relationships`, public commitments on `commitments`/`funds`, and
+  `directory_lists`, `directory_list_items`, `saved_searches`,
+  `directory_imports`. `company_category` gains `UN` for firms the workbook
+  hasn't classified; pickers that sell (`CATEGORY_ORDER`) still offer LP/GP/SP
+  only.
+- **Fund lineup** (0014) — `funds` gains the Form ADV Schedule D columns
+  (`name_filed`, `vehicle_kind`, `domicile`, `currency`, `service_providers`).
+  ~5.5k named private funds per workbook edition, keyed `advfund:<GP>:<slug>`.
+- **Portfolio companies** (0015) — `portfolio_companies`, one row per company
+  per GP, each with `source` (`web_research` | `manual`) and the `source_url`
+  that names it. Operating partners have no table: they are contacts whose
+  title `isOperatingRole()` recognises (`lib/directory/operating.ts`).
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).
+
+## The directory (Discover)
+
+`lib/directory/` is the Inven-style database. The pieces:
+
+- `transform.ts` turns the Master Directory workbook into rows, in the
+  browser. It merges duplicate firms (same name, same website with one name
+  extending the other, a short list of known renames) and keeps every workbook
+  id in `external_ids`, so the next edition lands on the same records.
+- `import-actions.ts` writes those rows in chunks. The workbook **owns** Form
+  ADV facts, LP disclosures and SP service lines (refreshed each import);
+  people **own** name, description, website, location and type (the import
+  only fills blanks). Filed provider links and commitments missing from a new
+  edition are pruned; companies and contacts never are.
+- `providers.ts` collapses the ~2,400 legal names GPs file on Schedule D into
+  brands (`J.P. Morgan`, not `JPMORGAN CHASE BANK, N.A.`). League tables count
+  distinct managers per brand, never filing rows. Rule order matters: narrower
+  brands first.
+- `index-server.ts` builds one compact record per firm, cached with
+  `unstable_cache` under the `directory` tag (anything that edits companies or
+  contacts calls `updateTag`/`revalidateTag` on it). It pages past the
+  PostgREST row cap with `lib/supabase/paged.ts` — use `fetchAll` for any read
+  that can exceed 1,000 rows, and batch `.in()` filters.
+- Search, filters, lookalikes and the market map run **in the browser** over
+  that index (`search.ts`, `filters.ts`, `similar.ts`, `market.ts`), so every
+  facet click is instant. The URL is the state (`filtersFromParams` /
+  `filtersToParams`, written with `history.replaceState`).
+- `thesis.ts` reads a plain-English search into filters with rules; whatever
+  it can't place stays as ranked keywords. With `ANTHROPIC_API_KEY` set,
+  `ai-actions.ts` has Claude re-read the same search into the same shape and
+  `readingToFilters` resolves any names it returns against the directory's own
+  vocabulary.
+- `funds.ts` derives the fund lineup from the relationship rows' fund
+  examples: display names in title case with the manager's own spelling, and
+  a vehicle kind or domicile only when the legal name states it. The Funds
+  page (`fund-universe.ts`) ships them packed like the index.
+- Discover's home (`overview.tsx`, `insights.ts`) summarises the whole index;
+  `insights.ts` counts a brand's regulatory AUM once even when the directory
+  holds several of its entities. The HQ map (`world-map.ts`) is projected on
+  the server and drawn as proportional circles, not a choropleth.
+- Operating partners come from Lusha search previews by GP domain
+  (`/api/directory/operating-partners`, no reveals); portfolio companies from
+  Claude reading the manager's own site (`portfolio-research.ts`,
+  `/api/directory/portfolio`). Both are per firm on the profile and in bulk
+  for admins on Import → Master directory.
+- `setup.ts` tells an admin which directory SQL a database is missing and
+  serves it in paste-sized parts.
+- Nothing is inferred that the workbook doesn't say. Sizes carry their basis
+  (brand vs. entity regulatory AUM, fund gross assets for ERAs, total assets
+  for LPs), commitments keep their own currency, and the original seed's
+  illustrative links are labelled `source = 'sample'`.
 
 ## The ops-panel bridge
 

@@ -54,11 +54,41 @@ optionally record deals into it.
 
 ### Database
 
-- **Company cards** — one profile per firm, filterable by LP / GP / SP.
+An Inven-style intelligence database over the team's **Master Directory**
+workbook: every GP, LP and provider in it, their key contacts, the service
+providers each manager names on Form ADV, and public LP commitments.
+
+- **Discover** (`/database`) — describe what you're after in plain English
+  ("private credit managers in London with $1bn+ AUM audited by KPMG") and it
+  becomes removable filter chips: book, type, place, size, headcount, founding
+  year, Form ADV status, providers used, contacts on file. Whatever the rules
+  don't recognise is ranked as keywords, with the matching sentence
+  highlighted. With `ANTHROPIC_API_KEY` set, Claude re-reads each search a
+  moment later. Facet counts, sorting and paging are instant — the directory
+  is searched in the browser. Tick firms to add them to a list, the pipeline or
+  a CSV, or to find more like them.
+- **Lookalikes** — "firms like Ares", or any selection: similarity blends what
+  firms say they do with type, place, size and the providers they share on
+  Form ADV, and every match lists its reasons.
+- **Company one-pager** — key facts, overview, SP service lines and lifecycle
+  coverage, the providers a manager files by role, the managers a provider
+  serves and where it ranks, LP commitments made and received (in their own
+  currency), the Form ADV entities behind the figures, key contacts, similar
+  firms and every source.
+- **Market map** (`/database/market`) — league tables of auditors,
+  administrators, custodians, prime brokers and placement agents by the number
+  of managers that name them, sliced by manager type, region and size; plus a
+  landscape of each book by segment. Every provider has a page listing its
+  clients and the legal names it's filed under.
+- **Lists** (`/database/lists`) — shared target lists with notes, export and
+  one-click "add all to pipeline".
+- **Import → Master directory** (admins) — reads the workbook in the browser,
+  merges duplicate rows, collapses 2,000+ provider spellings into brands,
+  matches firms already in the CRM, and loads everything in chunks. Re-running
+  it with the next edition updates records in place.
 - **Contact profiles** — inline-editable, with free-text notes on any record.
-- **Search** — searches your whole database live, and can look people up in
-  **Lusha** on demand; every result is labelled with its source.
-- **Lusha import** and **CSV export** for contacts and companies.
+- **Lusha** — look people up on demand from Discover, import them, and export
+  contacts and companies to CSV.
 
 ## Quick start
 
@@ -79,7 +109,7 @@ so it's safe to re-run.
 
 > Prefer step-by-step migrations? Run the files in
 > [`supabase/migrations/`](supabase/migrations) **in numeric order**
-> (`0001` → … → `0012`). Running a later one first fails with
+> (`0001` → … → `0015`). Running a later one first fails with
 > `relation "public.companies" does not exist` — that just means `0001`
 > hasn't run yet.
 

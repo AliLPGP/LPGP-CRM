@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Mail, Phone, Link2, MapPin, Check, Minus } from "lucide-react";
 import { getContact, getNotes } from "@/lib/queries";
 import { CategoryBadge } from "@/components/category-badge";
+import { ConnectableBadge } from "@/components/directory/profile-sections";
 import { PersonAvatar } from "@/components/person-avatar";
 import { EditableField } from "@/components/editable-field";
 import { NotesPanel } from "@/components/notes-panel";
@@ -86,6 +87,8 @@ export default async function ContactProfile({ params }: { params: Promise<{ id:
                   <MapPin className="h-3 w-3" /> {location}
                 </Chip>
               ) : null}
+              {!contact.email && contact.connectable ? <ConnectableBadge /> : null}
+              {contact.source === "master_directory" ? <Chip>Master Directory</Chip> : null}
             </div>
           </div>
         </div>

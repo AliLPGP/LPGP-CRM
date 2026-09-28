@@ -441,6 +441,76 @@
   border-color: var(--rail-line);
 }
 
+/* -- The stand (hero panels) ----------------------------------------------- */
+/* A full graphite panel in both themes, like the rail: the page's one black
+   object, carrying cream lettering and a strip of light along its top edge.
+   Every neutral token is re-pointed inside it, so a card, an input or a
+   button nested in the stand reads correctly without knowing where it is. */
+.stand {
+  --background: #121316;
+  --foreground: #ede7db;
+  --card: #1b1d22;
+  --card-foreground: #ede7db;
+  --popover: #202328;
+  --popover-foreground: #ede7db;
+  --secondary: #24272c;
+  --secondary-foreground: #ede7db;
+  --muted: #24272c;
+  --muted-foreground: #a39e92;
+  --border: #2d3037;
+  --input: #3a3e46;
+  --primary: #ede7db;
+  --primary-foreground: #16171a;
+  --accent: #2c2a26;
+  --accent-foreground: #e8d9bf;
+  --ring: #c89a63;
+  --brand: #ede7db;
+  --brand-2: #c89a63;
+  --brass: #c89a63;
+  --chart-bar: #c89a63;
+  --chart-track: #2a2d33;
+  --hairline: rgba(255, 255, 255, 0.1);
+  --hairline-strong: rgba(255, 255, 255, 0.24);
+  --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-pop: 0 30px 66px -26px rgba(0, 0, 0, 0.85);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--foreground);
+  background-color: #141518;
+  background-image:
+    radial-gradient(900px 420px at 12% -20%, rgba(200, 154, 99, 0.16), transparent 60%),
+    radial-gradient(700px 380px at 105% 120%, rgba(168, 123, 82, 0.1), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 40%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+.stand::after {
+  content: "";
+  position: absolute;
+  inset-inline: 6%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34) 20%, rgba(255, 255, 255, 0.34) 80%, transparent);
+  pointer-events: none;
+}
+/* Fine grid etched into the stand, the way a panel's joints show. */
+.stand-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at 70% 0%, #000 10%, transparent 70%);
+}
+
+/* A magnitude bar: one walnut hue, a quiet track. */
+.bar-track {
+  background: var(--chart-track);
+}
+.bar-fill {
+  background: var(--chart-bar);
+}
+
 /* -- Motion --------------------------------------------------------------- */
 
 main > * {
@@ -462,6 +532,19 @@ main > * {
 }
 .modal-panel {
   animation: modal-panel-in 240ms cubic-bezier(0.21, 0.68, 0.36, 1.02) both;
+}
+.quick-look {
+  animation: slide-in 260ms cubic-bezier(0.21, 0.68, 0.36, 1) both;
+}
+@keyframes slide-in {
+  from {
+    transform: translateX(28px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 @keyframes modal-overlay-in {
   from {
@@ -521,6 +604,7 @@ main > * {
   main > *,
   .modal-overlay,
   .modal-panel,
+  .quick-look,
   .shimmer,
   .pulse-ring {
     animation: none;

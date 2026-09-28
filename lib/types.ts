@@ -1,7 +1,8 @@
 import type { LeadStage } from "./pipeline";
 import type { OpsMatch } from "./ops-types";
 
-export type Category = "LP" | "GP" | "SP";
+/** LP / GP / SP, plus UN for firms the Master Directory hasn't classified yet. */
+export type Category = "LP" | "GP" | "SP" | "UN";
 
 export type Allocation = { label: string; value: number };
 
@@ -34,6 +35,52 @@ export type Company = {
   in_portfolio: boolean;
   created_at: string;
   updated_at: string;
+} & Partial<DirectoryFields>;
+
+/** Columns migration 0013 adds; absent until it runs, hence optional. */
+export type DirectoryFields = {
+  external_id: string | null;
+  external_ids: string[];
+  source: string | null;
+  directory_vertical: string | null;
+  state: string | null;
+  founded_year: number | null;
+  years_active: number | null;
+  employee_count: number | null;
+  industry: string | null;
+  lusha_verified_on: string | null;
+  catalog_updated_at: string | null;
+  sources: { label: string; url: string | null }[];
+  sec_crd: string | null;
+  sec_file_number: string | null;
+  adv_firm_type: string | null;
+  adv_matched_entity: string | null;
+  adv_last_filed: string | null;
+  adv_employee_count: number | null;
+  private_fund_count: number | null;
+  private_fund_gross_assets: number | null;
+  regulatory_aum_usd: number | null;
+  brand_entity_count: number | null;
+  brand_aum_total_usd: number | null;
+  adv_source_url: string | null;
+  adv_entities: {
+    crd: string | null;
+    file_number: string | null;
+    entity: string | null;
+    firm_type: string | null;
+    regulatory_aum_usd: number | null;
+    last_filed: string | null;
+    source_url: string | null;
+  }[];
+  investor_type: string | null;
+  total_assets_usd: number | null;
+  alts_allocation_pct: number | null;
+  discloses_commitments: string | null;
+  disclosure_source_url: string | null;
+  assets_monitored_usd: number | null;
+  assets_monitored_display: string | null;
+  lifecycle: string[];
+  service_lines: { name: string; description: string | null; capabilities: string[] }[];
 };
 
 export type Contact = {
@@ -58,6 +105,11 @@ export type Contact = {
   last_contacted: string | null;
   created_at: string;
   updated_at: string;
+  // Master Directory provenance (migration 0013)
+  external_ref?: string | null;
+  source?: string | null;
+  /** The team's master sheet holds a direct email for this person. */
+  connectable?: boolean | null;
 };
 
 export type Fund = {
@@ -71,6 +123,17 @@ export type Fund = {
   geography: string | null;
   status: string | null;
   created_at: string;
+  // Directory columns (0013/0014); absent on an older database.
+  external_key?: string | null;
+  manager_name?: string | null;
+  source?: string | null;
+  name_filed?: string | null;
+  vehicle_kind?: string | null;
+  domicile?: string | null;
+  currency?: string | null;
+  service_providers?: { role: string; key: string; brand: string }[] | null;
+  filed?: string | null;
+  source_url?: string | null;
 };
 
 export type FundManager = { id: string; name: string; category: Category; domain: string | null };
@@ -91,6 +154,14 @@ export type FundCommitment = {
   amount_usd: number | null;
   commitment_date: string | null;
   lp: { id: string; name: string; category: Category } | null;
+  // Disclosed commitments keep their own currency and the source (0013).
+  amount?: number | null;
+  currency?: string | null;
+  amount_text?: string | null;
+  commitment_date_text?: string | null;
+  disclosure_type?: string | null;
+  source_url?: string | null;
+  lp_name?: string | null;
 };
 
 // A commitment as seen from an LP (which fund they backed).

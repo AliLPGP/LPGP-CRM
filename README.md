@@ -109,7 +109,7 @@ so it's safe to re-run.
 
 > Prefer step-by-step migrations? Run the files in
 > [`supabase/migrations/`](supabase/migrations) **in numeric order**
-> (`0001` → … → `0013`). Running a later one first fails with
+> (`0001` → … → `0015`). Running a later one first fails with
 > `relation "public.companies" does not exist` — that just means `0001`
 > hasn't run yet.
 

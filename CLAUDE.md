@@ -66,6 +66,13 @@ boundaries and keeps comment text ASCII.
   `directory_imports`. `company_category` gains `UN` for firms the workbook
   hasn't classified; pickers that sell (`CATEGORY_ORDER`) still offer LP/GP/SP
   only.
+- **Fund lineup** (0014) — `funds` gains the Form ADV Schedule D columns
+  (`name_filed`, `vehicle_kind`, `domicile`, `currency`, `service_providers`).
+  ~5.5k named private funds per workbook edition, keyed `advfund:<GP>:<slug>`.
+- **Portfolio companies** (0015) — `portfolio_companies`, one row per company
+  per GP, each with `source` (`web_research` | `manual`) and the `source_url`
+  that names it. Operating partners have no table: they are contacts whose
+  title `isOperatingRole()` recognises (`lib/directory/operating.ts`).
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).
@@ -101,6 +108,21 @@ The app degrades gracefully when Supabase env vars are absent (shows a
   `ai-actions.ts` has Claude re-read the same search into the same shape and
   `readingToFilters` resolves any names it returns against the directory's own
   vocabulary.
+- `funds.ts` derives the fund lineup from the relationship rows' fund
+  examples: display names in title case with the manager's own spelling, and
+  a vehicle kind or domicile only when the legal name states it. The Funds
+  page (`fund-universe.ts`) ships them packed like the index.
+- Discover's home (`overview.tsx`, `insights.ts`) summarises the whole index;
+  `insights.ts` counts a brand's regulatory AUM once even when the directory
+  holds several of its entities. The HQ map (`world-map.ts`) is projected on
+  the server and drawn as proportional circles, not a choropleth.
+- Operating partners come from Lusha search previews by GP domain
+  (`/api/directory/operating-partners`, no reveals); portfolio companies from
+  Claude reading the manager's own site (`portfolio-research.ts`,
+  `/api/directory/portfolio`). Both are per firm on the profile and in bulk
+  for admins on Import → Master directory.
+- `setup.ts` tells an admin which directory SQL a database is missing and
+  serves it in paste-sized parts.
 - Nothing is inferred that the workbook doesn't say. Sizes carry their basis
   (brand vs. entity regulatory AUM, fund gross assets for ERAs, total assets
   for LPs), commitments keep their own currency, and the original seed's

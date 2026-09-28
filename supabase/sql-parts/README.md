@@ -29,10 +29,12 @@ the problem entirely.
    you're importing your own data.
 
 **Upgrading a database that already has parts 1–8?** Run only
-**`3-directory/directory_01_of_04.sql` … `directory_04_of_04.sql`** — migration
-`0013`, the directory-intelligence tables and columns. It is the same SQL as
-schema parts 9–11, cut on its own so you don't have to work out where it
-starts. Then load the data in the app: **Import → Master directory**.
+**`3-directory/directory_01_of_05.sql` … `directory_05_of_05.sql`** — migrations
+`0013`–`0015`: the directory-intelligence tables and columns, the Form ADV
+fund lineup and portfolio companies. It is the same SQL as the end of the
+schema parts, cut on its own so you don't have to work out where it starts.
+Then load the data in the app: **Import → Master directory**. (Discover, signed
+in as an admin, shows which of these a database is still missing.)
 
 Run one file, wait for "Success", run the next. If a part errors, fix that
 before moving on — later parts build on earlier ones.
@@ -47,9 +49,9 @@ lose track of where you were, start over from part 1.
 
 | Set | Parts | Largest part |
 | --- | --- | --- |
-| `1-schema` | 11 | 3.6 KB |
+| `1-schema` | 12 | 3.6 KB |
 | `2-seed` | 12 | 8.1 KB |
-| `3-directory` | 4 | 3.6 KB |
+| `3-directory` | 5 | 3.6 KB |
 
 The schema parts are deliberately under 4 KB. The seed parts can't go that low —
 a single `insert` of a dozen firms is bigger than that, and splitting inside one
@@ -61,8 +63,9 @@ would be exactly the bug these files exist to avoid.
 
 ```sh
 python3 tools/split_sql.py schema.sql sql-parts/1-schema schema --max-bytes=3500
-python3 tools/split_sql.py migrations/0013_directory_intelligence.sql \
-    sql-parts/3-directory directory --max-bytes=3500
+cat migrations/0013_directory_intelligence.sql migrations/0014_fund_lineup.sql \
+    migrations/0015_portfolio_companies.sql > /tmp/directory.sql
+python3 tools/split_sql.py /tmp/directory.sql sql-parts/3-directory directory --max-bytes=3500
 
 cat seed.sql seed_companies_2.sql seed_companies_3.sql \
     seed_contacts_2.sql seed_contacts_3.sql seed_funds.sql \

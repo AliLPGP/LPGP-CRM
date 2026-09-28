@@ -113,10 +113,12 @@ async function build(): Promise<PackedFundUniverse> {
     ];
   });
 
+  // Best-documented first: funds with their providers named, then by name.
+  funds.sort((a, b) => b[10].length - a[10].length || a[2].localeCompare(b[2]));
   return { generatedAt: new Date().toISOString(), brands, managers, funds };
 }
 
-const cached = unstable_cache(build, ["fund-universe-v1"], { tags: [DIRECTORY_TAG], revalidate: 3600 });
+const cached = unstable_cache(build, ["fund-universe-v2"], { tags: [DIRECTORY_TAG], revalidate: 3600 });
 
 /** Every fund on file, packed. Never throws. */
 export async function getFundUniverse(): Promise<PackedFundUniverse> {

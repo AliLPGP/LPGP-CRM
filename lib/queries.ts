@@ -1,4 +1,5 @@
 import { getReadClient } from "./supabase/server";
+import { chunk, fetchAll } from "./supabase/paged";
 import type {
   Category,
   Company,
@@ -17,16 +18,21 @@ import type {
 export type CategoryCounts = Record<Category, number> & { total: number };
 
 export async function getCategoryCounts(): Promise<CategoryCounts> {
-  const empty: CategoryCounts = { LP: 0, GP: 0, SP: 0, total: 0 };
+  const empty: CategoryCounts = { LP: 0, GP: 0, SP: 0, UN: 0, total: 0 };
   const supabase = getReadClient();
   if (!supabase) return empty;
-  const { data, error } = await supabase.from("companies").select("category");
-  if (error || !data) return empty;
+  // Head-only counts: exact past the 1,000-row response cap, and no rows moved.
+  const books: Category[] = ["LP", "GP", "SP", "UN"];
+  const results = await Promise.all(
+    books.map((b) =>
+      supabase.from("companies").select("id", { count: "exact", head: true }).eq("category", b),
+    ),
+  );
   const counts = { ...empty };
-  for (const row of data as { category: Category }[]) {
-    counts[row.category] = (counts[row.category] ?? 0) + 1;
-    counts.total += 1;
-  }
+  results.forEach((r, i) => {
+    counts[books[i]] = r.count ?? 0;
+    counts.total += r.count ?? 0;
+  });
   return counts;
 }
 
@@ -45,12 +51,17 @@ export async function listCompanies(opts: {
 } = {}): Promise<Company[]> {
   const supabase = getReadClient();
   if (!supabase) return [];
-  let query = supabase.from("companies").select("*").order("name");
-  if (opts.category) query = query.eq("category", opts.category);
-  if (opts.search) query = query.ilike("name", `%${opts.search}%`);
-  const { data, error } = await query;
-  if (error || !data) return [];
-  return data as Company[];
+  const rows = await fetchAll<Company>((from, to, first) => {
+    let query = supabase
+      .from("companies")
+      .select("*", first ? { count: "exact" } : undefined)
+      .order("name")
+      .order("id");
+    if (opts.category) query = query.eq("category", opts.category);
+    if (opts.search) query = query.ilike("name", `%${opts.search}%`);
+    return query.range(from, to);
+  });
+  return rows ?? [];
 }
 
 export type CompanyLite = { id: string; name: string; category: Category };
@@ -60,24 +71,30 @@ export type CompanyLite = { id: string; name: string; category: Category };
 export async function listCompaniesLite(): Promise<CompanyLite[]> {
   const supabase = getReadClient();
   if (!supabase) return [];
-  const { data, error } = await supabase
-    .from("companies")
-    .select("id, name, category")
-    .order("name");
-  if (error || !data) return [];
-  return data as CompanyLite[];
+  const rows = await fetchAll<CompanyLite>((from, to, first) =>
+    supabase
+      .from("companies")
+      .select("id, name, category", first ? { count: "exact" } : undefined)
+      .order("name")
+      .order("id")
+      .range(from, to),
+  );
+  return rows ?? [];
 }
 
 export async function listPortfolioCompanies(): Promise<Company[]> {
   const supabase = getReadClient();
   if (!supabase) return [];
-  const { data, error } = await supabase
-    .from("companies")
-    .select("*")
-    .eq("in_portfolio", true)
-    .order("name");
-  if (error || !data) return [];
-  return data as Company[];
+  const rows = await fetchAll<Company>((from, to, first) =>
+    supabase
+      .from("companies")
+      .select("*", first ? { count: "exact" } : undefined)
+      .eq("in_portfolio", true)
+      .order("name")
+      .order("id")
+      .range(from, to),
+  );
+  return rows ?? [];
 }
 
 export async function getCompany(id: string): Promise<Company | null> {
@@ -95,20 +112,26 @@ export async function listContacts(opts: {
   if (!supabase) return [];
   // Fetch contacts plainly (no embed) so a join quirk can never drop rows,
   // then attach company data in JS.
-  let query = supabase.from("contacts").select("*").order("full_name");
-  if (opts.companyId) query = query.eq("company_id", opts.companyId);
-  if (opts.search) query = query.ilike("full_name", `%${opts.search}%`);
-  const { data, error } = await query;
-  if (error || !data) return [];
+  const contacts = await fetchAll<Contact>((from, to, first) => {
+    let query = supabase
+      .from("contacts")
+      .select("*", first ? { count: "exact" } : undefined)
+      .order("full_name")
+      .order("id");
+    if (opts.companyId) query = query.eq("company_id", opts.companyId);
+    if (opts.search) query = query.ilike("full_name", `%${opts.search}%`);
+    return query.range(from, to);
+  });
+  if (!contacts) return [];
 
-  const contacts = data as Contact[];
   const companyIds = [...new Set(contacts.map((c) => c.company_id).filter(Boolean))] as string[];
   const companyMap = new Map<string, ContactWithCompany["company"]>();
-  if (companyIds.length) {
+  // Batched: two thousand ids in one `in` filter overflow the request URL.
+  for (const ids of chunk(companyIds, 150)) {
     const { data: companies } = await supabase
       .from("companies")
-      .select("id, name, category, logo_url")
-      .in("id", companyIds);
+      .select("id, name, category, logo_url, domain")
+      .in("id", ids);
     for (const co of companies ?? []) {
       companyMap.set(co.id, co as ContactWithCompany["company"]);
     }
@@ -155,12 +178,13 @@ async function managerMap(
 ): Promise<Map<string, FundManager>> {
   const map = new Map<string, FundManager>();
   const unique = [...new Set(ids.filter(Boolean))];
-  if (!unique.length) return map;
-  const { data } = await supabase
-    .from("companies")
-    .select("id, name, category, domain")
-    .in("id", unique);
-  for (const c of data ?? []) map.set(c.id, c as FundManager);
+  for (const batch of chunk(unique, 150)) {
+    const { data } = await supabase
+      .from("companies")
+      .select("id, name, category, domain")
+      .in("id", batch);
+    for (const c of data ?? []) map.set(c.id, c as FundManager);
+  }
   return map;
 }
 

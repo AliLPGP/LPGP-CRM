@@ -33,7 +33,10 @@ service-role key bypasses RLS entirely, is only ever read in server code, and
 must never be committed or exposed to the browser.
 
 Before any of this works, run the SQL: `supabase/sql-parts/1-schema/` parts 1
-to 8, in order, in the Supabase SQL editor.
+to 11, in order, in the Supabase SQL editor. Already ran parts 1 to 8 before
+the directory upgrade? Run `supabase/sql-parts/3-directory/` parts 1 to 4 (the
+same SQL as schema parts 9 to 11), then load the data from **Import -> Master
+directory**.
 
 ### Auth -- required
 
@@ -69,6 +72,18 @@ recording a deal into the tracker from here.
 | `LUSHA_API_KEY` | REST key from the Lusha dashboard | Lusha search and import are hidden; spreadsheet import still works |
 
 Server-only. The key never reaches the browser.
+
+### AI thesis search -- optional
+
+| Variable | Value | Without it |
+| --- | --- | --- |
+| `ANTHROPIC_API_KEY` | An Anthropic API key (console.anthropic.com) | Discover reads searches with its built-in rules only |
+
+Discover answers every search instantly from built-in rules. With this key set
+on the CRM project, Claude (`claude-opus-5-5`, low effort) also re-reads each
+search into the same filters a moment later and the results update, with a
+one-line explanation and a link back to the quick reading. The tracker has its
+own `ANTHROPIC_API_KEY`; the same key can be used on both projects. Server-only.
 
 ---
 

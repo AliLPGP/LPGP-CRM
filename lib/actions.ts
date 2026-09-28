@@ -1,15 +1,28 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
+import { getSessionUser } from "./auth";
+import { DIRECTORY_TAG } from "./directory/index-server";
 import { getAdminClient } from "./supabase/admin";
 
 export type ActionResult = { ok: boolean; error?: string };
 
+/** The service-role client, but only for a signed-in user. */
+async function writer(): Promise<
+  { ok: true; supabase: NonNullable<ReturnType<typeof getAdminClient>> } | { ok: false; error: string }
+> {
+  if (!(await getSessionUser())) return { ok: false, error: "Not signed in" };
+  const supabase = getAdminClient();
+  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  return { ok: true, supabase };
+}
+
 // --- Deletes ---------------------------------------------------------------
 
 async function deleteCompanyIds(ids: string[]): Promise<ActionResult> {
-  const supabase = getAdminClient();
-  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  const w = await writer();
+  if (!w.ok) return w;
+  const { supabase } = w;
   if (ids.length === 0) return { ok: true };
 
   // Remove notes attached to this company's contacts, then the contacts,
@@ -28,6 +41,7 @@ async function deleteCompanyIds(ids: string[]): Promise<ActionResult> {
   revalidatePath("/contacts");
   revalidatePath("/portfolio");
   revalidatePath("/");
+  updateTag(DIRECTORY_TAG);
   return { ok: true };
 }
 
@@ -40,13 +54,15 @@ export async function deleteCompanies(ids: string[]): Promise<ActionResult> {
 }
 
 export async function deleteContact(id: string): Promise<ActionResult> {
-  const supabase = getAdminClient();
-  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  const w = await writer();
+  if (!w.ok) return w;
+  const { supabase } = w;
   await supabase.from("notes").delete().eq("entity_type", "contact").eq("entity_id", id);
   const { error } = await supabase.from("contacts").delete().eq("id", id);
   if (error) return { ok: false, error: error.message };
   revalidatePath("/contacts");
   revalidatePath("/");
+  updateTag(DIRECTORY_TAG);
   return { ok: true };
 }
 
@@ -103,8 +119,9 @@ export async function updateContact(
   id: string,
   patch: Record<string, unknown>,
 ): Promise<ActionResult> {
-  const supabase = getAdminClient();
-  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  const w = await writer();
+  if (!w.ok) return w;
+  const { supabase } = w;
   const update = sanitize(patch, CONTACT_FIELDS);
   if (Object.keys(update).length === 0) return { ok: true };
   const { error } = await supabase.from("contacts").update(update).eq("id", id);
@@ -115,8 +132,9 @@ export async function updateContact(
 }
 
 export async function setContactRating(id: string, value: number): Promise<ActionResult> {
-  const supabase = getAdminClient();
-  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  const w = await writer();
+  if (!w.ok) return w;
+  const { supabase } = w;
   const v = Number.isFinite(value) ? Math.max(0, Math.min(5, Math.round(value))) : 0;
   const { error } = await supabase
     .from("contacts")
@@ -131,8 +149,9 @@ export async function updateCompany(
   id: string,
   patch: Record<string, unknown>,
 ): Promise<ActionResult> {
-  const supabase = getAdminClient();
-  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  const w = await writer();
+  if (!w.ok) return w;
+  const { supabase } = w;
 
   const update: Record<string, string | number | null> = sanitize(patch, COMPANY_FIELDS);
   // Numeric fields: strip currency symbols / commas, parse, null when empty/NaN.
@@ -152,6 +171,7 @@ export async function updateCompany(
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/companies/${id}`);
   revalidatePath("/companies");
+  updateTag(DIRECTORY_TAG);
   return { ok: true };
 }
 
@@ -159,8 +179,9 @@ export async function updateCompanyAllocations(
   id: string,
   allocations: { label: string; value: number }[],
 ): Promise<ActionResult> {
-  const supabase = getAdminClient();
-  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  const w = await writer();
+  if (!w.ok) return w;
+  const { supabase } = w;
   const clean = (Array.isArray(allocations) ? allocations : [])
     .map((a) => ({
       label: typeof a.label === "string" ? a.label.trim() : "",
@@ -174,12 +195,15 @@ export async function updateCompanyAllocations(
 }
 
 export async function setPortfolio(id: string, value: boolean): Promise<ActionResult> {
-  const supabase = getAdminClient();
-  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  const w = await writer();
+  if (!w.ok) return w;
+  const { supabase } = w;
   const { error } = await supabase.from("companies").update({ in_portfolio: value }).eq("id", id);
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/companies/${id}`);
   revalidatePath("/companies");
+  revalidatePath("/portfolio");
+  updateTag(DIRECTORY_TAG);
   return { ok: true };
 }
 
@@ -198,8 +222,9 @@ export async function addNote(
   body: string,
   author?: string,
 ): Promise<ActionResult> {
-  const supabase = getAdminClient();
-  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  const w = await writer();
+  if (!w.ok) return w;
+  const { supabase } = w;
   const text = body.trim();
   if (!text) return { ok: false, error: "Note is empty" };
   const { error } = await supabase.from("notes").insert({
@@ -218,8 +243,9 @@ export async function deleteNote(
   entityType: NoteEntity,
   entityId: string,
 ): Promise<ActionResult> {
-  const supabase = getAdminClient();
-  if (!supabase) return { ok: false, error: "Supabase service role not configured" };
+  const w = await writer();
+  if (!w.ok) return w;
+  const { supabase } = w;
   const { error } = await supabase.from("notes").delete().eq("id", id);
   if (error) return { ok: false, error: error.message };
   revalidatePath(notePath(entityType, entityId));

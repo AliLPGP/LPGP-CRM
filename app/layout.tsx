@@ -33,6 +33,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html
       lang="en"
       className={`${sans.variable} ${mono.variable} antialiased`}
+      // The theme script sets `dark` on this element before React hydrates.
+      suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

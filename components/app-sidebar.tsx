@@ -2,23 +2,25 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import {
-  Building2,
   CalendarRange,
+  ChevronDown,
   Command,
   FileSpreadsheet,
   Gauge,
   Handshake,
   Kanban,
   Layers,
-  LayoutDashboard,
   List,
+  ListChecks,
+  Map as MapIcon,
   Menu,
   PhoneCall,
   Receipt,
   Settings,
   Shield,
+  Sparkles,
   Star,
   Upload,
   Users,
@@ -31,8 +33,9 @@ import { openCommandPalette } from "@/components/command-palette";
 import { cn, initials } from "@/lib/utils";
 import type { SessionUser } from "@/lib/auth";
 
-type NavItem = { href: string; label: string; icon: typeof Kanban };
-type NavGroup = { label: string; items: NavItem[] };
+/** `also`: other paths this entry owns (a firm's profile belongs to Discover). */
+type NavItem = { href: string; label: string; icon: typeof Kanban; also?: string[] };
+type NavGroup = { label: string; items: NavItem[]; collapsible?: boolean };
 
 const SELL: NavItem[] = [
   { href: "/", label: "Command centre", icon: Gauge },
@@ -46,17 +49,18 @@ const SELL: NavItem[] = [
 ];
 
 const DATA: NavItem[] = [
-  { href: "/database", label: "Overview", icon: LayoutDashboard },
-  { href: "/companies", label: "Companies", icon: Building2 },
+  { href: "/database", label: "Discover", icon: Sparkles, also: ["/companies"] },
+  { href: "/database/market", label: "Market map", icon: MapIcon, also: ["/database/providers"] },
+  { href: "/database/lists", label: "Lists", icon: ListChecks },
   { href: "/funds", label: "Funds", icon: Layers },
   { href: "/contacts", label: "Contacts", icon: Users },
   { href: "/portfolio", label: "Portfolio", icon: Star },
-  { href: "/import", label: "Import contacts", icon: Upload },
+  { href: "/import", label: "Import", icon: Upload, also: ["/import/directory"] },
 ];
 
 const GROUPS: NavGroup[] = [
   { label: "Sell", items: SELL },
-  { label: "Database", items: DATA },
+  { label: "Database", items: DATA, collapsible: true },
 ];
 
 const ALL_HREFS = GROUPS.flatMap((g) => g.items).map((i) => i.href);
@@ -66,12 +70,53 @@ const ALL_HREFS = GROUPS.flatMap((g) => g.items).map((i) => i.href);
  * workspace" rather than both it and "Leads", and /import/leads doesn't also
  * light "Import contacts".
  */
-function isActive(pathname: string, href: string) {
+function isActive(pathname: string, item: NavItem) {
+  const { href } = item;
+  if (item.also?.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return true;
   if (href === "/" || href === "/database" || href === "/import") return pathname === href;
   if (!pathname.startsWith(href)) return false;
   return !ALL_HREFS.some(
     (other) => other !== href && other.startsWith(href) && pathname.startsWith(other),
   );
+}
+
+// Collapsed nav groups, remembered per browser. Read through
+// useSyncExternalStore so the server render and the first client render agree.
+const COLLAPSE_KEY = "nav:collapsed";
+const COLLAPSE_EVENT = "nav-collapse";
+
+function subscribeCollapse(cb: () => void) {
+  window.addEventListener("storage", cb);
+  window.addEventListener(COLLAPSE_EVENT, cb);
+  return () => {
+    window.removeEventListener("storage", cb);
+    window.removeEventListener(COLLAPSE_EVENT, cb);
+  };
+}
+
+function readCollapse(): string {
+  try {
+    return localStorage.getItem(COLLAPSE_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+
+function useCollapsedGroups(): [Set<string>, (label: string) => void] {
+  const raw = useSyncExternalStore(subscribeCollapse, readCollapse, () => "");
+  const set = new Set(raw.split("|").filter(Boolean));
+  const toggle = (label: string) => {
+    const next = new Set(set);
+    if (next.has(label)) next.delete(label);
+    else next.add(label);
+    try {
+      localStorage.setItem(COLLAPSE_KEY, [...next].join("|"));
+    } catch {
+      /* private mode: the toggle just won't persist */
+    }
+    window.dispatchEvent(new Event(COLLAPSE_EVENT));
+  };
+  return [set, toggle];
 }
 
 function Brand({ onClick }: { onClick?: () => void }) {
@@ -91,7 +136,7 @@ function Brand({ onClick }: { onClick?: () => void }) {
 function RailLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
   const pathname = usePathname();
   const Icon = item.icon;
-  const on = isActive(pathname, item.href);
+  const on = isActive(pathname, item);
   return (
     <Link
       href={item.href}
@@ -136,18 +181,44 @@ function CommandTrigger({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 function NavBody({ user, onNavigate }: { user: SessionUser | null; onNavigate?: () => void }) {
+  const pathname = usePathname();
+  const [collapsed, toggle] = useCollapsedGroups();
   return (
     <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4">
-      {GROUPS.map((group) => (
-        <div key={group.label} className="space-y-0.5">
-          <p className="wordmark px-2.5 pb-1.5 text-[9px] text-[var(--rail-fg-dim)]">
-            {group.label}
-          </p>
-          {group.items.map((item) => (
-            <RailLink key={item.href} item={item} onNavigate={onNavigate} />
-          ))}
-        </div>
-      ))}
+      {GROUPS.map((group) => {
+        // A collapsed group still opens for the page you're on.
+        const holdsActive = group.items.some((i) => isActive(pathname, i));
+        const open = !group.collapsible || !collapsed.has(group.label) || holdsActive;
+        return (
+          <div key={group.label} className="space-y-0.5">
+            {group.collapsible ? (
+              <button
+                type="button"
+                onClick={() => toggle(group.label)}
+                aria-expanded={open}
+                className="group flex w-full items-center justify-between px-2.5 pb-1.5 text-left"
+              >
+                <span className="wordmark text-[9px] text-[var(--rail-fg-dim)] group-hover:text-[var(--rail-fg)]">
+                  {group.label}
+                </span>
+                <ChevronDown
+                  className={cn(
+                    "h-3 w-3 text-[var(--rail-fg-dim)] transition-transform",
+                    open ? "" : "-rotate-90",
+                  )}
+                />
+              </button>
+            ) : (
+              <p className="wordmark px-2.5 pb-1.5 text-[9px] text-[var(--rail-fg-dim)]">
+                {group.label}
+              </p>
+            )}
+            {open
+              ? group.items.map((item) => <RailLink key={item.href} item={item} onNavigate={onNavigate} />)
+              : null}
+          </div>
+        );
+      })}
 
       {user?.role === "admin" ? (
         <div className="space-y-0.5">

@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
+import { getSessionUser } from "@/lib/auth";
+import { DIRECTORY_TAG } from "@/lib/directory/index-server";
 import { getAdminClient, isAdminConfigured } from "@/lib/supabase/admin";
 import { isCategory } from "@/lib/categories";
 import { importContactRows, type ImportRow } from "@/lib/import";
@@ -7,6 +10,9 @@ import type { Category } from "@/lib/types";
 const MAX_ROWS = 10_000;
 
 export async function POST(req: Request) {
+  if (!(await getSessionUser())) {
+    return NextResponse.json({ error: "Not signed in" }, { status: 401 });
+  }
   if (!isAdminConfigured()) {
     return NextResponse.json(
       { error: "SUPABASE_SERVICE_ROLE_KEY is not configured — cannot write rows." },
@@ -38,6 +44,8 @@ export async function POST(req: Request) {
 
   const rows = (body.rows as Record<string, unknown>[]).map(normalizeRow);
   const result = await importContactRows(supabase, rows, category as Category);
+  // New firms and people should show in Discover straight away.
+  revalidateTag(DIRECTORY_TAG, { expire: 0 });
   return NextResponse.json(result);
 }
 

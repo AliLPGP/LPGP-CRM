@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
+import { getSessionUser } from "@/lib/auth";
+import { DIRECTORY_TAG } from "@/lib/directory/index-server";
 import { lushaConfigured, lushaContactEnrich, LushaError, type LushaEnriched } from "@/lib/lusha";
 import { getAdminClient, isAdminConfigured } from "@/lib/supabase/admin";
 import { isCategory } from "@/lib/categories";
 import { importContactRows, type ImportRow } from "@/lib/import";
 
 export async function POST(req: Request) {
+  if (!(await getSessionUser())) {
+    return NextResponse.json({ error: "Not signed in" }, { status: 401 });
+  }
   if (!lushaConfigured()) {
     return NextResponse.json({ error: "LUSHA_API_KEY is not configured." }, { status: 503 });
   }
@@ -59,5 +65,7 @@ export async function POST(req: Request) {
   }));
 
   const result = await importContactRows(supabase, rows, category);
+  // New firms and people should show in Discover straight away.
+  revalidateTag(DIRECTORY_TAG, { expire: 0 });
   return NextResponse.json(result);
 }

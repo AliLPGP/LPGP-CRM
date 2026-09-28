@@ -1,116 +1,73 @@
 import Link from "next/link";
-import { ArrowRight, Building2, Users, Upload, Layers } from "lucide-react";
-import { getCategoryCounts, getContactCount } from "@/lib/queries";
-import { isSupabaseConfigured } from "@/lib/supabase/server";
-import { isAdminConfigured } from "@/lib/supabase/admin";
+import { ListChecks, Map as MapIcon, Upload } from "lucide-react";
+import { getSessionUser } from "@/lib/auth";
+import { getDirectoryIndex } from "@/lib/directory/index-server";
+import { listDirectoryLists, listSavedSearches } from "@/lib/directory/queries";
+import { packIndex } from "@/lib/directory/records";
 import { lushaConfigured } from "@/lib/lusha";
-import { CATEGORIES, CATEGORY_ORDER } from "@/lib/categories";
-import { StatCard } from "@/components/stat-card";
-import { SetupNotice } from "@/components/setup-notice";
-import { DashboardSearch } from "@/components/dashboard-search";
+import { isAdminConfigured } from "@/lib/supabase/admin";
+import { isSupabaseConfigured } from "@/lib/supabase/server";
+import { Discover } from "@/components/directory/discover";
 import { PageHeader } from "@/components/page-header";
+import { SetupNotice } from "@/components/setup-notice";
 import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Database — LPGP Connect" };
+export const metadata = { title: "Discover — LPGP Connect" };
 
 export default async function DatabasePage() {
-  const configured = isSupabaseConfigured();
-  const [counts, contactCount] = await Promise.all([getCategoryCounts(), getContactCount()]);
+  const [index, user, lists, saved] = await Promise.all([
+    getDirectoryIndex(),
+    getSessionUser(),
+    listDirectoryLists(),
+    listSavedSearches(),
+  ]);
+  const firms = index.records.length;
+  const managers = index.records.filter((r) => r.providers.length).length;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 md:px-6 py-8 md:py-10 space-y-8">
+    <div className="mx-auto max-w-[1440px] px-4 md:px-6 py-8 space-y-6">
       <PageHeader
         eyebrow="Intelligence database"
-        title="Private markets database"
-        description="The reference book behind your pipeline — limited partners, fund managers, the providers that serve them, plus funds and commitments."
+        title="Discover"
+        description={
+          firms
+            ? `Search ${firms.toLocaleString("en-US")} LPs, GPs and providers by thesis, filters or lookalikes — with Form ADV service-provider links for ${managers.toLocaleString("en-US")} managers.`
+            : "Search LPs, GPs and providers by thesis, filters or lookalikes."
+        }
         actions={
-          <Button asChild variant="outline">
-            <Link href="/import">
-              <Upload className="h-4 w-4" /> Import
-            </Link>
-          </Button>
+          <>
+            <Button asChild variant="outline">
+              <Link href="/database/market">
+                <MapIcon className="h-4 w-4" /> Market map
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/database/lists">
+                <ListChecks className="h-4 w-4" /> Lists
+              </Link>
+            </Button>
+            {user?.role === "admin" ? (
+              <Button asChild variant="outline">
+                <Link href="/import/directory">
+                  <Upload className="h-4 w-4" /> Import
+                </Link>
+              </Button>
+            ) : null}
+          </>
         }
       />
-
-      {!configured ? <SetupNotice /> : null}
-
-      <DashboardSearch lushaReady={lushaConfigured()} adminReady={isAdminConfigured()} />
-
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="All firms" value={counts.total} sublabel="companies tracked" href="/companies" />
-        {CATEGORY_ORDER.map((k) => (
-          <StatCard
-            key={k}
-            label={CATEGORIES[k].name}
-            value={counts[k]}
-            sublabel={CATEGORIES[k].label}
-            href={`/companies?category=${k}`}
-            dot={CATEGORIES[k].dot}
-          />
-        ))}
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {CATEGORY_ORDER.map((k) => {
-          const meta = CATEGORIES[k];
-          return (
-            <Link
-              key={k}
-              href={`/companies?category=${k}`}
-              className="lift rounded-xl border bg-card p-5 flex flex-col"
-            >
-              <div className="flex items-center justify-between">
-                <span
-                  className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-xs font-semibold ${meta.accent}`}
-                >
-                  <span className={`h-1.5 w-1.5 rounded-full ${meta.dot}`} />
-                  {meta.singular}
-                </span>
-                <span className="tabular text-2xl font-semibold">{counts[k]}</span>
-              </div>
-              <h3 className="mt-3 font-semibold">{meta.name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground flex-1">{meta.blurb}</p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm text-primary font-medium">
-                View book <ArrowRight className="h-3.5 w-3.5" />
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-3">
-        <Link href="/companies" className="lift rounded-xl border bg-card p-5 flex items-center gap-4">
-          <span className="grid place-items-center h-11 w-11 rounded-lg bg-accent text-accent-foreground">
-            <Building2 className="h-5 w-5" />
-          </span>
-          <div className="flex-1">
-            <h3 className="font-semibold">Companies</h3>
-            <p className="text-sm text-muted-foreground">{counts.total} firm profiles</p>
-          </div>
-          <ArrowRight className="h-4 w-4 text-muted-foreground" />
-        </Link>
-        <Link href="/contacts" className="lift rounded-xl border bg-card p-5 flex items-center gap-4">
-          <span className="grid place-items-center h-11 w-11 rounded-lg bg-accent text-accent-foreground">
-            <Users className="h-5 w-5" />
-          </span>
-          <div className="flex-1">
-            <h3 className="font-semibold">Contacts</h3>
-            <p className="text-sm text-muted-foreground">{contactCount} people</p>
-          </div>
-          <ArrowRight className="h-4 w-4 text-muted-foreground" />
-        </Link>
-        <Link href="/funds" className="lift rounded-xl border bg-card p-5 flex items-center gap-4">
-          <span className="grid place-items-center h-11 w-11 rounded-lg bg-accent text-accent-foreground">
-            <Layers className="h-5 w-5" />
-          </span>
-          <div className="flex-1">
-            <h3 className="font-semibold">Funds</h3>
-            <p className="text-sm text-muted-foreground">Flagship vehicles &amp; commitments</p>
-          </div>
-          <ArrowRight className="h-4 w-4 text-muted-foreground" />
-        </Link>
-      </div>
+      {!isSupabaseConfigured() ? <SetupNotice /> : null}
+      <Discover
+        packed={packIndex(index)}
+        lists={lists.map((l) => ({ id: l.id, name: l.name, item_count: l.item_count }))}
+        saved={saved}
+        userId={user?.id ?? null}
+        isAdmin={user?.role === "admin"}
+        lushaReady={lushaConfigured()}
+        adminReady={isAdminConfigured()}
+        aiReady={Boolean(process.env.ANTHROPIC_API_KEY)}
+      />
     </div>
   );
 }

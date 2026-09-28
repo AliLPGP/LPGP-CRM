@@ -5,11 +5,13 @@ import Link from "next/link";
 import { ArrowDownWideNarrow, Mail, Sparkles, Users } from "lucide-react";
 import { CategoryBadge } from "@/components/category-badge";
 import { CompanyLogo } from "@/components/company-logo";
+import { brandDomain } from "@/lib/directory/brand-domains";
 import type { SortKey } from "@/lib/directory/filters";
 import { headcountLabel, sizeLabel, sizeTitle } from "@/lib/directory/format";
-import { locationLabel } from "@/lib/directory/records";
+import { locationLabel, providerPairs } from "@/lib/directory/records";
 import { highlight, snippet } from "@/lib/directory/search";
 import { cn } from "@/lib/utils";
+import type { Directory } from "./use-directory";
 import type { ResultRow } from "./use-results";
 
 const PAGE = 50;
@@ -65,6 +67,7 @@ function SortHead({
  * so a new search starts back at the first fifty.
  */
 export function ResultsTable({
+  dir,
   rows,
   sort,
   onSort,
@@ -74,8 +77,9 @@ export function ResultsTable({
   onToggle,
   onToggleMany,
   onSimilar,
-  empty,
+  onQuickLook,
 }: {
+  dir: Directory;
   rows: ResultRow[];
   sort: SortKey;
   onSort: (k: SortKey) => void;
@@ -85,15 +89,12 @@ export function ResultsTable({
   onToggle: (id: string) => void;
   onToggleMany: (ids: string[], on: boolean) => void;
   onSimilar: (id: string) => void;
-  empty: React.ReactNode;
+  /** Row click: the firm at a glance, without leaving the results. */
+  onQuickLook: (id: string) => void;
 }) {
   const [shown, setShown] = useState(PAGE);
   const visible = rows.slice(0, shown);
   const allOn = visible.length > 0 && visible.every((r) => selected.has(r.record.id));
-
-  if (rows.length === 0) {
-    return <div className="sheen rounded-2xl border bg-card px-6 py-14 text-center">{empty}</div>;
-  }
 
   return (
     <div className="space-y-3">
@@ -115,6 +116,7 @@ export function ResultsTable({
                 <SortHead label="Size" k="aum" sort={sort} onSort={onSort} align="right" />
                 <SortHead label="Team" k="employees" sort={sort} onSort={onSort} align="right" className="hidden md:table-cell" />
                 <SortHead label="People" k="contacts" sort={sort} onSort={onSort} align="right" className="hidden md:table-cell" />
+                <th className="hidden px-3 py-2.5 text-left font-medium xl:table-cell">Providers</th>
                 {mode !== "all" ? (
                   <SortHead
                     label={mode === "similar" ? "Match" : "Fit"}
@@ -138,7 +140,12 @@ export function ResultsTable({
                 return (
                   <tr
                     key={r.id}
-                    className={cn("group border-t align-top transition-colors hover:bg-muted/30", on && "bg-accent/40")}
+                    onClick={(e) => {
+                      // Links, boxes and buttons keep their own behaviour.
+                      if ((e.target as HTMLElement).closest("a,button,input")) return;
+                      onQuickLook(r.id);
+                    }}
+                    className={cn("group cursor-pointer border-t align-top transition-colors hover:bg-muted/30", on && "bg-accent/40")}
                   >
                     <td className="py-3 pl-4 pr-1">
                       <input
@@ -151,7 +158,7 @@ export function ResultsTable({
                     </td>
                     <td className="px-3 py-3">
                       <div className="flex gap-3">
-                        <CompanyLogo name={r.name} domain={r.domain} size={36} />
+                        <CompanyLogo name={r.name} domain={r.domain} size={40} />
                         <div className="min-w-0">
                           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                             <Link href={`/companies/${r.id}`} className="font-semibold hover:text-primary">
@@ -203,6 +210,23 @@ export function ResultsTable({
                       ) : (
                         <span className="text-muted-foreground">—</span>
                       )}
+                    </td>
+                    <td className="hidden px-3 py-3 xl:table-cell">
+                      <span className="flex items-center gap-1">
+                        {[...new Set(providerPairs(r).map((p) => p.brand))].slice(0, 4).map((i) => {
+                          const b = dir.brands[i];
+                          return (
+                            <span key={b.key} title={b.name}>
+                              <CompanyLogo name={b.name} domain={brandDomain(b.key, b.companyId ? dir.byId.get(b.companyId)?.domain : null)} size={22} />
+                            </span>
+                          );
+                        })}
+                        {new Set(providerPairs(r).map((p) => p.brand)).size > 4 ? (
+                          <span className="figure text-[11px] text-muted-foreground">
+                            +{new Set(providerPairs(r).map((p) => p.brand)).size - 4}
+                          </span>
+                        ) : null}
+                      </span>
                     </td>
                     {mode !== "all" ? (
                       <td className="px-3 py-3 text-right">

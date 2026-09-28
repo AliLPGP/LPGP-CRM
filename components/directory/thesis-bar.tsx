@@ -22,11 +22,14 @@ export function ThesisBar({
   onSubmit,
   pending = false,
   aiReady = false,
+  examples = true,
 }: {
   initial: string;
   onSubmit: (text: string) => void;
   pending?: boolean;
   aiReady?: boolean;
+  /** The example searches under the box; the home page shows them. */
+  examples?: boolean;
 }) {
   const [text, setText] = useState(initial);
 
@@ -44,7 +47,7 @@ export function ThesisBar({
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Describe the firms you're after — “mid-market private credit managers in London using Alter Domus”"
-          className="h-11 min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-muted-foreground/80"
+          className="h-12 min-w-0 flex-1 bg-transparent text-[15.5px] outline-none placeholder:text-muted-foreground/80"
           aria-label="Thesis search"
         />
         {text ? (
@@ -70,6 +73,7 @@ export function ThesisBar({
         </button>
       </form>
       {/* One scrolling line on a phone; wraps on anything wider. */}
+      {examples ? (
       <div className="-mx-4 flex items-center gap-1.5 overflow-x-auto px-4 pb-1 text-[12.5px] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
         <span className="shrink-0 text-muted-foreground">
           {aiReady ? "Plain English works — try" : "Try"}
@@ -91,6 +95,7 @@ export function ThesisBar({
           </button>
         ))}
       </div>
+      ) : null}
     </div>
   );
 }

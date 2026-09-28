@@ -6,6 +6,7 @@ import {
   getCompanyFunds,
   getDisclosedCommitments,
   getFiledProviders,
+  getPortfolioCompanies,
   getProviderClients,
   listDirectoryLists,
   listsForCompany,
@@ -47,6 +48,9 @@ import {
   type RoleRank,
 } from "@/components/directory/profile-sections";
 import { FundLineup } from "@/components/directory/fund-lineup";
+import { OperatingPartners, PortfolioCompanies } from "@/components/directory/operators-portfolio";
+import { isOperatingRole } from "@/lib/directory/operating";
+import { lushaConfigured } from "@/lib/lusha";
 import { PeerBenchmark } from "@/components/directory/peer-benchmark";
 import { Separator } from "@/components/ui/separator";
 
@@ -71,7 +75,7 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
   const company = await getCompany(id);
   if (!company) notFound();
 
-  const [contacts, funds, providers, providerClients, commitments, notes, lists, onLists, similar, index] =
+  const [contacts, funds, providers, providerClients, commitments, notes, lists, onLists, similar, index, portcos] =
     await Promise.all([
       getContactsForCompany(id),
       getCompanyFunds(id),
@@ -83,6 +87,7 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
       listsForCompany(id),
       similarFirms(id),
       getDirectoryIndex(),
+      getPortfolioCompanies(id),
     ]);
   const [asLp, asGp] = await Promise.all([nameCommitments(commitments.asLp), nameCommitments(commitments.asGp)]);
 
@@ -111,12 +116,16 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
   );
   const connectable = contacts.filter((c) => c.connectable).length;
   const record = index.records.find((r) => r.id === id) ?? null;
+  const operators = contacts.filter((c) => isOperatingRole(c.job_title));
+  // Managers own companies; other books only show these when someone added some.
+  const ownsCompanies = company.category === "GP" || company.category === "UN" || portcos.length > 0;
   const sections: [string, string][] = [
     ["#overview", "Overview"],
     ...(providers.length ? ([["#providers", "Service providers"]] as [string, string][]) : []),
     ...(providerClients.length ? ([["#clients", "Clients"]] as [string, string][]) : []),
     ...(funds.length ? ([["#funds", `Funds · ${funds.length.toLocaleString("en-US")}`]] as [string, string][]) : []),
     ["#people", `People · ${contacts.length}`],
+    ...(ownsCompanies ? ([["#operators", `Operating partners · ${operators.length}`], ["#portfolio", `Portfolio · ${portcos.length}`]] as [string, string][]) : []),
     ...(asLp.length || asGp.length ? ([["#commitments", "Commitments"]] as [string, string][]) : []),
     ...(record ? ([["#peers", "Peers"]] as [string, string][]) : []),
     ["#similar", "Similar"],
@@ -285,6 +294,25 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
               </ul>
             )}
           </section>
+          {ownsCompanies ? (
+            <>
+              <PortfolioCompanies companyId={company.id} rows={portcos} aiReady={Boolean(process.env.ANTHROPIC_API_KEY)} />
+              <OperatingPartners
+                companyId={company.id}
+                hasDomain={Boolean(company.domain)}
+                lushaReady={lushaConfigured()}
+                rows={operators.map((c) => ({
+                  id: c.id,
+                  full_name: c.full_name,
+                  job_title: c.job_title,
+                  city: c.city,
+                  country: c.country,
+                  linkedin_url: c.linkedin_url,
+                  source: c.source ?? null,
+                }))}
+              />
+            </>
+          ) : null}
           <div id="providers" className="scroll-mt-20">
             <FiledProviders rows={providers} />
           </div>

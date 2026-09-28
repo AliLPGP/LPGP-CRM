@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Bookmark, ExternalLink, ListChecks, Mail, Users } from "lucide-react";
+import { ArrowRight, Bookmark, Briefcase, ExternalLink, ListChecks, Mail, Sparkles, Users } from "lucide-react";
 import { CATEGORIES } from "@/lib/categories";
 import { brandDomain } from "@/lib/directory/brand-domains";
 import { EMPTY_FILTERS, type DirectoryFilters } from "@/lib/directory/filters";
@@ -354,6 +354,16 @@ export function DiscoverOverview({
               <Mail className="h-4 w-4 text-[var(--success)]" />
               <p className="figure mt-2 text-2xl">{insights.connectable.toLocaleString("en-US")}</p>
               <p className="text-[11.5px] text-muted-foreground">with a direct email</p>
+            </button>
+            <button type="button" onClick={() => apply({ books: ["GP"], hasOperators: true })} className="rounded-xl border p-3 text-left hover:bg-accent/40">
+              <Briefcase className="h-4 w-4 text-[var(--brass)]" />
+              <p className="figure mt-2 text-2xl">{insights.operators.toLocaleString("en-US")}</p>
+              <p className="text-[11.5px] text-muted-foreground">operating partners at GPs</p>
+            </button>
+            <button type="button" onClick={() => apply({ books: ["GP"], hasPortcos: true })} className="rounded-xl border p-3 text-left hover:bg-accent/40">
+              <Sparkles className="h-4 w-4 text-[var(--brass)]" />
+              <p className="figure mt-2 text-2xl">{insights.portcos.toLocaleString("en-US")}</p>
+              <p className="text-[11.5px] text-muted-foreground">portfolio companies</p>
             </button>
           </div>
           <PanelLink href="/contacts">Open contacts</PanelLink>

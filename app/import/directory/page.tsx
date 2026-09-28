@@ -2,10 +2,13 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getSessionUser } from "@/lib/auth";
 import { countSampleRows } from "@/lib/directory/queries";
-import { getDirectorySetup, missingSql } from "@/lib/directory/setup";
+import { getDirectorySetup, missingSql, upgradeOnly } from "@/lib/directory/setup";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { DirectoryImport } from "@/components/directory/directory-import";
 import { DirectorySetupPanel } from "@/components/directory/directory-setup";
+import { EnrichRunner } from "@/components/directory/enrich-runner";
+import { getDirectoryIndex } from "@/lib/directory/index-server";
+import { lushaConfigured } from "@/lib/lusha";
 import { PageHeader } from "@/components/page-header";
 import { SetupNotice } from "@/components/setup-notice";
 import { timeAgo } from "@/lib/utils";
@@ -14,7 +17,17 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Import the Master Directory — LPGP Connect" };
 
 export default async function DirectoryImportPage() {
-  const [user, samples, setup] = await Promise.all([getSessionUser(), countSampleRows(), getDirectorySetup()]);
+  const [user, samples, setup, index] = await Promise.all([
+    getSessionUser(),
+    countSampleRows(),
+    getDirectorySetup(),
+    getDirectoryIndex(),
+  ]);
+  // GPs with a website, largest first: the order the enrichment runs go in.
+  const gps = index.records
+    .filter((r) => r.category === "GP" && r.domain)
+    .sort((a, b) => (b.aum ?? 0) - (a.aum ?? 0))
+    .map((r) => ({ id: r.id, name: r.name, operators: r.operators, portcos: r.portcos }));
   const isAdmin = user?.role === "admin";
   const parts = isAdmin ? await missingSql(setup) : [];
   const last = setup.lastImport;
@@ -34,7 +47,7 @@ export default async function DirectoryImportPage() {
         <DirectorySetupPanel
           state={{
             sqlDone: false,
-            fundsOnly: setup.directory && !setup.funds,
+            fundsOnly: upgradeOnly(setup),
             lastImport: last,
             sqlEditorUrl: setup.sqlEditorUrl,
           }}
@@ -50,6 +63,9 @@ export default async function DirectoryImportPage() {
         </p>
       ) : null}
       <DirectoryImport isAdmin={isAdmin} schemaReady={setup.directory} fundsReady={setup.funds} samples={samples} />
+      {isAdmin && setup.portfolio && gps.length ? (
+        <EnrichRunner gps={gps} lushaReady={lushaConfigured()} aiReady={Boolean(process.env.ANTHROPIC_API_KEY)} />
+      ) : null}
     </div>
   );
 }

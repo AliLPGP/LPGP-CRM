@@ -98,6 +98,8 @@ export function describeFilters(f: DirectoryFilters, dir: Directory): Chip[] {
     ["hasWebsite", "Has website"],
     ["discloses", "Discloses commitments"],
     ["portfolio", "In portfolio"],
+    ["hasOperators", "Operating partners"],
+    ["hasPortcos", "Portfolio companies"],
   ];
   for (const [k, label] of flags) {
     if (f[k]) chips.push({ key: k, group: "Has", label, remove: (x) => ({ ...x, [k]: false }) });

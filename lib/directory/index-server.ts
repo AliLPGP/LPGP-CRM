@@ -4,6 +4,7 @@ import { getReadClient } from "../supabase/server";
 import { fetchAll } from "../supabase/paged";
 import type { Category } from "../types";
 import { zoneOf, type Zone } from "./geo";
+import { isOperatingRole } from "./operating";
 import { normalizeRole, providerBrand } from "./providers";
 import {
   EMPTY_INDEX,
@@ -107,8 +108,8 @@ async function buildIndex(): Promise<DirectoryIndex> {
   // keeps a half-built index for the next hour.
   if (!companies) throw new Error("Directory: companies unavailable");
 
-  const contactCols = schemaReady ? "id, company_id, connectable" : "id, company_id";
-  const contacts = await fetchAll<{ company_id: string | null; connectable?: boolean | null }>(
+  const contactCols = schemaReady ? "id, company_id, job_title, connectable" : "id, company_id, job_title";
+  const contacts = await fetchAll<{ company_id: string | null; job_title: string | null; connectable?: boolean | null }>(
     (from, to, first) =>
       supabase
         .from("contacts")
@@ -120,9 +121,11 @@ async function buildIndex(): Promise<DirectoryIndex> {
   if (!contacts) throw new Error("Directory: contacts unavailable");
   const contactCount = new Map<string, number>();
   const connectableCount = new Map<string, number>();
+  const operatorCount = new Map<string, number>();
   for (const c of contacts) {
     if (!c.company_id) continue;
     contactCount.set(c.company_id, (contactCount.get(c.company_id) ?? 0) + 1);
+    if (isOperatingRole(c.job_title)) operatorCount.set(c.company_id, (operatorCount.get(c.company_id) ?? 0) + 1);
     if (c.connectable) connectableCount.set(c.company_id, (connectableCount.get(c.company_id) ?? 0) + 1);
   }
 
@@ -198,6 +201,18 @@ async function buildIndex(): Promise<DirectoryIndex> {
   const fundCount = new Map<string, number>();
   for (const f of funds) if (f.company_id) fundCount.set(f.company_id, (fundCount.get(f.company_id) ?? 0) + 1);
 
+  // Portfolio companies per GP (migration 0015). Missing table: no counts.
+  const portcos =
+    (await fetchAll<{ gp_company_id: string }>((from, to, first) =>
+      supabase
+        .from("portfolio_companies")
+        .select("id, gp_company_id", first ? { count: "exact" } : undefined)
+        .order("id")
+        .range(from, to),
+    )) ?? [];
+  const portcoCount = new Map<string, number>();
+  for (const p of portcos) portcoCount.set(p.gp_company_id, (portcoCount.get(p.gp_company_id) ?? 0) + 1);
+
   let advThrough: string | null = null;
   for (const c of companies) {
     if (c.adv_last_filed && (!advThrough || c.adv_last_filed > advThrough)) advThrough = c.adv_last_filed;
@@ -235,6 +250,8 @@ async function buildIndex(): Promise<DirectoryIndex> {
       providers: providersByClient.get(c.id) ?? [],
       clientCount: clientsByProvider.get(c.id)?.size ?? 0,
       funds: fundCount.get(c.id) ?? 0,
+      operators: operatorCount.get(c.id) ?? 0,
+      portcos: portcoCount.get(c.id) ?? 0,
     };
   });
 
@@ -250,7 +267,7 @@ async function buildIndex(): Promise<DirectoryIndex> {
 
 let pendingIndex: DirectoryIndex | null = null;
 
-const cachedIndex = unstable_cache(buildIndex, ["directory-index-v2"], {
+const cachedIndex = unstable_cache(buildIndex, ["directory-index-v3"], {
   tags: [DIRECTORY_TAG],
   revalidate: 3600,
 });

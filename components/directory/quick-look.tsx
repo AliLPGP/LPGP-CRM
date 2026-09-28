@@ -127,6 +127,12 @@ export function QuickLook({
             <Stat label={r.category === "SP" ? "ADV clients" : "Funds"} value={r.category === "SP" ? r.clientCount || "—" : r.funds || r.privateFunds || "—"} title={r.category === "SP" ? "Managers naming this firm on Form ADV" : "Funds on file, or private funds reported on Form ADV"} />
             <Stat label="People" value={r.contacts || "—"} />
             <Stat label="Providers" value={r.providers.length ? new Set(providerPairs(r).map((p) => p.brand)).size : "—"} />
+            {r.category === "GP" ? (
+              <>
+                <Stat label="Operating partners" value={r.operators || "—"} />
+                <Stat label="Portfolio cos." value={r.portcos || "—"} />
+              </>
+            ) : null}
           </div>
 
           {r.description || r.lines ? (

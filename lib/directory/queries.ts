@@ -489,3 +489,15 @@ export async function getRecentCommitments(
   if (error || !data) return [];
   return nameCommitments(data as DisclosedCommitment[]);
 }
+
+/** A GP's portfolio companies, current first. Empty before migration 0015. */
+export async function getPortfolioCompanies(gpId: string): Promise<import("./portfolio").PortfolioCompany[]> {
+  const supabase = getReadClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase.from("portfolio_companies").select("*").eq("gp_company_id", gpId).limit(1000);
+  if (error || !data) return [];
+  const rank = (s: string | null) => (s === "current" ? 0 : s === "realized" ? 2 : 1);
+  return (data as import("./portfolio").PortfolioCompany[]).sort(
+    (a, b) => rank(a.status) - rank(b.status) || (b.invested_year ?? 0) - (a.invested_year ?? 0) || a.name.localeCompare(b.name),
+  );
+}

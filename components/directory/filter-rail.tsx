@@ -384,13 +384,15 @@ export function FilterRail({
         />
       </Section>
 
-      <Section title="Data on file" defaultOpen={false}>
+      <Section title="Data on file" defaultOpen={filters.hasOperators || filters.hasPortcos}>
         <div className="space-y-0.5">
           <Option on={filters.hasContacts} label="Has key contacts" onClick={() => set({ hasContacts: !filters.hasContacts })} />
           <Option on={filters.connectable} label="Direct email on file" onClick={() => set({ connectable: !filters.connectable })} />
           <Option on={filters.hasWebsite} label="Has website" onClick={() => set({ hasWebsite: !filters.hasWebsite })} />
           <Option on={filters.discloses} label="Discloses commitments (LPs)" onClick={() => set({ discloses: !filters.discloses })} />
           <Option on={filters.portfolio} label="In portfolio" onClick={() => set({ portfolio: !filters.portfolio })} />
+          <Option on={filters.hasOperators} label="Operating partners on file" onClick={() => set({ hasOperators: !filters.hasOperators })} />
+          <Option on={filters.hasPortcos} label="Portfolio companies on file" onClick={() => set({ hasPortcos: !filters.hasPortcos })} />
         </div>
       </Section>
     </div>

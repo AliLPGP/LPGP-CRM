@@ -19,6 +19,8 @@ export type Insights = {
   people: number;
   connectable: number;
   funds: number;
+  operators: number;
+  portcos: number;
   providerLinks: number;
   filers: number;
   /** Managers naming at least one provider in each role. */
@@ -68,6 +70,8 @@ export function summarize(records: DirectoryRecord[], leadersPerRole = 8): Insig
   let people = 0;
   let connectable = 0;
   let funds = 0;
+  let operators = 0;
+  let portcos = 0;
   let providerLinks = 0;
   let filers = 0;
   const raum = { sum: 0, firms: 0 };
@@ -80,6 +84,8 @@ export function summarize(records: DirectoryRecord[], leadersPerRole = 8): Insig
     people += r.contacts;
     connectable += r.connectable;
     funds += r.funds;
+    operators += r.operators;
+    portcos += r.portcos;
     if (r.subType) bump(types, r.subType);
     if (r.country) bump(countries, r.country);
     if (r.founded && r.founded >= 1800 && r.founded <= 2100 && r.category === "GP") bump(decades, Math.floor(r.founded / 10) * 10);
@@ -135,6 +141,8 @@ export function summarize(records: DirectoryRecord[], leadersPerRole = 8): Insig
     people,
     connectable,
     funds,
+    operators,
+    portcos,
     providerLinks,
     filers,
     roleFilers,

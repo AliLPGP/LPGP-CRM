@@ -1,4 +1,4 @@
--- directory: part 4 of 4
+-- directory: part 4 of 5
 -- Run the parts in order. Each one is whole statements, so a part
 -- never ends mid-statement. Safe to re-run.
 
@@ -33,3 +33,33 @@ alter table public.funds
   add column if not exists source_url        text;
 
 create index if not exists funds_source_idx on public.funds (source);
+-- ===========================================================================
+-- LPGP Connect CRM -- portfolio companies
+--
+-- The companies a GP owns or has owned, each with where it was found: the
+-- manager's own portfolio page, a press release, or someone on the team
+-- adding it by hand. Operating partners need no table of their own -- they
+-- are contacts at the GP, recognised by title and pulled from Lusha with
+-- source = 'lusha' (see lib/directory/operating.ts).
+--
+-- Run AFTER 0014_fund_lineup.sql. Safe to re-run.
+-- ===========================================================================
+
+create table if not exists public.portfolio_companies (
+  id            uuid primary key default gen_random_uuid(),
+  gp_company_id uuid not null references public.companies (id) on delete cascade,
+  external_key  text unique,          -- "<gp id>:<name slug>", one row per company per GP
+  name          text not null,
+  domain        text,
+  description   text,
+  sector        text,
+  hq            text,
+  status        text,                 -- 'current' | 'realized', only when the source says
+  invested_year integer,
+  exit_year     integer,
+  fund_name     text,
+  source        text not null default 'manual', -- 'web_research' | 'manual'
+  source_url    text,
+  added_by      uuid references public.profiles (id) on delete set null,
+  created_at    timestamptz not null default now()
+);

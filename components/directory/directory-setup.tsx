@@ -12,7 +12,7 @@ export type SetupPart = { name: string; sql: string };
 export type SetupState = {
   /** Migrations 0013 + 0014 have both run. */
   sqlDone: boolean;
-  /** Only 0014 is missing: a database set up before the fund lineup. */
+  /** The directory tables exist; only a later update (0014, 0015) is missing. */
   fundsOnly: boolean;
   lastImport: { at: string; filename: string | null } | null;
   sqlEditorUrl: string | null;
@@ -104,7 +104,7 @@ export function DirectorySetupPanel({
   const title = state.sqlDone
     ? "One step left: load the Master Directory"
     : state.fundsOnly
-      ? "One database update for the fund lineup"
+      ? "One database update: fund lineup and portfolio companies"
       : "Set up the intelligence database";
 
   return (
@@ -133,7 +133,7 @@ export function DirectorySetupPanel({
             <>
               <p className="text-sm text-muted-foreground">
                 {state.fundsOnly
-                  ? "Adds the columns for the funds GPs name on Form ADV. Paste it into Supabase's SQL editor and press Run."
+                  ? "Adds the fund lineup columns and the portfolio companies table. Paste each part into Supabase's SQL editor and press Run."
                   : "Adds the columns and tables the directory fills. Paste each part into Supabase's SQL editor and press Run — in order, one at a time. Every part is safe to run twice."}
               </p>
               {state.sqlEditorUrl ? (

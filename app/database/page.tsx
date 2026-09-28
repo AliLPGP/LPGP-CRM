@@ -2,7 +2,7 @@ import { getSessionUser } from "@/lib/auth";
 import { getDirectoryIndex } from "@/lib/directory/index-server";
 import { getRecentCommitments, listDirectoryLists, listSavedSearches } from "@/lib/directory/queries";
 import { packIndex } from "@/lib/directory/records";
-import { getDirectorySetup, missingSql } from "@/lib/directory/setup";
+import { getDirectorySetup, missingSql, upgradeOnly } from "@/lib/directory/setup";
 import { worldGeometry } from "@/lib/directory/world-map";
 import { lushaConfigured } from "@/lib/lusha";
 import { isAdminConfigured } from "@/lib/supabase/admin";
@@ -55,8 +55,8 @@ export default async function DatabasePage() {
       {needsSetup && (isAdmin || !index.records.some((r) => r.directory)) ? (
         <DirectorySetupPanel
           state={{
-            sqlDone: parts.length === 0 && setup.directory && setup.funds,
-            fundsOnly: setup.directory && !setup.funds,
+            sqlDone: parts.length === 0 && setup.directory && setup.funds && setup.portfolio,
+            fundsOnly: upgradeOnly(setup),
             lastImport: setup.lastImport,
             sqlEditorUrl: setup.sqlEditorUrl,
           }}

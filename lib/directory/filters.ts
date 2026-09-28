@@ -43,6 +43,10 @@ export type DirectoryFilters = {
   hasWebsite: boolean;
   discloses: boolean;
   portfolio: boolean;
+  /** GPs with operating partners on file. */
+  hasOperators: boolean;
+  /** GPs with portfolio companies on file. */
+  hasPortcos: boolean;
   /** Free-text terms ranked by relevance. */
   keywords: string;
   /** Company ids to find lookalikes of. */
@@ -72,6 +76,8 @@ export const EMPTY_FILTERS: DirectoryFilters = {
   hasWebsite: false,
   discloses: false,
   portfolio: false,
+  hasOperators: false,
+  hasPortcos: false,
   keywords: "",
   like: [],
   sort: null,
@@ -102,7 +108,9 @@ export function hasStructuredFilters(f: DirectoryFilters): boolean {
     f.connectable ||
     f.hasWebsite ||
     f.discloses ||
-    f.portfolio
+    f.portfolio ||
+    f.hasOperators ||
+    f.hasPortcos
   );
 }
 
@@ -176,6 +184,8 @@ export function matches(
   if (f.hasWebsite && !r.domain) return false;
   if (f.discloses && r.discloses !== true) return false;
   if (f.portfolio && !r.portfolio) return false;
+  if (f.hasOperators && !r.operators) return false;
+  if (f.hasPortcos && !r.portcos) return false;
   return true;
 }
 
@@ -237,6 +247,8 @@ export function filtersFromParams(p: Params): DirectoryFilters {
     hasWebsite: has.has("website"),
     discloses: has.has("disclosures"),
     portfolio: has.has("portfolio"),
+    hasOperators: has.has("operators"),
+    hasPortcos: has.has("portcos"),
     keywords: p.get("kw") ?? "",
     like: list(p.get("like")),
     sort: (p.get("sort") as SortKey | null) ?? null,
@@ -267,6 +279,8 @@ export function filtersToParams(f: DirectoryFilters): URLSearchParams {
     f.hasWebsite && "website",
     f.discloses && "disclosures",
     f.portfolio && "portfolio",
+    f.hasOperators && "operators",
+    f.hasPortcos && "portcos",
   ].filter(Boolean) as string[];
   set("has", has.join(","));
   set("kw", f.keywords.trim());

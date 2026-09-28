@@ -55,6 +55,10 @@ export type DirectoryRecord = {
   clientCount: number;
   /** Funds on file for this manager (Form ADV's named funds, and any others). */
   funds: number;
+  /** Operating partners on file (contacts with an operating title). */
+  operators: number;
+  /** Portfolio companies on file. */
+  portcos: number;
 };
 
 export type DirectoryBrand = {
@@ -111,7 +115,7 @@ type Packed = [
   string | null, string | null, string | null, Zone | null,
   number | null, AumKind | null, number | null, number | null, "Registered" | "ERA" | null,
   number | null, number, number, string | null, string | null, string | null,
-  string[], boolean | null, 0 | 1, 0 | 1, number[], number, number,
+  string[], boolean | null, 0 | 1, 0 | 1, number[], number, number, number, number,
 ];
 
 export type PackedIndex = {
@@ -133,6 +137,7 @@ export function packIndex(index: DirectoryIndex): PackedIndex {
       r.aum, r.aumKind, r.employees, r.founded, r.adv,
       r.privateFunds, r.contacts, r.connectable, r.description, r.industry, r.lines,
       r.lifecycle, r.discloses, r.portfolio ? 1 : 0, r.directory ? 1 : 0, r.providers, r.clientCount, r.funds,
+      r.operators, r.portcos,
     ]),
     brands: index.brands.map((b) => [b.key, b.name, b.companyId, b.clients]),
   };
@@ -150,6 +155,8 @@ export function unpackIndex(packed: PackedIndex): DirectoryIndex {
       privateFunds: p[15], contacts: p[16], connectable: p[17], description: p[18], industry: p[19], lines: p[20],
       lifecycle: p[21], discloses: p[22], portfolio: p[23] === 1, directory: p[24] === 1, providers: p[25], clientCount: p[26],
       funds: p[27] ?? 0,
+      operators: p[28] ?? 0,
+      portcos: p[29] ?? 0,
     })),
     brands: packed.brands.map(([key, name, companyId, clients]) => ({ key, name, companyId, clients })),
   };

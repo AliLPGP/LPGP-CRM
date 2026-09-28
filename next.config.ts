@@ -3,8 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // The directory setup panel reads the SQL it asks an admin to paste.
   outputFileTracingIncludes: {
-    "/database": ["./supabase/sql-parts/3-directory/*.sql", "./supabase/migrations/0014_fund_lineup.sql"],
-    "/import/directory": ["./supabase/sql-parts/3-directory/*.sql", "./supabase/migrations/0014_fund_lineup.sql"],
+    "/database": ["./supabase/sql-parts/3-directory/*.sql", "./supabase/migrations/0014_fund_lineup.sql", "./supabase/migrations/0015_portfolio_companies.sql"],
+    "/import/directory": ["./supabase/sql-parts/3-directory/*.sql", "./supabase/migrations/0014_fund_lineup.sql", "./supabase/migrations/0015_portfolio_companies.sql"],
   },
   images: {
     remotePatterns: [

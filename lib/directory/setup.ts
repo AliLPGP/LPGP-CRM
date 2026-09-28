@@ -17,6 +17,8 @@ export type DirectorySetup = {
   directory: boolean;
   /** Migration 0014: the Form ADV fund lineup columns. */
   funds: boolean;
+  /** Migration 0015: portfolio companies. */
+  portfolio: boolean;
   lastImport: { at: string; filename: string | null } | null;
   /** This project's SQL editor, when the URL is a *.supabase.co project. */
   sqlEditorUrl: string | null;
@@ -38,11 +40,12 @@ export async function getDirectorySetup(): Promise<DirectorySetup> {
   const supabase = getReadClient();
   const sqlEditorUrl = supabaseSqlEditorUrl();
   if (!supabase || !isSupabaseConfigured()) {
-    return { configured: false, directory: false, funds: false, lastImport: null, sqlEditorUrl };
+    return { configured: false, directory: false, funds: false, portfolio: false, lastImport: null, sqlEditorUrl };
   }
-  const [dir, funds] = await Promise.all([
+  const [dir, funds, portfolio] = await Promise.all([
     supabase.from("companies").select("external_id").limit(1),
     supabase.from("funds").select("service_providers").limit(1),
+    supabase.from("portfolio_companies").select("id").limit(1),
   ]);
   let lastImport: DirectorySetup["lastImport"] = null;
   if (!dir.error) {
@@ -54,12 +57,19 @@ export async function getDirectorySetup(): Promise<DirectorySetup> {
     const row = data?.[0] as { filename: string | null; created_at: string } | undefined;
     if (row) lastImport = { at: row.created_at, filename: row.filename };
   }
-  return { configured: true, directory: !dir.error, funds: !funds.error, lastImport, sqlEditorUrl };
+  return {
+    configured: true,
+    directory: !dir.error,
+    funds: !funds.error,
+    portfolio: !portfolio.error,
+    lastImport,
+    sqlEditorUrl,
+  };
 }
 
 const ROOT = process.cwd();
 
-/** The paste-sized parts of migrations 0013 + 0014 (supabase/sql-parts/3-directory). */
+/** The paste-sized parts of migrations 0013–0015 (supabase/sql-parts/3-directory). */
 export async function directorySqlParts(): Promise<SqlPart[]> {
   const dir = path.join(ROOT, "supabase", "sql-parts", "3-directory");
   try {
@@ -70,20 +80,25 @@ export async function directorySqlParts(): Promise<SqlPart[]> {
   }
 }
 
-/** Migration 0014 on its own, for a database that already has 0013. */
-export async function fundsSqlPart(): Promise<SqlPart[]> {
+async function migration(name: string): Promise<SqlPart[]> {
   try {
-    const sql = await readFile(path.join(ROOT, "supabase", "migrations", "0014_fund_lineup.sql"), "utf8");
-    return [{ name: "0014_fund_lineup.sql", sql }];
+    return [{ name, sql: await readFile(path.join(ROOT, "supabase", "migrations", name), "utf8") }];
   } catch {
     return [];
   }
+}
+
+/** True when the directory tables exist but a later update hasn't run. */
+export function upgradeOnly(setup: DirectorySetup): boolean {
+  return setup.directory && (!setup.funds || !setup.portfolio);
 }
 
 /** Whatever SQL this database is still missing, in paste order. */
 export async function missingSql(setup: DirectorySetup): Promise<SqlPart[]> {
   if (!setup.configured) return [];
   if (!setup.directory) return directorySqlParts();
-  if (!setup.funds) return fundsSqlPart();
-  return [];
+  return [
+    ...(setup.funds ? [] : await migration("0014_fund_lineup.sql")),
+    ...(setup.portfolio ? [] : await migration("0015_portfolio_companies.sql")),
+  ];
 }

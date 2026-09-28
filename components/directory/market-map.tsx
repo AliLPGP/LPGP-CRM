@@ -9,8 +9,9 @@ import { AUM_PRESETS } from "@/lib/directory/format";
 import { ZONES, type Zone } from "@/lib/directory/geo";
 import { filers, leagueTable } from "@/lib/directory/market";
 import { PROVIDER_ROLES, ROLE_PLURAL, type ProviderRole } from "@/lib/directory/providers";
-import { unpackIndex, type DirectoryRecord, type PackedIndex } from "@/lib/directory/records";
+import { unpackIndex, type DirectoryBrand, type DirectoryRecord, type PackedIndex } from "@/lib/directory/records";
 import { CompanyLogo } from "@/components/company-logo";
+import { brandDomain } from "@/lib/directory/brand-domains";
 import { cn, formatUsd } from "@/lib/utils";
 import type { Category } from "@/lib/types";
 
@@ -42,7 +43,10 @@ export function MarketMap({ packed }: { packed: PackedIndex }) {
   const index = useMemo(() => unpackIndex(packed), [packed]);
   const params = useSearchParams();
   const pathname = usePathname();
-  const tab = params.get("tab") === "landscape" ? "landscape" : "providers";
+  const tabParam = params.get("tab");
+  // The poster first; a shared league-table link (it carries a role) opens there.
+  const tab: "map" | "providers" | "landscape" =
+    tabParam === "landscape" ? "landscape" : tabParam === "league" || (!tabParam && params.get("role")) ? "providers" : "map";
   const roleParam = params.get("role") as ProviderRole | null;
   const role: ProviderRole = roleParam && PROVIDER_ROLES.includes(roleParam) ? roleParam : "administrator";
   const types = list(params.get("type"));
@@ -82,28 +86,42 @@ export function MarketMap({ packed }: { packed: PackedIndex }) {
   );
   const league = useMemo(() => leagueTable(scope, index.brands, role, 200), [scope, index.brands, role]);
   const top3 = league.rows.slice(0, 3).reduce((a, r) => a + r.share, 0);
+  const byId = useMemo(() => new Map(index.records.map((r) => [r.id, r])), [index]);
   const shown = showAll ? league.rows : league.rows.slice(0, 25);
   const max = league.rows[0]?.clients ?? 1;
 
   return (
     <div className="space-y-5">
       <div className="inline-flex rounded-lg border bg-card p-1">
-        {(["providers", "landscape"] as const).map((t) => (
+        {(
+          [
+            ["map", "Provider map"],
+            ["providers", "League tables"],
+            ["landscape", "Manager landscape"],
+          ] as const
+        ).map(([t, label]) => (
           <button
             key={t}
             type="button"
-            onClick={() => set({ tab: t === "providers" ? null : t })}
+            onClick={() => set({ tab: t === "map" ? null : t === "providers" ? "league" : t })}
             className={cn(
               "rounded-md px-3 py-1.5 text-sm font-medium",
               tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
             )}
           >
-            {t === "providers" ? "Service providers" : "Landscape"}
+            {label}
           </button>
         ))}
       </div>
 
-      {tab === "providers" ? (
+      {tab === "map" ? (
+        <ProviderPoster
+          managers={managers}
+          brands={index.brands}
+          domainOf={(companyId) => (companyId ? (byId.get(companyId)?.domain ?? null) : null)}
+          onRole={(r) => set({ tab: "league", role: r })}
+        />
+      ) : tab === "providers" ? (
         <>
           <div className="sheen space-y-4 rounded-2xl border bg-card p-5">
             <div className="flex flex-wrap items-center gap-2">
@@ -188,6 +206,11 @@ export function MarketMap({ packed }: { packed: PackedIndex }) {
                       <td className="px-5 py-2.5 tabular text-muted-foreground">{i + 1}</td>
                       <td className="px-3 py-2.5">
                         <div className="flex items-center gap-2">
+                          <CompanyLogo
+                            name={row.brand.name}
+                            domain={brandDomain(row.brand.key, row.brand.companyId ? (byId.get(row.brand.companyId)?.domain ?? null) : null)}
+                            size={26}
+                          />
                           <Link href={`/database/providers/${row.brand.key}`} className="font-medium hover:text-primary">
                             {row.brand.name}
                           </Link>
@@ -273,7 +296,9 @@ function Landscape({
       .map(([type, list]) => ({
         type,
         count: list.length,
-        top: [...list].sort((a, b) => (b.aum ?? -1) - (a.aum ?? -1) || a.name.localeCompare(b.name)).slice(0, 8),
+        top: [...list]
+          .sort((a, b) => (b.aum ?? -1) - (a.aum ?? -1) || (b.domain ? 1 : 0) - (a.domain ? 1 : 0) || a.name.localeCompare(b.name))
+          .slice(0, 12),
       }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 12);
@@ -295,13 +320,17 @@ function Landscape({
               <h3 className="font-semibold">{s.type}</h3>
               <span className="tabular text-xs text-muted-foreground">{s.count}</span>
             </div>
-            <ul className="flex-1 divide-y">
+            <ul className="grid flex-1 grid-cols-3 gap-px bg-border">
               {s.top.map((r) => (
-                <li key={r.id}>
-                  <Link href={`/companies/${r.id}`} className="flex items-center gap-2.5 px-4 py-2 text-sm hover:bg-muted/40">
-                    <CompanyLogo name={r.name} domain={r.domain} size={24} />
-                    <span className="min-w-0 flex-1 truncate">{r.name}</span>
-                    <span className="tabular text-xs text-muted-foreground">{r.aum != null ? formatUsd(r.aum) : ""}</span>
+                <li key={r.id} className="bg-card">
+                  <Link
+                    href={`/companies/${r.id}`}
+                    className="flex h-full flex-col items-center gap-1.5 px-2 py-3 text-center hover:bg-muted/40"
+                    title={r.aum != null ? `${r.name} · ${formatUsd(r.aum)}` : r.name}
+                  >
+                    <CompanyLogo name={r.name} domain={r.domain} size={36} />
+                    <span className="line-clamp-2 text-[11.5px] leading-tight">{r.name}</span>
+                    {r.aum != null ? <span className="figure text-[10.5px] text-muted-foreground">{formatUsd(r.aum)}</span> : null}
                   </Link>
                 </li>
               ))}
@@ -315,6 +344,70 @@ function Landscape({
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+/**
+ * The market on one page: for every role, the providers most managers name,
+ * as logo tiles in rank order — the view a sponsorship pitch starts from.
+ */
+function ProviderPoster({
+  managers,
+  brands,
+  domainOf,
+  onRole,
+}: {
+  managers: DirectoryRecord[];
+  brands: DirectoryBrand[];
+  domainOf: (companyId: string | null) => string | null;
+  onRole: (role: ProviderRole) => void;
+}) {
+  const leagues = useMemo(
+    () => PROVIDER_ROLES.map((role) => leagueTable(managers, brands, role, 12)),
+    [managers, brands],
+  );
+  return (
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+      {leagues.map((l) => {
+        const max = l.rows[0]?.clients ?? 1;
+        return (
+          <section key={l.role} className="sheen flex flex-col overflow-hidden rounded-2xl border bg-card">
+            <header className="border-b px-4 py-3">
+              <p className="eyebrow">{l.covered.toLocaleString("en-US")} managers</p>
+              <h3 className="display mt-0.5 text-[15px]">{ROLE_PLURAL[l.role]}</h3>
+            </header>
+            <ol className="grid flex-1 grid-cols-2 gap-px bg-border">
+              {l.rows.map((row, i) => (
+                <li key={row.brand.key} className="bg-card">
+                  <Link
+                    href={`/database/providers/${row.brand.key}`}
+                    className="group relative flex h-full flex-col items-center gap-1.5 px-2 pb-2.5 pt-3 text-center hover:bg-muted/40"
+                    title={`${row.brand.name}: ${row.clients} managers (${Math.round(row.share * 100)}%)`}
+                  >
+                    <span className="figure absolute left-2 top-1.5 text-[10px] text-muted-foreground">{i + 1}</span>
+                    <CompanyLogo name={row.brand.name} domain={brandDomain(row.brand.key, domainOf(row.brand.companyId))} size={38} />
+                    <span className="line-clamp-1 text-[12px] font-medium">{row.brand.name}</span>
+                    <span className="flex w-full items-center gap-1.5 px-1">
+                      <span className="h-1 flex-1 overflow-hidden rounded-full bar-track">
+                        <span className="block h-full rounded-full bar-fill" style={{ width: `${(row.clients / max) * 100}%` }} />
+                      </span>
+                      <span className="figure text-[10.5px] text-muted-foreground">{row.clients}</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+            <button
+              type="button"
+              onClick={() => onRole(l.role)}
+              className="flex items-center gap-1 border-t px-4 py-2.5 text-xs font-medium text-muted-foreground hover:text-foreground"
+            >
+              Full league table <ArrowUpRight className="h-3 w-3" />
+            </button>
+          </section>
+        );
+      })}
     </div>
   );
 }

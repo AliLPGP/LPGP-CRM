@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Globe, Layers, Link2, ListChecks, MapPin, PieChart, Users } from "lucide-react";
-import { getCompany, getContactsForCompany, getFundsForCompany, getNotes } from "@/lib/queries";
+import { ArrowLeft, Globe, Link2, ListChecks, Mail, MapPin, PieChart, Users } from "lucide-react";
+import { getCompany, getContactsForCompany, getNotes } from "@/lib/queries";
 import {
+  getCompanyFunds,
   getDisclosedCommitments,
   getFiledProviders,
   getProviderClients,
@@ -15,7 +16,7 @@ import { filers, leagueTable } from "@/lib/directory/market";
 import { PROVIDER_ROLES } from "@/lib/directory/providers";
 import { similarFirms } from "@/lib/directory/similar-server";
 import { CATEGORIES } from "@/lib/categories";
-import { formatAumLong, formatUsd } from "@/lib/utils";
+import { formatAumLong } from "@/lib/utils";
 import { CategoryBadge } from "@/components/category-badge";
 import { CompanyLogo } from "@/components/company-logo";
 import { PersonAvatar } from "@/components/person-avatar";
@@ -45,6 +46,8 @@ import {
   Sources,
   type RoleRank,
 } from "@/components/directory/profile-sections";
+import { FundLineup } from "@/components/directory/fund-lineup";
+import { PeerBenchmark } from "@/components/directory/peer-benchmark";
 import { Separator } from "@/components/ui/separator";
 
 export const dynamic = "force-dynamic";
@@ -71,7 +74,7 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
   const [contacts, funds, providers, providerClients, commitments, notes, lists, onLists, similar, index] =
     await Promise.all([
       getContactsForCompany(id),
-      getFundsForCompany(id),
+      getCompanyFunds(id),
       getFiledProviders(id),
       company.category === "SP" ? getProviderClients(id) : Promise.resolve([]),
       getDisclosedCommitments(id),
@@ -107,6 +110,18 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
       company.active_funds,
   );
   const connectable = contacts.filter((c) => c.connectable).length;
+  const record = index.records.find((r) => r.id === id) ?? null;
+  const sections: [string, string][] = [
+    ["#overview", "Overview"],
+    ...(providers.length ? ([["#providers", "Service providers"]] as [string, string][]) : []),
+    ...(providerClients.length ? ([["#clients", "Clients"]] as [string, string][]) : []),
+    ...(funds.length ? ([["#funds", `Funds · ${funds.length.toLocaleString("en-US")}`]] as [string, string][]) : []),
+    ["#people", `People · ${contacts.length}`],
+    ...(asLp.length || asGp.length ? ([["#commitments", "Commitments"]] as [string, string][]) : []),
+    ...(record ? ([["#peers", "Peers"]] as [string, string][]) : []),
+    ["#similar", "Similar"],
+    ["#notes", "Notes"],
+  ];
 
   return (
     <div className="mx-auto max-w-6xl px-4 md:px-6 py-8 space-y-6">
@@ -118,68 +133,110 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
         <ArrowLeft className="h-4 w-4" /> Discover
       </Link>
 
-      {/* Header */}
-      <div className="space-y-4">
-        <div className="flex gap-4 min-w-0">
-          <CompanyLogo name={company.name} domain={company.domain} size={56} />
-          <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Directory <span className="mx-1">/</span> {meta.name}
-            </p>
-            <h1 className="display mt-1 text-2xl md:text-3xl">{company.name}</h1>
-            <div className="mt-2.5 flex flex-wrap items-center gap-2">
-              <CategoryBadge category={company.category} showName />
-              {company.sub_type ? <Chip>{company.sub_type}</Chip> : null}
-              {company.city || company.country || company.region ? (
-                <Chip>
-                  <MapPin className="h-3 w-3" />
-                  {[company.city, company.country].filter(Boolean).join(", ") || company.region}
-                </Chip>
-              ) : null}
-              {company.status ? (
-                <Chip>
-                  <PieChart className="h-3 w-3" /> {company.status}
-                </Chip>
-              ) : null}
-              {company.website ? (
-                <a href={company.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
-                  <Globe className="h-3.5 w-3.5" /> {company.domain ?? "Website"}
-                </a>
-              ) : null}
-              {company.linkedin_url ? (
-                <a href={company.linkedin_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
-                  <Link2 className="h-3.5 w-3.5" /> LinkedIn
-                </a>
-              ) : null}
-            </div>
-            {onLists.length ? (
-              <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground" data-no-print>
-                <ListChecks className="h-3.5 w-3.5" />
-                On{" "}
-                {onLists.map((l, i) => (
-                  <span key={l.id}>
-                    <Link href={`/database/lists/${l.id}`} className="font-medium text-foreground hover:text-primary">
-                      {l.name}
-                    </Link>
-                    {i < onLists.length - 1 ? "," : ""}
-                  </span>
-                ))}
+      {/* Cover: the firm on the stand, its numbers along the bottom. */}
+      <header className="stand rounded-3xl px-5 pb-5 pt-6 md:px-8 md:pt-8">
+        <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
+        <div className="relative space-y-6">
+          <div className="flex flex-wrap items-start justify-between gap-5">
+            <div className="flex min-w-0 gap-5">
+              <CompanyLogo name={company.name} domain={company.domain} size={76} />
+              <div className="min-w-0">
+                <p className="wordmark text-[10.5px] text-[var(--brass)]">
+                  {meta.name}
+                  {company.sub_type ? ` · ${company.sub_type}` : ""}
+                </p>
+                <h1 className="display mt-2 text-[28px] leading-tight md:text-[40px]">{company.name}</h1>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <CategoryBadge category={company.category} showName />
+                  {company.city || company.country || company.region ? (
+                    <Chip>
+                      <MapPin className="h-3 w-3" />
+                      {[company.city, company.country].filter(Boolean).join(", ") || company.region}
+                    </Chip>
+                  ) : null}
+                  {company.status ? (
+                    <Chip>
+                      <PieChart className="h-3 w-3" /> {company.status}
+                    </Chip>
+                  ) : null}
+                  {company.website ? (
+                    <a href={company.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground">
+                      <Globe className="h-3.5 w-3.5" /> {company.domain ?? "Website"}
+                    </a>
+                  ) : null}
+                  {company.linkedin_url ? (
+                    <a href={company.linkedin_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground">
+                      <Link2 className="h-3.5 w-3.5" /> LinkedIn
+                    </a>
+                  ) : null}
+                </div>
+                {onLists.length ? (
+                  <div className="mt-2.5 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground" data-no-print>
+                    <ListChecks className="h-3.5 w-3.5" />
+                    On{" "}
+                    {onLists.map((l, i) => (
+                      <span key={l.id}>
+                        <Link href={`/database/lists/${l.id}`} className="font-medium text-foreground hover:underline">
+                          {l.name}
+                        </Link>
+                        {i < onLists.length - 1 ? "," : ""}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
               </div>
-            ) : null}
+            </div>
+            <div className="flex flex-wrap gap-2" data-no-print>
+              <AddToPipelineButton companyId={company.id} />
+              <AddToListButton
+                companyId={company.id}
+                lists={lists.map((l) => ({ id: l.id, name: l.name }))}
+                onLists={onLists.map((l) => l.id)}
+              />
+              <FindSimilarButton companyId={company.id} />
+              <ReportButton />
+              <PortfolioButton id={company.id} initial={company.in_portfolio} />
+            </div>
           </div>
-        </div>
-        <div className="flex flex-wrap gap-2" data-no-print>
-          <AddToPipelineButton companyId={company.id} />
-          <AddToListButton
-            companyId={company.id}
-            lists={lists.map((l) => ({ id: l.id, name: l.name }))}
-            onLists={onLists.map((l) => l.id)}
+
+          <KeyFacts
+            company={company}
+            contacts={contacts.length}
+            connectable={connectable}
+            signal={
+              company.category === "SP" && brandIndex >= 0
+                ? {
+                    label: "Form ADV clients",
+                    value: index.brands[brandIndex].clients,
+                    hint: ranks[0] ? `#${ranks[0].rank} ${ranks[0].role.replace("_", " ")} by managers` : null,
+                  }
+                : company.category === "LP"
+                  ? {
+                      label: "Commitments",
+                      value: asLp.filter((c) => c.source !== "sample").length,
+                      hint: company.discloses_commitments ? company.discloses_commitments.split(" - ")[0] : "public disclosures",
+                    }
+                  : undefined
+            }
           />
-          <FindSimilarButton companyId={company.id} />
-          <ReportButton />
-          <PortfolioButton id={company.id} initial={company.in_portfolio} />
         </div>
-      </div>
+      </header>
+
+      {/* Section nav: only what this firm has. */}
+      <nav
+        data-no-print
+        className="sticky top-0 z-20 -mx-4 flex gap-1 overflow-x-auto border-b bg-background/85 px-4 py-2 backdrop-blur md:-mx-6 md:px-6"
+      >
+        {sections.map(([href, label]) => (
+          <a
+            key={href}
+            href={href}
+            className="shrink-0 rounded-full px-3 py-1.5 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
 
       {company.category === "UN" ? (
         <div data-no-print>
@@ -187,69 +244,65 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
         </div>
       ) : null}
 
-      <KeyFacts
-        company={company}
-        contacts={contacts.length}
-        connectable={connectable}
-        signal={
-          company.category === "SP" && brandIndex >= 0
-            ? {
-                label: "Form ADV clients",
-                value: index.brands[brandIndex].clients,
-                hint: ranks[0] ? `#${ranks[0].rank} ${ranks[0].role.replace("_", " ")} by managers` : null,
-              }
-            : company.category === "LP"
-              ? {
-                  label: "Commitments",
-                  value: asLp.filter((c) => c.source !== "sample").length,
-                  hint: company.discloses_commitments ? company.discloses_commitments.split(" - ")[0] : "public disclosures",
-                }
-              : undefined
-        }
-      />
-
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          <Overview company={company} />
-          <FiledProviders rows={providers} />
-          <ProviderClients clients={providerClients} ranks={ranks} brandKey={brandIndex >= 0 ? index.brands[brandIndex].key : null} />
-          <Commitments rows={asLp} as="lp" />
-          <Commitments rows={asGp} as="gp" />
-          <AdvPanel company={company} />
-        </div>
-        <div className="space-y-6">
-          <SimilarFirms hits={similar} companyId={company.id} />
-          {/* People */}
-          <section className="sheen rounded-2xl border bg-card">
-            <div className="flex items-center gap-2 px-5 py-3.5 border-b">
+          <div id="overview" className="scroll-mt-20">
+            <Overview company={company} />
+          </div>
+          {/* People: the reason anyone opens a profile in a sales CRM. */}
+          <section id="people" className="sheen scroll-mt-20 rounded-2xl border bg-card">
+            <div className="flex items-center gap-2 border-b px-5 py-3.5">
               <Users className="h-4 w-4 text-muted-foreground" />
               <h2 className="font-semibold">People</h2>
               <span className="text-sm text-muted-foreground">({contacts.length})</span>
+              {connectable ? (
+                <span className="ml-auto inline-flex items-center gap-1 text-xs text-muted-foreground">
+                  <Mail className="h-3.5 w-3.5 text-[var(--success)]" /> {connectable} with a direct email
+                </span>
+              ) : null}
             </div>
             {contacts.length === 0 ? (
-              <p className="px-5 py-8 text-sm text-muted-foreground text-center">
+              <p className="px-5 py-8 text-center text-sm text-muted-foreground">
                 No contacts yet. Use the Import tab to add people.
               </p>
             ) : (
-              <ul className="divide-y">
+              <ul className="grid gap-px bg-border sm:grid-cols-2">
                 {contacts.map((c) => (
-                  <li key={c.id}>
-                    <Link href={`/contacts/${c.id}`} className="flex items-center gap-3 px-5 py-3 hover:bg-muted/40">
-                      <PersonAvatar name={c.full_name} size={34} />
+                  <li key={c.id} className="bg-card">
+                    <Link href={`/contacts/${c.id}`} className="flex h-full items-center gap-3 px-5 py-3.5 hover:bg-muted/40">
+                      <PersonAvatar name={c.full_name} size={40} />
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium truncate">{c.full_name ?? "—"}</span>
+                          <span className="truncate font-medium">{c.full_name ?? "—"}</span>
                           {c.connectable ? <ConnectableBadge /> : null}
                         </div>
-                        <div className="text-sm text-muted-foreground truncate">{c.job_title ?? "—"}</div>
+                        <div className="truncate text-sm text-muted-foreground">{c.job_title ?? "—"}</div>
+                        {c.email ? <div className="truncate text-xs text-muted-foreground">{c.email}</div> : null}
                       </div>
-                      {c.email ? <span className="hidden text-xs text-muted-foreground sm:inline">{c.email}</span> : null}
                     </Link>
                   </li>
                 ))}
               </ul>
             )}
           </section>
+          <div id="providers" className="scroll-mt-20">
+            <FiledProviders rows={providers} />
+          </div>
+          <div id="clients" className="scroll-mt-20">
+            <ProviderClients clients={providerClients} ranks={ranks} brandKey={brandIndex >= 0 ? index.brands[brandIndex].key : null} />
+          </div>
+          <FundLineup funds={funds} reported={company.private_fund_count ?? null} sourceUrl={company.adv_source_url ?? null} />
+          <div id="commitments" className="scroll-mt-20 space-y-6">
+            <Commitments rows={asLp} as="lp" />
+            <Commitments rows={asGp} as="gp" />
+          </div>
+          {record ? <PeerBenchmark firm={record} records={index.records} /> : null}
+          <AdvPanel company={company} />
+        </div>
+        <div className="space-y-6">
+          <div id="similar" className="scroll-mt-20">
+            <SimilarFirms hits={similar} companyId={company.id} />
+          </div>
           <Sources company={company} />
         </div>
       </div>
@@ -324,59 +377,6 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
         </>
       ) : null}
 
-      {/* Funds */}
-      {funds.length > 0 ? (
-        <section className="sheen rounded-2xl border bg-card overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3.5 border-b">
-            <Layers className="h-4 w-4 text-muted-foreground" />
-            <h2 className="font-semibold">Funds</h2>
-            <span className="text-sm text-muted-foreground">({funds.length})</span>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-muted/40 text-muted-foreground">
-                <tr>
-                  <th className="text-left font-medium px-5 py-2">Fund</th>
-                  <th className="text-left font-medium px-3 py-2">Strategy</th>
-                  <th className="text-left font-medium px-3 py-2">Vintage</th>
-                  <th className="text-right font-medium px-3 py-2">Size</th>
-                  <th className="text-left font-medium px-5 py-2">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {funds.map((f) => (
-                  <tr key={f.id} className="border-t">
-                    <td className="px-5 py-2.5 font-medium">
-                      <Link href={`/funds/${f.id}`} className="hover:text-primary">
-                        {f.name}
-                      </Link>
-                    </td>
-                    <td className="px-3 py-2.5 text-muted-foreground whitespace-nowrap">{f.strategy ?? "—"}</td>
-                    <td className="px-3 py-2.5 tabular">{f.vintage_year ?? "—"}</td>
-                    <td className="px-3 py-2.5 text-right tabular whitespace-nowrap">
-                      {f.fund_size_usd != null
-                        ? formatUsd(f.fund_size_usd)
-                        : f.target_size_usd != null
-                          ? `${formatUsd(f.target_size_usd)} target`
-                          : "—"}
-                    </td>
-                    <td className="px-5 py-2.5">
-                      {f.status ? (
-                        <span className="inline-flex items-center rounded-md border bg-secondary px-2 py-0.5 text-xs">
-                          {f.status}
-                        </span>
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      ) : null}
-
       {/* Editable data + notes */}
       <div className="grid gap-6 lg:grid-cols-3" data-no-print>
         <aside className="rounded-xl border bg-card p-5 h-fit space-y-5">
@@ -430,7 +430,7 @@ export default async function CompanyProfile({ params }: { params: Promise<{ id:
         </aside>
 
         <section className="lg:col-span-2 space-y-6">
-          <div className="rounded-xl border bg-card p-5">
+          <div id="notes" className="scroll-mt-20 rounded-xl border bg-card p-5">
             <h2 className="font-semibold mb-3">Notes</h2>
             <NotesPanel entityType="company" entityId={company.id} notes={notes} />
           </div>

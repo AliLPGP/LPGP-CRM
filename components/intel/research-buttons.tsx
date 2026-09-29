@@ -109,6 +109,40 @@ export function ResearchClubsRunner({ teamIds, aiReady }: { teamIds: string[]; a
   );
 }
 
+/** Admin: LP commitments from what the disclosing LPs publish, a few LPs per run. */
+export function ResearchCommitmentsButton({ aiReady, limit = 4 }: { aiReady: boolean; limit?: number }) {
+  const router = useRouter();
+  const [pending, start] = useTransition();
+  const [message, setMessage] = useState<string | null>(null);
+  if (!aiReady) return null;
+  return (
+    <span className="inline-flex items-center gap-2">
+      {message ? <span className="text-[11px] text-muted-foreground">{message}</span> : null}
+      <Button
+        size="sm"
+        variant="outline"
+        disabled={pending}
+        onClick={() =>
+          start(async () => {
+            setMessage(`Reading board minutes and reports of the ${limit} largest disclosing LPs — a few minutes…`);
+            const r = await post("/api/directory/commitments/research", { limit });
+            if (!r.ok) {
+              setMessage(r.message);
+              return;
+            }
+            const errors = (r.json.errors as string[] | undefined) ?? [];
+            setMessage(`${r.json.added ?? 0} commitments recorded from ${((r.json.researched as string[] | undefined) ?? []).join(", ")}.${errors.length ? ` ${errors.join("; ")}` : ""}`);
+            router.refresh();
+          })
+        }
+      >
+        {pending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Search className="h-3.5 w-3.5" />}
+        Research LP commitments
+      </Button>
+    </span>
+  );
+}
+
 /** Admin: deals or benchmarks for one asset class. */
 export function ResearchClassButton({ assetClass, kind, aiReady }: { assetClass: string; kind: "deals" | "benchmarks"; aiReady: boolean }) {
   const router = useRouter();

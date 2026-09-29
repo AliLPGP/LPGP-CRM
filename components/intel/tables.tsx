@@ -34,7 +34,7 @@ function classTag(key: string) {
 export function DealTable({ deals, showClass = true, compact = false }: { deals: Deal[]; showClass?: boolean; compact?: boolean }) {
   if (!deals.length) return <Empty>No deals on file yet.</Empty>;
   return (
-    <div className="overflow-x-auto">
+    <div className="desk-scroll">
       <table className="desk-table">
         <thead>
           <tr>
@@ -45,7 +45,6 @@ export function DealTable({ deals, showClass = true, compact = false }: { deals:
             <th className="num">Stake</th>
             <th className="num">Amount</th>
             {!compact ? <th className="num">Valuation</th> : null}
-            <th>Source</th>
           </tr>
         </thead>
         <tbody>
@@ -80,9 +79,6 @@ export function DealTable({ deals, showClass = true, compact = false }: { deals:
               <td className="num">{d.stake_pct != null ? `${d.stake_pct}%` : "—"}</td>
               <td className="num">{formatMoney(d.amount, d.currency)}</td>
               {!compact ? <td className="num">{formatMoney(d.valuation, d.valuation_currency)}</td> : null}
-              <td>
-                <Src url={d.source_url} name={d.source_name} />
-              </td>
             </tr>
           ))}
         </tbody>

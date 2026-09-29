@@ -582,6 +582,21 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+/* A wide ledger scrolls sideways inside its panel, with the scrollbar kept
+   visible so the width past the edge is never a surprise. */
+.desk-scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--foreground) 28%, transparent) transparent;
+  scrollbar-gutter: stable;
+}
+.desk-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.desk-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--foreground) 28%, transparent);
+  border-radius: 4px;
+}
 /* A row that opens a record: its title link covers the whole row, and every
    other link in the row sits above that cover so it still works. */
 .desk-table tr.linked {

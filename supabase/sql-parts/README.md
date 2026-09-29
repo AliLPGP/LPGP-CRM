@@ -48,6 +48,12 @@ portfolio companies, after `1-schema` (or `3-directory`/`4-intelligence`).
 `../intelligence-data.sql` is the whole set in one file for `psql` or the
 Supabase CLI, where a paste can't truncate.
 
+**One CFO/COO portfolio (migration `0017`)** is a single idempotent `update`
+on `event_targets`, folding the three old CFO series ids into `cfo-coo`. It is
+the last statement of `1-schema`; a database that already has everything else
+can paste `../migrations/0017_series_merge.sql` on its own. The app reads the
+old ids correctly either way, so nothing waits on it.
+
 Run one file, wait for "Success", run the next. If a part errors, fix that
 before moving on — later parts build on earlier ones.
 

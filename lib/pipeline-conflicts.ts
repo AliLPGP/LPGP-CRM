@@ -196,9 +196,9 @@ export async function listKnownEvents(): Promise<KnownEvent[]> {
         event_id: e.id,
         event_name: e.name,
         event_date: e.event_date,
-        location: e.location,
-        producer: e.producer,
-        date_tbc: e.date_tbc,
+        location: e.location ?? "",
+        producer: e.producer ?? "",
+        date_tbc: e.date_tbc ?? "",
       }));
     }
   }

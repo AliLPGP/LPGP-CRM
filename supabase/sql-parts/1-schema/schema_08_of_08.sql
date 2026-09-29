@@ -69,3 +69,13 @@ alter table public.ops_links drop constraint if exists ops_links_entity_type_che
 alter table public.ops_links
   add constraint ops_links_entity_type_check
   check (entity_type in ('lead', 'account', 'company', 'user'));
+
+
+-- ##################################################################
+-- ## One CFO/COO portfolio (0013)
+-- ##################################################################
+-- The three CFO/COO series fold into 'cfo-coo'. The app already reads the old
+-- ids as that; this tidies stored choices. Idempotent.
+update public.event_targets
+   set series = 'cfo-coo'
+ where series in ('cfo-private-markets', 'cfo-pe-debt', 'cfo-pe');

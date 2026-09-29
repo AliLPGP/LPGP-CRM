@@ -1,5 +1,5 @@
 /**
- * The LPGP Connect 2027 programme — 7 series, 25 events.
+ * The LPGP Connect 2027 programme — 5 series, 25 events.
  *
  * Transcribed from the confirmed producer allocation ("Events by Producer",
  * 28 September 2026), the same list the tracker holds in `programme-2027.js`.
@@ -19,12 +19,21 @@
 
 export type SeriesId =
   | "private-debt"
-  | "cfo-private-markets"
-  | "cfo-pe-debt"
-  | "cfo-pe"
+  | "cfo-coo"
+  | "operational-fund"
   | "operating-partners"
-  | "data-tech"
-  | "operational-fund";
+  | "data-tech";
+
+/**
+ * Ids earlier versions stored. The three CFO/COO conferences (Private Markets,
+ * Private Equity, Private Debt) are one portfolio, so all of them fold into
+ * `cfo-coo`; a stored choice of any of them still reads as that portfolio.
+ */
+export const LEGACY_SERIES: Record<string, SeriesId> = {
+  "cfo-private-markets": "cfo-coo",
+  "cfo-pe-debt": "cfo-coo",
+  "cfo-pe": "cfo-coo",
+};
 
 export type Series = {
   id: SeriesId;
@@ -36,20 +45,28 @@ export type Series = {
   eventCount: number;
 };
 
+// The order here is the display order in every chart, and it is the one order
+// in which each neighbouring pair of series hues stays apart under red-green
+// colour blindness (checked with the dataviz palette validator on both card
+// surfaces). Every series keeps the hue it always had.
 export const SERIES: Series[] = [
   { id: "private-debt", code: "01", name: "Private Debt Fundraising Series", short: "Private Debt", eventCount: 6 },
-  { id: "cfo-private-markets", code: "02", name: "CFO / COO Private Markets Series", short: "CFO Private Markets", eventCount: 5 },
-  { id: "cfo-pe-debt", code: "03", name: "CFO / COO Private Equity & Debt Conference Series", short: "CFO PE & Debt", eventCount: 4 },
-  // Retired: no 2027 events. The id stays because stored event_targets rows may still reference it.
-  { id: "cfo-pe", code: "04", name: "CFO / COO Private Equity", short: "CFO Private Equity", eventCount: 0 },
-  { id: "operating-partners", code: "05", name: "Operating Partners Conference Series", short: "Operating Partners", eventCount: 5 },
-  { id: "data-tech", code: "06", name: "Data & Technology Forum Series", short: "Data & Technology", eventCount: 4 },
-  { id: "operational-fund", code: "07", name: "Operational Fund Summit Series", short: "Operational Fund", eventCount: 1 },
+  { id: "cfo-coo", code: "02", name: "CFO / COO Series", short: "CFO / COO", eventCount: 9 },
+  { id: "operational-fund", code: "03", name: "Operational Fund Summit Series", short: "Operational Fund", eventCount: 1 },
+  { id: "operating-partners", code: "04", name: "Operating Partners Conference Series", short: "Operating Partners", eventCount: 5 },
+  { id: "data-tech", code: "05", name: "Data & Technology Forum Series", short: "Data & Technology", eventCount: 4 },
 ];
 
 export const SERIES_MAP: Record<string, Series> = Object.fromEntries(
   SERIES.map((s) => [s.id, s]),
 );
+
+/** A stored or received series id, folded onto the current five; null if unknown. */
+export function normaliseSeriesId(v: unknown): SeriesId | null {
+  if (typeof v !== "string" || !v) return null;
+  if (SERIES.some((s) => s.id === v)) return v as SeriesId;
+  return LEGACY_SERIES[v] ?? null;
+}
 
 /** The five producer teams, in the order the allocation lists them. */
 export const PRODUCERS = ["Gio & Karam", "Tara & Maryam", "Fidak", "Santos", "Arj & Leena"] as const;
@@ -91,17 +108,17 @@ export const CATALOGUE_2027: CatalogueEvent[] = [
   { series: "operating-partners", name: "Operating Partners Retreat", location: "", month: "November 2027", monthIndex: 11, producer: "Tara & Maryam", key: "ops-retreat", date: "2027-11-01", tbc: "day" },
 
   // Fidak — 5
-  { series: "cfo-private-markets", name: "4th Annual CFO/COO Private Markets Miami", location: "Miami, USA", month: "May 2027", monthIndex: 5, producer: "Fidak", key: "cfo-pm-miami", date: "2027-05-01", tbc: "day" },
-  { series: "cfo-pe-debt", name: "9th Annual CFO/COO Private Debt London", location: "London, UK", month: "July 2027", monthIndex: 7, producer: "Fidak", key: "cfo-pd-london", date: "2027-07-01", tbc: "day" },
-  { series: "cfo-private-markets", name: "4th Annual CFO/COO Private Markets Los Angeles", location: "Los Angeles, USA", month: "October 2027", monthIndex: 10, producer: "Fidak", key: "cfo-pm-los-angeles", date: "2027-10-01", tbc: "day" },
-  { series: "cfo-private-markets", name: "9th Annual CFO/COO Private Markets Chicago", location: "Chicago, USA", month: "October 2027", monthIndex: 10, producer: "Fidak", key: "cfo-pm-chicago", date: "2027-10-01", tbc: "day" },
-  { series: "cfo-pe-debt", name: "8th Annual CFO/COO Private Debt New York", location: "New York, USA", month: "November 2027", monthIndex: 11, producer: "Fidak", key: "cfo-pd-new-york", date: "2027-11-01", tbc: "day" },
+  { series: "cfo-coo", name: "4th Annual CFO/COO Private Markets Miami", location: "Miami, USA", month: "May 2027", monthIndex: 5, producer: "Fidak", key: "cfo-pm-miami", date: "2027-05-01", tbc: "day" },
+  { series: "cfo-coo", name: "9th Annual CFO/COO Private Debt London", location: "London, UK", month: "July 2027", monthIndex: 7, producer: "Fidak", key: "cfo-pd-london", date: "2027-07-01", tbc: "day" },
+  { series: "cfo-coo", name: "4th Annual CFO/COO Private Markets Los Angeles", location: "Los Angeles, USA", month: "October 2027", monthIndex: 10, producer: "Fidak", key: "cfo-pm-los-angeles", date: "2027-10-01", tbc: "day" },
+  { series: "cfo-coo", name: "9th Annual CFO/COO Private Markets Chicago", location: "Chicago, USA", month: "October 2027", monthIndex: 10, producer: "Fidak", key: "cfo-pm-chicago", date: "2027-10-01", tbc: "day" },
+  { series: "cfo-coo", name: "8th Annual CFO/COO Private Debt New York", location: "New York, USA", month: "November 2027", monthIndex: 11, producer: "Fidak", key: "cfo-pd-new-york", date: "2027-11-01", tbc: "day" },
 
   // Santos — 5
-  { series: "cfo-private-markets", name: "4th Annual CFO/COO Private Markets Switzerland", location: "Switzerland", month: "March 2027", monthIndex: 3, producer: "Santos", key: "cfo-pm-switzerland", date: "2027-03-18", tbc: "" },
-  { series: "cfo-private-markets", name: "5th Annual CFO/COO Private Markets San Francisco", location: "San Francisco, USA", month: "June 2027", monthIndex: 6, producer: "Santos", key: "cfo-pm-san-francisco", date: "2027-06-01", tbc: "day" },
-  { series: "cfo-pe-debt", name: "9th Annual CFO/COO Private Equity London", location: "London, UK", month: "July 2027", monthIndex: 7, producer: "Santos", key: "cfo-pe-london", date: "2027-07-01", tbc: "day" },
-  { series: "cfo-pe-debt", name: "8th Annual CFO/COO Private Equity New York", location: "New York, USA", month: "November 2027", monthIndex: 11, producer: "Santos", key: "cfo-pe-new-york", date: "2027-11-01", tbc: "day" },
+  { series: "cfo-coo", name: "4th Annual CFO/COO Private Markets Switzerland", location: "Switzerland", month: "March 2027", monthIndex: 3, producer: "Santos", key: "cfo-pm-switzerland", date: "2027-03-18", tbc: "" },
+  { series: "cfo-coo", name: "5th Annual CFO/COO Private Markets San Francisco", location: "San Francisco, USA", month: "June 2027", monthIndex: 6, producer: "Santos", key: "cfo-pm-san-francisco", date: "2027-06-01", tbc: "day" },
+  { series: "cfo-coo", name: "9th Annual CFO/COO Private Equity London", location: "London, UK", month: "July 2027", monthIndex: 7, producer: "Santos", key: "cfo-pe-london", date: "2027-07-01", tbc: "day" },
+  { series: "cfo-coo", name: "8th Annual CFO/COO Private Equity New York", location: "New York, USA", month: "November 2027", monthIndex: 11, producer: "Santos", key: "cfo-pe-new-york", date: "2027-11-01", tbc: "day" },
   { series: "operational-fund", name: "Operational Fund Summit Luxembourg", location: "Luxembourg", month: "November 2027", monthIndex: 11, producer: "Santos", key: "ofs-luxembourg", date: "2027-11-01", tbc: "day" },
 
   // Arj & Leena — 4
@@ -135,16 +152,10 @@ export function guessSeries(eventName: string): SeriesGuess {
   if (n.includes("data") && (n.includes("tech") || n.includes("ai"))) {
     return { series: "data-tech", confidence: "certain" };
   }
-  // The CFO/COO programme split into separate Private Debt and Private Equity
-  // events; both belong to the PE & Debt series. This has to run before the
-  // bare "private debt" rule, or "CFO/COO Private Debt London" would be filed
-  // as a fundraising event.
-  if (n.includes("cfo") && (n.includes("private debt") || n.includes("private equity"))) {
-    return { series: "cfo-pe-debt", confidence: "certain" };
-  }
-  if (n.includes("cfo") && n.includes("private markets")) {
-    return { series: "cfo-private-markets", confidence: "certain" };
-  }
+  // Every CFO/COO conference is the one CFO/COO portfolio. This runs before
+  // the bare "private debt" rule, or "CFO/COO Private Debt London" would be
+  // filed as a fundraising event.
+  if (/\bcfo\b/.test(n) || /\bcoo\b/.test(n)) return { series: "cfo-coo", confidence: "certain" };
   if (n.includes("private debt") || n.includes("sports investing")) {
     return { series: "private-debt", confidence: "certain" };
   }
@@ -162,23 +173,17 @@ export function guessSeries(eventName: string): SeriesGuess {
   if (n.includes("berlin")) return { series: "private-debt", confidence: "likely" };
   if (n.includes("lux")) return { series: "operational-fund", confidence: "likely" };
   if (n.includes("switzerland") || n.includes("zurich")) {
-    return { series: "cfo-private-markets", confidence: "likely" };
+    return { series: "cfo-coo", confidence: "likely" };
   }
 
-  // 9: a bare "CFO <city>" is most often a Private Markets event.
-  if (/\bcfo\b/.test(n)) return { series: "cfo-private-markets", confidence: "likely" };
-
-  // 10
   return null;
 }
 
 /** Series display colour, used consistently across charts and badges. */
 export const SERIES_COLOR: Record<SeriesId, string> = {
   "private-debt": "var(--chart-1)",
-  "cfo-private-markets": "var(--chart-2)",
-  "cfo-pe-debt": "var(--chart-3)",
-  "cfo-pe": "var(--chart-4)",
+  "cfo-coo": "var(--chart-2)",
+  "operational-fund": "var(--chart-7)",
   "operating-partners": "var(--chart-5)",
   "data-tech": "var(--chart-6)",
-  "operational-fund": "var(--chart-7)",
 };

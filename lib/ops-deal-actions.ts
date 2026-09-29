@@ -39,9 +39,9 @@ export async function listAllocatableEvents(): Promise<EventOption[]> {
     id: e.id,
     name: e.name,
     date: e.event_date,
-    location: e.location,
-    producer: e.producer,
-    dateTbc: e.date_tbc,
+    location: e.location ?? "",
+    producer: e.producer ?? "",
+    dateTbc: e.date_tbc ?? "",
   }));
 }
 

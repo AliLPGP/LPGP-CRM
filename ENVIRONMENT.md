@@ -42,6 +42,12 @@ intelligence dataset). Signed in as an admin, Discover shows exactly which SQL
 is still missing, with a copy button per part and a link to the project's SQL
 editor.
 
+The dataset needs no SQL of its own: the button on Import -> Master directory
+writes it. If you would rather load it from the SQL editor (say, before the app
+is deployed), `supabase/sql-parts/5-intelligence-data/` holds the same rows as
+paste-sized parts, and `supabase/intelligence-data.sql` is the whole thing in
+one file for `psql` or the Supabase CLI. Both are idempotent.
+
 ### Auth -- required
 
 Sign-in is Supabase Auth with email and password.

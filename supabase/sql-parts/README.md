@@ -40,6 +40,14 @@ where it starts. A database that already has `0013`–`0015` needs only
 (Discover, signed in as an admin, shows which of these a database is still
 missing and serves exactly those parts.)
 
+**The intelligence dataset needs no SQL** — the button on Import → Master
+directory loads it. If you'd rather paste it (a database the app can't reach
+yet), **`5-intelligence-data/data_001_of_120.sql` … `_120_of_120.sql`** holds
+the same clubs, investors, deals, signals, LP commitments, benchmarks and
+portfolio companies, after `1-schema` (or `3-directory`/`4-intelligence`).
+`../intelligence-data.sql` is the whole set in one file for `psql` or the
+Supabase CLI, where a paste can't truncate.
+
 Run one file, wait for "Success", run the next. If a part errors, fix that
 before moving on — later parts build on earlier ones.
 
@@ -57,6 +65,7 @@ lose track of where you were, start over from part 1.
 | `2-seed` | 12 | 8.1 KB |
 | `3-directory` | 8 | 3.6 KB |
 | `4-intelligence` | 4 | 3.5 KB |
+| `5-intelligence-data` | 120 | 8.1 KB |
 
 The schema parts are deliberately under 4 KB. The seed parts can't go that low —
 a single `insert` of a dozen firms is bigger than that, and splitting inside one
@@ -77,6 +86,13 @@ cat seed.sql seed_companies_2.sql seed_companies_3.sql \
     seed_contacts_2.sql seed_contacts_3.sql seed_funds.sql \
     seed_commitments.sql seed_service_relationships.sql > /tmp/seed_only.sql
 python3 tools/split_sql.py /tmp/seed_only.sql sql-parts/2-seed seed --max-bytes=8000
+```
+
+The dataset parts come from `dataset.json` instead of a `.sql` source, so they
+have their own tool, which also writes the one-file version:
+
+```sh
+python3 tools/dataset_to_sql.py ../data/intelligence/dataset.json sql-parts/5-intelligence-data --whole=intelligence-data.sql
 ```
 
 It only cuts on real statement boundaries — its scanner knows about quoted

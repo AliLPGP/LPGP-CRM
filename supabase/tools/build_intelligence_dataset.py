@@ -288,9 +288,15 @@ def main():
                     break
             if not hit:
                 continue
-            for group in (("revenue", "revenue_currency", "revenue_season", "revenue_source_name", "revenue_source_url"), ("valuation", "valuation_currency", "valuation_year", "valuation_source_name", "valuation_source_url")):
+            for group in (
+                ("revenue", "revenue_currency", "revenue_season", "revenue_source_name", "revenue_source_url"),
+                ("valuation", "valuation_currency", "valuation_year", "valuation_source_name", "valuation_source_url"),
+                ("stadium_capacity", "stadium", None, None, "stadium_capacity_source_url"),
+            ):
                 if hit.get(group[0]) is None and num(cf.get(group[0])) is not None and is_url(cf.get(group[4])):
                     for f in group:
+                        if f is None:
+                            continue
                         hit[f] = num(cf.get(f)) if f in (group[0], "valuation_year") else cf.get(f)
                     if cf[group[4]] not in hit.setdefault("sources", []):
                         hit["sources"].append(cf[group[4]])
@@ -311,7 +317,16 @@ def main():
                 "disclosure_type": c.get("disclosure_type") or "other", "source_name": c.get("source_name"), "source_url": c["source_url"],
             }
         for d in tp.get("deals", []):
-            add_deal(d, d.get("asset_class") or "other", d.get("target") or "", d.get("target_kind"), d.get("target_country"), None, d.get("sport"))
+            # A club deal names its league so the row lands on the roster team.
+            team_key = None
+            if d.get("target_kind") in ("club", "team") and d.get("target"):
+                want = slug(d["target"]); lg = slug(d.get("target_league") or "")
+                for k, t in teams.items():
+                    ts = slug(t["name"]); ss = slug(t.get("short_name") or "")
+                    if (not lg or k.startswith(lg + "--")) and (ts == want or ss == want or ts.startswith(want + "-") or (ss and ss.startswith(want))):
+                        team_key = k
+                        break
+            add_deal(d, d.get("asset_class") or "other", d.get("target") or "", d.get("target_kind"), d.get("target_country"), team_key, d.get("sport"))
         for i in tp.get("investors", []):
             if not i.get("name"):
                 continue

@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { IntelShell } from "@/components/intel/shell";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Layers, Building2 } from "lucide-react";
+import { ArrowLeft, Building2, ExternalLink, Layers } from "lucide-react";
 import { getFund, getCommitmentsForFund } from "@/lib/queries";
 import { formatUsd } from "@/lib/utils";
 import { CategoryBadge } from "@/components/category-badge";
 import { CompanyLogo } from "@/components/company-logo";
+import { brandDomain } from "@/lib/directory/brand-domains";
+import { ROLE_LABEL, normalizeRole } from "@/lib/directory/providers";
 
 export const dynamic = "force-dynamic";
 
@@ -22,11 +25,13 @@ export default async function FundProfile({ params }: { params: Promise<{ id: st
   if (!fund) notFound();
 
   const commitments = await getCommitmentsForFund(id);
+  // Money stays in its own currency: only USD figures are summed.
   const totalCommitted = commitments.reduce((s, c) => s + (c.amount_usd ?? 0), 0);
+  const providers = Array.isArray(fund.service_providers) ? fund.service_providers : [];
   const size = fund.fund_size_usd ?? fund.target_size_usd;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 md:px-6 py-8 space-y-6">
+    <IntelShell wide={false}>
       <Link href="/funds" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-4 w-4" /> Funds
       </Link>
@@ -51,8 +56,48 @@ export default async function FundProfile({ params }: { params: Promise<{ id: st
           {fund.vintage_year ? <Chip>Vintage {fund.vintage_year}</Chip> : null}
           {fund.geography ? <Chip>{fund.geography}</Chip> : null}
           {fund.status ? <Chip>{fund.status}</Chip> : null}
+          {fund.vehicle_kind ? <Chip>{fund.vehicle_kind}</Chip> : null}
+          {fund.domicile ? <Chip>{fund.domicile}</Chip> : null}
+          {fund.currency ? <Chip>{fund.currency} class</Chip> : null}
         </div>
+        {fund.name_filed && fund.name_filed !== fund.name ? (
+          <p className="mt-3 text-xs text-muted-foreground">
+            As filed: <span className="font-mono">{fund.name_filed}</span>
+          </p>
+        ) : null}
+        {fund.source === "form_adv" ? (
+          <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+            Named on the manager&rsquo;s Form ADV Schedule D{fund.filed ? ` (${fund.filed})` : ""}
+            {fund.source_url ? (
+              <a href={fund.source_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-0.5 hover:text-foreground">
+                IAPD <ExternalLink className="h-3 w-3" />
+              </a>
+            ) : null}
+          </p>
+        ) : null}
       </div>
+
+      {providers.length ? (
+        <section className="sheen rounded-2xl border bg-card p-5">
+          <h2 className="font-semibold">Service providers</h2>
+          <p className="mt-0.5 text-xs text-muted-foreground">Named with this fund on the manager&rsquo;s Form ADV filing.</p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {providers.map((p) => (
+              <Link
+                key={`${p.role}:${p.key}`}
+                href={`/database/providers/${p.key}`}
+                className="flex items-center gap-3 rounded-xl border bg-background/50 p-3 hover:border-[var(--brass)]/50"
+              >
+                <CompanyLogo name={p.brand} domain={brandDomain(p.key)} size={36} />
+                <span className="min-w-0">
+                  <span className="block truncate font-medium">{p.brand}</span>
+                  <span className="text-xs text-muted-foreground">{ROLE_LABEL[normalizeRole(p.role)]}</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {/* Stats */}
       <div className="grid gap-4 sm:grid-cols-3">
@@ -111,12 +156,23 @@ export default async function FundProfile({ params }: { params: Promise<{ id: st
                         {c.lp.name}
                       </Link>
                     ) : (
-                      "—"
+                      (c.lp_name ?? "—")
                     )}
                   </td>
-                  <td className="px-3 py-3 text-muted-foreground">{c.commitment_date ?? "—"}</td>
+                  <td className="px-3 py-3 text-muted-foreground">
+                    {c.commitment_date_text ?? c.commitment_date ?? "—"}
+                    {c.source_url ? (
+                      <a href={c.source_url} target="_blank" rel="noreferrer" className="ml-1.5 inline-flex hover:text-foreground" title={c.disclosure_type ?? "Source"}>
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    ) : null}
+                  </td>
                   <td className="px-5 py-3 text-right tabular font-medium">
-                    {c.amount_usd != null ? formatUsd(c.amount_usd) : "—"}
+                    {c.amount_usd != null
+                      ? formatUsd(c.amount_usd)
+                      : c.amount != null
+                        ? `${formatUsd(c.amount).replace("$", "")} ${c.currency ?? ""}`
+                        : (c.amount_text ?? "—")}
                   </td>
                 </tr>
               ))}
@@ -124,6 +180,6 @@ export default async function FundProfile({ params }: { params: Promise<{ id: st
           </table>
         )}
       </section>
-    </div>
+    </IntelShell>
   );
 }

@@ -21,14 +21,23 @@ export const CATEGORIES: Record<Category, CategoryMeta> = {
     blurb:
       "Institutional investors — insurers, foundations, endowments, pension & superannuation funds, multi-family offices.",
     subTypes: [
+      "Public pension fund",
+      "Corporate pension fund",
+      "Sovereign wealth fund",
       "Insurance company",
-      "Foundation",
       "Endowment",
+      "Foundation",
+      "Family office",
+      "Multi-family office",
+      "Investment consultant",
+      "Fund of funds",
+      "Development finance institution",
+      "Asset manager",
+      "Bank",
+      "Government agency",
       "Pension fund",
       "Superannuation scheme",
-      "Multi-family office",
-      "Sovereign wealth fund",
-      "Fund of funds",
+      "Other",
     ],
     accent: "bg-secondary text-foreground/80 border-border",
     dot: "bg-foreground/30",
@@ -42,12 +51,20 @@ export const CATEGORIES: Record<Category, CategoryMeta> = {
       "Fund managers — private equity & asset managers (BlackRock, Ares, Oaktree) and venture capital firms.",
     subTypes: [
       "Private equity",
-      "Asset manager",
-      "Hedge fund",
+      "Growth equity",
       "Venture capital",
       "Private credit",
-      "Real assets",
+      "Real estate",
       "Infrastructure",
+      "Multi-asset alternatives",
+      "Fund of funds & secondaries",
+      "Hedge fund",
+      "Asset manager",
+      "Family office",
+      "Bank",
+      "Development finance",
+      "Real assets",
+      "Other",
     ],
     accent: "bg-secondary text-foreground/80 border-border",
     dot: "bg-foreground/55",
@@ -60,23 +77,43 @@ export const CATEGORIES: Record<Category, CategoryMeta> = {
     blurb:
       "Vendors to the industry — audit & advisory (KPMG), banks (MUFG), fund administrators (Apex), law firms (Kirkland & Ellis).",
     subTypes: [
-      "Audit & advisory",
-      "Bank",
       "Fund administrator",
+      "Audit & advisory",
       "Law firm",
+      "Bank",
       "Placement agent",
       "Technology vendor",
       "Consulting",
+      "Research & analytics",
+      "Valuation & ratings",
+      "FX & treasury",
+      "Talent & search",
+      "Industry body",
     ],
     accent: "bg-secondary text-foreground/80 border-border",
     dot: "bg-foreground/85",
   },
+  UN: {
+    key: "UN",
+    label: "Unclassified",
+    singular: "UN",
+    name: "Unclassified",
+    blurb:
+      "Firms the Master Directory hasn't placed in a book yet — classify them from their profile.",
+    subTypes: [],
+    accent: "bg-transparent text-muted-foreground border-dashed border-border",
+    dot: "bg-transparent ring-1 ring-foreground/40",
+  },
 };
 
+/** The three books people sell into. Pickers and imports offer these. */
 export const CATEGORY_ORDER: Category[] = ["LP", "GP", "SP"];
 
+/** Every book the directory holds, unclassified last. */
+export const DIRECTORY_BOOKS: Category[] = ["LP", "GP", "SP", "UN"];
+
 export function isCategory(value: unknown): value is Category {
-  return value === "LP" || value === "GP" || value === "SP";
+  return value === "LP" || value === "GP" || value === "SP" || value === "UN";
 }
 
 // Sensible default Lusha job-title filters per book — senior decision-makers

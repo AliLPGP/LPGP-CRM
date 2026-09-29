@@ -24,6 +24,9 @@ Every company belongs to exactly one of three categories:
 - **SP** — Solution Providers / vendors: audit & advisory (KPMG), banks (MUFG),
   fund administrators (Apex), law firms (Kirkland & Ellis).
 
+Firms the Master Directory hasn't classified wait in a fourth, holding book —
+**UN** (Unclassified) — until someone places them from the firm's profile.
+
 ## Stack
 
 Next.js 16 (App Router) · React 19 · TypeScript strict · Tailwind v4 ·
@@ -55,12 +58,116 @@ boundaries and keeps comment text ASCII.
 - **My deals** (0012) — `ops_links.entity_type` gains `user`. A salesperson
   claiming a tracker deal is a link owned by their profile, so nothing about
   the money is copied into Supabase.
-- **Series merge** (0013) — stored `event_targets.series` values for the three
+- **Directory intelligence** (0013) — the Master Directory workbook's columns
+  on `companies` (workbook ids, Form ADV facts, LP disclosures, SP service
+  lines, sources), provenance on `contacts`, brand-level Form ADV links on
+  `service_relationships`, public commitments on `commitments`/`funds`, and
+  `directory_lists`, `directory_list_items`, `saved_searches`,
+  `directory_imports`. `company_category` gains `UN` for firms the workbook
+  hasn't classified; pickers that sell (`CATEGORY_ORDER`) still offer LP/GP/SP
+  only.
+- **Fund lineup** (0014) — `funds` gains the Form ADV Schedule D columns
+  (`name_filed`, `vehicle_kind`, `domicile`, `currency`, `service_providers`).
+  ~5.5k named private funds per workbook edition, keyed `advfund:<GP>:<slug>`.
+- **Portfolio companies** (0015) — `portfolio_companies`, one row per company
+  per GP, each with `source` (`web_research` | `manual`) and the `source_url`
+  that names it. Operating partners have no table: they are contacts whose
+  title `isOperatingRole()` recognises (`lib/directory/operating.ts`).
+- **Intelligence** (0016) — `deals` and `signals` per asset class,
+  `sports_teams` / `sports_team_owners` / `sports_investors`, and
+  `benchmarks` (published figures with publisher, period and page). Every
+  row carries the URL of the page that states it; a figure no page states is
+  null. Seeded from `data/intelligence/dataset.json` (public facts only,
+  built by `supabase/tools/build_intelligence_dataset.py`) and grown by the
+  in-app research jobs.
+- **Series merge** (0017) — stored `event_targets.series` values for the three
   old CFO ids become `cfo-coo`. Read-side folding means nothing breaks without
   it; it exists so exports and queries see the current id.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).
+
+## The directory (Discover)
+
+`lib/directory/` is the Inven-style database. The pieces:
+
+- `transform.ts` turns the Master Directory workbook into rows, in the
+  browser. It merges duplicate firms (same name, same website with one name
+  extending the other, a short list of known renames) and keeps every workbook
+  id in `external_ids`, so the next edition lands on the same records.
+- `import-actions.ts` writes those rows in chunks. The workbook **owns** Form
+  ADV facts, LP disclosures and SP service lines (refreshed each import);
+  people **own** name, description, website, location and type (the import
+  only fills blanks). Filed provider links and commitments missing from a new
+  edition are pruned; companies and contacts never are.
+- `providers.ts` collapses the ~2,400 legal names GPs file on Schedule D into
+  brands (`J.P. Morgan`, not `JPMORGAN CHASE BANK, N.A.`). League tables count
+  distinct managers per brand, never filing rows. Rule order matters: narrower
+  brands first.
+- `index-server.ts` builds one compact record per firm, cached with
+  `unstable_cache` under the `directory` tag (anything that edits companies or
+  contacts calls `updateTag`/`revalidateTag` on it). It pages past the
+  PostgREST row cap with `lib/supabase/paged.ts` — use `fetchAll` for any read
+  that can exceed 1,000 rows, and batch `.in()` filters.
+- Search, filters, lookalikes and the market map run **in the browser** over
+  that index (`search.ts`, `filters.ts`, `similar.ts`, `market.ts`), so every
+  facet click is instant. The URL is the state (`filtersFromParams` /
+  `filtersToParams`, written with `history.replaceState`).
+- `thesis.ts` reads a plain-English search into filters with rules; whatever
+  it can't place stays as ranked keywords. With `ANTHROPIC_API_KEY` set,
+  `ai-actions.ts` has Claude re-read the same search into the same shape and
+  `readingToFilters` resolves any names it returns against the directory's own
+  vocabulary.
+- `funds.ts` derives the fund lineup from the relationship rows' fund
+  examples: display names in title case with the manager's own spelling, and
+  a vehicle kind or domicile only when the legal name states it. The Funds
+  page (`fund-universe.ts`) ships them packed like the index.
+- Discover's home (`overview.tsx`, `insights.ts`) summarises the whole index;
+  `insights.ts` counts a brand's regulatory AUM once even when the directory
+  holds several of its entities. The HQ map (`world-map.ts`) is projected on
+  the server and drawn as proportional circles, not a choropleth.
+- Operating partners come from Lusha search previews by GP domain
+  (`/api/directory/operating-partners`, no reveals); portfolio companies from
+  Claude reading the manager's own site (`portfolio-research.ts`,
+  `/api/directory/portfolio`). Both are per firm on the profile and in bulk
+  for admins on Import → Master directory.
+- `setup.ts` tells an admin which directory SQL a database is missing and
+  serves it in paste-sized parts.
+- `asset-classes.ts` and `strategies.ts` are the taxonomy. A manager sits in
+  a class by its directory type; a fund by its own name first, its manager's
+  type second (`fundClass` says which). A strategy (direct lending,
+  mezzanine, CLOs, logistics, energy transition…) is placed by words in the
+  fund's legal name or in the manager's own vertical/overview — never by
+  guess. `strategy-data.ts` computes the metrics per strategy from Form ADV
+  data (sizes as quartiles, ERA share, providers, geography).
+- `research.ts` is the one loop behind every in-app research job: Claude
+  with the server-side web_search tool, a strict `record_*` tool for the
+  shape we store, `pause_turn` handed back. Jobs: `sports-research.ts`
+  (a club, optionally re-checked by a second pass with different queries),
+  `deals-research.ts` (a class since a date), `benchmark-research.ts`
+  (published figures per class and strategy), `signals-refresh.ts` (news),
+  `commitments-research.ts` (an LP's published fund commitments),
+  `portfolio-research.ts`. `jobs.ts` runs each job over a service-role
+  client — the routes call it after checking who asks, and
+  `scripts/research.ts` calls it from a terminal with no time limit. Routes under `app/api/directory/*`; the daily
+  signals and monthly benchmarks crons are in `vercel.json` (Vercel sends
+  `CRON_SECRET`; GET is cron-only, a session never starts a job from a link).
+  Every job carries a **deadline** (`deadlineAfter`) inside the function's
+  time limit and reports what it did not reach rather than dying mid-write.
+  All need `ANTHROPIC_API_KEY`; deals, bulk jobs and clubs added by name are
+  admin-only. A refuted fact-check verdict removes the figure *and* what hung
+  on it (currency, season, page, the owner rows a summary described).
+- `workflows.ts` is the desk's ten jobs (market intelligence, deal sourcing,
+  deal execution, networking, due diligence, fundraising, benchmarking,
+  business development, asset allocation, portfolio management) as views
+  over the same records — never a separate dataset. `/database/workflows/
+  [slug]` renders them; a deal has its own page at `/database/deals/[id]`
+  (terms as stated, an *implied whole* labelled as arithmetic, the target's
+  history, the investor's other deals, signals naming either party).
+- Nothing is inferred that the workbook doesn't say. Sizes carry their basis
+  (brand vs. entity regulatory AUM, fund gross assets for ERAs, total assets
+  for LPs), commitments keep their own currency, and the original seed's
+  illustrative links are labelled `source = 'sample'`.
 
 ## The ops-panel bridge
 
@@ -117,6 +224,14 @@ asks — adopting or creating is the person's call.
 - Client state is **derived, not reset in effects** (results carry the query or
   id they answer). The React Compiler lint is enforced; don't reach for an
   escape hatch, restructure instead.
+- The intelligence screens (`/database/*`, `/companies/[id]`, `/funds`,
+  `/contacts`) wear the **desk** register on top of Pavilion: the `.desk`
+  wrapper (`IntelShell` in `components/intel/shell.tsx`) drops the radius to
+  4px, flattens surfaces and sets 13px type; `.desk-table` for dense ledgers,
+  `.desk-label` small caps, `.desk-tabs` underline tabs, `.defn` for a hover
+  definition, `.tag`, `.kv`. Primitives in `components/intel/ui.tsx` (`Box`,
+  `Stat`, `StatStrip`, `Src`, `Tag`, `SubTabs`, `Bar`). Every figure that
+  came from a page shows its `Src`.
 - The theme is **"Pavilion"** (`app/globals.css`), taken from our own exhibition
   stands: matte graphite panels, cream lettering, walnut behind them. Primary is
   near-black in light mode and cream in dark — inverted, the way a stand puts

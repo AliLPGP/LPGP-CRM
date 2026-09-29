@@ -47,10 +47,11 @@ export function formatAumLong(value: number | null | undefined): string | null {
   return `$${value}`;
 }
 
-/** "$415.9M", "$2.3B" — for compact contexts. */
+/** "$415.9M", "$2.3B", "$1.2T" — for compact contexts. */
 export function formatUsd(value: number | null | undefined): string {
   if (value == null || Number.isNaN(value)) return "—";
   const v = Math.abs(value);
+  if (v >= 1_000_000_000_000) return `$${trimZero(value / 1_000_000_000_000)}T`;
   if (v >= 1_000_000_000) return `$${trimZero(value / 1_000_000_000)}B`;
   if (v >= 1_000_000) return `$${trimZero(value / 1_000_000)}M`;
   if (v >= 1_000) return `$${trimZero(value / 1_000)}K`;

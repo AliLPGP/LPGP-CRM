@@ -11,7 +11,8 @@ import "server-only";
 // defensive (checks several likely keys). Docs: https://docs.lusha.com/apis
 // ===========================================================================
 
-const BASE = "https://api.lusha.com";
+// Overridable for local testing against a stand-in server.
+const BASE = process.env.LUSHA_API_BASE ?? "https://api.lusha.com";
 
 export function lushaConfigured(): boolean {
   return Boolean(process.env.LUSHA_API_KEY);
@@ -45,6 +46,8 @@ export type LushaPreview = {
   companyName: string | null;
   companyDomain: string | null;
   country: string | null;
+  city: string | null;
+  linkedinUrl: string | null;
   hasEmail: boolean;
   hasPhone: boolean;
 };
@@ -138,11 +141,13 @@ export async function lushaContactSearch(
 
   const json = await post("/prospecting/contact/search", reqBody);
 
-  const rows = arr(json.data).length ? arr(json.data) : arr(json.contacts);
+  const rows = arr(json.data).length ? arr(json.data) : arr(json.contacts).length ? arr(json.contacts) : arr(json.results);
   const contacts = rows.map(normalizePreview);
+  const pagination = asObj(json.pagination);
   const total =
     (typeof json.totalResults === "number" && json.totalResults) ||
     (typeof json.total === "number" && (json.total as number)) ||
+    (typeof pagination.total === "number" && (pagination.total as number)) ||
     contacts.length;
 
   return { requestId: str(json.requestId), contacts, total };
@@ -156,17 +161,22 @@ function normalizePreview(raw: unknown): LushaPreview {
   const lastName = str(r.lastName) ?? str(name.last);
   const full =
     str(r.name) ?? str(name.full) ?? ([firstName, lastName].filter(Boolean).join(" ") || null);
+  const has = arr(r.has).map(String);
+  const location = asObj(r.location);
   return {
     contactId: String(r.contactId ?? r.id ?? ""),
     name: full,
     firstName,
     lastName,
-    jobTitle: str(r.jobTitle) ?? str(r.title),
+    // Newer responses nest the title: { jobTitle: { title, departments } }.
+    jobTitle: str(r.jobTitle) ?? str(asObj(r.jobTitle).title) ?? str(r.title),
     companyName: str(r.companyName) ?? str(company.name),
     companyDomain: str(r.fqdn) ?? str(r.companyDomain) ?? str(company.fqdn) ?? str(company.domain),
-    country: str(r.country) ?? str(asObj(r.location).country),
-    hasEmail: Boolean(r.hasWorkEmail ?? r.hasEmail ?? r.hasEmails),
-    hasPhone: Boolean(r.hasPhones ?? r.hasPhone),
+    country: str(r.country) ?? str(location.country),
+    city: str(r.city) ?? str(location.city),
+    linkedinUrl: str(asObj(r.socialLinks).linkedin) ?? str(r.linkedinUrl),
+    hasEmail: Boolean(r.hasWorkEmail ?? r.hasEmail ?? r.hasEmails ?? has.includes("emails")),
+    hasPhone: Boolean(r.hasPhones ?? r.hasPhone ?? has.includes("phones")),
   };
 }
 

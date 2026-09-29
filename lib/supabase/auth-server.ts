@@ -6,6 +6,12 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+// Abort any Supabase call that takes longer than this — a paused/unreachable
+// project must degrade gracefully, never hang a render until the 504 limit.
+const FETCH_TIMEOUT_MS = 8000;
+const fetchWithTimeout: typeof fetch = (input, init) =>
+  fetch(input, { ...init, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
+
 export function authConfigured(): boolean {
   return Boolean(url && anon);
 }
@@ -19,6 +25,7 @@ export async function createSupabaseServerClient(): Promise<SupabaseClient | nul
   if (!url || !anon) return null;
   const cookieStore = await cookies();
   return createServerClient(url, anon, {
+    global: { fetch: fetchWithTimeout },
     cookies: {
       getAll() {
         return cookieStore.getAll();

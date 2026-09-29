@@ -33,7 +33,7 @@ export function CompaniesBrowser({
   const [error, setError] = useState<string | null>(null);
 
   const counts = useMemo(() => {
-    const c: Record<Filter, number> = { ALL: companies.length, LP: 0, GP: 0, SP: 0 };
+    const c: Record<Filter, number> = { ALL: companies.length, LP: 0, GP: 0, SP: 0, UN: 0 };
     for (const co of companies) c[co.category] += 1;
     return c;
   }, [companies]);

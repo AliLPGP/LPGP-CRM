@@ -549,7 +549,413 @@ alter table public.ops_links
 
 
 -- ##################################################################
--- ## One CFO/COO portfolio (0013)
+-- ## Directory intelligence: the Master Directory workbook, Form ADV
+-- ## provider links, LP commitments, team lists (0013)
+-- ##################################################################
+
+-- Firms the capture file hasn't classified yet get a book of their own
+-- rather than a guess. (A new enum value can't be used in the transaction
+-- that adds it; nothing below uses it.)
+alter type company_category add value if not exists 'UN';
+
+-- --- Companies: firmographics, Form ADV, LP and SP facts -------------------
+alter table public.companies
+  add column if not exists external_id        text unique,                  -- workbook id, e.g. "GP-0014"
+  add column if not exists external_ids       text[] not null default '{}', -- every id merged into this record
+  add column if not exists source             text,                         -- 'master_directory' when imported
+  add column if not exists directory_vertical text,                         -- the sheet's own vertical / SP line
+  add column if not exists state              text,                         -- "CA", "ON", "Zug"
+  add column if not exists founded_year       integer,
+  add column if not exists years_active       integer,
+  add column if not exists employee_count     integer,
+  add column if not exists industry           text,                         -- Lusha industry
+  add column if not exists lusha_verified_on  date,
+  add column if not exists catalog_updated_at timestamptz,
+  add column if not exists sources            jsonb not null default '[]'::jsonb; -- [{label, url}]
+
+alter table public.companies
+  add column if not exists sec_crd                   text,
+  add column if not exists sec_file_number           text,
+  add column if not exists adv_firm_type             text,    -- 'Registered' | 'ERA'
+  add column if not exists adv_matched_entity        text,
+  add column if not exists adv_last_filed            date,
+  add column if not exists adv_employee_count        integer,
+  add column if not exists private_fund_count        integer,
+  add column if not exists private_fund_gross_assets numeric, -- ERAs report this instead of RAUM
+  add column if not exists regulatory_aum_usd        numeric, -- per registered SEC entity
+  add column if not exists brand_entity_count        integer,
+  add column if not exists brand_aum_total_usd       numeric, -- summed across the brand's entities
+  add column if not exists adv_source_url            text,
+  add column if not exists adv_entities              jsonb not null default '[]'::jsonb;
+
+alter table public.companies
+  add column if not exists investor_type            text,
+  add column if not exists total_assets_usd         numeric,
+  add column if not exists alts_allocation_pct      numeric,
+  add column if not exists discloses_commitments    text,
+  add column if not exists disclosure_source_url    text,
+  add column if not exists assets_monitored_usd     numeric,
+  add column if not exists assets_monitored_display text,
+  add column if not exists lifecycle                text[] not null default '{}',   -- fund lifecycle stages an SP covers
+  add column if not exists service_lines            jsonb not null default '[]'::jsonb; -- [{name, description, capabilities[]}]
+
+create index if not exists companies_sec_crd_idx on public.companies (sec_crd) where sec_crd is not null;
+create index if not exists companies_domain_idx on public.companies (lower(domain)) where domain is not null;
+
+-- --- Contacts: the key people each book names -------------------------------
+alter table public.contacts
+  add column if not exists external_ref text unique, -- "GP-0014#jane-doe"
+  add column if not exists source       text,
+  add column if not exists connectable  boolean;     -- the team's master sheet holds a direct email
+
+-- --- Service relationships: Form ADV Schedule D, one row per brand & role ---
+alter table public.service_relationships
+  add column if not exists external_key       text unique, -- "adv:GP-0014:auditor:kpmg"
+  add column if not exists provider_key       text,        -- brand slug, groups every legal entity
+  add column if not exists provider_brand     text,
+  add column if not exists provider_entities  text[] not null default '{}', -- names as filed
+  add column if not exists provider_locations text[] not null default '{}',
+  add column if not exists fund_count         integer,
+  add column if not exists fund_examples      text[] not null default '{}',
+  add column if not exists source             text,        -- 'form_adv' | 'sample'
+  add column if not exists source_url         text,
+  add column if not exists filed              text;
+
+create index if not exists service_rel_provider_key_idx on public.service_relationships (provider_key);
+
+-- The original seed's links were illustrative; say so rather than let them
+-- sit beside filed data looking like it.
+update public.service_relationships
+   set source = 'sample'
+ where source is null and external_key is null;
+
+-- --- Funds and commitments: the public LP -> GP allocation record ----------
+alter table public.funds
+  add column if not exists external_key text unique,
+  add column if not exists manager_name text, -- when the manager isn't a directory firm
+  add column if not exists source       text;
+
+alter table public.commitments
+  add column if not exists external_key         text unique,
+  add column if not exists gp_company_id        uuid references public.companies (id) on delete set null,
+  add column if not exists lp_name              text,
+  add column if not exists gp_name              text,
+  add column if not exists fund_name            text,
+  add column if not exists amount               numeric, -- in `currency`; never converted
+  add column if not exists currency             text,
+  add column if not exists amount_text          text,    -- as published: "up to 40,000,000"
+  add column if not exists commitment_date_text text,
+  add column if not exists commitment_year      integer,
+  add column if not exists disclosure_type      text,
+  add column if not exists source               text,    -- 'lp_disclosure' | 'sample'
+  add column if not exists source_url           text,
+  add column if not exists source_date          date;
+
+create index if not exists commitments_gp_idx on public.commitments (gp_company_id);
+
+update public.commitments
+   set source = 'sample'
+ where source is null and external_key is null;
+
+-- --- Team lists and saved searches ----------------------------------------
+create table if not exists public.directory_lists (
+  id          uuid primary key default gen_random_uuid(),
+  name        text not null,
+  description text,
+  owner_id    uuid references public.profiles (id) on delete set null,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
+);
+
+create table if not exists public.directory_list_items (
+  id         uuid primary key default gen_random_uuid(),
+  list_id    uuid not null references public.directory_lists (id) on delete cascade,
+  company_id uuid not null references public.companies (id) on delete cascade,
+  note       text,
+  added_by   uuid references public.profiles (id) on delete set null,
+  created_at timestamptz not null default now(),
+  unique (list_id, company_id)
+);
+create index if not exists directory_list_items_company_idx on public.directory_list_items (company_id);
+
+create table if not exists public.saved_searches (
+  id         uuid primary key default gen_random_uuid(),
+  name       text not null,
+  query      text,
+  filters    jsonb not null default '{}'::jsonb,
+  owner_id   uuid references public.profiles (id) on delete set null,
+  created_at timestamptz not null default now()
+);
+
+-- One row per workbook import: what came in and what it changed.
+create table if not exists public.directory_imports (
+  id          uuid primary key default gen_random_uuid(),
+  filename    text,
+  stats       jsonb not null default '{}'::jsonb,
+  result      jsonb not null default '{}'::jsonb,
+  imported_by uuid references public.profiles (id) on delete set null,
+  created_at  timestamptz not null default now()
+);
+
+drop trigger if exists directory_lists_set_updated_at on public.directory_lists;
+create trigger directory_lists_set_updated_at
+  before update on public.directory_lists
+  for each row execute function public.set_updated_at();
+
+alter table public.directory_lists      enable row level security;
+alter table public.directory_list_items enable row level security;
+alter table public.saved_searches       enable row level security;
+alter table public.directory_imports    enable row level security;
+
+drop policy if exists "directory_lists_read" on public.directory_lists;
+create policy "directory_lists_read" on public.directory_lists for select using (true);
+drop policy if exists "directory_list_items_read" on public.directory_list_items;
+create policy "directory_list_items_read" on public.directory_list_items for select using (true);
+drop policy if exists "saved_searches_read" on public.saved_searches;
+create policy "saved_searches_read" on public.saved_searches for select using (true);
+drop policy if exists "directory_imports_read" on public.directory_imports;
+create policy "directory_imports_read" on public.directory_imports for select using (true);
+
+-- ##################################################################
+-- ## Fund lineup: private funds named on Form ADV Schedule D, with
+-- ## the providers each filing ties them to (0014)
+-- ##################################################################
+
+alter table public.funds
+  add column if not exists name_filed        text,  -- exactly as filed
+  add column if not exists vehicle_kind      text,  -- from the name: Feeder, Co-investment, Master ...
+  add column if not exists domicile          text,  -- only when the legal form fixes it (SCSp, ICAV)
+  add column if not exists currency          text,  -- a currency class the name states
+  add column if not exists service_providers jsonb not null default '[]'::jsonb, -- [{role, key, brand}]
+  add column if not exists filed             text,  -- which ADV filings named it
+  add column if not exists source_url        text;
+
+create index if not exists funds_source_idx on public.funds (source);
+
+-- ##################################################################
+-- ## Portfolio companies: what each GP owns or has owned, with the
+-- ## source each one was found in (0015)
+-- ##################################################################
+
+create table if not exists public.portfolio_companies (
+  id            uuid primary key default gen_random_uuid(),
+  gp_company_id uuid not null references public.companies (id) on delete cascade,
+  external_key  text unique,          -- "<gp id>:<name slug>", one row per company per GP
+  name          text not null,
+  domain        text,
+  description   text,
+  sector        text,
+  hq            text,
+  status        text,                 -- 'current' | 'realized', only when the source says
+  invested_year integer,
+  exit_year     integer,
+  fund_name     text,
+  source        text not null default 'manual', -- 'web_research' | 'manual'
+  source_url    text,
+  added_by      uuid references public.profiles (id) on delete set null,
+  created_at    timestamptz not null default now()
+);
+create index if not exists portfolio_companies_gp_idx on public.portfolio_companies (gp_company_id);
+
+alter table public.portfolio_companies enable row level security;
+drop policy if exists "portfolio_companies_read" on public.portfolio_companies;
+create policy "portfolio_companies_read" on public.portfolio_companies for select using (true);
+
+-- ##################################################################
+-- ## Intelligence: deals and signals per asset class, sports teams,
+-- ## their owners and the investors in sport (0016)
+-- ##################################################################
+
+create table if not exists public.sports_investors (
+  id             uuid primary key default gen_random_uuid(),
+  external_key   text unique,
+  name           text not null,
+  investor_type  text,                -- private_equity | sovereign_wealth | family_office | consortium | corporate | individual | ...
+  hq             text,
+  domain         text,
+  aum            numeric,             -- fund size or AUM as a source states it
+  aum_currency   text,
+  aum_as_of      text,
+  aum_source_url text,
+  summary        text,
+  holdings       jsonb not null default '[]'::jsonb, -- [{target, sport, stake_pct, since_year, source_url}]
+  company_id     uuid references public.companies (id) on delete set null, -- the directory firm, when it is one
+  source_url     text,
+  source         text not null default 'web_research',
+  created_at     timestamptz not null default now(),
+  updated_at     timestamptz not null default now()
+);
+
+create table if not exists public.sports_teams (
+  id                          uuid primary key default gen_random_uuid(),
+  external_key                text unique,    -- "<league slug>--<team slug>"
+  name                        text not null,
+  short_name                  text,
+  sport                       text not null default 'football',
+  league                      text,
+  country                     text,
+  city                        text,
+  stadium                     text,
+  stadium_capacity            integer,
+  stadium_capacity_source_url text,
+  founded_year                integer,
+  domain                      text,
+  ownership_type              text,           -- individual_family | consortium | private_equity | sovereign_state | corporate | member_owned | public_listed | municipal | other | unknown
+  ownership_summary           text,
+  ownership_source_url        text,
+  revenue                     numeric,
+  revenue_currency            text,
+  revenue_season              text,
+  revenue_source_name         text,
+  revenue_source_url          text,
+  valuation                   numeric,
+  valuation_currency          text,
+  valuation_year              integer,
+  valuation_source_name       text,
+  valuation_source_url        text,
+  social_followers            bigint,
+  social_as_of                text,
+  social_source_url           text,
+  social_platforms            jsonb not null default '[]'::jsonb, -- [{platform, followers, as_of, source_url}]
+  notes                       text,
+  sources                     jsonb not null default '[]'::jsonb, -- [url]
+  verification                jsonb not null default '[]'::jsonb, -- [{field, verdict, claimed, found, note, source_url}]
+  source                      text not null default 'web_research',
+  created_at                  timestamptz not null default now(),
+  updated_at                  timestamptz not null default now()
+);
+create index if not exists sports_teams_league_idx on public.sports_teams (league);
+
+create table if not exists public.sports_team_owners (
+  id                 uuid primary key default gen_random_uuid(),
+  team_id            uuid not null references public.sports_teams (id) on delete cascade,
+  name               text not null,
+  kind               text,               -- individual | family | fund | company | state | members | other
+  institutional      boolean not null default false, -- a fund, sovereign or corporate investor rather than a founder-owner
+  investor_type      text,               -- private_equity | private_credit | sovereign_wealth | family_office | corporate | institutional
+  stake_pct          numeric,
+  since_year         integer,
+  amount             numeric,
+  currency           text,
+  valuation_at_entry numeric,
+  investor_id        uuid references public.sports_investors (id) on delete set null,
+  company_id         uuid references public.companies (id) on delete set null,
+  source_url         text,
+  created_at         timestamptz not null default now()
+);
+create index if not exists sports_team_owners_team_idx on public.sports_team_owners (team_id);
+create index if not exists sports_team_owners_company_idx on public.sports_team_owners (company_id);
+create index if not exists sports_team_owners_investor_idx on public.sports_team_owners (investor_id);
+
+create table if not exists public.deals (
+  id                  uuid primary key default gen_random_uuid(),
+  external_key        text unique,
+  date                date,
+  date_text           text,
+  kind                text not null,      -- stake_sale | acquisition | minority_investment | debt_financing | stadium_financing | league_media_rights | league_stake | expansion_fee | fund_close | fundraise | company_acquisition | company_exit | secondary | other
+  asset_class         text not null,      -- sports | private_equity | private_credit | venture_capital | real_estate | infrastructure | secondaries | hedge_funds | other
+  sport               text,
+  target              text not null,
+  target_kind         text,               -- club | team | league | competition | company | fund | asset | other
+  target_country      text,
+  target_team_id      uuid references public.sports_teams (id) on delete set null,
+  target_company_id   uuid references public.companies (id) on delete set null,
+  target_fund_id      uuid references public.funds (id) on delete set null,
+  investor            text not null,
+  investor_type       text,
+  investor_company_id uuid references public.companies (id) on delete set null,
+  investor_id         uuid references public.sports_investors (id) on delete set null,
+  seller              text,
+  stake_pct           numeric,
+  amount              numeric,
+  currency            text,
+  valuation           numeric,
+  valuation_currency  text,
+  headline            text not null,
+  summary             text,
+  source_name         text,
+  source_url          text,
+  source              text not null default 'web_research', -- web_research | manual
+  added_by            uuid references public.profiles (id) on delete set null,
+  created_at          timestamptz not null default now()
+);
+create index if not exists deals_class_date_idx on public.deals (asset_class, date desc);
+create index if not exists deals_investor_company_idx on public.deals (investor_company_id);
+create index if not exists deals_target_company_idx on public.deals (target_company_id);
+create index if not exists deals_target_team_idx on public.deals (target_team_id);
+create index if not exists deals_investor_idx on public.deals (investor_id);
+
+create table if not exists public.signals (
+  id           uuid primary key default gen_random_uuid(),
+  external_key text unique,          -- the source URL, normalised
+  date         date,
+  asset_class  text not null,
+  kind         text not null,        -- deal | fund_close | fundraise | people | regulatory | performance | news
+  headline     text not null,
+  summary      text,
+  entities     text[] not null default '{}',
+  company_ids  uuid[] not null default '{}', -- directory firms the headline names
+  source_name  text,
+  source_url   text,
+  source       text not null default 'web_research', -- web_research | refresh
+  created_at   timestamptz not null default now()
+);
+create index if not exists signals_class_date_idx on public.signals (asset_class, date desc);
+-- A profile asks "which signals name this firm": company_ids @> '{id}' needs GIN.
+create index if not exists signals_company_ids_idx on public.signals using gin (company_ids);
+
+create table if not exists public.benchmarks (
+  id           uuid primary key default gen_random_uuid(),
+  external_key text unique,          -- class:strategy:metric:period:publisher
+  asset_class  text not null,
+  strategy     text,                 -- strategy key (lib/directory/strategies.ts) or null for the whole class
+  metric       text not null,        -- fundraising_total | dry_powder | aum | median_net_irr | index_return | default_rate | spread_bps | deal_volume | fund_count | other
+  label        text not null,        -- as the publisher words it
+  value        numeric,
+  unit         text,                 -- USD | EUR | GBP | pct | bps | x | count
+  period       text,                 -- "2025", "Q2 2026", "vintage 2019", "12m to Jun 2026"
+  geography    text,
+  publisher    text,
+  published_on date,
+  source_url   text not null,
+  note         text,
+  source       text not null default 'web_research',
+  created_at   timestamptz not null default now()
+);
+create index if not exists benchmarks_class_idx on public.benchmarks (asset_class, strategy);
+
+drop trigger if exists sports_teams_set_updated_at on public.sports_teams;
+create trigger sports_teams_set_updated_at
+  before update on public.sports_teams
+  for each row execute function public.set_updated_at();
+drop trigger if exists sports_investors_set_updated_at on public.sports_investors;
+create trigger sports_investors_set_updated_at
+  before update on public.sports_investors
+  for each row execute function public.set_updated_at();
+
+alter table public.sports_investors   enable row level security;
+alter table public.sports_teams       enable row level security;
+alter table public.sports_team_owners enable row level security;
+alter table public.deals              enable row level security;
+alter table public.signals            enable row level security;
+alter table public.benchmarks         enable row level security;
+
+drop policy if exists "sports_investors_read" on public.sports_investors;
+create policy "sports_investors_read" on public.sports_investors for select using (true);
+drop policy if exists "sports_teams_read" on public.sports_teams;
+create policy "sports_teams_read" on public.sports_teams for select using (true);
+drop policy if exists "sports_team_owners_read" on public.sports_team_owners;
+create policy "sports_team_owners_read" on public.sports_team_owners for select using (true);
+drop policy if exists "deals_read" on public.deals;
+create policy "deals_read" on public.deals for select using (true);
+drop policy if exists "signals_read" on public.signals;
+create policy "signals_read" on public.signals for select using (true);
+drop policy if exists "benchmarks_read" on public.benchmarks;
+create policy "benchmarks_read" on public.benchmarks for select using (true);
+
+
+-- ##################################################################
+-- ## One CFO/COO portfolio (0017)
 -- ##################################################################
 -- The three CFO/COO series fold into 'cfo-coo'. The app already reads the old
 -- ids as that; this tidies stored choices. Idempotent.

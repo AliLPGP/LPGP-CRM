@@ -1,22 +1,50 @@
-import { FileSpreadsheet, Plug } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Database, FileSpreadsheet, Plug } from "lucide-react";
+import { getSessionUser } from "@/lib/auth";
+import { getLastDirectoryImport } from "@/lib/directory/queries";
 import { lushaConfigured } from "@/lib/lusha";
 import { isAdminConfigured } from "@/lib/supabase/admin";
 import { ExcelUpload } from "@/components/excel-upload";
 import { ImportTool } from "@/components/import-tool";
+import { PageHeader } from "@/components/page-header";
+import { Button } from "@/components/ui/button";
+import { timeAgo } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
 export const metadata = { title: "Import — LPGP Connect" };
 
-export default function ImportPage() {
+export default async function ImportPage() {
+  const [user, last] = await Promise.all([getSessionUser(), getLastDirectoryImport()]);
   return (
     <div className="mx-auto max-w-4xl px-4 md:px-6 py-8 space-y-10">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Import data</h1>
-        <p className="text-muted-foreground mt-1 max-w-2xl">
-          Bring your existing book into the CRM from a spreadsheet. Companies are created and
-          de-duplicated automatically; re-uploading updates matching people instead of duplicating
-          them.
-        </p>
-      </div>
+      <PageHeader
+        eyebrow="Intelligence database"
+        title="Import data"
+        description="Bring your book into the CRM. Companies are created and de-duplicated automatically; re-uploading updates what's already there instead of duplicating it."
+      />
+
+      <section className="sheen flex flex-col gap-4 rounded-2xl border bg-card p-5 sm:flex-row sm:items-center">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent text-accent-foreground">
+          <Database className="h-5 w-5" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <h2 className="font-semibold">Master Directory workbook</h2>
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            Every GP, LP and provider in the team&rsquo;s capture file — with key contacts, Form ADV facts and provider
+            links, and public LP commitments — into the database behind Discover.
+            {last ? ` Last imported ${timeAgo(last.created_at)}.` : ""}
+          </p>
+        </div>
+        {user?.role === "admin" ? (
+          <Button asChild>
+            <Link href="/import/directory">
+              Import workbook <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        ) : (
+          <span className="text-xs text-muted-foreground">Admins only</span>
+        )}
+      </section>
 
       <section className="space-y-4">
         <div className="flex items-center gap-2">

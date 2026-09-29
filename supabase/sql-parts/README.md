@@ -22,11 +22,37 @@ the problem entirely.
 
 ## Order
 
-1. **`1-schema/schema_01_of_08.sql` … `schema_08_of_08.sql`** — every table,
+1. **`1-schema/schema_01_of_15.sql` … `schema_15_of_15.sql`** — every table,
    type, index, policy and trigger. This is the whole database. Required.
 2. **`2-seed/seed_01_of_12.sql` … `seed_12_of_12.sql`** — sample firms,
    contacts, funds, commitments and service relationships. Optional: skip it if
    you're importing your own data.
+
+**Upgrading a database that predates the directory (migrations `0001`–`0012`
+only)?** Run only **`3-directory/directory_01_of_08.sql` …
+`directory_08_of_08.sql`** — migrations `0013`–`0016`: the
+directory-intelligence tables and columns, the Form ADV fund lineup, portfolio
+companies, and deals, signals, sports and benchmarks. It is the same SQL as
+the end of the schema parts, cut on its own so you don't have to work out
+where it starts. A database that already has `0013`–`0015` needs only
+**`4-intelligence/intelligence_01_of_04.sql` … `_04_of_04.sql`** (migration
+`0016`). Then load the data in the app: **Import → Master directory**.
+(Discover, signed in as an admin, shows which of these a database is still
+missing and serves exactly those parts.)
+
+**The intelligence dataset needs no SQL** — the button on Import → Master
+directory loads it. If you'd rather paste it (a database the app can't reach
+yet), **`5-intelligence-data/data_001_of_120.sql` … `_120_of_120.sql`** holds
+the same clubs, investors, deals, signals, LP commitments, benchmarks and
+portfolio companies, after `1-schema` (or `3-directory`/`4-intelligence`).
+`../intelligence-data.sql` is the whole set in one file for `psql` or the
+Supabase CLI, where a paste can't truncate.
+
+**One CFO/COO portfolio (migration `0017`)** is a single idempotent `update`
+on `event_targets`, folding the three old CFO series ids into `cfo-coo`. It is
+the last statement of `1-schema`; a database that already has everything else
+can paste `../migrations/0017_series_merge.sql` on its own. The app reads the
+old ids correctly either way, so nothing waits on it.
 
 Run one file, wait for "Success", run the next. If a part errors, fix that
 before moving on — later parts build on earlier ones.
@@ -41,8 +67,11 @@ lose track of where you were, start over from part 1.
 
 | Set | Parts | Largest part |
 | --- | --- | --- |
-| `1-schema` | 8 | 3.6 KB |
+| `1-schema` | 15 | 3.6 KB |
 | `2-seed` | 12 | 8.1 KB |
+| `3-directory` | 8 | 3.6 KB |
+| `4-intelligence` | 4 | 3.5 KB |
+| `5-intelligence-data` | 120 | 8.1 KB |
 
 The schema parts are deliberately under 4 KB. The seed parts can't go that low —
 a single `insert` of a dozen firms is bigger than that, and splitting inside one
@@ -54,11 +83,22 @@ would be exactly the bug these files exist to avoid.
 
 ```sh
 python3 tools/split_sql.py schema.sql sql-parts/1-schema schema --max-bytes=3500
+cat migrations/0013_directory_intelligence.sql migrations/0014_fund_lineup.sql \
+    migrations/0015_portfolio_companies.sql migrations/0016_intelligence.sql > /tmp/directory.sql
+python3 tools/split_sql.py /tmp/directory.sql sql-parts/3-directory directory --max-bytes=3500
+python3 tools/split_sql.py migrations/0016_intelligence.sql sql-parts/4-intelligence intelligence --max-bytes=3500
 
 cat seed.sql seed_companies_2.sql seed_companies_3.sql \
     seed_contacts_2.sql seed_contacts_3.sql seed_funds.sql \
     seed_commitments.sql seed_service_relationships.sql > /tmp/seed_only.sql
 python3 tools/split_sql.py /tmp/seed_only.sql sql-parts/2-seed seed --max-bytes=8000
+```
+
+The dataset parts come from `dataset.json` instead of a `.sql` source, so they
+have their own tool, which also writes the one-file version:
+
+```sh
+python3 tools/dataset_to_sql.py ../data/intelligence/dataset.json sql-parts/5-intelligence-data --whole=intelligence-data.sql
 ```
 
 It only cuts on real statement boundaries — its scanner knows about quoted

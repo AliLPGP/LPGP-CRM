@@ -1,0 +1,28 @@
+-- data_120_of_120.sql: intelligence dataset 2026-09-29, part 120 of 120. Run in order; safe to re-run.
+
+insert into public.portfolio_companies (gp_company_id, external_key, name, domain, description, sector, hq, status, invested_year, exit_year, fund_name, source, source_url)
+  select (select id from public.companies where lower(name) = lower('Vista Equity Partners') limit 1), (select id from public.companies where lower(name) = lower('Vista Equity Partners') limit 1) || ':' || 'arcee-ai', 'Arcee AI', null, 'Investment on 16 September 2026.', 'AI software', null, 'current', 2026, null, null, 'web_research', 'https://pitchbook.com/profiles/investor/10096-12'
+  where (select id from public.companies where lower(name) = lower('Vista Equity Partners') limit 1) is not null
+  on conflict (external_key) do update set name = excluded.name, domain = excluded.domain, description = excluded.description, sector = excluded.sector, hq = excluded.hq, status = excluded.status, invested_year = excluded.invested_year, exit_year = excluded.exit_year, fund_name = excluded.fund_name, source_url = excluded.source_url;
+
+insert into public.portfolio_companies (gp_company_id, external_key, name, domain, description, sector, hq, status, invested_year, exit_year, fund_name, source, source_url)
+  select (select id from public.companies where lower(name) = lower('Vista Equity Partners') limit 1), (select id from public.companies where lower(name) = lower('Vista Equity Partners') limit 1) || ':' || 'cloud-software-group', 'Cloud Software Group', null, 'Fund VIII investment, April 2025.', 'Enterprise software', null, 'current', 2025, null, null, 'web_research', 'https://pitchbook.com/profiles/fund/19269-55F'
+  where (select id from public.companies where lower(name) = lower('Vista Equity Partners') limit 1) is not null
+  on conflict (external_key) do update set name = excluded.name, domain = excluded.domain, description = excluded.description, sector = excluded.sector, hq = excluded.hq, status = excluded.status, invested_year = excluded.invested_year, exit_year = excluded.exit_year, fund_name = excluded.fund_name, source_url = excluded.source_url;
+
+insert into public.portfolio_companies (gp_company_id, external_key, name, domain, description, sector, hq, status, invested_year, exit_year, fund_name, source, source_url)
+  select (select id from public.companies where lower(name) = lower('Vista Equity Partners') limit 1), (select id from public.companies where lower(name) = lower('Vista Equity Partners') limit 1) || ':' || 'smartsheet', 'Smartsheet', null, 'Vista Fund VIII and Blackstone Capital Partners IX completed the acquisition of a 94.9% stake on 21 January 2025.', 'Collaboration software', 'Bellevue, Washington', 'current', 2025, null, null, 'web_research', 'https://www.marketscreener.com/quote/stock/SMARTSHEET-INC-43180305/news/Vista-Equity-Partners-Fund-VIII-and-Vepf-Viii-SPV-I-L-P-managed-by-Vista-Equity-Partners-Managemen-48839465/'
+  where (select id from public.companies where lower(name) = lower('Vista Equity Partners') limit 1) is not null
+  on conflict (external_key) do update set name = excluded.name, domain = excluded.domain, description = excluded.description, sector = excluded.sector, hq = excluded.hq, status = excluded.status, invested_year = excluded.invested_year, exit_year = excluded.exit_year, fund_name = excluded.fund_name, source_url = excluded.source_url;
+
+insert into public.portfolio_companies (gp_company_id, external_key, name, domain, description, sector, hq, status, invested_year, exit_year, fund_name, source, source_url)
+  select (select id from public.companies where lower(name) = lower('Francisco Partners') limit 1), (select id from public.companies where lower(name) = lower('Francisco Partners') limit 1) || ':' || 'teamsystem', 'TeamSystem', null, 'Investment on 11 September 2026.', 'Business software', 'Italy', 'current', 2026, null, null, 'web_research', 'https://tracxn.com/d/private-equity/francisco-partners/__0lPOHM0zHmlW6sZ3iAJGlJ7F919WOJWmUGFFecOlxXk'
+  where (select id from public.companies where lower(name) = lower('Francisco Partners') limit 1) is not null
+  on conflict (external_key) do update set name = excluded.name, domain = excluded.domain, description = excluded.description, sector = excluded.sector, hq = excluded.hq, status = excluded.status, invested_year = excluded.invested_year, exit_year = excluded.exit_year, fund_name = excluded.fund_name, source_url = excluded.source_url;
+
+insert into public.portfolio_companies (gp_company_id, external_key, name, domain, description, sector, hq, status, invested_year, exit_year, fund_name, source, source_url)
+  select (select id from public.companies where lower(name) = lower('Francisco Partners') limit 1), (select id from public.companies where lower(name) = lower('Francisco Partners') limit 1) || ':' || 'weave', 'Weave', null, 'Stake acquired 18 August 2026.', 'Healthcare software', null, 'current', 2026, null, null, 'web_research', 'https://tracxn.com/d/private-equity/francisco-partners/__0lPOHM0zHmlW6sZ3iAJGlJ7F919WOJWmUGFFecOlxXk'
+  where (select id from public.companies where lower(name) = lower('Francisco Partners') limit 1) is not null
+  on conflict (external_key) do update set name = excluded.name, domain = excluded.domain, description = excluded.description, sector = excluded.sector, hq = excluded.hq, status = excluded.status, invested_year = excluded.invested_year, exit_year = excluded.exit_year, fund_name = excluded.fund_name, source_url = excluded.source_url;
+
+insert into public.directory_imports (filename, stats) values ('intelligence-dataset@2026-09-29', '{"via": "sql-parts", "teams": 188, "deals": 139}'::jsonb);

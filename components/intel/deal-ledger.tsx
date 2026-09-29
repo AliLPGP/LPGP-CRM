@@ -97,7 +97,7 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
   }, [rows]);
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[220px_minmax(0,1fr)]">
+    <div className="grid gap-4 xl:grid-cols-[200px_minmax(0,1fr)]">
       <aside className="space-y-4">
         <div className="relative">
           <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
@@ -196,9 +196,7 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
                 <thead>
                   <tr>
                     <th>Date</th>
-                    <th>Deal</th>
-                    <th>Investor</th>
-                    <th>Target</th>
+                    <th>Deal · investor → target</th>
                     <th>Kind</th>
                     <th>Class</th>
                     <th className="num">Stake</th>
@@ -211,29 +209,26 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
                   {rows.slice(0, shown).map((d) => {
                     const c = ASSET_CLASS_BY_KEY[d.asset_class as AssetClassKey];
                     return (
-                      <tr key={d.id}>
+                      <tr key={d.id} className="linked">
                         <td className="whitespace-nowrap text-muted-foreground">{dateLabel(d.date, d.date_text)}</td>
-                        <td className="min-w-[280px] max-w-[480px]">
-                          <div className="font-medium leading-snug">{d.headline}</div>
-                          {d.summary ? <div className="mt-0.5 line-clamp-2 text-[11.5px] leading-snug text-muted-foreground">{d.summary}</div> : null}
-                        </td>
-                        <td className="whitespace-nowrap">
-                          {d.investor_company_id ? (
-                            <Link href={`/companies/${d.investor_company_id}`} className="font-medium">
-                              {d.investor}
-                            </Link>
-                          ) : d.investor_id ? (
-                            <Link href={`/database/sports/investors/${d.investor_id}`} className="font-medium">
-                              {d.investor}
-                            </Link>
-                          ) : (
-                            d.investor
-                          )}
-                          {d.investor_type ? <div className="text-[10.5px] text-muted-foreground">{INVESTOR_TYPE_LABEL[d.investor_type] ?? d.investor_type}</div> : null}
-                        </td>
-                        <td className="whitespace-nowrap">
-                          {d.target_team_id ? <Link href={`/database/sports/${d.target_team_id}`}>{d.target}</Link> : d.target_company_id ? <Link href={`/companies/${d.target_company_id}`}>{d.target}</Link> : d.target}
-                          <div className="text-[10.5px] text-muted-foreground">{[d.sport ? SPORT_LABEL[d.sport] ?? d.sport : null, d.target_country].filter(Boolean).join(" · ")}</div>
+                        <td className="min-w-[260px] max-w-[380px]">
+                          <Link href={`/database/deals/${d.id}`} className="cover block font-medium leading-snug">
+                            {d.headline}
+                          </Link>
+                          <div className="mt-0.5 text-[11.5px] leading-snug">
+                            {d.investor_company_id ? (
+                              <Link href={`/companies/${d.investor_company_id}`}>{d.investor}</Link>
+                            ) : d.investor_id ? (
+                              <Link href={`/database/sports/investors/${d.investor_id}`}>{d.investor}</Link>
+                            ) : (
+                              <span>{d.investor}</span>
+                            )}
+                            {d.investor_type ? <span className="text-muted-foreground"> ({INVESTOR_TYPE_LABEL[d.investor_type] ?? d.investor_type})</span> : null}
+                            <span className="text-muted-foreground"> → </span>
+                            {d.target_team_id ? <Link href={`/database/sports/${d.target_team_id}`}>{d.target}</Link> : d.target_company_id ? <Link href={`/companies/${d.target_company_id}`}>{d.target}</Link> : <span>{d.target}</span>}
+                            <span className="text-muted-foreground">{[d.sport ? SPORT_LABEL[d.sport] ?? d.sport : null, d.target_country].filter(Boolean).map((s) => ` · ${s}`).join("")}</span>
+                          </div>
+                          {d.summary ? <div className="mt-0.5 line-clamp-1 text-[11px] leading-snug text-muted-foreground">{d.summary}</div> : null}
                         </td>
                         <td>
                           <Tag>{DEAL_KIND_LABEL[d.kind] ?? d.kind}</Tag>

@@ -39,9 +39,7 @@ export function DealTable({ deals, showClass = true, compact = false }: { deals:
         <thead>
           <tr>
             <th>Date</th>
-            <th>Deal</th>
-            {!compact ? <th>Investor</th> : null}
-            {!compact ? <th>Target</th> : null}
+            <th>{compact ? "Deal" : "Deal · investor → target"}</th>
             <th>Kind</th>
             {showClass ? <th>Class</th> : null}
             <th className="num">Stake</th>
@@ -52,40 +50,29 @@ export function DealTable({ deals, showClass = true, compact = false }: { deals:
         </thead>
         <tbody>
           {deals.map((d) => (
-            <tr key={d.id}>
+            <tr key={d.id} className="linked">
               <td className="whitespace-nowrap text-muted-foreground">{dateLabel(d.date, d.date_text)}</td>
-              <td className="min-w-[260px] max-w-[460px]">
-                <div className="font-medium leading-snug">{d.headline}</div>
-                {d.summary && !compact ? <div className="mt-0.5 line-clamp-2 text-[11.5px] leading-snug text-muted-foreground">{d.summary}</div> : null}
+              <td className={compact ? "min-w-[200px] max-w-[420px]" : "min-w-[280px] max-w-[520px]"}>
+                <Link href={`/database/deals/${d.id}`} className="cover block font-medium leading-snug">
+                  {d.headline}
+                </Link>
+                {!compact ? (
+                  <div className="mt-0.5 text-[11.5px] leading-snug">
+                    {d.investor_company_id ? (
+                      <Link href={`/companies/${d.investor_company_id}`}>{d.investor}</Link>
+                    ) : d.investor_id ? (
+                      <Link href={`/database/sports/investors/${d.investor_id}`}>{d.investor}</Link>
+                    ) : (
+                      <span>{d.investor}</span>
+                    )}
+                    {d.investor_type ? <span className="text-muted-foreground"> ({INVESTOR_TYPE_LABEL[d.investor_type] ?? d.investor_type})</span> : null}
+                    <span className="text-muted-foreground"> → </span>
+                    {d.target_team_id ? <Link href={`/database/sports/${d.target_team_id}`}>{d.target}</Link> : d.target_company_id ? <Link href={`/companies/${d.target_company_id}`}>{d.target}</Link> : <span>{d.target}</span>}
+                    {d.target_country ? <span className="text-muted-foreground"> · {d.target_country}</span> : null}
+                  </div>
+                ) : null}
+                {d.summary && !compact ? <div className="mt-0.5 line-clamp-1 text-[11px] leading-snug text-muted-foreground">{d.summary}</div> : null}
               </td>
-              {!compact ? (
-                <td className="whitespace-nowrap">
-                  {d.investor_company_id ? (
-                    <Link href={`/companies/${d.investor_company_id}`} className="font-medium">
-                      {d.investor}
-                    </Link>
-                  ) : d.investor_id ? (
-                    <Link href={`/database/sports/investors/${d.investor_id}`} className="font-medium">
-                      {d.investor}
-                    </Link>
-                  ) : (
-                    d.investor
-                  )}
-                  {d.investor_type ? <div className="text-[10.5px] text-muted-foreground">{INVESTOR_TYPE_LABEL[d.investor_type] ?? d.investor_type}</div> : null}
-                </td>
-              ) : null}
-              {!compact ? (
-                <td className="whitespace-nowrap">
-                  {d.target_team_id ? (
-                    <Link href={`/database/sports/${d.target_team_id}`}>{d.target}</Link>
-                  ) : d.target_company_id ? (
-                    <Link href={`/companies/${d.target_company_id}`}>{d.target}</Link>
-                  ) : (
-                    d.target
-                  )}
-                  {d.target_country ? <div className="text-[10.5px] text-muted-foreground">{d.target_country}</div> : null}
-                </td>
-              ) : null}
               <td>
                 <Tag>{DEAL_KIND_LABEL[d.kind] ?? d.kind}</Tag>
               </td>

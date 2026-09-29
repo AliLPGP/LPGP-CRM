@@ -41,7 +41,6 @@ import {
   Overview,
   ProviderClients,
   SimilarFirms,
-  Sources,
   type RoleRank,
 } from "@/components/directory/profile-sections";
 import { FundLineup } from "@/components/directory/fund-lineup";
@@ -250,7 +249,6 @@ export default async function CompanyProfile({
                 </ul>
               </Box>
             ) : null}
-            <Sources company={company} />
             {isAdmin ? (
               <details className="rounded-[4px] border bg-card" data-no-print>
                 <summary className="cursor-pointer px-3 py-2 text-[12px] font-medium text-muted-foreground hover:text-foreground">Edit firm details</summary>

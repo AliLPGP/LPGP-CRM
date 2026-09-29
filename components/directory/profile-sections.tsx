@@ -604,39 +604,6 @@ export function SimilarFirms({ hits, companyId }: { hits: SimilarHit[]; companyI
   );
 }
 
-export function Sources({ company }: { company: Company }) {
-  const sources = Array.isArray(company.sources) ? company.sources : [];
-  const ids = Array.isArray(company.external_ids) ? company.external_ids : [];
-  if (!sources.length && !ids.length) return null;
-  return (
-    <Panel icon={<FileText className="h-4 w-4" />} title="Sources">
-      <div className="space-y-3 px-5 py-4 text-sm">
-        {ids.length ? (
-          <p className="text-muted-foreground">
-            Master Directory {ids.length > 1 ? "rows" : "row"} <span className="tabular text-foreground">{ids.join(", ")}</span>
-            {company.catalog_updated_at ? <> · catalogued {company.catalog_updated_at.slice(0, 10)}</> : null}
-            {company.lusha_verified_on ? <> · Lusha verified {company.lusha_verified_on}</> : null}
-          </p>
-        ) : null}
-        {sources.length ? (
-          <ul className="space-y-1">
-            {sources.map((s) => (
-              <li key={s.label} className="truncate text-muted-foreground">
-                {s.url ? (
-                  <a href={s.url} target="_blank" rel="noreferrer" className="hover:text-primary">
-                    {s.label} <ArrowUpRight className="inline h-3 w-3" />
-                  </a>
-                ) : (
-                  s.label
-                )}
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </div>
-    </Panel>
-  );
-}
 
 export function ConnectableBadge() {
   return (

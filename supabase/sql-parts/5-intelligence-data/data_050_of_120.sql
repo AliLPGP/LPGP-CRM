@@ -1,5 +1,24 @@
 -- data_050_of_120.sql: intelligence dataset 2026-09-29, part 50 of 120. Run in order; safe to re-run.
 
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--san-jose-earthquakes');
+
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--seattle-sounders-fc');
+
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--sporting-kansas-city');
+
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--st-louis-city-sc');
+
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--toronto-fc');
+
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--vancouver-whitecaps-fc');
+
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'premier-league--arsenal');
+
+insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
+  values ((select id from public.sports_teams where external_key = 'premier-league--arsenal'), 'Stan Kroenke / Kroenke Sports & Entertainment (KSE UK Inc)', 'individual', false, null, 100, 2018, null, null, null, (select id from public.sports_investors where lower(name) = lower('Stan Kroenke / Kroenke Sports & Entertainment (KSE UK Inc)') limit 1), null, 'https://en.wikipedia.org/wiki/Ownership_of_Arsenal_F.C._&_W.F.C.');
+
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'premier-league--aston-villa');
+
 insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
   values ((select id from public.sports_teams where external_key = 'premier-league--aston-villa'), 'V Sports (holding company)', 'company', false, null, 100, 2018, null, null, null, (select id from public.sports_investors where lower(name) = lower('V Sports (holding company)') limit 1), null, 'https://www.avfc.co.uk/news/2023/december/15/v-sports-announces-investment-from-atairos/');
 
@@ -31,9 +50,3 @@ insert into public.sports_team_owners (team_id, name, kind, institutional, inves
 
 insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
   values ((select id from public.sports_teams where external_key = 'premier-league--afc-bournemouth'), 'Ryan Sports Ventures (minority stake in BKFC)', 'family', false, null, null, 2023, null, null, null, (select id from public.sports_investors where lower(name) = lower('Ryan Sports Ventures (minority stake in BKFC)') limit 1), null, 'https://www.sportico.com/business/sales/2023/chicago-bears-investors-buy-bill-foleys-bournemouth-1234739606/');
-
-insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
-  values ((select id from public.sports_teams where external_key = 'premier-league--afc-bournemouth'), 'Cannae Holdings Inc.', 'fund', true, 'corporate', 42.4, 2022, 263000000, 'USD', null, (select id from public.sports_investors where lower(name) = lower('Cannae Holdings Inc.') limit 1), (select id from public.companies where lower(name) = lower('Cannae Holdings Inc.') limit 1), 'https://www.cannaeholdings.com/static-files/cb2a6132-fbee-491f-88aa-f7d1829f5c05');
-
-insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
-  values ((select id from public.sports_teams where external_key = 'premier-league--afc-bournemouth'), 'Ryan Sports Ventures', 'fund', true, 'family_office', null, 2023, null, null, null, (select id from public.sports_investors where lower(name) = lower('Ryan Sports Ventures') limit 1), (select id from public.companies where lower(name) = lower('Ryan Sports Ventures') limit 1), 'https://www.sportico.com/business/sales/2023/chicago-bears-investors-buy-bill-foleys-bournemouth-1234739606/');

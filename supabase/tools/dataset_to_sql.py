@@ -170,9 +170,14 @@ def main():
     for f in os.listdir(outdir):
         if f.endswith(".sql"):
             os.remove(os.path.join(outdir, f))
+    # Two limits: about 8 KB, and well under 100 lines -- a browser paste has
+    # been seen to stop at line 100 whatever the byte count.
     parts, cur = [], []
     for s in stmts:
-        if cur and sum(len(x.encode("utf-8")) + 2 for x in cur) + len(s.encode("utf-8")) > 8000:
+        if cur and (
+            sum(len(x.encode("utf-8")) + 2 for x in cur) + len(s.encode("utf-8")) > 8000
+            or sum(x.count("\n") + 2 for x in cur) + s.count("\n") + 1 > 80
+        ):
             parts.append(cur)
             cur = []
         cur.append(s)

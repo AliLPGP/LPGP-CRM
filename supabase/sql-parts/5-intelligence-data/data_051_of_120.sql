@@ -1,6 +1,12 @@
 -- data_051_of_120.sql: intelligence dataset 2026-09-29, part 51 of 120. Run in order; safe to re-run.
 
 insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
+  values ((select id from public.sports_teams where external_key = 'premier-league--afc-bournemouth'), 'Cannae Holdings Inc.', 'fund', true, 'corporate', 42.4, 2022, 263000000, 'USD', null, (select id from public.sports_investors where lower(name) = lower('Cannae Holdings Inc.') limit 1), (select id from public.companies where lower(name) = lower('Cannae Holdings Inc.') limit 1), 'https://www.cannaeholdings.com/static-files/cb2a6132-fbee-491f-88aa-f7d1829f5c05');
+
+insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
+  values ((select id from public.sports_teams where external_key = 'premier-league--afc-bournemouth'), 'Ryan Sports Ventures', 'fund', true, 'family_office', null, 2023, null, null, null, (select id from public.sports_investors where lower(name) = lower('Ryan Sports Ventures') limit 1), (select id from public.companies where lower(name) = lower('Ryan Sports Ventures') limit 1), 'https://www.sportico.com/business/sales/2023/chicago-bears-investors-buy-bill-foleys-bournemouth-1234739606/');
+
+insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
   values ((select id from public.sports_teams where external_key = 'premier-league--afc-bournemouth'), 'Goldman Sachs (senior secured credit facility, lender)', 'fund', true, 'private_credit', null, 2024, null, null, null, (select id from public.sports_investors where lower(name) = lower('Goldman Sachs (senior secured credit facility, lender)') limit 1), (select id from public.companies where lower(name) = lower('Goldman Sachs (senior secured credit facility, lender)') limit 1), 'https://theesk.org/2026/05/11/the-analysis-series-afc-bournemouth-limited-annual-report-and-financial-statements-for-the-year-ended-30-june-2025/');
 
 delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'premier-league--brentford');
@@ -30,11 +36,3 @@ delete from public.sports_team_owners where team_id = (select id from public.spo
 
 insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
   values ((select id from public.sports_teams where external_key = 'premier-league--brighton-hove-albion'), 'Tony Bloom', 'individual', false, null, 75, 2009, null, null, null, (select id from public.sports_investors where lower(name) = lower('Tony Bloom') limit 1), null, 'https://www.sussexexpress.co.uk/sport/football/brighton-and-hove-albion/revealed-the-staggering-amount-brighton-owner-tony-bloom-has-invested-in-albion-1334468');
-
-insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
-  values ((select id from public.sports_teams where external_key = 'premier-league--brighton-hove-albion'), 'Paul Barber', 'individual', false, null, 1.5, 2025, null, null, null, (select id from public.sports_investors where lower(name) = lower('Paul Barber') limit 1), null, 'https://www.brightonandhovealbion.com/media-article/club-news-paul-barber-investment-tony-bloom-august-2025');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'premier-league--burnley');
-
-insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
-  values ((select id from public.sports_teams where external_key = 'premier-league--burnley'), 'Velocity Sports Partners (ALK Capital)', 'fund', false, null, 84, 2020, null, null, null, (select id from public.sports_investors where lower(name) = lower('Velocity Sports Partners (ALK Capital)') limit 1), null, 'https://alkcapital.com/2023/09/alk-capital-completes-investment-in-burnley-fc/');

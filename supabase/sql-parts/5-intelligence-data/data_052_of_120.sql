@@ -1,6 +1,14 @@
 -- data_052_of_120.sql: intelligence dataset 2026-09-29, part 52 of 120. Run in order; safe to re-run.
 
 insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
+  values ((select id from public.sports_teams where external_key = 'premier-league--brighton-hove-albion'), 'Paul Barber', 'individual', false, null, 1.5, 2025, null, null, null, (select id from public.sports_investors where lower(name) = lower('Paul Barber') limit 1), null, 'https://www.brightonandhovealbion.com/media-article/club-news-paul-barber-investment-tony-bloom-august-2025');
+
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'premier-league--burnley');
+
+insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
+  values ((select id from public.sports_teams where external_key = 'premier-league--burnley'), 'Velocity Sports Partners (ALK Capital)', 'fund', false, null, 84, 2020, null, null, null, (select id from public.sports_investors where lower(name) = lower('Velocity Sports Partners (ALK Capital)') limit 1), null, 'https://alkcapital.com/2023/09/alk-capital-completes-investment-in-burnley-fc/');
+
+insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
   values ((select id from public.sports_teams where external_key = 'premier-league--burnley'), 'Alan Pace', 'individual', false, null, null, 2020, null, null, null, (select id from public.sports_investors where lower(name) = lower('Alan Pace') limit 1), null, 'https://burnleyfootballclub.com/legal-information/legal-information-company-details');
 
 insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
@@ -31,11 +39,3 @@ insert into public.sports_team_owners (team_id, name, kind, institutional, inves
 
 insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
   values ((select id from public.sports_teams where external_key = 'premier-league--chelsea'), 'Hansjörg Wyss', 'individual', false, null, 13.5, 2022, null, null, null, (select id from public.sports_investors where lower(name) = lower('Hansjörg Wyss') limit 1), null, 'https://www.espn.com/soccer/story/_/id/49960706/chelsea-clarlake-capital-todd-boehly-mark-walter-ownership');
-
-insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
-  values ((select id from public.sports_teams where external_key = 'premier-league--chelsea'), 'Clearlake Capital Group', 'fund', true, 'private_equity', 86.5, 2022, null, null, 4250000000, (select id from public.sports_investors where lower(name) = lower('Clearlake Capital Group') limit 1), (select id from public.companies where lower(name) = lower('Clearlake Capital Group') limit 1), 'https://www.espn.com/soccer/story/_/id/37628834/todd-boehly-completes-chelsea-takeover-deal-worth-425bn');
-
-insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
-  values ((select id from public.sports_teams where external_key = 'premier-league--chelsea'), 'Ares Management', 'fund', true, 'private_credit', null, 2023, 500000000, 'GBP', null, (select id from public.sports_investors where lower(name) = lower('Ares Management') limit 1), (select id from public.companies where lower(name) = lower('Ares Management') limit 1), 'https://www.bloomberg.com/news/articles/2023-09-22/chelsea-raises-500-million-of-financing-from-us-investor-ares');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'premier-league--crystal-palace');

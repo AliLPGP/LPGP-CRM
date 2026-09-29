@@ -1,6 +1,14 @@
 -- data_053_of_120.sql: intelligence dataset 2026-09-29, part 53 of 120. Run in order; safe to re-run.
 
 insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
+  values ((select id from public.sports_teams where external_key = 'premier-league--chelsea'), 'Clearlake Capital Group', 'fund', true, 'private_equity', 86.5, 2022, null, null, 4250000000, (select id from public.sports_investors where lower(name) = lower('Clearlake Capital Group') limit 1), (select id from public.companies where lower(name) = lower('Clearlake Capital Group') limit 1), 'https://www.espn.com/soccer/story/_/id/37628834/todd-boehly-completes-chelsea-takeover-deal-worth-425bn');
+
+insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
+  values ((select id from public.sports_teams where external_key = 'premier-league--chelsea'), 'Ares Management', 'fund', true, 'private_credit', null, 2023, 500000000, 'GBP', null, (select id from public.sports_investors where lower(name) = lower('Ares Management') limit 1), (select id from public.companies where lower(name) = lower('Ares Management') limit 1), 'https://www.bloomberg.com/news/articles/2023-09-22/chelsea-raises-500-million-of-financing-from-us-investor-ares');
+
+delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'premier-league--crystal-palace');
+
+insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
   values ((select id from public.sports_teams where external_key = 'premier-league--crystal-palace'), 'Woody Johnson (Robert Wood Johnson IV)', 'individual', false, null, 43, 2025, null, null, null, (select id from public.sports_investors where lower(name) = lower('Woody Johnson (Robert Wood Johnson IV)') limit 1), null, 'https://www.nfl.com/news/jets-owner-woody-johnson-buys-43-stake-in-english-soccer-club-crystal-palace');
 
 insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
@@ -59,27 +67,3 @@ delete from public.sports_team_owners where team_id = (select id from public.spo
 delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--juventus');
 
 delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--lazio');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--lecce');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--ac-milan');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--napoli');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--parma');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--pisa');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--roma');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--sassuolo');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--torino');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'serie-a--udinese');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'super-lig--galatasaray');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'super-lig--fenerbahce');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'super-lig--besiktas');

@@ -79,22 +79,3 @@ delete from public.sports_team_owners where team_id = (select id from public.spo
 delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--real-salt-lake');
 
 delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--san-diego-fc');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--san-jose-earthquakes');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--seattle-sounders-fc');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--sporting-kansas-city');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--st-louis-city-sc');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--toronto-fc');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'major-league-soccer--vancouver-whitecaps-fc');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'premier-league--arsenal');
-
-insert into public.sports_team_owners (team_id, name, kind, institutional, investor_type, stake_pct, since_year, amount, currency, valuation_at_entry, investor_id, company_id, source_url)
-  values ((select id from public.sports_teams where external_key = 'premier-league--arsenal'), 'Stan Kroenke / Kroenke Sports & Entertainment (KSE UK Inc)', 'individual', false, null, 100, 2018, null, null, null, (select id from public.sports_investors where lower(name) = lower('Stan Kroenke / Kroenke Sports & Entertainment (KSE UK Inc)') limit 1), null, 'https://en.wikipedia.org/wiki/Ownership_of_Arsenal_F.C._&_W.F.C.');
-
-delete from public.sports_team_owners where team_id = (select id from public.sports_teams where external_key = 'premier-league--aston-villa');

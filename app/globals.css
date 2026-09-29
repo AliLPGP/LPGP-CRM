@@ -582,10 +582,30 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+/* A row that opens a record: its title link covers the whole row, and every
+   other link in the row sits above that cover so it still works. */
+.desk-table tr.linked {
+  position: relative;
+  cursor: pointer;
+}
+.desk-table tr.linked a.cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.desk-table tr.linked a:not(.cover) {
+  position: relative;
+  z-index: 1;
+}
+.desk-table tr.linked:hover .cover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 /* Underline tabs, the section's own navigation. */
 .desk-tabs {
   display: flex;
+  flex-wrap: wrap; /* ten workflow tabs wrap to a second row rather than scroll off */
   gap: 2px;
   overflow-x: auto;
   border-bottom: 1px solid var(--border);

@@ -27,6 +27,7 @@ import {
   Trophy,
   Upload,
   Users,
+  Workflow,
   X,
 } from "lucide-react";
 import { LpgpMark } from "@/components/lpgp-mark";
@@ -36,8 +37,10 @@ import { openCommandPalette } from "@/components/command-palette";
 import { cn, initials } from "@/lib/utils";
 import type { SessionUser } from "@/lib/auth";
 
-/** `also`: other paths this entry owns (a firm's profile belongs to Discover). */
-type NavItem = { href: string; label: string; icon: typeof Kanban; also?: string[] };
+/** `also`: other paths this entry owns (a firm's profile belongs to Discover).
+ *  `children`: the entry's own sub-tree, shown when it or one of them is the
+ *  page you're on — the way a data terminal nests books under a section. */
+type NavItem = { href: string; label: string; icon?: typeof Kanban; also?: string[]; children?: NavItem[] };
 type NavGroup = { label: string; items: NavItem[]; collapsible?: boolean };
 
 const SELL: NavItem[] = [
@@ -51,16 +54,61 @@ const SELL: NavItem[] = [
   { href: "/import/leads", label: "Import leads", icon: FileSpreadsheet },
 ];
 
+// The intelligence section is laid out the way a data terminal is: the
+// records (firms by book, funds, people), then activity (deals, signals),
+// then the market views (asset classes with each class and the sports desk
+// under it, service providers), then the reader's own lists and imports.
 const DATA: NavItem[] = [
   { href: "/database", label: "Overview", icon: Gauge },
-  { href: "/database?view=table", label: "Firms", icon: Building2, also: ["/companies"] },
+  {
+    href: "/database?view=table",
+    label: "Firms",
+    icon: Building2,
+    also: ["/companies"],
+    children: [
+      { href: "/database?book=GP", label: "Fund managers" },
+      { href: "/database?book=LP", label: "Limited partners" },
+      { href: "/database?book=SP", label: "Solution providers" },
+    ],
+  },
   { href: "/funds", label: "Funds", icon: Layers },
-  { href: "/database/deals", label: "Deals", icon: Handshake },
-  { href: "/database/asset-classes", label: "Asset classes", icon: LayoutGrid },
-  { href: "/database/sports", label: "Sports", icon: Trophy },
-  { href: "/database/market", label: "Service providers", icon: MapIcon, also: ["/database/providers"] },
-  { href: "/database/signals", label: "Signals", icon: Activity },
   { href: "/contacts", label: "People", icon: Users },
+  { href: "/database/deals", label: "Deals", icon: Handshake },
+  { href: "/database/signals", label: "Signals", icon: Activity },
+  {
+    href: "/database/asset-classes",
+    label: "Asset classes",
+    icon: LayoutGrid,
+    also: ["/database/sports"],
+    children: [
+      { href: "/database/asset-classes/private-equity", label: "Private equity" },
+      { href: "/database/asset-classes/private-credit", label: "Private credit" },
+      { href: "/database/asset-classes/venture-capital", label: "Venture capital" },
+      { href: "/database/asset-classes/real-estate", label: "Real estate" },
+      { href: "/database/asset-classes/infrastructure", label: "Infrastructure" },
+      { href: "/database/asset-classes/secondaries", label: "Secondaries" },
+      { href: "/database/asset-classes/hedge-funds", label: "Hedge funds" },
+      { href: "/database/sports", label: "Sports", icon: Trophy },
+    ],
+  },
+  { href: "/database/market", label: "Service providers", icon: MapIcon, also: ["/database/providers"] },
+  {
+    href: "/database/workflows",
+    label: "Workflows",
+    icon: Workflow,
+    children: [
+      { href: "/database/workflows/market-intelligence", label: "Market intelligence" },
+      { href: "/database/workflows/deal-sourcing", label: "Deal sourcing" },
+      { href: "/database/workflows/deal-execution", label: "Deal execution" },
+      { href: "/database/workflows/networking", label: "Networking" },
+      { href: "/database/workflows/due-diligence", label: "Due diligence" },
+      { href: "/database/workflows/fundraising", label: "Fundraising" },
+      { href: "/database/workflows/benchmarking", label: "Benchmarking" },
+      { href: "/database/workflows/business-development", label: "Business development" },
+      { href: "/database/workflows/asset-allocation", label: "Asset allocation" },
+      { href: "/database/workflows/portfolio-management", label: "Portfolio management" },
+    ],
+  },
   { href: "/database/lists", label: "Lists", icon: ListChecks },
   { href: "/portfolio", label: "Watchlist", icon: Star },
   { href: "/import", label: "Import", icon: Upload, also: ["/import/directory"] },
@@ -71,25 +119,36 @@ const GROUPS: NavGroup[] = [
   { label: "Intelligence", items: DATA, collapsible: true },
 ];
 
-const ALL_HREFS = GROUPS.flatMap((g) => g.items).map((i) => i.href.split("?")[0]);
+const ALL_HREFS = GROUPS.flatMap((g) => g.items.flatMap((i) => [i, ...(i.children ?? [])])).map((i) => i.href.split("?")[0]);
 
 /**
  * The most specific matching entry wins, so /leads/workspace lights up "Call
  * workspace" rather than both it and "Leads", and /import/leads doesn't also
- * light "Import contacts". Overview and Firms share /database and only the
- * query string tells them apart (the same rule as the in-page IntelNav);
- * without one to read, Overview owns the bare path.
+ * light "Import contacts". Entries that differ only by query string (Overview
+ * and Firms on /database, the firm books) are told apart by the query — the
+ * same rule as the in-page IntelNav; without one to read, Overview owns the
+ * bare path.
  */
 function isActive(pathname: string, item: NavItem, search: URLSearchParams | null) {
-  const href = item.href.split("?")[0];
+  const [href, query] = item.href.split("?");
   if (item.also?.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return true;
   if (item.href === "/database?view=table") return pathname === "/database" && Boolean(search?.toString());
+  if (query) {
+    if (pathname !== href || !search) return false;
+    return [...new URLSearchParams(query).entries()].every(([k, v]) => search.get(k) === v);
+  }
   if (href === "/database") return pathname === "/database" && !search?.toString();
   if (href === "/" || href === "/import") return pathname === href;
   if (!pathname.startsWith(href)) return false;
   return !ALL_HREFS.some(
     (other) => other !== href && other.startsWith(href) && pathname.startsWith(other),
   );
+}
+
+/** A parent is lit only when none of its children is: the leaf carries the mark. */
+function isLit(pathname: string, item: NavItem, search: URLSearchParams | null) {
+  if (!isActive(pathname, item, search)) return false;
+  return !item.children?.some((c) => isActive(pathname, c, search));
 }
 
 // Collapsed nav groups, remembered per browser. Read through
@@ -151,7 +210,7 @@ function Brand({ onClick }: { onClick?: () => void }) {
 function RailLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
   const pathname = usePathname();
   return (
-    <Suspense fallback={<RailLinkView item={item} onNavigate={onNavigate} on={isActive(pathname, item, null)} />}>
+    <Suspense fallback={<RailEntry item={item} onNavigate={onNavigate} pathname={pathname} search={null} />}>
       <RailLinkLive item={item} onNavigate={onNavigate} />
     </Suspense>
   );
@@ -160,34 +219,74 @@ function RailLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void
 function RailLinkLive({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
   const pathname = usePathname();
   const search = useSearchParams();
-  return <RailLinkView item={item} onNavigate={onNavigate} on={isActive(pathname, item, search)} />;
+  return <RailEntry item={item} onNavigate={onNavigate} pathname={pathname} search={search} />;
 }
 
-function RailLinkView({ item, onNavigate, on }: { item: NavItem; onNavigate?: () => void; on: boolean }) {
+/** An entry and, when it has one, its sub-tree: open on the page it holds,
+ *  or on the chevron; the leaf carries the mark. */
+function RailEntry({ item, onNavigate, pathname, search }: { item: NavItem; onNavigate?: () => void; pathname: string; search: URLSearchParams | null }) {
+  const within = isActive(pathname, item, search);
+  const [toggled, setToggled] = useState<boolean | null>(null);
+  const open = Boolean(item.children?.length) && (toggled ?? within);
+  return (
+    <div>
+      <RailLinkView
+        item={item}
+        onNavigate={onNavigate}
+        on={isLit(pathname, item, search)}
+        chevron={item.children?.length ? { open, toggle: () => setToggled(!open) } : undefined}
+      />
+      {open ? (
+        <div className="ml-[19px] mt-0.5 space-y-px border-l border-[var(--rail-line)] pl-2">
+          {item.children!.map((child) => (
+            <RailLinkView key={child.href} item={child} onNavigate={onNavigate} on={isActive(pathname, child, search)} small />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function RailLinkView({ item, onNavigate, on, small, chevron }: { item: NavItem; onNavigate?: () => void; on: boolean; small?: boolean; chevron?: { open: boolean; toggle: () => void } }) {
   const Icon = item.icon;
   return (
-    <Link
-      href={item.href}
-      onClick={onNavigate}
-      aria-current={on ? "page" : undefined}
-      className={cn(
-        "relative flex items-center gap-2.5 rounded-lg px-2.5 py-[7px] text-[13px] font-medium transition-colors",
-        on
-          ? "bg-[var(--rail-hover)] text-[#f3efe6]"
-          : "text-[var(--rail-fg)] hover:bg-[var(--rail-hover)] hover:text-[#f3efe6]",
-      )}
-    >
-      {/* Active marker rides the left edge rather than filling the row, so the
-          rail stays calm with six items in a group. */}
-      <span
+    <div className="relative">
+      <Link
+        href={item.href}
+        onClick={onNavigate}
+        aria-current={on ? "page" : undefined}
         className={cn(
-          "absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-r-full transition-all",
-          on ? "brand-gradient opacity-100" : "opacity-0",
+          "relative flex items-center gap-2.5 rounded-lg px-2.5 font-medium transition-colors",
+          small ? "py-[5px] text-[12px]" : "py-[7px] text-[13px]",
+          chevron ? "pr-8" : "",
+          on
+            ? "bg-[var(--rail-hover)] text-[#f3efe6]"
+            : "text-[var(--rail-fg)] hover:bg-[var(--rail-hover)] hover:text-[#f3efe6]",
         )}
-      />
-      <Icon className={cn("h-4 w-4 shrink-0", on ? "text-[var(--brand-2)]" : "opacity-80")} />
-      {item.label}
-    </Link>
+      >
+        {/* Active marker rides the left edge rather than filling the row, so the
+            rail stays calm with a dozen items in a group. */}
+        <span
+          className={cn(
+            "absolute left-0 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-r-full transition-all",
+            on ? "brand-gradient opacity-100" : "opacity-0",
+          )}
+        />
+        {Icon ? <Icon className={cn("shrink-0", small ? "h-3.5 w-3.5" : "h-4 w-4", on ? "text-[var(--brand-2)]" : "opacity-80")} /> : null}
+        {item.label}
+      </Link>
+      {chevron ? (
+        <button
+          type="button"
+          onClick={chevron.toggle}
+          aria-label={chevron.open ? `Collapse ${item.label}` : `Expand ${item.label}`}
+          aria-expanded={chevron.open}
+          className="absolute right-1 top-1/2 -translate-y-1/2 rounded p-1 text-[var(--rail-fg-dim)] hover:text-[#f3efe6]"
+        >
+          <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", chevron.open ? "" : "-rotate-90")} />
+        </button>
+      ) : null}
+    </div>
   );
 }
 

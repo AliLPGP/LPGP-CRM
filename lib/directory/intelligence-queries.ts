@@ -81,6 +81,52 @@ export async function getAllDeals(assetClass?: AssetClassKey | null): Promise<De
   }
 }
 
+export async function getDeal(id: string): Promise<(Deal & { created_at: string; added_by: string | null }) | null> {
+  const supabase = getReadClient();
+  if (!supabase || !isUuid(id)) return null;
+  const { data } = await supabase.from("deals").select(`${DEAL_COLUMNS}, created_at, added_by`).eq("id", id).maybeSingle();
+  return (data as unknown as (Deal & { created_at: string; added_by: string | null }) | null) ?? null;
+}
+
+/** The deals around one deal: the target's other transactions and the
+ *  investor's, matched by linked record first and by name otherwise. */
+export async function relatedDeals(deal: Deal): Promise<{ target: Deal[]; investor: Deal[] }> {
+  const supabase = getReadClient();
+  if (!supabase) return { target: [], investor: [] };
+  const targetQ = supabase.from("deals").select(DEAL_COLUMNS).neq("id", deal.id);
+  const investorQ = supabase.from("deals").select(DEAL_COLUMNS).neq("id", deal.id);
+  const byTarget = deal.target_team_id
+    ? targetQ.eq("target_team_id", deal.target_team_id)
+    : deal.target_company_id
+      ? targetQ.eq("target_company_id", deal.target_company_id)
+      : targetQ.ilike("target", deal.target);
+  const byInvestor = deal.investor_company_id
+    ? investorQ.eq("investor_company_id", deal.investor_company_id)
+    : deal.investor_id
+      ? investorQ.eq("investor_id", deal.investor_id)
+      : investorQ.ilike("investor", deal.investor);
+  const [t, i] = await Promise.all([
+    byTarget.order("date", { ascending: false, nullsFirst: false }).limit(50),
+    byInvestor.order("date", { ascending: false, nullsFirst: false }).limit(50),
+  ]);
+  return { target: (t.data as unknown as Deal[]) ?? [], investor: (i.data as unknown as Deal[]) ?? [] };
+}
+
+/** Signals whose named entities include either party of a deal. */
+export async function signalsNaming(names: string[], limit = 20): Promise<Signal[]> {
+  const supabase = getReadClient();
+  const wanted = names.filter(Boolean);
+  if (!supabase || !wanted.length) return [];
+  const { data } = await supabase
+    .from("signals")
+    .select(SIGNAL_COLUMNS)
+    .overlaps("entities", wanted)
+    .order("date", { ascending: false, nullsFirst: false })
+    .limit(limit);
+  const rows = (data as unknown as Omit<Signal, "firms">[] | null) ?? [];
+  return rows.map((r) => ({ ...r, firms: [] }));
+}
+
 /** Other clubs in a league, ranked by revenue, for a profile's sidebar. */
 export async function leaguePeers(league: string | null, excludeId: string, limit = 8): Promise<Pick<SportsTeam, "id" | "name" | "short_name" | "domain" | "revenue" | "revenue_currency">[]> {
   const supabase = getReadClient();

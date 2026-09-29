@@ -151,6 +151,13 @@ The app degrades gracefully when Supabase env vars are absent (shows a
   All need `ANTHROPIC_API_KEY`; deals, bulk jobs and clubs added by name are
   admin-only. A refuted fact-check verdict removes the figure *and* what hung
   on it (currency, season, page, the owner rows a summary described).
+- `workflows.ts` is the desk's ten jobs (market intelligence, deal sourcing,
+  deal execution, networking, due diligence, fundraising, benchmarking,
+  business development, asset allocation, portfolio management) as views
+  over the same records — never a separate dataset. `/database/workflows/
+  [slug]` renders them; a deal has its own page at `/database/deals/[id]`
+  (terms as stated, an *implied whole* labelled as arithmetic, the target's
+  history, the investor's other deals, signals naming either party).
 - Nothing is inferred that the workbook doesn't say. Sizes carry their basis
   (brand vs. entity regulatory AUM, fund gross assets for ERAs, total assets
   for LPs), commitments keep their own currency, and the original seed's

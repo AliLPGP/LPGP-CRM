@@ -16,10 +16,11 @@ export const INTEL_NAV: { href: string; label: string; match: (path: string, sea
   { href: "/database?view=table", label: "Firms", match: (p, s) => (p === "/database" && s.toString() !== "") || p.startsWith("/companies") },
   { href: "/funds", label: "Funds", match: (p) => p.startsWith("/funds") },
   { href: "/database/deals", label: "Deals", match: (p) => p.startsWith("/database/deals") },
-  { href: "/database/asset-classes", label: "Asset classes", match: (p) => p.startsWith("/database/asset-classes") },
-  { href: "/database/sports", label: "Sports", match: (p) => p.startsWith("/database/sports") },
+  // Sports is an asset class: it lives under that tab, not beside it.
+  { href: "/database/asset-classes", label: "Asset classes", match: (p) => p.startsWith("/database/asset-classes") || p.startsWith("/database/sports") },
   { href: "/database/market", label: "Service providers", match: (p) => p.startsWith("/database/market") || p.startsWith("/database/providers") },
   { href: "/database/signals", label: "Signals", match: (p) => p.startsWith("/database/signals") },
+  { href: "/database/workflows", label: "Workflows", match: (p) => p.startsWith("/database/workflows") },
   { href: "/contacts", label: "People", match: (p) => p.startsWith("/contacts") },
   { href: "/database/lists", label: "Lists", match: (p) => p.startsWith("/database/lists") },
 ];

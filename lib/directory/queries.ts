@@ -534,6 +534,20 @@ export async function getPortfolioCompanies(gpId: string): Promise<import("./por
   );
 }
 
+/** Portfolio companies across every manager, newest investments first. */
+export async function listPortfolioCompanies(limit = 400): Promise<import("./portfolio").PortfolioCompany[]> {
+  const supabase = getReadClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("portfolio_companies")
+    .select("*")
+    .order("invested_year", { ascending: false, nullsFirst: false })
+    .order("name")
+    .limit(limit);
+  if (error || !data) return [];
+  return data as import("./portfolio").PortfolioCompany[];
+}
+
 /** Managers by their latest Form ADV filing date, newest first. */
 export async function getRecentFilings(limit = 15): Promise<{ id: string; name: string; domain: string | null; sub_type: string | null; adv_last_filed: string | null }[]> {
   const supabase = getReadClient();

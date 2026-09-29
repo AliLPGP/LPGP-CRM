@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState, useSyncExternalStore } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense, useState, useSyncExternalStore } from "react";
 import {
+  Activity,
+  Building2,
   CalendarRange,
   ChevronDown,
   Command,
@@ -11,6 +13,7 @@ import {
   Gauge,
   Handshake,
   Kanban,
+  LayoutGrid,
   Layers,
   List,
   ListChecks,
@@ -20,8 +23,8 @@ import {
   Receipt,
   Settings,
   Shield,
-  Sparkles,
   Star,
+  Trophy,
   Upload,
   Users,
   X,
@@ -49,31 +52,40 @@ const SELL: NavItem[] = [
 ];
 
 const DATA: NavItem[] = [
-  { href: "/database", label: "Discover", icon: Sparkles, also: ["/companies"] },
-  { href: "/database/market", label: "Market map", icon: MapIcon, also: ["/database/providers"] },
-  { href: "/database/lists", label: "Lists", icon: ListChecks },
+  { href: "/database", label: "Overview", icon: Gauge },
+  { href: "/database?view=table", label: "Firms", icon: Building2, also: ["/companies"] },
   { href: "/funds", label: "Funds", icon: Layers },
-  { href: "/contacts", label: "Contacts", icon: Users },
-  { href: "/portfolio", label: "Portfolio", icon: Star },
+  { href: "/database/deals", label: "Deals", icon: Handshake },
+  { href: "/database/asset-classes", label: "Asset classes", icon: LayoutGrid },
+  { href: "/database/sports", label: "Sports", icon: Trophy },
+  { href: "/database/market", label: "Service providers", icon: MapIcon, also: ["/database/providers"] },
+  { href: "/database/signals", label: "Signals", icon: Activity },
+  { href: "/contacts", label: "People", icon: Users },
+  { href: "/database/lists", label: "Lists", icon: ListChecks },
+  { href: "/portfolio", label: "Watchlist", icon: Star },
   { href: "/import", label: "Import", icon: Upload, also: ["/import/directory"] },
 ];
 
 const GROUPS: NavGroup[] = [
   { label: "Sell", items: SELL },
-  { label: "Database", items: DATA, collapsible: true },
+  { label: "Intelligence", items: DATA, collapsible: true },
 ];
 
-const ALL_HREFS = GROUPS.flatMap((g) => g.items).map((i) => i.href);
+const ALL_HREFS = GROUPS.flatMap((g) => g.items).map((i) => i.href.split("?")[0]);
 
 /**
  * The most specific matching entry wins, so /leads/workspace lights up "Call
  * workspace" rather than both it and "Leads", and /import/leads doesn't also
- * light "Import contacts".
+ * light "Import contacts". Overview and Firms share /database and only the
+ * query string tells them apart (the same rule as the in-page IntelNav);
+ * without one to read, Overview owns the bare path.
  */
-function isActive(pathname: string, item: NavItem) {
-  const { href } = item;
+function isActive(pathname: string, item: NavItem, search: URLSearchParams | null) {
+  const href = item.href.split("?")[0];
   if (item.also?.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return true;
-  if (href === "/" || href === "/database" || href === "/import") return pathname === href;
+  if (item.href === "/database?view=table") return pathname === "/database" && Boolean(search?.toString());
+  if (href === "/database") return pathname === "/database" && !search?.toString();
+  if (href === "/" || href === "/import") return pathname === href;
   if (!pathname.startsWith(href)) return false;
   return !ALL_HREFS.some(
     (other) => other !== href && other.startsWith(href) && pathname.startsWith(other),
@@ -133,10 +145,26 @@ function Brand({ onClick }: { onClick?: () => void }) {
   );
 }
 
+// The query string is read behind a Suspense boundary: a statically rendered
+// page (not-found, errors) gets the path-only answer and hydrates to the
+// full one, instead of failing the build over useSearchParams.
 function RailLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
   const pathname = usePathname();
+  return (
+    <Suspense fallback={<RailLinkView item={item} onNavigate={onNavigate} on={isActive(pathname, item, null)} />}>
+      <RailLinkLive item={item} onNavigate={onNavigate} />
+    </Suspense>
+  );
+}
+
+function RailLinkLive({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
+  const pathname = usePathname();
+  const search = useSearchParams();
+  return <RailLinkView item={item} onNavigate={onNavigate} on={isActive(pathname, item, search)} />;
+}
+
+function RailLinkView({ item, onNavigate, on }: { item: NavItem; onNavigate?: () => void; on: boolean }) {
   const Icon = item.icon;
-  const on = isActive(pathname, item);
   return (
     <Link
       href={item.href}
@@ -187,7 +215,7 @@ function NavBody({ user, onNavigate }: { user: SessionUser | null; onNavigate?: 
     <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4">
       {GROUPS.map((group) => {
         // A collapsed group still opens for the page you're on.
-        const holdsActive = group.items.some((i) => isActive(pathname, i));
+        const holdsActive = group.items.some((i) => isActive(pathname, i, null));
         const open = !group.collapsible || !collapsed.has(group.label) || holdsActive;
         return (
           <div key={group.label} className="space-y-0.5">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { IntelShell } from "@/components/intel/shell";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Building2, ExternalLink, Layers } from "lucide-react";
 import { getFund, getCommitmentsForFund } from "@/lib/queries";
@@ -30,7 +31,7 @@ export default async function FundProfile({ params }: { params: Promise<{ id: st
   const size = fund.fund_size_usd ?? fund.target_size_usd;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 md:px-6 py-8 space-y-6">
+    <IntelShell wide={false}>
       <Link href="/funds" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-4 w-4" /> Funds
       </Link>
@@ -179,6 +180,6 @@ export default async function FundProfile({ params }: { params: Promise<{ id: st
           </table>
         )}
       </section>
-    </div>
+    </IntelShell>
   );
 }

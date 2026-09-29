@@ -40,14 +40,14 @@ export function ThesisBar({
           e.preventDefault();
           onSubmit(text);
         }}
-        className="sheen group relative flex items-center gap-2 rounded-2xl border bg-card p-2 pl-4 transition-shadow focus-within:border-[var(--brass)]/60 focus-within:shadow-[var(--shadow-pop)]"
+        className="sheen group relative flex items-center gap-2 rounded-lg border bg-card p-1.5 pl-3 transition-shadow focus-within:border-[var(--brass)]/60 focus-within:shadow-[var(--shadow-pop)]"
       >
         <Sparkles className="h-5 w-5 shrink-0 text-[var(--brass)]" />
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Describe the firms you're after — “mid-market private credit managers in London using Alter Domus”"
-          className="h-12 min-w-0 flex-1 bg-transparent text-[15.5px] outline-none placeholder:text-muted-foreground/80"
+          className="h-10 min-w-0 flex-1 bg-transparent text-[14px] outline-none placeholder:text-muted-foreground/80"
           aria-label="Thesis search"
         />
         {text ? (
@@ -65,7 +65,7 @@ export function ThesisBar({
         ) : null}
         <button
           type="submit"
-          className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-primary px-4 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98]"
+          className="inline-flex h-8 items-center gap-1.5 rounded-md bg-primary px-3 text-[13px] font-medium text-primary-foreground transition-all hover:bg-primary/90 active:scale-[0.98]"
         >
           {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
           Search

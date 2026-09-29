@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { IntelShell } from "@/components/intel/shell";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Building2, Landmark, MapPin } from "lucide-react";
 import { getSessionUser } from "@/lib/auth";
@@ -73,7 +74,7 @@ export default async function ProviderPage({ params }: { params: Promise<{ key: 
   });
 
   return (
-    <div className="mx-auto max-w-6xl px-4 md:px-6 py-8 space-y-6">
+    <IntelShell wide={false}>
       <Link href="/database/market" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-4 w-4" /> Market map
       </Link>
@@ -165,6 +166,6 @@ export default async function ProviderPage({ params }: { params: Promise<{ key: 
           ) : null}
         </div>
       </div>
-    </div>
+    </IntelShell>
   );
 }

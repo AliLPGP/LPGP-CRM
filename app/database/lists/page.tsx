@@ -4,7 +4,7 @@ import { listDirectoryLists } from "@/lib/directory/queries";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { NewListButton } from "@/components/directory/list-views";
 import { EmptyState } from "@/components/empty-state";
-import { PageHeader } from "@/components/page-header";
+import { IntelShell } from "@/components/intel/shell";
 import { SetupNotice } from "@/components/setup-notice";
 import { timeAgo } from "@/lib/utils";
 
@@ -14,13 +14,12 @@ export const metadata = { title: "Lists — LPGP Connect" };
 export default async function ListsPage() {
   const lists = await listDirectoryLists();
   return (
-    <div className="mx-auto max-w-6xl px-4 md:px-6 py-8 space-y-6">
-      <PageHeader
-        eyebrow="Intelligence database"
-        title="Lists"
-        description="Target lists the team builds from Discover — shared, annotated, and one click from the pipeline."
-        actions={<NewListButton />}
-      />
+    <IntelShell
+      crumbs={[{ label: "Lists" }]}
+      title="Lists"
+      description="Target lists the team builds from search — shared, annotated, and one click from the pipeline."
+      actions={<NewListButton />}
+    >
       {!isSupabaseConfigured() ? <SetupNotice /> : null}
       {lists.length === 0 ? (
         <EmptyState
@@ -47,6 +46,6 @@ export default async function ListsPage() {
           ))}
         </div>
       )}
-    </div>
+    </IntelShell>
   );
 }

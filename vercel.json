@@ -3,5 +3,15 @@
   "framework": "nextjs",
   "buildCommand": "pnpm next build",
   "installCommand": "pnpm install",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "crons": [
+    {
+      "path": "/api/directory/signals/refresh",
+      "schedule": "20 6 * * *"
+    },
+    {
+      "path": "/api/directory/benchmarks/research",
+      "schedule": "40 6 1-8 * *"
+    }
+  ]
 }

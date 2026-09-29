@@ -33,11 +33,14 @@ service-role key bypasses RLS entirely, is only ever read in server code, and
 must never be committed or exposed to the browser.
 
 Before any of this works, run the SQL: `supabase/sql-parts/1-schema/` parts 1
-to 12, in order, in the Supabase SQL editor. Already ran parts 1 to 8 before
-the directory upgrade? Run `supabase/sql-parts/3-directory/` parts 1 to 5
-(migrations 0013-0015), then load the data from **Import -> Master
-directory**. Signed in as an admin, Discover shows exactly which SQL is still
-missing, with a copy button per part and a link to the project's SQL editor.
+to 15, in order, in the Supabase SQL editor. Upgrading a database from before
+the directory (migrations 0001-0012)? Run `supabase/sql-parts/3-directory/`
+parts 1 to 8 (migrations 0013-0016); one that already has 0013-0015 needs only
+`supabase/sql-parts/4-intelligence/` parts 1 to 4 (migration 0016). Then load
+the data from **Import -> Master directory** (the workbook, then the shipped
+intelligence dataset). Signed in as an admin, Discover shows exactly which SQL
+is still missing, with a copy button per part and a link to the project's SQL
+editor.
 
 ### Auth -- required
 
@@ -94,6 +97,24 @@ projects. Server-only.
 each GP's domain for operating partners, operating executives and
 value-creation leads. Search previews only -- names, titles, LinkedIn -- at
 about one Lusha credit per 25 people; no email or phone is revealed.
+
+The same `ANTHROPIC_API_KEY` runs the **intelligence research jobs**, all
+with web search on the server and every figure saved with its page:
+
+| Job | Where | Who |
+| --- | --- | --- |
+| Research a club (ownership, revenue, valuation, following, deals) | a club's page, or "Research N clubs" on the sports desk | any user for one club; admins in bulk |
+| Deals for an asset class since a date | the asset class page | admins |
+| Published benchmarks per class and strategy | the asset class page; cron on the 1st–8th of each month, one class per run | admins / cron |
+| Signals (news) per class | the Signals page; daily cron | admins / cron |
+
+Each run stops itself a little before Vercel's 300-second function limit and
+names the classes or clubs it did not reach, so nothing is lost to a timeout
+mid-write; the daily and monthly crons rotate which class goes first.
+
+| Variable | Value | Without it |
+| --- | --- | --- |
+| `CRON_SECRET` | any long random string; Vercel sends it as a bearer token to the cron routes | The crons are refused (admins can still run the jobs by hand) |
 
 ---
 

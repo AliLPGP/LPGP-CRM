@@ -10,8 +10,10 @@ import { cn, timeAgo } from "@/lib/utils";
 export type SetupPart = { name: string; sql: string };
 
 export type SetupState = {
-  /** Migrations 0013 + 0014 have both run. */
+  /** Every directory migration has run. */
   sqlDone: boolean;
+  /** The shipped sports/deals/signals dataset has been loaded. */
+  datasetLoaded?: boolean;
   /** The directory tables exist; only a later update (0014, 0015) is missing. */
   fundsOnly: boolean;
   lastImport: { at: string; filename: string | null } | null;
@@ -102,7 +104,9 @@ export function DirectorySetupPanel({
 
   const imported = Boolean(state.lastImport);
   const title = state.sqlDone
-    ? "One step left: load the Master Directory"
+    ? imported
+      ? "One step left: load the intelligence dataset"
+      : "Load the Master Directory and the intelligence dataset"
     : state.fundsOnly
       ? "One database update: fund lineup and portfolio companies"
       : "Set up the intelligence database";
@@ -125,7 +129,7 @@ export function DirectorySetupPanel({
         </Button>
       </div>
 
-      <div className={cn("grid divide-y md:divide-y-0", showImportStep && "md:grid-cols-2 md:divide-x")}>
+      <div className={cn("grid divide-y md:divide-y-0", showImportStep && "md:grid-cols-3 md:divide-x")}>
         <Step n={1} done={state.sqlDone} title={state.sqlDone ? "Database updated" : "Update the database"}>
           {state.sqlDone ? (
             <p className="text-sm text-muted-foreground">Every directory table and column is in place.</p>
@@ -175,7 +179,7 @@ export function DirectorySetupPanel({
                 ))}
                 {parts.length === 0 ? (
                   <li className="text-sm text-muted-foreground">
-                    Run <code className="font-mono text-xs">supabase/sql-parts/3-directory/</code> in order.
+                    Run <code className="font-mono text-xs">supabase/sql-parts/3-directory/</code> in order (or <code className="font-mono text-xs">4-intelligence/</code> when only migration 0016 is missing).
                   </li>
                 ) : null}
               </ol>
@@ -194,6 +198,21 @@ export function DirectorySetupPanel({
             <Button asChild size="sm" variant={state.sqlDone ? "default" : "outline"} disabled={!state.sqlDone}>
               <Link href="/import/directory" aria-disabled={!state.sqlDone}>
                 <FileSpreadsheet className="h-4 w-4" /> {imported ? "Import again" : "Import the workbook"}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </Step>
+        ) : null}
+        {showImportStep ? (
+          <Step n={3} done={Boolean(state.datasetLoaded)} title="Load the intelligence dataset" muted={!state.sqlDone}>
+            <p className="text-sm text-muted-foreground">
+              {state.datasetLoaded
+                ? "Clubs, investors in sport, deals and signals are loaded."
+                : "The researched, source-cited dataset that ships with the app: football clubs with ownership and money, the funds investing in sport, deals and news across every asset class. One click on the import page."}
+            </p>
+            <Button asChild size="sm" variant={state.sqlDone ? "default" : "outline"} disabled={!state.sqlDone}>
+              <Link href="/import/directory#dataset" aria-disabled={!state.sqlDone}>
+                <FileSpreadsheet className="h-4 w-4" /> {state.datasetLoaded ? "Reload dataset" : "Load the dataset"}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>

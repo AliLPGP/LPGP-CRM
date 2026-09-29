@@ -1,7 +1,7 @@
 import "server-only";
 import { getReadClient } from "./supabase/server";
 import { isOpsConfigured, listOpsEvents, listOpsEventSponsors } from "./ops";
-import type { OpsSponsor } from "./ops-types";
+import type { DateTbc, OpsSponsor } from "./ops-types";
 import { guessSeries, SERIES, type SeriesId } from "./events-catalogue";
 
 /**
@@ -29,7 +29,10 @@ export type EventPerformance = {
   opsEventId: number;
   name: string;
   date: string | null;
+  dateTbc: DateTbc;
   location: string;
+  /** Producer team from the tracker's programme; "" when unassigned. */
+  producer: string;
   /** Allocated to this event in the ops panel, across all live deals. */
   actual: number;
   /** The portion of `actual` whose deal has been paid. */
@@ -121,7 +124,9 @@ export async function getEventPerformance(): Promise<EventPerformanceData> {
       opsEventId: e.id,
       name: e.name,
       date: e.event_date,
+      dateTbc: e.date_tbc,
       location: e.location,
+      producer: e.producer,
       actual: e.allocated_total,
       collected: e.allocated_paid,
       sponsorCount: e.deal_count,

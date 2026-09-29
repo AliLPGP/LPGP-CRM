@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   BadgeCheck,
+  CalendarDays,
   ChevronDown,
   Loader2,
   MapPin,
@@ -11,6 +12,7 @@ import {
   Search,
   Sparkles,
   Target,
+  UserRound,
   Users,
 } from "lucide-react";
 import {
@@ -19,8 +21,9 @@ import {
   acceptInferredSeries,
   type EventSponsorRow,
 } from "@/lib/event-target-actions";
-import { SERIES, SERIES_COLOR, SERIES_MAP, type SeriesId } from "@/lib/events-catalogue";
-import { formatOpsMoney } from "@/lib/ops-types";
+import { PRODUCERS, SERIES, SERIES_COLOR, SERIES_MAP, type SeriesId } from "@/lib/events-catalogue";
+import { formatEventDate, isEventDateTbc } from "@/lib/event-date";
+import { formatOpsMoney, type DateTbc } from "@/lib/ops-types";
 import { EventBar } from "@/components/events/charts";
 import { RecordDealDialog } from "@/components/ops/record-deal-dialog";
 import { Badge } from "@/components/ui/badge";
@@ -35,7 +38,10 @@ export type EventRow = {
   opsEventId: number;
   name: string;
   date: string | null;
+  dateTbc: DateTbc;
   location: string;
+  /** Producer team from the tracker's programme; "" when unassigned. */
+  producer: string;
   actual: number;
   collected: number;
   sponsorCount: number;
@@ -46,6 +52,9 @@ export type EventRow = {
   series: SeriesId | null;
   seriesInferred: boolean;
 };
+
+/** Filter value for events the tracker has not assigned to a producer team. */
+const NO_PRODUCER = "__none__";
 
 export function EventTable({
   events,
@@ -59,6 +68,7 @@ export function EventTable({
   const router = useRouter();
   const [q, setQ] = useState("");
   const [seriesFilter, setSeriesFilter] = useState("");
+  const [producerFilter, setProducerFilter] = useState("");
   const [editing, setEditing] = useState<EventRow | null>(null);
   const [acceptBusy, setAcceptBusy] = useState(false);
 
@@ -66,12 +76,15 @@ export function EventTable({
     const needle = q.trim().toLowerCase();
     return events.filter((e) => {
       if (seriesFilter && (e.series ?? "unassigned") !== seriesFilter) return false;
+      if (producerFilter && (e.producer || NO_PRODUCER) !== producerFilter) return false;
       if (!needle) return true;
       return (
-        e.name.toLowerCase().includes(needle) || e.location.toLowerCase().includes(needle)
+        e.name.toLowerCase().includes(needle) ||
+        e.location.toLowerCase().includes(needle) ||
+        e.producer.toLowerCase().includes(needle)
       );
     });
-  }, [events, q, seriesFilter]);
+  }, [events, q, seriesFilter, producerFilter]);
 
   // Shared scale across every visible row, so bar lengths are comparable.
   const scale = Math.max(1, ...shown.map((e) => Math.max(e.actual, e.target ?? 0)));
@@ -102,6 +115,20 @@ export function EventTable({
             </option>
           ))}
           <option value="unassigned">Unassigned</option>
+        </NativeSelect>
+        <NativeSelect
+          className="w-[170px]"
+          value={producerFilter}
+          onChange={(e) => setProducerFilter(e.target.value)}
+          aria-label="Producer"
+        >
+          <option value="">All producers</option>
+          {PRODUCERS.map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+          <option value={NO_PRODUCER}>No producer</option>
         </NativeSelect>
         <span className="text-xs text-muted-foreground">
           {shown.length} of {events.length}
@@ -257,8 +284,20 @@ function EventRowItem({
                     {event.location}
                   </span>
                 ) : null}
-                {event.date ? (
-                  <span className="text-[11px] text-muted-foreground">{event.date}</span>
+                <span
+                  className={cn(
+                    "inline-flex items-center gap-1 text-[11px] text-muted-foreground",
+                    isEventDateTbc({ event_date: event.date, date_tbc: event.dateTbc }) && "italic",
+                  )}
+                >
+                  <CalendarDays className="h-3 w-3" />
+                  {formatEventDate({ event_date: event.date, date_tbc: event.dateTbc })}
+                </span>
+                {event.producer ? (
+                  <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
+                    <UserRound className="h-3 w-3" />
+                    {event.producer}
+                  </span>
                 ) : null}
                 <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
                   <Users className="h-3 w-3" />
@@ -410,7 +449,10 @@ function TargetDialog({
       <ModalHeader
         icon={<Target className="h-4.5 w-4.5" />}
         title="Set target"
-        description={event.name}
+        description={`${event.name} · ${formatEventDate(
+          { event_date: event.date, date_tbc: event.dateTbc },
+          { long: true },
+        )}`}
         onClose={onClose}
       />
       <form onSubmit={submit} className="contents">

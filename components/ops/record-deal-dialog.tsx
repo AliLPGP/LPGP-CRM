@@ -21,6 +21,7 @@ import { checkForExistingDeal, claimOpsDeal } from "@/lib/my-deal-actions";
 import type { DuplicateReport } from "@/lib/deal-duplicates";
 import { DuplicatePrompt } from "@/components/deals/duplicate-prompt";
 import { formatOpsMoney } from "@/lib/ops-types";
+import { formatEventDate } from "@/lib/event-date";
 import type { OpsLinkEntity } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -397,6 +398,7 @@ function RecordDealForm({
                       <option key={ev.id} value={ev.id}>
                         {ev.name}
                         {ev.location ? ` — ${ev.location}` : ""}
+                        {` · ${formatEventDate({ event_date: ev.date, date_tbc: ev.dateTbc })}`}
                       </option>
                     ))}
                   </NativeSelect>

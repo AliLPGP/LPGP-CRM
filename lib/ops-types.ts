@@ -6,11 +6,16 @@
  * The fetching lives in `lib/ops.ts`, which re-exports everything here.
  */
 
+/** How much of an event's date is still to be confirmed (see lib/event-date.ts). */
+export type DateTbc = "" | "day" | "date";
+
 export type OpsEventAllocation = {
   event_id: number;
   event_name: string;
   event_date: string | null;
   location: string;
+  producer: string;
+  date_tbc: DateTbc;
   allocated_amount: number;
   package_label: string;
 };
@@ -71,6 +76,8 @@ export type OpsCompanyEvent = {
   event_name: string;
   event_date: string | null;
   location: string;
+  producer: string;
+  date_tbc: DateTbc;
   allocated_amount: number;
   package_labels: string[];
   deal_ids: number[];
@@ -98,7 +105,14 @@ export type OpsMatch = OpsCompany & { confidence: number; exact: boolean };
 export type OpsCompanySlim = Omit<OpsCompany, "deals" | "cancelled_count" | "events"> & {
   events: Pick<
     OpsCompanyEvent,
-    "event_id" | "event_name" | "event_date" | "allocated_amount" | "currency" | "deal_ids"
+    | "event_id"
+    | "event_name"
+    | "event_date"
+    | "producer"
+    | "date_tbc"
+    | "allocated_amount"
+    | "currency"
+    | "deal_ids"
   >[];
 };
 
@@ -116,6 +130,12 @@ export type OpsEvent = {
   event_date: string | null;
   location: string;
   notes: string;
+  /** Producer team, from the tracker's programme. "" when unassigned. */
+  producer: string;
+  date_tbc: DateTbc;
+  programme_year: number | null;
+  /** `2027:ops-miami` when linked to the canonical programme, else null. */
+  programme_key: string | null;
   deal_count: number;
   allocated_total: number;
   allocated_paid: number;

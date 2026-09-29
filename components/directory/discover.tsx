@@ -358,18 +358,18 @@ export function Discover({
   return (
     <div className="space-y-5">
       {/* The stand: search first, the scale of the book right under it. */}
-      <section className={cn("stand rounded-3xl", home ? "px-5 pb-6 pt-6 md:px-9 md:pb-8 md:pt-8" : "px-4 py-4 md:px-6")}>
+      <section className={cn("stand rounded-[6px]", home ? "px-5 pb-5 pt-5 md:px-7 md:pb-6 md:pt-6" : "px-4 py-3 md:px-5")}>
         <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
         <div className="relative space-y-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0">
               {home ? (
                 <>
-                  <p className="wordmark text-[11px] text-[var(--brass)]">LPGP Intelligence</p>
-                  <h1 className="display mt-3 max-w-3xl text-[28px] leading-[1.08] md:text-[42px]">
+                  <p className="wordmark text-[10px] text-[var(--brass)]">Intelligence desk</p>
+                  <h1 className="display mt-2 max-w-3xl text-[22px] leading-[1.1] md:text-[28px]">
                     Every LP, GP and provider in your market, searchable in a sentence.
                   </h1>
-                  <p className="mt-3 max-w-2xl text-[14px] text-muted-foreground">
+                  <p className="mt-2 max-w-2xl text-[12.5px] text-muted-foreground">
                     {everything.total.toLocaleString("en-US")} firms, {everything.people.toLocaleString("en-US")} named
                     decision-makers, {everything.funds.toLocaleString("en-US")} funds and{" "}
                     {Math.round(everything.providerLinks).toLocaleString("en-US")} Form ADV service-provider links
@@ -392,7 +392,7 @@ export function Discover({
           <ThesisBar key={q} initial={q} onSubmit={submitThesis} pending={aiPending} aiReady={aiReady} examples={home} />
 
           {home ? (
-            <div className="grid grid-cols-2 gap-x-6 gap-y-5 border-t border-[var(--border)] pt-5 sm:grid-cols-3 lg:grid-cols-6">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-[var(--border)] pt-4 sm:grid-cols-3 lg:grid-cols-6">
               <Figure label="Firms" value={compact(everything.total)} sub="across four books" onClick={() => navigate(EMPTY_FILTERS, { push: true, view: "table" })} />
               <Figure label="General partners" value={compact(everything.books.GP)} sub={`${everything.filers.toLocaleString("en-US")} with Form ADV providers`} onClick={() => navigate({ ...EMPTY_FILTERS, books: ["GP"] }, { push: true })} />
               <Figure label="Limited partners" value={compact(everything.books.LP)} sub="pensions, SWFs, insurers, E&Fs" onClick={() => navigate({ ...EMPTY_FILTERS, books: ["LP"] }, { push: true })} />

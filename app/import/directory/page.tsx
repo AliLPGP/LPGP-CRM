@@ -6,7 +6,9 @@ import { getDirectorySetup, missingSql, upgradeOnly } from "@/lib/directory/setu
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { DirectoryImport } from "@/components/directory/directory-import";
 import { DirectorySetupPanel } from "@/components/directory/directory-setup";
+import { DatasetLoader } from "@/components/directory/dataset-loader";
 import { EnrichRunner } from "@/components/directory/enrich-runner";
+import { shippedDatasetInfo } from "@/lib/directory/intelligence-queries";
 import { getDirectoryIndex } from "@/lib/directory/index-server";
 import { lushaConfigured } from "@/lib/lusha";
 import { PageHeader } from "@/components/page-header";
@@ -17,11 +19,12 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Import the Master Directory — LPGP Connect" };
 
 export default async function DirectoryImportPage() {
-  const [user, samples, setup, index] = await Promise.all([
+  const [user, samples, setup, index, shipped] = await Promise.all([
     getSessionUser(),
     countSampleRows(),
     getDirectorySetup(),
     getDirectoryIndex(),
+    shippedDatasetInfo(),
   ]);
   // GPs with a website, largest first: the order the enrichment runs go in.
   const gps = index.records
@@ -63,6 +66,7 @@ export default async function DirectoryImportPage() {
         </p>
       ) : null}
       <DirectoryImport isAdmin={isAdmin} schemaReady={setup.directory} fundsReady={setup.funds} samples={samples} />
+      {isAdmin ? <DatasetLoader shipped={shipped} loaded={setup.datasetLoaded} ready={setup.intelligence} /> : null}
       {isAdmin && setup.portfolio && gps.length ? (
         <EnrichRunner gps={gps} lushaReady={lushaConfigured()} aiReady={Boolean(process.env.ANTHROPIC_API_KEY)} />
       ) : null}

@@ -73,6 +73,13 @@ boundaries and keeps comment text ASCII.
   per GP, each with `source` (`web_research` | `manual`) and the `source_url`
   that names it. Operating partners have no table: they are contacts whose
   title `isOperatingRole()` recognises (`lib/directory/operating.ts`).
+- **Intelligence** (0016) — `deals` and `signals` per asset class,
+  `sports_teams` / `sports_team_owners` / `sports_investors`, and
+  `benchmarks` (published figures with publisher, period and page). Every
+  row carries the URL of the page that states it; a figure no page states is
+  null. Seeded from `data/intelligence/dataset.json` (public facts only,
+  built by `supabase/tools/build_intelligence_dataset.py`) and grown by the
+  in-app research jobs.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).
@@ -123,6 +130,27 @@ The app degrades gracefully when Supabase env vars are absent (shows a
   for admins on Import → Master directory.
 - `setup.ts` tells an admin which directory SQL a database is missing and
   serves it in paste-sized parts.
+- `asset-classes.ts` and `strategies.ts` are the taxonomy. A manager sits in
+  a class by its directory type; a fund by its own name first, its manager's
+  type second (`fundClass` says which). A strategy (direct lending,
+  mezzanine, CLOs, logistics, energy transition…) is placed by words in the
+  fund's legal name or in the manager's own vertical/overview — never by
+  guess. `strategy-data.ts` computes the metrics per strategy from Form ADV
+  data (sizes as quartiles, ERA share, providers, geography).
+- `research.ts` is the one loop behind every in-app research job: Claude
+  with the server-side web_search tool, a strict `record_*` tool for the
+  shape we store, `pause_turn` handed back. Jobs: `sports-research.ts`
+  (a club, optionally re-checked by a second pass with different queries),
+  `deals-research.ts` (a class since a date), `benchmark-research.ts`
+  (published figures per class and strategy), `signals-refresh.ts` (news),
+  `portfolio-research.ts`. Routes under `app/api/directory/*`; the daily
+  signals and monthly benchmarks crons are in `vercel.json` (Vercel sends
+  `CRON_SECRET`; GET is cron-only, a session never starts a job from a link).
+  Every job carries a **deadline** (`deadlineAfter`) inside the function's
+  time limit and reports what it did not reach rather than dying mid-write.
+  All need `ANTHROPIC_API_KEY`; deals, bulk jobs and clubs added by name are
+  admin-only. A refuted fact-check verdict removes the figure *and* what hung
+  on it (currency, season, page, the owner rows a summary described).
 - Nothing is inferred that the workbook doesn't say. Sizes carry their basis
   (brand vs. entity regulatory AUM, fund gross assets for ERAs, total assets
   for LPs), commitments keep their own currency, and the original seed's
@@ -183,6 +211,14 @@ asks — adopting or creating is the person's call.
 - Client state is **derived, not reset in effects** (results carry the query or
   id they answer). The React Compiler lint is enforced; don't reach for an
   escape hatch, restructure instead.
+- The intelligence screens (`/database/*`, `/companies/[id]`, `/funds`,
+  `/contacts`) wear the **desk** register on top of Pavilion: the `.desk`
+  wrapper (`IntelShell` in `components/intel/shell.tsx`) drops the radius to
+  4px, flattens surfaces and sets 13px type; `.desk-table` for dense ledgers,
+  `.desk-label` small caps, `.desk-tabs` underline tabs, `.defn` for a hover
+  definition, `.tag`, `.kv`. Primitives in `components/intel/ui.tsx` (`Box`,
+  `Stat`, `StatStrip`, `Src`, `Tag`, `SubTabs`, `Bar`). Every figure that
+  came from a page shows its `Src`.
 - The theme is **"Pavilion"** (`app/globals.css`), taken from our own exhibition
   stands: matte graphite panels, cream lettering, walnut behind them. Primary is
   near-black in light mode and cream in dark — inverted, the way a stand puts

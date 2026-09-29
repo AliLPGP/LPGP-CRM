@@ -2,7 +2,7 @@ import { getSessionUser } from "@/lib/auth";
 import { getDirectoryIndex } from "@/lib/directory/index-server";
 import { getRecentCommitments, listDirectoryLists, listSavedSearches } from "@/lib/directory/queries";
 import { packIndex } from "@/lib/directory/records";
-import { getDirectorySetup, missingSql, upgradeOnly } from "@/lib/directory/setup";
+import { getDirectorySetup, missingSql, sqlDone, upgradeOnly } from "@/lib/directory/setup";
 import { worldGeometry } from "@/lib/directory/world-map";
 import { lushaConfigured } from "@/lib/lusha";
 import { isAdminConfigured } from "@/lib/supabase/admin";
@@ -11,6 +11,7 @@ import { Discover } from "@/components/directory/discover";
 import { DirectorySetupPanel } from "@/components/directory/directory-setup";
 import type { OverviewCommitment } from "@/components/directory/overview";
 import { SetupNotice } from "@/components/setup-notice";
+import { IntelShell } from "@/components/intel/shell";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Discover — LPGP Connect" };
@@ -26,7 +27,7 @@ export default async function DatabasePage() {
   ]);
   const isAdmin = user?.role === "admin";
   const parts = isAdmin ? await missingSql(setup) : [];
-  const needsSetup = setup.configured && (parts.length > 0 || !setup.lastImport);
+  const needsSetup = setup.configured && (parts.length > 0 || !setup.lastImport || !setup.datasetLoaded);
 
   let geometry = null;
   try {
@@ -50,13 +51,14 @@ export default async function DatabasePage() {
   }));
 
   return (
-    <div className="mx-auto max-w-[1440px] space-y-5 px-4 py-6 md:px-6 md:py-8">
+    <IntelShell>
       {!isSupabaseConfigured() ? <SetupNotice /> : null}
       {needsSetup && (isAdmin || !index.records.some((r) => r.directory)) ? (
         <DirectorySetupPanel
           state={{
-            sqlDone: parts.length === 0 && setup.directory && setup.funds && setup.portfolio,
+            sqlDone: parts.length === 0 && sqlDone(setup),
             fundsOnly: upgradeOnly(setup),
+            datasetLoaded: setup.datasetLoaded,
             lastImport: setup.lastImport,
             sqlEditorUrl: setup.sqlEditorUrl,
           }}
@@ -76,6 +78,6 @@ export default async function DatabasePage() {
         geometry={geometry}
         commitments={commitments}
       />
-    </div>
+    </IntelShell>
   );
 }

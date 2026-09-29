@@ -1,6 +1,8 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { chunk, fetchAll } from "../supabase/paged";
+import { DIRECTORY_TAG } from "./index-server";
 
 // Reads behind Discover, lists and the richer company page. Like every read
 // in the app: anon client, empty result on any failure, never throws.
@@ -355,10 +357,40 @@ export async function getProviderClients(companyId: string): Promise<ProviderCli
   }));
 }
 
+export type NamedCommitment = DisclosedCommitment & { fund_label: string | null; lp_label: string | null; gp_label: string | null };
+
+/** Every publicly disclosed commitment, named. */
+async function buildAllDisclosedCommitments(): Promise<NamedCommitment[]> {
+  const supabase = getReadClient();
+  if (!supabase) return [];
+  const rows = await fetchAll<DisclosedCommitment>((from, to, first) =>
+    supabase
+      .from("commitments")
+      .select(COMMITMENT_COLUMNS, first ? { count: "exact" } : undefined)
+      .eq("source", "lp_disclosure")
+      .order("commitment_year", { ascending: false, nullsFirst: false })
+      .order("id")
+      .range(from, to),
+  );
+  if (!rows) return [];
+  return nameCommitments(rows);
+}
+
+// Every workbook commitment, named — pages past the row cap and resolves
+// names in batches, so it is built once per import (the importer refreshes
+// the directory tag) rather than on every asset-class request.
+const cachedDisclosedCommitments = unstable_cache(buildAllDisclosedCommitments, ["all-disclosed-commitments-v1"], { tags: [DIRECTORY_TAG], revalidate: 3600 });
+
+export async function getAllDisclosedCommitments(): Promise<NamedCommitment[]> {
+  try {
+    return await cachedDisclosedCommitments();
+  } catch {
+    return buildAllDisclosedCommitments();
+  }
+}
+
 /** Names for the ids a commitment points at, so a row reads without joins. */
-export async function nameCommitments(rows: DisclosedCommitment[]): Promise<
-  (DisclosedCommitment & { fund_label: string | null; lp_label: string | null; gp_label: string | null })[]
-> {
+export async function nameCommitments(rows: DisclosedCommitment[]): Promise<NamedCommitment[]> {
   const supabase = getReadClient();
   if (!supabase || !rows.length) return rows.map((r) => ({ ...r, fund_label: r.fund_name, lp_label: r.lp_name, gp_label: r.gp_name }));
   const fundIds = [...new Set(rows.map((r) => r.fund_id).filter(Boolean))] as string[];
@@ -500,4 +532,18 @@ export async function getPortfolioCompanies(gpId: string): Promise<import("./por
   return (data as import("./portfolio").PortfolioCompany[]).sort(
     (a, b) => rank(a.status) - rank(b.status) || (b.invested_year ?? 0) - (a.invested_year ?? 0) || a.name.localeCompare(b.name),
   );
+}
+
+/** Managers by their latest Form ADV filing date, newest first. */
+export async function getRecentFilings(limit = 15): Promise<{ id: string; name: string; domain: string | null; sub_type: string | null; adv_last_filed: string | null }[]> {
+  const supabase = getReadClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("companies")
+    .select("id, name, domain, sub_type, adv_last_filed")
+    .not("adv_last_filed", "is", null)
+    .order("adv_last_filed", { ascending: false })
+    .limit(limit);
+  if (error || !data) return [];
+  return data as { id: string; name: string; domain: string | null; sub_type: string | null; adv_last_filed: string | null }[];
 }

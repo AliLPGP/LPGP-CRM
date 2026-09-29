@@ -1,10 +1,13 @@
 # Intelligence dataset
 
 `dataset.json` is the researched, source-cited dataset behind the Sports,
-Deals and Signals sections: football clubs and other teams with their
-ownership, revenue, valuation and following; the investors in sport; deals
-and news across every asset class. Every figure carries the URL of the page
-that states it and an as-of; a figure no source states is `null`.
+Deals, Signals and LP-commitment sections: football clubs and other teams
+with their ownership, revenue, valuation and following; the investors in
+sport; deals across every asset class (fund closes, take-privates,
+acquisitions, financings, secondaries, hedge fund launches); LP fund
+commitments as the LPs' own board publications and the press state them;
+and news. Every figure carries the URL of the page that states it and an
+as-of; a figure no source states is `null`.
 
 It is public information about companies, clubs and funds — no contact data —
 so it ships with the app. Load it from **Import → Master directory → Load the

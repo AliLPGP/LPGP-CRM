@@ -238,10 +238,27 @@ def main():
             add_deal(d, "sports", t["name"], "club", t.get("country"), key, t.get("sport") or meta.get("sport", "football"))
 
     signals = {}
+    commitments = {}
     for path in sorted(glob.glob(os.path.join(src, "topics", "*.json"))):
         tp = load(path)
         if not tp:
             continue
+        # LP commitments as an LP publication or the press states them; keyed
+        # the same way commitments-research.ts keys its rows.
+        for c in tp.get("commitments", []):
+            if not (c.get("lp_name") and c.get("fund_name") and is_url(c.get("source_url"))):
+                continue
+            cdate = c.get("date") if isinstance(c.get("date"), str) and re.match(r"^\d{4}-\d{2}-\d{2}$", c.get("date")) else None
+            year = num(c.get("year")) or (int(cdate[:4]) if cdate else None)
+            key = f"lpcommit:{slug(c['lp_name'])}:{slug(c['fund_name'])}:{cdate or (str(int(year)) if year else 'undated')}"
+            if key in commitments:
+                continue
+            commitments[key] = {
+                "key": key, "lp_name": c["lp_name"], "gp_name": c.get("manager") or c.get("gp_name"), "fund_name": c["fund_name"],
+                "amount": num(c.get("amount")), "currency": c.get("currency"), "amount_text": c.get("amount_text"),
+                "date": cdate, "date_text": c.get("date_text"), "year": int(year) if year else None,
+                "disclosure_type": c.get("disclosure_type") or "other", "source_name": c.get("source_name"), "source_url": c["source_url"],
+            }
         for d in tp.get("deals", []):
             add_deal(d, d.get("asset_class") or "other", d.get("target") or "", d.get("target_kind"), d.get("target_country"), None, d.get("sport"))
         for i in tp.get("investors", []):
@@ -276,10 +293,11 @@ def main():
         "investors": list(investors.values()),
         "deals": list(deals.values()),
         "signals": list(signals.values()),
+        "commitments": list(commitments.values()),
     }
     with open(out, "w", encoding="utf-8") as f:
         json.dump(dataset, f, ensure_ascii=False, indent=1)
-    print(f"teams {len(teams)} (with figures {filled}), investors {len(investors)}, deals {len(deals)}, signals {len(signals)} -> {out}")
+    print(f"teams {len(teams)} (with figures {filled}), investors {len(investors)}, deals {len(deals)}, signals {len(signals)}, commitments {len(commitments)} -> {out}")
 
 
 if __name__ == "__main__":

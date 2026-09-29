@@ -105,6 +105,23 @@ export type DatasetSignal = {
   source_url: string;
 };
 
+/** An LP's fund commitment as an LP publication or the press states it. */
+export type DatasetCommitment = {
+  key: string;
+  lp_name: string;
+  gp_name: string | null;
+  fund_name: string;
+  amount: number | null;
+  currency: string | null;
+  amount_text: string | null;
+  date: string | null;
+  date_text: string | null;
+  year: number | null;
+  disclosure_type: string;
+  source_name: string | null;
+  source_url: string;
+};
+
 export type IntelligenceDataset = {
   version: string;
   generated_at: string;
@@ -112,6 +129,8 @@ export type IntelligenceDataset = {
   investors: DatasetInvestor[];
   deals: DatasetDeal[];
   signals: DatasetSignal[];
+  /** Absent in editions before 2026-09-29. */
+  commitments?: DatasetCommitment[];
 };
 
 // --- Rows as read back ----------------------------------------------------------

@@ -5,7 +5,7 @@ import path from "node:path";
 import { revalidatePath, updateTag } from "next/cache";
 import { getSessionUser } from "../auth";
 import { getAdminClient } from "../supabase/admin";
-import { chunk } from "../supabase/paged";
+import { chunk, fetchAll } from "../supabase/paged";
 import { firmMatcher } from "./firm-match";
 import { DIRECTORY_TAG } from "./index-server";
 import { INTEL_TAG } from "./intelligence-queries";
@@ -29,10 +29,11 @@ export type LoadResult = {
   investors: number;
   deals: number;
   signals: number;
+  commitments: number;
   linkedFirms: number;
 };
 
-const EMPTY: LoadResult = { ok: false, teams: 0, owners: 0, investors: 0, deals: 0, signals: 0, linkedFirms: 0 };
+const EMPTY: LoadResult = { ok: false, teams: 0, owners: 0, investors: 0, deals: 0, signals: 0, commitments: 0, linkedFirms: 0 };
 
 async function readDataset(): Promise<IntelligenceDataset | null> {
   try {
@@ -249,9 +250,48 @@ export async function loadIntelligenceDataset(): Promise<LoadResult> {
     signals += rows.length;
   }
 
+  // LP commitments the dataset carries: linked to the LP, the manager and
+  // the fund where the directory has them; source = web_research, which the
+  // workbook import never prunes.
+  let commitments = 0;
+  if (data.commitments?.length) {
+    const funds =
+      (await fetchAll<{ id: string; name: string; company_id: string | null }>((from, to, first) =>
+        supabase.from("funds").select("id, name, company_id", first ? { count: "exact" } : undefined).order("id").range(from, to),
+      )) ?? [];
+    const fundByName = new Map(funds.map((f) => [normName(f.name), f]));
+    for (const batch of chunk(data.commitments, 200)) {
+      const rows: Row[] = batch.map((c) => {
+        const fund = fundByName.get(normName(c.fund_name));
+        return {
+          external_key: c.key,
+          lp_company_id: link(c.lp_name),
+          gp_company_id: fund?.company_id ?? link(c.gp_name),
+          fund_id: fund?.id ?? null,
+          lp_name: c.lp_name,
+          gp_name: c.gp_name,
+          fund_name: c.fund_name,
+          amount: c.amount,
+          currency: c.currency,
+          amount_text: c.amount_text,
+          commitment_date: c.date,
+          commitment_date_text: c.date_text,
+          commitment_year: c.year,
+          disclosure_type: c.disclosure_type,
+          source: "web_research",
+          source_url: c.source_url,
+          source_date: data.generated_at,
+        };
+      });
+      const { error } = await supabase.from("commitments").upsert(rows, { onConflict: "external_key" });
+      if (error) return { ...EMPTY, error: `Commitments: ${error.message}` };
+      commitments += rows.length;
+    }
+  }
+
   await supabase.from("directory_imports").insert({
     filename: `intelligence-dataset@${data.version}`,
-    stats: { teams: data.teams.length, investors: data.investors.length, deals: data.deals.length, signals: data.signals.length },
+    stats: { teams: data.teams.length, investors: data.investors.length, deals: data.deals.length, signals: data.signals.length, commitments },
     result: { owners, linkedFirms },
     imported_by: user.id,
   });
@@ -259,5 +299,5 @@ export async function loadIntelligenceDataset(): Promise<LoadResult> {
   updateTag(INTEL_TAG);
   updateTag(DIRECTORY_TAG);
   for (const p of ["/database", "/database/sports", "/database/deals", "/database/signals", "/database/asset-classes", "/import/directory"]) revalidatePath(p);
-  return { ok: true, version: data.version, teams: teamIds.size, owners, investors: investorIds.size, deals, signals, linkedFirms };
+  return { ok: true, version: data.version, teams: teamIds.size, owners, investors: investorIds.size, deals, signals, commitments, linkedFirms };
 }

@@ -7,6 +7,7 @@ import {
   formatOpsMoney,
   opsMatchKey,
   OPS_SIGNED_CONFIDENCE as SIGNED_CONFIDENCE,
+  type DateTbc,
   type OpsMatch,
 } from "./ops-types";
 import { STAGE_META, type LeadStage } from "./pipeline";
@@ -175,7 +176,12 @@ function rank(kind: TeammateLead["stageKind"]): number {
   return kind === "open" ? 0 : kind === "won" ? 1 : 2;
 }
 
-export type KnownEvent = LeadEvent & { event_date: string | null; location: string };
+export type KnownEvent = LeadEvent & {
+  event_date: string | null;
+  location: string;
+  producer: string;
+  date_tbc: DateTbc;
+};
 
 /**
  * Events a lead can be pursued for. The ops panel is the source; when it's
@@ -191,6 +197,8 @@ export async function listKnownEvents(): Promise<KnownEvent[]> {
         event_name: e.name,
         event_date: e.event_date,
         location: e.location,
+        producer: e.producer,
+        date_tbc: e.date_tbc,
       }));
     }
   }
@@ -206,5 +214,7 @@ export async function listKnownEvents(): Promise<KnownEvent[]> {
     event_name: r.event_name as string,
     event_date: null,
     location: "",
+    producer: "",
+    date_tbc: "",
   }));
 }

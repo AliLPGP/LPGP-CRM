@@ -13,6 +13,7 @@ import {
 import { LEAD_STAGES, STAGE_META } from "@/lib/pipeline";
 import { ACTIVITY_LABELS, formatDuration } from "@/lib/sales";
 import { formatOpsMoney, type OpsEvent } from "@/lib/ops-types";
+import { formatEventDate } from "@/lib/event-date";
 import type { ActivityWithRefs, LeadWithRefs } from "@/lib/types";
 import { cn, formatUsd, timeAgo } from "@/lib/utils";
 
@@ -181,7 +182,7 @@ export function OpsEventsPanel({
                 </div>
                 <p className="mt-0.5 text-[11px] text-muted-foreground">
                   {e.deal_count} sponsor{e.deal_count === 1 ? "" : "s"}
-                  {e.event_date ? ` · ${e.event_date}` : ""}
+                  {` · ${formatEventDate(e)}`}
                   {e.location ? ` · ${e.location}` : ""}
                 </p>
               </li>

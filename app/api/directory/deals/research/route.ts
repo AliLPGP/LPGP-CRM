@@ -2,12 +2,10 @@ import { NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import { getSessionUser } from "@/lib/auth";
 import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, isAssetClassKey } from "@/lib/directory/asset-classes";
-import { researchDeals } from "@/lib/directory/deals-research";
-import { firmMatcher } from "@/lib/directory/firm-match";
 import { INTEL_TAG } from "@/lib/directory/intelligence-queries";
-import { deadlineAfter, OUT_OF_TIME, timeLeft } from "@/lib/directory/research";
+import { runDeals } from "@/lib/directory/jobs";
+import { deadlineAfter } from "@/lib/directory/research";
 import { getAdminClient } from "@/lib/supabase/admin";
-import { chunk } from "@/lib/supabase/paged";
 
 // Deals for one asset class (or all), announced since a date, from web
 // search on the server. Admin only; parties are linked to directory firms.
@@ -32,45 +30,12 @@ export async function POST(req: Request) {
   }
   const classes = isAssetClassKey(body.assetClass) ? [ASSET_CLASS_BY_KEY[body.assetClass]] : ASSET_CLASSES;
   const since = typeof body.since === "string" && /^\d{4}-\d{2}-\d{2}$/.test(body.since) ? body.since : `${new Date().getUTCFullYear() - 1}-01-01`;
-  const today = new Date().toISOString().slice(0, 10);
-  const firmId = await firmMatcher(supabase);
-  const deadline = deadlineAfter(270_000);
-
-  let added = 0;
-  const errors: string[] = [];
-  const skipped: string[] = [];
   try {
-    for (const cls of classes) {
-      if (timeLeft(deadline) < 45_000) {
-        skipped.push(cls.short);
-        continue;
-      }
-      const [closes, transactions] = await Promise.all([
-        researchDeals(cls, { since, angle: "closes", today, deadline }),
-        researchDeals(cls, { since, angle: "transactions", today, deadline }),
-      ]);
-      for (const r of [closes, transactions]) {
-        if (r.error === OUT_OF_TIME) {
-          if (!skipped.includes(cls.short)) skipped.push(cls.short);
-        } else if (r.error) errors.push(`${cls.short}: ${r.error}`);
-      }
-      // The two angles can surface the same transaction; one row per key.
-      const byKey = new Map([...closes.rows, ...transactions.rows].map((d) => [d.external_key, d]));
-      const rows = [...byKey.values()].map((d) => ({
-        ...d,
-        investor_company_id: firmId(d.investor),
-        target_company_id: d.target_kind === "company" || d.target_kind === "fund" ? firmId(d.target) : null,
-        added_by: user.id,
-      }));
-      for (const batch of chunk(rows, 200)) {
-        const { error } = await supabase.from("deals").upsert(batch, { onConflict: "external_key" });
-        if (error) return NextResponse.json({ error: `Saving: ${error.message}`, added }, { status: 500 });
-        added += batch.length;
-      }
-    }
-  } finally {
-    if (added) revalidateTag(INTEL_TAG, { expire: 0 });
+    const result = await runDeals(supabase, classes, { since, deadline: deadlineAfter(270_000), addedBy: user.id });
+    if (result.added) revalidateTag(INTEL_TAG, { expire: 0 });
+    return NextResponse.json({ ok: true, ...result });
+  } catch (error) {
+    revalidateTag(INTEL_TAG, { expire: 0 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : "Research failed" }, { status: 500 });
   }
-  if (skipped.length) errors.push(`${OUT_OF_TIME} Not finished: ${skipped.join(", ")}.`);
-  return NextResponse.json({ ok: true, added, classes: classes.length - skipped.length, skipped, errors });
 }

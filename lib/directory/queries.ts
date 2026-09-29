@@ -367,7 +367,8 @@ async function buildAllDisclosedCommitments(): Promise<NamedCommitment[]> {
     supabase
       .from("commitments")
       .select(COMMITMENT_COLUMNS, first ? { count: "exact" } : undefined)
-      .eq("source", "lp_disclosure")
+      // The workbook's disclosures and the research job's; never the seed's samples.
+      .in("source", ["lp_disclosure", "web_research"])
       .order("commitment_year", { ascending: false, nullsFirst: false })
       .order("id")
       .range(from, to),
@@ -514,7 +515,7 @@ export async function getRecentCommitments(
   const { data, error } = await supabase
     .from("commitments")
     .select(COMMITMENT_COLUMNS)
-    .eq("source", "lp_disclosure")
+    .in("source", ["lp_disclosure", "web_research"])
     .order("commitment_year", { ascending: false, nullsFirst: false })
     .order("commitment_date", { ascending: false, nullsFirst: false })
     .limit(limit);

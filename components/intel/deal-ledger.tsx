@@ -7,7 +7,7 @@ import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, DEAL_KIND_LABEL, INVESTOR_TYPE_LABEL
 import { formatMoney, SPORT_LABEL, type Deal } from "@/lib/directory/intelligence-types";
 import { cn } from "@/lib/utils";
 import { dateLabel } from "./tables";
-import { Empty, Src, Tag } from "./ui";
+import { Empty, Tag } from "./ui";
 
 // The Deals page: every sourced transaction, filtered and sorted in the
 // browser. Money is shown in the currency the source states and never
@@ -191,7 +191,7 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
             </label>
           </div>
           {rows.length ? (
-            <div className="overflow-x-auto">
+            <div className="desk-scroll">
               <table className="desk-table">
                 <thead>
                   <tr>
@@ -202,7 +202,6 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
                     <th className="num">Stake</th>
                     <th className="num">Amount</th>
                     <th className="num">Valuation</th>
-                    <th>Source</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -237,9 +236,6 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
                         <td className="num">{d.stake_pct != null ? `${d.stake_pct}%` : "—"}</td>
                         <td className="num">{formatMoney(d.amount, d.currency)}</td>
                         <td className="num">{formatMoney(d.valuation, d.valuation_currency)}</td>
-                        <td>
-                          <Src url={d.source_url} name={d.source_name} />
-                        </td>
                       </tr>
                     );
                   })}

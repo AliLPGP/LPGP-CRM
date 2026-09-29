@@ -143,7 +143,10 @@ The app degrades gracefully when Supabase env vars are absent (shows a
   (a club, optionally re-checked by a second pass with different queries),
   `deals-research.ts` (a class since a date), `benchmark-research.ts`
   (published figures per class and strategy), `signals-refresh.ts` (news),
-  `portfolio-research.ts`. Routes under `app/api/directory/*`; the daily
+  `commitments-research.ts` (an LP's published fund commitments),
+  `portfolio-research.ts`. `jobs.ts` runs each job over a service-role
+  client — the routes call it after checking who asks, and
+  `scripts/research.ts` calls it from a terminal with no time limit. Routes under `app/api/directory/*`; the daily
   signals and monthly benchmarks crons are in `vercel.json` (Vercel sends
   `CRON_SECRET`; GET is cron-only, a session never starts a job from a link).
   Every job carries a **deadline** (`deadlineAfter`) inside the function's

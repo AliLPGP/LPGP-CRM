@@ -107,6 +107,12 @@ with web search on the server and every figure saved with its page:
 | Deals for an asset class since a date | the asset class page | admins |
 | Published benchmarks per class and strategy | the asset class page; cron on the 1st–8th of each month, one class per run | admins / cron |
 | Signals (news) per class | the Signals page; daily cron | admins / cron |
+| LP commitments from what disclosing LPs publish (board minutes, reports) | the Fundraising and Asset allocation desks | admins |
+
+The same jobs run from a terminal with no time limit and a log line per
+class, club or LP — `npx tsx --conditions react-server scripts/research.ts
+all` (or `benchmarks`, `deals`, `signals`, `clubs`, `commitments`), reading
+the keys from `.env.local`.
 
 Each run stops itself a little before Vercel's 300-second function limit and
 names the classes or clubs it did not reach, so nothing is lost to a timeout

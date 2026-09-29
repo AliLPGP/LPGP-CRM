@@ -30,19 +30,19 @@ export type WorkflowKey =
   | "asset_allocation"
   | "portfolio_management";
 
-export type Workflow = { key: WorkflowKey; slug: string; name: string; blurb: string; icon: string };
+export type Workflow = { key: WorkflowKey; slug: string; name: string; blurb: string; icon: string; /** The questions the desk answers, in the order its panels do. */ answers: string[] };
 
 export const WORKFLOWS: Workflow[] = [
-  { key: "market_intelligence", slug: "market-intelligence", name: "Market intelligence", blurb: "The market by class: managers, capital, funds, what filed and what moved this week.", icon: "search" },
-  { key: "deal_sourcing", slug: "deal-sourcing", name: "Deal sourcing", blurb: "What is transacting, who is buying, which assets have institutional money behind them.", icon: "radar" },
-  { key: "deal_execution", slug: "deal-execution", name: "Deal execution", blurb: "The counterparties a deal runs through: administrators, auditors, custodians, placement agents — and deals with stated terms.", icon: "handshake" },
-  { key: "networking", slug: "networking", name: "Networking", blurb: "Who to know: the people on file, the firms with the deepest benches, the operating partners.", icon: "users" },
-  { key: "due_diligence", slug: "due-diligence", name: "Due diligence", blurb: "What a manager files: registration, private funds, providers, domiciles, latest Form ADV.", icon: "clipboard" },
-  { key: "fundraising", slug: "fundraising", name: "Fundraising", blurb: "The limited partners: who discloses commitments, what they committed to, the closes on record.", icon: "banknote" },
-  { key: "benchmarking", slug: "benchmarking", name: "Benchmarking", blurb: "Published figures per class and strategy, and the size distribution of managers by class.", icon: "chart" },
-  { key: "business_development", slug: "business-development", name: "Business development", blurb: "The solution providers' market: who serves the most managers, where the white space is.", icon: "briefcase" },
-  { key: "asset_allocation", slug: "asset-allocation", name: "Asset allocation", blurb: "Where disclosed LP capital goes by class, and which LPs disclose the most.", icon: "pie" },
-  { key: "portfolio_management", slug: "portfolio-management", name: "Portfolio management", blurb: "Portfolio companies on file: who owns what, sectors, holding periods, exits.", icon: "folder" },
+  { key: "market_intelligence", slug: "market-intelligence", name: "Market intelligence", blurb: "The market by class: managers, capital, funds, what filed and what moved this week.", icon: "search", answers: ["How big is each class, in managers and regulatory AUM?", "What moved this week — deals, news, filings?", "Where are the managers, and what kind are they?"] },
+  { key: "deal_sourcing", slug: "deal-sourcing", name: "Deal sourcing", blurb: "What is transacting, who is buying, which assets have institutional money behind them.", icon: "radar", answers: ["What has transacted, by quarter and by class?", "Who is buying most often?", "Which assets already have institutional money behind them?"] },
+  { key: "deal_execution", slug: "deal-execution", name: "Deal execution", blurb: "The counterparties a deal runs through: administrators, auditors, custodians, placement agents — and deals with stated terms.", icon: "handshake", answers: ["Which administrators, auditors, custodians and agents do managers actually use?", "Which deals state terms a comparable can be drawn from?"] },
+  { key: "networking", slug: "networking", name: "Networking", blurb: "Who to know: the people on file, the firms with the deepest benches, the operating partners.", icon: "users", answers: ["How many people are on file, and how many can be reached?", "Which firms have the deepest benches?", "Which managers have operating partners?"] },
+  { key: "due_diligence", slug: "due-diligence", name: "Due diligence", blurb: "What a manager files: registration, private funds, providers, domiciles, latest Form ADV.", icon: "clipboard", answers: ["Who is SEC-registered, exempt, or not filing?", "What do the largest managers file?", "Where are funds domiciled and in what vehicles?"] },
+  { key: "fundraising", slug: "fundraising", name: "Fundraising", blurb: "The limited partners: who discloses commitments, what they committed to, the closes on record.", icon: "banknote", answers: ["Which LPs publish their commitments?", "What have they committed to, and when?", "What has closed?"] },
+  { key: "benchmarking", slug: "benchmarking", name: "Benchmarking", blurb: "Published figures per class and strategy, and the size distribution of managers by class.", icon: "chart", answers: ["How are managers sized within each class?", "What do Preqin, PitchBook, Cliffwater and the rest publish, with the page?"] },
+  { key: "business_development", slug: "business-development", name: "Business development", blurb: "The solution providers' market: who serves the most managers, where the white space is.", icon: "briefcase", answers: ["Which providers serve the most managers?", "What kinds of provider are there, and how large?", "Where is the white space?"] },
+  { key: "asset_allocation", slug: "asset-allocation", name: "Asset allocation", blurb: "Where disclosed LP capital goes by class, and which LPs disclose the most.", icon: "pie", answers: ["Where does disclosed LP capital go, by class and by year?", "Which LPs disclose the most?", "Who are the largest allocators?"] },
+  { key: "portfolio_management", slug: "portfolio-management", name: "Portfolio management", blurb: "Portfolio companies on file: who owns what, sectors, holding periods, exits.", icon: "folder", answers: ["Which portfolio companies are on file, and who owns them?", "When were they bought, and which have exited?", "Which sectors?"] },
 ];
 
 export const WORKFLOW_BY_SLUG: Record<string, Workflow> = Object.fromEntries(WORKFLOWS.map((w) => [w.slug, w]));
@@ -58,9 +58,45 @@ const bump = (m: Map<string, number>, k: string | null | undefined, by = 1) => {
   if (k) m.set(k, (m.get(k) ?? 0) + by);
 };
 
+export type Series = { label: string; value: number; hint?: string }[];
+
+/** Counts per quarter over the last `n` quarters, oldest first, from ISO dates. */
+function byQuarter(dates: (string | null)[], n = 8): Series {
+  const now = new Date();
+  const keys: string[] = [];
+  for (let i = n - 1; i >= 0; i--) {
+    const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i * 3, 1));
+    keys.push(`${d.getUTCFullYear()}Q${Math.floor(d.getUTCMonth() / 3) + 1}`);
+  }
+  const counts = new Map(keys.map((k) => [k, 0]));
+  for (const iso of dates) {
+    if (!iso) continue;
+    const k = `${iso.slice(0, 4)}Q${Math.floor((Number(iso.slice(5, 7)) - 1) / 3) + 1}`;
+    if (counts.has(k)) counts.set(k, counts.get(k)! + 1);
+  }
+  return keys.map((k) => ({ label: k.replace(/^(\d{2})(\d{2})Q/, "$2 Q"), value: counts.get(k)! }));
+}
+
+/** Counts per year over the last `n` years, oldest first. */
+function byYear(years: (number | null)[], n = 8): Series {
+  const last = new Date().getUTCFullYear();
+  const counts = new Map<number, number>();
+  for (let y = last - n + 1; y <= last; y++) counts.set(y, 0);
+  for (const y of years) if (y != null && counts.has(y)) counts.set(y, counts.get(y)! + 1);
+  return [...counts.entries()].map(([y, value]) => ({ label: String(y), value }));
+}
+
 export type WorkflowData = {
   workflow: Workflow;
   insights: Insights;
+  // Series for the charts: drawn to scale from the rows below.
+  dealsByQuarter: Series;
+  dealsByClass: Count[];
+  managersByClass: Count[];
+  commitmentsByYear: Series;
+  commitmentsByClass: Count[];
+  portcosByYear: Series;
+  peopleByBook: Count[];
   records: DirectoryRecord[];
   brands: DirectoryBrand[];
   classes: ClassSummary[];
@@ -252,9 +288,25 @@ export async function getWorkflow(workflow: Workflow): Promise<WorkflowData> {
     bump(portcoStatus, p.status ?? "unknown");
   }
 
+  const dealsByClass = new Map<string, number>();
+  for (const d of deals) bump(dealsByClass, d.asset_class);
+  const managersByClass = new Map<string, number>();
+  for (const m of managers) bump(managersByClass, classOfGpType(m.subType) ?? "");
+  const commitmentsByClass = new Map<string, number>();
+  for (const [k, e] of alloc) commitmentsByClass.set(k, e.commitments);
+  const peopleByBook = new Map<string, number>();
+  for (const r of records) bump(peopleByBook, r.category, r.contacts);
+
   return {
     workflow,
     insights,
+    dealsByQuarter: byQuarter(deals.map((d) => d.date)),
+    dealsByClass: top(dealsByClass, 8),
+    managersByClass: top(managersByClass, 8).filter((c) => c.key),
+    commitmentsByYear: byYear(commitments.map((c) => c.commitment_year ?? (c.commitment_date ? Number(c.commitment_date.slice(0, 4)) : null))),
+    commitmentsByClass: top(commitmentsByClass, 8),
+    portcosByYear: byYear(portcosRaw.map((p) => p.invested_year), 10),
+    peopleByBook: top(peopleByBook, 4),
     records,
     brands: index.brands,
     classes,

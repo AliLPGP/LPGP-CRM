@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CompanyLogo } from "@/components/company-logo";
+import { Columns, Ranges, ShareBar } from "@/components/intel/charts";
+import { ResearchCommitmentsButton } from "@/components/intel/research-buttons";
 import { IntelShell } from "@/components/intel/shell";
 import { BenchmarkTable } from "@/components/intel/strategies-panel";
 import { CommitmentTable, DealTable, dateLabel, FirmTable, ProviderMini, SignalList } from "@/components/intel/tables";
@@ -10,8 +12,11 @@ import { ASSET_CLASS_BY_KEY, DEAL_KIND_LABEL, type AssetClassKey } from "@/lib/d
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { getWorkflow, WORKFLOW_BY_SLUG, WORKFLOWS, type Count, type WorkflowData } from "@/lib/directory/workflows";
 import { formatUsd } from "@/lib/utils";
+import { getSessionUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
+
+const CLASS_NAME = (key: string) => ASSET_CLASS_BY_KEY[key as AssetClassKey]?.name ?? key;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -94,9 +99,11 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const workflow = WORKFLOW_BY_SLUG[slug];
   if (!workflow) notFound();
-  const d = await getWorkflow(workflow);
+  const [d, user] = await Promise.all([getWorkflow(workflow), getSessionUser()]);
   const i = d.insights;
   const k = workflow.key;
+  const isAdmin = user?.role === "admin";
+  const aiReady = Boolean(process.env.ANTHROPIC_API_KEY);
 
   return (
     <IntelShell
@@ -108,7 +115,20 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
           {workflow.name}
         </span>
       }
-      description={workflow.blurb}
+      description={
+        <span className="block">
+          {workflow.blurb}
+          <span className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 text-[11.5px]">
+            {workflow.answers.map((a) => (
+              <span key={a} className="text-foreground/80">
+                <span className="text-muted-foreground">▸ </span>
+                {a}
+              </span>
+            ))}
+          </span>
+        </span>
+      }
+      actions={isAdmin && (k === "fundraising" || k === "asset_allocation") ? <ResearchCommitmentsButton aiReady={aiReady} /> : undefined}
       tabs={<SubTabs items={WORKFLOWS.map((w) => ({ href: `/database/workflows/${w.slug}`, label: w.name, active: w.key === k }))} />}
     >
       {k === "market_intelligence" ? (
@@ -121,6 +141,14 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
             <Stat label="Signals" value={d.signals.length.toLocaleString("en-US")} basis="dated news items" href="/database/signals" />
             <Stat label="People" value={i.people.toLocaleString("en-US")} basis={`${i.connectable.toLocaleString("en-US")} reachable`} href="/contacts" />
           </StatStrip>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Box title="Managers by class" defn="Every manager in the directory placed by its type; the hue per class is the same on every chart.">
+              <ShareBar segments={d.managersByClass.map((c) => ({ key: c.key, label: CLASS_NAME(c.key), value: c.count }))} />
+            </Box>
+            <Box title="Deals per quarter" defn="Sourced transactions by announcement date, last eight quarters.">
+              <Columns rows={d.dealsByQuarter} height={110} />
+            </Box>
+          </div>
           <Split>
             <div className="space-y-4">
               <Box title="The market by class" flush>
@@ -164,6 +192,14 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
             <Stat label="Clubs with institutional money" value={d.backedClubs.length} href="/database/sports" />
             <Stat label="Deal signals" value={d.signals.filter((s) => s.kind === "deal").length} basis="news items tagged deal" />
           </StatStrip>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Box title="Deals per quarter" defn="Sourced transactions by announcement date, last eight quarters.">
+              <Columns rows={d.dealsByQuarter} height={110} />
+            </Box>
+            <Box title="Deals by class" defn="Share of the deals on file by asset class. Classes with none are the ones the research jobs have not run for yet.">
+              <ShareBar segments={d.dealsByClass.map((c) => ({ key: c.key, label: CLASS_NAME(c.key), value: c.count }))} />
+            </Box>
+          </div>
           <Split>
             <div className="space-y-4">
               <Box title="Newest deals" flush>
@@ -241,6 +277,9 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
             <Stat label="Operating partners" value={i.operators.toLocaleString("en-US")} basis="contacts with an operating title" />
             <Stat label="Firms with people" value={d.records.filter((r) => r.contacts > 0).length.toLocaleString("en-US")} />
           </StatStrip>
+          <Box title="People by book" defn="Contacts on file across managers, limited partners, solution providers and unclassified firms.">
+            <ShareBar segments={d.peopleByBook.map((c, idx) => ({ key: c.key, label: { GP: "Fund managers", LP: "Limited partners", SP: "Solution providers", UN: "Unclassified" }[c.key] ?? c.key, value: c.count, hue: `var(--chart-${idx + 1})` }))} />
+          </Box>
           <Split>
             <Box title="Deepest benches" count={d.deepestBench.length} flush defn="Firms with the most people on file, whatever their book.">
               <FirmTable firms={d.deepestBench} />
@@ -281,6 +320,15 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
             <Stat label="Private funds named" value={i.funds.toLocaleString("en-US")} href="/funds" />
             <Stat label="Provider links" value={i.providerLinks.toLocaleString("en-US")} basis="filed on Schedule D" />
           </StatStrip>
+          <Box title="Registration status" defn="Managers by what they file with the SEC: a full Form ADV, the exempt reporting form, or nothing on file (non-US, or not matched).">
+            <ShareBar
+              segments={[
+                { key: "registered", label: "SEC-registered", value: d.registration.registered, hue: "var(--chart-1)" },
+                { key: "era", label: "Exempt reporting", value: d.registration.era, hue: "var(--chart-2)" },
+                { key: "unfiled", label: "No filing on file", value: d.registration.unfiled, hue: "var(--chart-track)" },
+              ]}
+            />
+          </Box>
           <Split>
             <Box title="Largest managers, as filed" count={i.largest.length} flush defn="Regulatory AUM, the fund count and registration status, straight from Form ADV.">
               <FirmTable firms={i.largest} limit={25} />
@@ -319,6 +367,14 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
             <Stat label="LP assets" value={formatUsd(i.lpAssets.sum)} basis={`${i.lpAssets.firms} LPs stating total assets`} />
             <Stat label="Fund closes" value={d.closes.length} basis="sourced closes and milestones" />
           </StatStrip>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Box title="Commitments disclosed per year" defn="Disclosed LP commitments by the year they were approved or reported, last eight years.">
+              <Columns rows={d.commitmentsByYear} height={110} />
+            </Box>
+            <Box title="Commitments by class" defn="Each commitment placed by its fund's name or the manager's type.">
+              <ShareBar segments={d.commitmentsByClass.map((c) => ({ key: c.key, label: CLASS_NAME(c.key), value: c.count }))} />
+            </Box>
+          </div>
           <Split>
             <div className="space-y-4">
               <Box title="Latest disclosed commitments" flush>
@@ -348,7 +404,10 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
             <Stat label="Publishers" value={new Set(d.benchmarks.map((b) => b.publisher)).size} />
             <Stat label="Managers sized" value={d.sizeByClass.reduce((a, s) => a + (s.q?.n ?? 0), 0).toLocaleString("en-US")} basis="with Form ADV regulatory AUM" />
           </StatStrip>
-          <Box title="Manager size by class" flush defn="Form ADV regulatory AUM across each class's SEC filers, brand totals counted once — the distribution a manager can be placed against.">
+          <Box title="Where a manager sits in its class" defn="Form ADV regulatory AUM of each class's SEC filers, brand totals counted once. Place a manager's size on its class's range.">
+            <Ranges rows={d.sizeByClass.filter((s) => s.q).map((s) => ({ key: s.cls.key, label: s.cls.name, ...s.q!, n: s.q!.n }))} format={formatUsd} />
+          </Box>
+          <Box title="Manager size by class" flush defn="The same distributions as figures: quartiles of regulatory AUM per class.">
             <div className="overflow-x-auto">
               <table className="desk-table">
                 <thead>
@@ -400,6 +459,9 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
             <Stat label="Managers to serve" value={i.books.GP.toLocaleString("en-US")} basis={`${i.filers} with providers on file`} />
             <Stat label="Managers without a filed provider" value={(i.books.GP - i.filers).toLocaleString("en-US")} basis="white space" defn="Managers in the directory whose Form ADV names no provider — either not a US filer or the lineup isn't on file. The list to work." />
           </StatStrip>
+          <Box title="The provider market by type" defn="Solution providers by the type the directory records, the largest six types shown as a share.">
+            <ShareBar segments={d.spTypes.slice(0, 6).map((c, idx) => ({ key: c.key, label: c.key, value: c.count, hue: `var(--chart-${(idx % 7) + 1})` }))} />
+          </Box>
           <Split>
             <div className="space-y-4">
               <Box title="Providers by managers served" count={d.topProviders.length} flush defn="Distinct managers whose filings name the provider, brand-level.">
@@ -433,6 +495,14 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
             <Stat label="LPs disclosing" value={d.topDisclosers.length ? new Set(d.commitments.map((c) => c.lp_company_id ?? c.lp_label)).size : 0} />
             <Stat label="Stated in USD" value={d.allocation.reduce((a, c) => a + c.usdCount, 0).toLocaleString("en-US")} basis="the only ones summed below" />
           </StatStrip>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Box title="Share of disclosed commitments by class" defn="Count of commitments per class — a count, because the amounts are in several currencies and are never added together.">
+              <ShareBar segments={d.commitmentsByClass.map((c) => ({ key: c.key, label: CLASS_NAME(c.key), value: c.count }))} />
+            </Box>
+            <Box title="Commitments per year" defn="Disclosed commitments by the year approved or reported, last eight years.">
+              <Columns rows={d.commitmentsByYear} height={110} />
+            </Box>
+          </div>
           <Split>
             <Box title="Where disclosed capital goes" flush defn="Commitments per class. The USD column adds only commitments the disclosure states in USD; other currencies are counted, never converted.">
               <div className="overflow-x-auto">
@@ -500,6 +570,14 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
               <Stat key={s.key} label={s.key} value={s.count} className="capitalize" />
             ))}
           </StatStrip>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Box title="Investments per year" defn="Portfolio companies by the year the manager's own site says it invested, last ten years.">
+              <Columns rows={d.portcosByYear} height={110} />
+            </Box>
+            <Box title="Status" defn="Current holdings against realised and other statuses, as the manager's site states them.">
+              <ShareBar segments={d.portcoStatus.map((s, idx) => ({ key: s.key, label: s.key, value: s.count, hue: `var(--chart-${idx + 1})` }))} />
+            </Box>
+          </div>
           <Split>
             <Box title="Portfolio companies" count={d.portcos.length} flush>
               {d.portcos.length ? (

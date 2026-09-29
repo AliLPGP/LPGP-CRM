@@ -30,10 +30,12 @@ export type LoadResult = {
   deals: number;
   signals: number;
   commitments: number;
+  benchmarks: number;
+  portfolio: number;
   linkedFirms: number;
 };
 
-const EMPTY: LoadResult = { ok: false, teams: 0, owners: 0, investors: 0, deals: 0, signals: 0, commitments: 0, linkedFirms: 0 };
+const EMPTY: LoadResult = { ok: false, teams: 0, owners: 0, investors: 0, deals: 0, signals: 0, commitments: 0, benchmarks: 0, portfolio: 0, linkedFirms: 0 };
 
 async function readDataset(): Promise<IntelligenceDataset | null> {
   try {
@@ -289,9 +291,61 @@ export async function loadIntelligenceDataset(): Promise<LoadResult> {
     }
   }
 
+  // Published benchmarks: keyed like the research job's rows.
+  let benchmarks = 0;
+  for (const batch of chunk(data.benchmarks ?? [], 200)) {
+    const rows: Row[] = batch.map((b) => ({
+      external_key: b.key,
+      asset_class: b.asset_class,
+      strategy: b.strategy,
+      metric: b.metric,
+      label: b.label,
+      value: b.value,
+      unit: b.unit,
+      period: b.period,
+      geography: b.geography,
+      publisher: b.publisher,
+      published_on: b.published_on,
+      source_url: b.source_url,
+      note: b.note,
+      source: "web_research",
+    }));
+    const { error } = await supabase.from("benchmarks").upsert(rows, { onConflict: "external_key" });
+    if (error) return { ...EMPTY, error: `Benchmarks: ${error.message}` };
+    benchmarks += rows.length;
+  }
+
+  // Portfolio companies: only for managers the directory has; one row per
+  // company per manager, keyed by the manager's id.
+  let portfolio = 0;
+  const placed = (data.portfolio ?? []).flatMap((p) => {
+    const gp = firmId(p.gp_name);
+    return gp ? [{ ...p, gp }] : [];
+  });
+  for (const batch of chunk(placed, 200)) {
+    const rows: Row[] = batch.map((p) => ({
+      gp_company_id: p.gp,
+      external_key: `${p.gp}:${p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}`,
+      name: p.name,
+      domain: normDomain(p.domain),
+      description: p.description,
+      sector: p.sector,
+      hq: p.hq,
+      status: p.status,
+      invested_year: p.invested_year,
+      exit_year: p.exit_year,
+      fund_name: p.fund_name,
+      source: "web_research",
+      source_url: p.source_url,
+    }));
+    const { error } = await supabase.from("portfolio_companies").upsert(rows, { onConflict: "external_key" });
+    if (error) return { ...EMPTY, error: `Portfolio: ${error.message}` };
+    portfolio += rows.length;
+  }
+
   await supabase.from("directory_imports").insert({
     filename: `intelligence-dataset@${data.version}`,
-    stats: { teams: data.teams.length, investors: data.investors.length, deals: data.deals.length, signals: data.signals.length, commitments },
+    stats: { teams: data.teams.length, investors: data.investors.length, deals: data.deals.length, signals: data.signals.length, commitments, benchmarks, portfolio },
     result: { owners, linkedFirms },
     imported_by: user.id,
   });
@@ -299,5 +353,5 @@ export async function loadIntelligenceDataset(): Promise<LoadResult> {
   updateTag(INTEL_TAG);
   updateTag(DIRECTORY_TAG);
   for (const p of ["/database", "/database/sports", "/database/deals", "/database/signals", "/database/asset-classes", "/import/directory"]) revalidatePath(p);
-  return { ok: true, version: data.version, teams: teamIds.size, owners, investors: investorIds.size, deals, signals, commitments, linkedFirms };
+  return { ok: true, version: data.version, teams: teamIds.size, owners, investors: investorIds.size, deals, signals, commitments, benchmarks, portfolio, linkedFirms };
 }

@@ -267,11 +267,13 @@ export function commitmentClass(c: DisclosedCommitment & { gp_type?: string | nu
 }
 
 /** The dataset shipped with this build: its version and row counts. */
-export async function shippedDatasetInfo(): Promise<{ version: string; generated_at: string; teams: number; investors: number; deals: number; signals: number; commitments: number } | null> {
+export type ShippedDatasetInfo = { version: string; generated_at: string; teams: number; investors: number; deals: number; signals: number; commitments: number; benchmarks: number; portfolio: number };
+
+export async function shippedDatasetInfo(): Promise<ShippedDatasetInfo | null> {
   try {
     const text = await readFile(path.join(process.cwd(), "data", "intelligence", "dataset.json"), "utf8");
-    const d = JSON.parse(text) as { version: string; generated_at: string; teams: unknown[]; investors: unknown[]; deals: unknown[]; signals: unknown[]; commitments?: unknown[] };
-    return { version: d.version, generated_at: d.generated_at, teams: d.teams.length, investors: d.investors.length, deals: d.deals.length, signals: d.signals.length, commitments: d.commitments?.length ?? 0 };
+    const d = JSON.parse(text) as { version: string; generated_at: string; teams: unknown[]; investors: unknown[]; deals: unknown[]; signals: unknown[]; commitments?: unknown[]; benchmarks?: unknown[]; portfolio?: unknown[] };
+    return { version: d.version, generated_at: d.generated_at, teams: d.teams.length, investors: d.investors.length, deals: d.deals.length, signals: d.signals.length, commitments: d.commitments?.length ?? 0, benchmarks: d.benchmarks?.length ?? 0, portfolio: d.portfolio?.length ?? 0 };
   } catch {
     return null;
   }

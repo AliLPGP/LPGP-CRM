@@ -239,10 +239,61 @@ def main():
 
     signals = {}
     commitments = {}
+    benchmarks = {}
+    portfolio = {}
     for path in sorted(glob.glob(os.path.join(src, "topics", "*.json"))):
         tp = load(path)
         if not tp:
             continue
+        # Published figures, keyed the way benchmark-research.ts keys them.
+        for b in tp.get("benchmarks", []):
+            if not (b.get("label") and b.get("asset_class") and is_url(b.get("source_url"))):
+                continue
+            publisher = b.get("publisher") or "unknown"
+            key = f"{b['asset_class']}:{b.get('strategy') or 'all'}:{b.get('metric') or 'other'}:{slug(b.get('period') or 'na')}:{slug(publisher)}:{slug(b['label'])[:40]}"
+            if key in benchmarks:
+                continue
+            benchmarks[key] = {
+                "key": key, "asset_class": b["asset_class"], "strategy": b.get("strategy"), "metric": b.get("metric") or "other", "label": b["label"],
+                "value": num(b.get("value")), "unit": b.get("unit"), "period": b.get("period"), "geography": b.get("geography"), "publisher": publisher,
+                "published_on": b.get("published_on"), "note": b.get("note"), "source_url": b["source_url"],
+            }
+        # Portfolio companies, one per company per manager; the loader links
+        # the manager by name and skips rows it cannot place.
+        for p in tp.get("portfolio", []):
+            if not (p.get("gp_name") and p.get("name") and is_url(p.get("source_url"))):
+                continue
+            key = f"{slug(p['gp_name'])}:{slug(p['name'])}"
+            if key in portfolio:
+                continue
+            portfolio[key] = {
+                "gp_name": p["gp_name"], "name": p["name"], "domain": p.get("domain"), "description": p.get("description"), "sector": p.get("sector"),
+                "hq": p.get("hq"), "status": p.get("status"), "invested_year": num(p.get("invested_year")), "exit_year": num(p.get("exit_year")),
+                "fund_name": p.get("fund_name"), "source_url": p["source_url"],
+            }
+        # Club figures from league-wide publications (a Money League table, a
+        # valuation list): fill a roster row's blanks, never overwrite a figure
+        # a club's own research already states.
+        for cf in tp.get("club_figures", []):
+            want = slug(cf.get("name") or "")
+            if not want:
+                continue
+            lg = slug(cf.get("league") or "")
+            hit = None
+            for k, t in teams.items():
+                ts = slug(t["name"]); ss = slug(t.get("short_name") or "")
+                same_league = not lg or k.startswith(lg + "--")
+                if same_league and (ts == want or ss == want or ts.startswith(want + "-") or want.startswith(ts + "-") or (ss and (ss.startswith(want) or want.startswith(ss)))):
+                    hit = t
+                    break
+            if not hit:
+                continue
+            for group in (("revenue", "revenue_currency", "revenue_season", "revenue_source_name", "revenue_source_url"), ("valuation", "valuation_currency", "valuation_year", "valuation_source_name", "valuation_source_url")):
+                if hit.get(group[0]) is None and num(cf.get(group[0])) is not None and is_url(cf.get(group[4])):
+                    for f in group:
+                        hit[f] = num(cf.get(f)) if f in (group[0], "valuation_year") else cf.get(f)
+                    if cf[group[4]] not in hit.setdefault("sources", []):
+                        hit["sources"].append(cf[group[4]])
         # LP commitments as an LP publication or the press states them; keyed
         # the same way commitments-research.ts keys its rows.
         for c in tp.get("commitments", []):
@@ -294,10 +345,13 @@ def main():
         "deals": list(deals.values()),
         "signals": list(signals.values()),
         "commitments": list(commitments.values()),
+        "benchmarks": list(benchmarks.values()),
+        "portfolio": list(portfolio.values()),
     }
     with open(out, "w", encoding="utf-8") as f:
         json.dump(dataset, f, ensure_ascii=False, indent=1)
-    print(f"teams {len(teams)} (with figures {filled}), investors {len(investors)}, deals {len(deals)}, signals {len(signals)}, commitments {len(commitments)} -> {out}")
+    figured = sum(1 for t in teams.values() if t.get("revenue") is not None or t.get("valuation") is not None or t.get("owners"))
+    print(f"teams {len(teams)} (with figures {figured}, researched {filled}), investors {len(investors)}, deals {len(deals)}, signals {len(signals)}, commitments {len(commitments)}, benchmarks {len(benchmarks)}, portfolio {len(portfolio)} -> {out}")
 
 
 if __name__ == "__main__":

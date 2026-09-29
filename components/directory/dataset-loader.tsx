@@ -15,7 +15,7 @@ export function DatasetLoader({
   loaded,
   ready,
 }: {
-  shipped: { version: string; generated_at: string; teams: number; investors: number; deals: number; signals: number; commitments: number } | null;
+  shipped: { version: string; generated_at: string; teams: number; investors: number; deals: number; signals: number; commitments: number; benchmarks: number; portfolio: number } | null;
   loaded: boolean;
   /** Migration 0016 has run. */
   ready: boolean;
@@ -44,7 +44,8 @@ export function DatasetLoader({
             This build ships version <span className="font-mono text-xs text-foreground">{shipped.version}</span> ({shipped.generated_at.slice(0, 10)}):{" "}
             <span className="text-foreground">{fmt(shipped.teams)}</span> clubs, <span className="text-foreground">{fmt(shipped.investors)}</span> investors in
             sport, <span className="text-foreground">{fmt(shipped.deals)}</span> deals across every asset class, <span className="text-foreground">{fmt(shipped.commitments)}</span>{" "}
-            LP commitments and <span className="text-foreground">{fmt(shipped.signals)}</span> signals — every figure with the page that states it. Loading updates
+            LP commitments, <span className="text-foreground">{fmt(shipped.benchmarks)}</span> published benchmarks, <span className="text-foreground">{fmt(shipped.portfolio)}</span>{" "}
+            portfolio companies and <span className="text-foreground">{fmt(shipped.signals)}</span> signals — every figure with the page that states it. Loading updates
             rows in place and never overwrites a club researched in the app.
           </p>
         ) : (
@@ -71,7 +72,8 @@ export function DatasetLoader({
           result.ok ? (
             <p className="text-xs text-muted-foreground">
               Loaded {fmt(result.teams)} clubs, {fmt(result.owners)} owner rows, {fmt(result.investors)} investors, {fmt(result.deals)} deals, {fmt(result.commitments)}{" "}
-              LP commitments and {fmt(result.signals)} signals; {fmt(result.linkedFirms)} parties linked to directory firms.
+              LP commitments, {fmt(result.benchmarks)} benchmarks, {fmt(result.portfolio)} portfolio companies and {fmt(result.signals)} signals; {fmt(result.linkedFirms)}{" "}
+              parties linked to directory firms.
             </p>
           ) : (
             <p className="text-xs text-destructive">{result.error}</p>

@@ -19,6 +19,8 @@ import {
   ListChecks,
   Map as MapIcon,
   Menu,
+  PanelLeftClose,
+  PanelLeftOpen,
   PhoneCall,
   Receipt,
   Settings,
@@ -151,10 +153,35 @@ function isLit(pathname: string, item: NavItem, search: URLSearchParams | null) 
   return !item.children?.some((c) => isActive(pathname, c, search));
 }
 
-// Collapsed nav groups, remembered per browser. Read through
-// useSyncExternalStore so the server render and the first client render agree.
+// Collapsed nav groups, and the rail itself folded to icons, remembered per
+// browser. Read through useSyncExternalStore so the server render and the
+// first client render agree.
 const COLLAPSE_KEY = "nav:collapsed";
 const COLLAPSE_EVENT = "nav-collapse";
+const RAIL_KEY = "nav:rail";
+
+function readRail(): string {
+  try {
+    return localStorage.getItem(RAIL_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+
+/** Whether the rail is folded to icons, and the toggle. */
+function useRailFolded(): [boolean, () => void] {
+  const raw = useSyncExternalStore(subscribeCollapse, readRail, () => "");
+  const folded = raw === "folded";
+  const toggle = () => {
+    try {
+      localStorage.setItem(RAIL_KEY, folded ? "" : "folded");
+    } catch {
+      /* private mode: the fold just won't persist */
+    }
+    window.dispatchEvent(new Event(COLLAPSE_EVENT));
+  };
+  return [folded, toggle];
+}
 
 function subscribeCollapse(cb: () => void) {
   window.addEventListener("storage", cb);
@@ -190,11 +217,11 @@ function useCollapsedGroups(): [Set<string>, (label: string) => void] {
   return [set, toggle];
 }
 
-function Brand({ onClick }: { onClick?: () => void }) {
+function Brand({ onClick, folded }: { onClick?: () => void; folded?: boolean }) {
   return (
-    <Link href="/" onClick={onClick} className="group flex items-center gap-2.5 px-1">
+    <Link href="/" onClick={onClick} className="group flex items-center gap-2.5 px-1" title={folded ? "LPGP Connect" : undefined}>
       <LpgpMark className="h-8 w-8 shrink-0 text-[var(--rail-fg)] transition-transform group-hover:scale-105" />
-      <span className="leading-none">
+      <span className={cn("leading-none", folded && "hidden")}>
         <span className="block text-[15px] font-bold tracking-tight text-[#f3efe6]">LPGP Connect</span>
         <span className="wordmark mt-1 block text-[9px] text-[var(--brass)]">
           Sales CRM
@@ -207,34 +234,36 @@ function Brand({ onClick }: { onClick?: () => void }) {
 // The query string is read behind a Suspense boundary: a statically rendered
 // page (not-found, errors) gets the path-only answer and hydrates to the
 // full one, instead of failing the build over useSearchParams.
-function RailLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
+function RailLink({ item, onNavigate, folded }: { item: NavItem; onNavigate?: () => void; folded?: boolean }) {
   const pathname = usePathname();
   return (
-    <Suspense fallback={<RailEntry item={item} onNavigate={onNavigate} pathname={pathname} search={null} />}>
-      <RailLinkLive item={item} onNavigate={onNavigate} />
+    <Suspense fallback={<RailEntry item={item} onNavigate={onNavigate} pathname={pathname} search={null} folded={folded} />}>
+      <RailLinkLive item={item} onNavigate={onNavigate} folded={folded} />
     </Suspense>
   );
 }
 
-function RailLinkLive({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
+function RailLinkLive({ item, onNavigate, folded }: { item: NavItem; onNavigate?: () => void; folded?: boolean }) {
   const pathname = usePathname();
   const search = useSearchParams();
-  return <RailEntry item={item} onNavigate={onNavigate} pathname={pathname} search={search} />;
+  return <RailEntry item={item} onNavigate={onNavigate} pathname={pathname} search={search} folded={folded} />;
 }
 
 /** An entry and, when it has one, its sub-tree: open on the page it holds,
- *  or on the chevron; the leaf carries the mark. */
-function RailEntry({ item, onNavigate, pathname, search }: { item: NavItem; onNavigate?: () => void; pathname: string; search: URLSearchParams | null }) {
+ *  or on the chevron; the leaf carries the mark. A folded rail shows the
+ *  icon alone and lights the parent for any page in its tree. */
+function RailEntry({ item, onNavigate, pathname, search, folded }: { item: NavItem; onNavigate?: () => void; pathname: string; search: URLSearchParams | null; folded?: boolean }) {
   const within = isActive(pathname, item, search);
   const [toggled, setToggled] = useState<boolean | null>(null);
-  const open = Boolean(item.children?.length) && (toggled ?? within);
+  const open = !folded && Boolean(item.children?.length) && (toggled ?? within);
   return (
     <div>
       <RailLinkView
         item={item}
         onNavigate={onNavigate}
-        on={isLit(pathname, item, search)}
-        chevron={item.children?.length ? { open, toggle: () => setToggled(!open) } : undefined}
+        on={folded ? within : isLit(pathname, item, search)}
+        folded={folded}
+        chevron={!folded && item.children?.length ? { open, toggle: () => setToggled(!open) } : undefined}
       />
       {open ? (
         <div className="ml-[19px] mt-0.5 space-y-px border-l border-[var(--rail-line)] pl-2">
@@ -247,7 +276,7 @@ function RailEntry({ item, onNavigate, pathname, search }: { item: NavItem; onNa
   );
 }
 
-function RailLinkView({ item, onNavigate, on, small, chevron }: { item: NavItem; onNavigate?: () => void; on: boolean; small?: boolean; chevron?: { open: boolean; toggle: () => void } }) {
+function RailLinkView({ item, onNavigate, on, small, chevron, folded }: { item: NavItem; onNavigate?: () => void; on: boolean; small?: boolean; chevron?: { open: boolean; toggle: () => void }; folded?: boolean }) {
   const Icon = item.icon;
   return (
     <div className="relative">
@@ -255,8 +284,11 @@ function RailLinkView({ item, onNavigate, on, small, chevron }: { item: NavItem;
         href={item.href}
         onClick={onNavigate}
         aria-current={on ? "page" : undefined}
+        aria-label={folded ? item.label : undefined}
+        title={folded ? item.label : undefined}
         className={cn(
-          "relative flex items-center gap-2.5 rounded-lg px-2.5 font-medium transition-colors",
+          "relative flex items-center gap-2.5 rounded-lg font-medium transition-colors",
+          folded ? "justify-center px-0 py-2" : "px-2.5",
           small ? "py-[5px] text-[12px]" : "py-[7px] text-[13px]",
           chevron ? "pr-8" : "",
           on
@@ -273,7 +305,7 @@ function RailLinkView({ item, onNavigate, on, small, chevron }: { item: NavItem;
           )}
         />
         {Icon ? <Icon className={cn("shrink-0", small ? "h-3.5 w-3.5" : "h-4 w-4", on ? "text-[var(--brand-2)]" : "opacity-80")} /> : null}
-        {item.label}
+        {folded ? <span className="sr-only">{item.label}</span> : item.label}
       </Link>
       {chevron ? (
         <button
@@ -290,7 +322,7 @@ function RailLinkView({ item, onNavigate, on, small, chevron }: { item: NavItem;
   );
 }
 
-function CommandTrigger({ onNavigate }: { onNavigate?: () => void }) {
+function CommandTrigger({ onNavigate, folded }: { onNavigate?: () => void; folded?: boolean }) {
   return (
     <button
       type="button"
@@ -298,27 +330,37 @@ function CommandTrigger({ onNavigate }: { onNavigate?: () => void }) {
         onNavigate?.();
         openCommandPalette();
       }}
-      className="flex w-full items-center gap-2 rounded-lg border border-[var(--rail-line)] bg-black/25 px-2.5 py-2 text-[13px] text-[var(--rail-fg-dim)] transition-colors hover:border-[var(--brand)]/50 hover:text-[#f3efe6]"
+      title={folded ? "Search or jump (⌘K)" : undefined}
+      aria-label="Search or jump"
+      className={cn(
+        "flex w-full items-center gap-2 rounded-lg border border-[var(--rail-line)] bg-black/25 py-2 text-[13px] text-[var(--rail-fg-dim)] transition-colors hover:border-[var(--brand)]/50 hover:text-[#f3efe6]",
+        folded ? "justify-center px-0" : "px-2.5",
+      )}
     >
       <Command className="h-3.5 w-3.5" />
-      <span className="flex-1 text-left">Search or jump…</span>
-      <kbd className="rounded border border-[var(--rail-line)] px-1 text-[10px] tabular">⌘K</kbd>
+      {folded ? null : (
+        <>
+          <span className="flex-1 text-left">Search or jump…</span>
+          <kbd className="rounded border border-[var(--rail-line)] px-1 text-[10px] tabular">⌘K</kbd>
+        </>
+      )}
     </button>
   );
 }
 
-function NavBody({ user, onNavigate }: { user: SessionUser | null; onNavigate?: () => void }) {
+function NavBody({ user, onNavigate, folded }: { user: SessionUser | null; onNavigate?: () => void; folded?: boolean }) {
   const pathname = usePathname();
   const [collapsed, toggle] = useCollapsedGroups();
   return (
-    <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4">
+    <nav className={cn("flex-1 space-y-5 overflow-y-auto py-4", folded ? "px-2" : "px-3")}>
       {GROUPS.map((group) => {
-        // A collapsed group still opens for the page you're on.
+        // A collapsed group still opens for the page you're on; a folded rail
+        // shows every group as icons, with a hairline between them.
         const holdsActive = group.items.some((i) => isActive(pathname, i, null));
-        const open = !group.collapsible || !collapsed.has(group.label) || holdsActive;
+        const open = folded || !group.collapsible || !collapsed.has(group.label) || holdsActive;
         return (
-          <div key={group.label} className="space-y-0.5">
-            {group.collapsible ? (
+          <div key={group.label} className={cn("space-y-0.5", folded && "border-t border-[var(--rail-line)] pt-3 first:border-t-0 first:pt-0")}>
+            {folded ? null : group.collapsible ? (
               <button
                 type="button"
                 onClick={() => toggle(group.label)}
@@ -341,20 +383,23 @@ function NavBody({ user, onNavigate }: { user: SessionUser | null; onNavigate?: 
               </p>
             )}
             {open
-              ? group.items.map((item) => <RailLink key={item.href} item={item} onNavigate={onNavigate} />)
+              ? group.items.map((item) => <RailLink key={item.href} item={item} onNavigate={onNavigate} folded={folded} />)
               : null}
           </div>
         );
       })}
 
       {user?.role === "admin" ? (
-        <div className="space-y-0.5">
-          <p className="wordmark px-2.5 pb-1.5 text-[9px] text-[var(--rail-fg-dim)]">
-            Admin
-          </p>
+        <div className={cn("space-y-0.5", folded && "border-t border-[var(--rail-line)] pt-3")}>
+          {folded ? null : (
+            <p className="wordmark px-2.5 pb-1.5 text-[9px] text-[var(--rail-fg-dim)]">
+              Admin
+            </p>
+          )}
           <RailLink
             item={{ href: "/admin", label: "Team & assignments", icon: Shield }}
             onNavigate={onNavigate}
+            folded={folded}
           />
         </div>
       ) : null}
@@ -362,56 +407,83 @@ function NavBody({ user, onNavigate }: { user: SessionUser | null; onNavigate?: 
   );
 }
 
-function RailFooter({ user, onNavigate }: { user: SessionUser | null; onNavigate?: () => void }) {
+function RailFooter({ user, onNavigate, folded, onFold }: { user: SessionUser | null; onNavigate?: () => void; folded?: boolean; onFold?: () => void }) {
   const pathname = usePathname();
   const settingsOn = pathname.startsWith("/settings");
   return (
-    <div className="rail-line space-y-2 border-t p-3">
+    <div className={cn("rail-line space-y-2 border-t", folded ? "p-2" : "p-3")}>
       <Link
         href="/settings"
         onClick={onNavigate}
+        title={folded ? "Settings" : undefined}
         className={cn(
-          "flex items-center gap-2.5 rounded-lg px-2.5 py-[7px] text-[13px] font-medium transition-colors",
+          "flex items-center gap-2.5 rounded-lg py-[7px] text-[13px] font-medium transition-colors",
+          folded ? "justify-center px-0" : "px-2.5",
           settingsOn
             ? "bg-[var(--rail-hover)] text-[#f3efe6]"
             : "text-[var(--rail-fg)] hover:bg-[var(--rail-hover)] hover:text-[#f3efe6]",
         )}
       >
         <Settings className="h-4 w-4 opacity-80" />
-        Settings
+        {folded ? <span className="sr-only">Settings</span> : "Settings"}
       </Link>
 
-      <ThemeToggle variant="rail" />
+      {folded ? null : <ThemeToggle variant="rail" />}
 
       {user ? (
-        <div className="rail-line flex items-center gap-2.5 rounded-lg border bg-black/25 px-2.5 py-2">
-          <span className="brand-gradient grid h-7 w-7 shrink-0 place-items-center rounded-full text-[11px] font-bold text-[var(--rail-bg)]">
-            {initials(user.name)}
-          </span>
-          <div className="min-w-0 flex-1">
-            <div className="truncate text-[13px] font-medium text-[#f3efe6]">{user.name}</div>
-            <div className="truncate text-[10px] text-[var(--rail-fg-dim)]">
-              {user.role === "admin" ? "Admin" : "Member"}
-            </div>
+        folded ? (
+          <div className="flex justify-center" title={`${user.name} · ${user.role === "admin" ? "Admin" : "Member"}`}>
+            <span className="brand-gradient grid h-7 w-7 shrink-0 place-items-center rounded-full text-[11px] font-bold text-[var(--rail-bg)]">
+              {initials(user.name)}
+            </span>
           </div>
-          <SignOutButton variant="rail" />
-        </div>
+        ) : (
+          <div className="rail-line flex items-center gap-2.5 rounded-lg border bg-black/25 px-2.5 py-2">
+            <span className="brand-gradient grid h-7 w-7 shrink-0 place-items-center rounded-full text-[11px] font-bold text-[var(--rail-bg)]">
+              {initials(user.name)}
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-[13px] font-medium text-[#f3efe6]">{user.name}</div>
+              <div className="truncate text-[10px] text-[var(--rail-fg-dim)]">
+                {user.role === "admin" ? "Admin" : "Member"}
+              </div>
+            </div>
+            <SignOutButton variant="rail" />
+          </div>
+        )
+      ) : null}
+
+      {onFold ? (
+        <button
+          type="button"
+          onClick={onFold}
+          aria-label={folded ? "Expand the navigation" : "Collapse the navigation"}
+          title={folded ? "Expand" : "Collapse"}
+          className={cn(
+            "flex w-full items-center gap-2.5 rounded-lg py-[6px] text-[12px] text-[var(--rail-fg-dim)] transition-colors hover:bg-[var(--rail-hover)] hover:text-[#f3efe6]",
+            folded ? "justify-center px-0" : "px-2.5",
+          )}
+        >
+          {folded ? <PanelLeftOpen className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
+          {folded ? null : "Collapse"}
+        </button>
       ) : null}
     </div>
   );
 }
 
 export function AppSidebar({ user }: { user: SessionUser | null }) {
+  const [folded, fold] = useRailFolded();
   return (
-    <aside className="rail rail-edge sticky top-0 hidden h-screen w-[15.5rem] shrink-0 flex-col md:flex">
-      <div className="rail-line flex h-16 items-center border-b px-3">
-        <Brand />
+    <aside className={cn("rail rail-edge sticky top-0 hidden h-screen shrink-0 flex-col transition-[width] duration-200 md:flex", folded ? "w-[4rem]" : "w-[15.5rem]")}>
+      <div className={cn("rail-line flex h-16 items-center border-b", folded ? "justify-center px-2" : "px-3")}>
+        <Brand folded={folded} />
       </div>
-      <div className="px-3 pt-3">
-        <CommandTrigger />
+      <div className={cn("pt-3", folded ? "px-2" : "px-3")}>
+        <CommandTrigger folded={folded} />
       </div>
-      <NavBody user={user} />
-      <RailFooter user={user} />
+      <NavBody user={user} folded={folded} />
+      <RailFooter user={user} folded={folded} onFold={fold} />
     </aside>
   );
 }

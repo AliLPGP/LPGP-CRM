@@ -105,6 +105,55 @@ export type DatasetSignal = {
   source_url: string;
 };
 
+/** An LP's fund commitment as an LP publication or the press states it. */
+export type DatasetCommitment = {
+  key: string;
+  lp_name: string;
+  gp_name: string | null;
+  fund_name: string;
+  amount: number | null;
+  currency: string | null;
+  amount_text: string | null;
+  date: string | null;
+  date_text: string | null;
+  year: number | null;
+  disclosure_type: string;
+  source_name: string | null;
+  source_url: string;
+};
+
+/** A published figure with its publisher, period and page. */
+export type DatasetBenchmark = {
+  key: string;
+  asset_class: AssetClassKey;
+  strategy: string | null;
+  metric: string;
+  label: string;
+  value: number | null;
+  unit: string | null;
+  period: string | null;
+  geography: string | null;
+  publisher: string | null;
+  published_on: string | null;
+  note: string | null;
+  source_url: string;
+};
+
+/** A portfolio company as the manager's own site or the press names it. */
+export type DatasetPortfolioCompany = {
+  gp_name: string;
+  name: string;
+  domain: string | null;
+  description: string | null;
+  sector: string | null;
+  hq: string | null;
+  status: string | null;
+  invested_year: number | null;
+  exit_year: number | null;
+  fund_name: string | null;
+  source_url: string;
+};
+
 export type IntelligenceDataset = {
   version: string;
   generated_at: string;
@@ -112,6 +161,10 @@ export type IntelligenceDataset = {
   investors: DatasetInvestor[];
   deals: DatasetDeal[];
   signals: DatasetSignal[];
+  /** Absent in editions before 2026-09-29. */
+  commitments?: DatasetCommitment[];
+  benchmarks?: DatasetBenchmark[];
+  portfolio?: DatasetPortfolioCompany[];
 };
 
 // --- Rows as read back ----------------------------------------------------------

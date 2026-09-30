@@ -1,0 +1,12 @@
+-- cpp-investments-cad: CPP Investments -- <strong>Private Equity Relationships Established as at March 31, 2026</strong> (CAD commitments) (as of 2026-03-31, CAD). Generated; re-run freely.
+do $$
+declare v_lp uuid; f record;
+begin
+  v_lp := ingest.lp_company('CPP Investments', 'Public Pension Fund', 'Canada', 'https://www.cppinvestments.com');
+  select * into f from ingest.fund_for('Birch Hill Equity Partners IV', 2010, 'private_equity');
+  insert into public.commitments as c (external_key, lp_company_id, gp_company_id, fund_id, lp_name, gp_name, fund_name, amount, currency, commitment_year, asset_class, contributed, distributed, remaining_value, net_irr, multiple, as_of, disclosure_type, source, source_url, source_date)
+  values ('lpdoc:cpp-investments:cpp-investments-cad:0d39a20a1ccc8d12a3647ceecfa1a7b6', v_lp, f.gp_company_id, f.fund_id, 'CPP Investments', coalesce(null, (select name from public.companies where id = f.gp_company_id)), 'Birch Hill Equity Partners IV', 85000000, 'CAD', 2010, 'private_equity', 81000000, null, null, null, null, '2026-03-31', '<strong>Private Equity Relationships Established as at March 31, 2026</strong> (CAD commitments) (p. 1)', 'lp_disclosure', 'https://www.cppinvestments.com/wp-content/uploads/2026/08/PI_Holdings_EN_Q1F27.html', '2026-03-31')
+  on conflict (external_key) do update set gp_company_id = coalesce(excluded.gp_company_id, c.gp_company_id), fund_id = coalesce(excluded.fund_id, c.fund_id), gp_name = coalesce(excluded.gp_name, c.gp_name), amount = excluded.amount, commitment_year = excluded.commitment_year, asset_class = excluded.asset_class, contributed = excluded.contributed, distributed = excluded.distributed, remaining_value = excluded.remaining_value, net_irr = excluded.net_irr, multiple = excluded.multiple, as_of = excluded.as_of, disclosure_type = excluded.disclosure_type, source_url = excluded.source_url, source_date = excluded.source_date;
+  update public.companies set discloses_commitments = coalesce(discloses_commitments, 'Yes - <strong>Private Equity Relationships Established as at March 31, 2026</strong> (CAD commitments)'), disclosure_source_url = coalesce(disclosure_source_url, 'https://www.cppinvestments.com/wp-content/uploads/2026/08/PI_Holdings_EN_Q1F27.html') where id = v_lp;
+  insert into ingest.log (what, detail) values ('load_lp_document', jsonb_build_object('lp', 'CPP Investments', 'doc', 'cpp-investments-cad', 'rows', 1));
+end $$;

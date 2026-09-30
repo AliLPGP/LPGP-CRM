@@ -1,0 +1,65 @@
+{
+ "lp_name": "London Pensions Fund Authority",
+ "lp_type": "LGPS Fund",
+ "country": "United Kingdom",
+ "website": "https://www.lpfa.org.uk",
+ "source_url": "https://lgpsboard.org/wp-content/uploads/2025/11/LPFA2425_final.pdf",
+ "source_title": "LPFA Pension Fund Annual Report 2024-25 \u2014 investments representing more than 5% of investment assets (LPPI pooled vehicles)",
+ "as_of": "2025-03-31",
+ "currency": "GBP",
+ "asset_class": null,
+ "rows": [
+  {
+   "fund_name": "LPPI Real Estate",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": null,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": 660249000,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "real_estate",
+   "page": 56
+  },
+  {
+   "fund_name": "LPPI PE Investments (No.1) LP",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": null,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": 461444000,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 56
+  },
+  {
+   "fund_name": "LPPI Credit",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": null,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": 1173187000,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": null,
+   "page": 56
+  },
+  {
+   "fund_name": "LPPI Infrastructure",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": null,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": 930469000,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "infrastructure",
+   "page": 56
+  }
+ ]
+}

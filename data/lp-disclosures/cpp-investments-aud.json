@@ -1,0 +1,65 @@
+{
+ "lp_name": "CPP Investments",
+ "lp_type": "Public Pension Fund",
+ "country": "Canada",
+ "website": "https://www.cppinvestments.com",
+ "source_url": "https://www.cppinvestments.com/wp-content/uploads/2026/08/PI_Holdings_EN_Q1F27.html",
+ "source_title": "<strong>Private Equity Relationships Established as at March 31, 2026</strong> (AUD commitments)",
+ "as_of": "2026-03-31",
+ "currency": "AUD",
+ "asset_class": "private_equity",
+ "rows": [
+  {
+   "fund_name": "Archer Capital Fund 5, L.P.",
+   "gp_name": null,
+   "vintage_year": 2011,
+   "commitment": 106000000,
+   "contributed": 109000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  },
+  {
+   "fund_name": "BGH Capital Offshore I",
+   "gp_name": null,
+   "vintage_year": 2019,
+   "commitment": 200000000,
+   "contributed": 200000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  },
+  {
+   "fund_name": "BGH Capital Offshore II",
+   "gp_name": null,
+   "vintage_year": 2024,
+   "commitment": 330000000,
+   "contributed": 65000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  },
+  {
+   "fund_name": "Pacific Equity Partners Fund VII",
+   "gp_name": null,
+   "vintage_year": 2025,
+   "commitment": 150000000,
+   "contributed": 42000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  }
+ ]
+}

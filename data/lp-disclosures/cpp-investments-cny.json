@@ -1,0 +1,52 @@
+{
+ "lp_name": "CPP Investments",
+ "lp_type": "Public Pension Fund",
+ "country": "Canada",
+ "website": "https://www.cppinvestments.com",
+ "source_url": "https://www.cppinvestments.com/wp-content/uploads/2026/08/PI_Holdings_EN_Q1F27.html",
+ "source_title": "<strong>Private Equity Relationships Established as at March 31, 2026</strong> (CNY commitments)",
+ "as_of": "2026-03-31",
+ "currency": "CNY",
+ "asset_class": "private_equity",
+ "rows": [
+  {
+   "fund_name": "FountainVest China Growth Fund",
+   "gp_name": null,
+   "vintage_year": 2008,
+   "commitment": 1500000000,
+   "contributed": 1659000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  },
+  {
+   "fund_name": "FountainVest II",
+   "gp_name": null,
+   "vintage_year": 2013,
+   "commitment": 1800000000,
+   "contributed": 2209000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  },
+  {
+   "fund_name": "FountainVest III",
+   "gp_name": null,
+   "vintage_year": 2017,
+   "commitment": 2300000000,
+   "contributed": 2861000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  }
+ ]
+}

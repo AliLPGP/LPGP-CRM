@@ -1,0 +1,78 @@
+{
+ "lp_name": "CPP Investments",
+ "lp_type": "Public Pension Fund",
+ "country": "Canada",
+ "website": "https://www.cppinvestments.com",
+ "source_url": "https://www.cppinvestments.com/wp-content/uploads/2026/08/PI_Holdings_EN_Q1F27.html",
+ "source_title": "<strong>Private Equity Relationships Established as at March 31, 2026</strong> (JPY commitments)",
+ "as_of": "2026-03-31",
+ "currency": "JPY",
+ "asset_class": "private_equity",
+ "rows": [
+  {
+   "fund_name": "Bain Capital Japan Middle Market Fund",
+   "gp_name": null,
+   "vintage_year": 2022,
+   "commitment": 6000000000,
+   "contributed": 7417000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  },
+  {
+   "fund_name": "Bain Capital Japan Middle Market Fund II",
+   "gp_name": null,
+   "vintage_year": 2026,
+   "commitment": 11750000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  },
+  {
+   "fund_name": "NSSK Global 2025",
+   "gp_name": null,
+   "vintage_year": 2026,
+   "commitment": 11000000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  },
+  {
+   "fund_name": "Tiara CG Private Equity Fund",
+   "gp_name": null,
+   "vintage_year": 2020,
+   "commitment": 13800000000,
+   "contributed": 14573000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  },
+  {
+   "fund_name": "Tiara CG Private Equity Fund 2024",
+   "gp_name": null,
+   "vintage_year": 2026,
+   "commitment": 15000000000,
+   "contributed": 2595000000,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 1
+  }
+ ]
+}

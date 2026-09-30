@@ -1,13 +1,7 @@
--- filings: part 6 of 7
+-- filings: part 6 of 8
 -- Run the parts in order. Each one is whole statements, so a part
 -- never ends mid-statement. Safe to re-run.
 
--- --- Draining the queue -----------------------------------------------------
-
--- A procedure, not a function, so each filing commits on its own: the
--- session's statement timeout (two minutes on a hosted project) can end a
--- run without undoing the filings before it. Time-boxed under that limit.
-drop function if exists ingest.process_queue(integer);
 create or replace procedure ingest.run_queue(p_limit integer default 80, p_seconds integer default 50)
 language plpgsql as $$
 declare q record; res text; n_done int := 0; n_err int := 0; n_skip int := 0; t0 timestamptz := clock_timestamp();
@@ -128,3 +122,10 @@ create or replace view public.fund_offerings_latest with (security_invoker = tru
 select distinct on (cik) *
 from public.fund_offerings
 order by cik, filing_date desc nulls last, accession_no desc;
+
+-- A lender's loan book at its latest period, per position, totals excluded.
+create or replace view public.credit_book with (security_invoker = true) as
+select p.*, l.name as lender_name, l.ticker as lender_ticker, l.company_id as lender_company_id
+from public.credit_positions p
+join public.credit_lenders l on l.cik = p.lender_cik
+where p.as_of = l.latest_period and not p.is_summary;

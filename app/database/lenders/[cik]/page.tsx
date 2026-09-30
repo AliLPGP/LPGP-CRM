@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCreditLender, getLenderBook, getLenderPeriods } from "@/lib/directory/filings-queries";
-import { instrumentGroup } from "@/lib/directory/filings-types";
+import { INSTRUMENT_HUE, instrumentGroup } from "@/lib/directory/filings-types";
 import { PositionTable } from "@/components/intel/filings-tables";
 import { Columns, ShareBar } from "@/components/intel/charts";
 import { IntelShell } from "@/components/intel/shell";
@@ -10,18 +10,6 @@ import { Box, Src, Stat, StatStrip, SubTabs } from "@/components/intel/ui";
 import { formatUsd } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-
-const INSTRUMENT_HUE: Record<string, string> = {
-  "First lien / senior secured": "var(--chart-2)",
-  "Second lien": "var(--chart-1)",
-  "Subordinated / mezzanine": "var(--chart-3)",
-  "Preferred equity": "var(--chart-4)",
-  "Equity & warrants": "var(--chart-5)",
-  "Notes & bonds": "var(--chart-6)",
-  Structured: "var(--chart-7)",
-  Other: "var(--chart-track)",
-  Unspecified: "var(--chart-track)",
-};
 
 export async function generateMetadata({ params }: { params: Promise<{ cik: string }> }) {
   const { cik } = await params;
@@ -42,7 +30,7 @@ export default async function LenderPage({ params, searchParams }: { params: Pro
   for (const p of book) {
     const v = Number(p.fair_value ?? 0);
     fv += v;
-    const g = instrumentGroup(p.instrument);
+    const g = instrumentGroup(p.instrument ?? p.identifier);
     const gi = groups.get(g) ?? { value: 0, count: 0 };
     gi.value += v; gi.count += 1; groups.set(g, gi);
     if (p.spread != null && p.spread > 0 && p.spread < 30) {
@@ -52,7 +40,7 @@ export default async function LenderPage({ params, searchParams }: { params: Pro
     }
   }
   const groupList = [...groups.entries()].sort((a, b) => b[1].value - a[1].value);
-  const rows = book.filter((p) => (!group || instrumentGroup(p.instrument) === group) && (!query || p.borrower.toLowerCase().includes(query) || (p.instrument ?? "").toLowerCase().includes(query)));
+  const rows = book.filter((p) => (!group || instrumentGroup(p.instrument ?? p.identifier) === group) && (!query || p.borrower.toLowerCase().includes(query) || p.identifier.toLowerCase().includes(query)));
   const borrowers = new Set(book.map((p) => p.borrower.toLowerCase())).size;
   const base = `/database/lenders/${cik}`;
   const withPeriod = (extra: string) => `${base}?${[period && period !== lender.latest_period ? `as_of=${period}` : "", extra].filter(Boolean).join("&")}`;

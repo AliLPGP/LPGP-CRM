@@ -90,19 +90,36 @@ export const FUND_TYPE_LABEL: Record<string, string> = {
 };
 
 /** The seniority a tagged instrument states, for grouping a loan book.
- *  Mirrors public.instrument_group() in migration 0018; the two must agree. */
+ *  Mirrors public.instrument_group() in migration 0018; the two must agree.
+ *  Pass the whole identifier when a filer tagged no separate instrument: the
+ *  words are usually in there. */
 export function instrumentGroup(instrument: string | null | undefined): string {
   const s = (instrument ?? "").toLowerCase();
   if (!s) return "Unspecified";
-  if (/first[- ]lien|senior secured (?:loan|term|revolv|note)|unitranche|senior (?:secured )?term loan|senior loan|revolv/.test(s)) return "First lien / senior secured";
-  if (/second[- ]lien/.test(s)) return "Second lien";
-  if (/subordinat|mezzanine|junior|pik note|unsecured (?:note|loan|debt)|holdco/.test(s)) return "Subordinated / mezzanine";
+  if (/first[- ]lien|1st[- ]lien|first[- ]out|senior secured|unitranche|senior (?:secured )?term loan|senior loan|senior debt|revolv|\bfl ?ssl\b/.test(s)) return "First lien / senior secured";
+  if (/second[- ]lien|last[- ]out/.test(s)) return "Second lien";
+  if (/subordinat|\bsub\.? |mezzanine|junior|pik note|unsecured (?:note|loan|debt)|holdco/.test(s)) return "Subordinated / mezzanine";
   if (/preferred/.test(s)) return "Preferred equity";
-  if (/equity|warrant|common|member|unit|share|interest|llc|l\.p\./.test(s)) return "Equity & warrants";
+  if (/equity|warrant|common|member|unit|share|interest|llc|l\.p\.|\blp\b|partnership/.test(s)) return "Equity & warrants";
   if (/note|bond|debenture/.test(s)) return "Notes & bonds";
-  if (/clo|structured|certificate/.test(s)) return "Structured";
+  if (/clo|structured|certificate|abs\b/.test(s)) return "Structured";
+  if (/loan|term|delayed draw|credit facility|line of credit|bridge|tranche|debt/.test(s)) return "Loans, seniority unstated";
   return "Other";
 }
+
+/** One fixed hue per seniority group, never cycled; the walnut track for the groups that carry no seniority. */
+export const INSTRUMENT_HUE: Record<string, string> = {
+  "First lien / senior secured": "var(--chart-2)",
+  "Second lien": "var(--chart-1)",
+  "Subordinated / mezzanine": "var(--chart-3)",
+  "Preferred equity": "var(--chart-4)",
+  "Equity & warrants": "var(--chart-5)",
+  "Notes & bonds": "var(--chart-6)",
+  Structured: "var(--chart-7)",
+  "Loans, seniority unstated": "var(--chart-bar)",
+  Other: "var(--chart-track)",
+  Unspecified: "var(--chart-track)",
+};
 
 /** "SOFR + 550" the way a term sheet reads it. */
 export function couponLabel(p: Pick<CreditPosition, "reference_rate" | "spread" | "interest_rate" | "pik_rate">): string {

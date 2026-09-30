@@ -1,4 +1,4 @@
--- filings: part 5 of 7
+-- filings: part 5 of 8
 -- Run the parts in order. Each one is whole statements, so a part
 -- never ends mid-statement. Safe to re-run.
 
@@ -54,10 +54,9 @@ begin
     external_key, lender_cik, accession_no, filing_form, as_of, identifier, borrower, instrument, industry, reference_rate,
     interest_rate, spread, pik_rate, maturity, principal, cost, fair_value, pct_net_assets, shares, dims, borrower_company_id, source_url)
   select
-    'soi:' || v_cik || ':' || c.instant || ':' || md5(c.identifier),
-    v_cik, p_key, p_meta->>'form', c.instant, c.identifier,
-    btrim(case when c.identifier like '% | %' then split_part(c.identifier, ' | ', 1) else c.identifier end),
-    nullif(btrim(case when c.identifier like '% | %' then substr(c.identifier, position(' | ' in c.identifier) + 3) end), ''),
+    'soi:' || v_cik || ':' || c.instant || ':' || md5(s.clean),
+    v_cik, p_key, p_meta->>'form', c.instant, s.clean,
+    s.borrower, s.instrument,
     (select ingest.humanize_member(d) from jsonb_array_elements_text(c.dims) d where d ~* 'industr' limit 1),
     (select ingest.humanize_member(d) from jsonb_array_elements_text(c.dims) d where d ~* '(sofr|libor|euribor|sonia|prime|basis|rate)' and d !~* 'industr' limit 1),
     f.rate * 100, f.spread * 100, f.pik * 100, f.maturity, f.principal, f.cost, f.fv, f.pct * 100, f.shares, c.dims,
@@ -67,6 +66,7 @@ begin
     -- a range); keep the plainest so the upsert sees each key once.
     select distinct on (identifier, instant) * from _ctx order by identifier, instant, jsonb_array_length(dims), id
   ) c
+  cross join lateral ingest.split_identifier(c.identifier) s
   join lateral (
     select
       max(case when name = 'InvestmentOwnedAtFairValue' then ingest.num(value) end) as fv,
@@ -110,3 +110,10 @@ begin
    where cik = v_cik;
   return format('done: %s contexts, %s positions as of %s', n_ctx, n_pos, v_period);
 end $$;
+
+-- --- Draining the queue -----------------------------------------------------
+
+-- A procedure, not a function, so each filing commits on its own: the
+-- session's statement timeout (two minutes on a hosted project) can end a
+-- run without undoing the filings before it. Time-boxed under that limit.
+drop function if exists ingest.process_queue(integer);

@@ -65,7 +65,7 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
         ))}
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+      <div className="space-y-4">
         <Box title={query ? `Borrowers matching “${query}”` : FILTERS.find((x) => x.key === filter)?.label === "All" ? "Largest borrowers" : FILTERS.find((x) => x.key === filter)?.label} count={rows.length} flush defn="Weighted by fair value. Mark is fair value over cost across the lenders that state both. Spread is over the reference rate.">
           {rows.length ? (
             <div className="desk-scroll">
@@ -73,7 +73,7 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                 <thead>
                   <tr>
                     <th>Borrower</th>
-                    <th>Instruments</th>
+                    <th className="whitespace-nowrap">Instruments</th>
                     <th className="num">Lenders</th>
                     <th className="num">Fair value</th>
                     <th className="num defn" data-tip="Turnover in the latest accounts filed at Companies House, in the filer's currency.">Turnover</th>
@@ -100,7 +100,7 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                           </div>
                         ) : null}
                       </td>
-                      <td className="max-w-[220px] text-[11.5px] text-muted-foreground">{b.instruments ?? "—"}</td>
+                      <td className="max-w-[260px] truncate whitespace-nowrap text-[11.5px] text-muted-foreground" title={b.instruments ?? undefined}>{b.instruments ?? "—"}</td>
                       <td className="num">{b.lenders}</td>
                       <td className="num">{formatUsd(b.fair_value ?? 0)}</td>
                       <td className="num">
@@ -127,7 +127,7 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
             <Empty>No borrowers match.</Empty>
           )}
         </Box>
-        <div className="space-y-4">
+        <div className="grid gap-4 lg:grid-cols-2">
           <Box title="How lenders mark their books" defn="Borrowers by mark (fair value over cost, in cents on the dollar) across every parsed book.">
             <Columns rows={summary.markBins.map((b) => ({ label: b.label, value: b.count }))} height={100} />
           </Box>

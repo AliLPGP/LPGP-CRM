@@ -16,7 +16,7 @@ language sql immutable as $$
   -- A filer's own numbering of tranches ("Acme, Inc. 1", "Acme, Inc. 2"), an
   -- XBRL member suffix ("Acme, Inc. [Member]") and a parenthesised instrument
   -- ("Acme, Inc. (Term Loan)") are not part of the name.
-  select btrim(regexp_replace(regexp_replace(regexp_replace(regexp_replace(regexp_replace(regexp_replace(lower(coalesce(p, '')), '\s*\[member\]\s*$', ''), '\s*\([^)]*\)', '', 'g'), '\s+\d{1,2}$', ''), '[.,''"()]', '', 'g'), '\s+(inc|incorporated|llc|l\.?l\.?c|lp|l\.?p\.?|ltd|limited|corp|corporation|co|company|holdings?|holdco|plc|sa|bv|gmbh|sarl|s\.?à\.?r\.?l\.?|pty|ag|intermediate|parent|buyer|bidco|midco|topco|acquisition|acquisitions)(\s|$)', ' ', 'g'), '\s+', ' ', 'g'));
+  select btrim(regexp_replace(regexp_replace(regexp_replace(regexp_replace(regexp_replace(regexp_replace(regexp_replace(lower(coalesce(p, '')), '\s*\[member\]\s*$', ''), '\s*\([^()]*\)', '', 'g'), '\s*\([^()]*\)', '', 'g'), '[\s()]+\d{1,2}[\s()]*$', ''), '[.,''"()]', '', 'g'), '\s+(inc|incorporated|llc|l\.?l\.?c|lp|l\.?p\.?|ltd|limited|corp|corporation|co|company|holdings?|holdco|plc|sa|bv|gmbh|sarl|s\.?à\.?r\.?l\.?|pty|ag|intermediate|parent|buyer|bidco|midco|topco|acquisition|acquisitions)(?=\s|$)', ' ', 'g'), '\s+', ' ', 'g'));
 $$;
 
 create index if not exists credit_positions_borrower_key_idx on public.credit_positions (public.borrower_key(borrower));
@@ -48,7 +48,8 @@ create materialized view public.borrowers as
 with book as (
   select p.*, l.name as lender_name, public.borrower_key(p.borrower) as bkey,
          -- The name as shown: the filer's spelling without its tranche number, member suffix or bracketed instrument.
-         btrim(regexp_replace(regexp_replace(regexp_replace(p.borrower, '\s*\[Member\]\s*$', '', 'i'), '\s*\([^)]*\)', '', 'g'), '\s+\d{1,2}$', '')) as shown
+         -- Brackets go twice over, so one nested former name ("(f/k/a X (f/k/a Y))") goes whole.
+         btrim(regexp_replace(regexp_replace(regexp_replace(regexp_replace(p.borrower, '\s*\[Member\]\s*$', '', 'i'), '\s*\([^()]*\)', '', 'g'), '\s*\([^()]*\)', '', 'g'), '\s+\d{1,2}$', ''), ' ()') as shown
   from public.credit_positions p join public.credit_lenders l on l.cik = p.lender_cik
   where p.as_of = l.latest_period and not p.is_summary and not public.borrower_is_category(p.borrower)
 )

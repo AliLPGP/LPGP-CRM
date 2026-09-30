@@ -14,16 +14,50 @@ import { OUT_OF_TIME, timeLeft } from "./research";
  *
  * One `portco_intel` row per company key. Re-running refreshes; it never
  * invents: a company the register cannot match stays without accounts.
+ *
+ * `enrichTargets` is the loop; `enrichPortcos` feeds it from the database
+ * and writes back. `scripts/enrich-portcos.ts` feeds it from a file and
+ * writes SQL, for a machine that has the register key but no database key.
  */
 
-const EXEC_TITLES = ["Chief Financial Officer", "CFO", "Chief Operating Officer", "COO", "Finance Director", "Chief Executive Officer", "CEO", "Managing Director", "Chief Transformation Officer", "Chief Restructuring Officer"];
+/** The people a restructuring or operating adviser asks for first: who runs the money and the operations. */
+export const EXEC_TITLES = [
+  "Chief Financial Officer",
+  "CFO",
+  "Finance Director",
+  "Financial Director",
+  "Financial Controller",
+  "Chief Operating Officer",
+  "COO",
+  "Operations Director",
+  "Director of Operations",
+  "Head of Operations",
+  "VP Operations",
+  "Chief Executive Officer",
+  "CEO",
+  "Managing Director",
+  "Chief Transformation Officer",
+  "Chief Restructuring Officer",
+];
 
 export type EnrichResult = { considered: number; matched: number; accounts: number; executives: number; errors: string[]; outOfTime: boolean };
 
-type Target = { key: string; name: string; domain: string | null; country: string | null };
+export type Target = { key: string; name: string; domain: string | null; country: string | null };
+
+export type EnrichOptions = {
+  deadline: number;
+  log?: (s: string) => void;
+  /** Where a finished row goes: the database, or a file of SQL. */
+  save: (row: Record<string, unknown>) => Promise<string | null>;
+};
+
+/** Does a name or country read British? The register only holds UK companies. */
+export function looksUk(t: Pick<Target, "name" | "country">): boolean {
+  return /\b(limited|ltd|plc|llp)\b/i.test(t.name) || /united kingdom|\buk\b|england|scotland|wales|london/i.test(t.country ?? "");
+}
 
 /** Companies worth a look: portfolio companies, then the largest borrowers. */
-async function targets(supabase: SupabaseClient, limit: number, onlyUk: boolean): Promise<Target[]> {
+export async function portcoTargets(supabase: SupabaseClient, limit: number, onlyUk: boolean): Promise<Target[]> {
   const out = new Map<string, Target>();
   const { data: portcos } = await supabase.from("portfolio_companies").select("intel_key, name, domain, hq").not("intel_key", "is", null).limit(2000);
   for (const p of (portcos as { intel_key: string; name: string; domain: string | null; hq: string | null }[] | null) ?? []) {
@@ -35,14 +69,19 @@ async function targets(supabase: SupabaseClient, limit: number, onlyUk: boolean)
   }
   // Already enriched recently: skip.
   const keys = [...out.keys()];
-  const { data: done } = await supabase.from("portco_intel").select("key, ch_at, executives_at").in("key", keys.slice(0, 1000));
-  const fresh = new Set(((done as { key: string; ch_at: string | null }[] | null) ?? []).filter((d) => d.ch_at && Date.now() - new Date(d.ch_at).getTime() < 90 * 86400_000).map((d) => d.key));
+  const fresh = new Set<string>();
+  for (let i = 0; i < keys.length; i += 500) {
+    const { data: done } = await supabase.from("portco_intel").select("key, ch_at").in("key", keys.slice(i, i + 500));
+    for (const d of (done as { key: string; ch_at: string | null }[] | null) ?? []) {
+      if (d.ch_at && Date.now() - new Date(d.ch_at).getTime() < 90 * 86400_000) fresh.add(d.key);
+    }
+  }
   const list = keys.filter((k) => !fresh.has(k)).map((k) => out.get(k)!);
-  // A UK-only pass keeps register lookups to names that read British (Limited, Ltd, plc, LLP) or say so.
-  return onlyUk ? list.filter((t) => /\b(limited|ltd|plc|llp)\b/i.test(t.name) || /united kingdom|\buk\b|england|scotland|london/i.test(t.country ?? "")) : list;
+  return onlyUk ? list.filter(looksUk) : list;
 }
 
-export async function enrichPortcos(supabase: SupabaseClient, opts: { deadline: number; limit?: number; onlyUk?: boolean; log?: (s: string) => void }): Promise<EnrichResult> {
+/** Look each target up and hand the row to `save`. */
+export async function enrichTargets(list: Target[], opts: EnrichOptions): Promise<EnrichResult> {
   const log = opts.log ?? (() => {});
   const result: EnrichResult = { considered: 0, matched: 0, accounts: 0, executives: 0, errors: [], outOfTime: false };
   const chOn = companiesHouseConfigured();
@@ -51,7 +90,6 @@ export async function enrichPortcos(supabase: SupabaseClient, opts: { deadline: 
     result.errors.push("Neither COMPANIES_HOUSE_API_KEY nor LUSHA_API_KEY is set.");
     return result;
   }
-  const list = await targets(supabase, opts.limit ?? 300, opts.onlyUk ?? true);
   for (const t of list) {
     if (timeLeft(opts.deadline) < 15_000) {
       result.outOfTime = true;
@@ -93,8 +131,8 @@ export async function enrichPortcos(supabase: SupabaseClient, opts: { deadline: 
           result.executives += 1;
         }
       }
-      const { error } = await supabase.from("portco_intel").upsert(row, { onConflict: "key" });
-      if (error) result.errors.push(`${t.name}: ${error.message}`);
+      const problem = await opts.save(row);
+      if (problem) result.errors.push(`${t.name}: ${problem}`);
       log(`${t.name}: ${row.ch_number ? `CH ${row.ch_number}` : "no register match"}${row.revenue != null ? `, revenue ${row.revenue}` : ""}${row.executives ? `, ${(row.executives as unknown[]).length} executives` : ""}`);
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
@@ -106,4 +144,32 @@ export async function enrichPortcos(supabase: SupabaseClient, opts: { deadline: 
     }
   }
   return result;
+}
+
+/** The in-app job: targets from the database, rows back into it. */
+export async function enrichPortcos(supabase: SupabaseClient, opts: { deadline: number; limit?: number; onlyUk?: boolean; log?: (s: string) => void }): Promise<EnrichResult> {
+  const list = await portcoTargets(supabase, opts.limit ?? 300, opts.onlyUk ?? true);
+  return enrichTargets(list, {
+    deadline: opts.deadline,
+    log: opts.log,
+    save: async (row) => {
+      const { error } = await supabase.from("portco_intel").upsert(row, { onConflict: "key" });
+      return error ? error.message : null;
+    },
+  });
+}
+
+/** One idempotent upsert per row, for a run that writes SQL instead of rows. */
+export function rowToSql(row: Record<string, unknown>): string {
+  const cols = Object.keys(row);
+  const lit = (v: unknown): string => {
+    if (v == null) return "null";
+    if (typeof v === "number") return Number.isFinite(v) ? String(v) : "null";
+    if (typeof v === "boolean") return v ? "true" : "false";
+    if (Array.isArray(v) && v.every((x) => typeof x === "string")) return `array[${(v as string[]).map((x) => `'${x.replace(/'/g, "''")}'`).join(", ")}]::text[]`;
+    if (typeof v === "object") return `'${JSON.stringify(v).replace(/'/g, "''")}'::jsonb`;
+    return `'${String(v).replace(/'/g, "''")}'`;
+  };
+  const updates = cols.filter((c) => c !== "key").map((c) => `${c} = excluded.${c}`);
+  return `insert into public.portco_intel (${cols.join(", ")}) values (${cols.map((c) => lit(row[c])).join(", ")}) on conflict (key) do update set ${updates.join(", ")};`;
 }

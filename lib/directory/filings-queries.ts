@@ -282,7 +282,9 @@ async function buildBorrowerSummary(version: string): Promise<BorrowerSummary> {
 const cachedBorrowerSummary = unstable_cache(buildBorrowerSummary, ["borrower-summary-v1"], { tags: [INTEL_TAG], revalidate: 1800 });
 
 export async function getBorrowerSummary(): Promise<BorrowerSummary> {
-  const version = await tableVersion("credit_positions");
+  // The materialised view has its own write counters: a refresh or rebuild
+  // changes the key even when no position changed.
+  const version = await tableVersion("credit_positions", "borrowers");
   try {
     return await cachedBorrowerSummary(version);
   } catch {

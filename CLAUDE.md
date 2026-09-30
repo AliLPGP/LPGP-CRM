@@ -133,7 +133,10 @@ boundaries and keeps comment text ASCII.
   the directory already had, never renaming or retyping them.
 - **Borrowers** (0021) — `borrowers`, a materialised view folding every
   parsed lender's latest positions into one row per borrower
-  (`borrower_key` strips legal suffixes and a filer's tranche numbering):
+  (`borrower_key` strips legal suffixes, a filer's tranche numbering, an
+  XBRL `[Member]` suffix and a bracketed instrument; `borrower_is_category`
+  keeps a book's headings — "First Lien Debt", an industry member, a
+  subtotal — out of the fold):
   lenders, fair value, principal, cost, mark, fair-value-weighted spread and
   rate, PIK, next maturity, instruments. `borrower_summary()` and
   `borrower_search(q, filter)` serve `/database/borrowers` inside the API

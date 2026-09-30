@@ -83,6 +83,22 @@ boundaries and keeps comment text ASCII.
 - **Series merge** (0017) — stored `event_targets.series` values for the three
   old CFO ids become `cfo-coo`. Read-side folding means nothing breaks without
   it; it exists so exports and queries see the current id.
+- **SEC filings** (0018) — `fund_offerings` (every Form D; pooled funds also
+  become `funds` rows and `fundraise`/`fund_close` deals with `source =
+  'sec_edgar'`, placement agents become `placement_agent` service
+  relationships), `credit_lenders` and `credit_positions` (each BDC's
+  schedule of investments as tagged in its own 10-Q/10-K: borrower,
+  instrument, rate, spread, principal, cost, fair value, per period;
+  `is_summary` marks a filer's per-borrower subtotal so nothing counts twice).
+  Views `fund_offerings_latest` and `credit_book` are what the app reads. The
+  **database fetches EDGAR itself**: the `ingest` schema holds the queue and
+  the parsers (plpgsql over the `http` extension), `ingest.enqueue_quarter`
+  queues a quarter of `form.idx`, and pg_cron drains it with
+  `ingest.run_queue` (a procedure committing per filing, time-boxed under the
+  hosted statement limit). Firm links come from `ingest.match_firm`: exact
+  name, else a first word that names exactly one directory firm.
+  `/database/lenders` is the loan-book desk; the credit class page and firm
+  profiles show raises and books.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).
@@ -211,6 +227,19 @@ nothing filed still means someone owes the client a document.
 already has one: company similarity from the bridge, plus the two things that
 separate deals within a company (shared events, matching amount). It only ever
 asks — adopting or creating is the person's call.
+
+**A deal makes an account** (`lib/account-sync.ts`). Every company with a
+tracker deal gets an account: created the first time (named as the directory
+spells it, linked to the firm, owned by the signer's profile via initials),
+matched by `opsMatchKey` on the account's ops spelling or name after that.
+Each deal is linked to the account with a fresh snapshot, `first_sponsored_year`
+and `ops_company` are filled from the tracker, a re-signed sponsor goes back to
+Active, and a lead confirmed against one of the deals gets its `account_id`.
+Fields people set (tier, health, notes, an owner once chosen) are never
+touched. It runs after `recordOpsDeal`/`updateRecordedDeal` for that company,
+daily from `/api/accounts/sync` (Vercel cron, `CRON_SECRET`), and from the
+Accounts page button, so a deal typed straight into the tracker still becomes
+an account within a day.
 
 ## Conventions
 

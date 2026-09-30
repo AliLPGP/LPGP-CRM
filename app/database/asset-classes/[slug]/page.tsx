@@ -4,10 +4,13 @@ import { assetClassBySlug } from "@/lib/directory/asset-classes";
 import { getClassPage } from "@/lib/directory/asset-class-data";
 import { getClassMetrics } from "@/lib/directory/strategy-data";
 import { STRATEGIES_BY_CLASS } from "@/lib/directory/strategies";
+import { getBookSummary, getFundOfferings, getOfferingStats, listCreditLenders } from "@/lib/directory/filings-queries";
 import { getSessionUser } from "@/lib/auth";
 import { ResearchClassButton } from "@/components/intel/research-buttons";
 import { StrategiesPanel } from "@/components/intel/strategies-panel";
 import { CompanyLogo } from "@/components/company-logo";
+import { Columns, ShareBar } from "@/components/intel/charts";
+import { LenderTable, OfferingTable } from "@/components/intel/filings-tables";
 import { IntelShell } from "@/components/intel/shell";
 import { CommitmentTable, DealTable, FirmTable, ProviderMini, SignalList } from "@/components/intel/tables";
 import { Box, Empty, Src, Stat, StatStrip, SubTabs, Tag } from "@/components/intel/ui";
@@ -16,7 +19,7 @@ import { formatMoney } from "@/lib/directory/intelligence-types";
 
 export const dynamic = "force-dynamic";
 
-const TABS = ["overview", "strategies", "managers", "funds", "commitments", "deals", "signals"] as const;
+const TABS = ["overview", "strategies", "managers", "funds", "commitments", "deals", "raises", "loans", "signals"] as const;
 type Tab = (typeof TABS)[number];
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -36,7 +39,17 @@ export default async function AssetClassPage({
   const cls = assetClassBySlug(slug);
   if (!cls) notFound();
   const tab: Tab = (TABS as readonly string[]).includes(tabParam ?? "") ? (tabParam as Tab) : "overview";
-  const [page, user] = await Promise.all([getClassPage(cls), getSessionUser()]);
+  const isSports = cls.key === "sports";
+  const isCredit = cls.key === "private_credit";
+  // Form D raises are read per class; the loan books only on the credit desk.
+  const [page, user, raises, offerings, book, lenders] = await Promise.all([
+    getClassPage(cls),
+    getSessionUser(),
+    isSports ? null : getOfferingStats(cls.key),
+    tabParam === "raises" && !isSports ? getFundOfferings({ assetClass: cls.key, limit: 600 }) : Promise.resolve([]),
+    isCredit ? getBookSummary() : null,
+    tabParam === "loans" && isCredit ? listCreditLenders() : Promise.resolve([]),
+  ]);
   // Strategy metrics run every strategy's placement over every manager and
   // fund in the class; only the tab that shows them pays for them.
   const strategyCount = STRATEGIES_BY_CLASS[cls.key].length;
@@ -46,7 +59,6 @@ export default async function AssetClassPage({
   const aiReady = Boolean(process.env.ANTHROPIC_API_KEY);
   const base = `/database/asset-classes/${cls.slug}`;
   const domainOf = (companyId: string | null) => (companyId ? (page.managers.find((m) => m.id === companyId)?.domain ?? null) : null);
-  const isSports = cls.key === "sports";
 
   return (
     <IntelShell
@@ -78,6 +90,8 @@ export default async function AssetClassPage({
             { href: `${base}?tab=funds`, label: "Funds", count: page.funds.length, active: tab === "funds" },
             { href: `${base}?tab=commitments`, label: "LP commitments", count: page.commitments.length, active: tab === "commitments" },
             { href: `${base}?tab=deals`, label: "Deals", count: page.deals.length, active: tab === "deals" },
+            ...(raises ? [{ href: `${base}?tab=raises`, label: "Form D raises", count: raises.filings, active: tab === "raises" }] : []),
+            ...(book ? [{ href: `${base}?tab=loans`, label: "Loan books", count: book.lenders, active: tab === "loans" }] : []),
             { href: `${base}?tab=signals`, label: "Signals", count: page.signals.length, active: tab === "signals" },
           ]}
         />
@@ -94,6 +108,16 @@ export default async function AssetClassPage({
         <Stat label="Funds" value={page.funds.length.toLocaleString("en-US")} basis={`${page.fundsByName} named as such in the fund's own name`} href={`${base}?tab=funds`} />
         <Stat label="LP commitments" value={page.commitments.length.toLocaleString("en-US")} basis="publicly disclosed" href={`${base}?tab=commitments`} />
         <Stat label="Deals" value={page.deals.length.toLocaleString("en-US")} basis="sourced transactions" href={`${base}?tab=deals`} />
+        {raises ? (
+          <Stat
+            label="Form D raises"
+            value={raises.filings.toLocaleString("en-US")}
+            basis={raises.sold ? `${formatUsd(raises.sold)} sold, ${raises.raising.toLocaleString("en-US")} funds with money in` : "read from EDGAR"}
+            href={`${base}?tab=raises`}
+            defn="Pooled funds that filed a Form D and whose name or stated fund type places them in this class. Sold-to-date is the fund's own figure on its latest filing."
+          />
+        ) : null}
+        {book ? <Stat label="Loan books" value={book.lenders.toLocaleString("en-US")} basis={`${book.positions.toLocaleString("en-US")} positions, ${formatUsd(book.fairValue)}`} href={`${base}?tab=loans`} /> : null}
         <Stat label="Signals" value={page.signals.length.toLocaleString("en-US")} basis="dated news items" href={`${base}?tab=signals`} />
       </StatStrip>
 
@@ -263,6 +287,62 @@ export default async function AssetClassPage({
         <Box title="Deals" count={page.deals.length} flush>
           <DealTable deals={page.deals} showClass={false} />
         </Box>
+      ) : null}
+
+      {tab === "raises" && raises ? (
+        <div className="space-y-4">
+          <div className="grid gap-4 lg:grid-cols-3">
+            <Box title="Filings by month" defn="Latest Form D per fund, by the month it was filed. Bars are filings; hover for the amount sold.">
+              <Columns rows={raises.byMonth.map((m) => ({ label: m.label, value: m.count, hint: `${formatUsd(m.sold)} sold` }))} height={90} />
+            </Box>
+            <Box title="Sold to date by fund type" defn="What the funds state they have sold so far, by the fund type ticked on the form.">
+              <ShareBar segments={raises.byType.map((t, i) => ({ key: t.label, label: t.label, value: t.sold, hue: `var(--chart-${(i % 7) + 1})` }))} format={(v) => formatUsd(v)} />
+            </Box>
+            <Box title="Placement agents" count={raises.agents.length} defn="Broker-dealers named as sales compensation recipients, by the number of funds that name them.">
+              {raises.agents.length ? (
+                <ul className="space-y-1">
+                  {raises.agents.slice(0, 8).map((a) => (
+                    <li key={a.name} className="flex items-center gap-2 text-[12px]">
+                      <span className="min-w-0 flex-1 truncate">{a.name}</span>
+                      <span className="inline-block h-[4px] w-14 overflow-hidden rounded-[2px] bar-track">
+                        <span className="block h-full bar-fill" style={{ width: `${Math.round((a.funds / (raises.agents[0]?.funds || 1)) * 100)}%` }} />
+                      </span>
+                      <span className="figure w-6 text-right text-[11px] text-muted-foreground">{a.funds}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <Empty>None named yet.</Empty>
+              )}
+            </Box>
+          </div>
+          <Box title="Form D raises" count={raises.filings} flush defn="The latest Form D per pooled fund in this class, newest filing first. Sold-to-date and investor counts are the fund's own figures; the general partner is the related person the filing names as such.">
+            <OfferingTable rows={offerings} showClass={false} />
+            {raises.filings > offerings.length ? <p className="px-3 py-2 text-[11px] text-muted-foreground">Showing the newest {offerings.length.toLocaleString("en-US")} of {raises.filings.toLocaleString("en-US")}.</p> : null}
+          </Box>
+        </div>
+      ) : null}
+
+      {tab === "loans" && book ? (
+        <div className="space-y-4">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Box title="Fair value by seniority" defn="Every parsed lender's latest book, grouped by what the tagged instrument says.">
+              <ShareBar segments={book.byInstrument.map((s, i) => ({ key: s.label, label: s.label, value: s.value, hue: `var(--chart-${(i % 7) + 1})` }))} format={(v) => formatUsd(v)} />
+            </Box>
+            <Box title="Spread distribution" defn="Positions by spread over the reference rate, in 100 bp bins.">
+              <Columns rows={book.spreadBins.map((b) => ({ label: b.label, value: b.count }))} height={90} />
+            </Box>
+          </div>
+          <Box
+            title="Lenders"
+            count={lenders.length}
+            flush
+            action={<Link href="/database/lenders" className="text-[11.5px] text-muted-foreground hover:text-foreground">Open the loan books</Link>}
+            defn="Business development companies whose schedule of investments the database has parsed from their own 10-Q and 10-K."
+          >
+            <LenderTable rows={lenders} />
+          </Box>
+        </div>
       ) : null}
 
       {tab === "signals" ? (

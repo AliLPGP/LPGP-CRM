@@ -1,9 +1,11 @@
 import { listAccounts } from "@/lib/accounts";
 import { listCompaniesLite } from "@/lib/queries";
 import { opsSummaries } from "@/lib/ops-links";
+import { isOpsConfigured } from "@/lib/ops";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { AccountsBrowser } from "@/components/accounts/accounts-browser";
 import { NewAccountDialog } from "@/components/accounts/new-account-dialog";
+import { SyncAccountsButton } from "@/components/accounts/sync-accounts-button";
 import { PageHeader } from "@/components/page-header";
 import { SetupNotice } from "@/components/setup-notice";
 import { StatCard } from "@/components/stat-card";
@@ -27,8 +29,13 @@ export default async function AccountsPage() {
       <PageHeader
         eyebrow="Sales CRM"
         title="Accounts"
-        description="Sponsors you've won. Each one keeps its own points of contact, activity history and the event allocations recorded in the ops panel."
-        actions={<NewAccountDialog companies={companies} />}
+        description="Sponsors you've won. Every company with a deal in the ops panel gets an account here automatically, and each new deal updates it; points of contact, activity history and event allocations hang off it."
+        actions={
+          <div className="flex flex-wrap items-start gap-2">
+            <SyncAccountsButton configured={isOpsConfigured()} />
+            <NewAccountDialog companies={companies} />
+          </div>
+        }
       />
 
       {!isSupabaseConfigured() ? <SetupNotice /> : null}

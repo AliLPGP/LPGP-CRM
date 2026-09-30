@@ -40,6 +40,21 @@ where it starts. A database that already has `0013`–`0015` needs only
 (Discover, signed in as an admin, shows which of these a database is still
 missing and serves exactly those parts.)
 
+**SEC filings (migration `0018`)** — Form D fund raises and BDC loan books,
+which the database reads from EDGAR by itself once the tables exist. Run
+**`6-sec-filings/filings_01_of_07.sql` … `_07_of_07.sql`** after the schema.
+Its parser functions are single statements well over a hundred lines, so if
+your editor cuts a paste short, run **`6-sec-filings/install_from_github.sql`**
+instead: one short statement that has the database fetch and apply the whole
+migration. Then queue a quarter from the SQL editor:
+
+```sql
+select ingest.enqueue_quarter(2026, 3);   -- every Form D and lender 10-Q/10-K filed in Q3 2026
+```
+
+The queue drains a batch a minute on its own (pg_cron); `select * from
+ingest.status` shows progress.
+
 **The intelligence dataset needs no SQL** — the button on Import → Master
 directory loads it. If you'd rather paste it (a database the app can't reach
 yet), **`5-intelligence-data/data_001_of_120.sql` … `_120_of_120.sql`** holds
@@ -48,7 +63,7 @@ portfolio companies, after `1-schema` (or `3-directory`/`4-intelligence`).
 `../intelligence-data.sql` is the whole set in one file for `psql` or the
 Supabase CLI, where a paste can't truncate.
 
-**One CFO/COO portfolio (migration `0017`)** is a single idempotent `update`
+**One CFO/COO portfolio (migration `0018`)** is a single idempotent `update`
 on `event_targets`, folding the three old CFO series ids into `cfo-coo`. It is
 the last statement of `1-schema`; a database that already has everything else
 can paste `../migrations/0017_series_merge.sql` on its own. The app reads the
@@ -72,6 +87,7 @@ lose track of where you were, start over from part 1.
 | `3-directory` | 8 | 3.6 KB |
 | `4-intelligence` | 4 | 3.5 KB |
 | `5-intelligence-data` | 120 | 8.1 KB |
+| `6-sec-filings` | 7 | 8.9 KB, up to 160 lines |
 
 The schema parts are deliberately under 4 KB. The seed parts can't go that low —
 a single `insert` of a dozen firms is bigger than that, and splitting inside one

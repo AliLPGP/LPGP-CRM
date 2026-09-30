@@ -8,6 +8,7 @@
  *   npx tsx --conditions react-server scripts/research.ts signals [--days 30]
  *   npx tsx --conditions react-server scripts/research.ts clubs [--limit 20] [--verify] [--all]
  *   npx tsx --conditions react-server scripts/research.ts commitments [--limit 20] [--since 2024-01-01]
+ *   npx tsx --conditions react-server scripts/research.ts portfolios [--limit 50] [--roster] [--redo]
  *   npx tsx --conditions react-server scripts/research.ts all
  *
  * Needs ANTHROPIC_API_KEY, NEXT_PUBLIC_SUPABASE_URL and
@@ -44,8 +45,8 @@ async function main() {
   const job = process.argv[2];
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!job || !["benchmarks", "deals", "signals", "clubs", "commitments", "all"].includes(job)) {
-    console.error("usage: research.ts benchmarks | deals | signals | clubs | commitments | all");
+  if (!job || !["benchmarks", "deals", "signals", "clubs", "commitments", "portfolios", "all"].includes(job)) {
+    console.error("usage: research.ts benchmarks | deals | signals | clubs | commitments | portfolios | all");
     process.exit(2);
   }
   if (!url || !key) throw new Error("NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required");
@@ -54,7 +55,7 @@ async function main() {
 
   // Imported after the env is loaded: these modules read it at import time.
   const { ASSET_CLASSES, ASSET_CLASS_BY_KEY, isAssetClassKey } = await import("../lib/directory/asset-classes");
-  const { disclosingLps, runBenchmarks, runClubs, runCommitments, runDeals, runSignals } = await import("../lib/directory/jobs");
+  const { disclosingLps, portfolioTargets, runBenchmarks, runClubs, runCommitments, runDeals, runPortfolios, runSignals } = await import("../lib/directory/jobs");
   const log = (line: string) => console.log(`${new Date().toISOString().slice(11, 19)} ${line}`);
   const far = Date.now() + 6 * 60 * 60 * 1000; // no function limit here: six hours
   const cls = arg("class");
@@ -90,6 +91,13 @@ async function main() {
     log(`clubs: ${teamIds.length} to research${flag("verify") ? ", with a fact-check pass" : ""}`);
     const results = await runClubs(supabase, { teamIds, clubs: [], verify: flag("verify"), deadline: far, addedBy: null, log });
     log(`clubs done: ${results.filter((r) => r.ok).length} researched, ${results.filter((r) => !r.ok).length} failed`);
+  }
+  if (job === "portfolios") {
+    // Sponsors with nothing on file, the directory's first; "--roster" adds the SEC roster's private-equity and venture advisers; "--redo" re-reads everyone.
+    const firms = await portfolioTargets(supabase, { limit: Number(arg("limit") ?? 50), includeRoster: flag("roster"), redo: flag("redo") });
+    log(`portfolios: ${firms.length} sponsors to read`);
+    const r = await runPortfolios(supabase, firms, { deadline: far, addedBy: null, log });
+    log(`portfolios done: ${r.companies} companies across ${r.firms} sponsors, errors: ${r.errors.join("; ") || "none"}`);
   }
   log("Open the app: cached reads refresh within the hour, or press any research button once to refresh them now.");
 }

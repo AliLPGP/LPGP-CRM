@@ -20,13 +20,22 @@ export type ResearchedCompany = {
   exit_year: number | null;
   fund_name: string | null;
   source_url: string;
+  /** The transaction value a page states, in its currency, with what the figure is. */
+  deal_value: number | null;
+  deal_currency: string | null;
+  deal_value_basis: "enterprise_value" | "equity_value" | "stake_price" | "unspecified" | null;
+  /** The sponsor's own equity and stake, only when a page states them. */
+  equity_invested: number | null;
+  stake_pct: number | null;
+  co_investors: string[];
+  deal_source_url: string | null;
 };
 
 export type PortfolioResearch =
   | { ok: true; companies: ResearchedCompany[]; note: string }
   | { ok: false; error: string };
 
-const nullable = (type: "string" | "integer") => ({ anyOf: [{ type }, { type: "null" }] });
+const nullable = (type: "string" | "integer" | "number") => ({ anyOf: [{ type }, { type: "null" }] });
 
 const RECORD_TOOL: Anthropic.Beta.BetaTool = {
   name: "record_portfolio",
@@ -53,10 +62,18 @@ const RECORD_TOOL: Anthropic.Beta.BetaTool = {
             exit_year: nullable("integer"),
             fund_name: nullable("string"),
             source_url: { type: "string" },
+            deal_value: nullable("number"),
+            deal_currency: nullable("string"),
+            deal_value_basis: { anyOf: [{ type: "string", enum: ["enterprise_value", "equity_value", "stake_price", "unspecified"] }, { type: "null" }] },
+            equity_invested: nullable("number"),
+            stake_pct: nullable("number"),
+            co_investors: { type: "array", items: { type: "string" } },
+            deal_source_url: nullable("string"),
           },
           required: [
             "name", "website", "description", "sector", "hq", "status",
             "invested_year", "exit_year", "fund_name", "source_url",
+            "deal_value", "deal_currency", "deal_value_basis", "equity_invested", "stake_pct", "co_investors", "deal_source_url",
           ],
         },
       },
@@ -73,7 +90,8 @@ Work from sources, never memory:
 2. If the site has no usable list, search recent press releases announcing this manager's investments or exits.
 3. Include a company only when a page you fetched or a search result you saw in this conversation states it is (or was) this manager's portfolio company. Do not include the manager's funds, its limited partners, or companies of a different firm with a similar name.
 4. For each company give source_url: the exact page that names it. Fill website, sector, HQ, description (one short sentence), fund name, investment year and exit year only when a source states them; otherwise null. status is "realized" only when the source marks it exited or realized, "current" only when it is listed as current/active, else "unknown".
-5. At most 80 companies — current holdings first when the list is longer.
+5. What the manager paid: when a page you fetched or a search result you saw states the money behind the investment, record it. deal_value is the transaction value in full units (2500000000, not "2.5bn") with deal_currency as an ISO code and deal_value_basis saying what the figure is: enterprise_value when the page says enterprise value or "valued the company at", equity_value when it says equity value, stake_price when it is the price paid for a stake, unspecified when the page gives a number without saying. equity_invested only when a page states the sponsor's own equity cheque; stake_pct only when a page states the percentage held; co_investors as named. deal_source_url is the page that states the money (a press release, a deal announcement, a reputable news report). Never estimate, convert currencies, or infer a value from a fund size.
+6. Large managers: a site can list several hundred companies. Fetch every sector or region page and every page of the list; record all of them, up to 400, current holdings first.
 
 When done, call record_portfolio once. Put anything the team should know (e.g. "site lists only current holdings", "no public portfolio page") in note.`;
 
@@ -84,10 +102,10 @@ export async function researchPortfolio(firm: { name: string; domain: string | n
   const messages: Anthropic.Beta.BetaMessageParam[] = [{ role: "user", content: ask }];
 
   try {
-    for (let turn = 0; turn < 8; turn++) {
+    for (let turn = 0; turn < 12; turn++) {
       const response = await client.beta.messages.create({
         model: MODEL,
-        max_tokens: 16000,
+        max_tokens: 32000,
         // A declined request is re-run on Anthropic's recommended fallback model.
         betas: ["server-side-fallback-2026-07-01"],
         fallbacks: "default",
@@ -95,8 +113,8 @@ export async function researchPortfolio(firm: { name: string; domain: string | n
         output_config: { effort: "medium" },
         system: SYSTEM,
         tools: [
-          { type: "web_search_20260209", name: "web_search", max_uses: 6 },
-          { type: "web_fetch_20260209", name: "web_fetch", max_uses: 10, max_content_tokens: 30_000 },
+          { type: "web_search_20260209", name: "web_search", max_uses: 10 },
+          { type: "web_fetch_20260209", name: "web_fetch", max_uses: 20, max_content_tokens: 40_000 },
           RECORD_TOOL,
         ],
         messages,
@@ -109,7 +127,8 @@ export async function researchPortfolio(firm: { name: string; domain: string | n
         const input = record.input as { companies?: ResearchedCompany[]; note?: string };
         const companies = (Array.isArray(input.companies) ? input.companies : [])
           .filter((c) => c && typeof c.name === "string" && c.name.trim() && typeof c.source_url === "string" && /^https?:\/\//.test(c.source_url))
-          .slice(0, 80);
+          .map((c) => ({ ...c, co_investors: Array.isArray(c.co_investors) ? c.co_investors.filter((x) => typeof x === "string") : [] }))
+          .slice(0, 400);
         return { ok: true, companies, note: typeof input.note === "string" ? input.note : "" };
       }
       if (response.stop_reason === "refusal") return { ok: false, error: "The research was declined." };

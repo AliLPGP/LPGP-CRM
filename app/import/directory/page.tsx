@@ -8,6 +8,7 @@ import { DirectoryImport } from "@/components/directory/directory-import";
 import { DirectorySetupPanel } from "@/components/directory/directory-setup";
 import { DatasetLoader } from "@/components/directory/dataset-loader";
 import { EnrichRunner } from "@/components/directory/enrich-runner";
+import { SPONSOR_TYPES } from "@/lib/directory/jobs";
 import { shippedDatasetInfo } from "@/lib/directory/intelligence-queries";
 import { getDirectoryIndex } from "@/lib/directory/index-server";
 import { lushaConfigured } from "@/lib/lusha";
@@ -26,10 +27,14 @@ export default async function DirectoryImportPage() {
     getDirectoryIndex(),
     shippedDatasetInfo(),
   ]);
-  // GPs with a website, largest first: the order the enrichment runs go in.
+  // GPs with a website, in the order the enrichment runs go: sponsors whose
+  // investments are companies (private equity, growth, venture, alternatives)
+  // before lenders and listed-securities managers, the directory's own firms
+  // before the SEC roster's, and the largest first within each.
+  const sponsor = (t: string | null) => Boolean(t && SPONSOR_TYPES.includes(t));
   const gps = index.records
     .filter((r) => r.category === "GP" && r.domain)
-    .sort((a, b) => (b.aum ?? 0) - (a.aum ?? 0))
+    .sort((a, b) => Number(sponsor(b.subType)) - Number(sponsor(a.subType)) || Number(b.directory) - Number(a.directory) || (b.aum ?? 0) - (a.aum ?? 0))
     .map((r) => ({ id: r.id, name: r.name, operators: r.operators, portcos: r.portcos }));
   const isAdmin = user?.role === "admin";
   const parts = isAdmin ? await missingSql(setup) : [];

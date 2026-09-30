@@ -9,6 +9,7 @@ import { borrowerPositions, getBorrower, getPortcoIntel, portcoHolders } from "@
 import { signalsNaming } from "@/lib/directory/intelligence-queries";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { LEAD_ROLE_LABEL, leadership, type PortcoIntel } from "@/lib/directory/portco-intel";
+import { DEAL_BASIS_LABEL } from "@/lib/directory/portfolio";
 import { formatUsd } from "@/lib/utils";
 
 // A company behind the deals: a sponsor's portfolio company, a lender's
@@ -165,6 +166,25 @@ export default async function PortcoPage({ params }: { params: Promise<{ key: st
                       {h.fund_name ? <span>{h.fund_name}</span> : null}
                       <Src url={h.source_url} name="Source" />
                     </div>
+                    {h.deal_value != null || h.equity_invested != null || h.stake_pct != null ? (
+                      <div className="mt-1 flex flex-wrap items-center gap-x-2 text-[11.5px]">
+                        {h.deal_value != null ? (
+                          <span>
+                            <span className="figure">{formatMoney(h.deal_value, h.deal_currency)}</span>
+                            <span className="text-muted-foreground"> {DEAL_BASIS_LABEL[h.deal_value_basis ?? "unspecified"]}</span>
+                          </span>
+                        ) : null}
+                        {h.equity_invested != null ? (
+                          <span>
+                            <span className="figure">{formatMoney(h.equity_invested, h.deal_currency)}</span>
+                            <span className="text-muted-foreground"> equity invested</span>
+                          </span>
+                        ) : null}
+                        {h.stake_pct != null ? <span className="text-muted-foreground">{h.stake_pct}% stake</span> : null}
+                        {h.co_investors?.length ? <span className="text-muted-foreground">with {h.co_investors.join(", ")}</span> : null}
+                        <Src url={h.deal_source_url} name="Stated by" />
+                      </div>
+                    ) : null}
                   </li>
                 ))}
               </ul>

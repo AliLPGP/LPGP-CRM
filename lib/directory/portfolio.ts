@@ -19,7 +19,18 @@ export type PortfolioCompany = {
   created_at: string;
   /** `borrower_key(name)`, the key shared with the loan books and `portco_intel` (migration 0022). */
   intel_key?: string | null;
+  /** What the sponsor paid, as a page states it (migration 0023). */
+  deal_value?: number | null;
+  deal_currency?: string | null;
+  deal_value_basis?: "enterprise_value" | "equity_value" | "stake_price" | "unspecified" | null;
+  equity_invested?: number | null;
+  stake_pct?: number | null;
+  co_investors?: string[];
+  deal_source_url?: string | null;
+  researched_at?: string | null;
 };
+
+export const DEAL_BASIS_LABEL: Record<string, string> = { enterprise_value: "enterprise value", equity_value: "equity value", stake_price: "price of the stake", unspecified: "as reported" };
 
 export function portfolioKey(gpId: string, name: string): string {
   const slug = name

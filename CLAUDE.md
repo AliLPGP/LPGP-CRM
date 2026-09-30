@@ -159,6 +159,18 @@ boundaries and keeps comment text ASCII.
   Borrowers desk and a GP's portfolio tab show turnover, EBITDA and the
   finance lead, each linked to the filing. `portco_debt` joins a sponsor's
   portfolio companies to the loan books.
+- **Portfolio deals** (0023) — `portfolio_companies` gains what a sponsor
+  paid as the press states it: `deal_value` with its currency and
+  `deal_value_basis` (enterprise value, equity value, the price of a stake,
+  or unspecified), `equity_invested` and `stake_pct` only when a page states
+  them, `co_investors`, and `deal_source_url`. The research job never
+  estimates or converts; an equity cheque no page states stays null, and the
+  UI labels the basis. `companies.portfolio_note` keeps the job's note per
+  sponsor ("site lists current holdings only"). `runPortfolios` /
+  `portfolioTargets` in `jobs.ts` read sponsors in bulk (`SPONSOR_TYPES`:
+  private equity, growth, venture, alternatives; the directory's firms before
+  the SEC roster's; `scripts/research.ts portfolios`), up to 400 companies
+  per manager, with `portfolioRows` shared by the per-firm route.
 - **Speed** — the API roles carry short statement timeouts (anon 3 s), so
   anything that aggregates a large table lives in SQL (`credit_book_summary`,
   `offering_stats`, `borrower_summary`), never in the app over paged rows.

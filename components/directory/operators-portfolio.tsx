@@ -8,7 +8,7 @@ import { CompanyLogo } from "@/components/company-logo";
 import { PersonAvatar } from "@/components/person-avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { PortfolioCompany } from "@/lib/directory/portfolio";
+import { DEAL_BASIS_LABEL, type PortfolioCompany } from "@/lib/directory/portfolio";
 import { financeLead, portcoHref, type PortcoIntel } from "@/lib/directory/portco-intel";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { addPortfolioCompany, removePortfolioCompany } from "@/lib/directory/portfolio-actions";
@@ -270,6 +270,29 @@ export function PortfolioCompanies({
                       .join(" · ") || (c.domain ?? "")}
                   </p>
                   {c.description ? <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug text-muted-foreground">{c.description}</p> : null}
+                  {c.deal_value != null || c.equity_invested != null || c.stake_pct != null ? (
+                    <p className="mt-1 text-[11.5px] leading-snug">
+                      {c.deal_value != null ? (
+                        <>
+                          <span className="figure">{formatMoney(c.deal_value, c.deal_currency)}</span>
+                          <span className="text-muted-foreground"> {DEAL_BASIS_LABEL[c.deal_value_basis ?? "unspecified"]}</span>
+                        </>
+                      ) : null}
+                      {c.equity_invested != null ? (
+                        <>
+                          {c.deal_value != null ? <span className="text-muted-foreground"> · </span> : null}
+                          <span className="figure">{formatMoney(c.equity_invested, c.deal_currency)}</span>
+                          <span className="text-muted-foreground"> equity</span>
+                        </>
+                      ) : null}
+                      {c.stake_pct != null ? <span className="text-muted-foreground"> · {c.stake_pct}% stake</span> : null}
+                      {c.deal_source_url ? (
+                        <a href={c.deal_source_url} target="_blank" rel="noreferrer" className="ml-1 text-muted-foreground hover:text-foreground" title="The page that states the money">
+                          <ExternalLink className="inline h-3 w-3" />
+                        </a>
+                      ) : null}
+                    </p>
+                  ) : null}
                   <PortcoFacts intel={c.intel_key ? intel[c.intel_key] : undefined} />
                 </div>
                 <div className="flex flex-col items-end gap-1">

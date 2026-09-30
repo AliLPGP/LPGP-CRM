@@ -4,6 +4,7 @@ import path from "node:path";
 import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { chunk, fetchAll } from "../supabase/paged";
+import { tableVersion } from "../supabase/version";
 import { ASSET_CLASSES, classOfGpType, classStatedByFundName, type AssetClassKey } from "./asset-classes";
 import type { Deal, Signal, SportsInvestor, SportsTeam, TeamOwner } from "./intelligence-types";
 import type { DisclosedCommitment } from "./queries";
@@ -56,7 +57,8 @@ export async function getDeals(f: DealFilter = {}): Promise<Deal[]> {
   return data as unknown as Deal[];
 }
 
-async function buildAllDeals(assetClass: AssetClassKey | ""): Promise<Deal[]> {
+async function buildAllDeals(assetClass: AssetClassKey | "", version: string): Promise<Deal[]> {
+  void version; // the deals row count, part of the cache key
   const supabase = getReadClient();
   if (!supabase) return [];
   const rows = await fetchAll<Deal>((from, to, first) => {
@@ -67,17 +69,19 @@ async function buildAllDeals(assetClass: AssetClassKey | ""): Promise<Deal[]> {
   return rows ?? [];
 }
 
-// The whole ledger (or one class of it), paged past the row cap. The table
-// only changes through the research jobs and the dataset loader, which all
-// refresh the intelligence tag, so the read is served from cache between.
+// The whole ledger (or one class of it), paged past the row cap. The research
+// jobs and the dataset loader refresh the intelligence tag when they write;
+// the EDGAR ingest writes from inside the database, so the row count rides in
+// the key and a stale copy is dropped the moment a deal lands.
 const cachedAllDeals = unstable_cache(buildAllDeals, ["all-deals-v1"], { tags: [INTEL_TAG], revalidate: 3600 });
 
 /** Every deal, for the Deals page, or every deal of one class. */
 export async function getAllDeals(assetClass?: AssetClassKey | null): Promise<Deal[]> {
+  const version = await tableVersion("deals");
   try {
-    return await cachedAllDeals(assetClass ?? "");
+    return await cachedAllDeals(assetClass ?? "", version);
   } catch {
-    return buildAllDeals(assetClass ?? "");
+    return buildAllDeals(assetClass ?? "", version);
   }
 }
 
@@ -234,7 +238,8 @@ export async function teamsHeldBy(f: { companyId?: string; investorId?: string }
 
 export type ClassCounts = Record<AssetClassKey, { deals: number; signals: number }>;
 
-async function buildClassCounts(): Promise<ClassCounts> {
+async function buildClassCounts(version: string): Promise<ClassCounts> {
+  void version;
   const supabase = getReadClient();
   const counts = Object.fromEntries(ASSET_CLASSES.map((c) => [c.key, { deals: 0, signals: 0 }])) as ClassCounts;
   if (!supabase) return counts;
@@ -254,7 +259,7 @@ const cachedCounts = unstable_cache(buildClassCounts, ["intel-class-counts-v1"],
 
 export async function getClassCounts(): Promise<ClassCounts> {
   try {
-    return await cachedCounts();
+    return await cachedCounts(await tableVersion("deals", "signals"));
   } catch {
     return Object.fromEntries(ASSET_CLASSES.map((c) => [c.key, { deals: 0, signals: 0 }])) as ClassCounts;
   }

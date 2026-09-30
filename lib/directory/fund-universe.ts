@@ -2,6 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { fetchAll } from "../supabase/paged";
+import { tableVersion } from "../supabase/version";
 import type { Category } from "../types";
 import { DIRECTORY_TAG, getDirectoryIndex } from "./index-server";
 import { normalizeRole, PROVIDER_ROLES } from "./providers";
@@ -54,7 +55,10 @@ type FundRow = {
 const BASE = "id, company_id, name, vintage_year, fund_size_usd, target_size_usd, strategy";
 const RICH = `${BASE}, source, manager_name, vehicle_kind, domicile, currency, service_providers`;
 
-async function build(): Promise<PackedFundUniverse> {
+// `version` is the funds table's row count: part of the cache key, so a
+// universe cached an hour ago is dropped as soon as the ingest adds a fund.
+async function build(version: string): Promise<PackedFundUniverse> {
+  void version;
   const supabase = getReadClient();
   const empty: PackedFundUniverse = { generatedAt: new Date().toISOString(), brands: [], managers: [], funds: [] };
   if (!supabase) return empty;
@@ -123,7 +127,7 @@ const cached = unstable_cache(build, ["fund-universe-v2"], { tags: [DIRECTORY_TA
 /** Every fund on file, packed. Never throws. */
 export async function getFundUniverse(): Promise<PackedFundUniverse> {
   try {
-    return await cached();
+    return await cached(await tableVersion("funds"));
   } catch {
     return { generatedAt: new Date().toISOString(), brands: [], managers: [], funds: [] };
   }

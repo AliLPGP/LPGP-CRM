@@ -2,6 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { fetchAll } from "../supabase/paged";
+import { tableVersion } from "../supabase/version";
 import { ASSET_CLASSES, type AssetClassKey } from "./asset-classes";
 import { INTEL_TAG } from "./intelligence-queries";
 import { OFFERING_COLUMNS, POSITION_COLUMNS, instrumentGroup, type BookPosition, type CreditLender, type CreditPosition, type FundOffering } from "./filings-types";
@@ -52,7 +53,8 @@ export type OfferingStats = {
   states: { label: string; count: number }[];
 };
 
-async function buildOfferingStats(assetClass: AssetClassKey | ""): Promise<OfferingStats> {
+async function buildOfferingStats(assetClass: AssetClassKey | "", version: string): Promise<OfferingStats> {
+  void version; // the filings row count, part of the cache key
   const empty: OfferingStats = { filings: 0, raising: 0, sold: 0, investors: 0, byMonth: [], byType: [], agents: [], states: [] };
   const supabase = getReadClient();
   if (!supabase) return empty;
@@ -102,10 +104,11 @@ async function buildOfferingStats(assetClass: AssetClassKey | ""): Promise<Offer
 const cachedOfferingStats = unstable_cache(buildOfferingStats, ["offering-stats-v1"], { tags: [INTEL_TAG], revalidate: 1800 });
 
 export async function getOfferingStats(assetClass?: AssetClassKey | null): Promise<OfferingStats> {
+  const version = await tableVersion("fund_offerings");
   try {
-    return await cachedOfferingStats(assetClass ?? "");
+    return await cachedOfferingStats(assetClass ?? "", version);
   } catch {
-    return buildOfferingStats(assetClass ?? "");
+    return buildOfferingStats(assetClass ?? "", version);
   }
 }
 
@@ -203,7 +206,8 @@ export type BookSummary = {
   byLender: { cik: string; name: string; ticker: string | null; positions: number; fairValue: number }[];
 };
 
-async function buildBookSummary(): Promise<BookSummary> {
+async function buildBookSummary(version: string): Promise<BookSummary> {
+  void version;
   const empty: BookSummary = { lenders: 0, positions: 0, fairValue: 0, byInstrument: [], spreadBins: [], avgSpread: null, avgRate: null, shared: [], byLender: [] };
   const supabase = getReadClient();
   if (!supabase) return empty;
@@ -251,10 +255,11 @@ async function buildBookSummary(): Promise<BookSummary> {
 const cachedBookSummary = unstable_cache(buildBookSummary, ["book-summary-v1"], { tags: [INTEL_TAG], revalidate: 1800 });
 
 export async function getBookSummary(): Promise<BookSummary> {
+  const version = await tableVersion("credit_positions");
   try {
-    return await cachedBookSummary();
+    return await cachedBookSummary(version);
   } catch {
-    return buildBookSummary();
+    return buildBookSummary(version);
   }
 }
 

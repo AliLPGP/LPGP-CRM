@@ -80,7 +80,10 @@ boundaries and keeps comment text ASCII.
   null. Seeded from `data/intelligence/dataset.json` (public facts only,
   built by `supabase/tools/build_intelligence_dataset.py`) and grown by the
   in-app research jobs.
-- **SEC filings** (0017) — `fund_offerings` (every Form D; pooled funds also
+- **Series merge** (0017) — stored `event_targets.series` values for the three
+  old CFO ids become `cfo-coo`. Read-side folding means nothing breaks without
+  it; it exists so exports and queries see the current id.
+- **SEC filings** (0018) — `fund_offerings` (every Form D; pooled funds also
   become `funds` rows and `fundraise`/`fund_close` deals with `source =
   'sec_edgar'`, placement agents become `placement_agent` service
   relationships), `credit_lenders` and `credit_positions` (each BDC's
@@ -272,13 +275,21 @@ an account within a day.
   label and never for a sentence. No serif — the brand mark is monochrome
   geometry and a flourish fights it.
 - Charts follow the `dataviz` method: form before colour, one axis, categorical
-  hues assigned by entity and never cycled. The seven series hues in
-  `--chart-1..7` are validated against both card surfaces — re-run the skill's
-  validator before changing any of them. They deliberately survived the Pavilion
-  retheme: a muted earth-tone set was measured and fails the chroma floor, CVD
-  separation and the normal-vision floor, so seven series cannot be told apart
-  in it. Magnitude bars (`--chart-bar`) wear the walnut instead, because there
-  colour carries size rather than identity.
+  hues assigned by entity and never cycled. The seven hues in `--chart-1..7`
+  are validated against both card surfaces — re-run the skill's validator
+  before changing any of them. They deliberately survived the Pavilion retheme:
+  a muted earth-tone set was measured and fails the chroma floor, CVD
+  separation and the normal-vision floor. Magnitude bars (`--chart-bar`) wear
+  the walnut instead, because there colour carries size rather than identity.
+- The programme has **five series** (`lib/events-catalogue.ts`): Private Debt,
+  one CFO/COO portfolio (the Private Markets, Private Equity & Debt and Private
+  Equity conferences are one series, `cfo-coo`; the three old ids fold into it
+  via `normaliseSeriesId`, and migration 0013 tidies stored rows), Operational
+  Fund, Operating Partners, Data & Technology. Each keeps its original hue
+  (slots 1, 2, 7, 5, 6), and that is the display order everywhere because it is
+  the one order in which every adjacent pair passes the validator's CVD check;
+  the natural size order puts orange beside pink and fails. The tracker's
+  `programme-2027.js` and `PORT_SERIES` carry the same five, in the same order.
 - The 2027 programme (`lib/events-catalogue.ts`) is transcribed from the
   published schedule. Its `guessSeries` only suggests; a suggestion is never
   written without someone confirming it.

@@ -21,7 +21,7 @@ export type DirectorySetup = {
   portfolio: boolean;
   /** Migration 0016: deals, signals and sports. */
   intelligence: boolean;
-  /** Migration 0017: Form D raises and BDC loan books, read by the database. */
+  /** Migration 0018: Form D raises and BDC loan books, read by the database. */
   filings: boolean;
   /** The intelligence dataset has been loaded at least once. */
   datasetLoaded: boolean;
@@ -127,7 +127,7 @@ async function migration(name: string): Promise<SqlPart[]> {
   }
 }
 
-/** Migration 0017 in paste-sized parts. Its parser functions are long single
+/** Migration 0018 in paste-sized parts. Its parser functions are long single
  *  statements, so a part can run past a hundred lines; the README names the
  *  one-statement loader for an editor that truncates. */
 export function filingsSqlParts(): Promise<SqlPart[]> {

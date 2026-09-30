@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getAdminClient } from "./supabase/admin";
 import { getSessionUser } from "./auth";
-import { SERIES } from "./events-catalogue";
+import { normaliseSeriesId } from "./events-catalogue";
 import { listOpsEventSponsors } from "./ops";
 import { loadProfileDirectory } from "./initials";
 import type { OpsSponsor } from "./ops-types";
@@ -24,8 +24,9 @@ function toCount(v: unknown): number | null {
   return n == null ? null : Math.round(n);
 }
 
+/** A series id fit to store: folded onto the current five, or null. */
 function validSeries(v: unknown): string | null {
-  return typeof v === "string" && SERIES.some((s) => s.id === v) ? v : null;
+  return normaliseSeriesId(v);
 }
 
 /**

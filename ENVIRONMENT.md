@@ -42,7 +42,7 @@ intelligence dataset). Signed in as an admin, Discover shows exactly which SQL
 is still missing, with a copy button per part and a link to the project's SQL
 editor.
 
-Migration 0017 (`supabase/sql-parts/6-sec-filings/`, or its one-statement
+Migration 0018 (`supabase/sql-parts/6-sec-filings/`, or its one-statement
 `install_from_github.sql`) adds the SEC filings layer. Once it is in, the
 database reads EDGAR by itself: `select ingest.enqueue_quarter(2026, 3)` in
 the SQL editor queues a quarter, pg_cron drains it, and `select * from

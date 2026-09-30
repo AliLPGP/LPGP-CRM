@@ -14,14 +14,21 @@ import {
 } from "./ops";
 import { loadProfileDirectory } from "./initials";
 import { syncAccountsFromOps } from "./account-sync";
-import type { OpsDeal, OpsEvent } from "./ops-types";
+import type { DateTbc, OpsDeal, OpsEvent } from "./ops-types";
 import type { OpsLinkEntity } from "./types";
 
 export type RecordDealResult =
   | { ok: true; deal: OpsDeal }
   | { ok: false; error: string };
 
-export type EventOption = { id: number; name: string; date: string | null; location: string };
+export type EventOption = {
+  id: number;
+  name: string;
+  date: string | null;
+  location: string;
+  producer: string;
+  dateTbc: DateTbc;
+};
 
 /** Events available to allocate against, straight from the tracker. */
 export async function listAllocatableEvents(): Promise<EventOption[]> {
@@ -33,7 +40,9 @@ export async function listAllocatableEvents(): Promise<EventOption[]> {
     id: e.id,
     name: e.name,
     date: e.event_date,
-    location: e.location,
+    location: e.location ?? "",
+    producer: e.producer ?? "",
+    dateTbc: e.date_tbc ?? "",
   }));
 }
 

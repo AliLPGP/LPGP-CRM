@@ -10,6 +10,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import { formatOpsMoney, type OpsDeal } from "@/lib/ops-types";
+import { formatEventDate } from "@/lib/event-date";
 import { aggregateAllocations } from "@/lib/ops-links";
 import type { OpsLink } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
@@ -111,7 +112,7 @@ export function OpsAllocations({
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium">{e.event_name}</p>
                   <p className="text-xs text-muted-foreground">
-                    {e.event_date ?? "Date TBC"}
+                    {formatEventDate(e)}
                     {e.packages.length ? ` · ${e.packages.join(", ")}` : ""}
                   </p>
                 </div>

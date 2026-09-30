@@ -91,7 +91,15 @@ export async function opsSummaries(
 export function aggregateAllocations(deals: OpsDeal[]) {
   const byEvent = new Map<
     number,
-    { event_id: number; event_name: string; event_date: string | null; allocated: number; currency: string; packages: string[] }
+    {
+      event_id: number;
+      event_name: string;
+      event_date: string | null;
+      date_tbc: string;
+      allocated: number;
+      currency: string;
+      packages: string[];
+    }
   >();
   for (const deal of deals) {
     if (deal.cancelled) continue;
@@ -107,6 +115,8 @@ export function aggregateAllocations(deals: OpsDeal[]) {
           event_id: ev.event_id,
           event_name: ev.event_name,
           event_date: ev.event_date,
+          // Older snapshots predate the programme fields; read them as confirmed.
+          date_tbc: ev.date_tbc ?? "",
           allocated: ev.allocated_amount,
           currency: deal.currency,
           packages: ev.package_label ? [ev.package_label] : [],

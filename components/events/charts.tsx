@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
  * Both forms encode magnitude as bar length against a shared scale. The series
  * chart colours each bar by the series it *is* (identity follows the entity, so
  * a series keeps its colour everywhere), while the per-event chart uses one hue
- * — an event isn't a recurring identity, and seven hues on twenty rows would be
+ * — an event isn't a recurring identity, and five hues on twenty-five rows would be
  * noise. Every bar is direct-labelled, so colour never carries meaning alone.
  */
 

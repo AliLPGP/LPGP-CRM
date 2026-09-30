@@ -1,8 +1,8 @@
 import "server-only";
 import { getReadClient } from "./supabase/server";
 import { isOpsConfigured, listOpsEvents, listOpsEventSponsors } from "./ops";
-import type { OpsSponsor } from "./ops-types";
-import { guessSeries, SERIES, type SeriesId } from "./events-catalogue";
+import type { DateTbc, OpsSponsor } from "./ops-types";
+import { CATALOGUE_2027, guessSeries, normaliseSeriesId, SERIES, type SeriesId } from "./events-catalogue";
 
 /**
  * Event performance = what the ops panel says an event earned, against the
@@ -29,7 +29,10 @@ export type EventPerformance = {
   opsEventId: number;
   name: string;
   date: string | null;
+  dateTbc: DateTbc;
   location: string;
+  /** Producer team from the tracker's programme; "" when unassigned. */
+  producer: string;
   /** Allocated to this event in the ops panel, across all live deals. */
   actual: number;
   /** The portion of `actual` whose deal has been paid. */
@@ -82,9 +85,8 @@ async function listTargets(): Promise<EventTargetRow[]> {
   return (data as EventTargetRow[]) ?? [];
 }
 
-function isSeriesId(v: unknown): v is SeriesId {
-  return typeof v === "string" && SERIES.some((s) => s.id === v);
-}
+/** programme_key -> catalogue entry, e.g. "2027:ops-miami". */
+const CATALOGUE_BY_KEY = new Map(CATALOGUE_2027.map((c) => [`2027:${c.key}`, c]));
 
 export async function getEventPerformance(): Promise<EventPerformanceData> {
   const empty: EventPerformanceData = {
@@ -111,17 +113,36 @@ export async function getEventPerformance(): Promise<EventPerformanceData> {
 
   const byEventId = new Map(targets.map((t) => [t.ops_event_id, t]));
 
-  const events: EventPerformance[] = opsEvents.data.map((e) => {
+  const events: EventPerformance[] = opsEvents.data.map((raw) => {
+    // An older tracker sends no programme fields at all. Fill them here, once,
+    // so nothing downstream has to ask whether a string is there.
+    const e = {
+      ...raw,
+      producer: raw.producer ?? "",
+      date_tbc: raw.date_tbc ?? "",
+      programme_year: raw.programme_year ?? null,
+      programme_key: raw.programme_key ?? null,
+    };
     const t = byEventId.get(e.id);
-    const stored = isSeriesId(t?.series) ? t.series : null;
-    const guess = stored ? null : guessSeries(e.name);
     const target = t?.target_amount != null ? Number(t.target_amount) : null;
+
+    // Where the series comes from, in order: the confirmed programme when the
+    // row is linked to it (the tracker files it the same way), a person's
+    // stored choice, then a guess from the name. A stored choice under one of
+    // the old CFO ids folds onto the CFO/COO portfolio, which is what it was.
+    const keyed = e.programme_key ? (CATALOGUE_BY_KEY.get(e.programme_key)?.series ?? null) : null;
+    const stored = normaliseSeriesId(t?.series);
+    const guess = keyed || stored ? null : guessSeries(e.name);
+    const series = keyed ?? stored ?? guess?.series ?? null;
+    const seriesInferred = !stored && series != null;
 
     return {
       opsEventId: e.id,
       name: e.name,
       date: e.event_date,
+      dateTbc: e.date_tbc,
       location: e.location,
+      producer: e.producer,
       actual: e.allocated_total,
       collected: e.allocated_paid,
       sponsorCount: e.deal_count,
@@ -129,8 +150,8 @@ export async function getEventPerformance(): Promise<EventPerformanceData> {
       targetCurrency: t?.target_currency ?? "GBP",
       targetSponsors: t?.target_sponsors ?? null,
       progress: target && target > 0 ? e.allocated_total / target : null,
-      series: stored ?? guess?.series ?? null,
-      seriesInferred: !stored && Boolean(guess),
+      series,
+      seriesInferred,
       targetRowId: t?.id ?? null,
     };
   });

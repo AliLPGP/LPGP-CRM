@@ -6,7 +6,7 @@ import { ASSET_CLASSES, type AssetClassKey } from "./asset-classes";
 import { INTEL_TAG } from "./intelligence-queries";
 import { OFFERING_COLUMNS, POSITION_COLUMNS, instrumentGroup, type BookPosition, type CreditLender, type CreditPosition, type FundOffering } from "./filings-types";
 
-// Reads for the SEC filings layer (migration 0017). Anon client; empty on any
+// Reads for the SEC filings layer (migration 0018). Anon client; empty on any
 // failure, so a database without the tables shows nothing rather than an error.
 // The tables grow a batch a minute while the queue drains, so the heavier
 // reads are cached for a while under the intelligence tag.

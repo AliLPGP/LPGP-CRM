@@ -1,4 +1,4 @@
-// Shapes for the SEC filings layer (migration 0017): Form D fund raises and
+// Shapes for the SEC filings layer (migration 0018): Form D fund raises and
 // BDC loan books, as the app reads them back. Pure: safe on the client.
 
 export type FundOffering = {

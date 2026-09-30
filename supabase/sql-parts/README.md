@@ -40,7 +40,7 @@ where it starts. A database that already has `0013`–`0015` needs only
 (Discover, signed in as an admin, shows which of these a database is still
 missing and serves exactly those parts.)
 
-**SEC filings (migration `0017`)** — Form D fund raises and BDC loan books,
+**SEC filings (migration `0018`)** — Form D fund raises and BDC loan books,
 which the database reads from EDGAR by itself once the tables exist. Run
 **`6-sec-filings/filings_01_of_07.sql` … `_07_of_07.sql`** after the schema.
 Its parser functions are single statements well over a hundred lines, so if
@@ -62,6 +62,12 @@ the same clubs, investors, deals, signals, LP commitments, benchmarks and
 portfolio companies, after `1-schema` (or `3-directory`/`4-intelligence`).
 `../intelligence-data.sql` is the whole set in one file for `psql` or the
 Supabase CLI, where a paste can't truncate.
+
+**One CFO/COO portfolio (migration `0018`)** is a single idempotent `update`
+on `event_targets`, folding the three old CFO series ids into `cfo-coo`. It is
+the last statement of `1-schema`; a database that already has everything else
+can paste `../migrations/0017_series_merge.sql` on its own. The app reads the
+old ids correctly either way, so nothing waits on it.
 
 Run one file, wait for "Success", run the next. If a part errors, fix that
 before moving on — later parts build on earlier ones.

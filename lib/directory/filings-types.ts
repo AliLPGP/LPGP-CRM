@@ -89,7 +89,8 @@ export const FUND_TYPE_LABEL: Record<string, string> = {
   "Other Investment Fund": "Other investment fund",
 };
 
-/** The seniority a tagged instrument states, for grouping a loan book. */
+/** The seniority a tagged instrument states, for grouping a loan book.
+ *  Mirrors public.instrument_group() in migration 0018; the two must agree. */
 export function instrumentGroup(instrument: string | null | undefined): string {
   const s = (instrument ?? "").toLowerCase();
   if (!s) return "Unspecified";

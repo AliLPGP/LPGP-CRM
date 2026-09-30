@@ -38,7 +38,7 @@ begin
     end if;
     continue when v_manager is null or v_manager in ('-', '') or v_manager ~* '^n/a' or v_value is null or v_value <= 0;
     v_manager := btrim(regexp_replace(v_manager, '\s+', ' ', 'g'));
-    if v_manager = upper(v_manager) then v_manager := initcap(v_manager); end if;
+    v_manager := ingest.nice_name(v_manager);
     select * into m from ingest.match_firm(v_manager, array['GP']);
     v_key := 'phd:' || lower(regexp_replace(p_lp, '[^A-Za-z0-9]+', '-', 'g')) || ':' || lower(regexp_replace(p_option, '[^A-Za-z0-9]+', '-', 'g')) || ':' || md5(lower(coalesce(v_class, 'unlisted') || '|' || v_manager));
     insert into public.commitments as c (external_key, lp_company_id, gp_company_id, lp_name, gp_name, fund_name, amount, amount_text, currency,

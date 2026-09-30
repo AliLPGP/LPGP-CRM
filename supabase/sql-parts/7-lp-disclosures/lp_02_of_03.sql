@@ -83,6 +83,24 @@ language sql immutable as $$
     else null end;
 $$;
 
+-- A name filed in capitals, made readable: title case, with the short tokens
+-- that are initials or legal forms (IFM, QIC, TPG, LLC, LP) kept upper.
+create or replace function ingest.nice_name(p text) returns text
+language plpgsql immutable as $$
+declare t text; out text[] := '{}';
+begin
+  if p is null or p <> upper(p) then return p; end if;
+  foreach t in array regexp_split_to_array(initcap(p), ' ') loop
+    if length(regexp_replace(t, '[^A-Za-z]', '', 'g')) <= 3 and lower(t) not in ('pty', 'ltd', 'inc', 'and', 'the', 'co', 'of', 'de', 'du', 'la', 'le', 'et', 'des', 'for', 'von', 'van', 'da', 'do', 'e') then
+      t := upper(t);
+    elsif lower(t) in ('llc', 'llp', 'l.p.', 'gmbh', 'sarl', 's.à.r.l.', 's.a.r.l.', 'plc') then
+      t := case when lower(t) = 'gmbh' then 'GmbH' when lower(t) = 'plc' then 'plc' else upper(t) end;
+    end if;
+    out := out || t;
+  end loop;
+  return array_to_string(out, ' ');
+end $$;
+
 create or replace function ingest.lp_company(p_name text, p_type text, p_country text, p_site text) returns uuid
 language plpgsql as $$
 declare v uuid;

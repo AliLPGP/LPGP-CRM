@@ -183,6 +183,24 @@ language sql immutable as $$
     else null end;
 $$;
 
+-- A name filed in capitals, made readable: title case, with the short tokens
+-- that are initials or legal forms (IFM, QIC, TPG, LLC, LP) kept upper.
+create or replace function ingest.nice_name(p text) returns text
+language plpgsql immutable as $$
+declare t text; out text[] := '{}';
+begin
+  if p is null or p <> upper(p) then return p; end if;
+  foreach t in array regexp_split_to_array(initcap(p), ' ') loop
+    if length(regexp_replace(t, '[^A-Za-z]', '', 'g')) <= 3 and lower(t) not in ('pty', 'ltd', 'inc', 'and', 'the', 'co', 'of', 'de', 'du', 'la', 'le', 'et', 'des', 'for', 'von', 'van', 'da', 'do', 'e') then
+      t := upper(t);
+    elsif lower(t) in ('llc', 'llp', 'l.p.', 'gmbh', 'sarl', 's.à.r.l.', 's.a.r.l.', 'plc') then
+      t := case when lower(t) = 'gmbh' then 'GmbH' when lower(t) = 'plc' then 'plc' else upper(t) end;
+    end if;
+    out := out || t;
+  end loop;
+  return array_to_string(out, ' ');
+end $$;
+
 create or replace function ingest.lp_company(p_name text, p_type text, p_country text, p_site text) returns uuid
 language plpgsql as $$
 declare v uuid;
@@ -230,7 +248,7 @@ begin
     end if;
     continue when v_manager is null or v_manager in ('-', '') or v_manager ~* '^n/a' or v_value is null or v_value <= 0;
     v_manager := btrim(regexp_replace(v_manager, '\s+', ' ', 'g'));
-    if v_manager = upper(v_manager) then v_manager := initcap(v_manager); end if;
+    v_manager := ingest.nice_name(v_manager);
     select * into m from ingest.match_firm(v_manager, array['GP']);
     v_key := 'phd:' || lower(regexp_replace(p_lp, '[^A-Za-z0-9]+', '-', 'g')) || ':' || lower(regexp_replace(p_option, '[^A-Za-z0-9]+', '-', 'g')) || ':' || md5(lower(coalesce(v_class, 'unlisted') || '|' || v_manager));
     insert into public.commitments as c (external_key, lp_company_id, gp_company_id, lp_name, gp_name, fund_name, amount, amount_text, currency,

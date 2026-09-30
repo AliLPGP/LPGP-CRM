@@ -28,10 +28,22 @@ begin
       update ingest.queue set status = case when res like 'skipped%' then 'skipped' else 'done' end, note = res, done_at = now() where id = q.id;
       if res like 'skipped%' then n_skip := n_skip + 1; else n_done := n_done + 1; end if;
     exception when others then
+      if sqlerrm like 'HTTP 429%' then
+        -- EDGAR asks for at most ten requests a second and answers 429 past
+        -- that. The filing is not at fault: hand it back, wait, and end the
+        -- run so the next one starts on a clean slate.
+        update ingest.queue set status = 'pending', attempts = greatest(attempts - 1, 0), note = 'rate limited; retried later' where id = q.id;
+        insert into ingest.log (what, detail) values ('rate_limited', jsonb_build_object('key', q.key));
+        commit;
+        perform pg_sleep(20);
+        exit;
+      end if;
       update ingest.queue set status = case when q.attempts + 1 >= 3 then 'error' else 'pending' end, note = left(sqlerrm, 500) where id = q.id;
       n_err := n_err + 1;
     end;
     commit;
+    -- Stay well inside EDGAR's rate: one worker, a short pause per filing.
+    perform pg_sleep(0.15);
   end loop;
   if n_done + n_err + n_skip > 0 then
     insert into ingest.log (what, detail) values ('run_queue', jsonb_build_object('done', n_done, 'skipped', n_skip, 'errors', n_err, 'seconds', round(extract(epoch from clock_timestamp() - t0))));
@@ -116,15 +128,3 @@ create or replace view public.fund_offerings_latest with (security_invoker = tru
 select distinct on (cik) *
 from public.fund_offerings
 order by cik, filing_date desc nulls last, accession_no desc;
-
--- A lender's loan book at its latest period, per position, totals excluded.
-create or replace view public.credit_book with (security_invoker = true) as
-select p.*, l.name as lender_name, l.ticker as lender_ticker, l.company_id as lender_company_id
-from public.credit_positions p
-join public.credit_lenders l on l.cik = p.lender_cik
-where p.as_of = l.latest_period and not p.is_summary;
-
--- What the queue looks like, for the setup panel and for a terminal.
-create or replace view ingest.status as
-select kind, status, count(*) as n, min(enqueued_at) as first_enqueued, max(done_at) as last_done
-from ingest.queue group by kind, status order by kind, status;

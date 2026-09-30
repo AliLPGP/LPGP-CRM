@@ -42,7 +42,7 @@ missing and serves exactly those parts.)
 
 **SEC filings (migration `0017`)** — Form D fund raises and BDC loan books,
 which the database reads from EDGAR by itself once the tables exist. Run
-**`6-sec-filings/filings_01_of_06.sql` … `_06_of_06.sql`** after the schema.
+**`6-sec-filings/filings_01_of_07.sql` … `_07_of_07.sql`** after the schema.
 Its parser functions are single statements well over a hundred lines, so if
 your editor cuts a paste short, run **`6-sec-filings/install_from_github.sql`**
 instead: one short statement that has the database fetch and apply the whole
@@ -81,7 +81,7 @@ lose track of where you were, start over from part 1.
 | `3-directory` | 8 | 3.6 KB |
 | `4-intelligence` | 4 | 3.5 KB |
 | `5-intelligence-data` | 120 | 8.1 KB |
-| `6-sec-filings` | 6 | 8.9 KB, up to 160 lines |
+| `6-sec-filings` | 7 | 8.9 KB, up to 160 lines |
 
 The schema parts are deliberately under 4 KB. The seed parts can't go that low —
 a single `insert` of a dozen firms is bigger than that, and splitting inside one

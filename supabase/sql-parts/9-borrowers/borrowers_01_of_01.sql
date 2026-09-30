@@ -23,8 +23,13 @@ create index if not exists credit_positions_borrower_key_idx on public.credit_po
 -- fold runs over every position, and the API role has three seconds per
 -- statement; pg_cron refreshes it every half hour, and the ingest's
 -- derive job refreshes it after a queue run.
-drop view if exists public.borrowers;
-drop materialized view if exists public.borrowers cascade; -- derived; rebuilt on every run so a changed fold takes effect
+-- Derived, so rebuilt on every run and a changed fold takes effect. An
+-- earlier edition was a plain view; either kind goes.
+do $$
+begin
+  if exists (select 1 from pg_views where schemaname = 'public' and viewname = 'borrowers') then execute 'drop view public.borrowers cascade'; end if;
+  if exists (select 1 from pg_matviews where schemaname = 'public' and matviewname = 'borrowers') then execute 'drop materialized view public.borrowers cascade'; end if;
+end $$;
 create materialized view public.borrowers as
 with book as (
   select p.*, l.name as lender_name, public.borrower_key(p.borrower) as bkey

@@ -113,7 +113,7 @@ $$;
 -- facts filled where blank, and are never renamed or retyped.
 create or replace function ingest.promote_advisers(p_min_gav numeric default 100000000) returns jsonb
 language plpgsql as $$
-declare n_new int := 0; n_linked int := 0; n_filled int := 0; a record; v_id uuid;
+declare n_new int := 0; n_linked int := 0; n_filled int := 0; a public.adv_advisers%rowtype; v_id uuid;
 begin
   for a in
     select * from public.adv_advisers

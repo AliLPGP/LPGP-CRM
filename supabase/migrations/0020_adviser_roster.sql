@@ -40,6 +40,16 @@ alter table public.adv_advisers enable row level security;
 drop policy if exists "adv_advisers_read" on public.adv_advisers;
 create policy "adv_advisers_read" on public.adv_advisers for select using (true);
 
+-- A cheap fingerprint of some tables for cache keys: the planner's row
+-- statistics change on every insert, update and delete, and reading them
+-- costs nothing, where an exact count of a large table is a full scan.
+create or replace function public.table_versions(p_tables text[]) returns text
+language sql stable as $$
+  select string_agg(t || ':' || coalesce((select n_tup_ins + n_tup_upd + n_tup_del from pg_stat_user_tables where schemaname = 'public' and relname = t)::text, 'x'), '.' order by t)
+  from unnest(p_tables) t;
+$$;
+grant execute on function public.table_versions(text[]) to anon, authenticated;
+
 -- Run SQL files the database fetches itself (the generated LP-disclosure
 -- loaders under supabase/lp-disclosures, for one). Each file runs on its
 -- own; a failure is logged and the next file still runs.
@@ -149,17 +159,17 @@ begin
   -- Fill Form ADV blanks on firms the directory already had.
   with f as (
     update public.companies c
-       set sec_crd = coalesce(c.sec_crd, a.crd),
-           adv_firm_type = coalesce(c.adv_firm_type, case when a.firm_type = 'ERA' then 'ERA' else 'Registered' end),
-           adv_last_filed = coalesce(c.adv_last_filed, a.filed),
-           adv_employee_count = coalesce(c.adv_employee_count, a.employees),
-           private_fund_count = coalesce(c.private_fund_count, a.private_fund_count),
-           private_fund_gross_assets = coalesce(c.private_fund_gross_assets, a.private_fund_gav),
-           regulatory_aum_usd = coalesce(c.regulatory_aum_usd, a.regulatory_aum),
-           adv_source_url = coalesce(c.adv_source_url, 'https://adviserinfo.sec.gov/firm/summary/' || a.crd),
-           website = coalesce(c.website, nullif(lower(a.website), ''))
-      from public.adv_advisers a
-     where a.company_id = c.id
+       set sec_crd = coalesce(c.sec_crd, r.crd),
+           adv_firm_type = coalesce(c.adv_firm_type, case when r.firm_type = 'ERA' then 'ERA' else 'Registered' end),
+           adv_last_filed = coalesce(c.adv_last_filed, r.filed),
+           adv_employee_count = coalesce(c.adv_employee_count, r.employees),
+           private_fund_count = coalesce(c.private_fund_count, r.private_fund_count),
+           private_fund_gross_assets = coalesce(c.private_fund_gross_assets, r.private_fund_gav),
+           regulatory_aum_usd = coalesce(c.regulatory_aum_usd, r.regulatory_aum),
+           adv_source_url = coalesce(c.adv_source_url, 'https://adviserinfo.sec.gov/firm/summary/' || r.crd),
+           website = coalesce(c.website, nullif(lower(r.website), ''))
+      from public.adv_advisers r
+     where r.company_id = c.id
        and (c.sec_crd is null or c.adv_last_filed is null or c.private_fund_count is null or c.private_fund_gross_assets is null or c.regulatory_aum_usd is null or c.website is null)
     returning 1
   ) select count(*) into n_filled from f;

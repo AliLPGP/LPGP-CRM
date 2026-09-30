@@ -44,17 +44,17 @@ begin
   -- Fill Form ADV blanks on firms the directory already had.
   with f as (
     update public.companies c
-       set sec_crd = coalesce(c.sec_crd, a.crd),
-           adv_firm_type = coalesce(c.adv_firm_type, case when a.firm_type = 'ERA' then 'ERA' else 'Registered' end),
-           adv_last_filed = coalesce(c.adv_last_filed, a.filed),
-           adv_employee_count = coalesce(c.adv_employee_count, a.employees),
-           private_fund_count = coalesce(c.private_fund_count, a.private_fund_count),
-           private_fund_gross_assets = coalesce(c.private_fund_gross_assets, a.private_fund_gav),
-           regulatory_aum_usd = coalesce(c.regulatory_aum_usd, a.regulatory_aum),
-           adv_source_url = coalesce(c.adv_source_url, 'https://adviserinfo.sec.gov/firm/summary/' || a.crd),
-           website = coalesce(c.website, nullif(lower(a.website), ''))
-      from public.adv_advisers a
-     where a.company_id = c.id
+       set sec_crd = coalesce(c.sec_crd, r.crd),
+           adv_firm_type = coalesce(c.adv_firm_type, case when r.firm_type = 'ERA' then 'ERA' else 'Registered' end),
+           adv_last_filed = coalesce(c.adv_last_filed, r.filed),
+           adv_employee_count = coalesce(c.adv_employee_count, r.employees),
+           private_fund_count = coalesce(c.private_fund_count, r.private_fund_count),
+           private_fund_gross_assets = coalesce(c.private_fund_gross_assets, r.private_fund_gav),
+           regulatory_aum_usd = coalesce(c.regulatory_aum_usd, r.regulatory_aum),
+           adv_source_url = coalesce(c.adv_source_url, 'https://adviserinfo.sec.gov/firm/summary/' || r.crd),
+           website = coalesce(c.website, nullif(lower(r.website), ''))
+      from public.adv_advisers r
+     where r.company_id = c.id
        and (c.sec_crd is null or c.adv_last_filed is null or c.private_fund_count is null or c.private_fund_gross_assets is null or c.regulatory_aum_usd is null or c.website is null)
     returning 1
   ) select count(*) into n_filled from f;

@@ -112,8 +112,25 @@ boundaries and keeps comment text ASCII.
   (`lpfund:<md5>`) and a manager via `ingest.match_firm(name, {GP})`, which
   now also takes the longest directory name that opens the fund's. A class
   page places a commitment by `asset_class` first, then by fund name or
-  manager type. PDF disclosures (CalSTRS, WSIB, NY Common, the LGPS pools,
-  Railpen) are out of the database's reach and need the sandbox pipeline.
+  manager type. PDF disclosures are read outside the database:
+  `data/lp-disclosures/*.json` holds one published document each (CalSTRS,
+  WSIB, Oregon, LACERA, LACERS, Alaska, NYSCRF, NYCERS, PSERS, Minnesota,
+  Wisconsin, Illinois TRS, New Jersey, North Carolina, six LGPS funds, CPP
+  Investments, NZ Super, AP6, nine more Australian supers, IFC, EIF, DEG) in
+  the schema documented in `supabase/tools/lp_disclosures_to_sql.py`, which
+  writes one idempotent loader per document to `supabase/lp-disclosures/`;
+  `ingest.run_remote_sql` (0020) has the database fetch and run them. A
+  figure the document does not print is null; an LP that only names funds
+  contributes names and values, never a commitment it did not state.
+- **Adviser roster** (0020) — `adv_advisers`, every SEC-registered and
+  exempt reporting adviser from the SEC's monthly roster
+  (`data/adv-roster/`), with Item 7B: whether it advises private funds, how
+  many, of which kinds, and their gross assets. `ingest.load_adviser_roster`
+  loads a roster JSON the database fetches; `ingest.promote_advisers(min_gav)`
+  turns advisers with private funds above the threshold into GP records
+  (`source = 'form_adv_roster'`, keyed by CRD in `sec_crd`/`external_ids`,
+  typed by the fund kinds they report) and fills Form ADV blanks on firms
+  the directory already had, never renaming or retyping them.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).

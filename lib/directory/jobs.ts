@@ -436,7 +436,17 @@ export function portfolioRows(gpId: string, companies: ResearchedCompany[], adde
 export type PortfolioJobResult = { firms: number; companies: number; skipped: string[]; errors: string[] };
 
 /** Read each sponsor's portfolio, two at a time, and save what the sources name. */
-export async function runPortfolios(supabase: Admin, firms: PortfolioFirm[], opts: { deadline: number; addedBy: string | null; log?: JobLog }): Promise<PortfolioJobResult> {
+export async function runPortfolios(
+  supabase: Admin,
+  firms: PortfolioFirm[],
+  opts: {
+    deadline: number;
+    addedBy: string | null;
+    log?: JobLog;
+    /** Where rows go instead of the database: a run on a machine with the research key but no database key writes SQL. */
+    save?: (firm: PortfolioFirm, rows: Record<string, unknown>[], note: string) => Promise<void>;
+  },
+): Promise<PortfolioJobResult> {
   const log = opts.log ?? (() => {});
   let done = 0;
   let companies = 0;
@@ -459,11 +469,15 @@ export async function runPortfolios(supabase: Admin, firms: PortfolioFirm[], opt
         continue;
       }
       const rows = portfolioRows(firm.id, r.companies, opts.addedBy);
-      for (const part of chunk(rows, 200)) {
-        const { error } = await supabase.from("portfolio_companies").upsert(part, { onConflict: "external_key" });
-        if (error) throw new Error(`Saving portfolio companies: ${error.message}`);
+      if (opts.save) {
+        await opts.save(firm, rows, r.note);
+      } else {
+        for (const part of chunk(rows, 200)) {
+          const { error } = await supabase.from("portfolio_companies").upsert(part, { onConflict: "external_key" });
+          if (error) throw new Error(`Saving portfolio companies: ${error.message}`);
+        }
+        await supabase.from("companies").update({ portfolio_note: r.note.slice(0, 600) || null, portfolio_researched_at: new Date().toISOString() }).eq("id", firm.id);
       }
-      await supabase.from("companies").update({ portfolio_note: r.note.slice(0, 600) || null, portfolio_researched_at: new Date().toISOString() }).eq("id", firm.id);
       done += 1;
       companies += rows.length;
       const priced = rows.filter((x) => x.deal_value != null).length;
@@ -472,4 +486,18 @@ export async function runPortfolios(supabase: Admin, firms: PortfolioFirm[], opt
   }
   if (skipped.length) errors.push(`${OUT_OF_TIME} Not reached: ${skipped.join(", ")}.`);
   return { firms: done, companies, skipped, errors };
+}
+
+/** One idempotent statement per row, for a run that writes SQL instead of rows. */
+export function portfolioRowSql(row: Record<string, unknown>): string {
+  const cols = Object.keys(row);
+  const lit = (v: unknown): string => {
+    if (v == null) return "null";
+    if (typeof v === "number") return Number.isFinite(v) ? String(v) : "null";
+    if (typeof v === "boolean") return v ? "true" : "false";
+    if (Array.isArray(v)) return `array[${v.map((x) => `'${String(x).replace(/'/g, "''")}'`).join(", ")}]::text[]`;
+    return `'${String(v).replace(/'/g, "''")}'`;
+  };
+  const updates = cols.filter((c) => c !== "external_key" && c !== "gp_company_id" && c !== "added_by").map((c) => `${c} = excluded.${c}`);
+  return `insert into public.portfolio_companies (${cols.join(", ")}) values (${cols.map((c) => lit(row[c])).join(", ")}) on conflict (external_key) do update set ${updates.join(", ")};`;
 }

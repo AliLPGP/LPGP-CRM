@@ -42,7 +42,7 @@ missing and serves exactly those parts.)
 
 **SEC filings (migration `0018`)** — Form D fund raises and BDC loan books,
 which the database reads from EDGAR by itself once the tables exist. Run
-**`6-sec-filings/filings_01_of_07.sql` … `_07_of_07.sql`** after the schema.
+**`6-sec-filings/filings_01_of_08.sql` … `_08_of_08.sql`** after the schema.
 Its parser functions are single statements well over a hundred lines, so if
 your editor cuts a paste short, run **`6-sec-filings/install_from_github.sql`**
 instead: one short statement that has the database fetch and apply the whole
@@ -54,6 +54,11 @@ select ingest.enqueue_quarter(2026, 3);   -- every Form D and lender 10-Q/10-K f
 
 The queue drains a batch a minute on its own (pg_cron); `select * from
 ingest.status` shows progress.
+
+**LP disclosures (migration `0019`)** — run **`7-lp-disclosures/`** after
+`6-sec-filings`, then `select ingest.load_lp_disclosures();` to read CalPERS's
+fund performance pages and the Australian super funds' holdings files. It
+re-reads them monthly on its own.
 
 **The intelligence dataset needs no SQL** — the button on Import → Master
 directory loads it. If you'd rather paste it (a database the app can't reach
@@ -87,7 +92,8 @@ lose track of where you were, start over from part 1.
 | `3-directory` | 8 | 3.6 KB |
 | `4-intelligence` | 4 | 3.5 KB |
 | `5-intelligence-data` | 120 | 8.1 KB |
-| `6-sec-filings` | 7 | 8.9 KB, up to 160 lines |
+| `6-sec-filings` | 8 | 9.4 KB, up to 160 lines |
+| `7-lp-disclosures` | see folder | long functions, as above |
 
 The schema parts are deliberately under 4 KB. The seed parts can't go that low —
 a single `insert` of a dozen firms is bigger than that, and splitting inside one

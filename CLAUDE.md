@@ -99,6 +99,21 @@ boundaries and keeps comment text ASCII.
   name, else a first word that names exactly one directory firm.
   `/database/lenders` is the loan-book desk; the credit class page and firm
   profiles show raises and books.
+- **LP disclosures** (0019) — `commitments` gains the LP's own programme
+  (`asset_class`) and performance figures (`contributed`, `distributed`,
+  `remaining_value`, `net_irr`, `multiple`, `as_of`). `ingest.load_calpers`
+  reads CalPERS's private equity and private debt fund performance pages
+  (HTML tables) into one commitment per fund; `ingest.load_phd` reads an
+  Australian super fund's portfolio holdings CSV (Aware Super, HESTA,
+  AustralianSuper) into one row per externally managed unlisted mandate,
+  value held in `remaining_value`, no commitment amount because none is
+  disclosed. `ingest.load_lp_disclosures` runs them all monthly under
+  pg_cron, each in its own block. Funds an LP names get a `funds` row
+  (`lpfund:<md5>`) and a manager via `ingest.match_firm(name, {GP})`, which
+  now also takes the longest directory name that opens the fund's. A class
+  page places a commitment by `asset_class` first, then by fund name or
+  manager type. PDF disclosures (CalSTRS, WSIB, NY Common, the LGPS pools,
+  Railpen) are out of the database's reach and need the sandbox pipeline.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).

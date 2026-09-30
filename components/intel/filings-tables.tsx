@@ -178,7 +178,7 @@ export function PositionTable({ rows, showLender = false, limit }: { rows: (Cred
                 ) : null}
                 <td className="max-w-[240px]">
                   <span className="block truncate" title={p.instrument ?? undefined}>{p.instrument ?? "—"}</span>
-                  <span className="text-[10.5px] text-muted-foreground">{instrumentGroup(p.instrument)}</span>
+                  <span className="text-[10.5px] text-muted-foreground">{instrumentGroup(p.instrument ?? p.identifier)}</span>
                 </td>
                 <td className="figure whitespace-nowrap text-[11.5px]">{couponLabel(p)}</td>
                 <td className="num">{formatMoney(p.principal, "USD")}</td>

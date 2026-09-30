@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getBookSummary, listCreditLenders, searchBook } from "@/lib/directory/filings-queries";
+import { INSTRUMENT_HUE } from "@/lib/directory/filings-types";
 import { LenderTable, PositionTable } from "@/components/intel/filings-tables";
 import { Columns, ShareBar } from "@/components/intel/charts";
 import { IntelShell } from "@/components/intel/shell";
@@ -8,18 +9,6 @@ import { formatUsd } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Loan books — LPGP Connect" };
-
-const INSTRUMENT_HUE: Record<string, string> = {
-  "First lien / senior secured": "var(--chart-2)",
-  "Second lien": "var(--chart-1)",
-  "Subordinated / mezzanine": "var(--chart-3)",
-  "Preferred equity": "var(--chart-4)",
-  "Equity & warrants": "var(--chart-5)",
-  "Notes & bonds": "var(--chart-6)",
-  Structured: "var(--chart-7)",
-  Other: "var(--chart-track)",
-  Unspecified: "var(--chart-track)",
-};
 
 export default async function LendersPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const { q } = await searchParams;

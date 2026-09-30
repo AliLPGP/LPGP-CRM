@@ -5,7 +5,7 @@ import { fetchAll } from "../supabase/paged";
 import { tableVersion } from "../supabase/version";
 import { ASSET_CLASSES, type AssetClassKey } from "./asset-classes";
 import { INTEL_TAG } from "./intelligence-queries";
-import { OFFERING_COLUMNS, POSITION_COLUMNS, instrumentGroup, type BookPosition, type CreditLender, type CreditPosition, type FundOffering } from "./filings-types";
+import { OFFERING_COLUMNS, POSITION_COLUMNS, type BookPosition, type CreditLender, type CreditPosition, type FundOffering } from "./filings-types";
 
 // Reads for the SEC filings layer (migration 0018). Anon client; empty on any
 // failure, so a database without the tables shows nothing rather than an error.
@@ -53,51 +53,31 @@ export type OfferingStats = {
   states: { label: string; count: number }[];
 };
 
+// The API roles carry a short statement timeout, so the summaries are
+// computed by the database in one call (public.offering_stats,
+// public.credit_book_summary in migration 0018) rather than by paging every
+// row through the API and adding them up here.
+const num = (v: unknown): number => (typeof v === "number" ? v : typeof v === "string" ? Number(v) : 0);
+const numOrNull = (v: unknown): number | null => (v == null ? null : num(v));
+
 async function buildOfferingStats(assetClass: AssetClassKey | "", version: string): Promise<OfferingStats> {
   void version; // the filings row count, part of the cache key
   const empty: OfferingStats = { filings: 0, raising: 0, sold: 0, investors: 0, byMonth: [], byType: [], agents: [], states: [] };
   const supabase = getReadClient();
   if (!supabase) return empty;
-  type Row = Pick<FundOffering, "amount_sold" | "investors_count" | "filing_date" | "fund_type" | "placement_agents" | "state">;
-  const rows = await fetchAll<Row>((from, to, first) => {
-    let q = supabase.from("fund_offerings_latest").select("amount_sold, investors_count, filing_date, fund_type, placement_agents, state", first ? { count: "exact" } : undefined).eq("is_pooled", true);
-    if (assetClass) q = q.eq("asset_class", assetClass);
-    return q.order("cik").range(from, to);
-  });
-  if (!rows) return empty;
-  const months = new Map<string, { count: number; sold: number }>();
-  const types = new Map<string, { count: number; sold: number }>();
-  const agents = new Map<string, number>();
-  const states = new Map<string, number>();
-  let raising = 0, sold = 0, investors = 0;
-  for (const r of rows) {
-    const s = Number(r.amount_sold ?? 0);
-    if (s > 0) { raising += 1; sold += s; }
-    investors += r.investors_count ?? 0;
-    if (r.filing_date) {
-      const k = r.filing_date.slice(0, 7);
-      const m = months.get(k) ?? { count: 0, sold: 0 };
-      m.count += 1; m.sold += s; months.set(k, m);
-    }
-    const t = r.fund_type ?? "Unstated";
-    const tv = types.get(t) ?? { count: 0, sold: 0 };
-    tv.count += 1; tv.sold += s; types.set(t, tv);
-    for (const a of r.placement_agents ?? []) {
-      const n = (a.broker_dealer || a.name || "").trim();
-      if (n) agents.set(n, (agents.get(n) ?? 0) + 1);
-    }
-    if (r.state) states.set(r.state, (states.get(r.state) ?? 0) + 1);
-  }
-  const monthLabel = (k: string) => new Date(`${k}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "short", year: "2-digit", timeZone: "UTC" });
+  const { data, error } = await supabase.rpc("offering_stats", { p_class: assetClass || null });
+  if (error || !data) return empty;
+  const d = data as Record<string, unknown>;
+  const list = (k: string) => (Array.isArray(d[k]) ? (d[k] as Record<string, unknown>[]) : []);
   return {
-    filings: rows.length,
-    raising,
-    sold,
-    investors,
-    byMonth: [...months.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(-12).map(([k, v]) => ({ label: monthLabel(k), ...v })),
-    byType: [...types.entries()].sort((a, b) => b[1].sold - a[1].sold).map(([label, v]) => ({ label, ...v })),
-    agents: [...agents.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([name, funds]) => ({ name, funds })),
-    states: [...states.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10).map(([label, count]) => ({ label, count })),
+    filings: num(d.filings),
+    raising: num(d.raising),
+    sold: num(d.sold),
+    investors: num(d.investors),
+    byMonth: list("byMonth").map((m) => ({ label: String(m.label), count: num(m.count), sold: num(m.sold) })),
+    byType: list("byType").map((t) => ({ label: String(t.label), count: num(t.count), sold: num(t.sold) })),
+    agents: list("agents").map((a) => ({ name: String(a.name), funds: num(a.funds) })),
+    states: list("states").map((s) => ({ label: String(s.label), count: num(s.count) })),
   };
 }
 
@@ -211,44 +191,20 @@ async function buildBookSummary(version: string): Promise<BookSummary> {
   const empty: BookSummary = { lenders: 0, positions: 0, fairValue: 0, byInstrument: [], spreadBins: [], avgSpread: null, avgRate: null, shared: [], byLender: [] };
   const supabase = getReadClient();
   if (!supabase) return empty;
-  type Row = Pick<BookPosition, "lender_cik" | "lender_name" | "lender_ticker" | "borrower" | "instrument" | "spread" | "interest_rate" | "fair_value">;
-  const rows = await fetchAll<Row>((from, to, first) =>
-    supabase.from("credit_book").select("lender_cik, lender_name, lender_ticker, borrower, instrument, spread, interest_rate, fair_value", first ? { count: "exact" } : undefined).order("id").range(from, to),
-  );
-  if (!rows || !rows.length) return empty;
-  const instruments = new Map<string, { value: number; count: number }>();
-  const bins = new Map<number, number>();
-  const borrowers = new Map<string, { lenders: Set<string>; fairValue: number; name: string }>();
-  const lenders = new Map<string, { name: string; ticker: string | null; positions: number; fairValue: number }>();
-  let fairValue = 0, wSpread = 0, wSpreadBase = 0, wRate = 0, wRateBase = 0;
-  for (const r of rows) {
-    const fv = Number(r.fair_value ?? 0);
-    fairValue += fv;
-    const g = instrumentGroup(r.instrument);
-    const gi = instruments.get(g) ?? { value: 0, count: 0 };
-    gi.value += fv; gi.count += 1; instruments.set(g, gi);
-    if (r.spread != null && r.spread > 0 && r.spread < 30) {
-      const bin = Math.min(12, Math.floor(r.spread));
-      bins.set(bin, (bins.get(bin) ?? 0) + 1);
-      wSpread += r.spread * Math.max(fv, 1); wSpreadBase += Math.max(fv, 1);
-    }
-    if (r.interest_rate != null && r.interest_rate > 0 && r.interest_rate < 40) { wRate += r.interest_rate * Math.max(fv, 1); wRateBase += Math.max(fv, 1); }
-    const bk = r.borrower.toLowerCase().replace(/[.,]/g, "").replace(/\s+(inc|llc|lp|ltd|corp|corporation|holdings?|co)$/g, "");
-    const b = borrowers.get(bk) ?? { lenders: new Set<string>(), fairValue: 0, name: r.borrower };
-    b.lenders.add(r.lender_cik); b.fairValue += fv; borrowers.set(bk, b);
-    const l = lenders.get(r.lender_cik) ?? { name: r.lender_name, ticker: r.lender_ticker, positions: 0, fairValue: 0 };
-    l.positions += 1; l.fairValue += fv; lenders.set(r.lender_cik, l);
-  }
+  const { data, error } = await supabase.rpc("credit_book_summary");
+  if (error || !data) return empty;
+  const d = data as Record<string, unknown>;
+  const list = (k: string) => (Array.isArray(d[k]) ? (d[k] as Record<string, unknown>[]) : []);
   return {
-    lenders: lenders.size,
-    positions: rows.length,
-    fairValue,
-    byInstrument: [...instruments.entries()].sort((a, b) => b[1].value - a[1].value).map(([label, v]) => ({ label, ...v })),
-    spreadBins: [...bins.entries()].sort((a, b) => a[0] - b[0]).map(([bin, count]) => ({ label: bin >= 12 ? "1200+" : `${bin * 100}–${bin * 100 + 99}`, count })),
-    avgSpread: wSpreadBase ? wSpread / wSpreadBase : null,
-    avgRate: wRateBase ? wRate / wRateBase : null,
-    shared: [...borrowers.values()].filter((b) => b.lenders.size > 1).sort((a, b) => b.lenders.size - a.lenders.size || b.fairValue - a.fairValue).slice(0, 25).map((b) => ({ borrower: b.name, lenders: b.lenders.size, fairValue: b.fairValue })),
-    byLender: [...lenders.entries()].sort((a, b) => b[1].fairValue - a[1].fairValue).map(([cik, v]) => ({ cik, ...v })),
+    lenders: num(d.lenders),
+    positions: num(d.positions),
+    fairValue: num(d.fairValue),
+    byInstrument: list("byInstrument").map((s) => ({ label: String(s.label), value: num(s.value), count: num(s.count) })),
+    spreadBins: list("spreadBins").map((b) => ({ label: String(b.label), count: num(b.count) })),
+    avgSpread: numOrNull(d.avgSpread),
+    avgRate: numOrNull(d.avgRate),
+    shared: list("shared").map((b) => ({ borrower: String(b.borrower), lenders: num(b.lenders), fairValue: num(b.fairValue) })),
+    byLender: list("byLender").map((l) => ({ cik: String(l.cik), name: String(l.name), ticker: l.ticker == null ? null : String(l.ticker), positions: num(l.positions), fairValue: num(l.fairValue) })),
   };
 }
 

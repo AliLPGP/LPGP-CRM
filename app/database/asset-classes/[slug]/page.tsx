@@ -5,6 +5,7 @@ import { getClassPage } from "@/lib/directory/asset-class-data";
 import { getClassMetrics } from "@/lib/directory/strategy-data";
 import { STRATEGIES_BY_CLASS } from "@/lib/directory/strategies";
 import { getBookSummary, getFundOfferings, getOfferingStats, listCreditLenders } from "@/lib/directory/filings-queries";
+import { INSTRUMENT_HUE } from "@/lib/directory/filings-types";
 import { getSessionUser } from "@/lib/auth";
 import { ResearchClassButton } from "@/components/intel/research-buttons";
 import { StrategiesPanel } from "@/components/intel/strategies-panel";
@@ -327,7 +328,7 @@ export default async function AssetClassPage({
         <div className="space-y-4">
           <div className="grid gap-4 lg:grid-cols-2">
             <Box title="Fair value by seniority" defn="Every parsed lender's latest book, grouped by what the tagged instrument says.">
-              <ShareBar segments={book.byInstrument.map((s, i) => ({ key: s.label, label: s.label, value: s.value, hue: `var(--chart-${(i % 7) + 1})` }))} format={(v) => formatUsd(v)} />
+              <ShareBar segments={book.byInstrument.map((s) => ({ key: s.label, label: s.label, value: s.value, hue: INSTRUMENT_HUE[s.label] }))} format={(v) => formatUsd(v)} />
             </Box>
             <Box title="Spread distribution" defn="Positions by spread over the reference rate, in 100 bp bins.">
               <Columns rows={book.spreadBins.map((b) => ({ label: b.label, value: b.count }))} height={90} />

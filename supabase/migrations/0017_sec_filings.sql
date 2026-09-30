@@ -495,17 +495,19 @@ end $$;
 
 -- --- Draining the queue -----------------------------------------------------
 
-create or replace function ingest.process_queue(p_limit integer default 60) returns jsonb
-language plpgsql
-set statement_timeout to '280s'
-as $$
+-- A procedure, not a function, so each filing commits on its own: the
+-- session's statement timeout (two minutes on a hosted project) can end a
+-- run without undoing the filings before it. Time-boxed under that limit.
+drop function if exists ingest.process_queue(integer);
+create or replace procedure ingest.run_queue(p_limit integer default 80, p_seconds integer default 50)
+language plpgsql as $$
 declare q record; res text; n_done int := 0; n_err int := 0; n_skip int := 0; t0 timestamptz := clock_timestamp();
 begin
-  for q in
-    select * from ingest.queue where status = 'pending' order by id for update skip locked limit p_limit
-  loop
-    exit when clock_timestamp() - t0 > interval '240 seconds';
-    update ingest.queue set status = 'working', attempts = attempts + 1 where id = q.id;
+  for q in select id, kind, key, url, meta, attempts from ingest.queue where status = 'pending' order by id limit p_limit loop
+    exit when clock_timestamp() - t0 > make_interval(secs => p_seconds);
+    update ingest.queue set status = 'working', attempts = attempts + 1 where id = q.id and status = 'pending';
+    if not found then continue; end if;
+    commit;
     begin
       if q.kind = 'form_d' then
         res := ingest.parse_form_d(q.key, q.url, q.meta, ingest.http_text(q.url));
@@ -520,11 +522,12 @@ begin
       update ingest.queue set status = case when q.attempts + 1 >= 3 then 'error' else 'pending' end, note = left(sqlerrm, 500) where id = q.id;
       n_err := n_err + 1;
     end;
+    commit;
   end loop;
   if n_done + n_err + n_skip > 0 then
-    insert into ingest.log (what, detail) values ('process_queue', jsonb_build_object('done', n_done, 'skipped', n_skip, 'errors', n_err, 'seconds', round(extract(epoch from clock_timestamp() - t0))));
+    insert into ingest.log (what, detail) values ('run_queue', jsonb_build_object('done', n_done, 'skipped', n_skip, 'errors', n_err, 'seconds', round(extract(epoch from clock_timestamp() - t0))));
+    commit;
   end if;
-  return jsonb_build_object('done', n_done, 'skipped', n_skip, 'errors', n_err);
 end $$;
 
 -- Deals derived from the latest Form D per pooled fund: what the fund has
@@ -621,8 +624,11 @@ from ingest.queue group by kind, status order by kind, status;
 
 do $$
 begin
+  if exists (select 1 from cron.job where jobname = 'lpgp-ingest-queue' and command not like 'call ingest.run_queue%') then
+    perform cron.unschedule('lpgp-ingest-queue');
+  end if;
   if not exists (select 1 from cron.job where jobname = 'lpgp-ingest-queue') then
-    perform cron.schedule('lpgp-ingest-queue', '* * * * *', $job$select ingest.process_queue(60)$job$);
+    perform cron.schedule('lpgp-ingest-queue', '* * * * *', $job$call ingest.run_queue(80, 50)$job$);
   end if;
   if not exists (select 1 from cron.job where jobname = 'lpgp-ingest-derive') then
     perform cron.schedule('lpgp-ingest-derive', '17 * * * *', $job$select ingest.derive_deals(), ingest.derive_placement_agents()$job$);

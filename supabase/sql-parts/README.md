@@ -55,6 +55,11 @@ select ingest.enqueue_quarter(2026, 3);   -- every Form D and lender 10-Q/10-K f
 The queue drains a batch a minute on its own (pg_cron); `select * from
 ingest.status` shows progress.
 
+**LP disclosures (migration `0019`)** — run **`7-lp-disclosures/`** after
+`6-sec-filings`, then `select ingest.load_lp_disclosures();` to read CalPERS's
+fund performance pages and the Australian super funds' holdings files. It
+re-reads them monthly on its own.
+
 **The intelligence dataset needs no SQL** — the button on Import → Master
 directory loads it. If you'd rather paste it (a database the app can't reach
 yet), **`5-intelligence-data/data_001_of_120.sql` … `_120_of_120.sql`** holds
@@ -88,6 +93,7 @@ lose track of where you were, start over from part 1.
 | `4-intelligence` | 4 | 3.5 KB |
 | `5-intelligence-data` | 120 | 8.1 KB |
 | `6-sec-filings` | 8 | 9.4 KB, up to 160 lines |
+| `7-lp-disclosures` | see folder | long functions, as above |
 
 The schema parts are deliberately under 4 KB. The seed parts can't go that low —
 a single `insert` of a dozen firms is bigger than that, and splitting inside one

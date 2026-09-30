@@ -195,7 +195,7 @@ begin
   if length(w) < 4 or w = any (array['capital','global','private','partners','first','american','north','south','east','west','new','united','general','national','international','credit','equity','real','growth','venture','ventures','fund','funds','investment','investments','strategic','opportunity','opportunities','income','infrastructure','energy','digital','blue','green','black','white','silver','gold','summit','main','alpha','core','prime','crown','eagle','harbor','harbour','lake','river','park','bridge','stone','oak','pine','cedar','maple','atlas','apex','vista','one','two','three','1','2','3']) then
     return;
   end if;
-  select count(*), min(id) into n, company_id
+  select count(*), (array_agg(id))[1] into n, company_id
     from public.companies
    where lower(split_part(regexp_replace(name, '^(the)\s+', '', 'i'), ' ', 1)) = w
      and category in ('GP', 'SP', 'LP');

@@ -5,7 +5,7 @@ import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { chunk, fetchAll } from "../supabase/paged";
 import { tableVersion } from "../supabase/version";
-import { ASSET_CLASSES, classOfGpType, classStatedByFundName, type AssetClassKey } from "./asset-classes";
+import { ASSET_CLASSES, classOfGpType, classStatedByFundName, isAssetClassKey, type AssetClassKey } from "./asset-classes";
 import type { Deal, Signal, SportsInvestor, SportsTeam, TeamOwner } from "./intelligence-types";
 import type { DisclosedCommitment } from "./queries";
 
@@ -268,6 +268,7 @@ export async function getClassCounts(): Promise<ClassCounts> {
 /** Which class a disclosed LP commitment belongs to, from its fund's name
  *  or, failing that, the manager's directory type. */
 export function commitmentClass(c: DisclosedCommitment & { gp_type?: string | null }): AssetClassKey | null {
+  if (c.asset_class && isAssetClassKey(c.asset_class)) return c.asset_class;
   return classStatedByFundName(c.fund_name) ?? classOfGpType(c.gp_type) ?? null;
 }
 

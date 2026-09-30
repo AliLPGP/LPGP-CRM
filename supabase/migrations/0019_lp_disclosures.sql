@@ -56,11 +56,11 @@ declare w text; n int; q text;
 begin
   if p_name is null then return; end if;
   q := lower(regexp_replace(btrim(p_name), '\s+', ' ', 'g'));
-  select id into company_id from public.companies where lower(name) = q and category = any (p_books) limit 1;
+  select id into company_id from public.companies where lower(name) = q and category::text = any (p_books) limit 1;
   if company_id is not null then method := 'exact'; return; end if;
   -- Longest directory name that is a prefix of the given name, on a word boundary.
   select id into company_id from public.companies
-   where length(name) >= 5 and category = any (p_books)
+   where length(name) >= 5 and category::text = any (p_books)
      and q like lower(regexp_replace(name, '\s+', ' ', 'g')) || ' %'
    order by length(name) desc limit 1;
   if company_id is not null then method := 'prefix'; return; end if;
@@ -71,7 +71,7 @@ begin
   end if;
   select count(*), (array_agg(id))[1] into n, company_id
     from public.companies
-   where lower(split_part(regexp_replace(name, '^(the)\s+', '', 'i'), ' ', 1)) = w and category = any (p_books);
+   where lower(split_part(regexp_replace(name, '^(the)\s+', '', 'i'), ' ', 1)) = w and category::text = any (p_books);
   if n = 1 then method := 'brand'; return; end if;
   if n > 1 and 'GP' = any (p_books) then
     select count(*), (array_agg(id))[1] into n, company_id

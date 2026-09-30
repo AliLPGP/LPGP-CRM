@@ -101,7 +101,10 @@ export async function getClassPage(cls: AssetClass): Promise<ClassPage> {
   const inClass = filers(managers);
   const leagues = PROVIDER_ROLES.map((role) => leagueTable(inClass, index.brands, role, 8));
   const { funds, byName } = fundsFor(universe, cls.key, byId);
+  // An LP's own programme places its commitment first; a fund's name or its
+  // manager's type only when the disclosure did not say.
   const commitments = commitmentsAll.filter((c) => {
+    if (c.asset_class) return c.asset_class === cls.key;
     const gp = c.gp_company_id ? byId.get(c.gp_company_id) : null;
     return fundClass(c.fund_label, gp?.subType)?.key === cls.key;
   });

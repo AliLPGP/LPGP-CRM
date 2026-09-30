@@ -172,8 +172,11 @@ export function FirmTable({ firms, limit }: { firms: DirectoryRecord[]; limit?: 
 
 export function CommitmentTable({ rows, showClass = false }: { rows: NamedCommitment[]; showClass?: boolean }) {
   if (!rows.length) return <Empty>No disclosed commitments in this class yet.</Empty>;
+  // Performance columns appear when any row carries them (an LP's own
+  // fund-by-fund review); a press-sourced commitment leaves them blank.
+  const perf = rows.some((c) => c.net_irr != null || c.multiple != null || c.contributed != null);
   return (
-    <div className="overflow-x-auto">
+    <div className="desk-scroll">
       <table className="desk-table">
         <thead>
           <tr>
@@ -183,6 +186,14 @@ export function CommitmentTable({ rows, showClass = false }: { rows: NamedCommit
             <th>Manager</th>
             {showClass ? <th>Class</th> : null}
             <th className="num">Commitment</th>
+            {perf ? (
+              <>
+                <th className="num">Paid in</th>
+                <th className="num">Distributed</th>
+                <th className="num">Net IRR</th>
+                <th className="num">Multiple</th>
+              </>
+            ) : null}
             <th>Source</th>
           </tr>
         </thead>
@@ -199,10 +210,18 @@ export function CommitmentTable({ rows, showClass = false }: { rows: NamedCommit
               <td className="whitespace-nowrap">
                 {c.gp_company_id ? <Link href={`/companies/${c.gp_company_id}`}>{c.gp_label}</Link> : c.gp_label}
               </td>
-              {showClass ? <td /> : null}
+              {showClass ? <td>{c.asset_class ? classTag(c.asset_class) : null}</td> : null}
               <td className="num">{c.amount != null ? formatMoney(c.amount, c.currency) : (c.amount_text ?? "—")}</td>
+              {perf ? (
+                <>
+                  <td className="num text-muted-foreground">{c.contributed != null ? formatMoney(c.contributed, c.currency) : "—"}</td>
+                  <td className="num text-muted-foreground">{c.distributed != null ? formatMoney(c.distributed, c.currency) : "—"}</td>
+                  <td className={`num ${c.net_irr != null && c.net_irr < 0 ? "text-[var(--destructive)]" : ""}`}>{c.net_irr != null ? `${c.net_irr.toFixed(1)}%` : "—"}</td>
+                  <td className="num">{c.multiple != null ? `${c.multiple.toFixed(2)}x` : "—"}</td>
+                </>
+              ) : null}
               <td>
-                <Src url={c.source_url} name={c.disclosure_type} />
+                <Src url={c.source_url} name={c.disclosure_type} asOf={c.as_of ?? null} />
               </td>
             </tr>
           ))}

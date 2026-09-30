@@ -222,10 +222,19 @@ export type DisclosedCommitment = {
   disclosure_type: string | null;
   source: string | null;
   source_url: string | null;
+  /** The LP's own programme, when its disclosure says (migration 0019). */
+  asset_class?: string | null;
+  contributed?: number | null;
+  distributed?: number | null;
+  remaining_value?: number | null;
+  /** Percent, as the LP states it. */
+  net_irr?: number | null;
+  multiple?: number | null;
+  as_of?: string | null;
 };
 
 const COMMITMENT_COLUMNS =
-  "id, lp_company_id, gp_company_id, fund_id, lp_name, gp_name, fund_name, amount, amount_usd, currency, amount_text, commitment_date, commitment_date_text, commitment_year, disclosure_type, source, source_url";
+  "id, lp_company_id, gp_company_id, fund_id, lp_name, gp_name, fund_name, amount, amount_usd, currency, amount_text, commitment_date, commitment_date_text, commitment_year, disclosure_type, source, source_url, asset_class, contributed, distributed, remaining_value, net_irr, multiple, as_of";
 
 /** Commitments where the firm is the LP or the manager. */
 export async function getDisclosedCommitments(

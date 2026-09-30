@@ -9,7 +9,7 @@ import { PersonAvatar } from "@/components/person-avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { PortfolioCompany } from "@/lib/directory/portfolio";
-import { financeLead, type PortcoIntel } from "@/lib/directory/portco-intel";
+import { financeLead, portcoHref, type PortcoIntel } from "@/lib/directory/portco-intel";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { addPortfolioCompany, removePortfolioCompany } from "@/lib/directory/portfolio-actions";
 import { cn } from "@/lib/utils";
@@ -246,7 +246,13 @@ export function PortfolioCompanies({
                 <CompanyLogo name={c.name} domain={c.domain} size={38} />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
-                    <span className="truncate text-[13.5px] font-medium">{c.name}</span>
+                    {c.intel_key ? (
+                      <Link href={portcoHref(c.intel_key)} className="truncate text-[13.5px] font-medium hover:underline">
+                        {c.name}
+                      </Link>
+                    ) : (
+                      <span className="truncate text-[13.5px] font-medium">{c.name}</span>
+                    )}
                     {c.status ? (
                       <span
                         className={cn(

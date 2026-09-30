@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { financeLead, getBorrowerSummary, getPortcoIntel, portcoIntelCounts, searchBorrowers, type BorrowerFilter } from "@/lib/directory/filings-queries";
 import { formatMoney } from "@/lib/directory/intelligence-types";
+import { portcoHref } from "@/lib/directory/portco-intel";
 import { getSessionUser } from "@/lib/auth";
 import { Columns } from "@/components/intel/charts";
 import { EnrichPortcosButton } from "@/components/intel/research-buttons";
@@ -89,7 +90,7 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                   {rows.map((b) => (
                     <tr key={b.key}>
                       <td className="min-w-[220px] max-w-[360px]">
-                        <Link href={`/database/lenders?q=${encodeURIComponent(b.borrower)}`} className="font-medium leading-snug" title="Every position in this borrower, by lender">
+                        <Link href={portcoHref(b.key)} className="font-medium leading-snug" title="The company: people, filed accounts, every lender's line">
                           {b.borrower}
                         </Link>
                         <div className="truncate text-[11px] text-muted-foreground">{b.lender_names?.slice(0, 3).join(" · ")}{(b.lender_names?.length ?? 0) > 3 ? " …" : ""}</div>
@@ -135,7 +136,7 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
             <ul className="divide-y">
               {summary.mostLenders.map((b) => (
                 <li key={b.key} className="flex items-center gap-2 px-3 py-1.5 text-[12px]">
-                  <Link href={`/database/lenders?q=${encodeURIComponent(b.borrower)}`} className="min-w-0 flex-1 truncate font-medium">
+                  <Link href={portcoHref(b.key)} className="min-w-0 flex-1 truncate font-medium">
                     {b.borrower}
                   </Link>
                   <span className="figure text-[11px] text-muted-foreground">{b.lenders} lenders</span>

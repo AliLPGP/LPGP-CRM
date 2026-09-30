@@ -50,3 +50,34 @@ export function financeLead(intel: PortcoIntel | undefined): { name: string; tit
   return null;
 }
 
+
+/** The page for a company behind the deals, by its key. */
+export function portcoHref(key: string): string {
+  return `/database/portcos/${encodeURIComponent(key)}`;
+}
+
+export type LeadRole = "finance" | "operations" | "chief" | "other";
+
+/** What a title says the person runs. */
+export function leadRole(title: string | null | undefined): LeadRole {
+  const t = title ?? "";
+  if (/\b(cfo|chief financial|finance director|financial director|financial controller|head of finance|vp finance|treasurer)\b/i.test(t)) return "finance";
+  if (/\b(coo|chief operating|operations director|director of operations|head of operations|vp operations|chief transformation|chief restructuring)\b/i.test(t)) return "operations";
+  if (/\b(ceo|chief executive|managing director|president|founder|chairman|chair)\b/i.test(t)) return "chief";
+  return "other";
+}
+
+export const LEAD_ROLE_LABEL: Record<LeadRole, string> = { finance: "Finance", operations: "Operations", chief: "Chief executive", other: "" };
+
+/** Everyone on file for a company, executives first, each with what they run. */
+export function leadership(intel: PortcoIntel): { name: string; title: string; role: LeadRole; source: "lusha" | "companies_house"; since: string | null; linkedin_url: string | null }[] {
+  const out: ReturnType<typeof leadership> = [];
+  for (const e of intel.executives) out.push({ name: e.name, title: e.title, role: leadRole(e.title), source: "lusha", since: null, linkedin_url: e.linkedin_url });
+  for (const o of intel.officers) {
+    if (o.resigned_on) continue;
+    const title = [o.occupation, o.role ? o.role.replace(/-/g, " ") : null].filter(Boolean).join(", ") || "Officer";
+    out.push({ name: o.name, title, role: leadRole(o.occupation), source: "companies_house", since: o.appointed_on, linkedin_url: null });
+  }
+  const rank: Record<LeadRole, number> = { finance: 0, operations: 1, chief: 2, other: 3 };
+  return out.sort((a, b) => rank[a.role] - rank[b.role] || (a.source === "lusha" ? -1 : 1) - (b.source === "lusha" ? -1 : 1));
+}

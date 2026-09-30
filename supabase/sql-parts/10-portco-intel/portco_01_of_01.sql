@@ -64,3 +64,14 @@ create or replace view public.portco_debt with (security_invoker = true) as
 select p.id as portfolio_company_id, p.gp_company_id, b.*
 from public.portfolio_companies p
 join public.borrowers b on b.key = p.intel_key;
+
+-- A borrower's positions across the latest books, by the same fold the
+-- borrowers view uses, so the company page shows every lender's line.
+create or replace function public.borrower_positions(p_key text, p_limit integer default 200) returns setof public.credit_book
+language sql stable as $$
+  select * from public.credit_book b
+  where public.borrower_key(b.borrower) = p_key
+  order by b.fair_value desc nulls last
+  limit least(greatest(coalesce(p_limit, 200), 1), 1000);
+$$;
+grant execute on function public.borrower_positions(text, integer) to anon, authenticated;

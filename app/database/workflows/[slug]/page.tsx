@@ -10,6 +10,7 @@ import { Bar, Box, Empty, Stat, StatStrip, SubTabs, Tag } from "@/components/int
 import { WorkflowIcon } from "@/components/intel/workflow-icon";
 import { ASSET_CLASS_BY_KEY, DEAL_KIND_LABEL, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { formatMoney } from "@/lib/directory/intelligence-types";
+import { portcoHref } from "@/lib/directory/portco-intel";
 import { getWorkflow, WORKFLOW_BY_SLUG, WORKFLOWS, type Count, type WorkflowData } from "@/lib/directory/workflows";
 import { formatUsd } from "@/lib/utils";
 import { getSessionUser } from "@/lib/auth";
@@ -599,7 +600,13 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
                           <td>
                             <span className="flex items-center gap-2 font-medium">
                               <CompanyLogo name={p.name} domain={p.domain} size={18} />
-                              {p.name}
+                              {p.intel_key ? (
+                                <Link href={portcoHref(p.intel_key)} className="hover:underline">
+                                  {p.name}
+                                </Link>
+                              ) : (
+                                p.name
+                              )}
                             </span>
                           </td>
                           <td>{p.gp ? <Link href={`/companies/${p.gp.id}?tab=portfolio`}>{p.gp.name}</Link> : "—"}</td>

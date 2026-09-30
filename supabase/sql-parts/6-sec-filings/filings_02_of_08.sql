@@ -25,15 +25,21 @@ create table if not exists ingest.log (
 
 -- --- Helpers ----------------------------------------------------------------
 
+-- EDGAR asks for a user agent that names who is asking; other public sites
+-- refuse anything that does not look like a browser.
 create or replace function ingest.http_text(p_url text) returns text
 language plpgsql as $$
-declare r record;
+declare r record; ua text;
 begin
   perform extensions.http_set_curlopt('CURLOPT_TIMEOUT_MS', '180000');
+  ua := case when p_url ~ '\.sec\.gov/' then 'LPGP Connect research info@worldhealth.ai'
+             else 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15' end;
   select * into r from extensions.http((
     'GET', p_url,
-    array[extensions.http_header('User-Agent', 'LPGP Connect research info@worldhealth.ai'),
-          extensions.http_header('Accept', '*/*')],
+    array[extensions.http_header('User-Agent', ua),
+          extensions.http_header('Accept', '*/*'),
+          extensions.http_header('Accept-Language', 'en-GB,en;q=0.9'),
+          extensions.http_header('Accept-Encoding', 'identity')],
     null, null)::extensions.http_request);
   if r.status <> 200 then
     raise exception 'HTTP % for %', r.status, p_url;

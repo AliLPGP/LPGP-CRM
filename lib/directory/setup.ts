@@ -21,6 +21,8 @@ export type DirectorySetup = {
   portfolio: boolean;
   /** Migration 0016: deals, signals and sports. */
   intelligence: boolean;
+  /** Migration 0017: Form D raises and BDC loan books, read by the database. */
+  filings: boolean;
   /** The intelligence dataset has been loaded at least once. */
   datasetLoaded: boolean;
   lastImport: { at: string; filename: string | null } | null;
@@ -45,16 +47,18 @@ export async function getDirectorySetup(): Promise<DirectorySetup> {
   const sqlEditorUrl = supabaseSqlEditorUrl();
   if (!supabase || !isSupabaseConfigured()) {
     return {
-      configured: false, directory: false, funds: false, portfolio: false, intelligence: false,
+      configured: false, directory: false, funds: false, portfolio: false, intelligence: false, filings: false,
       datasetLoaded: false, lastImport: null, sqlEditorUrl,
     };
   }
   // 0016 creates six tables; a paste that stopped after the first few would
   // still answer for sports_teams, so every one it creates is asked for.
-  const [dir, funds, portfolio, ...intel] = await Promise.all([
+  const [dir, funds, portfolio, filingsA, filingsB, ...intel] = await Promise.all([
     supabase.from("companies").select("external_id").limit(1),
     supabase.from("funds").select("service_providers").limit(1),
     supabase.from("portfolio_companies").select("id").limit(1),
+    supabase.from("fund_offerings_latest").select("id").limit(1),
+    supabase.from("credit_book").select("id").limit(1),
     supabase.from("sports_teams").select("id").limit(1),
     supabase.from("sports_team_owners").select("id").limit(1),
     supabase.from("deals").select("id").limit(1),
@@ -85,6 +89,7 @@ export async function getDirectorySetup(): Promise<DirectorySetup> {
     funds: !funds.error,
     portfolio: !portfolio.error,
     intelligence: intel.every((r) => !r.error),
+    filings: !filingsA.error && !filingsB.error,
     datasetLoaded,
     lastImport,
     sqlEditorUrl,
@@ -122,23 +127,31 @@ async function migration(name: string): Promise<SqlPart[]> {
   }
 }
 
+/** Migration 0017 in paste-sized parts. Its parser functions are long single
+ *  statements, so a part can run past a hundred lines; the README names the
+ *  one-statement loader for an editor that truncates. */
+export function filingsSqlParts(): Promise<SqlPart[]> {
+  return sqlParts("6-sec-filings");
+}
+
 /** True when the directory tables exist but a later update hasn't run. */
 export function upgradeOnly(setup: DirectorySetup): boolean {
-  return setup.directory && (!setup.funds || !setup.portfolio || !setup.intelligence);
+  return setup.directory && (!setup.funds || !setup.portfolio || !setup.intelligence || !setup.filings);
 }
 
 /** Every directory table and column is in place. */
 export function sqlDone(setup: DirectorySetup): boolean {
-  return setup.directory && setup.funds && setup.portfolio && setup.intelligence;
+  return setup.directory && setup.funds && setup.portfolio && setup.intelligence && setup.filings;
 }
 
 /** Whatever SQL this database is still missing, in paste order. */
 export async function missingSql(setup: DirectorySetup): Promise<SqlPart[]> {
   if (!setup.configured) return [];
-  if (!setup.directory) return directorySqlParts();
+  if (!setup.directory) return [...(await directorySqlParts()), ...(await filingsSqlParts())];
   return [
     ...(setup.funds ? [] : await migration("0014_fund_lineup.sql")),
     ...(setup.portfolio ? [] : await migration("0015_portfolio_companies.sql")),
     ...(setup.intelligence ? [] : await intelligenceSqlParts()),
+    ...(setup.filings ? [] : await filingsSqlParts()),
   ];
 }

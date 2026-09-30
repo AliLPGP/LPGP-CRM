@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 }
 
 const TARGET_KIND: Record<string, string> = { club: "Club", team: "Team", league: "League", competition: "Competition", company: "Company", fund: "Fund", asset: "Asset", other: "Other" };
-const RECORD_SOURCE: Record<string, string> = { web_research: "Web research, with the page that states it", manual: "Entered by hand", refresh: "Daily refresh" };
+const RECORD_SOURCE: Record<string, string> = { web_research: "Web research, with the page that states it", manual: "Entered by hand", refresh: "Daily refresh", sec_edgar: "SEC EDGAR filing, read by the database" };
 
 export default async function DealPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

@@ -80,6 +80,22 @@ boundaries and keeps comment text ASCII.
   null. Seeded from `data/intelligence/dataset.json` (public facts only,
   built by `supabase/tools/build_intelligence_dataset.py`) and grown by the
   in-app research jobs.
+- **SEC filings** (0017) — `fund_offerings` (every Form D; pooled funds also
+  become `funds` rows and `fundraise`/`fund_close` deals with `source =
+  'sec_edgar'`, placement agents become `placement_agent` service
+  relationships), `credit_lenders` and `credit_positions` (each BDC's
+  schedule of investments as tagged in its own 10-Q/10-K: borrower,
+  instrument, rate, spread, principal, cost, fair value, per period;
+  `is_summary` marks a filer's per-borrower subtotal so nothing counts twice).
+  Views `fund_offerings_latest` and `credit_book` are what the app reads. The
+  **database fetches EDGAR itself**: the `ingest` schema holds the queue and
+  the parsers (plpgsql over the `http` extension), `ingest.enqueue_quarter`
+  queues a quarter of `form.idx`, and pg_cron drains it with
+  `ingest.run_queue` (a procedure committing per filing, time-boxed under the
+  hosted statement limit). Firm links come from `ingest.match_firm`: exact
+  name, else a first word that names exactly one directory firm.
+  `/database/lenders` is the loan-book desk; the credit class page and firm
+  profiles show raises and books.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).

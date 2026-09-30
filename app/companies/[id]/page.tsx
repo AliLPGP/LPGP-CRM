@@ -14,6 +14,8 @@ import {
 } from "@/lib/directory/queries";
 import { getDirectoryIndex } from "@/lib/directory/index-server";
 import { getDeals, getSignals, teamsHeldBy } from "@/lib/directory/intelligence-queries";
+import { getFundOfferings, lendersManagedBy } from "@/lib/directory/filings-queries";
+import { LenderTable, OfferingTable } from "@/components/intel/filings-tables";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { filers, leagueTable } from "@/lib/directory/market";
 import { isOperatingRole } from "@/lib/directory/operating";
@@ -74,7 +76,7 @@ export default async function CompanyProfile({
   if (!company) notFound();
   const tab: Tab = (TABS as readonly string[]).includes(tabParam ?? "") ? (tabParam as Tab) : "overview";
 
-  const [contacts, funds, providers, providerClients, commitments, notes, lists, onLists, similar, index, portcos, deals, signals, held, user] =
+  const [contacts, funds, providers, providerClients, commitments, notes, lists, onLists, similar, index, portcos, deals, signals, held, user, offerings, lenders] =
     await Promise.all([
       getContactsForCompany(id),
       getCompanyFunds(id),
@@ -91,6 +93,8 @@ export default async function CompanyProfile({
       getSignals({ companyId: id, limit: 100 }),
       teamsHeldBy({ companyId: id }),
       getSessionUser(),
+      getFundOfferings({ gpCompanyId: id, limit: 200 }),
+      lendersManagedBy(id),
     ]);
   const [asLp, asGp] = await Promise.all([nameCommitments(commitments.asLp), nameCommitments(commitments.asGp)]);
 
@@ -115,7 +119,7 @@ export default async function CompanyProfile({
   const staff = company.employee_count ?? company.adv_employee_count ?? null;
   const adv = company.adv_firm_type === "ERA" ? "Exempt reporting" : company.adv_firm_type === "Registered" ? "SEC registered" : null;
   const hq = [company.city, company.country === "United States" ? company.state : company.country].filter(Boolean).join(", ") || company.hq_location || company.region || null;
-  const dealCount = deals.length + asLp.length + asGp.length + held.length;
+  const dealCount = deals.length + asLp.length + asGp.length + held.length + offerings.length + lenders.length;
   const base = `/companies/${company.id}`;
   const isAdmin = user?.role === "admin";
 
@@ -312,6 +316,16 @@ export default async function CompanyProfile({
                   </tbody>
                 </table>
               </div>
+            </Box>
+          ) : null}
+          {lenders.length ? (
+            <Box title="Lends through" count={lenders.length} flush defn="Business development companies this firm manages, with the loan book each tags in its own 10-Q and 10-K.">
+              <LenderTable rows={lenders} />
+            </Box>
+          ) : null}
+          {offerings.length ? (
+            <Box title="Form D raises" count={offerings.length} flush defn="Funds whose Form D names this firm, or one of its entities, as general partner or manager: what each has sold to date, per its latest filing.">
+              <OfferingTable rows={offerings} />
             </Box>
           ) : null}
           <Commitments rows={asLp} as="lp" />

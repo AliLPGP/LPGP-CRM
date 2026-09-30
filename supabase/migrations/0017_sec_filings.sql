@@ -16,8 +16,21 @@
 -- fund_offerings, credit_positions, credit_lenders, and rows derived into
 -- funds and deals. Idempotent; safe to re-run.
 
-create extension if not exists http with schema extensions;
-create extension if not exists pg_cron;
+-- Both extensions ship with hosted Supabase. A local Postgres without them
+-- still gets the tables and views (the app reads those); only the fetching
+-- needs them, and the queue simply never runs there.
+do $$
+begin
+  create extension if not exists http with schema extensions;
+exception when others then
+  raise notice 'http extension not available here (%); the ingest queue will not run', sqlerrm;
+end $$;
+do $$
+begin
+  create extension if not exists pg_cron;
+exception when others then
+  raise notice 'pg_cron not available here (%); the ingest queue will not run', sqlerrm;
+end $$;
 
 -- --- Public tables ----------------------------------------------------------
 
@@ -447,7 +460,11 @@ begin
     (select ingest.humanize_member(d) from jsonb_array_elements_text(c.dims) d where d ~* '(sofr|libor|euribor|sonia|prime|basis|rate)' and d !~* 'industr' limit 1),
     f.rate * 100, f.spread * 100, f.pik * 100, f.maturity, f.principal, f.cost, f.fv, f.pct * 100, f.shares, c.dims,
     null, base
-  from _ctx c
+  from (
+    -- A filer may tag one position on several contexts (an affiliation axis,
+    -- a range); keep the plainest so the upsert sees each key once.
+    select distinct on (identifier, instant) * from _ctx order by identifier, instant, jsonb_array_length(dims), id
+  ) c
   join lateral (
     select
       max(case when name = 'InvestmentOwnedAtFairValue' then ingest.num(value) end) as fv,
@@ -462,7 +479,6 @@ begin
     from _fact where ctx = c.id
   ) f on true
   where f.fv is not null or f.principal is not null or f.cost is not null
-  order by jsonb_array_length(c.dims)
   on conflict (external_key) do update set
     accession_no = excluded.accession_no, filing_form = excluded.filing_form, instrument = excluded.instrument,
     industry = coalesce(excluded.industry, cp.industry), reference_rate = coalesce(excluded.reference_rate, cp.reference_rate),
@@ -624,6 +640,10 @@ from ingest.queue group by kind, status order by kind, status;
 
 do $$
 begin
+  if not exists (select 1 from pg_extension where extname = 'pg_cron') then
+    raise notice 'pg_cron not installed; skipping the ingest schedule';
+    return;
+  end if;
   if exists (select 1 from cron.job where jobname = 'lpgp-ingest-queue' and command not like 'call ingest.run_queue%') then
     perform cron.unschedule('lpgp-ingest-queue');
   end if;

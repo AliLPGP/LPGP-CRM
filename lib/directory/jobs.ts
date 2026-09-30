@@ -4,6 +4,8 @@ import { ASSET_CLASSES, type AssetClass } from "./asset-classes";
 import { researchBenchmarks } from "./benchmark-research";
 import { researchCommitments, type LpInput } from "./commitments-research";
 import { researchDeals } from "./deals-research";
+import { portfolioDomain, portfolioKey } from "./portfolio";
+import { researchPortfolio, type ResearchedCompany } from "./portfolio-research";
 import { firmMatcher } from "./firm-match";
 import { normDomain, normName } from "./normalize";
 import { OUT_OF_TIME, slugify, timeLeft } from "./research";
@@ -355,4 +357,147 @@ export async function runSignals(supabase: Admin, opts: { deadline: number; rota
   }
   for (const o of outcomes) log(`  ${o.cls.short}: ${o.items.length} items${o.error ? ` (${o.error})` : ""}`);
   return { added, found: rows.length, classes: outcomes.filter((o) => !o.error).length, errors: outcomes.filter((o) => o.error).map((o) => `${o.cls.short}: ${o.error}`) };
+}
+
+// --- Portfolio companies, in bulk -------------------------------------------
+
+export type PortfolioFirm = { id: string; name: string; domain: string | null; country: string | null };
+
+/** The manager types whose investments are portfolio companies (not loans, not listed securities). */
+export const SPONSOR_TYPES = ["Private equity", "Growth equity", "Venture capital", "Alternative asset manager", "Multi-asset alternatives", "Infrastructure", "Other"];
+
+/**
+ * Sponsors to research, with nothing on file first: the Master Directory's
+ * firms before the SEC roster's, and the largest first within each. The
+ * roster's "private equity" advisers include many that report a private
+ * equity fund without running a portfolio, so they come last and by the
+ * gross assets of the private funds they file.
+ */
+export async function portfolioTargets(supabase: Admin, opts: { limit: number; includeRoster?: boolean; redo?: boolean }): Promise<PortfolioFirm[]> {
+  const { data: counts } = await supabase.from("portfolio_companies").select("gp_company_id");
+  const have = new Set(((counts as { gp_company_id: string }[] | null) ?? []).map((r) => r.gp_company_id));
+  const out: PortfolioFirm[] = [];
+  const pull = async (source: string, order: string) => {
+    const rows =
+      (await fetchAll<{ id: string; name: string; domain: string | null; country: string | null }>((from, to, first) =>
+        supabase
+          .from("companies")
+          .select("id, name, domain, country", first ? { count: "exact" } : undefined)
+          .eq("category", "GP")
+          .eq("source", source)
+          .in("sub_type", SPONSOR_TYPES)
+          .order(order, { ascending: false, nullsFirst: false })
+          .order("id")
+          .range(from, to),
+      )) ?? [];
+    for (const r of rows) if (opts.redo || !have.has(r.id)) out.push(r);
+  };
+  await pull("master_directory", "brand_aum_total_usd");
+  if (opts.includeRoster) await pull("form_adv_roster", "private_fund_gross_assets");
+  return out.slice(0, opts.limit);
+}
+
+/** Researched companies as rows, one per company per GP. */
+export function portfolioRows(gpId: string, companies: ResearchedCompany[], addedBy: string | null): Record<string, unknown>[] {
+  const rows = new Map<string, Record<string, unknown>>();
+  const year = (y: number | null | undefined) => (y && y > 1900 && y < 2100 ? y : null);
+  const money = (v: number | null | undefined) => (typeof v === "number" && Number.isFinite(v) && v > 0 ? v : null);
+  for (const c of companies) {
+    const key = portfolioKey(gpId, c.name);
+    if (rows.has(key)) continue;
+    rows.set(key, {
+      external_key: key,
+      gp_company_id: gpId,
+      name: c.name.trim().slice(0, 200),
+      domain: portfolioDomain(c.website),
+      description: c.description?.slice(0, 600) ?? null,
+      sector: c.sector?.slice(0, 120) ?? null,
+      hq: c.hq?.slice(0, 160) ?? null,
+      status: c.status === "unknown" ? null : c.status,
+      invested_year: year(c.invested_year),
+      exit_year: year(c.exit_year),
+      fund_name: c.fund_name?.slice(0, 200) ?? null,
+      source: "web_research",
+      source_url: c.source_url.slice(0, 600),
+      added_by: addedBy,
+      deal_value: money(c.deal_value),
+      deal_currency: c.deal_currency ? c.deal_currency.toUpperCase().slice(0, 3) : null,
+      deal_value_basis: money(c.deal_value) ? (c.deal_value_basis ?? "unspecified") : null,
+      equity_invested: money(c.equity_invested),
+      stake_pct: typeof c.stake_pct === "number" && c.stake_pct > 0 && c.stake_pct <= 100 ? c.stake_pct : null,
+      co_investors: (c.co_investors ?? []).map((x) => x.trim()).filter(Boolean).slice(0, 12),
+      deal_source_url: c.deal_source_url && /^https?:\/\//.test(c.deal_source_url) ? c.deal_source_url.slice(0, 600) : null,
+      researched_at: new Date().toISOString(),
+    });
+  }
+  return [...rows.values()];
+}
+
+export type PortfolioJobResult = { firms: number; companies: number; skipped: string[]; errors: string[] };
+
+/** Read each sponsor's portfolio, two at a time, and save what the sources name. */
+export async function runPortfolios(
+  supabase: Admin,
+  firms: PortfolioFirm[],
+  opts: {
+    deadline: number;
+    addedBy: string | null;
+    log?: JobLog;
+    /** Where rows go instead of the database: a run on a machine with the research key but no database key writes SQL. */
+    save?: (firm: PortfolioFirm, rows: Record<string, unknown>[], note: string) => Promise<void>;
+  },
+): Promise<PortfolioJobResult> {
+  const log = opts.log ?? (() => {});
+  let done = 0;
+  let companies = 0;
+  const errors: string[] = [];
+  const skipped: string[] = [];
+  for (let i = 0; i < firms.length; i += 2) {
+    const batch = firms.slice(i, i + 2);
+    if (timeLeft(opts.deadline) < 60_000) {
+      skipped.push(...batch.map((f) => f.name));
+      continue;
+    }
+    log(`portfolio: ${batch.map((f) => f.name).join(" · ")}…`);
+    const results = await Promise.all(batch.map((f) => researchPortfolio(f)));
+    for (let j = 0; j < batch.length; j++) {
+      const firm = batch[j];
+      const r = results[j];
+      if (!r.ok) {
+        errors.push(`${firm.name}: ${r.error}`);
+        log(`  ${firm.name}: ${r.error}`);
+        continue;
+      }
+      const rows = portfolioRows(firm.id, r.companies, opts.addedBy);
+      if (opts.save) {
+        await opts.save(firm, rows, r.note);
+      } else {
+        for (const part of chunk(rows, 200)) {
+          const { error } = await supabase.from("portfolio_companies").upsert(part, { onConflict: "external_key" });
+          if (error) throw new Error(`Saving portfolio companies: ${error.message}`);
+        }
+        await supabase.from("companies").update({ portfolio_note: r.note.slice(0, 600) || null, portfolio_researched_at: new Date().toISOString() }).eq("id", firm.id);
+      }
+      done += 1;
+      companies += rows.length;
+      const priced = rows.filter((x) => x.deal_value != null).length;
+      log(`  ${firm.name}: ${rows.length} companies${priced ? `, ${priced} with a stated deal value` : ""}${r.note ? ` (${r.note.slice(0, 120)})` : ""}`);
+    }
+  }
+  if (skipped.length) errors.push(`${OUT_OF_TIME} Not reached: ${skipped.join(", ")}.`);
+  return { firms: done, companies, skipped, errors };
+}
+
+/** One idempotent statement per row, for a run that writes SQL instead of rows. */
+export function portfolioRowSql(row: Record<string, unknown>): string {
+  const cols = Object.keys(row);
+  const lit = (v: unknown): string => {
+    if (v == null) return "null";
+    if (typeof v === "number") return Number.isFinite(v) ? String(v) : "null";
+    if (typeof v === "boolean") return v ? "true" : "false";
+    if (Array.isArray(v)) return `array[${v.map((x) => `'${String(x).replace(/'/g, "''")}'`).join(", ")}]::text[]`;
+    return `'${String(v).replace(/'/g, "''")}'`;
+  };
+  const updates = cols.filter((c) => c !== "external_key" && c !== "gp_company_id" && c !== "added_by").map((c) => `${c} = excluded.${c}`);
+  return `insert into public.portfolio_companies (${cols.join(", ")}) values (${cols.map((c) => lit(row[c])).join(", ")}) on conflict (external_key) do update set ${updates.join(", ")};`;
 }

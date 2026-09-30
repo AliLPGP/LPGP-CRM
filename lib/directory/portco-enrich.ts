@@ -122,8 +122,9 @@ export async function enrichTargets(list: Target[], opts: EnrichOptions): Promis
           row.ch_at = new Date().toISOString();
         }
       }
-      if (lushaOn && t.domain) {
-        const found = await lushaContactSearch({ companyDomains: [t.domain], jobTitles: EXEC_TITLES, size: 10 });
+      if (lushaOn) {
+        // By domain when one is on file, else by the company's name.
+        const found = await lushaContactSearch({ ...(t.domain ? { companyDomains: [t.domain] } : { companyNames: [t.name] }), jobTitles: EXEC_TITLES, size: 10 });
         const execs = found.contacts.filter((c) => c.name && c.jobTitle).map((c) => ({ name: c.name, title: c.jobTitle, linkedin_url: c.linkedinUrl, has_email: c.hasEmail, source: "lusha" }));
         if (execs.length) {
           row.executives = execs;

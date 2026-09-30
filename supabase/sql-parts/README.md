@@ -62,7 +62,7 @@ re-reads them monthly on its own.
 
 **Adviser roster, borrowers and portfolio-company intelligence (migrations
 `0020`, `0021`, `0022`)** — run **`8-adviser-roster/`**, **`9-borrowers/`**
-then **`10-portco-intel/`** after `7-lp-disclosures`.
+then **`10-portco-intel/`** and **`11-portfolio-deals/`** after `7-lp-disclosures`.
 Then, in the SQL editor, load a roster and promote its private-fund advisers
 (the JSON lives in `data/adv-roster/`):
 
@@ -108,7 +108,8 @@ lose track of where you were, start over from part 1.
 | `7-lp-disclosures` | see folder | long functions, as above |
 | `8-adviser-roster` | 2 | 7.4 KB |
 | `9-borrowers` | 1 | 7.8 KB |
-| `10-portco-intel` | 1 | 3.2 KB |
+| `10-portco-intel` | 1 | 3.7 KB |
+| `11-portfolio-deals` | 1 | 1.6 KB |
 
 The schema parts are deliberately under 4 KB. The seed parts can't go that low —
 a single `insert` of a dozen firms is bigger than that, and splitting inside one

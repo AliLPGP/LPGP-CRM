@@ -122,7 +122,11 @@ The app degrades gracefully when Supabase env vars are absent (shows a
   brands first.
 - `index-server.ts` builds one compact record per firm, cached with
   `unstable_cache` under the `directory` tag (anything that edits companies or
-  contacts calls `updateTag`/`revalidateTag` on it). It pages past the
+  contacts calls `updateTag`/`revalidateTag` on it). Every hour-long cache
+  (the index, the fund universe, commitments, deals, filings) also carries the
+  row counts of the tables it reads in its key (`lib/supabase/version.ts`),
+  because the EDGAR ingest grows those tables from inside the database, with
+  no app code to refresh a tag. It pages past the
   PostgREST row cap with `lib/supabase/paged.ts` — use `fetchAll` for any read
   that can exceed 1,000 rows, and batch `.in()` filters.
 - Search, filters, lookalikes and the market map run **in the browser** over

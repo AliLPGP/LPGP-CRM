@@ -2,6 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { fetchAll } from "../supabase/paged";
+import { tableVersion } from "../supabase/version";
 import type { Category } from "../types";
 import { zoneOf, type Zone } from "./geo";
 import { isOperatingRole } from "./operating";
@@ -81,7 +82,10 @@ function linesText(lines: CompanyRow["service_lines"]): string | null {
     .join(" | ");
 }
 
-async function buildIndex(): Promise<DirectoryIndex> {
+// `version` is the row count of the tables the index reads: part of the cache
+// key, so growth the app did not write (the EDGAR ingest) still shows.
+async function buildIndex(version: string): Promise<DirectoryIndex> {
+  void version;
   const supabase = getReadClient();
   if (!supabase) return EMPTY_INDEX;
 
@@ -279,7 +283,7 @@ const cachedIndex = unstable_cache(buildIndex, ["directory-index-v3"], {
 export async function getDirectoryIndex(): Promise<DirectoryIndex> {
   pendingIndex = null;
   try {
-    return await cachedIndex();
+    return await cachedIndex(await tableVersion("companies", "contacts", "service_relationships", "funds"));
   } catch {
     return pendingIndex ?? EMPTY_INDEX;
   }

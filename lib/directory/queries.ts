@@ -2,6 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { chunk, fetchAll } from "../supabase/paged";
+import { tableVersion } from "../supabase/version";
 import { DIRECTORY_TAG } from "./index-server";
 
 // Reads behind Discover, lists and the richer company page. Like every read
@@ -360,7 +361,8 @@ export async function getProviderClients(companyId: string): Promise<ProviderCli
 export type NamedCommitment = DisclosedCommitment & { fund_label: string | null; lp_label: string | null; gp_label: string | null };
 
 /** Every publicly disclosed commitment, named. */
-async function buildAllDisclosedCommitments(): Promise<NamedCommitment[]> {
+async function buildAllDisclosedCommitments(version: string): Promise<NamedCommitment[]> {
+  void version; // the commitments row count, part of the cache key
   const supabase = getReadClient();
   if (!supabase) return [];
   const rows = await fetchAll<DisclosedCommitment>((from, to, first) =>
@@ -383,10 +385,11 @@ async function buildAllDisclosedCommitments(): Promise<NamedCommitment[]> {
 const cachedDisclosedCommitments = unstable_cache(buildAllDisclosedCommitments, ["all-disclosed-commitments-v1"], { tags: [DIRECTORY_TAG], revalidate: 3600 });
 
 export async function getAllDisclosedCommitments(): Promise<NamedCommitment[]> {
+  const version = await tableVersion("commitments");
   try {
-    return await cachedDisclosedCommitments();
+    return await cachedDisclosedCommitments(version);
   } catch {
-    return buildAllDisclosedCommitments();
+    return buildAllDisclosedCommitments(version);
   }
 }
 

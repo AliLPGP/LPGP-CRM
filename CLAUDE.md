@@ -225,6 +225,19 @@ already has one: company similarity from the bridge, plus the two things that
 separate deals within a company (shared events, matching amount). It only ever
 asks — adopting or creating is the person's call.
 
+**A deal makes an account** (`lib/account-sync.ts`). Every company with a
+tracker deal gets an account: created the first time (named as the directory
+spells it, linked to the firm, owned by the signer's profile via initials),
+matched by `opsMatchKey` on the account's ops spelling or name after that.
+Each deal is linked to the account with a fresh snapshot, `first_sponsored_year`
+and `ops_company` are filled from the tracker, a re-signed sponsor goes back to
+Active, and a lead confirmed against one of the deals gets its `account_id`.
+Fields people set (tier, health, notes, an owner once chosen) are never
+touched. It runs after `recordOpsDeal`/`updateRecordedDeal` for that company,
+daily from `/api/accounts/sync` (Vercel cron, `CRON_SECRET`), and from the
+Accounts page button, so a deal typed straight into the tracker still becomes
+an account within a day.
+
 ## Conventions
 
 - Reads use the Supabase **anon** client (RLS allows select). Writes (import,

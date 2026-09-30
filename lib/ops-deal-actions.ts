@@ -13,6 +13,7 @@ import {
   type OpsDealInput,
 } from "./ops";
 import { loadProfileDirectory } from "./initials";
+import { syncAccountsFromOps } from "./account-sync";
 import type { OpsDeal, OpsEvent } from "./ops-types";
 import type { OpsLinkEntity } from "./types";
 
@@ -117,6 +118,16 @@ export async function recordOpsDeal({
     }
   }
 
+  // A deal makes the company a sponsor, so it gets an account (or its
+  // existing one is brought up to date) whether or not the form linked one.
+  {
+    const supabase = getAdminClient();
+    if (supabase) {
+      const synced = await syncAccountsFromOps(supabase, { company: deal.company, linkedBy: user.id });
+      if (!synced.ok) warnings.push(`the account was not updated (${synced.error})`);
+    }
+  }
+
   clearOpsMatchCache();
   revalidatePath("/events");
   revalidatePath("/accounts");
@@ -164,6 +175,9 @@ export async function updateRecordedDeal(
         .eq("id", l.id as string);
     }
   }
+
+  // The account's snapshot and status follow the deal's new figures.
+  if (supabase) await syncAccountsFromOps(supabase, { company: res.data.company, linkedBy: user.id });
 
   clearOpsMatchCache();
   revalidatePath("/events");

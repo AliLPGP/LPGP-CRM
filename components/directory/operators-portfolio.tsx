@@ -9,7 +9,7 @@ import { PersonAvatar } from "@/components/person-avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DEAL_BASIS_LABEL, type PortfolioCompany } from "@/lib/directory/portfolio";
-import { financeLead, portcoHref, type PortcoIntel } from "@/lib/directory/portco-intel";
+import { chiefExec, financeLead, operationsLead, portcoHref, type PortcoIntel } from "@/lib/directory/portco-intel";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { addPortfolioCompany, removePortfolioCompany } from "@/lib/directory/portfolio-actions";
 import { cn } from "@/lib/utils";
@@ -219,6 +219,7 @@ export function PortfolioCompanies({
       ) : null}
       {rows.length ? (
         <>
+          <PortfolioSummary rows={rows} intel={intel} />
           <div className="flex flex-wrap gap-1.5 px-5 pt-3">
             {(
               [
@@ -241,84 +242,102 @@ export function PortfolioCompanies({
             ))}
           </div>
           <ul className="grid gap-2.5 p-5 sm:grid-cols-2">
-            {shown.slice(0, limit).map((c) => (
-              <li key={c.id} className="group relative flex gap-3 rounded-xl border bg-background/50 p-3">
-                <CompanyLogo name={c.name} domain={c.domain} size={38} />
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-1.5">
-                    {c.intel_key ? (
-                      <Link href={portcoHref(c.intel_key)} className="truncate text-[13.5px] font-medium hover:underline">
-                        {c.name}
-                      </Link>
-                    ) : (
-                      <span className="truncate text-[13.5px] font-medium">{c.name}</span>
-                    )}
-                    {c.status ? (
-                      <span
-                        className={cn(
-                          "shrink-0 rounded border px-1.5 text-[10px] font-medium",
-                          c.status === "current" ? "text-[var(--success)]" : "text-muted-foreground",
+            {shown.slice(0, limit).map((c) => {
+              const ci = c.intel_key ? intel[c.intel_key] : undefined;
+              const cfo = financeLead(ci);
+              const coo = operationsLead(ci);
+              const ceo = chiefExec(ci);
+              const facts: { k: string; v: string; title?: string; href?: string | null }[] = [];
+              if (c.deal_value != null) facts.push({ k: DEAL_BASIS_LABEL[c.deal_value_basis ?? "unspecified"], v: formatMoney(c.deal_value, c.deal_currency), href: c.deal_source_url, title: "The transaction value a page states, in its currency" });
+              if (c.equity_invested != null) facts.push({ k: "equity", v: formatMoney(c.equity_invested, c.deal_currency), href: c.deal_source_url, title: "The sponsor's own equity, as stated" });
+              if (c.stake_pct != null) facts.push({ k: "stake", v: `${c.stake_pct}%`, href: c.deal_source_url });
+              if (c.invested_year) facts.push({ k: c.exit_year ? "held" : "since", v: c.exit_year ? `${c.invested_year}–${c.exit_year}` : String(c.invested_year) });
+              else if (c.exit_year) facts.push({ k: "exited", v: String(c.exit_year) });
+              if (c.fund_name) facts.push({ k: "fund", v: c.fund_name });
+              return (
+                <li key={c.id} className="group relative rounded-xl border bg-background/50 p-3">
+                  <div className="flex items-start gap-3">
+                    <CompanyLogo name={c.name} domain={c.domain} size={38} />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        {c.intel_key ? (
+                          <Link href={portcoHref(c.intel_key)} className="truncate text-[13.5px] font-medium hover:underline">
+                            {c.name}
+                          </Link>
+                        ) : (
+                          <span className="truncate text-[13.5px] font-medium">{c.name}</span>
                         )}
-                      >
-                        {STATUS_LABEL[c.status] ?? c.status}
-                      </span>
-                    ) : null}
-                  </div>
-                  <p className="truncate text-[11.5px] text-muted-foreground">
-                    {[c.sector, c.hq, c.invested_year ? `since ${c.invested_year}` : null, c.exit_year ? `exited ${c.exit_year}` : null]
-                      .filter(Boolean)
-                      .join(" · ") || (c.domain ?? "")}
-                  </p>
-                  {c.description ? <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug text-muted-foreground">{c.description}</p> : null}
-                  {c.deal_value != null || c.equity_invested != null || c.stake_pct != null ? (
-                    <p className="mt-1 text-[11.5px] leading-snug">
-                      {c.deal_value != null ? (
-                        <>
-                          <span className="figure">{formatMoney(c.deal_value, c.deal_currency)}</span>
-                          <span className="text-muted-foreground"> {DEAL_BASIS_LABEL[c.deal_value_basis ?? "unspecified"]}</span>
-                        </>
-                      ) : null}
-                      {c.equity_invested != null ? (
-                        <>
-                          {c.deal_value != null ? <span className="text-muted-foreground"> · </span> : null}
-                          <span className="figure">{formatMoney(c.equity_invested, c.deal_currency)}</span>
-                          <span className="text-muted-foreground"> equity</span>
-                        </>
-                      ) : null}
-                      {c.stake_pct != null ? <span className="text-muted-foreground"> · {c.stake_pct}% stake</span> : null}
-                      {c.deal_source_url ? (
-                        <a href={c.deal_source_url} target="_blank" rel="noreferrer" className="ml-1 text-muted-foreground hover:text-foreground" title="The page that states the money">
-                          <ExternalLink className="inline h-3 w-3" />
+                        {c.status ? (
+                          <span className={cn("shrink-0 rounded border px-1.5 text-[10px] font-medium", c.status === "current" ? "text-[var(--success)]" : "text-muted-foreground")}>
+                            {STATUS_LABEL[c.status] ?? c.status}
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="truncate text-[11.5px] text-muted-foreground">{[c.sector, c.hq].filter(Boolean).join(" · ") || (c.domain ?? "")}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      {c.source_url ? (
+                        <a href={c.source_url} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground" title="Where this was found">
+                          <ExternalLink className="h-3.5 w-3.5" />
                         </a>
                       ) : null}
-                    </p>
+                      {c.source === "manual" ? (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            start(async () => {
+                              await removePortfolioCompany(c.id, companyId);
+                              router.refresh();
+                            })
+                          }
+                          className="text-muted-foreground opacity-0 transition-opacity hover:text-destructive group-hover:opacity-100"
+                          aria-label={`Remove ${c.name}`}
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      ) : null}
+                    </div>
+                  </div>
+                  {facts.length ? (
+                    <dl className="mt-2.5 grid gap-x-3 gap-y-1.5" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(96px, 1fr))" }}>
+                      {facts.map((f) => (
+                        <div key={f.k + f.v} className="min-w-0" title={f.title}>
+                          <dt className="text-[10px] uppercase tracking-wide text-muted-foreground">{f.k}</dt>
+                          <dd className="figure truncate text-[13px]">
+                            {f.href ? (
+                              <a href={f.href} target="_blank" rel="noreferrer" className="hover:underline" title="The page that states it">
+                                {f.v}
+                              </a>
+                            ) : (
+                              f.v
+                            )}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
                   ) : null}
-                  <PortcoFacts intel={c.intel_key ? intel[c.intel_key] : undefined} />
-                </div>
-                <div className="flex flex-col items-end gap-1">
-                  {c.source_url ? (
-                    <a href={c.source_url} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground" title="Where this was found">
-                      <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
+                  {c.co_investors?.length ? <p className="mt-1.5 text-[11.5px] text-muted-foreground">With {c.co_investors.join(", ")}</p> : null}
+                  {cfo || coo || ceo ? (
+                    <ul className="mt-2 grid gap-x-3 gap-y-1 border-t pt-2 sm:grid-cols-3">
+                      {[
+                        ["CFO", cfo],
+                        ["COO", coo],
+                        ["CEO", ceo],
+                      ].map(([role, who]) =>
+                        who && typeof who === "object" ? (
+                          <li key={String(role)} className="min-w-0 text-[11.5px]" title={who.title}>
+                            <span className="text-muted-foreground">{String(role)} </span>
+                            <span className="truncate font-medium">{who.name}</span>
+                          </li>
+                        ) : null,
+                      )}
+                    </ul>
                   ) : null}
-                  {c.source === "manual" ? (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        start(async () => {
-                          await removePortfolioCompany(c.id, companyId);
-                          router.refresh();
-                        })
-                      }
-                      className="text-muted-foreground opacity-0 transition-opacity hover:text-destructive group-hover:opacity-100"
-                      aria-label={`Remove ${c.name}`}
-                    >
-                      <X className="h-3.5 w-3.5" />
-                    </button>
-                  ) : null}
-                </div>
-              </li>
-            ))}
+                  <PortcoFacts intel={ci} />
+                  {c.description ? <p className="mt-1.5 line-clamp-2 text-[11.5px] leading-snug text-muted-foreground">{c.description}</p> : null}
+                </li>
+              );
+            })}
           </ul>
           {shown.length > limit ? (
             <div className="border-t px-5 py-2.5">
@@ -339,34 +358,113 @@ export function PortfolioCompanies({
   );
 }
 
-/** Filed figures and the finance lead, when the register or a people preview holds them. */
+/** Filed figures from the register, when the latest accounts state them. */
 function PortcoFacts({ intel }: { intel: PortcoIntel | undefined }) {
   if (!intel) return null;
-  const lead = financeLead(intel);
   const facts = [
     intel.revenue != null ? `Turnover ${formatMoney(intel.revenue, intel.currency)}` : null,
     intel.ebitda_derived != null ? `EBITDA ${formatMoney(intel.ebitda_derived, intel.currency)}` : null,
     intel.employees != null ? `${intel.employees.toLocaleString("en-US")} staff` : null,
     intel.net_assets != null ? `Net assets ${formatMoney(intel.net_assets, intel.currency)}` : null,
   ].filter(Boolean);
-  if (!facts.length && !lead) return null;
+  if (!facts.length) return null;
   return (
-    <div className="mt-1 text-[11.5px] leading-snug">
-      {facts.length ? (
-        <p>
-          {intel.accounts_url ? (
-            <a href={intel.accounts_url} target="_blank" rel="noreferrer" className="hover:underline" title={`Accounts filed at Companies House${intel.accounts_period_end ? `, to ${intel.accounts_period_end}` : ""}`}>
-              {facts.join(" · ")}
-            </a>
-          ) : (
-            facts.join(" · ")
-          )}
-        </p>
+    <p className="mt-1.5 text-[11.5px] leading-snug">
+      {intel.accounts_url ? (
+        <a href={intel.accounts_url} target="_blank" rel="noreferrer" className="hover:underline" title={`Accounts filed at Companies House${intel.accounts_period_end ? `, to ${intel.accounts_period_end}` : ""}`}>
+          {facts.join(" · ")}
+        </a>
+      ) : (
+        facts.join(" · ")
+      )}
+    </p>
+  );
+}
+
+/** The portfolio at a glance: how many, what was paid where stated (per currency, never summed across), where, and what. */
+function PortfolioSummary({ rows, intel }: { rows: PortfolioCompany[]; intel: Record<string, PortcoIntel> }) {
+  const current = rows.filter((r) => r.status === "current").length;
+  const realized = rows.filter((r) => r.status === "realized").length;
+  const byCcy = new Map<string, { total: number; n: number }>();
+  for (const r of rows) {
+    if (r.deal_value == null) continue;
+    const ccy = r.deal_currency ?? "?";
+    const e = byCcy.get(ccy) ?? { total: 0, n: 0 };
+    e.total += Number(r.deal_value);
+    e.n += 1;
+    byCcy.set(ccy, e);
+  }
+  const top = (pick: (r: PortfolioCompany) => string | null | undefined, n: number) => {
+    const m = new Map<string, number>();
+    for (const r of rows) {
+      const k = pick(r)?.trim();
+      if (k) m.set(k, (m.get(k) ?? 0) + 1);
+    }
+    return [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, n);
+  };
+  const sectors = top((r) => r.sector, 4);
+  const places = top((r) => r.hq?.split(",").pop() ?? null, 4);
+  const withLeads = rows.filter((r) => r.intel_key && intel[r.intel_key] && (financeLead(intel[r.intel_key]) || operationsLead(intel[r.intel_key]))).length;
+  const withAccounts = rows.filter((r) => r.intel_key && intel[r.intel_key]?.revenue != null).length;
+  const cell = "min-w-0 border-l px-4 py-3 first:border-l-0";
+  const label = "text-[10px] uppercase tracking-wide text-muted-foreground";
+  const bars = (items: [string, number][]) => (
+    <ul className="mt-1 space-y-0.5">
+      {items.map(([k, n]) => (
+        <li key={k} className="flex items-center gap-2 text-[11.5px]">
+          <span className="min-w-0 flex-1 truncate">{k}</span>
+          <span className="h-[5px] w-14 overflow-hidden rounded-[2px] bg-muted">
+            <span className="block h-full bg-foreground/70" style={{ width: `${Math.max(6, Math.round((n / (items[0]?.[1] || 1)) * 100))}%` }} />
+          </span>
+          <span className="figure w-5 text-right text-[11px] text-muted-foreground">{n}</span>
+        </li>
+      ))}
+    </ul>
+  );
+  return (
+    <div className="grid border-b" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))" }}>
+      <div className={cell}>
+        <div className={label}>Companies</div>
+        <div className="figure text-[22px] leading-tight">{rows.length}</div>
+        <div className="text-[11.5px] text-muted-foreground">
+          {current} current · {realized} realized{rows.length - current - realized ? ` · ${rows.length - current - realized} unstated` : ""}
+        </div>
+      </div>
+      <div className={cell} title="Transaction values as the press states them, mostly enterprise value; each currency on its own, never added together.">
+        <div className={label}>Deal value stated</div>
+        {byCcy.size ? (
+          <ul className="mt-0.5">
+            {[...byCcy.entries()].map(([ccy, e]) => (
+              <li key={ccy} className="flex items-baseline gap-2">
+                <span className="figure text-[18px] leading-tight">{formatMoney(e.total, ccy === "?" ? null : ccy)}</span>
+                <span className="text-[11px] text-muted-foreground">{e.n} deal{e.n === 1 ? "" : "s"}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="text-[11.5px] text-muted-foreground">None stated yet</div>
+        )}
+      </div>
+      <div className={cell}>
+        <div className={label}>On file per company</div>
+        <div className="mt-0.5 text-[11.5px]">
+          <span className="figure text-[18px] leading-tight">{withLeads}</span> <span className="text-muted-foreground">with a CFO or COO named</span>
+        </div>
+        <div className="text-[11.5px]">
+          <span className="figure text-[18px] leading-tight">{withAccounts}</span> <span className="text-muted-foreground">with filed accounts</span>
+        </div>
+      </div>
+      {sectors.length ? (
+        <div className={cell}>
+          <div className={label}>Sectors</div>
+          {bars(sectors)}
+        </div>
       ) : null}
-      {lead ? (
-        <p className="text-muted-foreground" title={lead.title}>
-          Finance: <span className="text-foreground">{lead.name}</span>
-        </p>
+      {places.length ? (
+        <div className={cell}>
+          <div className={label}>Where</div>
+          {bars(places)}
+        </div>
       ) : null}
     </div>
   );

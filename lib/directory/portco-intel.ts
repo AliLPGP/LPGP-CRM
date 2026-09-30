@@ -81,3 +81,20 @@ export function leadership(intel: PortcoIntel): { name: string; title: string; r
   const rank: Record<LeadRole, number> = { finance: 0, operations: 1, chief: 2, other: 3 };
   return out.sort((a, b) => rank[a.role] - rank[b.role] || (a.source === "lusha" ? -1 : 1) - (b.source === "lusha" ? -1 : 1));
 }
+
+/** The operations lead a record names: COO, operations director, head of operations. */
+export function operationsLead(intel: PortcoIntel | undefined): { name: string; title: string } | null {
+  if (!intel) return null;
+  const exec = intel.executives.find((e) => leadRole(e.title) === "operations");
+  if (exec) return { name: exec.name, title: exec.title };
+  const officer = intel.officers.find((o) => !o.resigned_on && leadRole(o.occupation) === "operations");
+  if (officer) return { name: officer.name, title: officer.occupation ?? "Director" };
+  return null;
+}
+
+/** The chief executive a record names. */
+export function chiefExec(intel: PortcoIntel | undefined): { name: string; title: string } | null {
+  if (!intel) return null;
+  const exec = intel.executives.find((e) => leadRole(e.title) === "chief");
+  return exec ? { name: exec.name, title: exec.title } : null;
+}

@@ -7,13 +7,31 @@
 
 -- Borrower names as filers write them, folded so "Acme Holdings, Inc." and
 -- "Acme Holdings Inc" are one borrower.
+-- The index on this expression goes first: an index built by an earlier
+-- edition of the fold keeps that edition's values, and a query planned over
+-- it would group by stale keys beside fresh ones. It is rebuilt below.
+drop index if exists public.credit_positions_borrower_key_idx;
 create or replace function public.borrower_key(p text) returns text
 language sql immutable as $$
-  -- A filer's own numbering of tranches ("Acme, Inc. 1", "Acme, Inc. 2") is not part of the name.
-  select btrim(regexp_replace(regexp_replace(regexp_replace(regexp_replace(lower(coalesce(p, '')), '\s+\d{1,2}$', ''), '[.,''"()]', '', 'g'), '\s+(inc|incorporated|llc|l\.?l\.?c|lp|l\.?p\.?|ltd|limited|corp|corporation|co|company|holdings?|holdco|plc|sa|bv|gmbh|sarl|s\.?à\.?r\.?l\.?|pty|ag|intermediate|parent|buyer|bidco|midco|topco|acquisition|acquisitions)(\s|$)', ' ', 'g'), '\s+', ' ', 'g'));
+  -- A filer's own numbering of tranches ("Acme, Inc. 1", "Acme, Inc. 2"), an
+  -- XBRL member suffix ("Acme, Inc. [Member]") and a parenthesised instrument
+  -- ("Acme, Inc. (Term Loan)") are not part of the name.
+  select btrim(regexp_replace(regexp_replace(regexp_replace(regexp_replace(regexp_replace(regexp_replace(lower(coalesce(p, '')), '\s*\[member\]\s*$', ''), '\s*\([^)]*\)', '', 'g'), '\s+\d{1,2}$', ''), '[.,''"()]', '', 'g'), '\s+(inc|incorporated|llc|l\.?l\.?c|lp|l\.?p\.?|ltd|limited|corp|corporation|co|company|holdings?|holdco|plc|sa|bv|gmbh|sarl|s\.?à\.?r\.?l\.?|pty|ag|intermediate|parent|buyer|bidco|midco|topco|acquisition|acquisitions)(\s|$)', ' ', 'g'), '\s+', ' ', 'g'));
 $$;
 
 create index if not exists credit_positions_borrower_key_idx on public.credit_positions (public.borrower_key(borrower));
+
+-- Some filers tag a category where a name belongs ("First Lien Debt",
+-- "Investments at Fair Value [Member]", "Sub Total Non-control/Non-affiliate
+-- investments"). Those are a book's headings, not borrowers, and stay out of
+-- the fold. Judged on the folded key, so suffixes and case do not matter.
+create or replace function public.borrower_is_category(p text) returns boolean
+language sql immutable as $$
+  -- A member label with no legal form and no instrument in brackets is a
+  -- heading (an industry, a control class), not a company.
+  select (lower(coalesce(p, '')) like '%[member]%' and p !~ '\(' and p !~* '\m(inc|llc|l\.?p\.?|lp|ltd|limited|corp|corporation|co|company|holdings?|holdco|group|gmbh|sa|bv|plc|partners|capital|trust|fund|sarl|ag|pty|bidco|midco|topco|buyer|parent|acquisition|purchaser|international|systems|technologies|services|solutions|industries|enterprises|brands|products)\M')
+      or public.borrower_key(p) ~ '^((sub ?)?total( .*)?|investments?( at fair value)?|debt investments?|(u ?s )?corporate debt|credit fund|(senior )?(secured )?(first|second|1st|2nd|third) lien( secured)?( (debt|loans?|notes?|term loans?))?|senior (secured )?(debt|loans?|notes?|term loans?)|(senior )?subordinated (debt|loans?|notes?)|unsecured (debt|loans?|notes?)|unitranche( loans?)?|equity( investments?| securities| interests?)?|preferred (equity|stock|securities)|common (equity|stock)|warrants?|structured (products?|finance|credit|notes?)|other investments?|non ?control(led)?[ /]?non ?affiliated?( investments?)?|control(led)?( investments?)?|affiliated?( investments?)?|cash( and cash)? equivalents?|money market funds?|short term investments?|joint ventures?|portfolio investments?|loans?|debt|notes?|bonds?|term loans?|revolvers?|delayed draw( term loans?)?)$';
+$$;
 
 -- One row per borrower at the lenders' latest periods. Materialised: the
 -- fold runs over every position, and the API role has three seconds per
@@ -28,13 +46,15 @@ begin
 end $$;
 create materialized view public.borrowers as
 with book as (
-  select p.*, l.name as lender_name, public.borrower_key(p.borrower) as bkey
+  select p.*, l.name as lender_name, public.borrower_key(p.borrower) as bkey,
+         -- The name as shown: the filer's spelling without its tranche number, member suffix or bracketed instrument.
+         btrim(regexp_replace(regexp_replace(regexp_replace(p.borrower, '\s*\[Member\]\s*$', '', 'i'), '\s*\([^)]*\)', '', 'g'), '\s+\d{1,2}$', '')) as shown
   from public.credit_positions p join public.credit_lenders l on l.cik = p.lender_cik
-  where p.as_of = l.latest_period and not p.is_summary
+  where p.as_of = l.latest_period and not p.is_summary and not public.borrower_is_category(p.borrower)
 )
 select
   bkey as key,
-  regexp_replace((array_agg(borrower order by length(borrower) desc))[1], '\s+\d{1,2}$', '') as borrower,
+  (array_agg(shown order by length(shown) desc))[1] as borrower,
   count(distinct lender_cik) as lenders,
   count(*) as positions,
   sum(coalesce(fair_value, 0)) as fair_value,
@@ -59,6 +79,18 @@ create unique index if not exists borrowers_key_idx on public.borrowers (key);
 create index if not exists borrowers_fair_value_idx on public.borrowers (fair_value desc nulls last);
 create index if not exists borrowers_name_idx on public.borrowers (lower(borrower));
 grant select on public.borrowers to anon, authenticated;
+
+-- The cascade above takes 0022's portco_debt with it; put it back on a
+-- database that has 0022, so re-running this file never leaves a hole.
+do $$
+begin
+  if exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'portfolio_companies' and column_name = 'intel_key') then
+    execute $v$create or replace view public.portco_debt with (security_invoker = true) as
+      select p.id as portfolio_company_id, p.gp_company_id, b.*
+      from public.portfolio_companies p
+      join public.borrowers b on b.key = p.intel_key$v$;
+  end if;
+end $$;
 
 create or replace function ingest.refresh_borrowers() returns void
 language sql as $$
@@ -109,4 +141,4 @@ language sql stable as $$
   limit least(greatest(coalesce(p_limit, 200), 1), 1000);
 $$;
 
-grant execute on function public.borrower_key(text), public.borrower_summary(), public.borrower_search(text, text, integer) to anon, authenticated;
+grant execute on function public.borrower_key(text), public.borrower_is_category(text), public.borrower_summary(), public.borrower_search(text, text, integer) to anon, authenticated;

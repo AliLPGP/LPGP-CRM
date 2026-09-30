@@ -1,6 +1,9 @@
 import Link from "next/link";
-import { getBorrowerSummary, searchBorrowers, type BorrowerFilter } from "@/lib/directory/filings-queries";
+import { financeLead, getBorrowerSummary, getPortcoIntel, portcoIntelCounts, searchBorrowers, type BorrowerFilter } from "@/lib/directory/filings-queries";
+import { formatMoney } from "@/lib/directory/intelligence-types";
+import { getSessionUser } from "@/lib/auth";
 import { Columns } from "@/components/intel/charts";
+import { EnrichPortcosButton } from "@/components/intel/research-buttons";
 import { IntelShell } from "@/components/intel/shell";
 import { dateLabel } from "@/components/intel/tables";
 import { Box, Empty, Stat, StatStrip, Tag } from "@/components/intel/ui";
@@ -21,7 +24,9 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
   const { q, f } = await searchParams;
   const query = (q ?? "").trim();
   const filter = (FILTERS.some((x) => x.key === f) ? f : "") as BorrowerFilter;
-  const [summary, rows] = await Promise.all([getBorrowerSummary(), searchBorrowers(query, filter)]);
+  const [summary, rows, intelCounts, user] = await Promise.all([getBorrowerSummary(), searchBorrowers(query, filter), portcoIntelCounts(), getSessionUser()]);
+  const intel = await getPortcoIntel(rows.map((r) => r.key));
+  const enrichReady = user?.role === "admin" && Boolean(process.env.COMPANIES_HOUSE_API_KEY || process.env.LUSHA_API_KEY);
   const href = (nf: BorrowerFilter) => `/database/borrowers?${[query ? `q=${encodeURIComponent(query)}` : "", nf ? `f=${nf}` : ""].filter(Boolean).join("&")}`;
 
   return (
@@ -31,6 +36,8 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
       title="Borrowers"
       description="The private companies behind the loan books: who lends to each, how much, at what spread, whether any of it is paid in kind, when it matures, and how the lenders mark it. Folded from every parsed lender's latest schedule of investments; every figure is one a lender tagged in its own filing."
       actions={
+        <div className="flex flex-wrap items-center gap-2">
+        <EnrichPortcosButton ready={enrichReady} />
         <form action="/database/borrowers" className="flex items-center gap-1.5">
           {filter ? <input type="hidden" name="f" value={filter} /> : null}
           <input id="borrower-q" name="q" defaultValue={query} placeholder="Company name…" className="h-8 w-56 rounded-[4px] border bg-card px-2.5 text-[12px] outline-none focus:border-foreground" />
@@ -38,6 +45,7 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
             Search
           </button>
         </form>
+        </div>
       }
     >
       <StatStrip>
@@ -46,6 +54,7 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
         <Stat label="Paying in kind" value={summary.pik.toLocaleString("en-US")} basis="a PIK component tagged" href={href("pik")} />
         <Stat label="Maturing" value={summary.maturing.toLocaleString("en-US")} basis="within 18 months" href={href("maturing")} />
         <Stat label="Several lenders" value={summary.clubbed.toLocaleString("en-US")} basis="held by more than one" href={href("clubbed")} />
+        <Stat label="Filed accounts" value={intelCounts.accounts.toLocaleString("en-US")} basis={`${intelCounts.rows.toLocaleString("en-US")} on the UK register`} defn="Borrowers and portfolio companies whose latest accounts filed at Companies House state a turnover or operating profit." />
       </StatStrip>
 
       <div className="flex flex-wrap gap-1.5">
@@ -67,6 +76,8 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                     <th>Instruments</th>
                     <th className="num">Lenders</th>
                     <th className="num">Fair value</th>
+                    <th className="num defn" data-tip="Turnover in the latest accounts filed at Companies House, in the filer's currency.">Turnover</th>
+                    <th className="num defn" data-tip="Operating profit plus depreciation and amortisation, each as filed; arithmetic, not a stated figure. Blank when any of the three is not tagged.">EBITDA</th>
                     <th className="num">Mark</th>
                     <th className="num">Spread</th>
                     <th className="num">Rate</th>
@@ -82,10 +93,26 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                           {b.borrower}
                         </Link>
                         <div className="truncate text-[11px] text-muted-foreground">{b.lender_names?.slice(0, 3).join(" · ")}{(b.lender_names?.length ?? 0) > 3 ? " …" : ""}</div>
+                        {financeLead(intel.get(b.key)) ? (
+                          <div className="truncate text-[11px]" title={financeLead(intel.get(b.key))!.title}>
+                            <span className="text-muted-foreground">Finance: </span>
+                            {financeLead(intel.get(b.key))!.name}
+                          </div>
+                        ) : null}
                       </td>
                       <td className="max-w-[220px] text-[11.5px] text-muted-foreground">{b.instruments ?? "—"}</td>
                       <td className="num">{b.lenders}</td>
                       <td className="num">{formatUsd(b.fair_value ?? 0)}</td>
+                      <td className="num">
+                        {intel.get(b.key)?.revenue != null ? (
+                          <a href={intel.get(b.key)!.accounts_url ?? undefined} target="_blank" rel="noreferrer" className="hover:underline" title={`Accounts to ${intel.get(b.key)!.accounts_period_end ?? "latest period"}`}>
+                            {formatMoney(intel.get(b.key)!.revenue, intel.get(b.key)!.currency)}
+                          </a>
+                        ) : (
+                          "—"
+                        )}
+                      </td>
+                      <td className="num">{intel.get(b.key)?.ebitda_derived != null ? formatMoney(intel.get(b.key)!.ebitda_derived, intel.get(b.key)!.currency) : "—"}</td>
                       <td className={`num ${b.mark != null && b.mark < 0.9 ? "text-[var(--destructive)]" : ""}`}>{b.mark != null ? `${Math.round(b.mark * 100)}` : "—"}</td>
                       <td className="num">{b.spread != null ? `${Math.round(b.spread * 100)} bp` : "—"}</td>
                       <td className="num">{b.rate != null ? `${b.rate.toFixed(2)}%` : "—"}</td>

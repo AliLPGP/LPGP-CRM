@@ -1,7 +1,7 @@
 import "server-only";
-import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { fetchAll } from "../supabase/paged";
+import { bigCache } from "../supabase/big-cache";
 import { tableVersion } from "../supabase/version";
 import type { Category } from "../types";
 import { DIRECTORY_TAG, getDirectoryIndex } from "./index-server";
@@ -122,7 +122,7 @@ async function build(version: string): Promise<PackedFundUniverse> {
   return { generatedAt: new Date().toISOString(), brands, managers, funds };
 }
 
-const cached = unstable_cache(build, ["fund-universe-v2"], { tags: [DIRECTORY_TAG], revalidate: 3600 });
+const cached = bigCache("fund-universe-v3", build, { tags: [DIRECTORY_TAG], revalidate: 3600 });
 
 /** Every fund on file, packed. Never throws. */
 export async function getFundUniverse(): Promise<PackedFundUniverse> {

@@ -9,6 +9,8 @@ import { PersonAvatar } from "@/components/person-avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { PortfolioCompany } from "@/lib/directory/portfolio";
+import { financeLead, type PortcoIntel } from "@/lib/directory/portco-intel";
+import { formatMoney } from "@/lib/directory/intelligence-types";
 import { addPortfolioCompany, removePortfolioCompany } from "@/lib/directory/portfolio-actions";
 import { cn } from "@/lib/utils";
 
@@ -129,10 +131,13 @@ export function PortfolioCompanies({
   companyId,
   rows,
   aiReady,
+  intel = {},
 }: {
   companyId: string;
   rows: PortfolioCompany[];
   aiReady: boolean;
+  /** What is on file about each company (by `intel_key`): filed accounts, officers, executives. */
+  intel?: Record<string, PortcoIntel>;
 }) {
   const router = useRouter();
   const [pending, start] = useTransition();
@@ -259,6 +264,7 @@ export function PortfolioCompanies({
                       .join(" · ") || (c.domain ?? "")}
                   </p>
                   {c.description ? <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug text-muted-foreground">{c.description}</p> : null}
+                  <PortcoFacts intel={c.intel_key ? intel[c.intel_key] : undefined} />
                 </div>
                 <div className="flex flex-col items-end gap-1">
                   {c.source_url ? (
@@ -301,5 +307,38 @@ export function PortfolioCompanies({
         </p>
       )}
     </section>
+  );
+}
+
+/** Filed figures and the finance lead, when the register or a people preview holds them. */
+function PortcoFacts({ intel }: { intel: PortcoIntel | undefined }) {
+  if (!intel) return null;
+  const lead = financeLead(intel);
+  const facts = [
+    intel.revenue != null ? `Turnover ${formatMoney(intel.revenue, intel.currency)}` : null,
+    intel.ebitda_derived != null ? `EBITDA ${formatMoney(intel.ebitda_derived, intel.currency)}` : null,
+    intel.employees != null ? `${intel.employees.toLocaleString("en-US")} staff` : null,
+    intel.net_assets != null ? `Net assets ${formatMoney(intel.net_assets, intel.currency)}` : null,
+  ].filter(Boolean);
+  if (!facts.length && !lead) return null;
+  return (
+    <div className="mt-1 text-[11.5px] leading-snug">
+      {facts.length ? (
+        <p>
+          {intel.accounts_url ? (
+            <a href={intel.accounts_url} target="_blank" rel="noreferrer" className="hover:underline" title={`Accounts filed at Companies House${intel.accounts_period_end ? `, to ${intel.accounts_period_end}` : ""}`}>
+              {facts.join(" · ")}
+            </a>
+          ) : (
+            facts.join(" · ")
+          )}
+        </p>
+      ) : null}
+      {lead ? (
+        <p className="text-muted-foreground" title={lead.title}>
+          Finance: <span className="text-foreground">{lead.name}</span>
+        </p>
+      ) : null}
+    </div>
   );
 }

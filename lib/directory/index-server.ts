@@ -1,7 +1,7 @@
 import "server-only";
-import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { fetchAll } from "../supabase/paged";
+import { bigCache } from "../supabase/big-cache";
 import { tableVersion } from "../supabase/version";
 import type { Category } from "../types";
 import { zoneOf, type Zone } from "./geo";
@@ -271,7 +271,9 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
 
 let pendingIndex: DirectoryIndex | null = null;
 
-const cachedIndex = unstable_cache(buildIndex, ["directory-index-v3"], {
+// Several megabytes of records: sliced for the data cache and kept in
+// memory per instance (lib/supabase/big-cache.ts).
+const cachedIndex = bigCache("directory-index-v4", buildIndex, {
   tags: [DIRECTORY_TAG],
   revalidate: 3600,
 });

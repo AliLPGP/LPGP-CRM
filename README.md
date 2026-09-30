@@ -121,6 +121,7 @@ so it's safe to re-run.
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → Settings → API | Anon key (reads) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Settings → API | Server writes (import/edits) — **secret** |
 | `LUSHA_API_KEY` | Lusha dashboard → API | In-app lead import — **secret** |
+| `COMPANIES_HOUSE_API_KEY` | _optional_ — developer.company-information.service.gov.uk | Filed accounts and officers of UK portfolio companies and borrowers — **secret** |
 | `ADMIN_EMAILS` | _optional_ | Comma-separated super admins |
 | `OPS_PANEL_URL` | _optional_ | The tracker's origin, no trailing slash |
 | `OPS_BRIDGE_KEY` | _optional_ | Read secret, **identical on both apps** — **secret** |

@@ -17,6 +17,10 @@
     {
       "path": "/api/accounts/sync",
       "schedule": "50 6 * * *"
+    },
+    {
+      "path": "/api/directory/portcos/enrich",
+      "schedule": "10 7 * * *"
     }
   ]
 }

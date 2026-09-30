@@ -4,6 +4,7 @@ import path from "node:path";
 import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { chunk, fetchAll } from "../supabase/paged";
+import { bigCache } from "../supabase/big-cache";
 import { tableVersion } from "../supabase/version";
 import { ASSET_CLASSES, classOfGpType, classStatedByFundName, isAssetClassKey, type AssetClassKey } from "./asset-classes";
 import type { Deal, Signal, SportsInvestor, SportsTeam, TeamOwner } from "./intelligence-types";
@@ -73,16 +74,18 @@ async function buildAllDeals(assetClass: AssetClassKey | "", version: string): P
 // jobs and the dataset loader refresh the intelligence tag when they write;
 // the EDGAR ingest writes from inside the database, so the row count rides in
 // the key and a stale copy is dropped the moment a deal lands.
-const cachedAllDeals = unstable_cache(buildAllDeals, ["all-deals-v1"], { tags: [INTEL_TAG], revalidate: 3600 });
+const cachedAllDeals = bigCache("all-deals-v2", (version) => buildAllDeals("", version), { tags: [INTEL_TAG], revalidate: 3600 });
 
 /** Every deal, for the Deals page, or every deal of one class. */
 export async function getAllDeals(assetClass?: AssetClassKey | null): Promise<Deal[]> {
   const version = await tableVersion("deals");
+  let all: Deal[];
   try {
-    return await cachedAllDeals(assetClass ?? "", version);
+    all = await cachedAllDeals(version);
   } catch {
-    return buildAllDeals(assetClass ?? "", version);
+    all = await buildAllDeals("", version);
   }
+  return assetClass ? all.filter((d) => d.asset_class === assetClass) : all;
 }
 
 export async function getDeal(id: string): Promise<(Deal & { created_at: string; added_by: string | null }) | null> {

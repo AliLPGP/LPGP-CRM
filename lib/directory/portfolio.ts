@@ -17,6 +17,8 @@ export type PortfolioCompany = {
   source: string;
   source_url: string | null;
   created_at: string;
+  /** `borrower_key(name)`, the key shared with the loan books and `portco_intel` (migration 0022). */
+  intel_key?: string | null;
 };
 
 export function portfolioKey(gpId: string, name: string): string {

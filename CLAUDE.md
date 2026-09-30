@@ -133,19 +133,47 @@ boundaries and keeps comment text ASCII.
   the directory already had, never renaming or retyping them.
 - **Borrowers** (0021) — `borrowers`, a materialised view folding every
   parsed lender's latest positions into one row per borrower
-  (`borrower_key` strips legal suffixes and a filer's tranche numbering):
+  (`borrower_key` strips legal suffixes, a filer's tranche numbering, an
+  XBRL `[Member]` suffix and a bracketed instrument; `borrower_is_category`
+  keeps a book's headings — "First Lien Debt", an industry member, a
+  subtotal — out of the fold):
   lenders, fair value, principal, cost, mark, fair-value-weighted spread and
   rate, PIK, next maturity, instruments. `borrower_summary()` and
   `borrower_search(q, filter)` serve `/database/borrowers` inside the API
   role's three-second statement limit; pg_cron refreshes the view every half
   hour (`ingest.refresh_borrowers`).
+- **Portfolio-company intelligence** (0022) — `portco_intel`, one row per
+  company key (`borrower_key(name)`, which `portfolio_companies.intel_key`
+  now carries as a generated column, so a sponsor's portfolio company and a
+  lender's borrower that are the same firm read one record): the UK
+  register's facts and officers, the latest filed accounts as their iXBRL
+  tags them (turnover, operating profit, depreciation, amortisation, PBT,
+  headcount, net assets, cash, creditors), `ebitda_derived` as arithmetic on
+  three stated figures and null when any is missing, and the executives a
+  Lusha preview names for the domain (names, titles, LinkedIn — no reveals).
+  `lib/directory/companies-house.ts` is the register client
+  (`COMPANIES_HOUSE_API_KEY`, paced under its 600-per-five-minutes limit);
+  `portco-enrich.ts` walks portfolio companies and the largest borrowers,
+  skipping anything refreshed within ninety days; `/api/directory/portcos/
+  enrich` runs it daily (cron) or from the Borrowers desk (admin). The
+  Borrowers desk and a GP's portfolio tab show turnover, EBITDA and the
+  finance lead, each linked to the filing. `portco_debt` joins a sponsor's
+  portfolio companies to the loan books.
 - **Speed** — the API roles carry short statement timeouts (anon 3 s), so
   anything that aggregates a large table lives in SQL (`credit_book_summary`,
   `offering_stats`, `borrower_summary`), never in the app over paged rows.
   `table_versions()` fingerprints tables from planner statistics for cache
-  keys. The Funds page ships its best-documented 3,000 rows and pulls the
-  rest from `/api/directory/funds` (edge-cached) after paint. Vercel
-  functions run in `dub1`, beside the Supabase project.
+  keys. Next's data cache refuses any entry over 2 MB (it warns and serves
+  the build uncached), so the directory index, the fund universe and the
+  commitment and deal ledgers go through `lib/supabase/big-cache.ts`: the
+  value is sliced into 1 MB data-cache entries under a manifest, one build
+  serves every slice of a version, and a warm function instance keeps the
+  parsed value in memory and skips the data cache altogether. Anything else
+  that can pass 2 MB must use it too, or every request rebuilds it. Every
+  desk route has a `loading.tsx` so a click answers at once. The Funds page
+  ships its best-documented 3,000 rows and pulls the rest from
+  `/api/directory/funds` (edge-cached) after paint. Vercel functions run in
+  `dub1`, beside the Supabase project.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).

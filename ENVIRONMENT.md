@@ -110,6 +110,25 @@ each GP's domain for operating partners, operating executives and
 value-creation leads. Search previews only -- names, titles, LinkedIn -- at
 about one Lusha credit per 25 people; no email or phone is revealed.
 
+### Companies House -- optional
+
+| Variable | Value | Without it |
+| --- | --- | --- |
+| `COMPANIES_HOUSE_API_KEY` | A REST API key from developer.company-information.service.gov.uk (free; create an application, key type REST) | Portfolio companies and borrowers show no filed accounts or officers |
+
+The UK register's public API. With the key set, the daily
+`/api/directory/portcos/enrich` cron (and the "Enrich from Companies House"
+button on the Borrowers desk, admins only) looks each UK portfolio company and
+borrower up on the register and reads its latest filed accounts: turnover,
+operating profit, depreciation and amortisation (so an EBITDA that is
+arithmetic on stated figures), profit before tax, headcount, net assets, cash
+and creditors, each linked to the filing, plus the current officers. With
+`LUSHA_API_KEY` also set, the same run previews the finance and operating
+executives for the company's domain (names and titles; no email or phone is
+revealed). Nothing is estimated: a company the register cannot match, or an
+account the filer did not tag, stays blank. Server-only; the key is sent as
+Basic auth to the register and nowhere else.
+
 The same `ANTHROPIC_API_KEY` runs the **intelligence research jobs**, all
 with web search on the server and every figure saved with its page:
 

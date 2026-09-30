@@ -1,7 +1,7 @@
 import "server-only";
-import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { chunk, fetchAll } from "../supabase/paged";
+import { bigCache } from "../supabase/big-cache";
 import { tableVersion } from "../supabase/version";
 import { DIRECTORY_TAG } from "./index-server";
 
@@ -391,7 +391,7 @@ async function buildAllDisclosedCommitments(version: string): Promise<NamedCommi
 // Every workbook commitment, named — pages past the row cap and resolves
 // names in batches, so it is built once per import (the importer refreshes
 // the directory tag) rather than on every asset-class request.
-const cachedDisclosedCommitments = unstable_cache(buildAllDisclosedCommitments, ["all-disclosed-commitments-v1"], { tags: [DIRECTORY_TAG], revalidate: 3600 });
+const cachedDisclosedCommitments = bigCache("all-disclosed-commitments-v2", buildAllDisclosedCommitments, { tags: [DIRECTORY_TAG], revalidate: 3600 });
 
 export async function getAllDisclosedCommitments(): Promise<NamedCommitment[]> {
   const version = await tableVersion("commitments");

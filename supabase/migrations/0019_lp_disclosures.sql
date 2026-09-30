@@ -46,17 +46,21 @@ $$;
 -- ("Blackstone Real Estate Debt Strategies V" -> Blackstone Real Estate, not
 -- Blackstone); then a first word that names exactly one firm, or exactly one
 -- manager when several books share it.
-create or replace function ingest.match_firm(p_name text, out company_id uuid, out method text)
+-- p_books limits the match to some categories: a fund's manager is a GP, so
+-- fund names are matched against managers only ("Lincoln Plaza Fund" must
+-- not land on an insurer that happens to be called Lincoln).
+drop function if exists ingest.match_firm(text);
+create or replace function ingest.match_firm(p_name text, p_books text[] default array['GP', 'SP', 'LP'], out company_id uuid, out method text)
 language plpgsql stable as $$
 declare w text; n int; q text;
 begin
   if p_name is null then return; end if;
   q := lower(regexp_replace(btrim(p_name), '\s+', ' ', 'g'));
-  select id into company_id from public.companies where lower(name) = q limit 1;
+  select id into company_id from public.companies where lower(name) = q and category = any (p_books) limit 1;
   if company_id is not null then method := 'exact'; return; end if;
   -- Longest directory name that is a prefix of the given name, on a word boundary.
   select id into company_id from public.companies
-   where length(name) >= 5 and category in ('GP', 'SP', 'LP')
+   where length(name) >= 5 and category = any (p_books)
      and q like lower(regexp_replace(name, '\s+', ' ', 'g')) || ' %'
    order by length(name) desc limit 1;
   if company_id is not null then method := 'prefix'; return; end if;
@@ -67,9 +71,9 @@ begin
   end if;
   select count(*), (array_agg(id))[1] into n, company_id
     from public.companies
-   where lower(split_part(regexp_replace(name, '^(the)\s+', '', 'i'), ' ', 1)) = w and category in ('GP', 'SP', 'LP');
+   where lower(split_part(regexp_replace(name, '^(the)\s+', '', 'i'), ' ', 1)) = w and category = any (p_books);
   if n = 1 then method := 'brand'; return; end if;
-  if n > 1 then
+  if n > 1 and 'GP' = any (p_books) then
     select count(*), (array_agg(id))[1] into n, company_id
       from public.companies
      where lower(split_part(regexp_replace(name, '^(the)\s+', '', 'i'), ' ', 1)) = w and category = 'GP';
@@ -87,10 +91,10 @@ declare m record;
 begin
   select id, company_id into fund_id, gp_company_id from public.funds where lower(name) = lower(btrim(p_name)) order by (company_id is not null) desc, created_at limit 1;
   if fund_id is not null then
-    if gp_company_id is null then select company_id into gp_company_id from ingest.match_firm(p_name); end if;
+    if gp_company_id is null then select company_id into gp_company_id from ingest.match_firm(p_name, array['GP']); end if;
     return;
   end if;
-  select * into m from ingest.match_firm(p_name);
+  select * into m from ingest.match_firm(p_name, array['GP']);
   gp_company_id := m.company_id;
   insert into public.funds (external_key, name, company_id, vintage_year, strategy, source)
   values ('lpfund:' || md5(lower(btrim(p_name))), btrim(p_name), gp_company_id, p_vintage, p_class, 'lp_disclosure')

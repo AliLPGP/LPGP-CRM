@@ -362,3 +362,33 @@ export async function portcoIntelCounts(): Promise<{ rows: number; accounts: num
   ]);
   return { rows: all.count ?? 0, accounts: acc.count ?? 0, executives: ex.count ?? 0 };
 }
+
+/** The sponsors that hold a company, by its key. */
+export async function portcoHolders(key: string): Promise<{ id: string; gp_company_id: string; gp_name: string | null; gp_domain: string | null; name: string; domain: string | null; sector: string | null; hq: string | null; status: string | null; invested_year: number | null; exit_year: number | null; fund_name: string | null; description: string | null; source_url: string | null }[]> {
+  const supabase = getReadClient();
+  if (!supabase || !key) return [];
+  const { data, error } = await supabase.from("portfolio_companies").select("id, gp_company_id, name, domain, sector, hq, status, invested_year, exit_year, fund_name, description, source_url").eq("intel_key", key).limit(50);
+  if (error || !data?.length) return [];
+  const rows = data as { id: string; gp_company_id: string; name: string; domain: string | null; sector: string | null; hq: string | null; status: string | null; invested_year: number | null; exit_year: number | null; fund_name: string | null; description: string | null; source_url: string | null }[];
+  const { data: gps } = await supabase.from("companies").select("id, name, domain").in("id", [...new Set(rows.map((r) => r.gp_company_id))]);
+  const byId = new Map(((gps as { id: string; name: string; domain: string | null }[] | null) ?? []).map((g) => [g.id, g]));
+  return rows.map((r) => ({ ...r, gp_name: byId.get(r.gp_company_id)?.name ?? null, gp_domain: byId.get(r.gp_company_id)?.domain ?? null }));
+}
+
+/** One borrower row by key, or null. */
+export async function getBorrower(key: string): Promise<Borrower | null> {
+  const supabase = getReadClient();
+  if (!supabase || !key) return null;
+  const { data, error } = await supabase.from("borrowers").select("*").eq("key", key).maybeSingle();
+  if (error || !data) return null;
+  return data as Borrower;
+}
+
+/** A borrower's positions across every lender's latest book, by the same fold the view uses. */
+export async function borrowerPositions(key: string, limit = 200): Promise<BookPosition[]> {
+  const supabase = getReadClient();
+  if (!supabase || !key) return [];
+  const { data, error } = await supabase.rpc("borrower_positions", { p_key: key, p_limit: limit });
+  if (error || !data) return [];
+  return data as BookPosition[];
+}

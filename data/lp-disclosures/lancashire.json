@@ -1,0 +1,65 @@
+{
+ "lp_name": "Lancashire County Pension Fund",
+ "lp_type": "LGPS Fund",
+ "country": "United Kingdom",
+ "website": "https://www.lancashirecountypensionfund.org.uk",
+ "source_url": "https://lgpsboard.org/wp-content/uploads/2025/11/Lancashire2425_final.pdf",
+ "source_title": "Lancashire County Pension Fund Annual Report 2024/25 \u2014 note 8 Investments analysed by fund manager (LPPI pooled vehicles)",
+ "as_of": "2025-03-31",
+ "currency": "GBP",
+ "asset_class": null,
+ "rows": [
+  {
+   "fund_name": "LPPI Private Equity Fund",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": null,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": 692900000,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 39
+  },
+  {
+   "fund_name": "LPPI Global Infrastructure Fund",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": null,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": 1626400000,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "infrastructure",
+   "page": 39
+  },
+  {
+   "fund_name": "LPPI Credit Investments",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": null,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": 2007300000,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": null,
+   "page": 39
+  },
+  {
+   "fund_name": "LPPI Real Estate Fund",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": null,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": 852200000,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "real_estate",
+   "page": 39
+  }
+ ]
+}

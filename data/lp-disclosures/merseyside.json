@@ -1,0 +1,78 @@
+{
+ "lp_name": "Merseyside Pension Fund",
+ "lp_type": "LGPS Fund",
+ "country": "United Kingdom",
+ "website": "https://mpfmembers.org.uk",
+ "source_url": "https://lgpsboard.org/wp-content/uploads/2026/03/Merseyside-2425-final.pdf",
+ "source_title": "Merseyside Pension Fund Report & Accounts 2024/25 \u2014 Table 5, Top 5 Largest Infrastructure Holdings on Committed Capital Basis",
+ "as_of": "2025-03-31",
+ "currency": "GBP",
+ "asset_class": "infrastructure",
+ "rows": [
+  {
+   "fund_name": "GLIL",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": 487500000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "infrastructure",
+   "page": 71
+  },
+  {
+   "fund_name": "NextPower UK 1 GP Limited",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": 50000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "infrastructure",
+   "page": 71
+  },
+  {
+   "fund_name": "MEF4 Monet Co-Invest SLP",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": 46410000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "infrastructure",
+   "page": 71
+  },
+  {
+   "fund_name": "InfraBridge Global Infrastructure Fund I",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": 39140000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "infrastructure",
+   "page": 71
+  },
+  {
+   "fund_name": "Capital Dynamics Clean Energy UK",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": 30000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "infrastructure",
+   "page": 71
+  }
+ ]
+}

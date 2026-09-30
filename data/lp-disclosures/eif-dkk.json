@@ -1,0 +1,65 @@
+{
+ "lp_name": "European Investment Fund (EIF)",
+ "lp_type": "Development Finance Institution",
+ "country": "Luxembourg",
+ "website": "https://www.eif.org",
+ "source_url": "https://www.eif.org/files/calls/ieu-equity-visibility-report-financial-intermediaries.pdf",
+ "source_title": "InvestEU - Portfolio Equity - List of Financial Intermediaries as of 31/12/2025 (DKK commitments)",
+ "as_of": "2025-12-31",
+ "currency": "DKK",
+ "asset_class": null,
+ "rows": [
+  {
+   "fund_name": "Capidea Kapital IV KS",
+   "gp_name": "Capidea Management APS",
+   "vintage_year": null,
+   "commitment": 225000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "private_equity",
+   "page": 2
+  },
+  {
+   "fund_name": "Den Sociale Kapitalfond Invest II KS",
+   "gp_name": "Den Sociale Kapitalfond Invest Management Aps",
+   "vintage_year": null,
+   "commitment": 150000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "venture_capital",
+   "page": 2
+  },
+  {
+   "fund_name": "PSV Hafnium Fund I KS",
+   "gp_name": "PSV Hafnium Management ApS",
+   "vintage_year": null,
+   "commitment": 185000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": null,
+   "page": 2
+  },
+  {
+   "fund_name": "UV Fund II KS",
+   "gp_name": "Unconventional Ventures ApS",
+   "vintage_year": null,
+   "commitment": 149214000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "venture_capital",
+   "page": 2
+  }
+ ]
+}

@@ -9,7 +9,8 @@
 -- "Acme Holdings Inc" are one borrower.
 create or replace function public.borrower_key(p text) returns text
 language sql immutable as $$
-  select btrim(regexp_replace(regexp_replace(regexp_replace(lower(coalesce(p, '')), '[.,''"()]', '', 'g'), '\s+(inc|incorporated|llc|l\.?l\.?c|lp|l\.?p\.?|ltd|limited|corp|corporation|co|company|holdings?|holdco|plc|sa|bv|gmbh|sarl|s\.?à\.?r\.?l\.?|pty|ag|intermediate|parent|buyer|bidco|midco|topco|acquisition|acquisitions)(\s|$)', ' ', 'g'), '\s+', ' ', 'g'));
+  -- A filer's own numbering of tranches ("Acme, Inc. 1", "Acme, Inc. 2") is not part of the name.
+  select btrim(regexp_replace(regexp_replace(regexp_replace(regexp_replace(lower(coalesce(p, '')), '\s+\d{1,2}$', ''), '[.,''"()]', '', 'g'), '\s+(inc|incorporated|llc|l\.?l\.?c|lp|l\.?p\.?|ltd|limited|corp|corporation|co|company|holdings?|holdco|plc|sa|bv|gmbh|sarl|s\.?à\.?r\.?l\.?|pty|ag|intermediate|parent|buyer|bidco|midco|topco|acquisition|acquisitions)(\s|$)', ' ', 'g'), '\s+', ' ', 'g'));
 $$;
 
 create index if not exists credit_positions_borrower_key_idx on public.credit_positions (public.borrower_key(borrower));
@@ -19,7 +20,8 @@ create index if not exists credit_positions_borrower_key_idx on public.credit_po
 -- statement; pg_cron refreshes it every half hour, and the ingest's
 -- derive job refreshes it after a queue run.
 drop view if exists public.borrowers;
-create materialized view if not exists public.borrowers as
+drop materialized view if exists public.borrowers cascade; -- derived; rebuilt on every run so a changed fold takes effect
+create materialized view public.borrowers as
 with book as (
   select p.*, l.name as lender_name, public.borrower_key(p.borrower) as bkey
   from public.credit_positions p join public.credit_lenders l on l.cik = p.lender_cik
@@ -27,7 +29,7 @@ with book as (
 )
 select
   bkey as key,
-  (array_agg(borrower order by length(borrower) desc))[1] as borrower,
+  regexp_replace((array_agg(borrower order by length(borrower) desc))[1], '\s+\d{1,2}$', '') as borrower,
   count(distinct lender_cik) as lenders,
   count(*) as positions,
   sum(coalesce(fair_value, 0)) as fair_value,

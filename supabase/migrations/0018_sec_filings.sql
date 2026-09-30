@@ -634,9 +634,10 @@ begin
     from public.fund_offerings fo, jsonb_array_elements(fo.placement_agents) a
     where fo.is_pooled and fo.gp_company_id is not null and coalesce(a->>'name', '') <> ''
   ), grouped as (
-    select gp_company_id, bd, min(agent) as agent, count(distinct issuer_name) as fund_count,
+    -- One row per GP and agent brand however the filings spell it.
+    select gp_company_id, min(bd) as bd, min(agent) as agent, count(distinct issuer_name) as fund_count,
            (array_agg(distinct issuer_name))[1:5] as examples, max(source_url) as source_url, max(filing_date) as filed
-    from agents group by gp_company_id, bd
+    from agents group by gp_company_id, lower(bd)
   ), up as (
     insert into public.service_relationships as sr (client_company_id, provider_company_id, role, external_key, provider_key, provider_brand, fund_count, fund_examples, source, source_url, filed)
     select g.gp_company_id, (select company_id from ingest.match_firm(g.bd)), 'placement_agent',

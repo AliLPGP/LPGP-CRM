@@ -103,10 +103,12 @@ create table if not exists public.credit_positions (
   shares              numeric,
   currency            text not null default 'USD',
   dims                jsonb not null default '[]'::jsonb, -- every explicit dimension member on the context
+  is_summary          boolean not null default false,  -- a filer's per-borrower total, beside the positions it sums
   borrower_company_id uuid references public.companies (id) on delete set null,
   source_url          text not null,
   created_at          timestamptz not null default now()
 );
+alter table public.credit_positions add column if not exists is_summary boolean not null default false;
 create index if not exists credit_positions_lender_idx on public.credit_positions (lender_cik, as_of desc);
 create index if not exists credit_positions_borrower_idx on public.credit_positions (lower(borrower));
 create index if not exists credit_positions_asof_idx on public.credit_positions (as_of desc);
@@ -470,7 +472,18 @@ begin
     pct_net_assets = coalesce(excluded.pct_net_assets, cp.pct_net_assets), shares = coalesce(excluded.shares, cp.shares), dims = excluded.dims, source_url = excluded.source_url;
   get diagnostics n_pos = row_count;
 
-  select count(*), sum(fair_value) into n_pos, v_fv from public.credit_positions where lender_cik = v_cik and as_of = (select max(as_of) from public.credit_positions where lender_cik = v_cik);
+  -- Some filers also tag a total per borrower (no instrument in the
+  -- identifier) beside the instruments it sums; mark those so nothing counts
+  -- a loan twice.
+  update public.credit_positions p
+     set is_summary = (p.instrument is null and exists (
+           select 1 from public.credit_positions q
+            where q.lender_cik = p.lender_cik and q.as_of = p.as_of and q.instrument is not null
+              and lower(q.borrower) = lower(p.borrower) and q.id <> p.id))
+   where p.lender_cik = v_cik and p.accession_no = p_key;
+
+  select count(*), sum(fair_value) into n_pos, v_fv from public.credit_positions
+   where lender_cik = v_cik and not is_summary and as_of = (select max(as_of) from public.credit_positions where lender_cik = v_cik);
   update public.credit_lenders l
      set latest_accession = case when v_period >= coalesce(l.latest_period, '1900-01-01') then p_key else l.latest_accession end,
          latest_form = case when v_period >= coalesce(l.latest_period, '1900-01-01') then p_meta->>'form' else l.latest_form end,

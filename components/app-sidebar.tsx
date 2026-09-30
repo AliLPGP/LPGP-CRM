@@ -81,11 +81,12 @@ const DATA: NavItem[] = [
     href: "/database/asset-classes",
     label: "Asset classes",
     icon: LayoutGrid,
-    also: ["/database/sports", "/database/lenders"],
+    also: ["/database/sports", "/database/lenders", "/database/borrowers"],
     children: [
       { href: "/database/asset-classes/private-equity", label: "Private equity" },
       { href: "/database/asset-classes/private-credit", label: "Private credit" },
       { href: "/database/lenders", label: "Loan books" },
+      { href: "/database/borrowers", label: "Borrowers" },
       { href: "/database/asset-classes/venture-capital", label: "Venture capital" },
       { href: "/database/asset-classes/real-estate", label: "Real estate" },
       { href: "/database/asset-classes/infrastructure", label: "Infrastructure" },

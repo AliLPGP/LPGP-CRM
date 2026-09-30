@@ -219,6 +219,101 @@ export async function getBookSummary(): Promise<BookSummary> {
   }
 }
 
+// --- Borrowers: the companies behind the loan books (migration 0021) ------
+
+export type Borrower = {
+  key: string;
+  borrower: string;
+  lenders: number;
+  positions: number;
+  fair_value: number | null;
+  principal: number | null;
+  cost: number | null;
+  /** Fair value over cost, as a ratio (0.92 = marked at 92). */
+  mark: number | null;
+  spread: number | null;
+  rate: number | null;
+  pik_rate: number | null;
+  next_maturity: string | null;
+  as_of: string | null;
+  instruments: string | null;
+  lender_names: string[] | null;
+  industry: string | null;
+};
+
+export type BorrowerSummary = {
+  borrowers: number;
+  fairValue: number;
+  clubbed: number;
+  stressed: number;
+  pik: number;
+  maturing: number;
+  markBins: { label: string; count: number }[];
+  largest: { key: string; borrower: string; lenders: number; fairValue: number; mark: number | null; spread: number | null }[];
+  mostLenders: { key: string; borrower: string; lenders: number; fairValue: number; mark: number | null }[];
+};
+
+export type BorrowerFilter = "" | "stressed" | "pik" | "maturing" | "clubbed";
+
+async function buildBorrowerSummary(version: string): Promise<BorrowerSummary> {
+  void version;
+  const empty: BorrowerSummary = { borrowers: 0, fairValue: 0, clubbed: 0, stressed: 0, pik: 0, maturing: 0, markBins: [], largest: [], mostLenders: [] };
+  const supabase = getReadClient();
+  if (!supabase) return empty;
+  const { data, error } = await supabase.rpc("borrower_summary");
+  if (error || !data) return empty;
+  const d = data as Record<string, unknown>;
+  const list = (k: string) => (Array.isArray(d[k]) ? (d[k] as Record<string, unknown>[]) : []);
+  return {
+    borrowers: num(d.borrowers),
+    fairValue: num(d.fairValue),
+    clubbed: num(d.clubbed),
+    stressed: num(d.stressed),
+    pik: num(d.pik),
+    maturing: num(d.maturing),
+    markBins: list("markBins").map((b) => ({ label: String(b.label), count: num(b.count) })),
+    largest: list("largest").map((b) => ({ key: String(b.key), borrower: String(b.borrower), lenders: num(b.lenders), fairValue: num(b.fairValue), mark: numOrNull(b.mark), spread: numOrNull(b.spread) })),
+    mostLenders: list("mostLenders").map((b) => ({ key: String(b.key), borrower: String(b.borrower), lenders: num(b.lenders), fairValue: num(b.fairValue), mark: numOrNull(b.mark) })),
+  };
+}
+
+const cachedBorrowerSummary = unstable_cache(buildBorrowerSummary, ["borrower-summary-v1"], { tags: [INTEL_TAG], revalidate: 1800 });
+
+export async function getBorrowerSummary(): Promise<BorrowerSummary> {
+  const version = await tableVersion("credit_positions");
+  try {
+    return await cachedBorrowerSummary(version);
+  } catch {
+    return buildBorrowerSummary(version);
+  }
+}
+
+/** Borrowers by name and one of the desk's filters, largest first. */
+export async function searchBorrowers(q: string, filter: BorrowerFilter, limit = 300): Promise<Borrower[]> {
+  const supabase = getReadClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase.rpc("borrower_search", { p_q: q.trim() || null, p_filter: filter || null, p_limit: limit });
+  if (error || !data) return [];
+  return (data as Record<string, unknown>[]).map((r) => ({
+    key: String(r.key),
+    borrower: String(r.borrower),
+    lenders: num(r.lenders),
+    positions: num(r.positions),
+    fair_value: numOrNull(r.fair_value),
+    principal: numOrNull(r.principal),
+    cost: numOrNull(r.cost),
+    mark: numOrNull(r.mark),
+    spread: numOrNull(r.spread),
+    rate: numOrNull(r.rate),
+    pik_rate: numOrNull(r.pik_rate),
+    next_maturity: r.next_maturity == null ? null : String(r.next_maturity),
+    as_of: r.as_of == null ? null : String(r.as_of),
+    instruments: r.instruments == null ? null : String(r.instruments),
+    lender_names: Array.isArray(r.lender_names) ? (r.lender_names as string[]) : null,
+    industry: r.industry == null ? null : String(r.industry),
+  }));
+}
+
 /** Filing counts per class for the hub, one HEAD request each. */
 export async function offeringCounts(): Promise<Record<AssetClassKey, number>> {
   const supabase = getReadClient();

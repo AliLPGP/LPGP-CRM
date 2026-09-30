@@ -54,8 +54,10 @@ $$;
 update public.credit_positions p
    set identifier = s.clean, borrower = s.borrower, instrument = s.instrument,
        external_key = 'soi:' || p.lender_cik || ':' || p.as_of || ':' || md5(s.clean)
-  from ingest.split_identifier(p.identifier) s
- where (p.identifier <> s.clean or p.borrower <> s.borrower or p.instrument is distinct from s.instrument)
+  from (select q.id, si.clean, si.borrower, si.instrument
+          from public.credit_positions q cross join lateral ingest.split_identifier(q.identifier) si) s
+ where s.id = p.id
+   and (p.identifier <> s.clean or p.borrower <> s.borrower or p.instrument is distinct from s.instrument)
    and not exists (select 1 from public.credit_positions q where q.external_key = 'soi:' || p.lender_cik || ':' || p.as_of || ':' || md5(s.clean) and q.id <> p.id);
 
 -- Everything the loan-book desk summarises, computed here in one pass. The

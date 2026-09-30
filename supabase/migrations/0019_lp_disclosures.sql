@@ -41,6 +41,43 @@ language sql immutable as $$
     (case when p ~ '^\s*[\(-]' then -1 else 1 end) * nullif(regexp_replace(p, '[^0-9.]', '', 'g'), '')::numeric end;
 $$;
 
+-- A directory firm for a filed or published name, sharper than 0018's: exact
+-- name first; then the longest directory name that opens the given name
+-- ("Blackstone Real Estate Debt Strategies V" -> Blackstone Real Estate, not
+-- Blackstone); then a first word that names exactly one firm, or exactly one
+-- manager when several books share it.
+create or replace function ingest.match_firm(p_name text, out company_id uuid, out method text)
+language plpgsql stable as $$
+declare w text; n int; q text;
+begin
+  if p_name is null then return; end if;
+  q := lower(regexp_replace(btrim(p_name), '\s+', ' ', 'g'));
+  select id into company_id from public.companies where lower(name) = q limit 1;
+  if company_id is not null then method := 'exact'; return; end if;
+  -- Longest directory name that is a prefix of the given name, on a word boundary.
+  select id into company_id from public.companies
+   where length(name) >= 5 and category in ('GP', 'SP', 'LP')
+     and q like lower(regexp_replace(name, '\s+', ' ', 'g')) || ' %'
+   order by length(name) desc limit 1;
+  if company_id is not null then method := 'prefix'; return; end if;
+  w := lower(split_part(regexp_replace(btrim(p_name), '^(the)\s+', '', 'i'), ' ', 1));
+  w := regexp_replace(w, '[^a-z0-9&]', '', 'g');
+  if length(w) < 3 or w = any (array['capital','global','private','partners','first','american','north','south','east','west','new','united','general','national','international','credit','equity','real','growth','venture','ventures','fund','funds','investment','investments','strategic','opportunity','opportunities','income','infrastructure','energy','digital','blue','green','black','white','silver','gold','summit','main','alpha','core','prime','crown','eagle','harbor','harbour','lake','river','park','bridge','stone','oak','pine','cedar','maple','atlas','apex','vista','one','two','three','1','2','3']) then
+    return;
+  end if;
+  select count(*), (array_agg(id))[1] into n, company_id
+    from public.companies
+   where lower(split_part(regexp_replace(name, '^(the)\s+', '', 'i'), ' ', 1)) = w and category in ('GP', 'SP', 'LP');
+  if n = 1 then method := 'brand'; return; end if;
+  if n > 1 then
+    select count(*), (array_agg(id))[1] into n, company_id
+      from public.companies
+     where lower(split_part(regexp_replace(name, '^(the)\s+', '', 'i'), ' ', 1)) = w and category = 'GP';
+    if n = 1 then method := 'brand'; return; end if;
+  end if;
+  company_id := null;
+end $$;
+
 -- A fund record for a fund an LP names: the one already on file under that
 -- name, else a new one keyed by the name, linked to the manager the brand
 -- names when the directory holds exactly one such firm.
@@ -87,9 +124,10 @@ begin
   for piece in select p from regexp_split_to_table(v_html, '<tr') p loop
     continue when position('headers="Fund' in piece) = 0 or position('</tr>' in piece) = 0;
     piece := left(piece, position('</tr>' in piece));
-    select array_agg(ingest.strip_tags(left(c, coalesce(nullif(position('</td>' in c), 0) - 1, length(c)))) order by o)
+    -- Each split piece starts with the td's own attributes: drop up to its '>'.
+    select array_agg(ingest.strip_tags(left(substr(c, position('>' in c) + 1), coalesce(nullif(position('</td>' in substr(c, position('>' in c) + 1)), 0) - 1, length(c)))) order by o)
       into cells
-      from regexp_split_to_table(piece, '<td') with ordinality as t(c, o) where o > 1;
+      from regexp_split_to_table(piece, '<td') with ordinality as t(c, o) where o > 1 and position('>' in c) > 0;
     continue when cells is null or array_length(cells, 1) < 8 or cells[1] is null;
     v_fund := cells[1];
     v_vintage := nullif(regexp_replace(coalesce(cells[2], ''), '[^0-9]', '', 'g'), '')::int;

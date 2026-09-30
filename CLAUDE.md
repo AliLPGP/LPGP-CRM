@@ -131,6 +131,21 @@ boundaries and keeps comment text ASCII.
   (`source = 'form_adv_roster'`, keyed by CRD in `sec_crd`/`external_ids`,
   typed by the fund kinds they report) and fills Form ADV blanks on firms
   the directory already had, never renaming or retyping them.
+- **Borrowers** (0021) — `borrowers`, a materialised view folding every
+  parsed lender's latest positions into one row per borrower
+  (`borrower_key` strips legal suffixes and a filer's tranche numbering):
+  lenders, fair value, principal, cost, mark, fair-value-weighted spread and
+  rate, PIK, next maturity, instruments. `borrower_summary()` and
+  `borrower_search(q, filter)` serve `/database/borrowers` inside the API
+  role's three-second statement limit; pg_cron refreshes the view every half
+  hour (`ingest.refresh_borrowers`).
+- **Speed** — the API roles carry short statement timeouts (anon 3 s), so
+  anything that aggregates a large table lives in SQL (`credit_book_summary`,
+  `offering_stats`, `borrower_summary`), never in the app over paged rows.
+  `table_versions()` fingerprints tables from planner statistics for cache
+  keys. The Funds page ships its best-documented 3,000 rows and pulls the
+  rest from `/api/directory/funds` (edge-cached) after paint. Vercel
+  functions run in `dub1`, beside the Supabase project.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).

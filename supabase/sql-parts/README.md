@@ -60,6 +60,17 @@ ingest.status` shows progress.
 fund performance pages and the Australian super funds' holdings files. It
 re-reads them monthly on its own.
 
+**Adviser roster and borrowers (migrations `0020`, `0021`)** — run
+**`8-adviser-roster/`** then **`9-borrowers/`** after `7-lp-disclosures`.
+Then, in the SQL editor, load a roster and promote its private-fund advisers
+(the JSON lives in `data/adv-roster/`):
+
+```sql
+select ingest.load_adviser_roster('<raw url of data/adv-roster/advisers-2026-05-01.json>', '2026-05-01', 'https://www.sec.gov/data-research/sec-markets-data/information-about-registered-investment-advisers-exempt-reporting-advisers');
+select ingest.promote_advisers(100000000);
+select ingest.refresh_borrowers();
+```
+
 **The intelligence dataset needs no SQL** — the button on Import → Master
 directory loads it. If you'd rather paste it (a database the app can't reach
 yet), **`5-intelligence-data/data_001_of_120.sql` … `_120_of_120.sql`** holds
@@ -94,6 +105,8 @@ lose track of where you were, start over from part 1.
 | `5-intelligence-data` | 120 | 8.1 KB |
 | `6-sec-filings` | 8 | 9.4 KB, up to 160 lines |
 | `7-lp-disclosures` | see folder | long functions, as above |
+| `8-adviser-roster` | 2 | 7.4 KB |
+| `9-borrowers` | 1 | 7 KB |
 
 The schema parts are deliberately under 4 KB. The seed parts can't go that low —
 a single `insert` of a dozen firms is bigger than that, and splitting inside one

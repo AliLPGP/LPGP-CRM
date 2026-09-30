@@ -13,13 +13,24 @@
 -- "Acme Holdings Inc" are one borrower.
 create or replace function public.borrower_key(p text) returns text
 language sql immutable as $$
-  select btrim(regexp_replace(regexp_replace(regexp_replace(lower(coalesce(p, '')), '[.,''"()]', '', 'g'), '\s+(inc|incorporated|llc|l\.?l\.?c|lp|l\.?p\.?|ltd|limited|corp|corporation|co|company|holdings?|holdco|plc|sa|bv|gmbh|sarl|s\.?à\.?r\.?l\.?|pty|ag|intermediate|parent|buyer|bidco|midco|topco|acquisition|acquisitions)(\s|$)', ' ', 'g'), '\s+', ' ', 'g'));
+  -- A filer's own numbering of tranches ("Acme, Inc. 1", "Acme, Inc. 2") is not part of the name.
+  select btrim(regexp_replace(regexp_replace(regexp_replace(regexp_replace(lower(coalesce(p, '')), '\s+\d{1,2}$', ''), '[.,''"()]', '', 'g'), '\s+(inc|incorporated|llc|l\.?l\.?c|lp|l\.?p\.?|ltd|limited|corp|corporation|co|company|holdings?|holdco|plc|sa|bv|gmbh|sarl|s\.?à\.?r\.?l\.?|pty|ag|intermediate|parent|buyer|bidco|midco|topco|acquisition|acquisitions)(\s|$)', ' ', 'g'), '\s+', ' ', 'g'));
 $$;
 
 create index if not exists credit_positions_borrower_key_idx on public.credit_positions (public.borrower_key(borrower));
 
--- One row per borrower at the lenders' latest periods.
-create or replace view public.borrowers with (security_invoker = true) as
+-- One row per borrower at the lenders' latest periods. Materialised: the
+-- fold runs over every position, and the API role has three seconds per
+-- statement; pg_cron refreshes it every half hour, and the ingest's
+-- derive job refreshes it after a queue run.
+-- Derived, so rebuilt on every run and a changed fold takes effect. An
+-- earlier edition was a plain view; either kind goes.
+do $$
+begin
+  if exists (select 1 from pg_views where schemaname = 'public' and viewname = 'borrowers') then execute 'drop view public.borrowers cascade'; end if;
+  if exists (select 1 from pg_matviews where schemaname = 'public' and matviewname = 'borrowers') then execute 'drop materialized view public.borrowers cascade'; end if;
+end $$;
+create materialized view public.borrowers as
 with book as (
   select p.*, l.name as lender_name, public.borrower_key(p.borrower) as bkey
   from public.credit_positions p join public.credit_lenders l on l.cik = p.lender_cik
@@ -27,7 +38,7 @@ with book as (
 )
 select
   bkey as key,
-  (array_agg(borrower order by length(borrower) desc))[1] as borrower,
+  regexp_replace((array_agg(borrower order by length(borrower) desc))[1], '\s+\d{1,2}$', '') as borrower,
   count(distinct lender_cik) as lenders,
   count(*) as positions,
   sum(coalesce(fair_value, 0)) as fair_value,
@@ -42,11 +53,29 @@ select
   max(pik_rate) as pik_rate,
   min(maturity) as next_maturity,
   max(as_of) as as_of,
-  (select string_agg(distinct public.instrument_group(coalesce(b2.instrument, b2.identifier)), ', ') from book b2 where b2.bkey = book.bkey) as instruments,
+  string_agg(distinct public.instrument_group(coalesce(instrument, identifier)), ', ') as instruments,
   (array_agg(distinct lender_name))[1:6] as lender_names,
   max(industry) as industry
 from book
 group by bkey;
+
+create unique index if not exists borrowers_key_idx on public.borrowers (key);
+create index if not exists borrowers_fair_value_idx on public.borrowers (fair_value desc nulls last);
+create index if not exists borrowers_name_idx on public.borrowers (lower(borrower));
+grant select on public.borrowers to anon, authenticated;
+
+create or replace function ingest.refresh_borrowers() returns void
+language sql as $$
+  refresh materialized view concurrently public.borrowers;
+$$;
+
+do $$
+begin
+  if not exists (select 1 from pg_extension where extname = 'pg_cron') then return; end if;
+  if not exists (select 1 from cron.job where jobname = 'lpgp-borrowers-refresh') then
+    perform cron.schedule('lpgp-borrowers-refresh', '*/30 * * * *', $job$select ingest.refresh_borrowers()$job$);
+  end if;
+end $$;
 
 -- The desk's summary in one call, and a search, both cheap enough for the
 -- API role's statement limit.

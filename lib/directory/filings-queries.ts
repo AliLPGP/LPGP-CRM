@@ -6,6 +6,8 @@ import { tableVersion } from "../supabase/version";
 import { ASSET_CLASSES, type AssetClassKey } from "./asset-classes";
 import { INTEL_TAG } from "./intelligence-queries";
 import { OFFERING_COLUMNS, POSITION_COLUMNS, type BookPosition, type CreditLender, type CreditPosition, type FundOffering } from "./filings-types";
+import type { PortcoIntel } from "./portco-intel";
+export { financeLead, type PortcoIntel } from "./portco-intel";
 
 // Reads for the SEC filings layer (migration 0018). Anon client; empty on any
 // failure, so a database without the tables shows nothing rather than an error.
@@ -326,4 +328,35 @@ export async function offeringCounts(): Promise<Record<AssetClassKey, number>> {
     }),
   );
   return out;
+}
+
+// --- Portfolio-company intelligence (migration 0022) ------------------------
+
+const PORTCO_INTEL_COLUMNS =
+  "key, name, domain, country, ch_number, ch_name, ch_status, ch_type, sic_codes, incorporated_on, registered_address, officers, accounts_period_end, accounts_type, accounts_url, currency, revenue, gross_profit, operating_profit, profit_before_tax, depreciation, amortisation, ebitda_derived, employees, net_assets, cash, creditors_over_year, executives, executives_at, ch_at";
+
+/** Intel rows for some company keys (`borrower_key(name)`), by key. Empty on any failure. */
+export async function getPortcoIntel(keys: string[]): Promise<Map<string, PortcoIntel>> {
+  const out = new Map<string, PortcoIntel>();
+  const supabase = getReadClient();
+  const wanted = [...new Set(keys.filter(Boolean))];
+  if (!supabase || !wanted.length) return out;
+  for (let i = 0; i < wanted.length; i += 200) {
+    const { data, error } = await supabase.from("portco_intel").select(PORTCO_INTEL_COLUMNS).in("key", wanted.slice(i, i + 200));
+    if (error || !data) return out;
+    for (const row of data as unknown as PortcoIntel[]) out.set(row.key, row);
+  }
+  return out;
+}
+
+/** How many intel rows hold filed figures, for the desk's strip. */
+export async function portcoIntelCounts(): Promise<{ rows: number; accounts: number; executives: number }> {
+  const supabase = getReadClient();
+  if (!supabase) return { rows: 0, accounts: 0, executives: 0 };
+  const [all, acc, ex] = await Promise.all([
+    supabase.from("portco_intel").select("key", { count: "exact", head: true }).not("ch_number", "is", null),
+    supabase.from("portco_intel").select("key", { count: "exact", head: true }).not("revenue", "is", null),
+    supabase.from("portco_intel").select("key", { count: "exact", head: true }).not("executives_at", "is", null),
+  ]);
+  return { rows: all.count ?? 0, accounts: acc.count ?? 0, executives: ex.count ?? 0 };
 }

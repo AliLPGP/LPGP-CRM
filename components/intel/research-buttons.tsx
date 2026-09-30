@@ -176,3 +176,39 @@ export function ResearchClassButton({ assetClass, kind, aiReady }: { assetClass:
     </span>
   );
 }
+
+/** Admin: Companies House accounts and officers, and executive previews, for portfolio companies and borrowers. */
+export function EnrichPortcosButton({ ready }: { ready: boolean }) {
+  const router = useRouter();
+  const [pending, start] = useTransition();
+  const [message, setMessage] = useState<string | null>(null);
+  if (!ready) return null;
+  return (
+    <span className="inline-flex items-center gap-2">
+      {message ? <span className="text-[11px] text-muted-foreground">{message}</span> : null}
+      <Button
+        size="sm"
+        variant="outline"
+        disabled={pending}
+        onClick={() =>
+          start(async () => {
+            setMessage("Reading the register and the latest filed accounts of UK portfolio companies and borrowers — up to five minutes…");
+            const r = await post("/api/directory/portcos/enrich", { onlyUk: true });
+            if (!r.ok) {
+              setMessage(r.message);
+              return;
+            }
+            const errors = (r.json.errors as string[] | undefined) ?? [];
+            setMessage(
+              `${r.json.considered ?? 0} looked up: ${r.json.matched ?? 0} on the register, ${r.json.accounts ?? 0} with filed figures, ${r.json.executives ?? 0} with executives named.${r.json.outOfTime ? " More remain; run again." : ""}${errors.length ? ` ${errors.slice(0, 3).join("; ")}` : ""}`,
+            );
+            router.refresh();
+          })
+        }
+      >
+        {pending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Search className="h-3.5 w-3.5" />}
+        Enrich from Companies House
+      </Button>
+    </span>
+  );
+}

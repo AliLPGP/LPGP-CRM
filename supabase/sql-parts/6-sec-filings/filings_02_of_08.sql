@@ -76,12 +76,16 @@ $$;
 
 -- A directory firm for a filed name: exact, then the brand's first word when
 -- that word names exactly one directory firm ("Ares Capital Europe VI" -> Ares).
-create or replace function ingest.match_firm(p_name text, out company_id uuid, out method text)
+-- The signature is the one 0019 keeps (a list of books to search, GP/SP/LP by
+-- default) so the two editions replace each other instead of overloading;
+-- an earlier one-argument edition goes first.
+drop function if exists ingest.match_firm(text);
+create or replace function ingest.match_firm(p_name text, p_books text[] default array['GP', 'SP', 'LP'], out company_id uuid, out method text)
 language plpgsql stable as $$
 declare w text; n int;
 begin
   if p_name is null then return; end if;
-  select id into company_id from public.companies where lower(name) = lower(btrim(p_name)) limit 1;
+  select id into company_id from public.companies where lower(name) = lower(btrim(p_name)) and category::text = any (p_books) limit 1;
   if company_id is not null then method := 'exact'; return; end if;
   w := lower(split_part(regexp_replace(btrim(p_name), '^(the)\s+', '', 'i'), ' ', 1));
   w := regexp_replace(w, '[^a-z0-9&]', '', 'g');
@@ -91,7 +95,7 @@ begin
   select count(*), (array_agg(id))[1] into n, company_id
     from public.companies
    where lower(split_part(regexp_replace(name, '^(the)\s+', '', 'i'), ' ', 1)) = w
-     and category in ('GP', 'SP', 'LP');
+     and category::text = any (p_books);
   if n = 1 then method := 'brand'; else company_id := null; end if;
 end $$;
 

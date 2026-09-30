@@ -11,6 +11,10 @@
 
 -- Borrower names as filers write them, folded so "Acme Holdings, Inc." and
 -- "Acme Holdings Inc" are one borrower.
+-- The index on this expression goes first: an index built by an earlier
+-- edition of the fold keeps that edition's values, and a query planned over
+-- it would group by stale keys beside fresh ones. It is rebuilt below.
+drop index if exists public.credit_positions_borrower_key_idx;
 create or replace function public.borrower_key(p text) returns text
 language sql immutable as $$
   -- A filer's own numbering of tranches ("Acme, Inc. 1", "Acme, Inc. 2") is not part of the name.

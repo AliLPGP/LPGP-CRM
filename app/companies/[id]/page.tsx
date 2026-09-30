@@ -14,7 +14,7 @@ import {
 } from "@/lib/directory/queries";
 import { getDirectoryIndex } from "@/lib/directory/index-server";
 import { getDeals, getSignals, teamsHeldBy } from "@/lib/directory/intelligence-queries";
-import { getFundOfferings, lendersManagedBy } from "@/lib/directory/filings-queries";
+import { getFundOfferings, getPortcoIntel, lendersManagedBy } from "@/lib/directory/filings-queries";
 import { LenderTable, OfferingTable } from "@/components/intel/filings-tables";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { filers, leagueTable } from "@/lib/directory/market";
@@ -345,7 +345,7 @@ export default async function CompanyProfile({
 
       {tab === "portfolio" ? (
         <div className="space-y-4">
-          <PortfolioCompanies companyId={company.id} rows={portcos} aiReady={Boolean(process.env.ANTHROPIC_API_KEY)} />
+          <PortfolioCompanies companyId={company.id} rows={portcos} aiReady={Boolean(process.env.ANTHROPIC_API_KEY)} intel={Object.fromEntries(await getPortcoIntel(portcos.map((p) => p.intel_key ?? "")))} />
           <OperatingPartners
             companyId={company.id}
             hasDomain={Boolean(company.domain)}

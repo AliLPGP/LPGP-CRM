@@ -44,6 +44,16 @@ alter table public.adv_advisers enable row level security;
 drop policy if exists "adv_advisers_read" on public.adv_advisers;
 create policy "adv_advisers_read" on public.adv_advisers for select using (true);
 
+-- A cheap fingerprint of some tables for cache keys: the planner's row
+-- statistics change on every insert, update and delete, and reading them
+-- costs nothing, where an exact count of a large table is a full scan.
+create or replace function public.table_versions(p_tables text[]) returns text
+language sql stable as $$
+  select string_agg(t || ':' || coalesce((select n_tup_ins + n_tup_upd + n_tup_del from pg_stat_user_tables where schemaname = 'public' and relname = t)::text, 'x'), '.' order by t)
+  from unnest(p_tables) t;
+$$;
+grant execute on function public.table_versions(text[]) to anon, authenticated;
+
 -- Run SQL files the database fetches itself (the generated LP-disclosure
 -- loaders under supabase/lp-disclosures, for one). Each file runs on its
 -- own; a failure is logged and the next file still runs.

@@ -4,6 +4,7 @@
   "buildCommand": "pnpm next build",
   "installCommand": "pnpm install",
   "outputDirectory": ".next",
+  "regions": ["dub1"],
   "crons": [
     {
       "path": "/api/directory/signals/refresh",

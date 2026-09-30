@@ -7,7 +7,7 @@ language plpgsql as $$
 declare
   x xml; p xml; rp xml; rec xml;
   v_related jsonb := '[]'::jsonb; v_agents jsonb := '[]'::jsonb;
-  v_gp text; v_name text; v_first text; v_last text; v_clar text; v_rels text[];
+  v_gp text; v_gp_weak boolean := false; v_name text; v_first text; v_last text; v_clar text; v_rels text[];
   v_industry text; v_fund_type text; v_offering text; v_class text;
   v_match record; v_cik text; v_issuer text; v_fund_id uuid; v_id uuid;
 begin
@@ -24,10 +24,15 @@ begin
     select array_agg(btrim(r::text)) into v_rels from unnest(xpath('//relatedPersonRelationshipList/relationship/text()', rp)) r;
     v_name := btrim(concat_ws(' ', nullif(nullif(v_first, 'N/A'), ''), nullif(nullif(ingest.x1(rp, 'relatedPersonName/middleName'), 'N/A'), ''), v_last));
     v_related := v_related || jsonb_build_object('name', v_name, 'relationships', coalesce(to_jsonb(v_rels), '[]'::jsonb), 'clarification', v_clar);
-    if v_gp is null and (
-         (coalesce(v_first, 'N/A') in ('N/A', '') and v_last ~* '(gp|general partner|partners|management|manager|advisors|advisers|capital|llc|l\.?l\.?c|l\.?p\.?|ltd|limited|inc)')
-      or coalesce(v_clar, '') ~* '(general partner|managing member|manager of the|investment (adviser|advisor|manager)|sponsor)') then
-      v_gp := v_name;
+    -- The GP is an entity (no first name), never one of the individuals the
+    -- form lists beside it. An entity the filer calls the general partner,
+    -- manager, adviser or sponsor wins over one that merely reads like a firm.
+    if coalesce(v_first, 'N/A') in ('N/A', '') and v_last is not null then
+      if coalesce(v_clar, '') ~* '(general partner|managing member|manager of the|investment (adviser|advisor|manager)|sponsor|\mgp\M)' then
+        if v_gp is null or v_gp_weak then v_gp := v_name; v_gp_weak := false; end if;
+      elsif v_gp is null and v_last ~* '(\mgp\M|general partner|partners|management|manager|advisors|advisers|capital|llc|l\.?l\.?c|l\.?p\.?|ltd|limited|inc|sas|sarl|gmbh|ag\M)' then
+        v_gp := v_name; v_gp_weak := true;
+      end if;
     end if;
   end loop;
 

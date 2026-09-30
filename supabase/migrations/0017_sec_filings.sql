@@ -179,11 +179,21 @@ begin
   return r.content;
 end $$;
 
+-- A text node cast to text keeps its entities ("CD&amp;R"); undo them.
+create or replace function ingest.unxml(p text) returns text
+language sql immutable as $$
+  select case when p is null then null else
+    replace(replace(replace(replace(replace(
+      regexp_replace(regexp_replace(p, '&#(\d+);', E'\\1', 'g'), '&#x([0-9a-fA-F]+);', E'\\1', 'g'),
+      '&lt;', '<'), '&gt;', '>'), '&quot;', '"'), '&apos;', ''''), '&amp;', '&')
+  end;
+$$;
+
 -- A relative path is evaluated anywhere inside the fragment (Postgres evaluates
 -- xpath against a document node, so 'cik' alone would only match a root).
 create or replace function ingest.x1(p xml, p_path text) returns text
 language sql immutable as $$
-  select nullif(btrim((xpath(case when left(p_path, 1) = '/' then p_path else '//' || p_path end || '/text()', p))[1]::text), '');
+  select nullif(btrim(ingest.unxml((xpath(case when left(p_path, 1) = '/' then p_path else '//' || p_path end || '/text()', p))[1]::text)), '');
 $$;
 
 create or replace function ingest.num(p text) returns numeric
@@ -207,7 +217,7 @@ begin
   if company_id is not null then method := 'exact'; return; end if;
   w := lower(split_part(regexp_replace(btrim(p_name), '^(the)\s+', '', 'i'), ' ', 1));
   w := regexp_replace(w, '[^a-z0-9&]', '', 'g');
-  if length(w) < 4 or w = any (array['capital','global','private','partners','first','american','north','south','east','west','new','united','general','national','international','credit','equity','real','growth','venture','ventures','fund','funds','investment','investments','strategic','opportunity','opportunities','income','infrastructure','energy','digital','blue','green','black','white','silver','gold','summit','main','alpha','core','prime','crown','eagle','harbor','harbour','lake','river','park','bridge','stone','oak','pine','cedar','maple','atlas','apex','vista','one','two','three','1','2','3']) then
+  if length(w) < 3 or w = any (array['capital','global','private','partners','first','american','north','south','east','west','new','united','general','national','international','credit','equity','real','growth','venture','ventures','fund','funds','investment','investments','strategic','opportunity','opportunities','income','infrastructure','energy','digital','blue','green','black','white','silver','gold','summit','main','alpha','core','prime','crown','eagle','harbor','harbour','lake','river','park','bridge','stone','oak','pine','cedar','maple','atlas','apex','vista','one','two','three','1','2','3']) then
     return;
   end if;
   select count(*), (array_agg(id))[1] into n, company_id
@@ -295,7 +305,7 @@ language plpgsql as $$
 declare
   x xml; p xml; rp xml; rec xml;
   v_related jsonb := '[]'::jsonb; v_agents jsonb := '[]'::jsonb;
-  v_gp text; v_name text; v_first text; v_last text; v_clar text; v_rels text[];
+  v_gp text; v_gp_weak boolean := false; v_name text; v_first text; v_last text; v_clar text; v_rels text[];
   v_industry text; v_fund_type text; v_offering text; v_class text;
   v_match record; v_cik text; v_issuer text; v_fund_id uuid; v_id uuid;
 begin
@@ -312,10 +322,15 @@ begin
     select array_agg(btrim(r::text)) into v_rels from unnest(xpath('//relatedPersonRelationshipList/relationship/text()', rp)) r;
     v_name := btrim(concat_ws(' ', nullif(nullif(v_first, 'N/A'), ''), nullif(nullif(ingest.x1(rp, 'relatedPersonName/middleName'), 'N/A'), ''), v_last));
     v_related := v_related || jsonb_build_object('name', v_name, 'relationships', coalesce(to_jsonb(v_rels), '[]'::jsonb), 'clarification', v_clar);
-    if v_gp is null and (
-         (coalesce(v_first, 'N/A') in ('N/A', '') and v_last ~* '(gp|general partner|partners|management|manager|advisors|advisers|capital|llc|l\.?l\.?c|l\.?p\.?|ltd|limited|inc)')
-      or coalesce(v_clar, '') ~* '(general partner|managing member|manager of the|investment (adviser|advisor|manager)|sponsor)') then
-      v_gp := v_name;
+    -- The GP is an entity (no first name), never one of the individuals the
+    -- form lists beside it. An entity the filer calls the general partner,
+    -- manager, adviser or sponsor wins over one that merely reads like a firm.
+    if coalesce(v_first, 'N/A') in ('N/A', '') and v_last is not null then
+      if coalesce(v_clar, '') ~* '(general partner|managing member|manager of the|investment (adviser|advisor|manager)|sponsor|\mgp\M)' then
+        if v_gp is null or v_gp_weak then v_gp := v_name; v_gp_weak := false; end if;
+      elsif v_gp is null and v_last ~* '(\mgp\M|general partner|partners|management|manager|advisors|advisers|capital|llc|l\.?l\.?c|l\.?p\.?|ltd|limited|inc|sas|sarl|gmbh|ag\M)' then
+        v_gp := v_name; v_gp_weak := true;
+      end if;
     end if;
   end loop;
 

@@ -23,6 +23,7 @@ kkr.sql
 kohlberg.sql
 kps.sql
 nordic-capital.sql
+olympus.sql
 pai.sql
 partners-group.sql
 permira.sql

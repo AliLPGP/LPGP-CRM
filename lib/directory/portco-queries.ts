@@ -2,6 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { tableVersion } from "../supabase/version";
+import { cachedOrDirect } from "../supabase/safe";
 import { INTEL_TAG } from "./intelligence-queries";
 import type { Deal } from "./intelligence-types";
 
@@ -44,19 +45,16 @@ async function buildSummary(version: string): Promise<PortcoSummary> {
   const supabase = getReadClient();
   if (!supabase) return EMPTY;
   const { data, error } = await supabase.rpc("portco_summary");
-  if (error || !data) return EMPTY;
+  // Thrown, not returned empty: a failure must never be cached.
+  if (error || !data) throw new Error(`portco_summary: ${error?.message ?? "no data"}`);
   return { ...EMPTY, ...(data as Partial<PortcoSummary>) };
 }
 
-const cachedSummary = unstable_cache(buildSummary, ["portco-summary-v1"], { tags: [INTEL_TAG], revalidate: 1800 });
+const cachedSummary = unstable_cache(buildSummary, ["portco-summary-v2"], { tags: [INTEL_TAG], revalidate: 1800 });
 
 export async function getPortcoSummary(): Promise<PortcoSummary> {
   const version = await tableVersion("portfolio_companies", "deals");
-  try {
-    return await cachedSummary(version);
-  } catch {
-    return buildSummary(version);
-  }
+  return cachedOrDirect(() => cachedSummary(version), () => buildSummary(version), EMPTY);
 }
 
 export type PortcoRow = {

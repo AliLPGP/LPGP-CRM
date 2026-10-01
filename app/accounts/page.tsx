@@ -1,6 +1,8 @@
 import { after } from "next/server";
 import { listAccounts } from "@/lib/accounts";
 import { syncAccountsIfDue } from "@/lib/account-sync-auto";
+import { sponsorshipsByAccount, totalsByYear } from "@/lib/account-sponsorships";
+import { formatOpsMoney } from "@/lib/ops-types";
 import { opsSummaries } from "@/lib/ops-links";
 import { isOpsConfigured } from "@/lib/ops";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
@@ -29,6 +31,8 @@ export default async function AccountsPage() {
     after(() => syncAccountsIfDue());
   }
 
+  const sponsorships = await sponsorshipsByAccount();
+  const yearTotals = totalsByYear(sponsorships);
   const active = accounts.filter((a) => a.status === "Active").length;
   const contacts = accounts.reduce((n, a) => n + a.contact_count, 0);
   const linked = accounts.filter((a) => ops[a.id]).length;
@@ -61,7 +65,19 @@ export default async function AccountsPage() {
         />
       </div>
 
-      <AccountsBrowser accounts={accounts} opsByAccount={ops} />
+      {yearTotals.length ? (
+        <p className="text-xs text-muted-foreground">
+          From the sponsor lists:{" "}
+          {yearTotals.map((t, i) => (
+            <span key={`${t.year}-${t.currency}`}>
+              {i ? " · " : ""}
+              <span className="font-medium text-foreground">{t.year}</span> {formatOpsMoney(t.amount, t.currency)} across {t.accounts} sponsors
+            </span>
+          ))}
+          . Each currency is totalled on its own; the ops panel stays the source of truth for money.
+        </p>
+      ) : null}
+      <AccountsBrowser accounts={accounts} opsByAccount={ops} sponsorships={sponsorships} />
     </div>
   );
 }

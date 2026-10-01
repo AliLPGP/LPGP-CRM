@@ -16,6 +16,8 @@ import { listActivitiesFor } from "@/lib/activities";
 import { dealsFromLinks, listOpsLinks } from "@/lib/ops-links";
 import { opsPanelUrl } from "@/lib/ops";
 import { getNotes } from "@/lib/queries";
+import { sponsorshipsFor } from "@/lib/account-sponsorships";
+import { formatOpsMoney } from "@/lib/ops-types";
 import { ACTIVITY_LABELS, formatDuration } from "@/lib/sales";
 import { PointsOfContact } from "@/components/accounts/points-of-contact";
 import { OpsAllocations } from "@/components/accounts/ops-allocations";
@@ -52,11 +54,12 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
   const account = await getAccount(id);
   if (!account) notFound();
 
-  const [contacts, links, activities, notes] = await Promise.all([
+  const [contacts, links, activities, notes, paid] = await Promise.all([
     listAccountContacts(id),
     listOpsLinks("account", id),
     listActivitiesFor("account_id", id, 60),
     getNotes("account", id),
+    sponsorshipsFor(id),
   ]);
 
   const deals = dealsFromLinks(links);
@@ -139,6 +142,24 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
           </div>
         </div>
       </header>
+
+      {paid.length ? (
+        <section className="rounded-2xl border bg-card p-5">
+          <h2 className="text-sm font-semibold">Paid, by year</h2>
+          <p className="mt-0.5 text-xs text-muted-foreground">From the sponsor lists. Where this account is linked to ops-panel deals, the tracker&apos;s figures are the live ones.</p>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+            {paid.map((p) => (
+              <div key={`${p.year}-${p.currency}`} className="rounded-xl border bg-background p-3.5">
+                <p className="eyebrow">{p.year}</p>
+                <p className="mt-1 text-xl font-semibold tabular">{p.amount != null ? formatOpsMoney(p.amount, p.currency) : "No amount on the list"}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  {p.deals} deal{p.deals === 1 ? "" : "s"} · {p.currency}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <Tabs defaultValue="contacts" className="gap-4">
         <TabsList className="w-full max-w-2xl">

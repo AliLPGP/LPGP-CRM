@@ -12,6 +12,7 @@ import { LEAD_ROLE_LABEL, leadership, type PortcoIntel } from "@/lib/directory/p
 import { DEAL_BASIS_LABEL } from "@/lib/directory/portfolio";
 import { getPortcoDeals } from "@/lib/directory/portco-queries";
 import { InvestmentLedger, InvestmentStrip, moneyFacts } from "@/components/intel/investments";
+import { ProfileFacts } from "@/components/intel/portco-profile";
 import { DEAL_KIND_LABEL } from "@/lib/directory/asset-classes";
 import { AMOUNT_BASIS_LABEL } from "@/lib/directory/intelligence-types";
 import { formatUsd } from "@/lib/utils";
@@ -127,6 +128,20 @@ export default async function PortcoPage({ params }: { params: Promise<{ key: st
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <div className="space-y-4">
+          <Box
+            title="Profile"
+            flush
+            action={
+              holders.length ? (
+                <a href={`/api/directory/portcos/export?sponsor=${holders[0].gp_company_id}`} className="text-[11px] text-muted-foreground hover:text-foreground">
+                  Sponsor sheet ↓
+                </a>
+              ) : null
+            }
+            defn="The company as an adviser's sheet lays it out. Revenue, EBITDA, employees and named executives appear only from primary sources (filings, the company, the sponsor, their releases) or major financial press; each value links to its page, and the check mark means the source is primary or major press. Hover a source for the sentence it states."
+          >
+            <ProfileFacts intel={intel} holdings={holders} />
+          </Box>
           <Box title="Investments and commitments" count={deals.length || null} flush defn="Every announcement on file that commits money to this company: buyouts, stakes, rounds with each named investor, add-ons it made, financings and exits. Each figure is as the page states it, with what it is; a checked mark means it was re-read against the page before it was stored.">
             {deals.length ? <InvestmentStrip deals={deals} /> : null}
             <InvestmentLedger deals={deals} />

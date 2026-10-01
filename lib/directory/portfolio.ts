@@ -28,6 +28,13 @@ export type PortfolioCompany = {
   co_investors?: string[];
   deal_source_url?: string | null;
   researched_at?: string | null;
+  /** Migration 0025: the holding as the sponsor describes it. */
+  status_note?: string | null;
+  asset_class?: string | null;
+  deal_type?: string | null;
+  value_creation_plan?: string | null;
+  value_creation_source_url?: string | null;
+  notes?: string | null;
 };
 
 export const DEAL_BASIS_LABEL: Record<string, string> = { enterprise_value: "enterprise value", equity_value: "equity value", round_size: "round size", stake_price: "price of the stake", debt: "debt facility", unspecified: "as reported" };

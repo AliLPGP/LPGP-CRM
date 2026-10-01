@@ -38,7 +38,7 @@ export function SyncAccountsButton({ configured }: { configured: boolean }) {
       {result ? (
         <span className={`text-xs ${result.ok ? "text-muted-foreground" : "text-destructive"}`}>
           {result.ok
-            ? `${result.deals} deals across ${result.companies} companies: ${result.created} account${result.created === 1 ? "" : "s"} created, ${result.updated} updated, ${result.linked} deal${result.linked === 1 ? "" : "s"} newly linked${result.unmatched.length ? `; ${result.unmatched.length} with only cancelled deals left alone` : ""}.`
+            ? `${result.deals} deals across ${result.companies} companies: ${result.created} account${result.created === 1 ? "" : "s"} created, ${result.updated} updated, ${result.linked} deal${result.linked === 1 ? "" : "s"} newly linked${result.unmatched.length ? `; ${result.unmatched.length} with only cancelled deals left alone` : ""}${result.failed?.length ? `. ${result.failed.length} could not be written (${result.failed[0]})` : ""}.`
             : result.error}
         </span>
       ) : null}

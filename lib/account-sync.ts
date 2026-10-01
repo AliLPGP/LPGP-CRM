@@ -1,8 +1,8 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { loadProfileDirectory } from "./initials";
-import { listOpsDeals } from "./ops";
-import { opsMatchKey, type OpsDeal } from "./ops-types";
+import { listOpsCompanies, listOpsDeals } from "./ops";
+import { opsMatchKey, type OpsDeal, type OpsResult } from "./ops-types";
 
 /**
  * A deal in the ops panel means a sponsor, and a sponsor is an account.
@@ -29,6 +29,8 @@ export type AccountSyncResult = {
   linked: number;
   /** Names the sync could not place on any account, for a person to look at. */
   unmatched: string[];
+  /** Sponsors whose account could not be written, with the database's reason. */
+  failed?: string[];
 };
 
 type AccountRow = { id: string; name: string; ops_company: string | null; owner_id: string | null; company_id: string | null; first_sponsored_year: number | null; status: string };
@@ -52,11 +54,37 @@ function commonest(names: string[]): string {
   return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0][0];
 }
 
+/**
+ * Every deal in the tracker, whatever page size the tracker allows. One bulk
+ * read first; then the tracker's own company index says how many deals each
+ * sponsor has, and any sponsor the bulk read shows fewer of is read by name.
+ * A cap on the bulk read can therefore never leave a sponsor without an account.
+ */
+async function fetchTrackerDeals(company?: string): Promise<OpsResult<OpsDeal[]>> {
+  const bulk = await listOpsDeals({ company, limit: 500 });
+  if (!bulk.ok || company) return bulk;
+  const index = await listOpsCompanies();
+  if (!index.ok) return bulk;
+
+  const seen = new Map<number, OpsDeal>(bulk.data.map((d) => [d.id, d]));
+  const haveByKey = new Map<string, number>();
+  for (const d of bulk.data) {
+    const k = opsMatchKey(d.company);
+    haveByKey.set(k, (haveByKey.get(k) ?? 0) + 1);
+  }
+  const short = index.data.filter((c) => (haveByKey.get(opsMatchKey(c.company)) ?? 0) < c.deal_count).map((c) => c.company);
+  for (let i = 0; i < short.length; i += 5) {
+    const batch = await Promise.all(short.slice(i, i + 5).map((name) => listOpsDeals({ company: name, limit: 500 })));
+    for (const r of batch) if (r.ok) for (const d of r.data) seen.set(d.id, d);
+  }
+  return { ok: true, data: [...seen.values()] };
+}
+
 export async function syncAccountsFromOps(
   supabase: SupabaseClient,
   opts: { company?: string; linkedBy?: string | null } = {},
 ): Promise<AccountSyncResult> {
-  const fetched = await listOpsDeals({ company: opts.company, limit: 5000 });
+  const fetched = await fetchTrackerDeals(opts.company);
   if (!fetched.ok) return empty(fetched.error);
   const deals = fetched.data.filter((d) => d.company?.trim());
   const out = { ...empty(), deals: deals.length };
@@ -148,7 +176,7 @@ export async function syncAccountsFromOps(
         .select("id, name, ops_company, owner_id, company_id, first_sponsored_year, status")
         .single();
       if (error || !created) {
-        out.unmatched.push(spelling);
+        (out.failed ??= []).push(`${spelling}: ${error?.message ?? "no row returned"}`);
         continue;
       }
       account = created as AccountRow;

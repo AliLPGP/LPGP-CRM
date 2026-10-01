@@ -74,7 +74,7 @@ async function buildAllDeals(assetClass: AssetClassKey | "", version: string): P
 // jobs and the dataset loader refresh the intelligence tag when they write;
 // the EDGAR ingest writes from inside the database, so the row count rides in
 // the key and a stale copy is dropped the moment a deal lands.
-const cachedAllDeals = bigCache("all-deals-v3", (version) => buildAllDeals("", version), { tags: [INTEL_TAG], revalidate: 3600 });
+const cachedAllDeals = bigCache("all-deals-v3", (version) => buildAllDeals("", version), { tags: [INTEL_TAG], revalidate: 86400 });
 
 /** Every deal, for the Deals page, or every deal of one class. */
 export async function getAllDeals(assetClass?: AssetClassKey | null): Promise<Deal[]> {

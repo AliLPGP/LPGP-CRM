@@ -26,7 +26,7 @@
     },
     {
       "path": "/api/warm",
-      "schedule": "*/20 * * * *"
+      "schedule": "30 5 * * *"
     }
   ]
 }

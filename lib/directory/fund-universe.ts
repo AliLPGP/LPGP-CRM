@@ -122,7 +122,7 @@ async function build(version: string): Promise<PackedFundUniverse> {
   return { generatedAt: new Date().toISOString(), brands, managers, funds };
 }
 
-const cached = bigCache("fund-universe-v3", build, { tags: [DIRECTORY_TAG], revalidate: 3600 });
+const cached = bigCache("fund-universe-v3", build, { tags: [DIRECTORY_TAG], revalidate: 86400 });
 
 /** Every fund on file, packed. Never throws. */
 export async function getFundUniverse(): Promise<PackedFundUniverse> {

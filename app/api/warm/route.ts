@@ -8,7 +8,7 @@ import { getAllDisclosedCommitments } from "@/lib/directory/queries";
 // Builds the big cached reads (the directory index, the fund universe, the
 // deal and commitment ledgers, the portfolio summary) before anyone asks, so
 // the first click after a deploy or an expiry is as quick as the second.
-// Runs from Vercel cron (the CRON_SECRET bearer); nothing here is private.
+// Runs daily from Vercel cron (the CRON_SECRET bearer; sub-daily schedules are refused on the Hobby plan); nothing here is private.
 
 export const maxDuration = 120;
 

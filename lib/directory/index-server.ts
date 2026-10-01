@@ -259,7 +259,7 @@ let pendingIndex: DirectoryIndex | null = null;
 // memory per instance (lib/supabase/big-cache.ts).
 const cachedIndex = bigCache("directory-index-v4", buildIndex, {
   tags: [DIRECTORY_TAG],
-  revalidate: 3600,
+  revalidate: 86400,
 });
 
 /**

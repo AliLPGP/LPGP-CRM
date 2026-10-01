@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useState, useSyncExternalStore } from "react";
-import {
+import { Banknote,
   Activity,
   Building2,
   CalendarRange,
@@ -77,6 +77,7 @@ const DATA: NavItem[] = [
   { href: "/contacts", label: "People", icon: Users },
   { href: "/database/deals", label: "Deals", icon: Handshake },
   { href: "/database/portcos", label: "Portfolio companies", icon: Building2 },
+  { href: "/database/commitments", label: "LP commitments", icon: Banknote },
   { href: "/database/signals", label: "Signals", icon: Activity },
   {
     href: "/database/asset-classes",

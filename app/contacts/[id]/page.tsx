@@ -169,6 +169,11 @@ export default async function ContactProfile({ params }: { params: Promise<{ id:
                   {value ? <Check className="h-3 w-3" /> : <Minus className="h-3 w-3" />}
                 </span>
                 <span className={value ? "" : "text-muted-foreground"}>{label}</span>
+                {label === "Email" && !value && contact.connectable ? (
+                  <span className="text-xs text-muted-foreground" title="The master sheet flags a direct email for this person. The import keeps only that yes/no, never the address itself, so the address is not stored here.">
+                    · held in your master sheet, not stored here
+                  </span>
+                ) : null}
               </li>
             ))}
           </ul>

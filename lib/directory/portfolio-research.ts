@@ -20,6 +20,15 @@ export type ResearchedCompany = {
   exit_year: number | null;
   fund_name: string | null;
   source_url: string;
+  /** What a desk reads first: where the holding stands, how it was done, which book it sits in, and the sponsor's stated plan. */
+  status_note: string | null;
+  deal_type: string | null;
+  asset_class: string | null;
+  value_creation_plan: string | null;
+  value_creation_source_url: string | null;
+  /** What the holding is: a company, an infrastructure asset (toll road, bridge, pipeline, wind farm, port) or a property / development. */
+  asset_kind: "company" | "infrastructure_asset" | "property" | null;
+  asset_location: string | null;
   /** The transaction value a page states, in its currency, with what the figure is. */
   deal_value: number | null;
   deal_currency: string | null;
@@ -61,6 +70,13 @@ const RECORD_TOOL: Anthropic.Beta.BetaTool = {
             invested_year: nullable("integer"),
             exit_year: nullable("integer"),
             fund_name: nullable("string"),
+            status_note: nullable("string"),
+            deal_type: nullable("string"),
+            asset_class: nullable("string"),
+            value_creation_plan: nullable("string"),
+            value_creation_source_url: nullable("string"),
+            asset_kind: { anyOf: [{ type: "string", enum: ["company", "infrastructure_asset", "property"] }, { type: "null" }] },
+            asset_location: nullable("string"),
             source_url: { type: "string" },
             deal_value: nullable("number"),
             deal_currency: nullable("string"),
@@ -73,6 +89,7 @@ const RECORD_TOOL: Anthropic.Beta.BetaTool = {
           required: [
             "name", "website", "description", "sector", "hq", "status",
             "invested_year", "exit_year", "fund_name", "source_url",
+            "status_note", "deal_type", "asset_class", "value_creation_plan", "value_creation_source_url", "asset_kind", "asset_location",
             "deal_value", "deal_currency", "deal_value_basis", "equity_invested", "stake_pct", "co_investors", "deal_source_url",
           ],
         },
@@ -91,7 +108,14 @@ Work from sources, never memory:
 3. Include a company only when a page you fetched or a search result you saw in this conversation states it is (or was) this manager's portfolio company. Do not include the manager's funds, its limited partners, or companies of a different firm with a similar name.
 4. For each company give source_url: the exact page that names it. Fill website, sector, HQ, description (one short sentence), fund name, investment year and exit year only when a source states them; otherwise null. status is "realized" only when the source marks it exited or realized, "current" only when it is listed as current/active, else "unknown".
 5. What the manager paid: when a page you fetched or a search result you saw states the money behind the investment, record it. deal_value is the transaction value in full units (2500000000, not "2.5bn") with deal_currency as an ISO code and deal_value_basis saying what the figure is: enterprise_value when the page says enterprise value or "valued the company at", equity_value when it says equity value, stake_price when it is the price paid for a stake, unspecified when the page gives a number without saying. equity_invested only when a page states the sponsor's own equity cheque; stake_pct only when a page states the percentage held; co_investors as named. deal_source_url is the page that states the money (a press release, a deal announcement, a reputable news report). Never estimate, convert currencies, or infer a value from a fund size.
-6. Large managers: a site can list several hundred companies. Fetch every sector or region page and every page of the list; record all of them, up to 400, current holdings first.
+6. Write each holding the way a desk wants to read it:
+   - status_note: one line saying where it stands and how you know, with a date: "Majority owned since 2022; still described as Ares-backed in a Sept 2026 report", "Sold to X in 2024", "Take-private completed 13 Jul 2026", "No exit found through <month year>". When the latest confirmation is old, say so ("latest owner confirmation is 2022"), and never present an old listing as current without that caveat. Holdings reduced, partly sold or moved to a continuation vehicle say so.
+   - deal_type: Buyout, Buyout (majority), Take-private, Carve-out, Recapitalisation, Growth equity, Minority equity, Preferred / structured equity, Joint venture, Platform formation, Venture round, PIPE. Use the sponsor's own words from its announcement.
+   - asset_class: the book it sits in (Corporate Private Equity, Growth equity, Special Opportunities, Infrastructure, Credit (equity co-invest), Real Estate, Sports, Media and Entertainment, Venture capital). Count equity, preferred equity, joint-venture stakes and sports and infrastructure holdings: they are portfolio companies even when the manager is mostly known for credit.
+   - value_creation_plan: what the sponsor said it will do with the company, one or two sentences close to its announcement ("Accelerate growth through acquisitions and customer expansion"), with value_creation_source_url. Null when no page states a plan.
+   Prefer the manager's own releases, SEC filings (10-Q holdings tables, Form 4s) and the company's own announcements, newest first; use aggregators (MarketScreener, StockTitan, Yahoo, Investing.com) only to find the primary page, never as the source_url.
+   - asset_kind: what the holding actually is. "company" for an operating business; "infrastructure_asset" for a physical asset (a toll road, bridge, pipeline, wind or solar portfolio, port, airport, data centre, fibre network); "property" for a real-estate asset or development (a building, a logistics park, a residential scheme). asset_location: where the physical asset is, as the page states it. Name infrastructure and real-estate holdings as the asset ("Central Penn Line", "Skyway toll road"), not only the holding vehicle.
+7. Large managers: a site can list several hundred companies. Fetch every sector or region page and every page of the list; record all of them, up to 400, current holdings first.
 
 When done, call record_portfolio once. Put anything the team should know (e.g. "site lists only current holdings", "no public portfolio page") in note.`;
 

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { searchPortcos } from "@/lib/directory/portco-queries";
+import { portcoHref } from "@/lib/directory/portco-intel";
 import { assetClassBySlug } from "@/lib/directory/asset-classes";
 import { getClassPage } from "@/lib/directory/asset-class-data";
 import { getClassMetrics } from "@/lib/directory/strategy-data";
@@ -20,7 +22,16 @@ import { formatMoney } from "@/lib/directory/intelligence-types";
 
 export const dynamic = "force-dynamic";
 
-const TABS = ["overview", "strategies", "managers", "funds", "commitments", "deals", "raises", "loans", "signals"] as const;
+const TABS = ["overview", "strategies", "managers", "funds", "commitments", "deals", "raises", "loans", "assets", "signals"] as const;
+
+// What "the asset" means in each class: the unit an investor actually owns.
+const ASSET_VIEW: Record<string, { tab: string; title: string; blurb: string; kind?: "company" | "infrastructure_asset" | "property"; cls?: string }> = {
+  private_equity: { tab: "Portfolio companies", title: "Portfolio companies", blurb: "In private equity the asset is the company: what a sponsor bought or backed, with the page that names it.", kind: "company" },
+  venture_capital: { tab: "Portfolio companies", title: "Portfolio companies", blurb: "In venture the asset is the company a fund backed.", kind: "company", cls: "venture" },
+  infrastructure: { tab: "Infrastructure assets", title: "Infrastructure assets", blurb: "In infrastructure the asset is the physical thing: a toll road, a bridge, a pipeline, a wind or solar portfolio, a port. Listed with where it is, who holds it and how.", kind: "infrastructure_asset" },
+  real_estate: { tab: "Properties & developments", title: "Properties and developments", blurb: "In real estate the asset is the property or development the money went into.", kind: "property" },
+  private_credit: { tab: "Loans", title: "Loans", blurb: "In private credit the asset is the loan: who borrowed, from which lenders, how much, at what spread and mark, and when it matures." },
+};
 type Tab = (typeof TABS)[number];
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -57,6 +68,8 @@ export default async function AssetClassPage({
   const metrics = tab === "strategies" && strategyCount ? await getClassMetrics(cls, page.managers, page.funds, page.brands) : null;
   const selectedStrategy = metrics?.strategies.find((s) => s.strategy.key === strategyParam) ?? null;
   const isAdmin = user?.role === "admin";
+  const assetView = ASSET_VIEW[cls.key];
+  const assetRows = tab === "assets" && assetView && cls.key !== "private_credit" ? await searchPortcos({ assetKind: assetView.kind, assetClass: assetView.cls, limit: 200 }) : [];
   const aiReady = Boolean(process.env.ANTHROPIC_API_KEY);
   const base = `/database/asset-classes/${cls.slug}`;
   const domainOf = (companyId: string | null) => (companyId ? (page.managers.find((m) => m.id === companyId)?.domain ?? null) : null);
@@ -92,6 +105,7 @@ export default async function AssetClassPage({
             { href: `${base}?tab=commitments`, label: "LP commitments", count: page.commitments.length, active: tab === "commitments" },
             { href: `${base}?tab=deals`, label: "Deals", count: page.deals.length, active: tab === "deals" },
             ...(raises ? [{ href: `${base}?tab=raises`, label: "Form D raises", count: raises.filings, active: tab === "raises" }] : []),
+            ...(ASSET_VIEW[cls.key] ? [{ href: `${base}?tab=assets`, label: ASSET_VIEW[cls.key].tab, active: tab === "assets" }] : []),
             ...(book ? [{ href: `${base}?tab=loans`, label: "Loan books", count: book.lenders, active: tab === "loans" }] : []),
             { href: `${base}?tab=signals`, label: "Signals", count: page.signals.length, active: tab === "signals" },
           ]}
@@ -344,6 +358,63 @@ export default async function AssetClassPage({
             <LenderTable rows={lenders} />
           </Box>
         </div>
+      ) : null}
+
+      {tab === "assets" && ASSET_VIEW[cls.key] ? (
+        <Box
+          title={ASSET_VIEW[cls.key].title}
+          flush
+          defn={ASSET_VIEW[cls.key].blurb}
+          action={
+            cls.key === "private_credit" ? (
+              <Link href="/database/borrowers" className="text-[11.5px] text-muted-foreground hover:text-foreground">Open the borrowers desk →</Link>
+            ) : (
+              <Link href="/database/portcos" className="text-[11.5px] text-muted-foreground hover:text-foreground">Open the portfolio desk →</Link>
+            )
+          }
+        >
+          <p className="border-b px-3 py-2 text-[12px] text-muted-foreground">{ASSET_VIEW[cls.key].blurb}</p>
+          {cls.key === "private_credit" ? (
+            <p className="px-3 py-4 text-[12.5px]">
+              The loan-by-loan view lives on the <Link href="/database/borrowers" className="underline">borrowers desk</Link> (22,000+ borrowers across every parsed lender) and the <Link href="/database/lenders" className="underline">loan books</Link>.
+            </p>
+          ) : assetRows.length ? (
+            <div className="desk-scroll">
+              <table className="desk-table">
+                <thead>
+                  <tr>
+                    <th>Asset</th>
+                    <th>Held by</th>
+                    <th>Where</th>
+                    <th>Sector</th>
+                    <th className="num">Since</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {assetRows.map((r) => (
+                    <tr key={r.id}>
+                      <td className="max-w-[300px]">
+                        <span className="block truncate font-medium">{r.intel_key ? <Link href={portcoHref(r.intel_key)}>{r.name}</Link> : r.name}</span>
+                      </td>
+                      <td className="max-w-[200px] truncate">
+                        <Link href={`/companies/${r.gp_company_id}?tab=portfolio`}>{r.gp?.name ?? "Sponsor"}</Link>
+                      </td>
+                      <td className="max-w-[200px] truncate text-muted-foreground">{r.asset_location ?? r.hq ?? "—"}</td>
+                      <td className="max-w-[180px] truncate text-muted-foreground">{r.sector ?? "—"}</td>
+                      <td className="num text-muted-foreground">{r.invested_year ?? "—"}</td>
+                      <td>{r.status ? <Tag>{r.status}</Tag> : "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <Empty>
+              None on file yet for this class. The portfolio research now asks for the physical asset itself (the road, the bridge, the pipeline, the building) with where it is; it fills this table as sponsors are read.
+            </Empty>
+          )}
+        </Box>
       ) : null}
 
       {tab === "signals" ? (

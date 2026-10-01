@@ -609,9 +609,9 @@ export function ConnectableBadge() {
   return (
     <span
       className="inline-flex items-center gap-1 rounded border px-1.5 py-px text-[10px] font-medium text-[var(--success)]"
-      title="A direct email for this person is held in the team's master sheet"
+      title="The team's master sheet holds a direct email for this person. The import keeps only that yes/no, not the address, so it is not shown here."
     >
-      <Mail className="h-2.5 w-2.5" /> Email on file
+      <Mail className="h-2.5 w-2.5" /> Email in master sheet
     </span>
   );
 }

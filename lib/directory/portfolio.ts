@@ -35,6 +35,9 @@ export type PortfolioCompany = {
   value_creation_plan?: string | null;
   value_creation_source_url?: string | null;
   notes?: string | null;
+  /** company | infrastructure_asset | property (migration 0026). */
+  asset_kind?: string | null;
+  asset_location?: string | null;
 };
 
 export const DEAL_BASIS_LABEL: Record<string, string> = { enterprise_value: "enterprise value", equity_value: "equity value", round_size: "round size", stake_price: "price of the stake", debt: "debt facility", unspecified: "as reported" };

@@ -378,7 +378,7 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
           </div>
           <Split>
             <div className="space-y-4">
-              <Box title="Latest disclosed commitments" flush>
+              <Box title="Latest disclosed commitments" flush action={<Link href="/database/commitments" className="text-[11px] text-muted-foreground hover:text-foreground">All {d.commitments.length.toLocaleString("en-US")} →</Link>}>
                 <CommitmentTable rows={d.commitments.slice(0, 30)} />
               </Box>
               <Box title="Fund closes on record" count={d.closes.length} flush>

@@ -183,6 +183,19 @@ export function FirmTable({ firms, limit }: { firms: DirectoryRecord[]; limit?: 
   );
 }
 
+/** An LP's name without its trailing parenthetical (the full name stays in the tooltip). */
+export const shortName = (n: string | null | undefined) => (n ?? "").replace(/\s*\([^)]*\)\s*$/, "") || (n ?? "");
+
+/** A short label for where a disclosure came from: the page's host, else the first words of the stated type. */
+function sourceLabel(url: string | null | undefined, type: string | null | undefined): string {
+  try {
+    if (url) return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    /* fall through */
+  }
+  return (type ?? "Source").split(/\s[—–-]\s/)[0].slice(0, 24);
+}
+
 export function CommitmentTable({ rows, showClass = false }: { rows: NamedCommitment[]; showClass?: boolean }) {
   if (!rows.length) return <Empty>No disclosed commitments in this class yet.</Empty>;
   // Performance columns appear when any row carries them (an LP's own
@@ -214,17 +227,17 @@ export function CommitmentTable({ rows, showClass = false }: { rows: NamedCommit
           {rows.map((c) => (
             <tr key={c.id}>
               <td className="whitespace-nowrap text-muted-foreground">{c.commitment_date_text ?? c.commitment_year ?? "—"}</td>
-              <td className="whitespace-nowrap">
-                {c.lp_company_id ? <Link href={`/companies/${c.lp_company_id}`} className="font-medium">{c.lp_label}</Link> : c.lp_label}
+              <td className="max-w-[240px]" title={c.lp_label ?? undefined}>
+                <span className="block truncate">{c.lp_company_id ? <Link href={`/companies/${c.lp_company_id}`} className="font-medium">{shortName(c.lp_label)}</Link> : shortName(c.lp_label)}</span>
               </td>
-              <td className="max-w-[320px]">
-                {c.fund_id ? <Link href={`/funds/${c.fund_id}`}>{c.fund_label}</Link> : c.fund_label}
+              <td className="max-w-[300px]" title={c.fund_label ?? undefined}>
+                <span className="block truncate">{c.fund_id ? <Link href={`/funds/${c.fund_id}`}>{c.fund_label}</Link> : c.fund_label}</span>
               </td>
-              <td className="whitespace-nowrap">
-                {c.gp_company_id ? <Link href={`/companies/${c.gp_company_id}`}>{c.gp_label}</Link> : c.gp_label}
+              <td className="max-w-[200px]" title={c.gp_label ?? undefined}>
+                <span className="block truncate">{c.gp_company_id ? <Link href={`/companies/${c.gp_company_id}`}>{c.gp_label}</Link> : c.gp_label}</span>
               </td>
-              {showClass ? <td>{c.asset_class ? classTag(c.asset_class) : null}</td> : null}
-              <td className="num">{c.amount != null ? formatMoney(c.amount, c.currency) : (c.amount_text ?? "—")}</td>
+              {showClass ? <td className="whitespace-nowrap">{c.asset_class ? classTag(c.asset_class) : null}</td> : null}
+              <td className="num">{c.amount != null ? formatMoney(c.amount, c.currency) : (c.amount_text ? <span className="text-muted-foreground" title={c.amount_text}>{c.amount_text.length > 18 ? c.amount_text.slice(0, 16) + "…" : c.amount_text}</span> : "—")}</td>
               {perf ? (
                 <>
                   <td className="num text-muted-foreground">{c.contributed != null ? formatMoney(c.contributed, c.currency) : "—"}</td>
@@ -233,8 +246,10 @@ export function CommitmentTable({ rows, showClass = false }: { rows: NamedCommit
                   <td className="num">{c.multiple != null ? `${c.multiple.toFixed(2)}x` : "—"}</td>
                 </>
               ) : null}
-              <td>
-                <Src url={c.source_url} name={c.disclosure_type} asOf={c.as_of ?? null} />
+              <td className="max-w-[160px] whitespace-nowrap" title={c.disclosure_type ?? undefined}>
+                <span className="block truncate">
+                  <Src url={c.source_url} name={sourceLabel(c.source_url, c.disclosure_type)} asOf={c.as_of ?? null} />
+                </span>
               </td>
             </tr>
           ))}

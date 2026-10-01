@@ -187,6 +187,11 @@ def build(slug, lst, ver):
             "exit_year": year(c.get("exit_year")),
             "fund_name": text(c.get("fund_name"), 200),
             "source_url": src,
+            "status_note": text(c.get("status_note"), 300),
+            "deal_type": text(c.get("deal_type"), 80),
+            "asset_class": text(c.get("asset_class"), 80),
+            "value_creation_plan": text(c.get("value_creation_plan"), 600),
+            "value_creation_source_url": url(c.get("value_creation_source_url")),
         }
         by_fold[f] = row
         companies.append(row)
@@ -340,11 +345,11 @@ begin
   if gp is null then raise exception 'sponsor % is not in the directory', {q(sp['directory_name'])}; end if;
 
   insert into public.portfolio_companies as pc (external_key, gp_company_id, name, domain, description, sector, hq, status, invested_year, exit_year, fund_name,
-      source, source_url, deal_value, deal_currency, deal_value_basis, stake_pct, co_investors, deal_source_url, researched_at)
+      source, source_url, deal_value, deal_currency, deal_value_basis, stake_pct, co_investors, deal_source_url, researched_at, status_note, deal_type, asset_class, value_creation_plan, value_creation_source_url)
   select gp::text || ':' || (c->>'slug'), gp, c->>'name', c->>'domain', c->>'description', c->>'sector', c->>'hq', c->>'status',
          (c->>'invested_year')::int, (c->>'exit_year')::int, c->>'fund_name', 'web_research', c->>'source_url',
          (c->>'deal_value')::numeric, c->>'deal_currency', c->>'deal_value_basis', (c->>'stake_pct')::numeric,
-         coalesce(array(select jsonb_array_elements_text(c->'co_investors')), '{{}}'), c->>'deal_source_url', now()
+         coalesce(array(select jsonb_array_elements_text(c->'co_investors')), '{{}}'), c->>'deal_source_url', now(), c->>'status_note', c->>'deal_type', c->>'asset_class', c->>'value_creation_plan', c->>'value_creation_source_url'
     from jsonb_array_elements(doc->'companies') c
   on conflict (external_key) do update set
     name = case when pc.source = 'manual' then pc.name else excluded.name end,
@@ -363,6 +368,8 @@ begin
     stake_pct = coalesce(excluded.stake_pct, pc.stake_pct),
     co_investors = case when cardinality(excluded.co_investors) > 0 then excluded.co_investors else pc.co_investors end,
     deal_source_url = coalesce(excluded.deal_source_url, pc.deal_source_url),
+    status_note = coalesce(excluded.status_note, pc.status_note), deal_type = coalesce(excluded.deal_type, pc.deal_type), asset_class = coalesce(excluded.asset_class, pc.asset_class),
+    value_creation_plan = coalesce(excluded.value_creation_plan, pc.value_creation_plan), value_creation_source_url = coalesce(excluded.value_creation_source_url, pc.value_creation_source_url),
     researched_at = now();
   get diagnostics n_companies = row_count;
 

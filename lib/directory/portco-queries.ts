@@ -75,13 +75,16 @@ export type PortcoRow = {
   deal_value_basis: string | null;
   stake_pct: number | null;
   source_url: string | null;
+  asset_kind: string | null;
+  asset_class: string | null;
+  asset_location: string | null;
   gp: { name: string; domain: string | null } | null;
 };
 
-export type PortcoFilter = { q?: string; sponsor?: string; status?: "current" | "realized" | ""; priced?: boolean; limit?: number };
+export type PortcoFilter = { q?: string; sponsor?: string; status?: "current" | "realized" | ""; priced?: boolean; limit?: number; assetKind?: "company" | "infrastructure_asset" | "property"; assetClass?: string };
 
 const PORTCO_COLUMNS =
-  "id, gp_company_id, name, domain, sector, hq, status, invested_year, exit_year, intel_key, deal_value, deal_currency, deal_value_basis, stake_pct, source_url, gp:companies!portfolio_companies_gp_company_id_fkey(name, domain)";
+  "id, gp_company_id, name, domain, sector, hq, status, invested_year, exit_year, intel_key, deal_value, deal_currency, deal_value_basis, stake_pct, source_url, asset_kind, asset_class, asset_location, gp:companies!portfolio_companies_gp_company_id_fkey(name, domain)";
 
 /** Portfolio companies matching a search, most recent investment first. */
 export async function searchPortcos(f: PortcoFilter): Promise<PortcoRow[]> {
@@ -93,6 +96,9 @@ export async function searchPortcos(f: PortcoFilter): Promise<PortcoRow[]> {
   if (f.sponsor && /^[0-9a-f-]{36}$/i.test(f.sponsor)) q = q.eq("gp_company_id", f.sponsor);
   if (f.status) q = q.eq("status", f.status);
   if (f.priced) q = q.not("deal_value", "is", null);
+  if (f.assetKind === "company") q = q.or("asset_kind.is.null,asset_kind.eq.company");
+  else if (f.assetKind) q = q.eq("asset_kind", f.assetKind);
+  if (f.assetClass) q = q.ilike("asset_class", `%${f.assetClass.replace(/[%_,()]/g, " ")}%`);
   const { data, error } = await q
     .order(f.priced ? "deal_value" : "invested_year", { ascending: false, nullsFirst: false })
     .order("name")

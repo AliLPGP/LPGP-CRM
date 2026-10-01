@@ -22,6 +22,8 @@ import { isOperatingRole } from "@/lib/directory/operating";
 import { PROVIDER_ROLES } from "@/lib/directory/providers";
 import { similarFirms } from "@/lib/directory/similar-server";
 import { getSessionUser } from "@/lib/auth";
+import { getParticipationForCompany } from "@/lib/event-participants";
+import { CompanyEvents } from "@/components/events/event-history";
 import { CATEGORIES } from "@/lib/categories";
 import { lushaConfigured } from "@/lib/lusha";
 import { CategoryBadge } from "@/components/category-badge";
@@ -55,7 +57,7 @@ import { formatUsd } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-const TABS = ["overview", "deals", "funds", "portfolio", "people", "providers", "clients", "signals", "peers", "notes"] as const;
+const TABS = ["overview", "deals", "funds", "portfolio", "people", "events", "providers", "clients", "signals", "peers", "notes"] as const;
 type Tab = (typeof TABS)[number];
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -76,7 +78,7 @@ export default async function CompanyProfile({
   if (!company) notFound();
   const tab: Tab = (TABS as readonly string[]).includes(tabParam ?? "") ? (tabParam as Tab) : "overview";
 
-  const [contacts, funds, providers, providerClients, commitments, notes, lists, onLists, similar, index, portcos, deals, signals, held, user, offerings, lenders] =
+  const [contacts, funds, providers, providerClients, commitments, notes, lists, onLists, similar, index, portcos, deals, signals, held, user, offerings, lenders, eventRows] =
     await Promise.all([
       getContactsForCompany(id),
       getCompanyFunds(id),
@@ -95,6 +97,7 @@ export default async function CompanyProfile({
       getSessionUser(),
       getFundOfferings({ gpCompanyId: id, limit: 200 }),
       lendersManagedBy(id),
+      getParticipationForCompany(id),
     ]);
   const [asLp, asGp] = await Promise.all([nameCommitments(commitments.asLp), nameCommitments(commitments.asGp)]);
 
@@ -129,6 +132,7 @@ export default async function CompanyProfile({
     ...(funds.length || company.category === "GP" ? [{ key: "funds", label: "Funds", count: funds.length }] : []),
     ...(ownsCompanies ? [{ key: "portfolio", label: "Portfolio", count: portcos.length }] : []),
     { key: "people", label: "People", count: contacts.length },
+    ...(eventRows.length ? [{ key: "events", label: "Events", count: new Set(eventRows.map((r) => r.event_name)).size }] : []),
     ...(providers.length ? [{ key: "providers", label: "Service providers", count: providers.length }] : []),
     ...(providerClients.length ? [{ key: "clients", label: "Clients", count: providerClients.length }] : []),
     { key: "signals", label: "Signals", count: signals.length },
@@ -402,6 +406,12 @@ export default async function CompanyProfile({
           ) : (
             <Empty>No contacts yet. Use Import to add people.</Empty>
           )}
+        </Box>
+      ) : null}
+
+      {tab === "events" ? (
+        <Box title="Events" count={new Set(eventRows.map((r) => r.event_name)).size} flush>
+          <CompanyEvents rows={eventRows} />
         </Box>
       ) : null}
 

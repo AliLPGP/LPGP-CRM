@@ -1,4 +1,6 @@
+import { after } from "next/server";
 import { listAccounts } from "@/lib/accounts";
+import { syncAccountsIfDue } from "@/lib/account-sync-auto";
 import { opsSummaries } from "@/lib/ops-links";
 import { isOpsConfigured } from "@/lib/ops";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
@@ -13,10 +15,19 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Accounts — LPGP Connect" };
 
 export default async function AccountsPage() {
-  const [accounts, ops] = await Promise.all([
-    listAccounts(),
-    opsSummaries("account"),
-  ]);
+  let [accounts, ops] = await Promise.all([listAccounts(), opsSummaries("account")]);
+
+  // A book with next to no accounts has never been synced: do it now, so the
+  // first visit already shows every sponsor. Otherwise it runs after the page
+  // is sent and the next visit has any new ones.
+  if (accounts.length < 3) {
+    const synced = await Promise.race([syncAccountsIfDue({ force: true }), new Promise<null>((r) => setTimeout(() => r(null), 25_000))]);
+    if (synced && (synced.created || synced.updated || synced.linked)) {
+      [accounts, ops] = await Promise.all([listAccounts(), opsSummaries("account")]);
+    }
+  } else {
+    after(() => syncAccountsIfDue());
+  }
 
   const active = accounts.filter((a) => a.status === "Active").length;
   const contacts = accounts.reduce((n, a) => n + a.contact_count, 0);

@@ -1,6 +1,5 @@
 import { getSessionUser } from "@/lib/auth";
 import { listLeads, listProfiles } from "@/lib/crm";
-import { listCompaniesLite } from "@/lib/queries";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { LeadsTable } from "@/components/leads-table";
 import { PageHeader } from "@/components/page-header";
@@ -10,11 +9,10 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Leads — LPGP Connect" };
 
 export default async function LeadsPage() {
-  const [user, leads, profiles, companyLite] = await Promise.all([
+  const [user, leads, profiles] = await Promise.all([
     getSessionUser(),
     listLeads(),
     listProfiles(),
-    listCompaniesLite(),
   ]);
   const profileLite = profiles.map((p) => ({ id: p.id, full_name: p.full_name }));
 
@@ -30,7 +28,6 @@ export default async function LeadsPage() {
         leads={leads}
         currentUserId={user?.id ?? null}
         isAdmin={user?.role === "admin"}
-        companies={companyLite}
         profiles={profileLite}
       />
     </div>

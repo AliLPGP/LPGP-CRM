@@ -184,11 +184,11 @@ begin
   select count(*) into n_contacts_hit from ingest.ms_people where contact_id is not null;
 
   with ins as (
-    insert into public.contacts (company_id, first_name, last_name, full_name, job_title, email, phone, source)
+    insert into public.contacts (company_id, first_name, last_name, job_title, email, phone, source)
     select p.company_id,
            split_part(p.name, ' ', 1),
            nullif(btrim(substr(p.name, length(split_part(p.name, ' ', 1)) + 1)), ''),
-           p.name, nullif(p.title, ''), nullif(p.email, ''), nullif(p.phone, ''), 'mastersheet'
+           nullif(p.title, ''), nullif(p.email, ''), nullif(p.phone, ''), 'mastersheet'
       from ingest.ms_people p
      where p.contact_id is null and coalesce(btrim(p.name), '') <> ''
     returning id, full_name, company_id, email
@@ -212,13 +212,21 @@ begin
        or (c.job_title is null and nullif(p.title, '') is not null));
 
   -- 3. events --------------------------------------------------------------
+  -- The sheet's own typing is loose: a sponsor cell can hold a phone number
+  -- and a booked-by cell a note. Only a recognisable tier or a bare set of
+  -- initials is kept; the rest is left out rather than guessed at.
   insert into public.event_participants (event_name, contact_id, company_id, segment, role, status, sponsor_tier, booked_by, booked_on, invite_status)
   select distinct on (e.event, p.contact_id)
          e.event, p.contact_id, p.company_id,
-         nullif(e.seg, ''), nullif(lower(e.role), ''),
+         coalesce(nullif(e.seg, ''), nullif(p.seg, ''), nullif(c.category::text, 'UN')),
+         nullif(lower(e.role), ''),
          case when e.cancelled then 'cancelled' else 'attending' end,
-         nullif(e.sponsor, ''), nullif(e.booked, ''), e.booked_on, nullif(e.invite, '')
-    from ingest.ms_part e join ingest.ms_people p on p.pid = e.pid
+         case when e.sponsor ~* '(sponsor|partner|exhibitor|pass|complimentary|vip|media)' and e.sponsor !~ '[0-9]' and length(e.sponsor) <= 30 then e.sponsor end,
+         case when e.booked ~ '^[A-Za-z]{1,12}$' then e.booked end,
+         e.booked_on, nullif(e.invite, '')
+    from ingest.ms_part e
+    join ingest.ms_people p on p.pid = e.pid
+    left join public.companies c on c.id = p.company_id
    where p.contact_id is not null
    order by e.event, p.contact_id, e.cancelled, (e.sponsor <> '') desc
   on conflict (event_name, contact_id) do update set

@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Search, Mail, Phone, Link2 } from "lucide-react";
-import type { ContactWithCompany, Category } from "@/lib/types";
+import type { Category } from "@/lib/types";
+import type { ContactListRow, ContactSearchResult } from "@/lib/queries";
 import { CATEGORIES, CATEGORY_ORDER } from "@/lib/categories";
 import { CategoryBadge } from "@/components/category-badge";
 import { PersonAvatar } from "@/components/person-avatar";
@@ -13,39 +14,66 @@ import { cn } from "@/lib/utils";
 
 type Filter = Category | "ALL";
 
-/** What the list shows — the page sends only these fields. */
-export type ContactRow = Pick<
-  ContactWithCompany,
-  "id" | "full_name" | "job_title" | "country" | "email" | "phone" | "linkedin_url" | "connectable" | "company"
->;
+export type ContactRow = ContactListRow;
 
 const PAGE = 100;
 
-export function ContactsBrowser({ contacts }: { contacts: ContactRow[] }) {
+type Shown = ContactSearchResult & { key: string };
+
+function paramsFor(filter: Filter, q: string, emailOnly: boolean, offset: number): string {
+  const p = new URLSearchParams();
+  if (filter !== "ALL") p.set("cat", filter);
+  if (q.trim()) p.set("q", q.trim());
+  if (emailOnly) p.set("email", "1");
+  p.set("offset", String(offset));
+  p.set("limit", String(PAGE));
+  return p.toString();
+}
+
+// The database filters and pages (migration 0030). Each answer carries the
+// filters it belongs to; the last one stays on screen while the next loads.
+export function ContactsBrowser({ initial }: { initial: ContactSearchResult }) {
   const [filter, setFilter] = useState<Filter>("ALL");
   const [q, setQ] = useState("");
   const [emailOnly, setEmailOnly] = useState(false);
+  const key = JSON.stringify([filter, q, emailOnly]);
+  const [shown, setShown] = useState<Shown>(() => ({ ...initial, key }));
+  const [more, setMore] = useState(false);
 
-  const filtered = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    return contacts.filter((c) => {
-      if (filter !== "ALL" && c.company?.category !== filter) return false;
-      if (emailOnly && !c.email && !c.connectable) return false;
-      if (!needle) return true;
-      return (
-        (c.full_name ?? "").toLowerCase().includes(needle) ||
-        (c.job_title ?? "").toLowerCase().includes(needle) ||
-        (c.company?.name ?? "").toLowerCase().includes(needle) ||
-        (c.country ?? "").toLowerCase().includes(needle)
-      );
-    });
-  }, [contacts, filter, q, emailOnly]);
+  useEffect(() => {
+    if (shown.key === key) return;
+    let live = true;
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/contacts/search?${paramsFor(filter, q, emailOnly, 0)}`);
+        const json = (await res.json()) as ContactSearchResult;
+        if (live) setShown({ ...json, key });
+      } catch {
+        /* keep what is on screen */
+      }
+    }, 250);
+    return () => {
+      live = false;
+      clearTimeout(timer);
+    };
+  }, [key, filter, q, emailOnly, shown.key]);
 
-  const hasUnclassified = contacts.some((c) => c.company?.category === "UN");
+  async function showMore() {
+    setMore(true);
+    try {
+      const res = await fetch(`/api/contacts/search?${paramsFor(filter, q, emailOnly, shown.rows.length)}`);
+      const json = (await res.json()) as ContactSearchResult;
+      setShown((cur) => (cur.key === key ? { ...cur, rows: [...cur.rows, ...json.rows] } : cur));
+    } finally {
+      setMore(false);
+    }
+  }
+
+  const loading = shown.key !== key;
   const tabs: { key: Filter; label: string }[] = [
     { key: "ALL", label: "All" },
     ...CATEGORY_ORDER.map((k) => ({ key: k as Filter, label: CATEGORIES[k].label })),
-    ...(hasUnclassified ? [{ key: "UN" as Filter, label: CATEGORIES.UN.label }] : []),
+    ...(initial.hasUnclassified ? [{ key: "UN" as Filter, label: CATEGORIES.UN.label }] : []),
   ];
 
   return (
@@ -89,19 +117,31 @@ export function ContactsBrowser({ contacts }: { contacts: ContactRow[] }) {
         </div>
       </div>
 
-      <ContactRows key={`${filter}|${q}|${emailOnly}`} rows={filtered} total={contacts.length} />
+      <ContactRows rows={shown.rows} matching={shown.total} total={shown.all} loading={loading} more={more} onMore={showMore} />
     </div>
   );
 }
 
-/** Keyed by the filters above, so a new search starts back at the top. */
-function ContactRows({ rows, total }: { rows: ContactRow[]; total: number }) {
-  const [shown, setShown] = useState(PAGE);
-  const filtered = rows.slice(0, shown);
+function ContactRows({
+  rows,
+  matching,
+  total,
+  loading,
+  more,
+  onMore,
+}: {
+  rows: ContactRow[];
+  matching: number;
+  total: number;
+  loading: boolean;
+  more: boolean;
+  onMore: () => void;
+}) {
+  const filtered = rows;
   return (
     <>
 
-      <div className="rounded-xl border bg-card overflow-hidden">
+      <div className={cn("rounded-xl border bg-card overflow-hidden transition-opacity", loading && "opacity-60")}>
         <Table>
           <TableHeader>
             <TableRow>
@@ -147,16 +187,16 @@ function ContactRows({ rows, total }: { rows: ContactRow[]; total: number }) {
                   <TableCell className="text-muted-foreground">{c.country ?? "—"}</TableCell>
                   <TableCell>
                     <div className="flex items-center justify-end gap-2 text-muted-foreground">
-                      {c.email ? (
+                      {c.has_email ? (
                         <Mail className="h-4 w-4" />
                       ) : c.connectable ? (
                         <span title="Direct email held in the team's master sheet">
                           <Mail className="h-4 w-4 text-[var(--success)]" />
                         </span>
                       ) : null}
-                      {c.phone ? <Phone className="h-4 w-4" /> : null}
-                      {c.linkedin_url ? <Link2 className="h-4 w-4" /> : null}
-                      {!c.email && !c.connectable && !c.phone && !c.linkedin_url ? <span className="text-xs">—</span> : null}
+                      {c.has_phone ? <Phone className="h-4 w-4" /> : null}
+                      {c.has_linkedin ? <Link2 className="h-4 w-4" /> : null}
+                      {!c.has_email && !c.connectable && !c.has_phone && !c.has_linkedin ? <span className="text-xs">—</span> : null}
                     </div>
                   </TableCell>
                 </TableRow>
@@ -167,16 +207,17 @@ function ContactRows({ rows, total }: { rows: ContactRow[]; total: number }) {
       </div>
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
         <span>
-          Showing {filtered.length.toLocaleString("en-US")} of {rows.length.toLocaleString("en-US")}
-          {rows.length !== total ? ` matching (${total.toLocaleString("en-US")} in all)` : ""}
+          Showing {filtered.length.toLocaleString("en-US")} of {matching.toLocaleString("en-US")}
+          {matching !== total ? ` matching (${total.toLocaleString("en-US")} in all)` : ""}
         </span>
-        {rows.length > shown ? (
+        {rows.length < matching ? (
           <button
             type="button"
-            onClick={() => setShown(shown + PAGE)}
-            className="rounded-md border bg-card px-3 py-1.5 text-foreground hover:bg-accent"
+            disabled={more || loading}
+            onClick={onMore}
+            className="rounded-md border bg-card px-3 py-1.5 text-foreground hover:bg-accent disabled:opacity-50"
           >
-            Show {Math.min(PAGE, rows.length - shown)} more
+            {more ? "Loading…" : `Show ${Math.min(PAGE, matching - rows.length)} more`}
           </button>
         ) : null}
       </div>

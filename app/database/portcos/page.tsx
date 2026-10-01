@@ -19,7 +19,9 @@ export const metadata = { title: "Portfolio companies — LPGP Connect" };
 // figure the announcement that states it, with what the figure is. Money is
 // shown per currency and never added across currencies.
 
-type Search = { q?: string; sponsor?: string; status?: string; priced?: string };
+type Search = { q?: string; sponsor?: string; status?: string; priced?: string; n?: string };
+
+const STEP = 100;
 
 function CountList({ rows, href }: { rows: { key: string; label: React.ReactNode; count: number; title?: string }[]; href?: (key: string) => string }) {
   const max = rows[0]?.count ?? 1;
@@ -48,11 +50,15 @@ export default async function PortcosPage({ searchParams }: { searchParams: Prom
   const status = sp.status === "current" || sp.status === "realized" ? sp.status : "";
   const priced = sp.priced === "1";
   const query = (sp.q ?? "").trim();
+  const limit = Math.min(1000, Math.max(STEP, Math.floor(Number(sp.n)) || STEP));
   const [summary, sponsors, rows] = await Promise.all([
     getPortcoSummary(),
     portcoSponsors(),
-    searchPortcos({ q: query, sponsor: sp.sponsor, status, priced, limit: 300 }),
+    searchPortcos({ q: query, sponsor: sp.sponsor, status, priced, limit: limit + 1 }),
   ]);
+  // One row past the page says whether there is more.
+  const hasMore = rows.length > limit;
+  if (hasMore) rows.length = limit;
   const keys = rows.map((r) => r.intel_key ?? "").filter(Boolean);
   const [intel, counts] = await Promise.all([getPortcoIntel(keys), dealCountsFor(keys)]);
   const href = (patch: Partial<Search>) => {
@@ -239,7 +245,7 @@ export default async function PortcosPage({ searchParams }: { searchParams: Prom
         title={query ? `Companies matching “${query}”` : sponsorName ? `${sponsorName} portfolio` : "Most recent investments"}
         count={rows.length}
         flush
-        defn="Up to 300 at a time, most recent investment first (largest stated deal first when filtered to those with a value). Search narrows by company, sector or country."
+        defn="A hundred at a time, most recent investment first (largest stated deal first when filtered to those with a value). Search narrows by company, sector or country."
       >
         {rows.length ? (
           <div className="desk-scroll">
@@ -339,6 +345,13 @@ export default async function PortcosPage({ searchParams }: { searchParams: Prom
         ) : (
           <Empty>No portfolio company matches.</Empty>
         )}
+        {hasMore ? (
+          <div className="border-t px-3 py-2">
+            <Link href={href({ n: String(limit + STEP) })} scroll={false} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+              Show {STEP} more
+            </Link>
+          </div>
+        ) : null}
       </Box>
     </IntelShell>
   );

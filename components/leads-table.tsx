@@ -13,7 +13,6 @@ import { formatUsd } from "@/lib/utils";
 import { initials } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
-type CompanyLite = { id: string; name: string; category: string };
 type ProfileLite = { id: string; full_name: string | null };
 
 function StageBadge({ stage }: { stage: string }) {
@@ -41,13 +40,11 @@ export function LeadsTable({
   leads,
   currentUserId,
   isAdmin,
-  companies,
   profiles,
 }: {
   leads: LeadWithRefs[];
   currentUserId: string | null;
   isAdmin: boolean;
-  companies: CompanyLite[];
   profiles: ProfileLite[];
 }) {
   const [market, setMarket] = useState("ALL");
@@ -107,7 +104,7 @@ export function LeadsTable({
             <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search…" className="pl-9" />
           </div>
         </div>
-        <NewLeadDialog companies={companies} profiles={profiles} isAdmin={isAdmin} />
+        <NewLeadDialog profiles={profiles} isAdmin={isAdmin} />
       </div>
 
       <div className="sheen rounded-2xl border bg-card overflow-hidden">

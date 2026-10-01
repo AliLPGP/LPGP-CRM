@@ -356,3 +356,40 @@ export async function getNotes(
     .order("created_at", { ascending: false });
   return (data as Note[]) ?? [];
 }
+
+
+// ---------------------------------------------------------------------------
+// The People page: the database filters and pages (migration 0030). The list
+// only needs to know whether someone HAS an email, phone or LinkedIn, so the
+// addresses themselves never ride along.
+// ---------------------------------------------------------------------------
+
+export type ContactListRow = {
+  id: string;
+  full_name: string | null;
+  job_title: string | null;
+  country: string | null;
+  has_email: boolean;
+  has_phone: boolean;
+  has_linkedin: boolean;
+  connectable: boolean;
+  company: { id: string; name: string; category: Category } | null;
+};
+
+export type ContactSearchResult = { total: number; all: number; hasUnclassified: boolean; rows: ContactListRow[] };
+
+export async function searchContacts(s: { cat?: string | null; hasEmail?: boolean; q?: string; offset?: number; limit?: number }): Promise<ContactSearchResult> {
+  const empty: ContactSearchResult = { total: 0, all: 0, hasUnclassified: false, rows: [] };
+  const supabase = getReadClient();
+  if (!supabase) return empty;
+  const { data, error } = await supabase.rpc("contacts_search", {
+    p_cat: s.cat || null,
+    p_has_email: s.hasEmail ?? false,
+    p_q: s.q?.trim() || null,
+    p_offset: s.offset ?? 0,
+    p_limit: s.limit ?? 100,
+  });
+  if (error || !data) return empty;
+  const r = data as ContactSearchResult;
+  return { ...r, total: Number(r.total), all: Number(r.all) };
+}

@@ -133,10 +133,15 @@ export function PortfolioCompanies({
   rows,
   aiReady,
   intel = {},
+  total,
+  moreHref,
 }: {
   companyId: string;
   rows: PortfolioCompany[];
   aiReady: boolean;
+  /** How many the firm has in all, when `rows` is only the first part of them. */
+  total?: number;
+  moreHref?: string;
   /** What is on file about each company (by `intel_key`): filed accounts, officers, executives. */
   intel?: Record<string, PortcoIntel>;
 }) {
@@ -350,6 +355,13 @@ export function PortfolioCompanies({
               <button type="button" onClick={() => setLimit(limit + 60)} className="text-xs font-medium text-muted-foreground hover:text-foreground">
                 Show {Math.min(60, shown.length - limit)} more
               </button>
+            </div>
+          ) : total != null && total > rows.length && moreHref ? (
+            <div className="border-t px-5 py-2.5 text-xs text-muted-foreground">
+              Showing {rows.length.toLocaleString("en-US")} of {total.toLocaleString("en-US")}.{" "}
+              <Link href={moreHref} scroll={false} className="font-medium text-foreground hover:underline">
+                Show more
+              </Link>
             </div>
           ) : null}
         </>

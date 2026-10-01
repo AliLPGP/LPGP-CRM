@@ -1,4 +1,5 @@
 advent.sql
+aip.sql
 apax.sql
 apollo.sql
 ardian.sql
@@ -17,14 +18,20 @@ gtcr.sql
 hellman-friedman.sql
 hig.sql
 insight-partners.sql
+jf-lehman.sql
 kkr.sql
+kohlberg.sql
+kps.sql
 nordic-capital.sql
 pai.sql
 partners-group.sql
 permira.sql
 platinum-equity.sql
+providence.sql
 silver-lake.sql
+stone-point.sql
 summit-partners.sql
+sycamore.sql
 ta-associates.sql
 tcv.sql
 thoma-bravo.sql
@@ -32,3 +39,4 @@ tpg.sql
 triton.sql
 vista.sql
 warburg-pincus.sql
+wind-point.sql

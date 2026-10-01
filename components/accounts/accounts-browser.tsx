@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/native-select";
 import { EmptyState } from "@/components/empty-state";
+import type { Sponsorship } from "@/lib/account-sponsorships";
 import { cn, initials } from "@/lib/utils";
 
 const STATUS_STYLE: Record<string, string> = {
@@ -31,9 +32,12 @@ const STATUS_STYLE: Record<string, string> = {
 export function AccountsBrowser({
   accounts,
   opsByAccount,
+  sponsorships = {},
 }: {
   accounts: AccountWithRefs[];
   opsByAccount: Record<string, OpsLeadSummary>;
+  /** What each account paid per year, from the sponsor lists. */
+  sponsorships?: Record<string, Sponsorship[]>;
 }) {
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("");
@@ -96,7 +100,7 @@ export function AccountsBrowser({
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {shown.map((a) => (
-            <AccountCard key={a.id} account={a} ops={opsByAccount[a.id] ?? null} />
+            <AccountCard key={a.id} account={a} ops={opsByAccount[a.id] ?? null} paid={sponsorships[a.id] ?? []} />
           ))}
         </div>
       )}
@@ -107,9 +111,11 @@ export function AccountsBrowser({
 function AccountCard({
   account,
   ops,
+  paid,
 }: {
   account: AccountWithRefs;
   ops: OpsLeadSummary | null;
+  paid: Sponsorship[];
 }) {
   const poc = account.primary_contact;
   return (
@@ -172,6 +178,17 @@ function AccountCard({
           <p className="text-xs text-muted-foreground">No points of contact added yet</p>
         )}
       </div>
+
+      {/* What they paid, by year, from the sponsor lists */}
+      {paid.length ? (
+        <div className="mt-2.5 flex flex-wrap gap-1">
+          {paid.slice(0, 3).map((p) => (
+            <span key={`${p.year}-${p.currency}`} className="rounded-md border bg-background px-1.5 py-0.5 text-[10px]">
+              {p.year} <span className="tabular text-muted-foreground">{p.amount != null ? formatOpsMoney(p.amount, p.currency) : "no amount"}</span>
+            </span>
+          ))}
+        </div>
+      ) : null}
 
       {/* Ops allocations */}
       {ops && ops.events.length ? (

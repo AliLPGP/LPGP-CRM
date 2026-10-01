@@ -221,7 +221,7 @@ begin
          coalesce(nullif(e.seg, ''), nullif(p.seg, ''), nullif(c.category::text, 'UN')),
          nullif(lower(e.role), ''),
          case when e.cancelled then 'cancelled' else 'attending' end,
-         case when e.sponsor ~* '(sponsor|partner|exhibitor|pass|complimentary|vip|media)' and e.sponsor !~ '[0-9]{3}' then e.sponsor end,
+         case when e.sponsor ~* '(sponsor|partner|exhibitor|pass|complimentary|vip|media)' and e.sponsor !~ '[0-9]' and length(e.sponsor) <= 30 then e.sponsor end,
          case when e.booked ~ '^[A-Za-z]{1,12}$' then e.booked end,
          e.booked_on, nullif(e.invite, '')
     from ingest.ms_part e

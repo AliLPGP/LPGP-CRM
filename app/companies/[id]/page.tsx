@@ -71,9 +71,10 @@ export default async function CompanyProfile({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ tab?: string }>;
+  searchParams: Promise<{ tab?: string; n?: string }>;
 }) {
-  const [{ id }, { tab: tabParam }] = await Promise.all([params, searchParams]);
+  const [{ id }, { tab: tabParam, n: nParam }] = await Promise.all([params, searchParams]);
+  const portcoShown = Math.min(2000, Math.max(120, Math.floor(Number(nParam)) || 120));
   const company = await getCompany(id);
   if (!company) notFound();
   const tab: Tab = (TABS as readonly string[]).includes(tabParam ?? "") ? (tabParam as Tab) : "overview";
@@ -349,7 +350,14 @@ export default async function CompanyProfile({
 
       {tab === "portfolio" ? (
         <div className="space-y-4">
-          <PortfolioCompanies companyId={company.id} rows={portcos} aiReady={Boolean(process.env.ANTHROPIC_API_KEY)} intel={Object.fromEntries(await getPortcoIntel(portcos.map((p) => p.intel_key ?? "")))} />
+          <PortfolioCompanies
+            companyId={company.id}
+            rows={portcos.slice(0, portcoShown)}
+            total={portcos.length}
+            moreHref={`${base}?tab=portfolio&n=${portcoShown + 120}`}
+            aiReady={Boolean(process.env.ANTHROPIC_API_KEY)}
+            intel={Object.fromEntries(await getPortcoIntel(portcos.slice(0, portcoShown).map((p) => p.intel_key ?? "")))}
+          />
           <OperatingPartners
             companyId={company.id}
             hasDomain={Boolean(company.domain)}

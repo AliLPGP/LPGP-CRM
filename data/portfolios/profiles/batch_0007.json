@@ -1,0 +1,1921 @@
+[
+ {
+  "name": "ContextLogic",
+  "website": "https://www.contextlogic.com",
+  "description": "ContextLogic Holdings Inc. is a publicly traded business ownership platform established to own a collection of niche, competitively advantaged, long-duration businesses; its first operating business is US Salt.",
+  "sector": "Diversified holding company",
+  "subsector": "Salt production (US Salt); specialty chemicals (gChem, pending)",
+  "country": "United States",
+  "business_model": "Holding company (permanent public capital owning operating businesses)",
+  "email": "ir@contextlogic.com",
+  "email_type": "investor_relations",
+  "revenue": 33600000,
+  "revenue_currency": "USD",
+  "revenue_period": "Q2 2026 (3 months to 2026-06-30)",
+  "ebitda": 10800000,
+  "ebitda_currency": "USD",
+  "ebitda_period": "Q2 2026 (3 months to 2026-06-30)",
+  "ebitda_basis": "adjusted",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Mark Ward",
+    "title": "President (Principal Executive Officer)",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000017/logc-20260630.htm",
+    "source_kind": "filing",
+    "evidence": "/s/ Mark Ward ... President (Principal Executive Officer) [10-Q for the quarter ended June 30, 2026, filed 2026-08-13]"
+   },
+   {
+    "role": "cfo",
+    "name": "Scott Stewart",
+    "title": "Chief Financial Officer and Chief Operating Officer",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000007/logc-20260529.htm",
+    "source_kind": "filing",
+    "evidence": "On June 1, 2026 the Company also announced the appointment of Scott Stewart, age 53, as Chief Financial Officer and Chief Operating Officer, effective June 1, 2026"
+   },
+   {
+    "role": "coo",
+    "name": "Scott Stewart",
+    "title": "Chief Financial Officer and Chief Operating Officer",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000017/logc-20260630.htm",
+    "source_kind": "filing",
+    "evidence": "/s/ Scott Stewart ... Chief Financial Officer and Chief Operating Officer"
+   },
+   {
+    "role": "other",
+    "name": "Raja Bobbili",
+    "title": "Chairman",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/2064307/000119312526333861/logc-ex99_1.htm",
+    "source_kind": "filing",
+    "evidence": "\"It is rare to find businesses like gChem,\" said Raja Bobbili, Chairman of ContextLogic."
+   }
+  ],
+  "notes": "Former Wish.com parent; acquired US Salt on 2026-02-26 (US Salt is the accounting predecessor) and on 2026-08-05 agreed to acquire gChem (Gaylord Chemical) at an $850m enterprise value. Figures are quarterly (Q2 2026 net sales $33.6m, Adjusted EBITDA $10.8m, non-GAAP) because no full year including US Salt has been reported. The FY2025 10-K counted 4 parent-company employees before the US Salt acquisition, so no current headcount is recorded. Rishi Bajaj was CEO when BC Partners invested (Feb 2025); the Q2 2026 10-Q is signed by Mark Ward as President (Principal Executive Officer). Trades OTCQB: LOGC.",
+  "sources": {
+   "description": {
+    "url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000015/logc-ex99_1.htm",
+    "name": "ContextLogic Q2 2026 results release (8-K Ex. 99.1, GlobeNewswire)",
+    "kind": "filing",
+    "as_of": "2026-08-13",
+    "evidence": "ContextLogic Holdings Inc. is a publicly traded business ownership platform established to own a collection of niche, competitively advantaged, long-duration businesses."
+   },
+   "sector": {
+    "url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000017/logc-20260630.htm",
+    "name": "SEC Form 10-Q",
+    "kind": "filing",
+    "as_of": "2026-08-13",
+    "evidence": "The single segment represents the Company's core business of selling salt products to its customers."
+   },
+   "country": {
+    "url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000015/logc-ex99_1.htm",
+    "name": "ContextLogic Q2 2026 results release",
+    "kind": "filing",
+    "as_of": "2026-08-13",
+    "evidence": "OAKLAND, Calif., August 13, 2026 ( GLOBE NEWSWIRE ) -- ContextLogic Holdings Inc. (OTCQB: LOGC)"
+   },
+   "business_model": {
+    "url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000017/logc-20260630.htm",
+    "name": "SEC Form 10-Q",
+    "kind": "filing",
+    "as_of": "2026-08-13",
+    "evidence": "We are a business ownership platform designed from first principles to combine the structural advantages of permanent public capital with the operating discipline, alignment, and long-term orientation typically associated with private ownership."
+   },
+   "email": {
+    "url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000015/logc-ex99_1.htm",
+    "name": "ContextLogic Q2 2026 results release",
+    "kind": "filing",
+    "as_of": "2026-08-13",
+    "evidence": "Contacts Investor Relations: ir@contextlogic.com"
+   },
+   "revenue": {
+    "url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000015/logc-ex99_1.htm",
+    "name": "ContextLogic Q2 2026 results release (8-K Ex. 99.1)",
+    "kind": "filing",
+    "as_of": "2026-08-13",
+    "evidence": "Revenue for the second quarter of 2026 was $33.6 million, essentially flat compared to $33.8 million in the second quarter of 2025."
+   },
+   "ebitda": {
+    "url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000015/logc-ex99_1.htm",
+    "name": "ContextLogic Q2 2026 results release (8-K Ex. 99.1)",
+    "kind": "filing",
+    "as_of": "2026-08-13",
+    "evidence": "Non-GAAP Adjusted EBITDA for the second quarter ended June 30, 2026 was $10.8 million"
+   },
+   "website": {
+    "url": "https://www.sec.gov/Archives/edgar/data/2064307/000206430726000015/logc-ex99_1.htm",
+    "name": "ContextLogic Q2 2026 results release",
+    "kind": "filing",
+    "as_of": "2026-08-13",
+    "evidence": "The Company plans to prepare and share responses on its website at www.contextlogic.com"
+   }
+  },
+  "holding": {
+   "sponsor": "BC Partners",
+   "status": "current",
+   "status_note": "BC Partners credit fund bought convertible preferred units of ContextLogic Holdings, LLC from 2025; BCP and Abrams Capital recapitalised the company to buy US Salt (closed Feb 2026)",
+   "asset_class": "Credit",
+   "deal_type": "PIPE",
+   "value_creation_plan": "The investment positions ContextLogic to execute its acquisition-led value maximization strategy; together BC Partners and the company will review, identify and evaluate strategic opportunities, with Ted Goldthorpe, Head of BC Partners Credit, expected to be named Chairman.",
+   "value_creation_source_url": "https://www.bcpartners.com/news/contextlogic-announces-up-to-150-million-strategic-investment-by-bc-partners/",
+   "notes": "Up to $150m of convertible preferred units (4% dividend rising to 8% on an acquisition); BC Partners fund to own 41.6% of Holdings' common units fully diluted. Status per the Q2 2026 10-Q: 'In 2025, investment funds advised by BCP and Abrams Capital partnered to recapitalize ContextLogic and Holdings to acquire US Salt'."
+  }
+ },
+ {
+  "name": "Innovad Group",
+  "website": "https://www.innovadgroup.com",
+  "description": "Innovad Group is a global leader in animal health and nutrition, supplying specialty feed additives mainly for poultry, ruminant and swine species, combining nature and science.",
+  "sector": "Food & Consumer",
+  "subsector": "Animal health and nutrition (specialty animal feed additives)",
+  "country": "Belgium",
+  "business_model": "B2B",
+  "employees": 210,
+  "employees_text": "210 employees",
+  "employees_as_of": "2026-10-01",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Ben Letor",
+    "title": "CEO Innovad Group",
+    "source_url": "https://www.innovadgroup.com/",
+    "source_kind": "company",
+    "evidence": "Ben Letor CEO Innovad Group"
+   },
+   {
+    "role": "ceo",
+    "name": "Ben Letor",
+    "title": "CEO of Innovad Group",
+    "source_url": "https://www.paipartners.com/mediaitem/pai-partners-acquires-innovad-group/",
+    "source_kind": "sponsor",
+    "evidence": "Ben Letor, CEO of Innovad Group, said: ..."
+   }
+  ],
+  "notes": "Headquartered at Cogels-Osylei 33, Antwerp. Six production facilities (in-house manufacturing in Belgium, Brazil and Italy plus tolling partners in Switzerland and Italy), ~900 customers in 75 countries per PAI. Acquisitions include Scentarom (2022), Herbonis (2023) and Oligobasics. No revenue or EBITDA published; no CFO named on the company or sponsor sites. Headcount is the company homepage figure (undated; read 2026-10-01); the about page says 'over 200 experts'.",
+  "sources": {
+   "description": {
+    "url": "https://www.innovadgroup.com/about-innovad-group",
+    "name": "Innovad Group",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Innovad Group is a global leader in animal health and nutrition, known for its innovation and commitment to sustainable growth."
+   },
+   "subsector": {
+    "url": "https://www.paipartners.com/mediaitem/pai-partners-acquires-innovad-group/",
+    "name": "PAI Partners",
+    "kind": "sponsor",
+    "as_of": "2025-12-08",
+    "evidence": "Innovad is a leading supplier of animal health and nutrition solutions, offering a wide range of specialty additives, which mainly focus on the poultry, ruminant and swine species."
+   },
+   "country": {
+    "url": "https://www.paipartners.com/mediaitem/pai-partners-acquires-innovad-group/",
+    "name": "PAI Partners",
+    "kind": "sponsor",
+    "as_of": "2025-12-08",
+    "evidence": "Headquartered in Antwerp, Belgium, Innovad serves a diverse range of 900 customers across 75 countries."
+   },
+   "business_model": {
+    "url": "https://www.paipartners.com/mediaitem/pai-partners-acquires-innovad-group/",
+    "name": "PAI Partners (About Innovad Group)",
+    "kind": "sponsor",
+    "as_of": "2025-12-08",
+    "evidence": "Serving a wide arrange of clients including integrators, producers, veterinarians, and feed companies, the Innovad Group delivers targeted water soluble, natural and in-feed solutions tailored to specific on-farm needs."
+   },
+   "employees": {
+    "url": "https://www.innovadgroup.com/",
+    "name": "Innovad Group",
+    "kind": "company",
+    "as_of": "2026-10-01",
+    "evidence": "Some numbers 210 employees 4 annual master classes 75 directly active countries"
+   },
+   "sector": {
+    "url": "https://www.paipartners.com/investments/",
+    "name": "PAI Partners investments",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Headquarters Belgium Food & Consumer Innovad Group Innovad is a leading supplier of animal health and nutrition solutions."
+   }
+  },
+  "holding": {
+   "sponsor": "PAI Partners",
+   "status": "current",
+   "status_note": "Acquired from IK Partners (IK IX Fund) by PAI Partners VIII; agreement Dec 2025, investment date January 2026",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "PAI intends to build on Innovad's growth momentum by supporting its transformation journey and establishing it as a leader in specialty animal feed additives, accelerating organic growth, pursuing strategic acquisitions, and building a solid platform to continue the Group's expansion.",
+   "value_creation_source_url": "https://www.paipartners.com/mediaitem/pai-partners-acquires-innovad-group/",
+   "notes": "Management team led by CEO Ben Letor reinvested. PAI investments page lists Investment date January 2026, Fund PAI Partners VIII."
+  }
+ },
+ {
+  "name": "TradingHub",
+  "website": "https://tradinghub.com",
+  "description": "TradingHub is a global FinTech firm focused on delivering intelligent, high-precision trade surveillance solutions; its flagship platform MAST detects market abuse, including cross-product manipulation.",
+  "sector": "Technology & Payments",
+  "subsector": "Trade surveillance / financial markets analytics software",
+  "country": "United Kingdom",
+  "founded_year": 2010,
+  "business_model": "B2B enterprise software",
+  "employees": 150,
+  "employees_text": "Employees 150",
+  "employees_as_of": "2026-03-16",
+  "revenue": 50000000,
+  "revenue_currency": "EUR",
+  "revenue_period": "FY2025",
+  "ebitda": 2825495,
+  "ebitda_currency": "GBP",
+  "ebitda_period": "FY2024 (year ended 2024-12-31)",
+  "ebitda_basis": "derived",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Mike Coats",
+    "title": "Chief Executive Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Mike Coats Chief Executive Officer ... Mike joined TradingHub in 2012 and currently serves as CEO"
+   },
+   {
+    "role": "cfo",
+    "name": "Stephen Bergin",
+    "title": "Chief Financial Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Stephen Bergin Chief Financial Officer ... Stephen joined TradingHub in 2021 and leads the company's global Finance function."
+   },
+   {
+    "role": "other",
+    "name": "Elaine Thomas",
+    "title": "Chief Administration Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Elaine Thomas Chief Administration Officer"
+   },
+   {
+    "role": "other",
+    "name": "Shayne Ganeson",
+    "title": "Chief Customer Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Shayne Ganeson Chief Customer Officer"
+   },
+   {
+    "role": "other",
+    "name": "Oliver Hodson",
+    "title": "Chief Technology Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Oliver Hodson Chief Technology Officer"
+   }
+  ],
+  "notes": "Legal entity TradingHub Group Limited (Companies House 07382307), 5 Aldermanbury Square, London; offices in Toronto, Singapore and Sydney. Revenue is Nordic Capital's stated 'Revenues 2025 EUR 50 million' (rounded, sponsor-stated). Filed group accounts FY2024: turnover GBP 31,025,634 (FY2023 GBP 26,334,798), operating profit GBP 1,181,041, average 136 employees. EBITDA is derived from those FY2024 accounts: operating profit 1,181,041 + depreciation 523,889 + amortisation of intangibles 1,120,565. Cidron Talon Bidco Limited (Nordic Capital) became PSC on 2026-04-07 when Summit Partners THB S.a r.l. ceased to be a PSC; co-founder Neil Walker also retains a minority.",
+  "sources": {
+   "description": {
+    "url": "https://tradinghub.com/about",
+    "name": "TradingHub",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "TradingHub is a global FinTech firm focused on delivering intelligent, high-precision trade surveillance solutions."
+   },
+   "founded_year": {
+    "url": "https://www.nordiccapital.com/insights/press-releases/tradinghub-secures-strategic-investment-from-nordic-capital-to-accelerate-next-phase-of-growth/",
+    "name": "Nordic Capital",
+    "kind": "sponsor",
+    "as_of": "2026-03-16",
+    "evidence": "Founded in 2010 and today operating from offices in London, Toronto, Singapore and Sydney"
+   },
+   "country": {
+    "url": "https://www.nordiccapital.com/portfolio-cases/investments/tradinghub/",
+    "name": "Nordic Capital",
+    "kind": "sponsor",
+    "as_of": "2026-03-16",
+    "evidence": "HEAD OFFICE London, UK"
+   },
+   "sector": {
+    "url": "https://www.nordiccapital.com/portfolio-cases/investments/tradinghub/",
+    "name": "Nordic Capital",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "SECTOR Technology & Payments"
+   },
+   "business_model": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/07382307/filing-history/MzQ3OTM0MjYxN2FkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - TradingHub Group Limited accounts FY2024",
+    "kind": "registry",
+    "as_of": "2024-12-31",
+    "evidence": "TradingHub is a leading provider of financial markets analytics software to enterprise financial services clients across the globe."
+   },
+   "employees": {
+    "url": "https://www.nordiccapital.com/portfolio-cases/investments/tradinghub/",
+    "name": "Nordic Capital",
+    "kind": "sponsor",
+    "as_of": "2026-03-16",
+    "evidence": "EMPLOYEES 150"
+   },
+   "revenue": [
+    {
+     "url": "https://www.nordiccapital.com/portfolio-cases/investments/tradinghub/",
+     "name": "Nordic Capital",
+     "kind": "sponsor",
+     "as_of": "2026-03-16",
+     "evidence": "REVENUES 2025 EUR 50 million"
+    },
+    {
+     "url": "https://find-and-update.company-information.service.gov.uk/company/07382307/filing-history/MzQ3OTM0MjYxN2FkaXF6a2N4/document?format=pdf&download=0",
+     "name": "Companies House - TradingHub Group Limited group accounts",
+     "kind": "registry",
+     "as_of": "2024-12-31",
+     "evidence": "Turnover 31,025,634 (2024 £) 26,334,798 (2023 £)"
+    }
+   ],
+   "ebitda": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/07382307/filing-history/MzQ3OTM0MjYxN2FkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - TradingHub Group Limited group accounts",
+    "kind": "registry",
+    "as_of": "2024-12-31",
+    "evidence": "Operating profit/(loss) 1,181,041; Amortisation of intangible assets 1,120,565; Depreciation of tangible fixed assets 523,889 (consolidated statement of cash flows, year ended 31 December 2024)"
+   }
+  },
+  "holding": {
+   "sponsor": "Nordic Capital",
+   "status": "current",
+   "status_note": "Majority shareholder since 2026 (Nordic Capital Fund XI; agreed March 2026, completed April 2026)",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "Support TradingHub's mission across all asset classes including equities, accelerate product investment and innovation leveraging artificial intelligence to improve detection and false-positive efficiency, and continue expansion into new geographies using Nordic Capital's experience in financial institution software.",
+   "value_creation_source_url": "https://www.nordiccapital.com/portfolio-cases/investments/tradinghub/",
+   "notes": "Bought majority from Summit Partners (minority since 2023) and the founders; Summit and co-founder Neil Walker kept minority stakes. Financial terms not disclosed. Deal type is a majority purchase from a prior PE investor."
+  }
+ },
+ {
+  "name": "TradingHub",
+  "website": "https://tradinghub.com",
+  "description": "TradingHub is a global FinTech firm focused on delivering intelligent, high-precision trade surveillance solutions; its flagship platform MAST detects market abuse, including cross-product manipulation.",
+  "sector": "Technology & Payments",
+  "subsector": "Trade surveillance / financial markets analytics software",
+  "country": "United Kingdom",
+  "founded_year": 2010,
+  "business_model": "B2B enterprise software",
+  "employees": 150,
+  "employees_text": "Employees 150",
+  "employees_as_of": "2026-03-16",
+  "revenue": 50000000,
+  "revenue_currency": "EUR",
+  "revenue_period": "FY2025",
+  "ebitda": 2825495,
+  "ebitda_currency": "GBP",
+  "ebitda_period": "FY2024 (year ended 2024-12-31)",
+  "ebitda_basis": "derived",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Mike Coats",
+    "title": "Chief Executive Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Mike Coats Chief Executive Officer ... Mike joined TradingHub in 2012 and currently serves as CEO"
+   },
+   {
+    "role": "cfo",
+    "name": "Stephen Bergin",
+    "title": "Chief Financial Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Stephen Bergin Chief Financial Officer ... Stephen joined TradingHub in 2021 and leads the company's global Finance function."
+   },
+   {
+    "role": "other",
+    "name": "Elaine Thomas",
+    "title": "Chief Administration Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Elaine Thomas Chief Administration Officer"
+   },
+   {
+    "role": "other",
+    "name": "Shayne Ganeson",
+    "title": "Chief Customer Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Shayne Ganeson Chief Customer Officer"
+   },
+   {
+    "role": "other",
+    "name": "Oliver Hodson",
+    "title": "Chief Technology Officer",
+    "source_url": "https://tradinghub.com/about",
+    "source_kind": "company",
+    "evidence": "Oliver Hodson Chief Technology Officer"
+   }
+  ],
+  "notes": "Legal entity TradingHub Group Limited (Companies House 07382307), 5 Aldermanbury Square, London; offices in Toronto, Singapore and Sydney. Revenue is Nordic Capital's stated 'Revenues 2025 EUR 50 million' (rounded, sponsor-stated). Filed group accounts FY2024: turnover GBP 31,025,634 (FY2023 GBP 26,334,798), operating profit GBP 1,181,041, average 136 employees. EBITDA is derived from those FY2024 accounts: operating profit 1,181,041 + depreciation 523,889 + amortisation of intangibles 1,120,565. Cidron Talon Bidco Limited (Nordic Capital) became PSC on 2026-04-07 when Summit Partners THB S.a r.l. ceased to be a PSC; co-founder Neil Walker also retains a minority.",
+  "sources": {
+   "description": {
+    "url": "https://tradinghub.com/about",
+    "name": "TradingHub",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "TradingHub is a global FinTech firm focused on delivering intelligent, high-precision trade surveillance solutions."
+   },
+   "founded_year": {
+    "url": "https://www.nordiccapital.com/insights/press-releases/tradinghub-secures-strategic-investment-from-nordic-capital-to-accelerate-next-phase-of-growth/",
+    "name": "Nordic Capital",
+    "kind": "sponsor",
+    "as_of": "2026-03-16",
+    "evidence": "Founded in 2010 and today operating from offices in London, Toronto, Singapore and Sydney"
+   },
+   "country": {
+    "url": "https://www.nordiccapital.com/portfolio-cases/investments/tradinghub/",
+    "name": "Nordic Capital",
+    "kind": "sponsor",
+    "as_of": "2026-03-16",
+    "evidence": "HEAD OFFICE London, UK"
+   },
+   "sector": {
+    "url": "https://www.nordiccapital.com/portfolio-cases/investments/tradinghub/",
+    "name": "Nordic Capital",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "SECTOR Technology & Payments"
+   },
+   "business_model": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/07382307/filing-history/MzQ3OTM0MjYxN2FkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - TradingHub Group Limited accounts FY2024",
+    "kind": "registry",
+    "as_of": "2024-12-31",
+    "evidence": "TradingHub is a leading provider of financial markets analytics software to enterprise financial services clients across the globe."
+   },
+   "employees": {
+    "url": "https://www.nordiccapital.com/portfolio-cases/investments/tradinghub/",
+    "name": "Nordic Capital",
+    "kind": "sponsor",
+    "as_of": "2026-03-16",
+    "evidence": "EMPLOYEES 150"
+   },
+   "revenue": [
+    {
+     "url": "https://www.nordiccapital.com/portfolio-cases/investments/tradinghub/",
+     "name": "Nordic Capital",
+     "kind": "sponsor",
+     "as_of": "2026-03-16",
+     "evidence": "REVENUES 2025 EUR 50 million"
+    },
+    {
+     "url": "https://find-and-update.company-information.service.gov.uk/company/07382307/filing-history/MzQ3OTM0MjYxN2FkaXF6a2N4/document?format=pdf&download=0",
+     "name": "Companies House - TradingHub Group Limited group accounts",
+     "kind": "registry",
+     "as_of": "2024-12-31",
+     "evidence": "Turnover 31,025,634 (2024 £) 26,334,798 (2023 £)"
+    }
+   ],
+   "ebitda": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/07382307/filing-history/MzQ3OTM0MjYxN2FkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - TradingHub Group Limited group accounts",
+    "kind": "registry",
+    "as_of": "2024-12-31",
+    "evidence": "Operating profit/(loss) 1,181,041; Amortisation of intangible assets 1,120,565; Depreciation of tangible fixed assets 523,889 (consolidated statement of cash flows, year ended 31 December 2024)"
+   }
+  },
+  "holding": {
+   "sponsor": "Summit Partners",
+   "status": "current",
+   "status_note": "Minority investor since 2023, follow-on in 2025; retained a minority after Nordic Capital's 2026 majority investment",
+   "asset_class": "Growth equity",
+   "deal_type": "Minority stake",
+   "value_creation_plan": "Summit worked with the founding team on a leadership evolution (CTO Mike Coats to CEO, co-founder Neil Walker to Executive Chair), strengthened the executive team with a CFO and a Global Head of Sales, and helped scale go-to-market with Tier-1 financial institutions in North America and Asia.",
+   "value_creation_source_url": "https://www.summitpartners.com/companies/tradinghub",
+   "notes": "Summit page: 'Completed a minority investment in 2023 and a follow-on investment in 2025'; status Current."
+  }
+ },
+ {
+  "name": "Varna",
+  "website": "https://www.varnasecurity.com",
+  "description": "Varna is a Nordic group in perimeter protection and technical security specialising in the installation, service and maintenance of physical perimeter protection, access control and surveillance for mid and high security sites across public infrastructure, industry and commercial real estate.",
+  "sector": "Business Services",
+  "subsector": "Technical security installation and service (perimeter protection, access control, surveillance)",
+  "country": "Sweden",
+  "founded_year": 2026,
+  "business_model": "B2B / B2G installation and service (decentralised buy-and-build group)",
+  "email": "info@varnasecurity.com",
+  "email_type": "generic",
+  "employees": 135,
+  "employees_text": "135+ Security professionals",
+  "employees_as_of": "2026-10-01",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Robin Boheman",
+    "title": "Chief Executive Officer",
+    "source_url": "https://www.triton-partners.com/news/triton-partners-creates-varna",
+    "source_kind": "sponsor",
+    "evidence": "Varna will be led by Robin Boheman as Chief Executive Officer. He joins most recently from the role of CEO at Instalco (Nasdaq Stockholm: INSTAL)"
+   }
+  ],
+  "notes": "Formed 15 June 2026 by the Triton Smaller Mid-Cap Fund from six specialist providers (Telehantering, Landströms Larmcenter, IQ, Låshantering, IP Security Scandinavia, Dan Group Alarm Syd); the website now lists eight companies including Nilhe and Säkra Installationer, operating in Sweden and Denmark. Owned by Triton together with the local entrepreneurs. Headcount '135+' from the homepage (undated, read 2026-10-01). No revenue, EBITDA or CFO published.",
+  "sources": {
+   "description": {
+    "url": "https://www.triton-partners.com/news/triton-partners-creates-varna",
+    "name": "Triton Partners (About Varna)",
+    "kind": "sponsor",
+    "as_of": "2026-06-15",
+    "evidence": "Varna is a Nordic group in perimeter protection and technical security specialising in the installation, service and maintenance of physical perimeter protection, access control and surveillance for mid and high security sites across public infrastructure, industry and commercial real estate."
+   },
+   "country": {
+    "url": "https://www.triton-partners.com/portfolio/varna",
+    "name": "Triton Partners",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Country: Sweden Sector: Business Services Strategy: TSM Status: Current"
+   },
+   "founded_year": {
+    "url": "https://www.triton-partners.com/news/triton-partners-creates-varna",
+    "name": "Triton Partners",
+    "kind": "sponsor",
+    "as_of": "2026-06-15",
+    "evidence": "Stockholm (Sweden), 15 June 2026 - The Triton Smaller Mid-Cap Fund announces the formation of Varna"
+   },
+   "business_model": {
+    "url": "https://www.triton-partners.com/news/triton-partners-creates-varna",
+    "name": "Triton Partners",
+    "kind": "sponsor",
+    "as_of": "2026-06-15",
+    "evidence": "a shared focus on high-value, service-intensive security solutions for public and commercial customers"
+   },
+   "email": {
+    "url": "https://www.varnasecurity.com/",
+    "name": "Varna Security",
+    "kind": "company",
+    "as_of": "2026-10-01",
+    "evidence": "Reach out to us. ... info@varnasecurity.com"
+   },
+   "employees": {
+    "url": "https://www.varnasecurity.com/",
+    "name": "Varna Security",
+    "kind": "company",
+    "as_of": "2026-10-01",
+    "evidence": "135+ Security professionals 8 Specialist companies 3 INTEGRATED VERTICALS 2 COUNTRIES OF OPERATION"
+   }
+  },
+  "holding": {
+   "sponsor": "Triton Partners",
+   "status": "current",
+   "status_note": "Platform formed by the Triton Smaller Mid-Cap Fund in June 2026, owned with the local entrepreneurs",
+   "asset_class": "Private equity",
+   "deal_type": "Buyout",
+   "value_creation_plan": "Varna is formed with an active acquisition agenda in a fragmented Nordic perimeter protection and technical security market; the businesses keep operational independence while gaining access to capital, resources and expertise to accelerate growth.",
+   "value_creation_source_url": "https://www.triton-partners.com/news/triton-partners-creates-varna",
+   "notes": "Buy-and-build platform: Triton's decentralised installation-group strategy (Eleda, Habeo, Lohkare Infra, bluu unit)."
+  }
+ },
+ {
+  "name": "Zentiva",
+  "website": "https://www.zentiva.com",
+  "description": "Zentiva is a European generics pharmaceutical company focused on the development, manufacturing and supply of generic, branded specialty and over-the-counter medicines, serving more than 100 million people across over 40 countries.",
+  "sector": "Healthcare",
+  "subsector": "Generic, branded specialty and OTC pharmaceuticals",
+  "country": "Czech Republic",
+  "business_model": "B2B (manufacture and supply of medicines to pharmacies and health systems)",
+  "email": "zentiva.cz@zentiva.com",
+  "email_type": "generic",
+  "employees": 5000,
+  "employees_text": "Zentiva employs more than 5,000 unique talents",
+  "employees_as_of": "2025-09-11",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Steffen Saltofte",
+    "title": "CEO",
+    "source_url": "https://www.zentiva.com/about/leadership",
+    "source_kind": "company",
+    "evidence": "Steffen Saltofte CEO"
+   },
+   {
+    "role": "cfo",
+    "name": "Joaquim Mascaro",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.zentiva.com/about/leadership",
+    "source_kind": "company",
+    "evidence": "Joaquim Mascaro Chief Financial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Kieran Murphy",
+    "title": "Executive Chairperson",
+    "source_url": "https://www.biospace.com/press-releases/gtcr-completes-acquisition-of-zentiva-a-leading-european-generics-pharmaceutical-company",
+    "source_kind": "wire",
+    "evidence": "GTCR will partner with Zentiva's management team, led by Chief Executive Officer Steffen Saltofte and Executive Chairperson Kieran Murphy"
+   },
+   {
+    "role": "other",
+    "name": "Jeff Rope",
+    "title": "Head of Product Supply",
+    "source_url": "https://www.zentiva.com/about/leadership",
+    "source_kind": "company",
+    "evidence": "Jeff Rope Head of Product Supply"
+   }
+  ],
+  "notes": "Headquarters Zentiva Group, a.s., U kabelovny 529/16, Prague 10. Roots go back more than 530 years to a Prague pharmacy; acquired by Sanofi in 2008, carved out by Advent in 2018, sold to GTCR (announced 2025-09-11, closed 2026-04-09). Four wholly-owned manufacturing sites. No revenue or EBITDA located in a primary or major-press source this run (Advent said revenue and EBITDA more than doubled under its ownership); the email is the Prague head-office contact printed on the contacts page.",
+  "sources": {
+   "description": {
+    "url": "https://www.biospace.com/press-releases/gtcr-completes-acquisition-of-zentiva-a-leading-european-generics-pharmaceutical-company",
+    "name": "GTCR release via PR Newswire (BioSpace)",
+    "kind": "wire",
+    "as_of": "2026-04-09",
+    "evidence": "Zentiva is focused on the development, manufacturing and supply of generic, branded specialty and over-the-counter medicines and products, serving more than 100 million people across over 40 countries."
+   },
+   "country": {
+    "url": "https://www.zentiva.com/contacts",
+    "name": "Zentiva",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Zentiva Group, a.s. U kabelovny 529/16 102 00 Prague 10 Czech Republic"
+   },
+   "email": {
+    "url": "https://www.zentiva.com/contacts",
+    "name": "Zentiva",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Zentiva Group, a.s. ... zentiva.cz@zentiva.com (+420) 267 241 111"
+   },
+   "employees": {
+    "url": "https://www.zentiva.com/news/newsroom/2025/2025-09-11-Zentiva-announces-sale-from-Advent-to-GTCR",
+    "name": "Zentiva newsroom",
+    "kind": "company",
+    "as_of": "2025-09-11",
+    "evidence": "Zentiva employs more than 5,000 unique talents, bonded together by a commitment to the people who depend on our medicines every day."
+   },
+   "business_model": {
+    "url": "https://www.prnewswire.com/news-releases/zentiva-a-leading-european-generics-pharmaceutical-company-announces-sale-from-advent-to-gtcr-302553994.html",
+    "name": "PR Newswire",
+    "kind": "wire",
+    "as_of": "2025-09-11",
+    "evidence": "Zentiva has four wholly-owned manufacturing sites and a broad network of external manufacturing partners to ensure supply security."
+   }
+  },
+  "holding": {
+   "sponsor": "GTCR",
+   "status": "current",
+   "status_note": "Acquired from Advent; announced Sep 2025, closed 9 April 2026",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "GTCR will support Zentiva's next phase of growth through continued investment in new product development, portfolio breadth and geographic reach, with a focus on improving patient access to essential medicines and supporting sustainable healthcare systems.",
+   "value_creation_source_url": "https://www.biospace.com/press-releases/gtcr-completes-acquisition-of-zentiva-a-leading-european-generics-pharmaceutical-company",
+   "notes": "GTCR partners with CEO Steffen Saltofte and Executive Chairperson Kieran Murphy. Price not stated in the releases read."
+  }
+ },
+ {
+  "name": "Inventus Power",
+  "website": "https://inventuspower.com",
+  "description": "Inventus Power is a global leader in advanced battery systems, designing and manufacturing custom and standard lithium-ion battery packs, smart chargers and power supplies for OEMs in the A&D, fleet, medical, industrial and consumer end markets.",
+  "sector": "Industrials",
+  "subsector": "Lithium-ion batteries and power systems",
+  "country": "United States",
+  "founded_year": 1960,
+  "business_model": "B2B (OEM supplier)",
+  "email": "info@inventuspower.com",
+  "email_type": "generic",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Patrick Trippel",
+    "title": "President & Chief Executive Officer",
+    "source_url": "https://inventuspower.com/about/leadership/",
+    "source_kind": "company",
+    "evidence": "Patrick Trippel President & Chief Executive Officer"
+   },
+   {
+    "role": "cfo",
+    "name": "Jun Cai",
+    "title": "Chief Financial Officer",
+    "source_url": "https://inventuspower.com/about/leadership/",
+    "source_kind": "company",
+    "evidence": "Jun Cai Chief Financial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Michael Stuart",
+    "title": "Chief Commercial Officer",
+    "source_url": "https://inventuspower.com/about/leadership/",
+    "source_kind": "company",
+    "evidence": "Michael Stuart Chief Commercial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Chris Turner",
+    "title": "Chief Technology Officer",
+    "source_url": "https://inventuspower.com/about/leadership/",
+    "source_kind": "company",
+    "evidence": "Chris Turner Chief Technology Officer"
+   }
+  ],
+  "notes": "Headquarters 1200 Internationale Parkway, Woodridge, IL. Manufacturing in the U.S., Mexico, China and Brazil. Acquired by an H.I.G. affiliate on 2026-04-15 (terms not disclosed). No revenue, EBITDA or headcount published on the company or sponsor pages read.",
+  "sources": {
+   "description": {
+    "url": "https://hig.com/news/h-i-g-capital-invests-in-inventus-power/",
+    "name": "H.I.G. Capital (About Inventus Power)",
+    "kind": "sponsor",
+    "as_of": "2026-04-15",
+    "evidence": "Inventus Power is a global leader in advanced battery systems ... The Company's core product offering includes custom and standard lithium-ion battery packs, smart chargers, and power supplies for OEMs in the A&D, fleet, medical, industrial, and consumer end markets."
+   },
+   "founded_year": {
+    "url": "https://inventuspower.com/about/",
+    "name": "Inventus Power",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Founded in 1960, Inventus Power has deep roots in the battery industry."
+   },
+   "country": {
+    "url": "https://hig.com/news/h-i-g-capital-invests-in-inventus-power/",
+    "name": "H.I.G. Capital",
+    "kind": "sponsor",
+    "as_of": "2026-04-15",
+    "evidence": "Founded in 1960 and headquartered in Woodridge, Illinois"
+   },
+   "business_model": {
+    "url": "https://hig.com/news/h-i-g-capital-invests-in-inventus-power/",
+    "name": "H.I.G. Capital",
+    "kind": "sponsor",
+    "as_of": "2026-04-15",
+    "evidence": "custom and standard lithium-ion battery packs, smart chargers, and power supplies for OEMs"
+   },
+   "email": {
+    "url": "https://inventuspower.com/contact-us/",
+    "name": "Inventus Power",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "1200 Internationale Parkway Woodridge, IL 60517 P: +1.630.410.7900 (1.877.423.4242) info@inventuspower.com"
+   }
+  },
+  "holding": {
+   "sponsor": "H.I.G. Capial",
+   "status": "current",
+   "status_note": "Acquired by an H.I.G. affiliate (Private Equity - US) on 2026-04-15; status Active",
+   "asset_class": "Private equity",
+   "deal_type": "Buyout",
+   "value_creation_plan": "H.I.G. believes Inventus is well positioned to capitalize on growing demand for advanced energy solutions and is eager to support management in accelerating its strategic initiatives.",
+   "value_creation_source_url": "https://hig.com/news/h-i-g-capital-invests-in-inventus-power/",
+   "notes": "Terms not disclosed. H.I.G. portfolio page: Status Active, Fund Private Equity - US."
+  }
+ },
+ {
+  "name": "Norton Packaging",
+  "website": "https://www.nortonpackaging.com",
+  "description": "Norton Packaging is a provider of high-performance rigid packaging solutions (plastic pails and containers) for paints and coatings, chemicals and cleansers, food products, lubricants and specialty applications.",
+  "sector": "Industrials",
+  "subsector": "Rigid plastic packaging (pails and containers)",
+  "country": "United States",
+  "founded_year": 1901,
+  "business_model": "B2B manufacturer",
+  "email": "info@nortonpackaging.com",
+  "email_type": "generic",
+  "employees": 380,
+  "employees_text": "The company employs approximately 380 people nationwide",
+  "employees_as_of": "2026-10-01",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Greg Norton",
+    "title": "CEO",
+    "source_url": "https://www.platinumequity.com/news/platinum-equity-invests-in-norton-packaging/",
+    "source_kind": "sponsor",
+    "evidence": "Norton Packaging CEO Greg Norton and the Norton family retained a significant interest in the business and Mr. Norton will continue to lead the company going forward."
+   },
+   {
+    "role": "other",
+    "name": "Scott Norton",
+    "title": "Co-President",
+    "source_url": "https://www.nortonpackaging.com/about/",
+    "source_kind": "company",
+    "evidence": "Scott Norton Co-President"
+   },
+   {
+    "role": "other",
+    "name": "Mark Norton",
+    "title": "Vice President",
+    "source_url": "https://www.nortonpackaging.com/about/",
+    "source_kind": "company",
+    "evidence": "Mark Norton Vice President"
+   }
+  ],
+  "notes": "Headquarters 20670 Corsair Boulevard, Hayward, CA. Production facilities in Vernon (Los Angeles), CA; Hamlet, IN; Monticello, GA, plus a tool and die facility in Signal Hill, CA. Company site still lists Greg and Scott Norton as Co-Presidents (Greg's bio: sales and finance); Platinum's January 2026 release names Greg Norton CEO. No revenue or EBITDA disclosed; terms not disclosed.",
+  "sources": {
+   "description": {
+    "url": "https://www.platinumequity.com/our-company/norton-packaging/",
+    "name": "Platinum Equity",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Norton Packaging is a leading provider of high-performance rigid packaging solutions for markets including paints and coatings, chemicals and cleansers, food products, lubricants, and specialty applications"
+   },
+   "founded_year": {
+    "url": "https://www.platinumequity.com/news/platinum-equity-invests-in-norton-packaging/",
+    "name": "Platinum Equity",
+    "kind": "sponsor",
+    "as_of": "2026-01-09",
+    "evidence": "Founded in 1901 and headquartered in Hayward, Calif., Norton is a provider of high-performance rigid packaging solutions"
+   },
+   "country": {
+    "url": "https://www.platinumequity.com/news/platinum-equity-invests-in-norton-packaging/",
+    "name": "Platinum Equity",
+    "kind": "sponsor",
+    "as_of": "2026-01-09",
+    "evidence": "Founded in 1901 and headquartered in Hayward, Calif."
+   },
+   "business_model": {
+    "url": "https://www.nortonpackaging.com/about/",
+    "name": "Norton Packaging",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "From our Hayward, California, headquarters, we serve more than 600 customers worldwide."
+   },
+   "email": {
+    "url": "https://www.nortonpackaging.com/contact-us/",
+    "name": "Norton Packaging",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Corporate Office 20670 Corsair Boulevard Hayward, CA 94545 (510) 786-1922 info@nortonpackaging.com"
+   },
+   "employees": {
+    "url": "https://www.platinumequity.com/our-company/norton-packaging/",
+    "name": "Platinum Equity",
+    "kind": "sponsor",
+    "as_of": "2026-10-01",
+    "evidence": "The company employs approximately 380 people nationwide"
+   }
+  },
+  "holding": {
+   "sponsor": "Platinum Equity",
+   "status": "current",
+   "status_note": "Acquired a majority stake in January 2026 from the founding family; Norton family retains a significant interest",
+   "asset_class": "Private equity",
+   "deal_type": "Buyout",
+   "value_creation_plan": "Platinum sees significant opportunities to enhance Norton's operations, expand capacity where needed, and pursue add-on acquisitions that broaden the company's capabilities and geographic reach, investing in the business to help it reach greater scale.",
+   "value_creation_source_url": "https://www.platinumequity.com/news/platinum-equity-invests-in-norton-packaging/",
+   "notes": "Platinum portfolio page: Active, Private Transaction. Financial terms not disclosed."
+  }
+ },
+ {
+  "name": "First Eagle Investments",
+  "website": "https://www.firsteagle.com",
+  "description": "First Eagle Investments is an independent, privately held global asset manager with investment capabilities across global value multi-asset, equities, fixed income, CLOs and alternative credit, focused on active, fundamental and benchmark-agnostic investing with an emphasis on downside mitigation.",
+  "sector": "Financial Services",
+  "subsector": "Asset management (multi-asset, equities, fixed income, CLOs and alternative credit)",
+  "country": "United States",
+  "founded_year": 1864,
+  "business_model": "Investment management fees (mutual funds, ETFs, interval funds, UCITS, SMAs, CITs, CLOs, BDCs) via intermediary, institutional and international channels",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Mehdi Mahmud",
+    "title": "President and Chief Executive Officer",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1570827/000110465926101533/tm2624030d1_ex99-1.htm",
+    "source_kind": "filing",
+    "evidence": "said Mehdi Mahmud, President and Chief Executive Officer of First Eagle."
+   },
+   {
+    "role": "cfo",
+    "name": "Michael Constantino",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.firsteagle.com/our-people/michael-constantino",
+    "source_kind": "company",
+    "evidence": "Michael Constantino is chief financial officer of First Eagle Investments, with oversight of the Corporate Finance, Financial Planning and Analysis, Strategy and Performance Analytics teams."
+   },
+   {
+    "role": "coo",
+    "name": "Heather Brilliant",
+    "title": "Chief Operating Officer",
+    "source_url": "https://www.firsteagle.com/our-people/heather-brilliant",
+    "source_kind": "company",
+    "evidence": "Page title: Heather Brilliant - Chief Operating Officer | First Eagle Investments"
+   }
+  ],
+  "notes": "Approximately $222bn AUM as of 2026-07-31 (global value multi-asset $134.9bn, equity and fixed income $45.6bn, CLOs $26.5bn, alternative credit $14.9bn); 195 investment professionals; headquartered in New York. On 2026-08-26 Victory Capital (NASDAQ: VCTR) agreed to acquire 100% of First Eagle from Genstar and employees for ~$7.0bn total consideration (~$4.4bn cash, ~$2.0bn VCTR equity, plus $575m of assumed 7.25% senior secured notes due 2032); close expected by end of Q1 2027; Genstar to own ~14.6% of Victory Capital. Victory's investor presentation shows '$1.5Bn 2026 Expected Revenue' for First Eagle - a projection, so it is not recorded as revenue. Website blocks automated reads; leader titles for CFO/COO come from firsteagle.com people pages.",
+  "sources": {
+   "description": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1570827/000110465926101533/tm2624030d1_ex99-1.htm",
+    "name": "Victory Capital 8-K Ex. 99.1",
+    "kind": "filing",
+    "as_of": "2026-08-26",
+    "evidence": "First Eagle Investments (\"First Eagle\"), an independent, privately held global asset manager with approximately $222 billion in assets under management (\"AUM\") as of July 31, 2026"
+   },
+   "founded_year": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1570827/000110465926101581/tm2624030d3_defa14a.htm",
+    "name": "Victory Capital investor presentation (DEFA14A)",
+    "kind": "filing",
+    "as_of": "2026-08-26",
+    "evidence": "First Eagle was founded in 1864 and is headquartered in New York"
+   },
+   "country": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1570827/000110465926101581/tm2624030d3_defa14a.htm",
+    "name": "Victory Capital investor presentation (DEFA14A)",
+    "kind": "filing",
+    "as_of": "2026-08-26",
+    "evidence": "First Eagle was founded in 1864 and is headquartered in New York"
+   },
+   "business_model": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1570827/000110465926101581/tm2624030d3_defa14a.htm",
+    "name": "Victory Capital investor presentation (DEFA14A)",
+    "kind": "filing",
+    "as_of": "2026-08-26",
+    "evidence": "The firm offers a wide variety of investment vehicles, including mutual funds, ETFs, interval funds, UCITS, SMAs, CITs, CLOs, and BDCs"
+   },
+   "subsector": {
+    "url": "https://www.gencap.com/first-eagle-investments-announces-majority-investment-from-genstar-capital/",
+    "name": "Genstar Capital",
+    "kind": "sponsor",
+    "as_of": "2025-03-03",
+    "evidence": "With investment capabilities that include equity, fixed income, alternative credit and multi-asset strategies, First Eagle focuses on active, fundamental and benchmark-agnostic investing"
+   }
+  },
+  "holding": {
+   "sponsor": "Genstar Capital",
+   "status": "current",
+   "status_note": "Majority owned since August 2025 (bought from Blackstone and Corsair); agreed Aug 2026 to sell to Victory Capital, closing expected by end of Q1 2027",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "The transaction with Genstar will bolster First Eagle's strategy of investing in its core business while thoughtfully expanding the range of differentiated investment solutions it offers clients worldwide, accelerating expansion of investment capabilities and client reach organically and through acquisitions.",
+   "value_creation_source_url": "https://www.gencap.com/first-eagle-investments-announces-majority-investment-from-genstar-capital/",
+   "notes": "Announced 2025-03-03, closed 2025-08-18. Sale to Victory Capital (announced 2026-08-26) for ~$7.0bn total consideration; Genstar to receive Victory equity (~14.6% fully diluted, 4.9% voting) under a three-year lock-up. Holding remains current until that closes."
+  }
+ },
+ {
+  "name": "Govineer Solutions",
+  "website": "https://www.govineersolutions.com",
+  "description": "Govineer Solutions brings together software companies that serve local governments with specialized ERP and payments solutions to manage finance, utilities, permitting, public engagement and more.",
+  "sector": "Technology (Software)",
+  "subsector": "GovTech ERP and payments software for local governments",
+  "country": "United States",
+  "business_model": "B2G software and payments",
+  "employees": 180,
+  "employees_text": "180+ Combined Team Members",
+  "employees_as_of": "2026-10-01",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Mike Fabrizio",
+    "title": "Co-CEO",
+    "source_url": "https://www.govineersolutions.com/who-we-are",
+    "source_kind": "company",
+    "evidence": "Mike Fabrizio Co-CEO ... joined Black Mountain Software as Co-CEO in 2022. He guides the overall direction of the platform and strategic decisions."
+   },
+   {
+    "role": "ceo",
+    "name": "Nate Quinn",
+    "title": "Co-CEO",
+    "source_url": "https://www.govineersolutions.com/who-we-are",
+    "source_kind": "company",
+    "evidence": "Nate Quinn Co-CEO ... joined Black Mountain Software as Co-CEO in 2022."
+   },
+   {
+    "role": "cfo",
+    "name": "Josh Edwards",
+    "title": "VP of Finance",
+    "source_url": "https://www.govineersolutions.com/who-we-are",
+    "source_kind": "company",
+    "evidence": "Josh Edwards VP of Finance ... His background includes leading FP&A and finance teams at software companies"
+   },
+   {
+    "role": "other",
+    "name": "Manav Thiara",
+    "title": "Chief Product & Technology Officer",
+    "source_url": "https://www.govineersolutions.com/who-we-are",
+    "source_kind": "company",
+    "evidence": "Manav Thiara Chief Product & Technology Officer"
+   }
+  ],
+  "notes": "Headquartered in Provo, Utah (TA portfolio page). Platform built from Black Mountain Software and Caselle; serves more than 2,300 towns, municipalities and special districts across 43 states. Co-CEOs Mike Fabrizio and Nate Quinn; the senior finance role listed is VP of Finance (no CFO title). Headcount is the website counter value ('180+ Combined Team Members', read 2026-10-01). No revenue or EBITDA disclosed; terms not disclosed.",
+  "sources": {
+   "description": {
+    "url": "https://www.ta.com/news/govineer-solutions-announces-strategic-growth-investment-from-ta-to-accelerate-its-evolution-into-an-ai-powered-operating-system-for-local-governments/",
+    "name": "TA (About Govineer Solutions)",
+    "kind": "sponsor",
+    "as_of": "2026-05-12",
+    "evidence": "Govineer Solutions brings together software companies that serve local governments with specialized solutions to manage finance, utilities, permitting, public engagement and more."
+   },
+   "subsector": {
+    "url": "https://www.ta.com/portfolio/investments/govineer-solutions/",
+    "name": "TA",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Govineer Solutions is a provider of mission-critical ERP software and payments solutions for local governments."
+   },
+   "country": {
+    "url": "https://www.ta.com/portfolio/investments/govineer-solutions/",
+    "name": "TA",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Headquarters Provo, Utah"
+   },
+   "business_model": {
+    "url": "https://www.ta.com/portfolio/investments/govineer-solutions/",
+    "name": "TA",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "supports fund accounting, utility billing, online payments, personnel management, and community development workflows for more than 2,300 towns, municipalities, and special districts across 43 states."
+   },
+   "employees": {
+    "url": "https://www.govineersolutions.com/who-we-are",
+    "name": "Govineer Solutions",
+    "kind": "company",
+    "as_of": "2026-10-01",
+    "evidence": "180 + Combined Team Members (counter value fs-numbercount-end=\"180\")"
+   }
+  },
+  "holding": {
+   "sponsor": "TA Associates",
+   "status": "current",
+   "status_note": "Growth investment announced May 2026 (TA status Current, investment year 2026); Peterson Partners fully exited, management retains a meaningful stake",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "The investment will support Govineer's evolution into an AI-powered operating system for local governments; with TA's support the company plans to accelerate investment in product development, expand its platform, pursue strategic M&A and advance its AI capabilities.",
+   "value_creation_source_url": "https://www.ta.com/news/govineer-solutions-announces-strategic-growth-investment-from-ta-to-accelerate-its-evolution-into-an-ai-powered-operating-system-for-local-governments/",
+   "notes": "TA describes it as a 'growth investment'; Peterson Partners fully exited at completion, so recorded as a secondary buyout. Financial terms not disclosed; expected to close Q2 2026."
+  }
+ },
+ {
+  "name": "Socure",
+  "website": "https://www.socure.com",
+  "description": "Socure is a leading AI-native trust infrastructure, providing identity and risk intelligence - identity verification, compliance and fraud prevention - to enterprises and government agencies globally.",
+  "sector": "Technology — Software, Cybersecurity",
+  "subsector": "Digital identity verification and fraud prevention",
+  "country": "United States",
+  "business_model": "B2B / B2G SaaS (ARR-based platform)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Johnny Ayers",
+    "title": "Co-Founder and CEO",
+    "source_url": "https://www.summitpartners.com/news/socure-announces-strategic-growth-investment-from-summit-partners",
+    "source_kind": "sponsor",
+    "evidence": "said Johnny Ayers, Co-Founder and CEO of Socure."
+   },
+   {
+    "role": "other",
+    "name": "Matthew Thompson",
+    "title": "President and Chief Commercial Officer",
+    "source_url": "https://www.socure.com/company",
+    "source_kind": "company",
+    "evidence": "Matthew Thompson President and Chief Commercial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Arun Kumar",
+    "title": "CTO",
+    "source_url": "https://www.socure.com/company",
+    "source_kind": "company",
+    "evidence": "Arun Kumar CTO"
+   },
+   {
+    "role": "other",
+    "name": "Pablo Abreu",
+    "title": "Chief Product & Analytics Officer",
+    "source_url": "https://www.socure.com/company",
+    "source_kind": "company",
+    "evidence": "Pablo Abreu Chief Product & Analytics Officer"
+   }
+  ],
+  "notes": "Headquartered in Incline Village, Nevada (release dateline). Aug 27, 2026: strategic growth investment led by Summit Partners (with Goldman Sachs Alternatives, Wells Fargo, Docusign and others) valuing Socure at $5.2bn, including primary capital and an employee secondary tender, alongside the acquisition of Fravity. Socure closed Q2 2026 with $364m total ARR (63% YoY growth), 133% net dollar retention, >3,000 customers - ARR, not revenue, so no revenue figure is recorded. No CFO listed on the company leadership page.",
+  "sources": {
+   "description": {
+    "url": "https://www.summitpartners.com/companies/socure",
+    "name": "Summit Partners",
+    "kind": "sponsor",
+    "as_of": "2026-08-27",
+    "evidence": "Socure is a leading AI-native trust infrastructure, providing identity and risk intelligence for enterprises and government agencies globally."
+   },
+   "country": {
+    "url": "https://www.summitpartners.com/news/socure-announces-strategic-growth-investment-from-summit-partners",
+    "name": "Summit Partners",
+    "kind": "sponsor",
+    "as_of": "2026-08-27",
+    "evidence": "INCLINE VILLAGE, Nev. — Aug. 27, 2026 — Socure, a leading trust infrastructure for global identity and risk intelligence"
+   },
+   "business_model": {
+    "url": "https://www.summitpartners.com/news/socure-announces-strategic-growth-investment-from-summit-partners",
+    "name": "Summit Partners",
+    "kind": "sponsor",
+    "as_of": "2026-08-27",
+    "evidence": "Socure closed Q2 2026 with $364 million in total ARR, 63% year-over-year ARR growth, 133% net dollar retention, and 0.01% logo churn across more than 3,000 customers."
+   },
+   "subsector": {
+    "url": "https://www.socure.com/company",
+    "name": "Socure",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Socure is the leading provider of AI-powered digital identity verification and fraud prevention solutions, trusted by the largest enterprises and government agencies"
+   }
+  },
+  "holding": {
+   "sponsor": "Summit Partners",
+   "status": "current",
+   "status_note": "Led a strategic growth investment in August 2026 valuing Socure at $5.2bn",
+   "asset_class": "Growth equity",
+   "deal_type": "Growth investment",
+   "value_creation_plan": "The investment, including primary funding and a secondary employee tender, will support Socure's global expansion and the integration of Fravity's first-party agent building capabilities natively into its RiskOS platform.",
+   "value_creation_source_url": "https://www.summitpartners.com/news/socure-announces-strategic-growth-investment-from-summit-partners",
+   "notes": "Co-investors: Goldman Sachs Alternatives, Wells Fargo, Docusign and others. Summit page: Invested in 2026, Status Current."
+  }
+ },
+ {
+  "name": "Socure",
+  "website": "https://www.socure.com",
+  "description": "Socure is a leading AI-native trust infrastructure, providing identity and risk intelligence - identity verification, compliance and fraud prevention - to enterprises and government agencies globally.",
+  "sector": "Technology — Software, Cybersecurity",
+  "subsector": "Digital identity verification and fraud prevention",
+  "country": "United States",
+  "business_model": "B2B / B2G SaaS (ARR-based platform)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Johnny Ayers",
+    "title": "Co-Founder and CEO",
+    "source_url": "https://www.summitpartners.com/news/socure-announces-strategic-growth-investment-from-summit-partners",
+    "source_kind": "sponsor",
+    "evidence": "said Johnny Ayers, Co-Founder and CEO of Socure."
+   },
+   {
+    "role": "other",
+    "name": "Matthew Thompson",
+    "title": "President and Chief Commercial Officer",
+    "source_url": "https://www.socure.com/company",
+    "source_kind": "company",
+    "evidence": "Matthew Thompson President and Chief Commercial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Arun Kumar",
+    "title": "CTO",
+    "source_url": "https://www.socure.com/company",
+    "source_kind": "company",
+    "evidence": "Arun Kumar CTO"
+   },
+   {
+    "role": "other",
+    "name": "Pablo Abreu",
+    "title": "Chief Product & Analytics Officer",
+    "source_url": "https://www.socure.com/company",
+    "source_kind": "company",
+    "evidence": "Pablo Abreu Chief Product & Analytics Officer"
+   }
+  ],
+  "notes": "Headquartered in Incline Village, Nevada (release dateline). Aug 27, 2026: strategic growth investment led by Summit Partners (with Goldman Sachs Alternatives, Wells Fargo, Docusign and others) valuing Socure at $5.2bn, including primary capital and an employee secondary tender, alongside the acquisition of Fravity. Socure closed Q2 2026 with $364m total ARR (63% YoY growth), 133% net dollar retention, >3,000 customers - ARR, not revenue, so no revenue figure is recorded. No CFO listed on the company leadership page.",
+  "sources": {
+   "description": {
+    "url": "https://www.summitpartners.com/companies/socure",
+    "name": "Summit Partners",
+    "kind": "sponsor",
+    "as_of": "2026-08-27",
+    "evidence": "Socure is a leading AI-native trust infrastructure, providing identity and risk intelligence for enterprises and government agencies globally."
+   },
+   "country": {
+    "url": "https://www.summitpartners.com/news/socure-announces-strategic-growth-investment-from-summit-partners",
+    "name": "Summit Partners",
+    "kind": "sponsor",
+    "as_of": "2026-08-27",
+    "evidence": "INCLINE VILLAGE, Nev. — Aug. 27, 2026 — Socure, a leading trust infrastructure for global identity and risk intelligence"
+   },
+   "business_model": {
+    "url": "https://www.summitpartners.com/news/socure-announces-strategic-growth-investment-from-summit-partners",
+    "name": "Summit Partners",
+    "kind": "sponsor",
+    "as_of": "2026-08-27",
+    "evidence": "Socure closed Q2 2026 with $364 million in total ARR, 63% year-over-year ARR growth, 133% net dollar retention, and 0.01% logo churn across more than 3,000 customers."
+   },
+   "subsector": {
+    "url": "https://www.socure.com/company",
+    "name": "Socure",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Socure is the leading provider of AI-powered digital identity verification and fraud prevention solutions, trusted by the largest enterprises and government agencies"
+   }
+  },
+  "holding": {
+   "sponsor": "Bain Capital",
+   "status": "current",
+   "status_note": "Bain Capital Ventures portfolio company, listed Active",
+   "asset_class": "Venture capital",
+   "deal_type": "Venture round",
+   "notes": "Bain Capital portfolio data lists Socure under Business 'Ventures', Portfolio Status 'Active' (company data date 2023-02-08). Round and year of the investment not stated on that page."
+  }
+ },
+ {
+  "name": "ICEYE",
+  "website": "https://www.iceye.com",
+  "description": "ICEYE is the world leader in sovereign intelligence from space, owning and operating the world's largest and most advanced synthetic aperture radar (SAR) satellite constellation and providing the capability to governments as sovereign systems.",
+  "sector": "Aerospace & Defence / Space technology",
+  "subsector": "SAR satellite Earth observation and sovereign space intelligence",
+  "country": "Finland",
+  "founded_year": 2014,
+  "business_model": "B2G and B2B (satellite data, analytics and sovereign satellite systems)",
+  "email": "press@iceye.com",
+  "email_type": "press",
+  "employees": 1000,
+  "employees_text": "ICEYE operates globally with over 1,000 employees",
+  "employees_as_of": "2026-08-05",
+  "revenue": 250000000,
+  "revenue_currency": "EUR",
+  "revenue_period": "FY2025",
+  "ebitda": 100000000,
+  "ebitda_currency": "EUR",
+  "ebitda_period": "FY2025",
+  "ebitda_basis": "reported",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Rafal Modrzewski",
+    "title": "Chief Executive Officer, Co-founder",
+    "source_url": "https://www.iceye.com/company?hsLang=en",
+    "source_kind": "company",
+    "evidence": "Rafal Modrzewski Chief Executive Officer, Co-founder"
+   },
+   {
+    "role": "cfo",
+    "name": "Magdalena Bartoś",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.iceye.com/company?hsLang=en",
+    "source_kind": "company",
+    "evidence": "Magdalena Bartoś Chief Financial Officer"
+   },
+   {
+    "role": "coo",
+    "name": "Eric Jensen",
+    "title": "Chief Operating Officer",
+    "source_url": "https://www.iceye.com/company?hsLang=en",
+    "source_kind": "company",
+    "evidence": "Eric Jensen Chief Operating Officer"
+   },
+   {
+    "role": "other",
+    "name": "Pekka Laurila",
+    "title": "Chief Strategy Officer, Co-founder",
+    "source_url": "https://www.iceye.com/company?hsLang=en",
+    "source_kind": "company",
+    "evidence": "Pekka Laurila Chief Strategy Officer, Co-founder"
+   }
+  ],
+  "notes": "Founded in Finland in 2014; TCV lists Espoo, Finland. Revenue and EBITDA are 'over' figures from ICEYE's own Series F release and are based on unaudited 2025 results: 'crossing over EUR 250 million in revenue, and over EUR 100 million in EBITDA', contracted backlog over EUR 1.5bn. Series F (June 2026): EUR 450m primary led by General Atlantic at a valuation over EUR 10bn, total round over EUR 1bn with secondary; EQT's Scaleup Europe Fund co-led (first investment, announced 2026-08-05, subject to approvals).",
+  "sources": {
+   "description": {
+    "url": "https://www.iceye.com/company?hsLang=en",
+    "name": "ICEYE",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "ICEYE-built constellations serve customers in defense and intelligence, environmental monitoring, insurance and emergency management."
+   },
+   "founded_year": {
+    "url": "https://eqtgroup.com/news/eqts-scaleup-europe-fund-makes-first-investment-co-leads-1-billion-funding-round-in-iceye-europes-leader-in-sovereign-intelligence-from-space-2026-08-05",
+    "name": "EQT",
+    "kind": "sponsor",
+    "as_of": "2026-08-05",
+    "evidence": "ICEYE is Europe's leading provider of sovereign intelligence from space, founded in Finland in 2014."
+   },
+   "country": {
+    "url": "https://www.tcv.com/partnerships/iceye",
+    "name": "TCV",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Location Espoo, Finland Founded in 2014"
+   },
+   "email": {
+    "url": "https://www.iceye.com/newsroom/press-releases/iceye-leads-a-new-era-of-sovereign-intelligence-from-space-with-1b-funding-round",
+    "name": "ICEYE press release",
+    "kind": "company",
+    "as_of": "2026-06-09",
+    "evidence": "Media contact: press@iceye.com"
+   },
+   "employees": {
+    "url": "https://www.iceye.com/company?hsLang=en",
+    "name": "ICEYE",
+    "kind": "company",
+    "as_of": "2026-08-05",
+    "evidence": "Natively European, founded in Finland. ICEYE operates globally with over 1,000 employees."
+   },
+   "revenue": {
+    "url": "https://www.iceye.com/newsroom/press-releases/iceye-leads-a-new-era-of-sovereign-intelligence-from-space-with-1b-funding-round",
+    "name": "ICEYE press release",
+    "kind": "company",
+    "as_of": "2026-06-09",
+    "evidence": "In 2025, ICEYE scaled growth, profitability, and cash generation simultaneously - crossing over EUR 250 million in revenue, and over EUR 100 million in EBITDA ... 1 Based on unaudited 2025 financial results."
+   },
+   "ebitda": {
+    "url": "https://www.iceye.com/newsroom/press-releases/iceye-leads-a-new-era-of-sovereign-intelligence-from-space-with-1b-funding-round",
+    "name": "ICEYE press release",
+    "kind": "company",
+    "as_of": "2026-06-09",
+    "evidence": "crossing over EUR 250 million in revenue, and over EUR 100 million in EBITDA ... 1 Based on unaudited 2025 financial results."
+   },
+   "business_model": {
+    "url": "https://www.iceye.com/company?hsLang=en",
+    "name": "ICEYE",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "To governments who choose to operate their own constellation we provide this proven capability as a sovereign system."
+   }
+  },
+  "holding": {
+   "sponsor": "TCV",
+   "status": "current",
+   "status_note": "Current TCV partnership; TCV also invested in the June 2026 Series F",
+   "asset_class": "Growth equity",
+   "deal_type": "Growth investment",
+   "notes": "ICEYE's Series F release (2026-06-09) lists TCV among additional investors. TCV's partnership page gives no investment year."
+  }
+ },
+ {
+  "name": "ICEYE",
+  "website": "https://www.iceye.com",
+  "description": "ICEYE is the world leader in sovereign intelligence from space, owning and operating the world's largest and most advanced synthetic aperture radar (SAR) satellite constellation and providing the capability to governments as sovereign systems.",
+  "sector": "Aerospace & Defence / Space technology",
+  "subsector": "SAR satellite Earth observation and sovereign space intelligence",
+  "country": "Finland",
+  "founded_year": 2014,
+  "business_model": "B2G and B2B (satellite data, analytics and sovereign satellite systems)",
+  "email": "press@iceye.com",
+  "email_type": "press",
+  "employees": 1000,
+  "employees_text": "ICEYE operates globally with over 1,000 employees",
+  "employees_as_of": "2026-08-05",
+  "revenue": 250000000,
+  "revenue_currency": "EUR",
+  "revenue_period": "FY2025",
+  "ebitda": 100000000,
+  "ebitda_currency": "EUR",
+  "ebitda_period": "FY2025",
+  "ebitda_basis": "reported",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Rafal Modrzewski",
+    "title": "Chief Executive Officer, Co-founder",
+    "source_url": "https://www.iceye.com/company?hsLang=en",
+    "source_kind": "company",
+    "evidence": "Rafal Modrzewski Chief Executive Officer, Co-founder"
+   },
+   {
+    "role": "cfo",
+    "name": "Magdalena Bartoś",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.iceye.com/company?hsLang=en",
+    "source_kind": "company",
+    "evidence": "Magdalena Bartoś Chief Financial Officer"
+   },
+   {
+    "role": "coo",
+    "name": "Eric Jensen",
+    "title": "Chief Operating Officer",
+    "source_url": "https://www.iceye.com/company?hsLang=en",
+    "source_kind": "company",
+    "evidence": "Eric Jensen Chief Operating Officer"
+   },
+   {
+    "role": "other",
+    "name": "Pekka Laurila",
+    "title": "Chief Strategy Officer, Co-founder",
+    "source_url": "https://www.iceye.com/company?hsLang=en",
+    "source_kind": "company",
+    "evidence": "Pekka Laurila Chief Strategy Officer, Co-founder"
+   }
+  ],
+  "notes": "Founded in Finland in 2014; TCV lists Espoo, Finland. Revenue and EBITDA are 'over' figures from ICEYE's own Series F release and are based on unaudited 2025 results: 'crossing over EUR 250 million in revenue, and over EUR 100 million in EBITDA', contracted backlog over EUR 1.5bn. Series F (June 2026): EUR 450m primary led by General Atlantic at a valuation over EUR 10bn, total round over EUR 1bn with secondary; EQT's Scaleup Europe Fund co-led (first investment, announced 2026-08-05, subject to approvals).",
+  "sources": {
+   "description": {
+    "url": "https://www.iceye.com/company?hsLang=en",
+    "name": "ICEYE",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "ICEYE-built constellations serve customers in defense and intelligence, environmental monitoring, insurance and emergency management."
+   },
+   "founded_year": {
+    "url": "https://eqtgroup.com/news/eqts-scaleup-europe-fund-makes-first-investment-co-leads-1-billion-funding-round-in-iceye-europes-leader-in-sovereign-intelligence-from-space-2026-08-05",
+    "name": "EQT",
+    "kind": "sponsor",
+    "as_of": "2026-08-05",
+    "evidence": "ICEYE is Europe's leading provider of sovereign intelligence from space, founded in Finland in 2014."
+   },
+   "country": {
+    "url": "https://www.tcv.com/partnerships/iceye",
+    "name": "TCV",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Location Espoo, Finland Founded in 2014"
+   },
+   "email": {
+    "url": "https://www.iceye.com/newsroom/press-releases/iceye-leads-a-new-era-of-sovereign-intelligence-from-space-with-1b-funding-round",
+    "name": "ICEYE press release",
+    "kind": "company",
+    "as_of": "2026-06-09",
+    "evidence": "Media contact: press@iceye.com"
+   },
+   "employees": {
+    "url": "https://www.iceye.com/company?hsLang=en",
+    "name": "ICEYE",
+    "kind": "company",
+    "as_of": "2026-08-05",
+    "evidence": "Natively European, founded in Finland. ICEYE operates globally with over 1,000 employees."
+   },
+   "revenue": {
+    "url": "https://www.iceye.com/newsroom/press-releases/iceye-leads-a-new-era-of-sovereign-intelligence-from-space-with-1b-funding-round",
+    "name": "ICEYE press release",
+    "kind": "company",
+    "as_of": "2026-06-09",
+    "evidence": "In 2025, ICEYE scaled growth, profitability, and cash generation simultaneously - crossing over EUR 250 million in revenue, and over EUR 100 million in EBITDA ... 1 Based on unaudited 2025 financial results."
+   },
+   "ebitda": {
+    "url": "https://www.iceye.com/newsroom/press-releases/iceye-leads-a-new-era-of-sovereign-intelligence-from-space-with-1b-funding-round",
+    "name": "ICEYE press release",
+    "kind": "company",
+    "as_of": "2026-06-09",
+    "evidence": "crossing over EUR 250 million in revenue, and over EUR 100 million in EBITDA ... 1 Based on unaudited 2025 financial results."
+   },
+   "business_model": {
+    "url": "https://www.iceye.com/company?hsLang=en",
+    "name": "ICEYE",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "To governments who choose to operate their own constellation we provide this proven capability as a sovereign system."
+   }
+  },
+  "holding": {
+   "sponsor": "EQT AB",
+   "status": "current",
+   "status_note": "EQT's Scaleup Europe Fund co-led the Series F as its first investment (announced Aug 2026, subject to regulatory approvals)",
+   "asset_class": "Growth equity",
+   "deal_type": "Growth investment",
+   "value_creation_plan": "EQT's Scaleup Europe Fund will partner with Rafal Modrzewski and the team as ICEYE continues scaling from Europe to the world, part of the fund's strategy of backing strategically important European technology companies to scale globally while remaining anchored in Europe.",
+   "value_creation_source_url": "https://eqtgroup.com/news/eqts-scaleup-europe-fund-makes-first-investment-co-leads-1-billion-funding-round-in-iceye-europes-leader-in-sovereign-intelligence-from-space-2026-08-05",
+   "notes": "Part of ICEYE's EUR 1bn financing including EUR 450m primary Series F at a valuation exceeding EUR 10bn. Fund target size EUR 5bn."
+  }
+ },
+ {
+  "name": "Champions Group",
+  "website": "https://championsgroupholdings.com",
+  "description": "Champions Group is a leading provider of essential home services specializing in heating, air conditioning, plumbing and electrical services, operating through several local trade names with a membership-based model.",
+  "sector": "Home services",
+  "subsector": "Residential HVAC, plumbing and electrical services",
+  "country": "United States",
+  "founded_year": 2000,
+  "business_model": "B2C (residential services with club membership model)",
+  "email": "Partnerships@championsgh.com",
+  "email_type": "generic",
+  "employees": 2400,
+  "employees_text": "2.4k TOTAL EMPLOYEES",
+  "employees_as_of": "2026-10-01",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Frank DiMarco",
+    "title": "CEO",
+    "source_url": "https://www.webwire.com/ViewPressRel.asp?aId=350726",
+    "source_kind": "wire",
+    "evidence": "Frank DiMarco, CEO of Champions Group, said: ..."
+   },
+   {
+    "role": "cfo",
+    "name": "Naresh Idnani",
+    "title": "CFO",
+    "source_url": "https://championsgroupholdings.com/our-leadership/",
+    "source_kind": "company",
+    "evidence": "Naresh has led the Champions Group as Chief Financial Officer since 2022, overseeing over 75 team members in Finance and IT. ... Naresh Idnani | CFO"
+   },
+   {
+    "role": "other",
+    "name": "Ken Lipinski",
+    "title": "CHRO",
+    "source_url": "https://championsgroupholdings.com/our-leadership/",
+    "source_kind": "company",
+    "evidence": "Ken Lipinski | CHRO"
+   },
+   {
+    "role": "other",
+    "name": "Laura Koester",
+    "title": "CMO",
+    "source_url": "https://championsgroupholdings.com/our-leadership/",
+    "source_kind": "company",
+    "evidence": "Laura Koester | CMO"
+   }
+  ],
+  "notes": "Legal name Champions Group Holdings (formerly Service Champions), 2010 Main Street Suite 1250, Irvine, CA. Brands include Service Champions, ASI Hastings, Scottsdale Air, Swan, Sierra, Fetch-a-Tech, M and M, Service Wizard, HELP and Hobaica; markets in California, Arizona, Nevada, Colorado and Ohio. Blackstone's release: over 1,800 field technicians and 150,000 active members; company site: 2.4k total employees (undated, read 2026-10-01). Press (OCBJ citing Bloomberg) valued the deal at about $2.5bn; terms not disclosed by the parties. Published email is the partnerships (acquisitions) mailbox.",
+  "sources": {
+   "description": {
+    "url": "https://www.webwire.com/ViewPressRel.asp?aId=350726",
+    "name": "Blackstone release via WebWire",
+    "kind": "wire",
+    "as_of": "2026-02-18",
+    "evidence": "Based in Orange County, CA, Champions Group is a leading provider of essential home services specializing in heating, air conditioning, plumbing and electrical services."
+   },
+   "founded_year": {
+    "url": "https://www.odysseyinvestment.com/portfolio/champions-group/",
+    "name": "Odyssey Investment Partners",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Founded in 2000, Champions Group focuses on delivering world-class customer service and has a leading position in most of its core markets in California, Arizona, Nevada, Colorado, and Ohio."
+   },
+   "country": {
+    "url": "https://championsgroupholdings.com/contact/",
+    "name": "Champions Group Holdings",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Address 2010 Main Street Suite 1250, Irvine, CA 92614"
+   },
+   "business_model": {
+    "url": "https://www.webwire.com/ViewPressRel.asp?aId=350726",
+    "name": "Blackstone release via WebWire",
+    "kind": "wire",
+    "as_of": "2026-02-18",
+    "evidence": "Champions Group has built a differentiated go-to-market approach anchored by its membership model ... over 1,800 field technicians and 150,000 active members."
+   },
+   "email": {
+    "url": "https://championsgroupholdings.com/contact/",
+    "name": "Champions Group Holdings",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Email Address Partnerships@championsgh.com"
+   },
+   "employees": {
+    "url": "https://championsgroupholdings.com/contact/",
+    "name": "Champions Group Holdings",
+    "kind": "company",
+    "as_of": "2026-10-01",
+    "evidence": "2.4k TOTAL EMPLOYEES 100k VALUED CLUB MEMBERS"
+   }
+  },
+  "holding": {
+   "sponsor": "Blackstone",
+   "status_note": "Definitive agreement (BXPE, Feb 2026) to acquire from Odyssey Investment Partners, which keeps a significant minority with management; closing expected in H1 2026 (completion not confirmed in the sources read)",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "Blackstone aims to continue building Champions Group into a multi-service residential services platform, bringing best-in-class essential services under one umbrella to deliver quality, reliability and scale locally.",
+   "value_creation_source_url": "https://www.webwire.com/ViewPressRel.asp?aId=350726",
+   "notes": "Acquired by funds of Blackstone's perpetual private equity strategy (BXPE). Original release at blackstone.com (blocked to automated reads); text read from the WebWire distribution of the same release."
+  }
+ },
+ {
+  "name": "Compass Datacenters",
+  "website": "https://www.compassdatacenters.com",
+  "description": "Compass Datacenters develops and operates sustainable Class A, Community-First data center campuses for the world's largest hyperscalers and cloud providers, using industrialized, prefabricated design.",
+  "sector": "Communication Services",
+  "subsector": "Hyperscale and cloud data center development and operation",
+  "country": "United States",
+  "founded_year": 2011,
+  "business_model": "B2B (build-to-suit and leased hyperscale data center campuses)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Chris Crosby",
+    "title": "Founder and CEO",
+    "source_url": "https://www.compassdatacenters.com/in-the-news/kkr-permanent-capital-partnership/",
+    "source_kind": "company",
+    "evidence": "said Chris Crosby, Founder and CEO of Compass Datacenters."
+   },
+   {
+    "role": "other",
+    "name": "AJ Byers",
+    "title": "President",
+    "source_url": "https://www.compassdatacenters.com/about/leadership/",
+    "source_kind": "company",
+    "evidence": "AJ Byers President"
+   },
+   {
+    "role": "other",
+    "name": "Adil Attlassy",
+    "title": "Chief Technology Officer",
+    "source_url": "https://www.compassdatacenters.com/about/leadership/",
+    "source_kind": "company",
+    "evidence": "Adil Attlassy serves as Compass' Chief Technology Officer"
+   }
+  ],
+  "notes": "Headquarters 14555 N. Dallas Parkway, Suite 125, Dallas, Texas. Backed by Ontario Teachers' Pension Plan, Brookfield Infrastructure and KKR. Brookfield's infrastructure business (with OTPP) agreed in 2023 to acquire Compass in a deal valued at approximately $6.0bn. On 2026-03-16 Compass signed a definitive agreement for a permanent capital partnership with KKR; KKR's portfolio lists 'a newly established platform of fully stabilized data centers carved out from Compass Datacenters' (Infrastructure, 2026). No revenue, EBITDA, CFO or headcount found on company or sponsor pages.",
+  "sources": {
+   "description": {
+    "url": "https://www.compassdatacenters.com/in-the-news/kkr-permanent-capital-partnership/",
+    "name": "Compass Datacenters (About Compass)",
+    "kind": "company",
+    "as_of": "2026-03-16",
+    "evidence": "The company develops and operates sustainable Class A, Community-First campuses guided by a 100-year neighbor philosophy ... Compass delivers high-quality facilities at speed for the cloud and hyperscale customers"
+   },
+   "founded_year": {
+    "url": "https://www.compassdatacenters.com/about/leadership/",
+    "name": "Compass Datacenters",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "After years of working at the intersection of tech and real estate development, Chris Crosby set out in 2011 to take a new approach to data center development."
+   },
+   "country": {
+    "url": "https://www.compassdatacenters.com/in-the-news/kkr-permanent-capital-partnership/",
+    "name": "Compass Datacenters",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "14555 N. Dallas Parkway, Suite 125 Dallas, Texas 75254"
+   },
+   "business_model": {
+    "url": "https://www.compassdatacenters.com/in-the-news/kkr-permanent-capital-partnership/",
+    "name": "Compass Datacenters",
+    "kind": "company",
+    "as_of": "2026-03-16",
+    "evidence": "Compass Datacenters ... designs and constructs data centers for the world's largest hyperscalers and cloud providers."
+   },
+   "sector": {
+    "url": "https://www.kkr.com/invest/portfolio",
+    "name": "KKR portfolio",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "assetClass: Infrastructure, industry: Communication Services, hq: Dallas, Texas, United States, yoi: 2026"
+   }
+  },
+  "holding": {
+   "sponsor": "KKR",
+   "status": "current",
+   "status_note": "Permanent capital partnership agreed March 2026: KKR invests in a newly established platform of fully stabilized data centers carved out from Compass",
+   "asset_class": "Infrastructure",
+   "deal_type": "Carve-out",
+   "value_creation_plan": "The evergreen, permanent capital partnership gives Compass continuous access to capital so it can expand its network of hyperscale campuses while advancing its long-term 'Built to Last' strategy on its own foundation.",
+   "value_creation_source_url": "https://www.compassdatacenters.com/in-the-news/kkr-permanent-capital-partnership/",
+   "notes": "KKR portfolio: Infrastructure, year of investment 2026, 'A newly established platform of fully stabilized data centers carved out from Compass Datacenters.' Size not disclosed by the parties."
+  }
+ },
+ {
+  "name": "Compass Datacenters",
+  "website": "https://www.compassdatacenters.com",
+  "description": "Compass Datacenters develops and operates sustainable Class A, Community-First data center campuses for the world's largest hyperscalers and cloud providers, using industrialized, prefabricated design.",
+  "sector": "Communication Services",
+  "subsector": "Hyperscale and cloud data center development and operation",
+  "country": "United States",
+  "founded_year": 2011,
+  "business_model": "B2B (build-to-suit and leased hyperscale data center campuses)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Chris Crosby",
+    "title": "Founder and CEO",
+    "source_url": "https://www.compassdatacenters.com/in-the-news/kkr-permanent-capital-partnership/",
+    "source_kind": "company",
+    "evidence": "said Chris Crosby, Founder and CEO of Compass Datacenters."
+   },
+   {
+    "role": "other",
+    "name": "AJ Byers",
+    "title": "President",
+    "source_url": "https://www.compassdatacenters.com/about/leadership/",
+    "source_kind": "company",
+    "evidence": "AJ Byers President"
+   },
+   {
+    "role": "other",
+    "name": "Adil Attlassy",
+    "title": "Chief Technology Officer",
+    "source_url": "https://www.compassdatacenters.com/about/leadership/",
+    "source_kind": "company",
+    "evidence": "Adil Attlassy serves as Compass' Chief Technology Officer"
+   }
+  ],
+  "notes": "Headquarters 14555 N. Dallas Parkway, Suite 125, Dallas, Texas. Backed by Ontario Teachers' Pension Plan, Brookfield Infrastructure and KKR. Brookfield's infrastructure business (with OTPP) agreed in 2023 to acquire Compass in a deal valued at approximately $6.0bn. On 2026-03-16 Compass signed a definitive agreement for a permanent capital partnership with KKR; KKR's portfolio lists 'a newly established platform of fully stabilized data centers carved out from Compass Datacenters' (Infrastructure, 2026). No revenue, EBITDA, CFO or headcount found on company or sponsor pages.",
+  "sources": {
+   "description": {
+    "url": "https://www.compassdatacenters.com/in-the-news/kkr-permanent-capital-partnership/",
+    "name": "Compass Datacenters (About Compass)",
+    "kind": "company",
+    "as_of": "2026-03-16",
+    "evidence": "The company develops and operates sustainable Class A, Community-First campuses guided by a 100-year neighbor philosophy ... Compass delivers high-quality facilities at speed for the cloud and hyperscale customers"
+   },
+   "founded_year": {
+    "url": "https://www.compassdatacenters.com/about/leadership/",
+    "name": "Compass Datacenters",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "After years of working at the intersection of tech and real estate development, Chris Crosby set out in 2011 to take a new approach to data center development."
+   },
+   "country": {
+    "url": "https://www.compassdatacenters.com/in-the-news/kkr-permanent-capital-partnership/",
+    "name": "Compass Datacenters",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "14555 N. Dallas Parkway, Suite 125 Dallas, Texas 75254"
+   },
+   "business_model": {
+    "url": "https://www.compassdatacenters.com/in-the-news/kkr-permanent-capital-partnership/",
+    "name": "Compass Datacenters",
+    "kind": "company",
+    "as_of": "2026-03-16",
+    "evidence": "Compass Datacenters ... designs and constructs data centers for the world's largest hyperscalers and cloud providers."
+   },
+   "sector": {
+    "url": "https://www.kkr.com/invest/portfolio",
+    "name": "KKR portfolio",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "assetClass: Infrastructure, industry: Communication Services, hq: Dallas, Texas, United States, yoi: 2026"
+   }
+  },
+  "holding": {
+   "sponsor": "Brookfield Asset Management",
+   "status": "current",
+   "status_note": "Brookfield's infrastructure business (with Ontario Teachers') agreed in 2023 to acquire Compass in a deal valued at ~$6.0bn; Compass still names Brookfield Infrastructure as a backer in March 2026",
+   "asset_class": "Infrastructure",
+   "deal_type": "Buyout",
+   "value_creation_plan": "Compass Datacenters complements Brookfield's infrastructure digitalization investment strategy.",
+   "value_creation_source_url": "https://bam.brookfield.com/press-releases/brookfield-asset-management-announces-strong-second-quarter-results",
+   "notes": "Brookfield Q2 2023 release (2023-08-09): 'Our infrastructure business entered into a definitive agreement to acquire Compass Datacenters, in a deal valued at approximately $6.0 billion.' Acquired alongside Ontario Teachers' Pension Plan."
+  }
+ },
+ {
+  "name": "Gatehouse Living Group",
+  "website": "https://alvesta-im.com",
+  "description": "Gatehouse Living Group (now Alvesta Living Group) is a vertically integrated UK residential investment and management platform, comprising investment arm Gatehouse Investment Management and property management arm Ascend Properties, which originates and manages new build-to-rent single-family housing for institutional investors.",
+  "sector": "Real Estate",
+  "subsector": "Build-to-rent single-family housing investment and property management",
+  "country": "United Kingdom",
+  "business_model": "B2B fee-based investment, asset and property management",
+  "email": "enquiries@alvesta-im.com",
+  "email_type": "generic",
+  "employees": 140,
+  "employees_text": "The average monthly number of persons (including directors) employed during the year was 140",
+  "employees_as_of": "2025-12-31",
+  "revenue": 13276478,
+  "revenue_currency": "GBP",
+  "revenue_period": "FY2025 (year ended 2025-12-31)",
+  "ebitda": 2410073,
+  "ebitda_currency": "GBP",
+  "ebitda_period": "FY2025 (year ended 2025-12-31)",
+  "ebitda_basis": "derived",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Paul Stockwell",
+    "title": "Chief Executive Officer",
+    "source_url": "https://ir.apollo.com/news-events/press-releases/detail/616/apollo-funds-acquire-gatehouse-living-group-from-gatehouse",
+    "source_kind": "wire",
+    "evidence": "GLG will continue to be led by CEO Paul Stockwell and its management team"
+   },
+   {
+    "role": "cfo",
+    "name": "James Sarmecanic",
+    "title": "Group Finance Director",
+    "source_url": "https://alvesta-im.com/team",
+    "source_kind": "company",
+    "evidence": "Group Finance Director James Sarmecanic"
+   },
+   {
+    "role": "other",
+    "name": "John Coles",
+    "title": "Director of Acquisitions & Development",
+    "source_url": "https://alvesta-im.com/team",
+    "source_kind": "company",
+    "evidence": "Director of Acquisitions & Development John Coles MRICS"
+   }
+  ],
+  "notes": "Group parent Alvesta Living Group Limited, formerly Gatehouse Build To Rent Group Limited (Companies House 14440278; renamed 2026-09-25), Met Building, 22 Percy Street, London; Aegean Holdco Limited became PSC on 2026-03-31 when Gatehouse Bank plc ceased. Filed FY2025 group accounts (audited, RSM): turnover GBP 13,276,478 (FY2024 GBP 15,964,531 incl. GBP 3.2m one-off promote fees), operating profit GBP 2,016,873, average 140 employees. EBITDA derived: operating profit 2,016,873 + depreciation 72,120 + amortisation 321,080. Per Apollo, the group has established five platforms and exited three, acquired more than 5,000 homes and manages more than 10,000 homes through Ascend.",
+  "sources": {
+   "description": {
+    "url": "https://ir.apollo.com/news-events/press-releases/detail/616/apollo-funds-acquire-gatehouse-living-group-from-gatehouse",
+    "name": "Apollo (GlobeNewswire)",
+    "kind": "wire",
+    "as_of": "2026-04-01",
+    "evidence": "Gatehouse Living Group (\"GLG\" or \"the Group\"), a vertically integrated UK residential investment and management platform ... comprised of its investment arm, Gatehouse Investment Management (\"GIM\"), as well as its property management arm, Ascend Properties"
+   },
+   "country": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14440278",
+    "name": "Companies House",
+    "kind": "registry",
+    "as_of": "2026-10-01",
+    "evidence": "Registered office address Met Building, 6th Floor, 22 Percy Street, London, England, W1T 2BU ... Previous company names GATEHOUSE BUILD TO RENT GROUP LIMITED 25 Oct 2022 - 25 Sep 2026"
+   },
+   "business_model": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14440278/filing-history/MzU0MjMzNTQ1OGFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "The Group's principal activity was investment management and property management in the UK single-family rental (SFR) sector ... Services provided include capital raising, property finding, asset management, property lettings and administration"
+   },
+   "email": {
+    "url": "https://alvesta-im.com/contact",
+    "name": "Alvesta Investment Management",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Get in touch +44 (0) 203 821 6090 enquiries@alvesta-im.com"
+   },
+   "employees": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14440278/filing-history/MzU0MjMzNTQ1OGFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "5 Employees: The average monthly number of persons (including directors) employed during the year was ... Total 140 (2024: 115)"
+   },
+   "revenue": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14440278/filing-history/MzU0MjMzNTQ1OGFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "Consolidated statement of comprehensive income: Turnover 13,276,478 (2025 £) 15,964,531 (2024 £)"
+   },
+   "ebitda": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14440278/filing-history/MzU0MjMzNTQ1OGFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "Operating profit 2,016,873; Note 7: Depreciation of owned tangible fixed assets 72,120; Amortisation of intangible assets 321,080"
+   },
+   "website": {
+    "url": "https://alvesta-im.com/",
+    "name": "Alvesta Investment Management",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "© Copyright 2026 - Alvesta Investment Management ... Alvesta Living Group ... 12000 + Homes managed by Ascend"
+   }
+  },
+  "holding": {
+   "sponsor": "Apollo Global Management",
+   "status": "current",
+   "status_note": "Apollo-managed funds acquired the group from Gatehouse Bank on 1 April 2026; since rebranded Alvesta",
+   "asset_class": "Real estate",
+   "deal_type": "Carve-out",
+   "value_creation_plan": "Apollo will work closely with management to further enhance and expand the group's operational capabilities and support the platform's continued success; the group will invest its own capital and that of third-party partners, and Ascend will keep managing external institutional portfolios.",
+   "value_creation_source_url": "https://ir.apollo.com/news-events/press-releases/detail/616/apollo-funds-acquire-gatehouse-living-group-from-gatehouse",
+   "notes": "Bought from Gatehouse Bank (sale part of the bank's retail growth strategy). Terms not disclosed. Complements Apollo's UK housing activity (Foundation Home Loans, Miller Homes)."
+  }
+ },
+ {
+  "name": "SUGIKO",
+  "website": "https://www.sugiko.co.jp",
+  "description": "SUGIKO is a leading Japanese scaffolding rental operator providing rental of temporary construction equipment, technical support and safety consulting for building, plant, bridge, facilities, event and civil engineering work.",
+  "sector": "Industrial",
+  "subsector": "Scaffolding and temporary equipment rental",
+  "country": "Japan",
+  "founded_year": 1953,
+  "business_model": "B2B equipment rental (asset-based)",
+  "employees": 785,
+  "employees_text": "従業員 785名 ※2026年6月現在",
+  "employees_as_of": "2026-06-30",
+  "revenue": 37100000000,
+  "revenue_currency": "JPY",
+  "revenue_period": "FY ended 2025-12-31",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "杉山 亮",
+    "title": "代表取締役社長 / 社長執行役員 (Representative Director and President)",
+    "source_url": "https://www.sugiko.co.jp/about/profile/",
+    "source_kind": "company",
+    "evidence": "代表取締役社長　杉山 亮 ... 社長執行役員　杉山 亮"
+   },
+   {
+    "role": "other",
+    "name": "杉山 信夫",
+    "title": "取締役会長 (Chairman)",
+    "source_url": "https://www.sugiko.co.jp/about/profile/",
+    "source_kind": "company",
+    "evidence": "取締役会長　杉山 信夫"
+   }
+  ],
+  "notes": "株式会社杉孝 (SUGIKO CO., LTD.), head office Yokohama Diamond Building 14F, 1-7 Kinkocho, Kanagawa-ku, Yokohama, Kanagawa. Incorporated 1955-02-15 (founded January 1953); capital JPY 100m. Revenue 371億円 (JPY 37.1bn) for the fiscal year ended December 2025, as stated on the company profile; employees 785 as of June 2026. Carlyle agreed on 2026-03-04 to acquire SUGIKO from ORIX; closing subject to regulatory approvals (completion not confirmed in the sources read). Names are given in Japanese as printed on the company site; no CFO listed.",
+  "sources": {
+   "description": {
+    "url": "https://www.sugiko.co.jp/about/profile/",
+    "name": "SUGIKO company profile",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "事業内容 各種仮設機材のレンタル・技術サポートおよび安全コンサルティング （分野：建築、プラント、橋梁、設備、イベント、土木）"
+   },
+   "founded_year": {
+    "url": "https://www.sugiko.co.jp/about/profile/",
+    "name": "SUGIKO company profile",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "設立 1955年2月15日（創業1953年1月）"
+   },
+   "country": {
+    "url": "https://www.sugiko.co.jp/about/profile/",
+    "name": "SUGIKO company profile",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "本社 〒221-0056 神奈川県横浜市神奈川区 金港町1番地7 横浜ダイヤビルディング 14F"
+   },
+   "business_model": {
+    "url": "https://www.carlyle.com/media-room/news-release-archive/carlyle-agrees-acquire-sugiko",
+    "name": "Carlyle",
+    "kind": "sponsor",
+    "as_of": "2026-03-04",
+    "evidence": "Founded in 1953 and headquartered in Kanagawa Prefecture, SUGIKO is a pioneer in the Japanese scaffolding industry having established the rental model in the 1970s."
+   },
+   "employees": {
+    "url": "https://www.sugiko.co.jp/about/profile/",
+    "name": "SUGIKO company profile",
+    "kind": "company",
+    "as_of": "2026-06-30",
+    "evidence": "従業員 785名 ※2026年6月現在"
+   },
+   "revenue": {
+    "url": "https://www.sugiko.co.jp/about/profile/",
+    "name": "SUGIKO company profile",
+    "kind": "company",
+    "as_of": "2025-12-31",
+    "evidence": "売上高 371億円 ※2025年12月期実績"
+   }
+  },
+  "holding": {
+   "sponsor": "The Carlyle Group",
+   "status_note": "Agreed on 4 March 2026 to acquire SUGIKO from ORIX Corporation; subject to regulatory approvals and closing conditions (completion not confirmed in the sources read)",
+   "asset_class": "Private equity",
+   "deal_type": "Buyout",
+   "value_creation_plan": "Carlyle will work in partnership with SUGIKO's management team to build on the initiatives implemented under ORIX's ownership, while further enhancing value for customers and supporting the company's sustainable, long-term growth.",
+   "value_creation_source_url": "https://www.carlyle.com/media-room/news-release-archive/carlyle-agrees-acquire-sugiko",
+   "notes": "Seller ORIX Corporation. Adds to Carlyle's Japan social-infrastructure investments (Iwasaki Electric, Enewill, Kokusai Kogyo, SENQCIA). Fund not named; terms not disclosed."
+  }
+ }
+]

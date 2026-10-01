@@ -1,0 +1,1585 @@
+[
+ {
+  "name": "Mamezo",
+  "website": "https://mamezo.tech/",
+  "description": "MAMEZO is a Tokyo-headquartered IT consulting firm that helps companies modernize IT systems, design digital platforms and system architecture, and build capabilities in AI, robotics and cloud adoption.",
+  "sector": "Technology services",
+  "subsector": "IT consulting / AI and robotics engineering",
+  "country": "Japan",
+  "founded_year": 1999,
+  "business_model": "B2B",
+  "employees": 894,
+  "employees_text": "従業員数 894人 ＊2026年4月1日現在",
+  "employees_as_of": "2026-04-01",
+  "revenue": 10551965000,
+  "revenue_currency": "JPY",
+  "revenue_period": "FY2025 (12 months to 2025-03-31)",
+  "ebitda": 2152151000,
+  "ebitda_currency": "JPY",
+  "ebitda_period": "FY2025 (12 months to 2025-03-31)",
+  "ebitda_basis": "derived",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Tetsuya Nakahara (中原 徹也)",
+    "title": "President & CEO (代表取締役社長)",
+    "source_url": "https://mamezo.tech/corporate/",
+    "source_kind": "company",
+    "evidence": "役員 代表取締役社長　中原 徹也"
+   },
+   {
+    "role": "other",
+    "name": "泉 健憲",
+    "title": "Director, General Manager of Administration Division (取締役管理本部本部長)",
+    "source_url": "https://mamezo.tech/cms/wp-content/uploads/2026/05/2026.04.13tk.pdf",
+    "source_kind": "filing",
+    "evidence": "問合せ先 取締役管理本部本部長 泉 健憲"
+   }
+  ],
+  "notes": "Listed on TSE Growth (202A) from June 2024 as Mamezo Digital Holdings; four group companies merged into MAMEZO Co., Ltd. on 2025-10-01. Founded year is the core Mamezou business (1999); the current legal entity (formerly Mamezo Digital Holdings) was established 2020-11-11. Revenue is consolidated net sales (売上高) from the FY ended March 2025 earnings release (決算短信), issued under the former name 株式会社豆蔵デジタルホールディングス. EBITDA is derived: operating profit JPY 2,070,328k + depreciation (減価償却費, cash flow statement) JPY 81,823k; the statement shows no separate goodwill amortisation line. Delisted 2026-04-14 after EQT's tender offer. No published contact email (web form only). The company's English page writes the CEO's name 'Nakahara Tetsuya'; the administration head is given in kanji only, as filed.",
+  "sources": {
+   "description": {
+    "url": "https://eqtgroup.com/news/eqt-to-launch-usd-371-million-tender-offer-for-mamezo-2026-01-23",
+    "name": "EQT",
+    "kind": "sponsor",
+    "as_of": "2026-01-23",
+    "evidence": "Headquartered in Tokyo, MAMEZO is a leading IT consulting firm that helps companies modernize IT systems, design digital platforms and system architecture, and enhance their organization capabilities to work with new technologies, including AI and cloud adoption."
+   },
+   "employees": {
+    "url": "https://mamezo.tech/corporate/",
+    "name": "MAMEZO",
+    "kind": "company",
+    "as_of": "2026-04-01",
+    "evidence": "従業員数 894人 ＊2026年4月1日現在"
+   },
+   "founded_year": {
+    "url": "https://mamezo.tech/home/encorporate/",
+    "name": "MAMEZO",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Mamezou, the core of our Business, was launched in 1999 to promote the penetration of software engineering, object-oriented technologies included, into industries and companies."
+   },
+   "country": {
+    "url": "https://mamezo.tech/home/encorporate/",
+    "name": "MAMEZO",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Address Shinjuku Mitsui Bldg. 34F, Nishi-Shinjuku 2-1-1, Shinjuku-ku, Tokyo 163-0434,JAPAN"
+   },
+   "revenue": {
+    "url": "https://mamezo.tech/cms/wp-content/uploads/2026/05/kt2025.05.12.pdf",
+    "name": "Mamezo Digital Holdings FY3/2025 決算短信 (TSE filing)",
+    "kind": "filing",
+    "as_of": "2025-05-12",
+    "evidence": "（連結損益計算書）（単位：千円）売上高 9,586,457 10,551,965 (current year: 自2024年４月１日 至2025年３月31日)"
+   },
+   "ebitda": {
+    "url": "https://mamezo.tech/cms/wp-content/uploads/2026/05/kt2025.05.12.pdf",
+    "name": "Mamezo Digital Holdings FY3/2025 決算短信 (TSE filing)",
+    "kind": "filing",
+    "as_of": "2025-05-12",
+    "evidence": "営業利益 1,799,161 2,070,328 ; 減価償却費 100,518 81,823 (単位：千円, current year to 2025-03-31) -> 2,070,328 + 81,823 = 2,152,151 thousand yen"
+   },
+   "business_model": {
+    "url": "https://eqtgroup.com/news/eqt-to-launch-usd-371-million-tender-offer-for-mamezo-2026-01-23",
+    "name": "EQT",
+    "kind": "sponsor",
+    "as_of": "2026-01-23",
+    "evidence": "The Company works closely with clients in the manufacturing, automotive, and financial services sectors"
+   },
+   "sector": {
+    "url": "https://eqtgroup.com/about/current-portfolio/mamezo",
+    "name": "EQT",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Sector Tech Services Country Japan Fund BPEA EQT Mid-Market Growth Entry 2026"
+   }
+  },
+  "holding": {
+   "sponsor": "EQT AB",
+   "status": "current",
+   "status_note": "Taken private by BPEA EQT Mid-Market Growth Partnership via tender offer (closed 2026-03-10); delisted from TSE 2026-04-14",
+   "asset_class": "Private equity",
+   "deal_type": "Take-private",
+   "value_creation_plan": "Following completion, EQT expects to acquire full ownership of MAMEZO to support the Company's ongoing operations and strategic priorities, leveraging its track record in technology-enabled services and long-standing presence in Japan, and will collaborate with Itochu Corporation as a strategic partner to drive long-term value.",
+   "value_creation_source_url": "https://eqtgroup.com/news/eqt-to-launch-usd-371-million-tender-offer-for-mamezo-2026-01-23",
+   "notes": "USD 371 million tender offer at JPY 3,551 per share announced 2026-01-23 through offeror Roodhalsgans 1 K.K.; EQT's first IT services investment in Japan. Responsible adviser per EQT: Tetsuro Onitsuka."
+  }
+ },
+ {
+  "name": "Liberty Waste Solutions",
+  "website": "https://libertywastesolutions.com/",
+  "description": "Liberty Waste Solutions provides full-service waste management and recycling for commercial and residential customers in North Carolina, operating hauling divisions, transfer stations and landfills.",
+  "sector": "Environmental services",
+  "subsector": "Solid waste collection, recycling and disposal",
+  "country": "United States",
+  "business_model": "B2B and B2C",
+  "email": "office@libertywastesolutions.com",
+  "email_type": "generic",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Rick Prather",
+    "title": "CEO",
+    "source_url": "https://libertywastesolutions.com/about/",
+    "source_kind": "company",
+    "evidence": "Meet the Liberty Waste Solutions Team | Rick Prather | CEO"
+   },
+   {
+    "role": "cfo",
+    "name": "Phil Rado",
+    "title": "CFO",
+    "source_url": "https://libertywastesolutions.com/about/",
+    "source_kind": "company",
+    "evidence": "Phil Rado | CFO"
+   }
+  ],
+  "notes": "Headquartered in Raleigh, NC (per former owner Allied Industrial Partners). Formed by combining 13 companies, including Wall Recycling, which rebranded under the Liberty name. Rick Prather is also named CEO in TPG's June 2026 release. No employee count, revenue or EBITDA published; TPG did not disclose terms.",
+  "sources": {
+   "description": {
+    "url": "https://libertywastesolutions.com/about/",
+    "name": "Liberty Waste Solutions",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Liberty Waste Solutions is the Triangle’s largest recycling company. We provide full-service waste management and recycling for both commercial and consumer needs in Eastern North Carolina."
+   },
+   "business_model": {
+    "url": "https://libertywastesolutions.com/about/",
+    "name": "Liberty Waste Solutions",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "We provide full-service waste management and recycling for both commercial and consumer needs in Eastern North Carolina."
+   },
+   "email": {
+    "url": "https://libertywastesolutions.com/",
+    "name": "Liberty Waste Solutions",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "(919) 582 - 7777 office@libertywastesolutions.com"
+   },
+   "country": {
+    "url": "https://www.alliedindustrialpartners.com/portfolio",
+    "name": "Allied Industrial Partners",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Realized Investments | Waste Eliminator | Atlanta, GA | Liberty Waste Solutions | Raleigh, NC"
+   },
+   "sector": {
+    "url": "https://www.tpg.com/news-and-insights/tpg-to-acquire-waste-eliminator-and-liberty-waste-solutions-from-allied-industrial-partners-to-create-a-sustainable-waste-infrastructure-player",
+    "name": "TPG",
+    "kind": "sponsor",
+    "as_of": "2026-06-17",
+    "evidence": "Liberty Waste Solutions, a provider of integrated waste and recycling solutions in North Carolina."
+   }
+  },
+  "holding": {
+   "sponsor": "TPG",
+   "status": "current",
+   "status_note": "Acquired from Allied Industrial Partners via TPG Transition Infrastructure (agreement signed June 2026, combined with Waste Eliminator)",
+   "asset_class": "Infrastructure",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "TPG is combining Liberty Waste Solutions with Waste Eliminator to create a regional waste infrastructure provider across the Southeastern U.S., and plans to support continued investment in landfill diversion, composting and recycling throughout its ownership.",
+   "value_creation_source_url": "https://www.tpg.com/news-and-insights/tpg-to-acquire-waste-eliminator-and-liberty-waste-solutions-from-allied-industrial-partners-to-create-a-sustainable-waste-infrastructure-player",
+   "notes": "Announced 2026-06-17; closing expected by Q3 2026; terms not disclosed. Third transaction in TPG's inaugural Transition Infrastructure fund. Allied Industrial Partners now lists Liberty Waste Solutions under Realized Investments. Combined platform: 14 permitted facilities and more than 500 fleet vehicles."
+  }
+ },
+ {
+  "name": "Andera",
+  "website": "https://www.andera.ai/",
+  "description": "Andera is building the AI-native platform to automate internal audit, offering AI-native GRC and controls testing that turns evidence into audit-ready workpapers.",
+  "sector": "Software",
+  "subsector": "AI for audit, GRC and controls testing",
+  "founded_year": 2024,
+  "business_model": "B2B SaaS",
+  "email": "team@andera.ai",
+  "email_type": "generic",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Aryo Patel",
+    "title": "CEO and Co-founder",
+    "source_url": "https://lsvp.com/stories/audits-moment-has-arrived-why-we-invested-in-andera/",
+    "source_kind": "sponsor",
+    "evidence": "Aryo Patel (CEO and Co-founder) came to this problem from the intersection of finance and AI infrastructure"
+   },
+   {
+    "role": "other",
+    "name": "Tinah Hong",
+    "title": "CTO and Co-founder",
+    "source_url": "https://lsvp.com/stories/audits-moment-has-arrived-why-we-invested-in-andera/",
+    "source_kind": "sponsor",
+    "evidence": "Tinah Hong (CTO and Co-founder) has been close friends with Aryo since middle school in Chicago"
+   }
+  ],
+  "notes": "Raised a USD 37M Series A in June 2026 led by Lightspeed, joined by Bain Capital Ventures; A* led the seed round. Founded 2024 (A* met the founders in October 2024 'when Andera was just two months old'). All open roles on its careers page are on-site in San Francisco, but the company does not state its headquarters. No employee count, revenue or EBITDA published.",
+  "sources": {
+   "description": {
+    "url": "https://lsvp.com/stories/audits-moment-has-arrived-why-we-invested-in-andera/",
+    "name": "Lightspeed Venture Partners",
+    "kind": "sponsor",
+    "as_of": "2026-06-17",
+    "evidence": "Lightspeed is leading a $37M Series A in Andera , the company building the AI-native platform to automate internal audit."
+   },
+   "founded_year": {
+    "url": "https://a-star.co/news/andera",
+    "name": "A* (investor)",
+    "kind": "sponsor",
+    "as_of": "2026-07-20",
+    "evidence": "We first met Aryo Patel and Tinah Hong in October 2024, when Andera was just two months old."
+   },
+   "business_model": {
+    "url": "https://www.andera.ai/",
+    "name": "Andera",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Streamline your audits with the first AI-native GRC and testing platform ... Book a demo"
+   },
+   "email": {
+    "url": "https://www.andera.ai/",
+    "name": "Andera",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "mailto:team@andera.ai (footer 'Contact')"
+   },
+   "sector": {
+    "url": "https://baincapitalventures.com/portfolio/",
+    "name": "Bain Capital Ventures",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Andera | Building the AI-native platform to automate internal audit | C. Melas-Kyriazi | Ryan Kim | Applied AI | Early | 2026"
+   }
+  },
+  "holding": {
+   "sponsor": "Bain Capital",
+   "status": "current",
+   "status_note": "Bain Capital Ventures joined the USD 37M Series A led by Lightspeed (June 2026)",
+   "asset_class": "Venture capital",
+   "deal_type": "Venture round",
+   "notes": "Listed on Bain Capital Ventures' portfolio as Applied AI, Early stage, 2026 (deal leads C. Melas-Kyriazi and Ryan Kim). BCV's participation is stated by co-investor A*; no BCV announcement found, so no value-creation plan recorded."
+  }
+ },
+ {
+  "name": "Gaming Laboratories International",
+  "website": "https://gaminglabs.com/",
+  "description": "GLI is the global leader in testing, certification and cybersecurity services to the global gaming industry, servicing over 710 regulated gaming jurisdictions worldwide.",
+  "sector": "Business services",
+  "subsector": "Gaming testing, inspection and certification; cybersecurity",
+  "country": "United States",
+  "founded_year": 1989,
+  "business_model": "B2B",
+  "employees": 1500,
+  "employees_text": "over 1,500 employees globally",
+  "employees_as_of": "2026-06-22",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "James Maida",
+    "title": "President & CEO",
+    "source_url": "https://gaminglabs.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Executive Leadership Team | James Maida | President & CEO"
+   },
+   {
+    "role": "cfo",
+    "name": "Bruce Hecht",
+    "title": "Chief Financial Officer",
+    "source_url": "https://gaminglabs.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Bruce Hecht | Chief Financial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Mackenzie Haugh",
+    "title": "Chief Delivery Officer",
+    "source_url": "https://gaminglabs.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Mackenzie Haugh | Chief Delivery Officer"
+   },
+   {
+    "role": "managing_director",
+    "name": "Richard Howarth",
+    "title": "Managing Director - APAC",
+    "source_url": "https://gaminglabs.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Richard Howarth | Managing Director - APAC"
+   },
+   {
+    "role": "managing_director",
+    "name": "James Boje",
+    "title": "Managing Director, EMEIA",
+    "source_url": "https://gaminglabs.com/about-us/",
+    "source_kind": "company",
+    "evidence": "James Boje | Managing Director, EMEIA"
+   },
+   {
+    "role": "managing_director",
+    "name": "Salim L. Adatia",
+    "title": "Managing Director, Canada",
+    "source_url": "https://gaminglabs.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Salim L. Adatia | Managing Director, Canada"
+   }
+  ],
+  "notes": "Founded in 1989 by James Maida and Paul Magno; headquartered in Lakewood, New Jersey. CVC is GLI's first external investor (June 2026). GLI lists no COO (Mackenzie Haugh is Chief Delivery Officer). No contact email published (web form only). No revenue or EBITDA disclosed.",
+  "sources": {
+   "description": {
+    "url": "https://www.cvc.com/media/news/2026/gaming-laboratories-international-gli-welcomes-cvc-strategic-opportunities-as-its-first-external-investor/",
+    "name": "CVC",
+    "kind": "sponsor",
+    "as_of": "2026-06-22",
+    "evidence": "GLI is the global leader in testing, certification and cybersecurity services to the global gaming industry with over 1,500 employees globally servicing over 710 regulated gaming jurisdictions worldwide."
+   },
+   "employees": {
+    "url": "https://www.cvc.com/media/news/2026/gaming-laboratories-international-gli-welcomes-cvc-strategic-opportunities-as-its-first-external-investor/",
+    "name": "CVC",
+    "kind": "sponsor",
+    "as_of": "2026-06-22",
+    "evidence": "with over 1,500 employees globally servicing over 710 regulated gaming jurisdictions worldwide"
+   },
+   "founded_year": {
+    "url": "https://www.cvc.com/media/news/2026/gaming-laboratories-international-gli-welcomes-cvc-strategic-opportunities-as-its-first-external-investor/",
+    "name": "CVC",
+    "kind": "sponsor",
+    "as_of": "2026-06-22",
+    "evidence": "Founded in 1989 by James Maida and Paul Magno, GLI is headquartered in Lakewood, New Jersey, USA."
+   },
+   "country": {
+    "url": "https://www.cvc.com/media/news/2026/gaming-laboratories-international-gli-welcomes-cvc-strategic-opportunities-as-its-first-external-investor/",
+    "name": "CVC",
+    "kind": "sponsor",
+    "as_of": "2026-06-22",
+    "evidence": "GLI is headquartered in Lakewood, New Jersey, USA."
+   },
+   "business_model": {
+    "url": "https://www.cvc.com/media/news/2026/gaming-laboratories-international-gli-welcomes-cvc-strategic-opportunities-as-its-first-external-investor/",
+    "name": "CVC",
+    "kind": "sponsor",
+    "as_of": "2026-06-22",
+    "evidence": "established itself as a trusted partner to regulators, operators and suppliers around the world"
+   }
+  },
+  "holding": {
+   "sponsor": "CVC Capital Partners",
+   "status": "current",
+   "status_note": "Invested June 2026 via CVC Strategic Opportunities; GLI's first external investor",
+   "asset_class": "Private equity",
+   "value_creation_plan": "CVC's investment will provide resources and expertise to enhance GLI's capabilities and growth prospects while upholding its culture of world-class service; the partnership lets GLI invest more in the global gaming industry and in related and adjacent sectors, with the CEO and leadership team unchanged.",
+   "value_creation_source_url": "https://www.cvc.com/media/news/2026/gaming-laboratories-international-gli-welcomes-cvc-strategic-opportunities-as-its-first-external-investor/",
+   "notes": "Investment completed into GLI and related entities through CVC's long-duration Strategic Opportunities platform; size of stake and terms not disclosed, so deal type left blank. Matt Turner (Partner, CVC) joined the GLI board."
+  }
+ },
+ {
+  "name": "Reflection AI",
+  "website": "https://reflection.ai/",
+  "description": "Reflection builds open models that let anyone control their intelligence, releasing open weights, research and software with the mission to build the future of open intelligence.",
+  "sector": "Technology",
+  "subsector": "Frontier AI / open-weight foundation models",
+  "country": "United States",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Misha Laskin",
+    "title": "Co-Founder & CEO",
+    "source_url": "https://lsvp.com/stories/towards-superintelligence-reflection-ai/",
+    "source_kind": "sponsor",
+    "evidence": "Misha Laskin (Co-Founder & CEO) and Ioannis Antonoglou (Co-Founder & CTO) are not only accomplished AI researchers"
+   },
+   {
+    "role": "other",
+    "name": "Ioannis Antonoglou",
+    "title": "Co-Founder & CTO",
+    "source_url": "https://lsvp.com/stories/towards-superintelligence-reflection-ai/",
+    "source_kind": "sponsor",
+    "evidence": "Ioannis Antonoglou (Co-Founder & CTO)"
+   }
+  ],
+  "notes": "Hiring across New York, San Francisco, London and Washington D.C. (careers page). Named collaborations include the U.S. Department of Energy (Genesis Mission) and Shinsegae (sovereign South Korean cloud). Its news page links CNBC (2026-04-23) 'Reflection CEO confirms latest funding round closed at $25 billion pre-money valuation'; the article itself could not be opened, so no round size is recorded. No employee count, revenue or EBITDA published.",
+  "sources": {
+   "description": {
+    "url": "https://reflection.ai/",
+    "name": "Reflection AI",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Make intelligence open and accessible to all. We build open models that let anyone control their intelligence and help shape the future of AI."
+   },
+   "country": {
+    "url": "https://www.adventinternational.com/investments/",
+    "name": "Advent International",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Reflection AI | July 2026 | An AI company | Topics | United States | Reflection AI | Expansion capital | Technology"
+   },
+   "sector": {
+    "url": "https://www.adventinternational.com/investments/",
+    "name": "Advent International",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Reflection AI | July 2026 | An AI company | ... | Expansion capital | Technology"
+   }
+  },
+  "holding": {
+   "sponsor": "Advent International",
+   "status": "current",
+   "status_note": "Expansion-capital investment, July 2026",
+   "asset_class": "Growth equity",
+   "deal_type": "Growth investment",
+   "notes": "Advent's investments page lists Reflection AI as 'July 2026 | An AI company | United States | Expansion capital | Technology'. No Advent press release found, so size, stake and value-creation plan are not recorded."
+  }
+ },
+ {
+  "name": "CreditorWatch",
+  "website": "https://creditorwatch.com.au/",
+  "description": "CreditorWatch is Australia's only dedicated B2B credit reporting agency, offering credit reporting and risk management solutions from onboarding and automated credit decisioning to monitoring, KYC/AML reporting and automated collections.",
+  "sector": "Financial services / data and information services",
+  "subsector": "Commercial credit reporting and risk analytics",
+  "country": "Australia",
+  "founded_year": 2010,
+  "business_model": "B2B (credit reporting and risk analytics platform)",
+  "email": "companysecretary@creditorwatch.com.au",
+  "email_type": "investor_relations",
+  "employees": 230,
+  "employees_text": "a team of 230+ people",
+  "employees_as_of": "2026-07-09",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Patrick Coghlan",
+    "title": "Chief Executive Officer",
+    "source_url": "https://creditorwatch.com.au/company/about-us",
+    "source_kind": "company",
+    "evidence": "Meet the team | Patrick Coghlan | Chief Executive Officer"
+   },
+   {
+    "role": "cfo",
+    "name": "David Kirton",
+    "title": "Chief Financial Officer",
+    "source_url": "https://creditorwatch.com.au/company/about-us",
+    "source_kind": "company",
+    "evidence": "David Kirton | Chief Financial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Joseph Vartuli",
+    "title": "Chief Technology Officer",
+    "source_url": "https://creditorwatch.com.au/company/about-us",
+    "source_kind": "company",
+    "evidence": "Joseph Vartuli | Chief Technology Officer"
+   },
+   {
+    "role": "other",
+    "name": "Matthew Jackson",
+    "title": "Chief Commercial Officer",
+    "source_url": "https://creditorwatch.com.au/company/about-us",
+    "source_kind": "company",
+    "evidence": "Matthew Jackson | Chief Commercial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Stephen Wood",
+    "title": "Chairman",
+    "source_url": "https://warburgpincus.com/2026/07/09/warburg-pincus-signs-agreement-to-invest-in-creditorwatch-australias-leading-commercial-credit-agency/",
+    "source_kind": "sponsor",
+    "evidence": "said Stephen Wood, Chairman, CreditorWatch"
+   }
+  ],
+  "notes": "Legal entity Commercial Credit Holdings Limited (ACN 654 459 971), MLC Centre, Level 49, 25 Martin Place, Sydney. More than 10,000 customers. Email is the company secretary address printed on its shareholder notices. No revenue or EBITDA disclosed.",
+  "sources": {
+   "description": {
+    "url": "https://warburgpincus.com/2026/07/09/warburg-pincus-signs-agreement-to-invest-in-creditorwatch-australias-leading-commercial-credit-agency/",
+    "name": "Warburg Pincus",
+    "kind": "sponsor",
+    "as_of": "2026-07-09",
+    "evidence": "CreditorWatch is Australia’s only dedicated B2B credit reporting agency. ... CreditorWatch offers a complete suite of credit reporting and risk management solutions across the entire customer lifecycle – from onboarding and automated credit decisioning through to ongoing monitoring, KYC/AML reporting and automated collections."
+   },
+   "employees": {
+    "url": "https://warburgpincus.com/2026/07/09/warburg-pincus-signs-agreement-to-invest-in-creditorwatch-australias-leading-commercial-credit-agency/",
+    "name": "Warburg Pincus",
+    "kind": "sponsor",
+    "as_of": "2026-07-09",
+    "evidence": "Founded in 2010, CreditorWatch has grown to a team of 230+ people, servicing over 10,000 customers."
+   },
+   "founded_year": {
+    "url": "https://creditorwatch.com.au/company/about-us",
+    "name": "CreditorWatch",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "CreditorWatch was founded in 2010 to empower Australian businesses to trade more confidently with their customers."
+   },
+   "country": {
+    "url": "https://creditorwatch.com.au/wp-content/uploads/2026/08/Project-Wharton-Results-of-Scheme-Meeting-CU-18.08.26400015371.2.pdf",
+    "name": "CreditorWatch (Commercial Credit Holdings Limited)",
+    "kind": "company",
+    "as_of": "2026-08-18",
+    "evidence": "Commercial Credit Holdings Limited ACN 654 459 971 MLC Centre, Level 49, 25 Martin Place Sydney NSW 2000"
+   },
+   "business_model": {
+    "url": "https://warburgpincus.com/2026/07/09/warburg-pincus-signs-agreement-to-invest-in-creditorwatch-australias-leading-commercial-credit-agency/",
+    "name": "Warburg Pincus",
+    "kind": "sponsor",
+    "as_of": "2026-07-09",
+    "evidence": "CreditorWatch is Australia’s only dedicated B2B credit reporting agency."
+   },
+   "email": {
+    "url": "https://creditorwatch.com.au/wp-content/uploads/2026/08/Project-Wharton-Notice-of-Second-Court-Date-CU-17.08.26365302352.4.pdf",
+    "name": "CreditorWatch",
+    "kind": "company",
+    "as_of": "2026-08-18",
+    "evidence": "For further information, please contact: Company Secretary ... companysecretary@creditorwatch.com.au"
+   }
+  },
+  "holding": {
+   "sponsor": "Warburg Pincus",
+   "status_note": "Acquiring all shares via scheme of arrangement: shareholders approved 17 Aug 2026, implementation expected 3 Sep 2026 (completion not confirmed in sources read)",
+   "asset_class": "Private equity",
+   "deal_type": "Buyout",
+   "value_creation_plan": "Warburg Pincus will partner with the management team and continuing board members, bringing its global experience in scaling businesses and sector expertise to support CreditorWatch's next phase of growth and its mission to broaden access to data-driven credit insights for businesses of all sizes.",
+   "value_creation_source_url": "https://warburgpincus.com/2026/07/09/warburg-pincus-signs-agreement-to-invest-in-creditorwatch-australias-leading-commercial-credit-agency/",
+   "notes": "Agreement announced 2026-07-09. Bidder Currawong BidCo Pty Ltd, ultimately controlled by Warburg Pincus funds, to acquire all issued shares; prior majority shareholder Christian Beck. Second court hearing set for 2026-08-24. Terms not disclosed."
+  }
+ },
+ {
+  "name": "Accelerant",
+  "website": "https://accelerant.ai/",
+  "description": "Accelerant operates the Accelerant Risk Exchange, a data-driven platform that connects specialty insurance underwriters with risk capital providers through advanced analytics, real-time data and transparent underwriting insights.",
+  "sector": "Insurance / insurtech",
+  "subsector": "Specialty insurance risk exchange (MGA platform)",
+  "country": "Cayman Islands",
+  "founded_year": 2018,
+  "business_model": "B2B marketplace",
+  "email": "investors@accelerant.ai",
+  "email_type": "investor_relations",
+  "revenue": 912900000,
+  "revenue_currency": "USD",
+  "revenue_period": "FY2025 (12 months to 2025-12-31)",
+  "ebitda": 281800000,
+  "ebitda_currency": "USD",
+  "ebitda_period": "FY2025 (12 months to 2025-12-31)",
+  "ebitda_basis": "adjusted",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Jeff Radke",
+    "title": "Chairman and CEO (Co-Founder)",
+    "source_url": "https://www.thomabravo.com/press-releases/accelerant-enters-into-definitive-agreement-to-be-acquired-by-thoma-bravo",
+    "source_kind": "sponsor",
+    "evidence": "said Jeff Radke, Chairman and CEO of Accelerant."
+   },
+   {
+    "role": "cfo",
+    "name": "Jay Green",
+    "title": "Chief Financial Officer (Principal Financial and Principal Accounting Officer)",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1997350/000199735026000003/arx-20251231.htm",
+    "source_kind": "filing",
+    "evidence": "/s/ Jay Green Chief Financial Officer (Principal Financial and Principal Accounting Officer) Jay Green"
+   },
+   {
+    "role": "coo",
+    "name": "Matt Sternberg",
+    "title": "Chief Operating Officer, Risk Exchange",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1997350/000199735026000003/arx-20251231.htm",
+    "source_kind": "filing",
+    "evidence": "On December 7, 2025 , Matt Sternberg , Chief Operating Officer, Risk Exchange , entered into a Rule 10b5-1 trading arrangement"
+   }
+  ],
+  "notes": "Accelerant Holdings (NYSE: ARX), incorporated in the Cayman Islands with principal executive offices c/o Accelerant Re (Cayman) Ltd., Grand Cayman; the take-private release is datelined Atlanta, and the 10-K lists leased offices in Atlanta, New York City, Colorado Springs, Bermuda, Grand Cayman, Brussels, Dublin, London and Malta, with substantially all employees remote. IPO in 2025 (S-1 filed June 2025). FY2025 total revenues USD 912.9m; Adjusted EBITDA USD 281.8m (non-GAAP, 10-K reconciliation); GAAP net loss USD 1,345.2m driven by USD 1,379.7m profits-interest distribution expense. The 10-K gives no total employee count. Email is printed in the company's release.",
+  "sources": {
+   "description": {
+    "url": "https://www.thomabravo.com/press-releases/accelerant-enters-into-definitive-agreement-to-be-acquired-by-thoma-bravo",
+    "name": "Accelerant / Thoma Bravo joint release (thomabravo.com)",
+    "kind": "sponsor",
+    "as_of": "2026-08-13",
+    "evidence": "Accelerant operates the Accelerant Risk Exchange, a data-driven platform that connects specialty insurance underwriters with risk capital providers through advanced analytics, real-time data, and transparent underwriting insights."
+   },
+   "founded_year": {
+    "url": "https://www.thomabravo.com/press-releases/accelerant-enters-into-definitive-agreement-to-be-acquired-by-thoma-bravo",
+    "name": "Accelerant / Thoma Bravo joint release (thomabravo.com)",
+    "kind": "sponsor",
+    "as_of": "2026-08-13",
+    "evidence": "“Accelerant has been building the preeminent specialty insurance marketplace since our founding in 2018,” said Jeff Radke"
+   },
+   "revenue": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1997350/000199735026000003/arx-20251231.htm",
+    "name": "Accelerant Holdings Form 10-K FY2025 (SEC)",
+    "kind": "filing",
+    "as_of": "2026-03-18",
+    "evidence": "Total revenues $ 912.9 $ 602.6 $ 344.0 (years ended December 31, 2025, 2024, 2023; $ in millions)"
+   },
+   "ebitda": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1997350/000199735026000003/arx-20251231.htm",
+    "name": "Accelerant Holdings Form 10-K FY2025 (SEC)",
+    "kind": "filing",
+    "as_of": "2026-03-18",
+    "evidence": "Adjusted EBITDA $ 281.8 $ 113.0 $ 36.1 Total revenues 912.9 602.6 344.0 Adjusted EBITDA margin 31 % 19 % 10 %"
+   },
+   "country": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1997350/000199735026000003/arx-20251231.htm",
+    "name": "Accelerant Holdings Form 10-K FY2025 (SEC)",
+    "kind": "filing",
+    "as_of": "2026-03-18",
+    "evidence": "Cayman Islands ... Accelerant Holdings c/o Accelerant Re (Cayman) Ltd. Unit 106, Windward 3 , Regatta Office Park , West Bay Road , Grand Cayman , KY1-1108 ... (Address ... of Registrant’s Principal Executive Offices)"
+   },
+   "business_model": {
+    "url": "https://www.thomabravo.com/press-releases/accelerant-enters-into-definitive-agreement-to-be-acquired-by-thoma-bravo",
+    "name": "Accelerant / Thoma Bravo joint release (thomabravo.com)",
+    "kind": "sponsor",
+    "as_of": "2026-08-13",
+    "evidence": "the data-driven risk exchange platform transforming the specialty insurance marketplace through the Accelerant Risk Exchange"
+   },
+   "email": {
+    "url": "https://www.thomabravo.com/press-releases/accelerant-enters-into-definitive-agreement-to-be-acquired-by-thoma-bravo",
+    "name": "Accelerant / Thoma Bravo joint release (thomabravo.com)",
+    "kind": "sponsor",
+    "as_of": "2026-08-13",
+    "evidence": "For more information, visit investor.accelerant.ai or inquire via email at investors@accelerant.ai"
+   }
+  },
+  "holding": {
+   "sponsor": "Thoma Bravo",
+   "status_note": "Pending: definitive agreement (Aug 2026) to take Accelerant private at $20.25 per share; closing expected in H1 2027",
+   "asset_class": "Private equity",
+   "deal_type": "Take-private",
+   "value_creation_plan": "Thoma Bravo plans to partner with Jeff Radke and the team to invest behind the technology, data and capital capacity to support Accelerant's next phase of growth, bringing its technology and software expertise and financial and strategic resources.",
+   "value_creation_source_url": "https://www.thomabravo.com/press-releases/accelerant-enters-into-definitive-agreement-to-be-acquired-by-thoma-bravo",
+   "notes": "All-cash transaction with enterprise value of more than $4 billion; 49% premium to the 2026-08-12 close. Altamont Capital Partners (about 82% of voting rights) agreed to vote in favour and, with the founders, intends to retain equity alongside Thoma Bravo. Pending shareholder and insurance regulatory approvals as of the announcement."
+  }
+ },
+ {
+  "name": "Acumatica",
+  "website": "https://www.acumatica.com/",
+  "description": "Acumatica provides a cloud-native ERP platform that lets small and mid-sized organizations manage and automate processes from core financials to payroll and CRM in one system, with industry editions for manufacturing, distribution, construction, retail and professional services.",
+  "sector": "Software",
+  "subsector": "Cloud ERP for small and mid-market businesses",
+  "country": "United States",
+  "founded_year": 2008,
+  "business_model": "B2B SaaS sold through partner channel (VARs, OEM, ISVs)",
+  "email": "info@acumatica.com",
+  "email_type": "generic",
+  "employees": 700,
+  "employees_text": "700+ Employees",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "John Case",
+    "title": "Chief Executive Officer",
+    "source_url": "https://www.acumatica.com/leadership-team/",
+    "source_kind": "company",
+    "evidence": "Executive Team | John Case | Chief Executive Officer"
+   },
+   {
+    "role": "cfo",
+    "name": "Jordan Weitzen",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.acumatica.com/leadership-team/",
+    "source_kind": "company",
+    "evidence": "Jordan Weitzen | Chief Financial Officer | Executive Team"
+   },
+   {
+    "role": "coo",
+    "name": "Sanket Akerkar",
+    "title": "President and COO",
+    "source_url": "https://www.acumatica.com/leadership-team/",
+    "source_kind": "company",
+    "evidence": "Sanket Akerkar | President and COO | Executive Team"
+   }
+  ],
+  "notes": "Global HQ at 3075 112th Avenue NE, Suite 200, Bellevue, WA. Over 10,000 customers; 100% channel-driven (350+ VARs, OEM private label, xRP platform for vertical ISVs). Employees '700+' from the About page, which carries no date. Under EQT (2019-2025) headcount grew more than 3x and revenue 7x per EQT; no revenue or EBITDA figure disclosed.",
+  "sources": {
+   "description": {
+    "url": "https://www.vistaequitypartners.com/news/acumatica-to-be-acquired-by-vista-equity-partners/",
+    "name": "Acumatica release via Business Wire (Vista site)",
+    "kind": "wire",
+    "as_of": "2025-05-29",
+    "evidence": "Acumatica’s cloud-native Enterprise Resource Planning (“ERP”) platform enables a range of mid-market organizations to digitally manage and automate mission-critical processes from core financial management to payroll and Customer Relationship Management (“CRM”) in a single, unified system."
+   },
+   "founded_year": {
+    "url": "https://www.acumatica.com/about-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Our global team | 2008 | Year Founded | 7 | Offices | 700+ | Employees | 10,000+ | Customers"
+   },
+   "employees": {
+    "url": "https://www.acumatica.com/about-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "2008 Year Founded | 7 Offices | 700+ Employees | 10,000+ Customers"
+   },
+   "country": {
+    "url": "https://www.acumatica.com/contact-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Acumatica Global HQ | Seattle, WA | 3075 112th Avenue NE, Suite 200 | Bellevue, WA 98004, USA"
+   },
+   "business_model": {
+    "url": "https://www.acumatica.com/about-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "We’re 100% channel-driven | 3 go-to-market models | Acumatica Branded Resellers | Private Label (OEM) | xRP Cloud Platform For Vertical ISVs"
+   },
+   "email": {
+    "url": "https://www.acumatica.com/contact-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Bellevue, WA 98004, USA | info@acumatica.com | +1-888-228-8300"
+   }
+  },
+  "holding": {
+   "sponsor": "Vista Equity Partners",
+   "status": "current",
+   "status_note": "Acquired from EQT in 2025 (Flagship strategy)",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "Vista said it is excited to partner with Acumatica and its community of partners to drive continued growth and product innovation and deliver greater value to customers, with its investment intended to help power Acumatica's AI-first product strategy.",
+   "value_creation_source_url": "https://www.vistaequitypartners.com/news/acumatica-to-be-acquired-by-vista-equity-partners/",
+   "notes": "Definitive agreement announced 2025-05-29; Vista lists Year of Investment 2025, Status Current, Strategy Flagship. Terms not disclosed."
+  }
+ },
+ {
+  "name": "Acumatica",
+  "website": "https://www.acumatica.com/",
+  "description": "Acumatica provides a cloud-native ERP platform that lets small and mid-sized organizations manage and automate processes from core financials to payroll and CRM in one system, with industry editions for manufacturing, distribution, construction, retail and professional services.",
+  "sector": "Software",
+  "subsector": "Cloud ERP for small and mid-market businesses",
+  "country": "United States",
+  "founded_year": 2008,
+  "business_model": "B2B SaaS sold through partner channel (VARs, OEM, ISVs)",
+  "email": "info@acumatica.com",
+  "email_type": "generic",
+  "employees": 700,
+  "employees_text": "700+ Employees",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "John Case",
+    "title": "Chief Executive Officer",
+    "source_url": "https://www.acumatica.com/leadership-team/",
+    "source_kind": "company",
+    "evidence": "Executive Team | John Case | Chief Executive Officer"
+   },
+   {
+    "role": "cfo",
+    "name": "Jordan Weitzen",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.acumatica.com/leadership-team/",
+    "source_kind": "company",
+    "evidence": "Jordan Weitzen | Chief Financial Officer | Executive Team"
+   },
+   {
+    "role": "coo",
+    "name": "Sanket Akerkar",
+    "title": "President and COO",
+    "source_url": "https://www.acumatica.com/leadership-team/",
+    "source_kind": "company",
+    "evidence": "Sanket Akerkar | President and COO | Executive Team"
+   }
+  ],
+  "notes": "Global HQ at 3075 112th Avenue NE, Suite 200, Bellevue, WA. Over 10,000 customers; 100% channel-driven (350+ VARs, OEM private label, xRP platform for vertical ISVs). Employees '700+' from the About page, which carries no date. Under EQT (2019-2025) headcount grew more than 3x and revenue 7x per EQT; no revenue or EBITDA figure disclosed.",
+  "sources": {
+   "description": {
+    "url": "https://www.vistaequitypartners.com/news/acumatica-to-be-acquired-by-vista-equity-partners/",
+    "name": "Acumatica release via Business Wire (Vista site)",
+    "kind": "wire",
+    "as_of": "2025-05-29",
+    "evidence": "Acumatica’s cloud-native Enterprise Resource Planning (“ERP”) platform enables a range of mid-market organizations to digitally manage and automate mission-critical processes from core financial management to payroll and Customer Relationship Management (“CRM”) in a single, unified system."
+   },
+   "founded_year": {
+    "url": "https://www.acumatica.com/about-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Our global team | 2008 | Year Founded | 7 | Offices | 700+ | Employees | 10,000+ | Customers"
+   },
+   "employees": {
+    "url": "https://www.acumatica.com/about-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "2008 Year Founded | 7 Offices | 700+ Employees | 10,000+ Customers"
+   },
+   "country": {
+    "url": "https://www.acumatica.com/contact-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Acumatica Global HQ | Seattle, WA | 3075 112th Avenue NE, Suite 200 | Bellevue, WA 98004, USA"
+   },
+   "business_model": {
+    "url": "https://www.acumatica.com/about-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "We’re 100% channel-driven | 3 go-to-market models | Acumatica Branded Resellers | Private Label (OEM) | xRP Cloud Platform For Vertical ISVs"
+   },
+   "email": {
+    "url": "https://www.acumatica.com/contact-us/",
+    "name": "Acumatica",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Bellevue, WA 98004, USA | info@acumatica.com | +1-888-228-8300"
+   }
+  },
+  "holding": {
+   "sponsor": "EQT AB",
+   "status": "realized",
+   "status_note": "Sold to Vista Equity Partners in 2025",
+   "asset_class": "Private equity",
+   "deal_type": "Buyout",
+   "value_creation_plan": "EQT said it would support Acumatica's continued growth journey by leveraging its TMT and software expertise, global platform and cross-pollination opportunities with IFS, with Acumatica operating as a sister company to IFS.",
+   "value_creation_source_url": "https://eqtgroup.com/news/eqt-acquires-acumatica-a-us-based-cloud-native-erp-software-vendor-in-connection-with-its-existing-ifs-investment-2019-06-19",
+   "notes": "EQT VII acquired majority ownership in 2019 from the founders, management and minority investors, who re-invested significantly. EQT's portfolio page now titles it 'Former EQT Portfolio Company'. Exit announced 2025-05-29: during EQT's ownership headcount grew more than 3x and revenue 7x."
+  }
+ },
+ {
+  "name": "Khazna Data Centers",
+  "website": "https://khaznadatacenters.com/",
+  "description": "Khazna Data Centers designs, builds and operates hyperscale data centers, enabling the growth of AI and digital economies by delivering advanced, energy-efficient infrastructure for high-density computing.",
+  "sector": "Digital infrastructure",
+  "subsector": "Hyperscale wholesale data centers",
+  "country": "United Arab Emirates",
+  "business_model": "B2B (wholesale/hyperscale colocation)",
+  "email": "info@khazna.ae",
+  "email_type": "generic",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Hassan Alnaqbi",
+    "title": "Chief Executive Officer",
+    "source_url": "https://khaznadatacenters.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Leadership Team | Hassan Alnaqbi | Chief Executive Officer"
+   },
+   {
+    "role": "cfo",
+    "name": "Fabio Cattaneo",
+    "title": "Chief Financial Officer",
+    "source_url": "https://khaznadatacenters.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Fabio Cattaneo | Chief Financial Officer"
+   },
+   {
+    "role": "managing_director",
+    "name": "Bart Holsters",
+    "title": "Managing Director – Khazna NexOps",
+    "source_url": "https://khaznadatacenters.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Bart Holsters | Managing Director – Khazna NexOps"
+   },
+   {
+    "role": "other",
+    "name": "Abdulmajeed Harmoodi",
+    "title": "Chief Technology Officer",
+    "source_url": "https://khaznadatacenters.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Abdulmajeed Harmoodi | Chief Technology Officer"
+   },
+   {
+    "role": "other",
+    "name": "Gregory Jasmin",
+    "title": "Chief Commercial Officer",
+    "source_url": "https://khaznadatacenters.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Gregory Jasmin | Chief Commercial Officer"
+   }
+  ],
+  "notes": "Shareholders listed on its site: G42 (majority), MGX and Silver Lake. e& exited its stake when MGX and Silver Lake came in (March 2025). Facilities across the UAE (AUH6 retrofitted for GPU workloads; Ajman to add 100MW of AI-capable capacity). No employee count, revenue or EBITDA disclosed.",
+  "sources": {
+   "description": {
+    "url": "https://khaznadatacenters.com/about-us/",
+    "name": "Khazna Data Centers",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "With one of fastest-expanding platforms of hyperscale data centers globally, Khazna Data Centers enables the growth of artificial intelligence (AI) and digital economies by delivering advanced infrastructure with unparalleled energy efficiency."
+   },
+   "country": {
+    "url": "https://khaznadatacenters.com/press-release/khazna-welcomes-mgx-and-silver-lake-as-strategic-minority-investors/",
+    "name": "Khazna Data Centers",
+    "kind": "company",
+    "as_of": "2025-03-26",
+    "evidence": "Dubai, UAE, 26 March, 2025 – Khazna Data Centers is proud to welcome MGX and Silver Lake as new minority shareholders"
+   },
+   "business_model": {
+    "url": "https://www.silverlake.com/portfolio/khazna-data-centers/",
+    "name": "Silver Lake",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Khazna Data Centers is the largest hyperscale wholesale data center provider in the Middle East and North Africa."
+   },
+   "email": {
+    "url": "https://khaznadatacenters.com/contact-us/",
+    "name": "Khazna Data Centers",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Inquiry | info@khazna.ae | Phone | +971 4 556 0204"
+   }
+  },
+  "holding": {
+   "sponsor": "Silver Lake",
+   "status": "current",
+   "status_note": "Minority shareholder since 2025 alongside majority owner G42 and MGX",
+   "asset_class": "Private equity",
+   "deal_type": "Minority stake",
+   "value_creation_plan": "Khazna said the support of MGX and Silver Lake positions it to accelerate its global expansion plans and enhance its AI-optimized capabilities.",
+   "value_creation_source_url": "https://khaznadatacenters.com/press-release/khazna-welcomes-mgx-and-silver-lake-as-strategic-minority-investors/",
+   "notes": "Announced 2025-03-26 by Khazna; Silver Lake lists 'Partner Since 2025', strategy 'Silver Lake Partners & Alpine', Current Investment, Data Centers & Networking. Stake size and price not disclosed. The value-creation line is Khazna's statement; Silver Lake published no separate plan."
+  }
+ },
+ {
+  "name": "Baker Tilly",
+  "website": "https://www.bakertilly.com/",
+  "description": "Baker Tilly is a leading advisory, tax and assurance firm serving the middle market, operating through Baker Tilly Advisory Group, LP (tax and business advisory) and Baker Tilly US, LLP (a licensed CPA firm providing attest services).",
+  "sector": "Professional services",
+  "subsector": "Accounting, audit, tax and advisory (CPA firm)",
+  "country": "United States",
+  "business_model": "B2B professional services",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Eric Miles",
+    "title": "Chief Executive Officer",
+    "source_url": "https://www.bakertilly.com/news/baker-tilly-announces-eric-miles-as-chief-executive-officer",
+    "source_kind": "company",
+    "evidence": "CHICAGO (Jan. 7, 2026) — Baker Tilly, a leading advisory, tax and assurance firm, today announced that Eric Miles has assumed the role of chief executive officer, succeeding Jeff Ferro."
+   },
+   {
+    "role": "cfo",
+    "name": "Sonia Webb",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.bakertilly.com/news/baker-tilly-announces-new-senior-leadership-team",
+    "source_kind": "company",
+    "evidence": "With these appointments, Baker Tilly’s Senior Leadership Team will include: ... • Sonia Webb, Chief Financial Officer (structure effective Jan. 1, 2026)"
+   },
+   {
+    "role": "coo",
+    "name": "Fred Massanova",
+    "title": "North American Managing Principal and Chief Operating Officer",
+    "source_url": "https://www.bakertilly.com/news/baker-tilly-announces-new-senior-leadership-team",
+    "source_kind": "company",
+    "evidence": "Fred Massanova has been named North American Managing Principal and Chief Operating Officer."
+   }
+  ],
+  "notes": "Headquartered in Chicago (press-release dateline). Combined with Moss Adams in June 2025 (announced 2025-04-21 as creating the sixth largest advisory CPA firm in the US). Under the alternative practice structure H&F holds no equity in the audit and attest business (Baker Tilly US, LLP); partners hold equity alongside H&F and Valeas in Baker Tilly Advisory Group, LP. Member of Baker Tilly International (network-wide revenue USD 7bn; not this firm's revenue). No firm-level revenue, EBITDA or headcount opened from an accepted source.",
+  "sources": {
+   "description": {
+    "url": "https://www.bakertilly.com/news/baker-tilly-announces-eric-miles-as-chief-executive-officer",
+    "name": "Baker Tilly",
+    "kind": "company",
+    "as_of": "2026-01-07",
+    "evidence": "Baker Tilly is a leading advisory, tax and assurance firm ... Baker Tilly US, LLP, is a licensed independent CPA firm that provides attest services to its clients. Baker Tilly Advisory Group, LP, and its subsidiary entities provide tax and business advisory services to their clients."
+   },
+   "country": {
+    "url": "https://www.bakertilly.com/news/baker-tilly-announces-eric-miles-as-chief-executive-officer",
+    "name": "Baker Tilly",
+    "kind": "company",
+    "as_of": "2026-01-07",
+    "evidence": "CHICAGO (Jan. 7, 2026) — Baker Tilly, a leading advisory, tax and assurance firm"
+   },
+   "business_model": {
+    "url": "https://hf.com/portfolio/baker-tilly/",
+    "name": "Hellman & Friedman",
+    "kind": "sponsor",
+    "as_of": "2024-06-05",
+    "evidence": "a leading US Advisory CPA firm, performing audit, tax and advisory services, and primarily serving middle market clients"
+   }
+  },
+  "holding": {
+   "sponsor": "Hellman & Friedman",
+   "status": "current",
+   "status_note": "Investor since June 2024 (with Valeas); made a further strategic investment with the 2025 Moss Adams combination",
+   "asset_class": "Private equity",
+   "value_creation_plan": "H&F said it would invest alongside Baker Tilly's partners and senior leadership to bolster its capabilities, expand its footprint and help build the country's preeminent mid-market advisory CPA firm, giving it capital to accelerate growth through talent, technology and strategic acquisitions.",
+   "value_creation_source_url": "https://www.bakertilly.com/news/baker-tilly-secures-strategic-investment-led-by-hellman",
+   "notes": "Announced 2024-02-05 as the largest private equity investment in the US CPA sector to date; closed in June 2024 (H&F news dated 2024-06-05). H&F made a meaningful additional investment in the 2025 Baker Tilly-Moss Adams merger. Stake size not stated in the sources read, so deal type left blank."
+  }
+ },
+ {
+  "name": "Opella",
+  "website": "https://www.opella.com/",
+  "description": "Opella is a consumer healthcare company and the third-largest business worldwide in over-the-counter medicines and vitamins, minerals & supplements, with brands such as Allegra, Doliprane and Dulcolax serving more than half a billion consumers.",
+  "sector": "Healthcare",
+  "subsector": "Consumer healthcare (OTC and VMS)",
+  "country": "France",
+  "business_model": "B2C (consumer health brands)",
+  "email": "contact@opella.com",
+  "email_type": "generic",
+  "employees": 11000,
+  "employees_text": "Opella employs over 11,000 talented and passionate people",
+  "employees_as_of": "2025-04-30",
+  "revenue": 4600000000,
+  "revenue_currency": "EUR",
+  "revenue_period": "FY2025",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Julie Van Ongevalle",
+    "title": "Opella President & Chief Executive Officer",
+    "source_url": "https://www.opella.com/en/meet-opella/our-leaders",
+    "source_kind": "company",
+    "evidence": "Julie Van Ongevalle. Opella President & Chief Executive Officer."
+   },
+   {
+    "role": "cfo",
+    "name": "Adeline Le Franc",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.opella.com/en/meet-opella/our-leaders",
+    "source_kind": "company",
+    "evidence": "Adeline Le Franc. Chief Financial Officer."
+   },
+   {
+    "role": "other",
+    "name": "Rafik Amrane",
+    "title": "Chief Supply Chain Officer",
+    "source_url": "https://www.opella.com/en/meet-opella/our-leaders",
+    "source_kind": "company",
+    "evidence": "Rafik Amrane. Chief Supply Chain Officer."
+   },
+   {
+    "role": "other",
+    "name": "Greg Ross",
+    "title": "President of North America",
+    "source_url": "https://www.opella.com/en/meet-opella/our-leaders",
+    "source_kind": "company",
+    "evidence": "Greg Ross. President of North America."
+   },
+   {
+    "role": "other",
+    "name": "Gonzalo Balcazar",
+    "title": "President of Europe and Latin America",
+    "source_url": "https://www.opella.com/en/meet-opella/our-leaders",
+    "source_kind": "company",
+    "evidence": "Gonzalo Balcazar. President of Europe and Latin America."
+   },
+   {
+    "role": "other",
+    "name": "Carol-Ann Stewart",
+    "title": "President of Asia Pacific, Middle East, Africa",
+    "source_url": "https://www.opella.com/en/meet-opella/our-leaders",
+    "source_kind": "company",
+    "evidence": "Carol-Ann Stewart. President of Asia Pacific, Middle East, Africa."
+   }
+  ],
+  "notes": "Former consumer healthcare business of Sanofi; independent since 2025-04-30. Operates in 100 countries with 13 manufacturing sites and four science and innovation development centers. Revenue is the company's rounded figure ('€4.6bn revenues in 2025', footnoted 'Opella data, FY 2025 published financial results'). Sanofi's FY2024 filing reported Opella sales of EUR 4,948m 'under the new scope of reporting' (the two are not on the same scope). No EBITDA figure found from an accepted source.",
+  "sources": {
+   "description": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1121404/000119312525106923/d935542dex991.htm",
+    "name": "Sanofi press release (Form 6-K, SEC)",
+    "kind": "filing",
+    "as_of": "2025-04-30",
+    "evidence": "With a portfolio of iconic brands, such as Allegra, Doliprane, and Dulcolax, Opella is already the third-largest business worldwide in the over-the-counter and vitamins, minerals & supplements market (OTC & VMS), serving more than half a billion consumers worldwide."
+   },
+   "employees": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1121404/000119312525106923/d935542dex991.htm",
+    "name": "Sanofi press release (Form 6-K, SEC)",
+    "kind": "filing",
+    "as_of": "2025-04-30",
+    "evidence": "Headquartered in France, Opella employs over 11,000 talented and passionate people, operates in 100 countries with 13 best-in-class and strategic manufacturing sites and four science and innovation development centers."
+   },
+   "revenue": {
+    "url": "https://www.opella.com/en",
+    "name": "Opella",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "€4.6bn revenues 2 in 2025. ... Sources ... Opella data, FY 2025 published financial results."
+   },
+   "country": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1121404/000119312525106923/d935542dex991.htm",
+    "name": "Sanofi press release (Form 6-K, SEC)",
+    "kind": "filing",
+    "as_of": "2025-04-30",
+    "evidence": "Headquartered in France, Opella employs over 11,000 talented and passionate people"
+   },
+   "business_model": {
+    "url": "https://www.opella.com/en",
+    "name": "Opella",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "We're making self-care as simple as it should be. ... #3 leading OTC & VMS global player"
+   },
+   "email": {
+    "url": "https://www.opella.com/en/contact",
+    "name": "Opella",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "contact@opella.com | Drop us a line."
+   }
+  },
+  "holding": {
+   "sponsor": "Clayton, Dubilier & Rice, LLC",
+   "status": "current",
+   "status_note": "Acquired a 50.0% controlling stake from Sanofi, closed 2025-04-30 (Sanofi retains 48.2%, Bpifrance 1.8%)",
+   "asset_class": "Private equity",
+   "deal_type": "Carve-out",
+   "value_creation_plan": "CD&R said it will support Opella in building a French-headquartered global consumer health champion, bringing consumer health experience, operational insight and long-term capital to help accelerate Opella's growth in France and abroad.",
+   "value_creation_source_url": "https://www.sec.gov/Archives/edgar/data/1121404/000119312525106923/d935542dex991.htm",
+   "notes": "Sanofi received total net cash proceeds of around EUR 10 billion. CD&R lists Investment Date 2025, Region Europe, Sector Healthcare. Quote from Eric Rouzier, Partner and Head of European Healthcare, CD&R."
+  }
+ },
+ {
+  "name": "SILA",
+  "website": "https://silagroup.co.in/",
+  "description": "SILA is a business services and real estate platform in India delivering integrated, tech-enabled facility management, material handling equipment leasing, food catering and real estate advisory and development for corporates, funds and developers.",
+  "sector": "Business services",
+  "subsector": "Integrated facility management and real estate services",
+  "country": "India",
+  "founded_year": 2010,
+  "business_model": "B2B services",
+  "employees": 60000,
+  "employees_text": "a workforce exceeding 60,000",
+  "employees_as_of": "2026-04-08",
+  "leaders": [
+   {
+    "role": "managing_director",
+    "name": "Rushabh Vora",
+    "title": "Co-Founder & Managing Director",
+    "source_url": "https://silagroup.co.in/about-us/",
+    "source_kind": "company",
+    "evidence": "Meet our Leadership Team | Sahil Vora | Founder | Rushabh Vora | Co-Founder & Managing Director"
+   },
+   {
+    "role": "cfo",
+    "name": "Milind Pattarkine",
+    "title": "Chief Financial Officer",
+    "source_url": "https://silagroup.co.in/about-us/",
+    "source_kind": "company",
+    "evidence": "Milind Pattarkine | Chief Financial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Sahil Vora",
+    "title": "Founder",
+    "source_url": "https://silagroup.co.in/about-us/",
+    "source_kind": "company",
+    "evidence": "Founder | Sahil Vora | SILA was founded with a vision to build a trusted business services and real estate platform"
+   },
+   {
+    "role": "other",
+    "name": "Raghav Kapur",
+    "title": "Executive Director - Services",
+    "source_url": "https://silagroup.co.in/about-us/",
+    "source_kind": "company",
+    "evidence": "Raghav Kapur | Executive Director - Services"
+   },
+   {
+    "role": "other",
+    "name": "Vinay Deshmukh",
+    "title": "CEO & Executive Director, FFServices",
+    "source_url": "https://silagroup.co.in/about-us/",
+    "source_kind": "company",
+    "evidence": "Vinay Deshmukh | CEO & Executive Director, FFServices"
+   }
+  ],
+  "notes": "Corporate office: A-301, Neelam Centre, Hind Cycle Marg, Worli, Mumbai. Operates across 125+ cities in India managing over 450 million sq ft of real estate. Founded April 2010 as a facility management company; acquired Forbes Facility Management Services from the Shapoorji Pallonji Group (2022) and SMS from Samara Capital (Jan 2026). SILA lists no group CEO; the founder brothers lead it. Only role-specific emails (marketing@, recruitment@) are published, so none recorded. No revenue or EBITDA figure disclosed (site states '10x revenue growth within 5 years').",
+  "sources": {
+   "description": {
+    "url": "https://www.permira.com/news-and-insights/announcements/sila-announces-strategic-investment-from-permira",
+    "name": "Permira",
+    "kind": "sponsor",
+    "as_of": "2026-04-08",
+    "evidence": "The company delivers integrated, tech-enabled services spanning facility management, material handling equipment leasing, food catering, and real estate advisory — serving large corporates, funds, and developers across the full asset lifecycle."
+   },
+   "employees": {
+    "url": "https://www.permira.com/news-and-insights/announcements/sila-announces-strategic-investment-from-permira",
+    "name": "Permira",
+    "kind": "sponsor",
+    "as_of": "2026-04-08",
+    "evidence": "SILA today operates across 125+ cities in India, managing over 450 million square feet of real estate with a workforce exceeding 60,000."
+   },
+   "founded_year": {
+    "url": "https://silagroup.co.in/about-us/",
+    "name": "SILA",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "April 2010 | Founded SILA as a Facility Management company"
+   },
+   "country": {
+    "url": "https://silagroup.co.in/contact-us/",
+    "name": "SILA",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Corporate Office | A - 301, Neelam Centre, Hind Cycle Marg, Worli, Mumbai - 400030"
+   },
+   "business_model": {
+    "url": "https://www.permira.com/news-and-insights/announcements/sila-announces-strategic-investment-from-permira",
+    "name": "Permira",
+    "kind": "sponsor",
+    "as_of": "2026-04-08",
+    "evidence": "serving large corporates, funds, and developers across the full asset lifecycle"
+   }
+  },
+  "holding": {
+   "sponsor": "Permira",
+   "status": "current",
+   "status_note": "USD 100 million strategic investment by Permira funds, announced April 2026",
+   "asset_class": "Private equity",
+   "value_creation_plan": "The investment will support SILA's continued expansion across India by strengthening its technology capabilities, expanding adjacent service lines and pursuing growth opportunities, with Permira bringing its global pattern recognition, internal operator bench and international networks.",
+   "value_creation_source_url": "https://www.permira.com/news-and-insights/announcements/sila-announces-strategic-investment-from-permira",
+   "notes": "Announced 2026-04-08; Norwest Venture Partners keeps a meaningful minority position. SILA's site records 'April 2026 SILA Services received US$100 mm investment from Permira'. Permira's stake size not stated in the sources read, so deal type left blank."
+  }
+ },
+ {
+  "name": "Regenity Biosciences",
+  "website": "https://regenity.com/",
+  "description": "Regenity Biosciences is a global developer and manufacturer of bioresorbable technologies and biomaterials that support tissue and bone regeneration across dental, orthopaedic, spine, neurosurgery, advanced wound, sports medicine, ENT and nerve repair.",
+  "sector": "Healthcare",
+  "subsector": "Medical devices / regenerative biomaterials (contract development and manufacturing)",
+  "country": "United States",
+  "founded_year": 1997,
+  "business_model": "B2B (develops and manufactures products for strategic customers)",
+  "employees": 250,
+  "employees_text": "the Company’s team of over 250 employees",
+  "employees_as_of": "2026-02-12",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Shawn McCarthy",
+    "title": "Chief Executive Officer",
+    "source_url": "https://regenity.com/about-regenity/",
+    "source_kind": "company",
+    "evidence": "Our Team | Leaders. Trailblazers. Partners. | Shawn McCarthy | Chief Executive Officer"
+   },
+   {
+    "role": "cfo",
+    "name": "Oystein Valberg",
+    "title": "Chief Financial Officer",
+    "source_url": "https://regenity.com/about-regenity/",
+    "source_kind": "company",
+    "evidence": "Oystein Valberg | Chief Financial Officer"
+   },
+   {
+    "role": "coo",
+    "name": "Aaron Kendrick",
+    "title": "Senior Vice President, Operations",
+    "source_url": "https://regenity.com/about-regenity/",
+    "source_kind": "company",
+    "evidence": "Aaron Kendrick | Senior Vice President, Operations"
+   }
+  ],
+  "notes": "Headquarters: 115 W. Century Rd, Suite 380, Paramus, New Jersey; manufacturing facility in Allendale, NJ. Serves more than 125 customers with 80+ product lines; over 100 patents; more than 5 million patients treated in 2025. Previously and still backed by Linden Capital Partners. COO slot holds the SVP Operations, the nearest operations title. No published generic email (only a QA support desk address), revenue or EBITDA.",
+  "sources": {
+   "description": {
+    "url": "https://www.cinven.com/news-insights/regenity-biosciences-announcement/",
+    "name": "Cinven",
+    "kind": "sponsor",
+    "as_of": "2026-02-12",
+    "evidence": "Regenity has spent nearly 30 years advancing innovative biomaterials that support the body’s natural healing processes for tissue and bone regeneration across multiple clinical areas, including dental, orthopaedic, spine, neurosurgery, advanced wound, sports medicine, ENT, and nerve repair."
+   },
+   "employees": {
+    "url": "https://www.cinven.com/news-insights/regenity-biosciences-announcement/",
+    "name": "Cinven",
+    "kind": "sponsor",
+    "as_of": "2026-02-12",
+    "evidence": "Today, the Company’s team of over 250 employees serves more than 125 customers with 80+ product lines globally."
+   },
+   "founded_year": {
+    "url": "https://www.cinven.com/news-insights/regenity-biosciences-announcement/",
+    "name": "Cinven",
+    "kind": "sponsor",
+    "as_of": "2026-02-12",
+    "evidence": "Founded in 1997 and headquartered in New Jersey, USA"
+   },
+   "country": {
+    "url": "https://regenity.com/contact-us/",
+    "name": "Regenity Biosciences",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Headquarters | 115 W. Century Rd | Suite 380 | Paramus, New Jersey | 07652 USA"
+   },
+   "business_model": {
+    "url": "https://www.cinven.com/news-insights/regenity-biosciences-announcement/",
+    "name": "Cinven",
+    "kind": "sponsor",
+    "as_of": "2026-02-12",
+    "evidence": "developing and commercializing innovative products and next-generation technologies alongside its strategic customers"
+   }
+  },
+  "holding": {
+   "sponsor": "Cinven",
+   "status": "current",
+   "status_note": "Strategic investment agreed February 2026 alongside existing investor Linden Capital Partners",
+   "asset_class": "Private equity",
+   "value_creation_plan": "Cinven and Linden will partner with Regenity's management to build on its record of developing and commercialising innovative products, with Cinven drawing on its pan-European presence to support growth in the region; the investment is expected to help scale product development and delivery as the company expands its manufacturing footprint.",
+   "value_creation_source_url": "https://www.cinven.com/news-insights/regenity-biosciences-announcement/",
+   "notes": "Announced 2026-02-12; financial terms not disclosed; subject to customary regulatory approvals at announcement. Cinven lists Regenity in its portfolio. Stake size not stated, so deal type left blank. Cinven lead: Julia Kahr, Partner and Head of the North America Regional team."
+  }
+ },
+ {
+  "name": "El Jannah",
+  "website": "https://eljannah.com.au/",
+  "description": "El Jannah is an Australian charcoal chicken restaurant brand, founded in Granville, Western Sydney in 1998, serving charcoal-grilled chicken with its signature toum (garlic sauce) across around 50 restaurants.",
+  "sector": "Consumer",
+  "subsector": "Quick-service restaurants (charcoal chicken)",
+  "country": "Australia",
+  "founded_year": 1998,
+  "business_model": "B2C restaurants (company-run and franchise)",
+  "email": "enquiries@eljannah.com.au",
+  "email_type": "generic",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Brett Houldin",
+    "title": "CEO",
+    "source_url": "https://eljannah.com.au/whats-on/offers/el-jannah-confirms-national-growth-plans-and-strategic-investment-partnership/",
+    "source_kind": "company",
+    "evidence": "El Jannah CEO Brett Houldin will continue to lead the business, supported by the Estephan family and General Atlantic."
+   }
+  ],
+  "notes": "Founded by Andre and Carole Estephan; first restaurant in Granville, Western Sydney (1998). Grew from five restaurants in 2020 to 50 at the November 2025 announcement, with 160,000 transactions a week across Sydney, Melbourne, Canberra, Wollongong and the Southern Highlands. General Atlantic's site files it under Southeast Asia region, but the business is Australian. No employee count, revenue or EBITDA disclosed by the company or GA.",
+  "sources": {
+   "description": {
+    "url": "https://eljannah.com.au/whats-on/offers/el-jannah-confirms-national-growth-plans-and-strategic-investment-partnership/",
+    "name": "El Jannah",
+    "kind": "company",
+    "as_of": "2025-11-28",
+    "evidence": "From a humble charcoal chicken shop opened by Lebanese migrant couple Andre and Carole Estephan in Western Sydney in 1998, El Jannah has quickly developed into an Australian cultural institution."
+   },
+   "founded_year": {
+    "url": "https://eljannah.com.au/about-us/",
+    "name": "El Jannah",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "The first El Jannah opened in Granville, Western Sydney, in 1998"
+   },
+   "country": {
+    "url": "https://eljannah.com.au/whats-on/offers/el-jannah-confirms-national-growth-plans-and-strategic-investment-partnership/",
+    "name": "El Jannah",
+    "kind": "company",
+    "as_of": "2025-11-28",
+    "evidence": "El Jannah has grown its number of restaurants from five to 50, with 160,000 transactions occur every week across Sydney, Melbourne, Canberra, Wollongong and the Southern Highlands."
+   },
+   "business_model": {
+    "url": "https://eljannah.com.au/",
+    "name": "El Jannah",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "with new El Jannah restaurants opening their doors Australia-wide. Learn more about our franchise opportunities and careers."
+   },
+   "email": {
+    "url": "https://eljannah.com.au/contact/",
+    "name": "El Jannah",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "you can contact our experienced Customer Service Team at enquiries@eljannah.com.au"
+   }
+  },
+  "holding": {
+   "sponsor": "General Atlantic",
+   "status": "current",
+   "status_note": "Significant investment announced November 2025; listed as a current GA investment (2026)",
+   "asset_class": "Growth equity",
+   "value_creation_plan": "General Atlantic's investment backs a national expansion to quadruple El Jannah from 50 to almost 200 restaurants (more than 25 openings in NSW, Victoria and the ACT in the next 12 months), deeper digital and guest-experience capability, and selective international expansion, including the Middle East.",
+   "value_creation_source_url": "https://eljannah.com.au/whats-on/offers/el-jannah-confirms-national-growth-plans-and-strategic-investment-partnership/",
+   "notes": "Announced by El Jannah on 2025-11-28; GA's site lists the investment year as 2026, sector Consumer. CEO Brett Houldin continues with the Estephan family. Stake size and price not stated by the company or GA (press reports of a ~A$1bn majority deal not used), so deal type left blank. GA lead: Neal Kok, Managing Director and Head of Southeast Asia & Australia."
+  }
+ },
+ {
+  "name": "Cloudsmith",
+  "website": "https://cloudsmith.com/",
+  "description": "Cloudsmith is a fully-managed, cloud-native platform for controlling, securing and distributing software artifacts, giving engineering teams the infrastructure to manage, secure and govern every package across every format and environment.",
+  "sector": "Software",
+  "subsector": "DevOps / artifact management and software supply chain security",
+  "country": "United Kingdom",
+  "founded_year": 2016,
+  "business_model": "B2B SaaS",
+  "email": "contact@cloudsmith.com",
+  "email_type": "generic",
+  "employees": 130,
+  "employees_text": "The company currently has 130 staff, mainly based in Belfast.",
+  "employees_as_of": "2026-04-23",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Glenn Weinstein",
+    "title": "CEO",
+    "source_url": "https://cloudsmith.com/company/about",
+    "source_kind": "company",
+    "evidence": "Meet our leadership team | Glenn Weinstein | CEO"
+   },
+   {
+    "role": "cfo",
+    "name": "Mark O’Connor",
+    "title": "Chief Financial Officer",
+    "source_url": "https://cloudsmith.com/company/about",
+    "source_kind": "company",
+    "evidence": "Mark O’Connor | Chief Financial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Alan Carson",
+    "title": "CSO and Co-Founder",
+    "source_url": "https://cloudsmith.com/company/about",
+    "source_kind": "company",
+    "evidence": "Alan Carson | CSO and Co-Founder"
+   },
+   {
+    "role": "other",
+    "name": "Lee Skillen",
+    "title": "CTO and Co-Founder",
+    "source_url": "https://cloudsmith.com/company/about",
+    "source_kind": "company",
+    "evidence": "Lee Skillen | CTO and Co-Founder"
+   }
+  ],
+  "notes": "'Made with love in Belfast'; operating company Cloudsmith Ltd (NI653568, registered office Scottish Provident Building, Donegall Square West, Belfast) sits under Cloudsmith Holdings, Inc. (Delaware). Cloudsmith Ltd's FY2025 accounts (total exemption, filed Sept 2026) give an average of 92 employees (2024: 44) for that entity alone and no turnover. Funding: Seed $2.1M (2019), Series A $15M (2021), A2 $11M (2023), Series B $23M (2025), Series C $72M (2026); $124M total raised; company cites 103% YoY ARR growth (no ARR figure).",
+  "sources": {
+   "description": {
+    "url": "https://cloudsmith.com/company/series-c",
+    "name": "Cloudsmith",
+    "kind": "company",
+    "as_of": "2026-04-23",
+    "evidence": "As AI coding agents transform the pace and scale of software development, Cloudsmith gives engineering teams the infrastructure to manage, secure, and govern every package across every format and environment. Built cloud-native from the ground up"
+   },
+   "employees": {
+    "url": "https://www.bbc.co.uk/news/articles/cwykz0l2dzyo",
+    "name": "BBC News",
+    "kind": "press",
+    "as_of": "2026-04-23",
+    "evidence": "The company currently has 130 staff, mainly based in Belfast."
+   },
+   "founded_year": {
+    "url": "https://cloudsmith.com/company/series-c",
+    "name": "Cloudsmith",
+    "kind": "company",
+    "as_of": "2026-04-23",
+    "evidence": "$2.1 Million Seed / 2019 Founded / 2016"
+   },
+   "country": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/NI653568",
+    "name": "Companies House",
+    "kind": "registry",
+    "as_of": null,
+    "evidence": "CLOUDSMITH LTD (NI653568) Registered office address Scottish Provident Building, Donegall Square West, Belfast, Northern Ireland, BT1 6JH"
+   },
+   "business_model": {
+    "url": "https://cloudsmith.com/company/about",
+    "name": "Cloudsmith",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Cloudsmith is the fully-managed solution for controlling, securing, and distributing software artifacts."
+   },
+   "email": {
+    "url": "https://cloudsmith.com/company/contact-us",
+    "name": "Cloudsmith",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "contact@cloudsmith.com General enquiries"
+   }
+  },
+  "holding": {
+   "sponsor": "Insight Partners",
+   "status": "current",
+   "status_note": "Participated in the Series B (2025) and Series C (April 2026)",
+   "asset_class": "Growth equity",
+   "deal_type": "Venture round",
+   "value_creation_plan": "Insight said Cloudsmith, as a cloud-native offering, is positioned to secure the software supply chain at the scale enterprises and AI-driven builds need, backing its vision of a curated, AI-ready solution for enterprises of all sizes; the Series C funds product development and go-to-market expansion.",
+   "value_creation_source_url": "https://cloudsmith.com/company/series-c",
+   "notes": "USD 72M Series C announced 2026-04-23, led by TCV alongside Insight Partners (quote from Thomas Krane, Managing Director, Insight Partners). Insight also joined the USD 23M Series B (2025)."
+  }
+ },
+ {
+  "name": "Cloudsmith",
+  "website": "https://cloudsmith.com/",
+  "description": "Cloudsmith is a fully-managed, cloud-native platform for controlling, securing and distributing software artifacts, giving engineering teams the infrastructure to manage, secure and govern every package across every format and environment.",
+  "sector": "Software",
+  "subsector": "DevOps / artifact management and software supply chain security",
+  "country": "United Kingdom",
+  "founded_year": 2016,
+  "business_model": "B2B SaaS",
+  "email": "contact@cloudsmith.com",
+  "email_type": "generic",
+  "employees": 130,
+  "employees_text": "The company currently has 130 staff, mainly based in Belfast.",
+  "employees_as_of": "2026-04-23",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Glenn Weinstein",
+    "title": "CEO",
+    "source_url": "https://cloudsmith.com/company/about",
+    "source_kind": "company",
+    "evidence": "Meet our leadership team | Glenn Weinstein | CEO"
+   },
+   {
+    "role": "cfo",
+    "name": "Mark O’Connor",
+    "title": "Chief Financial Officer",
+    "source_url": "https://cloudsmith.com/company/about",
+    "source_kind": "company",
+    "evidence": "Mark O’Connor | Chief Financial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Alan Carson",
+    "title": "CSO and Co-Founder",
+    "source_url": "https://cloudsmith.com/company/about",
+    "source_kind": "company",
+    "evidence": "Alan Carson | CSO and Co-Founder"
+   },
+   {
+    "role": "other",
+    "name": "Lee Skillen",
+    "title": "CTO and Co-Founder",
+    "source_url": "https://cloudsmith.com/company/about",
+    "source_kind": "company",
+    "evidence": "Lee Skillen | CTO and Co-Founder"
+   }
+  ],
+  "notes": "'Made with love in Belfast'; operating company Cloudsmith Ltd (NI653568, registered office Scottish Provident Building, Donegall Square West, Belfast) sits under Cloudsmith Holdings, Inc. (Delaware). Cloudsmith Ltd's FY2025 accounts (total exemption, filed Sept 2026) give an average of 92 employees (2024: 44) for that entity alone and no turnover. Funding: Seed $2.1M (2019), Series A $15M (2021), A2 $11M (2023), Series B $23M (2025), Series C $72M (2026); $124M total raised; company cites 103% YoY ARR growth (no ARR figure).",
+  "sources": {
+   "description": {
+    "url": "https://cloudsmith.com/company/series-c",
+    "name": "Cloudsmith",
+    "kind": "company",
+    "as_of": "2026-04-23",
+    "evidence": "As AI coding agents transform the pace and scale of software development, Cloudsmith gives engineering teams the infrastructure to manage, secure, and govern every package across every format and environment. Built cloud-native from the ground up"
+   },
+   "employees": {
+    "url": "https://www.bbc.co.uk/news/articles/cwykz0l2dzyo",
+    "name": "BBC News",
+    "kind": "press",
+    "as_of": "2026-04-23",
+    "evidence": "The company currently has 130 staff, mainly based in Belfast."
+   },
+   "founded_year": {
+    "url": "https://cloudsmith.com/company/series-c",
+    "name": "Cloudsmith",
+    "kind": "company",
+    "as_of": "2026-04-23",
+    "evidence": "$2.1 Million Seed / 2019 Founded / 2016"
+   },
+   "country": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/NI653568",
+    "name": "Companies House",
+    "kind": "registry",
+    "as_of": null,
+    "evidence": "CLOUDSMITH LTD (NI653568) Registered office address Scottish Provident Building, Donegall Square West, Belfast, Northern Ireland, BT1 6JH"
+   },
+   "business_model": {
+    "url": "https://cloudsmith.com/company/about",
+    "name": "Cloudsmith",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Cloudsmith is the fully-managed solution for controlling, securing, and distributing software artifacts."
+   },
+   "email": {
+    "url": "https://cloudsmith.com/company/contact-us",
+    "name": "Cloudsmith",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "contact@cloudsmith.com General enquiries"
+   }
+  },
+  "holding": {
+   "sponsor": "TCV",
+   "status": "current",
+   "status_note": "Led the Series B (2025) and the USD 72M Series C (April 2026)",
+   "asset_class": "Growth equity",
+   "deal_type": "Venture round",
+   "value_creation_plan": "TCV said it is deepening its partnership with a company it sees as defining artifact management for the AI era, positioning Cloudsmith to become the platform enterprises rely on for compliance, control and security at global scale.",
+   "value_creation_source_url": "https://cloudsmith.com/company/series-c",
+   "notes": "Quote from Morgan Gerlak, Partner, TCV. TCV's own partnership page could not be opened (connection failed)."
+  }
+ }
+]

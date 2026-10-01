@@ -1,0 +1,1628 @@
+[
+ {
+  "name": "Quantios",
+  "website": "https://quantios.com/",
+  "description": "Quantios is a leading provider of SaaS solutions to the global trust and corporate services industry, powering close to 700 firms across six continents with AI-enabled technology that digitises and automates administration workflows.",
+  "sector": "Technology",
+  "subsector": "Entity management and compliance software for corporate, trust and fund services providers",
+  "country": "United Kingdom",
+  "founded_year": 2024,
+  "business_model": "Subscription/SaaS (B2B)",
+  "email": "info@quantios.com",
+  "email_type": "generic",
+  "employees": 300,
+  "employees_text": "The Group employs close to 300 people across 10 geographical locations",
+  "employees_as_of": "2025-12-31",
+  "revenue": 48000000,
+  "revenue_currency": "GBP",
+  "revenue_period": "FY2025 (12 months to 2025-12-31)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Guy Harrison",
+    "title": "Chief Executive Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Guy Harrison Chief Executive Officer ... Before joining Quantios in 2024, he led SmartSearch"
+   },
+   {
+    "role": "cfo",
+    "name": "Ben Donnelly",
+    "title": "Chief Financial Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Ben Donnelly Chief Financial Officer. Ben is a Chartered Accountant who is focused on value creation through growing SaaS businesses"
+   },
+   {
+    "role": "other",
+    "name": "Grant Jones",
+    "title": "Chief Revenue Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Grant Jones Chief Revenue Officer"
+   },
+   {
+    "role": "other",
+    "name": "Adrian Akers",
+    "title": "Chief Product Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Adrian Akers is Chief Product Officer for Quantios."
+   },
+   {
+    "role": "other",
+    "name": "Joe Sefton Jenkins",
+    "title": "Chief Technology Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Joe Sefton Jenkins Chief Technology Officer"
+   }
+  ],
+  "notes": "Group parent filing UK accounts is Tanqueray Holdco Limited (Companies House 14414162), controlled by Tanqueray Topco Limited (Jersey). FY2025: revenue GBP 48.0m (2024: 45.5m), contractually recurring revenue GBP 40.7m, underlying operating profit GBP 17.5m, reported operating profit GBP 5.7m, reported loss GBP 17.4m; no EBITDA stated. Brand formed in 2024 when TrustQuay and Viewpoint became Quantios; lineage back to Microgen (founded 1974). Vista agreed to acquire the company in July 2026 from Hg and EQT; EQT said completion expected in Q3 2026.",
+  "sources": {
+   "description": {
+    "url": "https://www.vistaequitypartners.com/news/quantios-announces-strategic-growth-investment-from-vista-equity-partners/",
+    "name": "Vista Equity Partners",
+    "kind": "sponsor",
+    "as_of": "2026-07-29",
+    "evidence": "Quantios is a leading provider of SaaS solutions to the global trust and corporate services industry, powering close to 700 firms across six continents with market-leading, AI- enabled technology that digitises and automates administration workflows."
+   },
+   "website": {
+    "url": "https://quantios.com/",
+    "name": "Quantios",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "The AI-native platform for global corporate, trust and fund services providers."
+   },
+   "country": {
+    "url": "https://quantios.com/contact-us/",
+    "name": "Quantios",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "UK Head Office Sentinel House, Harvest Crescent, Ancells Business Park, Fleet, GU51 2UZ"
+   },
+   "founded_year": {
+    "url": "https://quantios.com/about-us/",
+    "name": "Quantios",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "2024 Company founded | TrustQuay and Viewpoint become Quantios"
+   },
+   "business_model": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14414162/filing-history/MzU0MDAyNzk3NmFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - Tanqueray Holdco Limited group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "The Group operates a subscription-based Software-as-a-Service (\"SaaS\") model, delivering AI Enabled, cloud-native entity management software solutions that address the unique challenges and evolving demands of the CTFS industry."
+   },
+   "email": {
+    "url": "https://quantios.com/contact-us/",
+    "name": "Quantios",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "info@quantios.com"
+   },
+   "employees": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14414162/filing-history/MzU0MDAyNzk3NmFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - Tanqueray Holdco Limited group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "The Group employs close to 300 people across 10 geographical locations which includes Australia, Canada, Cyprus, Guernsey, Hong Kong, Jersey, Malaysia, Romania, Singapore and the United Kingdom."
+   },
+   "revenue": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14414162/filing-history/MzU0MDAyNzk3NmFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - Tanqueray Holdco Limited group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "The Group reported revenue of £48.0m (2024: £45.5m), an increase of 5.6% year-on-year, principally driven by a £3.3m increase in software licence fees."
+   }
+  },
+  "holding": {
+   "sponsor": "Vista Equity Partners",
+   "status": "current",
+   "status_note": "Agreed to acquire Quantios from Hg and EQT in July 2026 (Foundation fund)",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "Vista said its investment will help Quantios accelerate product innovation, expand its AI capabilities and raise the bar for customer experience, support and delivery across its global customer base.",
+   "value_creation_source_url": "https://www.vistaequitypartners.com/news/quantios-announces-strategic-growth-investment-from-vista-equity-partners/",
+   "notes": "Vista release 29 July 2026: Quantios 'has been acquired by Vista Equity Partners'; current investors Hg and EQT exit on completion. Vista portfolio page lists year of investment 2026, status Current, strategy Foundation."
+  }
+ },
+ {
+  "name": "Quantios",
+  "website": "https://quantios.com/",
+  "description": "Quantios is a leading provider of SaaS solutions to the global trust and corporate services industry, powering close to 700 firms across six continents with AI-enabled technology that digitises and automates administration workflows.",
+  "sector": "Technology",
+  "subsector": "Entity management and compliance software for corporate, trust and fund services providers",
+  "country": "United Kingdom",
+  "founded_year": 2024,
+  "business_model": "Subscription/SaaS (B2B)",
+  "email": "info@quantios.com",
+  "email_type": "generic",
+  "employees": 300,
+  "employees_text": "The Group employs close to 300 people across 10 geographical locations",
+  "employees_as_of": "2025-12-31",
+  "revenue": 48000000,
+  "revenue_currency": "GBP",
+  "revenue_period": "FY2025 (12 months to 2025-12-31)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Guy Harrison",
+    "title": "Chief Executive Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Guy Harrison Chief Executive Officer ... Before joining Quantios in 2024, he led SmartSearch"
+   },
+   {
+    "role": "cfo",
+    "name": "Ben Donnelly",
+    "title": "Chief Financial Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Ben Donnelly Chief Financial Officer. Ben is a Chartered Accountant who is focused on value creation through growing SaaS businesses"
+   },
+   {
+    "role": "other",
+    "name": "Grant Jones",
+    "title": "Chief Revenue Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Grant Jones Chief Revenue Officer"
+   },
+   {
+    "role": "other",
+    "name": "Adrian Akers",
+    "title": "Chief Product Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Adrian Akers is Chief Product Officer for Quantios."
+   },
+   {
+    "role": "other",
+    "name": "Joe Sefton Jenkins",
+    "title": "Chief Technology Officer",
+    "source_url": "https://quantios.com/about-us/",
+    "source_kind": "company",
+    "evidence": "Joe Sefton Jenkins Chief Technology Officer"
+   }
+  ],
+  "notes": "Group parent filing UK accounts is Tanqueray Holdco Limited (Companies House 14414162), controlled by Tanqueray Topco Limited (Jersey). FY2025: revenue GBP 48.0m (2024: 45.5m), contractually recurring revenue GBP 40.7m, underlying operating profit GBP 17.5m, reported operating profit GBP 5.7m, reported loss GBP 17.4m; no EBITDA stated. Brand formed in 2024 when TrustQuay and Viewpoint became Quantios; lineage back to Microgen (founded 1974). Vista agreed to acquire the company in July 2026 from Hg and EQT; EQT said completion expected in Q3 2026.",
+  "sources": {
+   "description": {
+    "url": "https://www.vistaequitypartners.com/news/quantios-announces-strategic-growth-investment-from-vista-equity-partners/",
+    "name": "Vista Equity Partners",
+    "kind": "sponsor",
+    "as_of": "2026-07-29",
+    "evidence": "Quantios is a leading provider of SaaS solutions to the global trust and corporate services industry, powering close to 700 firms across six continents with market-leading, AI- enabled technology that digitises and automates administration workflows."
+   },
+   "website": {
+    "url": "https://quantios.com/",
+    "name": "Quantios",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "The AI-native platform for global corporate, trust and fund services providers."
+   },
+   "country": {
+    "url": "https://quantios.com/contact-us/",
+    "name": "Quantios",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "UK Head Office Sentinel House, Harvest Crescent, Ancells Business Park, Fleet, GU51 2UZ"
+   },
+   "founded_year": {
+    "url": "https://quantios.com/about-us/",
+    "name": "Quantios",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "2024 Company founded | TrustQuay and Viewpoint become Quantios"
+   },
+   "business_model": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14414162/filing-history/MzU0MDAyNzk3NmFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - Tanqueray Holdco Limited group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "The Group operates a subscription-based Software-as-a-Service (\"SaaS\") model, delivering AI Enabled, cloud-native entity management software solutions that address the unique challenges and evolving demands of the CTFS industry."
+   },
+   "email": {
+    "url": "https://quantios.com/contact-us/",
+    "name": "Quantios",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "info@quantios.com"
+   },
+   "employees": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14414162/filing-history/MzU0MDAyNzk3NmFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - Tanqueray Holdco Limited group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "The Group employs close to 300 people across 10 geographical locations which includes Australia, Canada, Cyprus, Guernsey, Hong Kong, Jersey, Malaysia, Romania, Singapore and the United Kingdom."
+   },
+   "revenue": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/14414162/filing-history/MzU0MDAyNzk3NmFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - Tanqueray Holdco Limited group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "The Group reported revenue of £48.0m (2024: £45.5m), an increase of 5.6% year-on-year, principally driven by a £3.3m increase in software licence fees."
+   }
+  },
+  "holding": {
+   "sponsor": "EQT AB",
+   "status": "current",
+   "status_note": "Invested in ViewPoint in 2023; agreed in July 2026 to sell its stake to Vista, completion expected Q3 2026",
+   "asset_class": "Private equity",
+   "value_creation_plan": "EQT supported Quantios' transformation through the launch of Quantios Core, a cloud-native SaaS platform that accelerated the transition from on-premise software to a subscription-based model, strengthened its AI capabilities and expanded into new customer segments through the acquisition of Klea.",
+   "value_creation_source_url": "https://www.prnewswire.com/apac/news-releases/eqt-to-sell-quantios-a-leading-provider-of-saas-solutions-to-the-global-trust-and-corporate-services-industry-to-vista-equity-partners-302837996.html",
+   "notes": "Held through EQT Private Capital Asia Mid-Market Opportunities Fund I (EQT portfolio page: fund 'BPEA EQT Mid-Market Growth', entry 2023, responsible advisor Nicholas Macksey). EQT portfolio page still lists Quantios as current."
+  }
+ },
+ {
+  "name": "Hyve Group",
+  "website": "https://hyve.group/",
+  "description": "Hyve is a B2B events business uniting B2B ecosystems at scale through industry-leading events and the tech-enabled products built around them, organising over 30 trade exhibitions and conferences globally.",
+  "sector": "Media & Information Services",
+  "subsector": "B2B events, trade exhibitions and conferences",
+  "country": "United Kingdom",
+  "founded_year": 1991,
+  "business_model": "B2B",
+  "employees": 688,
+  "employees_text": "the Group employed an average of 688 employees (2024: 621)",
+  "employees_as_of": "2025-12-31",
+  "revenue": 351274000,
+  "revenue_currency": "USD",
+  "revenue_period": "FY2025 (12 months to 2025-12-31)",
+  "ebitda": 74952000,
+  "ebitda_currency": "USD",
+  "ebitda_period": "FY2025 (12 months to 2025-12-31)",
+  "ebitda_basis": "adjusted",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Mark Shashoua",
+    "title": "Chief Executive Officer",
+    "source_url": "https://hyve.group/about/meet-our-leaders/",
+    "source_kind": "company",
+    "evidence": "Group leadership | Mark Shashoua | Chief Executive Officer"
+   },
+   {
+    "role": "cfo",
+    "name": "James Warsop",
+    "title": "Chief Financial Officer",
+    "source_url": "https://hyve.group/about/meet-our-leaders/",
+    "source_kind": "company",
+    "evidence": "James Warsop | Chief Financial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Elizabeth Deeming",
+    "title": "Global President",
+    "source_url": "https://hyve.group/about/meet-our-leaders/",
+    "source_kind": "company",
+    "evidence": "Elizabeth Deeming | Global President"
+   },
+   {
+    "role": "managing_director",
+    "name": "Gordon Payne",
+    "title": "Managing Director, Asia",
+    "source_url": "https://hyve.group/about/meet-our-leaders/",
+    "source_kind": "company",
+    "evidence": "Gordon Payne | Managing Director, Asia"
+   }
+  ],
+  "notes": "Group parent filing UK accounts is Heron UK Topco Limited (filed against Hyve Group Limited, 01927339). FY2025 revenue $351.3m (2024 restated: $277.4m); Management EBITDA $75.0m (2024: $72.4m), a non-GAAP measure (operating profit before depreciation, amortisation, write-downs, transaction, FX, transformation, restructuring, share-based payment and other exceptional costs). H&F's June 2026 release separately says Hyve 'has expanded EBITDA beyond $100m' without a period. Formerly ITE Group; founded 1991 in West London. Hyve home page: 18 brands, 31 events, organic revenue +15% in 2025.",
+  "sources": {
+   "description": {
+    "url": "https://hyve.group/",
+    "name": "Hyve Group",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "We are Hyve. Uniting B2B ecosystems at scale through industry-leading events and the tech-enabled products built around them."
+   },
+   "country": {
+    "url": "https://hyve.group/",
+    "name": "Hyve Group",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Hyve Group Limited , 2 Kingdom Street, London, W2 6JG"
+   },
+   "founded_year": {
+    "url": "https://hyve.group/about/our-story/",
+    "name": "Hyve Group",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Once upon a time, in 1991, three family members sat around a kitchen table in West London and devised a plan... Then called ITE Group"
+   },
+   "business_model": {
+    "url": "https://hf.com/hyve-to-be-acquired-by-hellman-friedman-to-accelerate-next-phase-of-growth/",
+    "name": "Hellman & Friedman",
+    "kind": "sponsor",
+    "as_of": "2026-06-02",
+    "evidence": "Leading B2B events business Hyve Group (\"Hyve\")"
+   },
+   "employees": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/01927339/filing-history/MzU0NjAxNTQ0MGFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - Heron UK Topco Limited consolidated accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "During the financial year, the Group employed an average of 688 employees (2024: 621)"
+   },
+   "revenue": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/01927339/filing-history/MzU0NjAxNTQ0MGFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - Heron UK Topco Limited consolidated accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "The Group delivered strong performance in the year, with revenue increasing to $351.3m (2024: $277.4m) ... Revenue 351,274 ($'000)"
+   },
+   "ebitda": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/01927339/filing-history/MzU0NjAxNTQ0MGFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - Heron UK Topco Limited consolidated accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-12-31",
+    "evidence": "Management EBITDA rising to $75.0m (2024: $72.4m) ... Management EBITDA 74,952 ($'000)"
+   }
+  },
+  "holding": {
+   "sponsor": "Hellman & Friedman",
+   "status_note": "Agreed in June 2026 to acquire Hyve from Providence Equity Partners and Searchlight Capital Partners; completion expected by end of 2026",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "In partnership with H&F, Hyve will focus on accelerating international launches, expanding adjacent products and services, and continuing to scale into growing end markets via its proven acquisition strategy.",
+   "value_creation_source_url": "https://hf.com/hyve-to-be-acquired-by-hellman-friedman-to-accelerate-next-phase-of-growth/",
+   "notes": "Announced 2 June 2026; status left blank because completion was pending at the date of the release. Hunter Philbrick (Partner) led for H&F."
+  }
+ },
+ {
+  "name": "Universidad Alfonso X el Sabio Group (UAX)",
+  "website": "https://www.uax.com/",
+  "description": "UAX is a leading private higher education group in Spain, headquartered in Madrid, offering undergraduate, postgraduate and technical vocational programmes across health sciences, engineering, business, education and arts, delivered face to face and online.",
+  "sector": "Education",
+  "subsector": "Private higher education and vocational training",
+  "country": "Spain",
+  "founded_year": 1993,
+  "business_model": "B2C",
+  "email": "info@uax.es",
+  "email_type": "generic",
+  "employees": 2468,
+  "employees_text": "EMPLEADOS* 2.468 (* A tiempo completo)",
+  "employees_as_of": "2025-08-31",
+  "revenue": 233400000,
+  "revenue_currency": "EUR",
+  "revenue_period": "FY2025 (fiscal year 1 Sep 2024 - 31 Aug 2025)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Domingo Mirón Domínguez",
+    "title": "Consejero delegado, Grupo Educativo UAX",
+    "source_url": "https://www.uax.com/download/76184/pdf/memoria-grupo-uax-2425-esp.pdf",
+    "source_kind": "company",
+    "evidence": "CARTA DEL CONSEJERO DELEGADO ... Domingo Mirón Domínguez Consejero delegado, Grupo Educativo UAX"
+   },
+   {
+    "role": "other",
+    "name": "Jesús Núñez Velázquez",
+    "title": "Presidente y fundador, Grupo Educativo UAX",
+    "source_url": "https://www.uax.com/download/76184/pdf/memoria-grupo-uax-2425-esp.pdf",
+    "source_kind": "company",
+    "evidence": "CARTA DEL PRESIDENTE Jesús Núñez Velázquez Presidente y fundador, Grupo Educativo UAX"
+   }
+  ],
+  "notes": "Revenue and headcount are from the UAX Group Annual Report 2024-2025 (Memoria), fiscal year 1 September 2024 - 31 August 2025: 'CIFRA DE INGRESOS* 233,4 M€', revenue growth +11.9%; 2,468 full-time employees; 39,290 students in 2024-25. Cinven agreed on 28 October 2025 to partner with founder Jesús Núñez and Mubadala to acquire a majority stake from CVC Funds (financial terms not disclosed); Cinven portfolio page dates the investment July 2026. No CFO named publicly (the annual report refers to an unnamed 'director financiero y de operaciones').",
+  "sources": {
+   "description": {
+    "url": "https://www.cinven.com/news-insights/cinven-to-acquire-universidad-alfonso-x-el-sabio-group-from-cvc-funds/",
+    "name": "Cinven",
+    "kind": "sponsor",
+    "as_of": "2025-10-28",
+    "evidence": "Headquartered in Madrid, UAX offers a wide range of undergraduate, postgraduate and technical vocation programmes across disciplines including health sciences, engineering, business, education and arts, which are delivered both online and face to face."
+   },
+   "country": {
+    "url": "https://www.cinven.com/news-insights/cinven-to-acquire-universidad-alfonso-x-el-sabio-group-from-cvc-funds/",
+    "name": "Cinven",
+    "kind": "sponsor",
+    "as_of": "2025-10-28",
+    "evidence": "Headquartered in Madrid"
+   },
+   "founded_year": {
+    "url": "https://www.cinven.com/news-insights/cinven-to-acquire-universidad-alfonso-x-el-sabio-group-from-cvc-funds/",
+    "name": "Cinven",
+    "kind": "sponsor",
+    "as_of": "2025-10-28",
+    "evidence": "The Group began with the founding of UAX in Madrid in 1993."
+   },
+   "business_model": {
+    "url": "https://www.uax.com/download/76184/pdf/memoria-grupo-uax-2425-esp.pdf",
+    "name": "UAX Group Annual Report 2024-2025",
+    "kind": "company",
+    "as_of": "2025-08-31",
+    "evidence": "En el curso 2024-2025, fueron 39.290 los alumnos matriculados en enseñanzas de formación profesional, media y superior, de grado, posgrado, máster, doctorado, títulos propios y enseñanzas especializadas"
+   },
+   "email": {
+    "url": "https://www.uax.com/en/contact",
+    "name": "UAX",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Villanueva Campus | info@UAX.es | 91 810 92 00"
+   },
+   "employees": {
+    "url": "https://www.uax.com/download/76184/pdf/memoria-grupo-uax-2425-esp.pdf",
+    "name": "UAX Group Annual Report 2024-2025",
+    "kind": "company",
+    "as_of": "2025-08-31",
+    "evidence": "EMPLEADOS* 2.468 ... * A tiempo completo"
+   },
+   "revenue": {
+    "url": "https://www.uax.com/download/76184/pdf/memoria-grupo-uax-2425-esp.pdf",
+    "name": "UAX Group Annual Report 2024-2025",
+    "kind": "company",
+    "as_of": "2025-08-31",
+    "evidence": "CIFRA DE INGRESOS* 233,4 M€ CRECIMIENTO DE INGRESOS +11,9% ... * Año fiscal 2025; memoria corresponde al ejercicio 2024–2025 (periodo: 1 de septiembre de 2024 - 31 de agosto de 2025)"
+   }
+  },
+  "holding": {
+   "sponsor": "Cinven",
+   "status": "current",
+   "status_note": "Majority stake acquired from CVC Funds alongside founder Jesús Núñez and Mubadala (agreed October 2025; Cinven dates the investment July 2026)",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "In partnership with founder Jesús Núñez, Cinven is committed to supporting UAX in its next phase of growth, with the ambition to become a benchmark for excellence in the private university sector in Spain and internationally, including through new campus openings in Spain and expansion into new international markets.",
+   "value_creation_source_url": "https://www.cinven.com/news-insights/cinven-to-acquire-universidad-alfonso-x-el-sabio-group-from-cvc-funds/",
+   "notes": "Cinven team listed: Jorge Quemada (Co-Managing Partner), Miguel Segura (Partner), Guillermo Jonas, Nicholas Engels, Aswin Lizen, Pedro Quiroga. Founder and management reinvested; Mubadala co-invested."
+  }
+ },
+ {
+  "name": "Farther Finance",
+  "website": "https://www.farther.com/",
+  "description": "Farther is Intelligent Wealth Management: an AI-native wealth platform that gives advisors an all-in-one ecosystem (asset location, execution, data, risk management, personalised insights, private-markets access) and serves clients from high-earning individuals and ultra-high-net-worth families to small businesses and institutions.",
+  "sector": "Financial Services",
+  "subsector": "Wealth management / registered investment adviser platform (wealthtech)",
+  "country": "United States",
+  "founded_year": 2019,
+  "business_model": "B2C and B2B2C (advisor platform serving individual, family office, small business and institutional clients)",
+  "email": "press@farther.com",
+  "email_type": "press",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Taylor Matthews",
+    "title": "Co-Founder & CEO",
+    "source_url": "https://www.farther.com/about-us",
+    "source_kind": "company",
+    "evidence": "Our leadership | Taylor Matthews | Co-Founder & CEO"
+   },
+   {
+    "role": "cfo",
+    "name": "David Kilin",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.farther.com/about-us",
+    "source_kind": "company",
+    "evidence": "David Kilin | Chief Financial Officer"
+   },
+   {
+    "role": "other",
+    "name": "Brad Genser",
+    "title": "Co-Founder & CTO",
+    "source_url": "https://www.farther.com/about-us",
+    "source_kind": "company",
+    "evidence": "Brad Genser | Co-Founder & CTO"
+   },
+   {
+    "role": "other",
+    "name": "Kate Gordon",
+    "title": "Head of Business Operations",
+    "source_url": "https://www.farther.com/about-us",
+    "source_kind": "company",
+    "evidence": "Kate Gordon | Head of Business Operations"
+   }
+  ],
+  "notes": "Legal adviser entity: Farther Finance Advisors, LLC. Raised a $150m Series D led by General Atlantic in May 2026 with participation from existing investors; over $272m raised since founding. Company reports more than $23bn of 'recruited assets' (assets under management plus assets expected from advisors joining in coming months, company internal data, Q1 2026) - this is not revenue and no revenue, EBITDA or headcount is published. Headquartered in New York per the release dateline.",
+  "sources": {
+   "description": {
+    "url": "https://www.generalatlantic.com/media-article/farther-raises-150-million-series-d-led-by-general-atlantic-to-scale-intelligent-wealth-management/",
+    "name": "General Atlantic (Farther release)",
+    "kind": "sponsor",
+    "as_of": "2026-05-19",
+    "evidence": "Founded in 2019, Farther's Intelligent Wealth Platform is designed to overcome the limitations of legacy wealth management, delivering advisors an all-in-one ecosystem that helps them optimize client outcomes through dynamic asset location, enhanced execution, high-quality data, risk management, personalized insights, and AI-driven tools."
+   },
+   "founded_year": {
+    "url": "https://www.generalatlantic.com/media-article/farther-raises-150-million-series-d-led-by-general-atlantic-to-scale-intelligent-wealth-management/",
+    "name": "General Atlantic (Farther release)",
+    "kind": "sponsor",
+    "as_of": "2026-05-19",
+    "evidence": "Founded in 2019, Farther's Intelligent Wealth Platform"
+   },
+   "country": {
+    "url": "https://www.generalatlantic.com/media-article/farther-raises-150-million-series-d-led-by-general-atlantic-to-scale-intelligent-wealth-management/",
+    "name": "General Atlantic (Farther release)",
+    "kind": "sponsor",
+    "as_of": "2026-05-19",
+    "evidence": "NEW YORK - Farther, Intelligent Wealth Management, natively built to unlock greater client wealth, today announced it has raised $150 million in Series D funding"
+   },
+   "business_model": {
+    "url": "https://www.generalatlantic.com/media-article/farther-raises-150-million-series-d-led-by-general-atlantic-to-scale-intelligent-wealth-management/",
+    "name": "General Atlantic (Farther release)",
+    "kind": "sponsor",
+    "as_of": "2026-05-19",
+    "evidence": "Farther serves a broad client base - from high-earning individuals and ultra-high-net-worth families supported by Farther Family Office, to small businesses and institutions"
+   },
+   "email": {
+    "url": "https://www.farther.com/",
+    "name": "Farther",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "press@farther.com Media Inquiries"
+   }
+  },
+  "holding": {
+   "sponsor": "General Atlantic",
+   "status": "current",
+   "status_note": "Led $150m Series D in May 2026",
+   "asset_class": "Growth equity",
+   "deal_type": "Growth investment",
+   "value_creation_plan": "With this Series D funding, Farther anticipates continued expansion of its platform capabilities and further innovation to better support advisors and clients, leveraging General Atlantic's global wealth management investing experience and track record of scaling high-growth financial services platforms.",
+   "value_creation_source_url": "https://www.generalatlantic.com/media-article/farther-raises-150-million-series-d-led-by-general-atlantic-to-scale-intelligent-wealth-management/",
+   "notes": "Paul Stamas (Managing Director, Global Head of Financial Services) and Laura Chen (Vice President) quoted for GA. Round included existing investors."
+  }
+ },
+ {
+  "name": "World Freight Company",
+  "website": "https://www.worldfreightcompany.com/",
+  "description": "World Freight Company (WFC) is one of the world's largest general sales and service agents (GSSA) for the air freight industry, representing airlines to sell and manage cargo capacity while coordinating booking, handling and shipment oversight for more than 300 airlines on 3,500 trade lanes across more than 80 countries.",
+  "sector": "Transportation & Logistics",
+  "subsector": "Air cargo general sales and service agents (outsourced cargo capacity sales and management)",
+  "country": "Hong Kong",
+  "founded_year": 2004,
+  "business_model": "B2B (outsourced cargo sales and management services for airlines)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Vikram Singh",
+    "title": "Group CEO of WFC",
+    "source_url": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company",
+    "source_kind": "sponsor",
+    "evidence": "Vikram Singh, Group CEO of WFC, said: \"We would like to thank EQT and PAI for their support and partnership over the past several years.\""
+   }
+  ],
+  "notes": "Brookfield (private equity business) agreed in May 2026 to acquire WFC from BPEA Private Equity Fund VI (EQT) and PAI Partners; EQT said completion expected by end of 2026, Brookfield Business Corporation said Q3 2026, with BBC's share of the equity about $175m for a 25% interest. Air-cargo trade press reported a $1.2bn price (not a primary source). EQT portfolio page gives country Hong Kong; WFC's contact page lists offices in Roissy CDG (France), Dubai and Hong Kong. WFC's 'who we are' page (dated 2021) lists 399+1,222+30+839 team members by region; not recorded as a headcount because the page is dated and the total is not stated. During EQT/PAI ownership WFC completed 20 acquisitions.",
+  "sources": {
+   "description": {
+    "url": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company",
+    "name": "EQT",
+    "kind": "sponsor",
+    "as_of": "2026-05-14",
+    "evidence": "Founded in 2004, WFC is now one of the world's largest general sales and service agents (GSSA) for the global air freight industry. The company represents airlines to sell and manage cargo capacity while coordinating key operational activities including booking, handling and shipment oversight."
+   },
+   "founded_year": {
+    "url": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company",
+    "name": "EQT",
+    "kind": "sponsor",
+    "as_of": "2026-05-14",
+    "evidence": "Founded in 2004, WFC is now one of the world's largest general sales and service agents (GSSA)"
+   },
+   "country": {
+    "url": "https://eqtgroup.com/about/current-portfolio/world-freight-company",
+    "name": "EQT portfolio page",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Key Facts | Sector Tech Services | Country Hong Kong | Fund BPEA Private Equity Fund VI | Entry 2018"
+   },
+   "business_model": {
+    "url": "https://www.worldfreightcompany.com/about",
+    "name": "World Freight Company",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "WFC portfolio is a network of General Sales and Service Agents whose core business is to provide airline partners with a comprehensive global presence and the resources to sell and optimize their cargo capacity. They manage the complete freight capacity sales process on an exclusive, outsourced basis."
+   }
+  },
+  "holding": {
+   "sponsor": "Brookfield Asset Management",
+   "status_note": "Agreed in May 2026 to acquire WFC from EQT and PAI Partners; closing expected Q3 2026 (Brookfield) / by end-2026 (EQT)",
+   "asset_class": "Private equity",
+   "deal_type": "Secondary buyout",
+   "value_creation_plan": "Brookfield has identified meaningful value creation opportunities through business process outsourcing, automation and the development of AI-enabled operating platforms.",
+   "value_creation_source_url": "https://bbuc.brookfield.com/bbu/press-releases/brookfield-business-corporation-reports-strong-second-quarter-2026-results",
+   "notes": "Acquired through Brookfield's private equity business; Brookfield Business Corporation's share of the equity investment expected to be approximately $175 million for a 25% interest. Status left blank: closing pending at the date of the release."
+  }
+ },
+ {
+  "name": "World Freight Company",
+  "website": "https://www.worldfreightcompany.com/",
+  "description": "World Freight Company (WFC) is one of the world's largest general sales and service agents (GSSA) for the air freight industry, representing airlines to sell and manage cargo capacity while coordinating booking, handling and shipment oversight for more than 300 airlines on 3,500 trade lanes across more than 80 countries.",
+  "sector": "Transportation & Logistics",
+  "subsector": "Air cargo general sales and service agents (outsourced cargo capacity sales and management)",
+  "country": "Hong Kong",
+  "founded_year": 2004,
+  "business_model": "B2B (outsourced cargo sales and management services for airlines)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Vikram Singh",
+    "title": "Group CEO of WFC",
+    "source_url": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company",
+    "source_kind": "sponsor",
+    "evidence": "Vikram Singh, Group CEO of WFC, said: \"We would like to thank EQT and PAI for their support and partnership over the past several years.\""
+   }
+  ],
+  "notes": "Brookfield (private equity business) agreed in May 2026 to acquire WFC from BPEA Private Equity Fund VI (EQT) and PAI Partners; EQT said completion expected by end of 2026, Brookfield Business Corporation said Q3 2026, with BBC's share of the equity about $175m for a 25% interest. Air-cargo trade press reported a $1.2bn price (not a primary source). EQT portfolio page gives country Hong Kong; WFC's contact page lists offices in Roissy CDG (France), Dubai and Hong Kong. WFC's 'who we are' page (dated 2021) lists 399+1,222+30+839 team members by region; not recorded as a headcount because the page is dated and the total is not stated. During EQT/PAI ownership WFC completed 20 acquisitions.",
+  "sources": {
+   "description": {
+    "url": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company",
+    "name": "EQT",
+    "kind": "sponsor",
+    "as_of": "2026-05-14",
+    "evidence": "Founded in 2004, WFC is now one of the world's largest general sales and service agents (GSSA) for the global air freight industry. The company represents airlines to sell and manage cargo capacity while coordinating key operational activities including booking, handling and shipment oversight."
+   },
+   "founded_year": {
+    "url": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company",
+    "name": "EQT",
+    "kind": "sponsor",
+    "as_of": "2026-05-14",
+    "evidence": "Founded in 2004, WFC is now one of the world's largest general sales and service agents (GSSA)"
+   },
+   "country": {
+    "url": "https://eqtgroup.com/about/current-portfolio/world-freight-company",
+    "name": "EQT portfolio page",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Key Facts | Sector Tech Services | Country Hong Kong | Fund BPEA Private Equity Fund VI | Entry 2018"
+   },
+   "business_model": {
+    "url": "https://www.worldfreightcompany.com/about",
+    "name": "World Freight Company",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "WFC portfolio is a network of General Sales and Service Agents whose core business is to provide airline partners with a comprehensive global presence and the resources to sell and optimize their cargo capacity. They manage the complete freight capacity sales process on an exclusive, outsourced basis."
+   }
+  },
+  "holding": {
+   "sponsor": "EQT AB",
+   "status": "current",
+   "status_note": "Held since 2018 (BPEA Private Equity Fund VI); agreed in May 2026 to sell to Brookfield, completion expected by end-2026",
+   "asset_class": "Private equity",
+   "value_creation_plan": "EQT and PAI supported the company's transformation into a scaled global platform through organic growth initiatives, strategic acquisitions (20 during their ownership) and continued investment in technology and digital capabilities, expanding its international footprint and advancing its digital and AI-enabled capabilities.",
+   "value_creation_source_url": "https://eqtgroup.com/news/eqt-and-pai-partners-agree-to-sell-world-freight-company",
+   "notes": "Co-owned with PAI Partners. EQT portfolio page still lists WFC as current; responsible advisor Janice Leow (Head of Private Capital in Southeast Asia)."
+  }
+ },
+ {
+  "name": "Pflegia",
+  "website": "https://www.pflegia.de/",
+  "description": "Pflegia is a Berlin-based digital recruitment platform for healthcare professionals in Germany, dedicated to permanent placements through an AI-powered reverse-recruiting model in which care providers apply to registered candidates.",
+  "sector": "Business Services",
+  "subsector": "Online healthcare staffing / permanent recruitment platform",
+  "country": "Germany",
+  "founded_year": 2019,
+  "business_model": "Marketplace (two-sided recruitment platform; employers pay, candidates register)",
+  "email": "kontakt@pflegia.de",
+  "email_type": "generic",
+  "leaders": [
+   {
+    "role": "managing_director",
+    "name": "Lennart Steuer",
+    "title": "Co-Founder; Geschäftsführer (Vertreten durch)",
+    "source_url": "https://www.pflegia.de/imprint-privacy/",
+    "source_kind": "company",
+    "evidence": "Pflegia GmbH ... Vertreten durch: Lennart Steuer und Felix Westphal"
+   },
+   {
+    "role": "managing_director",
+    "name": "Felix Westphal",
+    "title": "Co-Founder; Geschäftsführer (Vertreten durch)",
+    "source_url": "https://www.pflegia.de/imprint-privacy/",
+    "source_kind": "company",
+    "evidence": "Pflegia GmbH ... Vertreten durch: Lennart Steuer und Felix Westphal"
+   },
+   {
+    "role": "other",
+    "name": "Masoud Shahryari",
+    "title": "Co-Founder",
+    "source_url": "https://www.ardian.com/news-insights/press-releases/ardian-acquires-majority-stake-pflegia-germanys-leading-digital",
+    "source_kind": "sponsor",
+    "evidence": "Lennart Steuer, Felix Westphal & Masoud Shahryari, Co-Founders, Pflegia"
+   }
+  ],
+  "notes": "Legal entity Pflegia GmbH, Chausseestraße 19, 10115 Berlin (Amtsgericht Charlottenburg HRB 234244 B). Over 900,000 registered healthcare candidates and over 10,000 care providers (Ardian release); launched Praxia for medical and dental practice staff in 2024. Ardian Growth acquired a majority stake (portfolio page dated 8 July 2026). No CEO title is published: the imprint lists two representatives; no revenue, EBITDA or headcount published.",
+  "sources": {
+   "description": {
+    "url": "https://www.ardian.com/expertise/our-portfolio?keyword=Pflegia",
+    "name": "Ardian portfolio page",
+    "kind": "sponsor",
+    "as_of": "2026-07-08",
+    "evidence": "Pflegia is a leading digital recruitment platform for healthcare professionals in Germany, dedicated to permanent placements. The Berlin-based company was founded in 2019 by Felix Westphal, Lennart Steuer and Masoud Shahryari"
+   },
+   "founded_year": {
+    "url": "https://www.ardian.com/news-insights/press-releases/ardian-acquires-majority-stake-pflegia-germanys-leading-digital",
+    "name": "Ardian",
+    "kind": "sponsor",
+    "as_of": "2026-07-08",
+    "evidence": "Founded in 2019 and headquartered in Berlin, Pflegia addresses the structural healthcare staffing shortage through an AI-powered reverse-recruiting platform"
+   },
+   "country": {
+    "url": "https://www.ardian.com/news-insights/press-releases/ardian-acquires-majority-stake-pflegia-germanys-leading-digital",
+    "name": "Ardian",
+    "kind": "sponsor",
+    "as_of": "2026-07-08",
+    "evidence": "Founded in 2019 and headquartered in Berlin"
+   },
+   "business_model": {
+    "url": "https://www.ardian.com/expertise/our-portfolio?keyword=Pflegia",
+    "name": "Ardian portfolio page",
+    "kind": "sponsor",
+    "as_of": "2026-07-08",
+    "evidence": "At the core of its model is a matching process that reverses the traditional application flow: employers actively approach and apply to healthcare professionals, supported by AI-powered process optimization and personal guidance on both sides of the marketplace."
+   },
+   "email": {
+    "url": "https://www.pflegia.de/imprint-privacy/",
+    "name": "Pflegia imprint",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "E-Mail: kontakt@pflegia.de"
+   }
+  },
+  "holding": {
+   "sponsor": "ARDIAN",
+   "status": "current",
+   "status_note": "Majority stake acquired by Ardian Growth in 2026",
+   "asset_class": "Growth equity",
+   "deal_type": "Growth investment",
+   "value_creation_plan": "Ardian will actively support Pflegia's management team across company strategy, platform development, organizational scaling, international expansion and external growth initiatives, aiming to keep it at the forefront of AI innovation in healthcare recruitment and to build its European growth story.",
+   "value_creation_source_url": "https://www.ardian.com/news-insights/press-releases/ardian-acquires-majority-stake-pflegia-germanys-leading-digital",
+   "notes": "Majority stake; deal team Romain Chiudini, Geoffroy de la Grandière (Managing Directors Growth), Pierre Schaeffer, Sophie Meyer. Ardian portfolio page date 08 July 2026."
+  }
+ },
+ {
+  "name": "Inspectorio",
+  "website": "https://www.inspectorio.com/",
+  "description": "Inspectorio is an AI-powered SaaS platform that enables global brands, retailers and their supplier networks to digitize the production chain - quality lifecycle, product regulations compliance, supplier ESG audits and multi-tier traceability - overlaid with a network intelligence control tower.",
+  "sector": "Technology",
+  "subsector": "Supply chain quality, compliance and traceability software (SaaS)",
+  "country": "United States",
+  "founded_year": 2016,
+  "business_model": "Subscription/SaaS (B2B)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Chirag Patel",
+    "title": "Chief Executive Officer",
+    "source_url": "https://www.apax.com/news-views/apax-digital-funds-invest-in-inspectorio/",
+    "source_kind": "sponsor",
+    "evidence": "Chirag Patel, Chief Executive Officer of Inspectorio, commented: \"Product integrity and supply chain compliance have become board-level issues...\""
+   },
+   {
+    "role": "cfo",
+    "name": "Devin Burns",
+    "title": "CFO",
+    "source_url": "https://www.inspectorio.com/about/",
+    "source_kind": "company",
+    "evidence": "Devin Burns | CFO (Inspectorio About page leadership section)"
+   },
+   {
+    "role": "other",
+    "name": "Carlos Moncayo",
+    "title": "Chairman & Co-Founder",
+    "source_url": "https://www.inspectorio.com/about/",
+    "source_kind": "company",
+    "evidence": "Carlos Moncayo | Chairman & Co-Founder"
+   },
+   {
+    "role": "other",
+    "name": "Kamal Anand",
+    "title": "Chief Product and Technology Officer",
+    "source_url": "https://www.inspectorio.com/about/",
+    "source_kind": "company",
+    "evidence": "Kamal Anand | Chief Product and Technology Officer"
+   }
+  ],
+  "notes": "Legal entity Inspectorio, Inc. Headquarters listed on the company About page as 400 South 4th Street, Suite 410, Minneapolis, MN 55415, USA, with hubs in Madrid, Ho Chi Minh City and Hangzhou. Platform used by over 40,000 organizations (co-founder quote, Apax release). Apax Digital Funds made a growth investment announced 16 July 2026; Insight Partners led the USD 50m Series B announced 31 January 2022. The company site blocks scripted reads; leadership was read through a fetch tool. No revenue, EBITDA or headcount published.",
+  "sources": {
+   "description": {
+    "url": "https://www.apax.com/news-views/apax-digital-funds-invest-in-inspectorio/",
+    "name": "Apax Partners (Inspectorio release)",
+    "kind": "sponsor",
+    "as_of": "2026-07-16",
+    "evidence": "Inspectorio is an AI-powered SaaS platform that enables global brands, retailers, and their supplier networks to digitize the entire production chain: quality lifecycle, product regulations compliance, supplier ESG audits, and multi-tier traceability workflows - overlaid with a network intelligence control tower"
+   },
+   "founded_year": {
+    "url": "https://www.apax.com/news-views/apax-digital-funds-invest-in-inspectorio/",
+    "name": "Apax Partners",
+    "kind": "sponsor",
+    "as_of": "2026-07-16",
+    "evidence": "Founded in 2016, Inspectorio has become a leading platform for supply chain quality and compliance"
+   },
+   "country": {
+    "url": "https://www.inspectorio.com/about/",
+    "name": "Inspectorio",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Minneapolis, USA: 400 South 4th Street, Suite 410, Minneapolis, MN 55415, USA"
+   },
+   "business_model": {
+    "url": "https://www.apax.com/news-views/apax-digital-funds-invest-in-inspectorio/",
+    "name": "Apax Partners",
+    "kind": "sponsor",
+    "as_of": "2026-07-16",
+    "evidence": "Inspectorio is an AI-powered SaaS platform ... The business serves some of the world's largest brands and retailers"
+   }
+  },
+  "holding": {
+   "sponsor": "Apax",
+   "status": "current",
+   "status_note": "Growth investment by the Apax Digital Funds, July 2026",
+   "asset_class": "Growth equity",
+   "deal_type": "Growth investment",
+   "value_creation_plan": "With this investment, Inspectorio will accelerate the buildout of its commercial infrastructure, strengthen its leadership team with key hires, and continue to invest in product development, including expanding Paramo, its AI platform for predictive insights, AI-assisted compliance workflows and supply chain network intelligence.",
+   "value_creation_source_url": "https://www.apax.com/news-views/apax-digital-funds-invest-in-inspectorio/",
+   "notes": "Apax team: Dave Evans (Partner, Apax Digital), Vikram Mashru (Principal), Dave Eckley, Isaiah Wartell. Apax page: investment year 2026, deal status Current."
+  }
+ },
+ {
+  "name": "Inspectorio",
+  "website": "https://www.inspectorio.com/",
+  "description": "Inspectorio is an AI-powered SaaS platform that enables global brands, retailers and their supplier networks to digitize the production chain - quality lifecycle, product regulations compliance, supplier ESG audits and multi-tier traceability - overlaid with a network intelligence control tower.",
+  "sector": "Technology",
+  "subsector": "Supply chain quality, compliance and traceability software (SaaS)",
+  "country": "United States",
+  "founded_year": 2016,
+  "business_model": "Subscription/SaaS (B2B)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Chirag Patel",
+    "title": "Chief Executive Officer",
+    "source_url": "https://www.apax.com/news-views/apax-digital-funds-invest-in-inspectorio/",
+    "source_kind": "sponsor",
+    "evidence": "Chirag Patel, Chief Executive Officer of Inspectorio, commented: \"Product integrity and supply chain compliance have become board-level issues...\""
+   },
+   {
+    "role": "cfo",
+    "name": "Devin Burns",
+    "title": "CFO",
+    "source_url": "https://www.inspectorio.com/about/",
+    "source_kind": "company",
+    "evidence": "Devin Burns | CFO (Inspectorio About page leadership section)"
+   },
+   {
+    "role": "other",
+    "name": "Carlos Moncayo",
+    "title": "Chairman & Co-Founder",
+    "source_url": "https://www.inspectorio.com/about/",
+    "source_kind": "company",
+    "evidence": "Carlos Moncayo | Chairman & Co-Founder"
+   },
+   {
+    "role": "other",
+    "name": "Kamal Anand",
+    "title": "Chief Product and Technology Officer",
+    "source_url": "https://www.inspectorio.com/about/",
+    "source_kind": "company",
+    "evidence": "Kamal Anand | Chief Product and Technology Officer"
+   }
+  ],
+  "notes": "Legal entity Inspectorio, Inc. Headquarters listed on the company About page as 400 South 4th Street, Suite 410, Minneapolis, MN 55415, USA, with hubs in Madrid, Ho Chi Minh City and Hangzhou. Platform used by over 40,000 organizations (co-founder quote, Apax release). Apax Digital Funds made a growth investment announced 16 July 2026; Insight Partners led the USD 50m Series B announced 31 January 2022. The company site blocks scripted reads; leadership was read through a fetch tool. No revenue, EBITDA or headcount published.",
+  "sources": {
+   "description": {
+    "url": "https://www.apax.com/news-views/apax-digital-funds-invest-in-inspectorio/",
+    "name": "Apax Partners (Inspectorio release)",
+    "kind": "sponsor",
+    "as_of": "2026-07-16",
+    "evidence": "Inspectorio is an AI-powered SaaS platform that enables global brands, retailers, and their supplier networks to digitize the entire production chain: quality lifecycle, product regulations compliance, supplier ESG audits, and multi-tier traceability workflows - overlaid with a network intelligence control tower"
+   },
+   "founded_year": {
+    "url": "https://www.apax.com/news-views/apax-digital-funds-invest-in-inspectorio/",
+    "name": "Apax Partners",
+    "kind": "sponsor",
+    "as_of": "2026-07-16",
+    "evidence": "Founded in 2016, Inspectorio has become a leading platform for supply chain quality and compliance"
+   },
+   "country": {
+    "url": "https://www.inspectorio.com/about/",
+    "name": "Inspectorio",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Minneapolis, USA: 400 South 4th Street, Suite 410, Minneapolis, MN 55415, USA"
+   },
+   "business_model": {
+    "url": "https://www.apax.com/news-views/apax-digital-funds-invest-in-inspectorio/",
+    "name": "Apax Partners",
+    "kind": "sponsor",
+    "as_of": "2026-07-16",
+    "evidence": "Inspectorio is an AI-powered SaaS platform ... The business serves some of the world's largest brands and retailers"
+   }
+  },
+  "holding": {
+   "sponsor": "Insight Partners",
+   "status": "current",
+   "status_note": "Led USD 50m Series B in January 2022",
+   "asset_class": "Venture capital",
+   "deal_type": "Venture round",
+   "value_creation_plan": "Series B funds to expand research and development and to grow its development, product and go-to-market teams.",
+   "value_creation_source_url": "https://www.inspectorio.com/press-release/inspectorio-raises-50-million-series-b-round-to-reinvent-the-production-chain-with-ai-powered-platform",
+   "notes": "Listed on Insight Partners' portfolio page. Other Series B participants: Techstars, Flexport, Ecolab, Matchstick Ventures. Nicole Shimer (Vice President, Insight Partners) quoted. Whether Insight sold any stake in the 2026 Apax transaction was not disclosed."
+  }
+ },
+ {
+  "name": "InfoRLife",
+  "description": "InfoRLife is the only pure-play B2B dossier developer and CDMO specialising in the ready-to-use IV infusion bag market, providing end-to-end development, manufacturing and out-licensing from three sites in Switzerland, Romania and Tunisia.",
+  "sector": "Healthcare",
+  "subsector": "Pharmaceutical CDMO and dossier development (ready-to-use IV infusion bags, generics)",
+  "country": "Switzerland",
+  "founded_year": 2002,
+  "business_model": "B2B (contract development and manufacturing, dossier out-licensing)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Sergio Dusci",
+    "title": "Founder and CEO",
+    "source_url": "https://www.bcpartners.com/news/bc-partners-to-invest-in-inforlife-in-partnership-with-italys-acs-dobfar/",
+    "source_kind": "sponsor",
+    "evidence": "BC Partners ... has agreed to acquire a co-control stake in InfoRLife SA (\"InfoRLife\") from its Founder and CEO Sergio Dusci and the founding families of ACS Dobfar"
+   }
+  ],
+  "notes": "Legal entity InfoRLife SA (Swiss register UID CHE-109.439.615), legal seat Brusio, address Casai, 7748 Campascio, Graubünden. Founded in 2002 as a division of ACS Dobfar. BC Partners agreed on 28 July 2026 to acquire a co-control stake alongside ACS Dobfar (terms not disclosed); second investment of BC Partners Fund XII. No website could be reached and no revenue, EBITDA or headcount is published.",
+  "sources": {
+   "description": {
+    "url": "https://www.bcpartners.com/news/bc-partners-to-invest-in-inforlife-in-partnership-with-italys-acs-dobfar/",
+    "name": "BC Partners",
+    "kind": "sponsor",
+    "as_of": "2026-07-28",
+    "evidence": "Founded in 2002 as a division of ACS, InfoRLife is the only pure-play B2B dossier developer and CDMO specialising in the ready-to-use IV infusion bag market. Headquartered in Switzerland, the company provides end-to-end development, manufacturing, and out-licensing capabilities and operates three sites across Switzerland, Romania, and Tunisia."
+   },
+   "founded_year": {
+    "url": "https://www.bcpartners.com/news/bc-partners-to-invest-in-inforlife-in-partnership-with-italys-acs-dobfar/",
+    "name": "BC Partners",
+    "kind": "sponsor",
+    "as_of": "2026-07-28",
+    "evidence": "Founded in 2002 as a division of ACS, InfoRLife is the only pure-play B2B dossier developer and CDMO"
+   },
+   "country": {
+    "url": "https://www.zefix.ch/ZefixREST/api/v1/firm/662342.json",
+    "name": "Zefix - Swiss Central Business Name Index",
+    "kind": "registry",
+    "as_of": null,
+    "evidence": "InfoRLife SA; legalSeat Brusio; address Casai, 7748 Campascio, CH; UID CHE-109.439.615"
+   },
+   "business_model": {
+    "url": "https://www.bcpartners.com/news/bc-partners-to-invest-in-inforlife-in-partnership-with-italys-acs-dobfar/",
+    "name": "BC Partners",
+    "kind": "sponsor",
+    "as_of": "2026-07-28",
+    "evidence": "InfoRLife is the only pure-play B2B dossier developer and CDMO specialising in the ready-to-use IV infusion bag market"
+   }
+  },
+  "holding": {
+   "sponsor": "BC Partners",
+   "status_note": "Agreed July 2026 to acquire a co-control stake in partnership with ACS Dobfar (BC Partners Fund XII)",
+   "asset_class": "Private equity",
+   "value_creation_plan": "In partnership with ACS, BC Partners will help the company accelerate growth by investing significantly in R&D, broadening its product pipeline, driving operational excellence, and pursuing M&A.",
+   "value_creation_source_url": "https://www.bcpartners.com/news/bc-partners-to-invest-in-inforlife-in-partnership-with-italys-acs-dobfar/",
+   "notes": "Deal type not set: BC Partners describes a co-control stake (joint control with ACS Dobfar). Co-control stake acquired from founder and CEO Sergio Dusci and the founding families of ACS Dobfar; terms not disclosed. Matt Evans and Marco Castelli (Partners) quoted. Status left blank: completion not confirmed in the release."
+  }
+ },
+ {
+  "name": "Cyrus",
+  "website": "https://www.cyrus-herez.fr/",
+  "description": "Cyrus is the leading independent wealth management group in France; through Cyrus Herez (wealth management), Amplegest (asset management) and Eternam (real estate) it provides a tailored offering to a high-net-worth clientele.",
+  "sector": "Financial Services",
+  "subsector": "Independent wealth management / private banking alternative (France)",
+  "country": "France",
+  "founded_year": 1989,
+  "business_model": "B2C (wealth management and advisory for high-net-worth families, entrepreneurs and professionals)",
+  "employees": 500,
+  "employees_text": "more than 500 employees serving over 5,000 families",
+  "employees_as_of": "2025-10-22",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Meyer Azogui",
+    "title": "Président du groupe Cyrus",
+    "source_url": "http://www.cyrus-herez.fr/gouvernance/",
+    "source_kind": "company",
+    "evidence": "Le comité exécutif | Meyer azogui | Président du groupe Cyrus"
+   },
+   {
+    "role": "cfo",
+    "name": "Matthieu Enjuanes",
+    "title": "Directeur Administratif et Financier du groupe Cyrus",
+    "source_url": "http://www.cyrus-herez.fr/gouvernance/",
+    "source_kind": "company",
+    "evidence": "Matthieu enjuanes | Directeur Administratif et Financier du groupe Cyrus"
+   },
+   {
+    "role": "managing_director",
+    "name": "David Intins",
+    "title": "Directeur Général de Cyrus Herez",
+    "source_url": "http://www.cyrus-herez.fr/gouvernance/",
+    "source_kind": "company",
+    "evidence": "David intins | Directeur Général de Cyrus Herez"
+   },
+   {
+    "role": "other",
+    "name": "Patrick Ganansia",
+    "title": "Vice-Président du groupe Cyrus",
+    "source_url": "http://www.cyrus-herez.fr/gouvernance/",
+    "source_kind": "company",
+    "evidence": "Patrick ganansia | Vice-Président du groupe Cyrus"
+   },
+   {
+    "role": "other",
+    "name": "Peggy Charmette",
+    "title": "Directrice de l'Organisation et des Projets du groupe Cyrus",
+    "source_url": "http://www.cyrus-herez.fr/gouvernance/",
+    "source_kind": "company",
+    "evidence": "Peggy charmette | Directrice de l'Organisation et des Projets du groupe Cyrus"
+   }
+  ],
+  "notes": "Head office 50 boulevard Haussmann, 75009 Paris. Company site (data 2026): more than 500 professionals, more than EUR 22bn of assets, more than 25 offices, 43% of capital held by employees; 'au service de vos projets depuis 1989'. PAI announced exclusive negotiations on 22 October 2025 to acquire a majority stake (management reinvesting significantly; Bridgepoint, minority shareholder since 2020, selling), closing expected Q2 2026; PAI lists the investment as April 2026, PAI Partners VIII. The PAI release named Azogui and Ganansia Co-Presidents; the company's current governance page lists them as Président and Vice-Président. Assets under management are not revenue; no revenue or EBITDA published.",
+  "sources": {
+   "description": {
+    "url": "https://www.paipartners.com/mediaitem/pai-partners-enters-into-exclusive-negotiations-to-acquire-cyrus/",
+    "name": "PAI Partners",
+    "kind": "sponsor",
+    "as_of": "2025-10-22",
+    "evidence": "Within the Cyrus Group, Cyrus Herez (wealth management), Amplegest (asset management), and Eternam (real estate), and soon Flandrin (private equity ...), provide a tailored offering to a high-net-worth clientele."
+   },
+   "country": {
+    "url": "https://www.cyrus-herez.fr/",
+    "name": "Cyrus Herez",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Siège social | 50 Boulevard Haussmann | 75009 PARIS"
+   },
+   "founded_year": {
+    "url": "https://www.cyrus-herez.fr/",
+    "name": "Cyrus Herez",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "groupe au service de vos projets depuis 1989"
+   },
+   "business_model": {
+    "url": "https://www.paipartners.com/mediaitem/pai-partners-enters-into-exclusive-negotiations-to-acquire-cyrus/",
+    "name": "PAI Partners",
+    "kind": "sponsor",
+    "as_of": "2025-10-22",
+    "evidence": "an expanding customer base of more than 30,000 institutional and private clients ... a resilient model with a high share of recurring revenue"
+   },
+   "employees": {
+    "url": "https://www.paipartners.com/mediaitem/pai-partners-enters-into-exclusive-negotiations-to-acquire-cyrus/",
+    "name": "PAI Partners",
+    "kind": "sponsor",
+    "as_of": "2025-10-22",
+    "evidence": "With 36 years of experience and more than 25 offices in France and abroad, the group brings together more than 500 employees serving over 5,000 families."
+   }
+  },
+  "holding": {
+   "sponsor": "PAI Partners",
+   "status": "current",
+   "status_note": "Majority stake (PAI Partners VIII), investment dated April 2026; management reinvested, Bridgepoint sold its minority stake",
+   "asset_class": "Private equity",
+   "deal_type": "Buyout",
+   "value_creation_plan": "With PAI's support, the group would drive sustainable organic growth, increase product distribution and further build its platform through targeted consolidation opportunities across France and Europe.",
+   "value_creation_source_url": "https://www.paipartners.com/mediaitem/pai-partners-enters-into-exclusive-negotiations-to-acquire-cyrus/",
+   "notes": "Frédéric Stévenin (Co-Managing Partner) and Guillaume Leblanc (Partner) quoted. PAI investments page: investment date April 2026, fund PAI Partners VIII, HQ France."
+  }
+ },
+ {
+  "name": "TikTok USDS JV",
+  "website": "https://usdsjv.tiktok.com/",
+  "description": "TikTok USDS Joint Venture LLC is the majority American-owned joint venture, established in compliance with the Executive Order of September 25, 2025, that secures U.S. user data, apps and the TikTok algorithm and holds decision-making authority for U.S. trust and safety policies and content moderation.",
+  "sector": "Media & Entertainment",
+  "subsector": "Social media / short-form video platform (U.S. data security and operations)",
+  "country": "United States",
+  "founded_year": 2026,
+  "email": "press@tiktokusds.com",
+  "email_type": "press",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Adam Presser",
+    "title": "Chief Executive Officer",
+    "source_url": "https://usdsjv.tiktok.com/about-us",
+    "source_kind": "company",
+    "evidence": "Leadership | Adam Presser | Chief Executive Officer"
+   },
+   {
+    "role": "other",
+    "name": "Will Farrell",
+    "title": "Chief Security Officer",
+    "source_url": "https://usdsjv.tiktok.com/about-us",
+    "source_kind": "company",
+    "evidence": "Will Farrell | Chief Security Officer"
+   },
+   {
+    "role": "other",
+    "name": "Suzy Loftus",
+    "title": "Head of Trust & Safety",
+    "source_url": "https://usdsjv.tiktok.com/about-us",
+    "source_kind": "company",
+    "evidence": "Suzy Loftus | Head of Trust & Safety"
+   },
+   {
+    "role": "other",
+    "name": "AnnaLou Tirol",
+    "title": "General Counsel",
+    "source_url": "https://usdsjv.tiktok.com/about-us",
+    "source_kind": "company",
+    "evidence": "AnnaLou Tirol | General Counsel"
+   }
+  ],
+  "notes": "Established January 23, 2026. Three managing investors - Silver Lake, Oracle and MGX - each hold 15%; ByteDance retains 19.9%; other consortium members include Dell Family Office, Vastmere (Susquehanna affiliate), Alpha Wave Partners, Revolution, Merritt Way (Dragoneer partners), Via Nova (General Atlantic affiliate), Virgo LI and NJJ Capital. Seven-member board includes Silver Lake Co-CEO Egon Durban. No CFO, employee count or financials published by the JV.",
+  "sources": {
+   "description": {
+    "url": "https://newsroom.tiktok.com/announcement-from-the-new-tiktok-usds-joint-venture-llc?lang=en",
+    "name": "TikTok Newsroom (official JV announcement)",
+    "kind": "company",
+    "as_of": "2026-01-23",
+    "evidence": "TikTok USDS Joint Venture's mandate is to secure U.S. user data, apps and the algorithm through comprehensive data privacy and cybersecurity measures. It will safeguard the U.S. content ecosystem through robust trust and safety policies and content moderation"
+   },
+   "website": {
+    "url": "https://usdsjv.tiktok.com/",
+    "name": "TikTok USDS Joint Venture",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "© 2026 TikTok USDS Joint Venture LLC. All Rights Reserved"
+   },
+   "founded_year": {
+    "url": "https://newsroom.tiktok.com/announcement-from-the-new-tiktok-usds-joint-venture-llc?lang=en",
+    "name": "TikTok Newsroom",
+    "kind": "company",
+    "as_of": "2026-01-23",
+    "evidence": "Today, TikTok USDS Joint Venture LLC has been established in compliance with the Executive Order signed by President Trump on September 25, 2025"
+   },
+   "country": {
+    "url": "https://usdsjv.tiktok.com/about-us",
+    "name": "TikTok USDS Joint Venture",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "About | Operating a portfolio of products in the United States"
+   },
+   "email": {
+    "url": "https://usdsjv.tiktok.com/",
+    "name": "TikTok USDS Joint Venture",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "For press inquiries: press@tiktokusds.com"
+   }
+  },
+  "holding": {
+   "sponsor": "Silver Lake",
+   "status": "current",
+   "status_note": "One of three managing investors with a 15% stake since January 2026",
+   "asset_class": "Private equity",
+   "deal_type": "Minority stake",
+   "value_creation_plan": "The Joint Venture will secure U.S. user data, apps and the algorithm, while driving business growth for TikTok, CapCut, and additional apps and websites in the U.S.",
+   "value_creation_source_url": "https://newsroom.tiktok.com/announcement-from-the-new-tiktok-usds-joint-venture-llc?lang=en",
+   "notes": "Value-creation text is the JV mandate from its own announcement; Silver Lake published no separate plan. Silver Lake portfolio page: partner since 2026, strategy 'Silver Lake Partners & Alpine', current investment, Content & Entertainment. Egon Durban (Silver Lake Co-CEO) sits on the board."
+  }
+ },
+ {
+  "name": "Sealed Air",
+  "website": "https://www.sealedair.com/",
+  "description": "Sealed Air Corporation is a leading global provider of packaging solutions that integrate sustainable, high-performance materials, automation, equipment and services, designing, manufacturing and delivering packaging that preserves food, protects goods and automates packaging processes.",
+  "sector": "Industrials",
+  "subsector": "Food and protective packaging (CRYOVAC, SEALED AIR, LIQUIBOX, AUTOBAG, BUBBLE WRAP)",
+  "country": "United States",
+  "business_model": "B2B",
+  "employees": 16100,
+  "employees_text": "approximately 16,100 employees who serve customers in 119 countries/territories",
+  "employees_as_of": "2026-03-23",
+  "revenue": 5360000000,
+  "revenue_currency": "USD",
+  "revenue_period": "FY2025 (12 months to 2025-12-31)",
+  "ebitda": 1134300000,
+  "ebitda_currency": "USD",
+  "ebitda_period": "FY2025 (12 months to 2025-12-31)",
+  "ebitda_basis": "adjusted",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Dustin J. Semach",
+    "title": "President and Chief Executive Officer",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1012100/000119312526148959/d86788dex991.htm",
+    "source_kind": "filing",
+    "evidence": "said Sealed Air President and Chief Executive Officer Dustin Semach (8-K Exhibit 99.1, April 9, 2026)"
+   },
+   {
+    "role": "cfo",
+    "name": "Kristen Actis-Grande",
+    "title": "Chief Financial Officer",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1012100/000101210026000016/see-20251231.htm",
+    "source_kind": "filing",
+    "evidence": "Kristen Actis-Grande / Chief Financial Officer | 44 | 2025 | 2025 (10-K FY2025, Information About Our Executive Officers)"
+   },
+   {
+    "role": "other",
+    "name": "Russell K. Grissett",
+    "title": "President, Food",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1012100/000101210026000016/see-20251231.htm",
+    "source_kind": "filing",
+    "evidence": "Russell K. Grissett / President, Food"
+   },
+   {
+    "role": "other",
+    "name": "Byron J. Racki",
+    "title": "President, Protective",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1012100/000101210026000016/see-20251231.htm",
+    "source_kind": "filing",
+    "evidence": "Byron J. Racki / President, Protective"
+   }
+  ],
+  "notes": "Taken private by funds affiliated with CD&R: agreement announced November 17, 2025 at an enterprise value of $10.3 billion ($42.15 per share in cash); completed April 9, 2026; NYSE listing (SEE) ended. Headquartered in Charlotte, North Carolina. 10-K: as of December 31, 2025 approximately 6,200 employees in the U.S. and 9,900 outside the U.S. FY2025 net sales $5,360m (2024: $5,393m); Non-GAAP consolidated Adjusted EBITDA $1,134.3m (2024: $1,110.6m); net earnings $441m. Leadership is as of the 10-K (filed March 2, 2026) and the April 2026 completion release; the company site blocked automated reads.",
+  "sources": {
+   "description": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1012100/000119312526148959/d86788dex991.htm",
+    "name": "Sealed Air 8-K Exhibit 99.1 (SEC)",
+    "kind": "filing",
+    "as_of": "2026-04-09",
+    "evidence": "Sealed Air Corporation is a leading global provider of packaging solutions that integrate sustainable, high-performance materials, automation, equipment and services."
+   },
+   "country": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1012100/000119312526148959/d86788dex991.htm",
+    "name": "Sealed Air 8-K Exhibit 99.1 (SEC)",
+    "kind": "filing",
+    "as_of": "2026-04-09",
+    "evidence": "Sealed Air will remain headquartered in Charlotte, North Carolina, and will continue to operate under the Sealed Air name."
+   },
+   "business_model": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1012100/000119312526148959/d86788dex991.htm",
+    "name": "Sealed Air 8-K Exhibit 99.1 (SEC)",
+    "kind": "filing",
+    "as_of": "2026-04-09",
+    "evidence": "Sealed Air Corporation (\"Sealed Air\" or the \"Company\"), a leading global provider of food and protective packaging solutions"
+   },
+   "employees": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1012100/000119312526118491/d116134dex991.htm",
+    "name": "Sealed Air 8-K Exhibit 99.1 (SEC)",
+    "kind": "filing",
+    "as_of": "2026-03-23",
+    "evidence": "In 2025, Sealed Air generated $5.4 billion in net sales and has approximately 16,100 employees who serve customers in 119 countries/territories."
+   },
+   "revenue": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1012100/000101210026000010/q42025ex991.htm",
+    "name": "Sealed Air Q4 and Full Year 2025 results, 8-K Exhibit 99.1 (SEC)",
+    "kind": "filing",
+    "as_of": "2026-03-02",
+    "evidence": "Net Sales | $1,401 | $1,373 | 2.1% | (0.7)% | | $5,360 | $5,393 (In millions; Full Year 2025 | 2024)"
+   },
+   "ebitda": {
+    "url": "https://www.sec.gov/Archives/edgar/data/1012100/000101210026000010/q42025ex991.htm",
+    "name": "Sealed Air Q4 and Full Year 2025 results, 8-K Exhibit 99.1 (SEC)",
+    "kind": "filing",
+    "as_of": "2026-03-02",
+    "evidence": "Non-GAAP Consolidated Adjusted EBITDA | | $ | 278.0 | | | $ | 270.8 | | | $ | 1,134.3 | | | $ | 1,110.6 (Year Ended December 31, 2025 | 2024, in millions)"
+   }
+  },
+  "holding": {
+   "sponsor": "Clayton, Dubilier & Rice, LLC",
+   "status": "current",
+   "status_note": "Acquired (take-private) April 9, 2026 at a $10.3bn enterprise value",
+   "asset_class": "Private equity",
+   "deal_type": "Take-private",
+   "value_creation_plan": "CD&R is committed to supporting Sealed Air's growth across its Food and Protective businesses, building on the Company's legacy of delivering high-performance materials, automated packaging equipment and world-class service.",
+   "value_creation_source_url": "https://www.sec.gov/Archives/edgar/data/1012100/000119312526148959/d86788dex991.htm",
+   "notes": "Rob Volpe, Partner at CD&R, quoted on completion. CD&R portfolio page lists investment date 2026, region North America."
+  }
+ },
+ {
+  "name": "Fleet",
+  "website": "https://fleetdatacenters.com/",
+  "description": "Fleet Data Centers is a platform dedicated to the development of mega-scale data center campuses with capacities of 500 MW or more for single-user customers, providing an end-to-end portfolio of services from early-stage design through construction to ongoing operations of rack-ready data centers.",
+  "sector": "Technology / Digital infrastructure",
+  "subsector": "Hyperscale data center campus development (500 MW+)",
+  "country": "United States",
+  "founded_year": 2025,
+  "business_model": "B2B (build-to-suit data center campuses for single-user hyperscale customers)",
+  "leaders": [
+   {
+    "role": "other",
+    "name": "Chris Vonderhaar",
+    "title": "President",
+    "source_url": "https://finance.yahoo.com/news/tract-capital-introduces-fleet-data-150000821.html",
+    "source_kind": "wire",
+    "evidence": "Chris Vonderhaar joins Fleet Data Centers as President, most recently coming from Google Cloud where he served as Vice President of Demand and Supply Management."
+   },
+   {
+    "role": "other",
+    "name": "Grant van Rooyen",
+    "title": "Executive Chairman of Fleet (CEO of Tract Capital)",
+    "source_url": "https://finance.yahoo.com/news/tract-capital-introduces-fleet-data-150000821.html",
+    "source_kind": "wire",
+    "evidence": "said Tract Capital CEO and Executive Chairman of Fleet, Grant van Rooyen."
+   }
+  ],
+  "notes": "Introduced by Tract Capital on January 8, 2025 (Denver, CO). Website lists 3200 Cherry Creek S Drive, Suite 500, Denver, CO 80209. Permira portfolio page: investment year 2026, status current, USA. No CEO is named: the January 2025 launch release (GlobeNewswire, read via its Yahoo Finance syndication) names Chris Vonderhaar as President, to whom van Rooyen said he would 'entrust the Fleet business', and Grant van Rooyen as Tract Capital CEO and Executive Chairman of Fleet; the company site renders its team page by script and could not be read. No employee, revenue or EBITDA figures published.",
+  "sources": {
+   "description": {
+    "url": "https://www.permira.com/portfolio/our-portfolio/fleet/",
+    "name": "Permira",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "Fleet is a newly launched platform dedicated to the development of mega-scale data center campuses with capacities of 500 MW or more, specifically designed for single-user customers. Fleet Data Centers provides an end-to-end portfolio of data center services, from early-stage design, through construction, to ongoing operations and support of fully operational, rack-ready data centers."
+   },
+   "country": {
+    "url": "https://fleetdatacenters.com/",
+    "name": "Fleet Data Centers",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "3200 Cherry Creek S Drive, Suite 500, Denver, CO 80209"
+   },
+   "founded_year": {
+    "url": "https://www.globenewswire.com/news-release/2025/01/08/3006397/0/en/Tract-Capital-introduces-Fleet-Data-Centers-a-new-mega-scale-data-center-development-platform-focused-on-customized-500MW-campuses.html",
+    "name": "GlobeNewswire (Tract Capital release)",
+    "kind": "wire",
+    "as_of": "2025-01-08",
+    "evidence": "Denver, CO, Jan. 08, 2025 (GLOBE NEWSWIRE) -- Tract Capital ... introduces Fleet Data Centers to programmatically meet the next phase of hyperscale data center growth."
+   },
+   "business_model": {
+    "url": "https://www.permira.com/portfolio/our-portfolio/fleet/",
+    "name": "Permira",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "mega-scale data center campuses with capacities of 500 MW or more, specifically designed for single-user customers"
+   }
+  },
+  "holding": {
+   "sponsor": "Permira",
+   "status": "current",
+   "status_note": "Invested in 2026",
+   "asset_class": "Private equity",
+   "notes": "Permira portfolio page lists sector Technology, USA, status Current, investment year 2026, '500+ MW campuses'; related team Pierre Pozzo, Michail Zekkos, Kush Patel, Stan Yao, Gabriel Cohen. No Permira announcement of terms found."
+  }
+ },
+ {
+  "name": "Gridsight",
+  "website": "https://www.gridsight.ai/",
+  "description": "Gridsight is an AI-powered capacity management platform for utilities that gives them a unified view of available network capacity and the tools to act on it in real time, built on a continuously updated, utility-specific Foundational Grid Model.",
+  "sector": "Technology",
+  "subsector": "Grid capacity management software for electric utilities (energy transition / AI)",
+  "business_model": "B2B (software platform sold to electric utilities)",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Brendan Banfield",
+    "title": "Co-founder and CEO",
+    "source_url": "https://www.pv-magazine-australia.com/press-releases/gridsight-raises-26-million-series-b-to-unlock-electric-grid-capacity-and-affordability/",
+    "source_kind": "wire",
+    "evidence": "\"The grid's capacity challenge is not uniform,\" said Brendan Banfield, Co-founder and CEO of Gridsight."
+   }
+  ],
+  "notes": "Raised a USD 26m Series B (reported as A$36m in Australian press) led by Insight Partners, with Galvanize and existing investors Airtree, Energy Transition Ventures and Aera VC, announced 1 September 2026, to accelerate US expansion. Founded in Australia (press release: 'In Australia, where Gridsight was founded'); headquarters not stated - careers page lists roles in Sydney, Melbourne, Brisbane, San Francisco, Austin and London. US utility customers include Xcel Energy and United Illuminating (Avangrid); Endeavour Energy partner since 2021. No revenue, EBITDA, headcount or CFO published.",
+  "sources": {
+   "description": {
+    "url": "https://www.pv-magazine-australia.com/press-releases/gridsight-raises-26-million-series-b-to-unlock-electric-grid-capacity-and-affordability/",
+    "name": "Gridsight press release (pv magazine Australia press releases)",
+    "kind": "wire",
+    "as_of": "2026-09-01",
+    "evidence": "Gridsight, the AI-powered capacity management platform for utilities ... Gridsight's intelligent platform gives utilities a unified view of available network capacity and the tools to act on it in real-time."
+   },
+   "business_model": {
+    "url": "https://www.pv-magazine-australia.com/press-releases/gridsight-raises-26-million-series-b-to-unlock-electric-grid-capacity-and-affordability/",
+    "name": "Gridsight press release (pv magazine Australia press releases)",
+    "kind": "wire",
+    "as_of": "2026-09-01",
+    "evidence": "Gridsight is already working with leading US utilities, including Xcel Energy and United Illuminating, an Avangrid subsidiary."
+   },
+   "website": {
+    "url": "https://www.gridsight.ai/",
+    "name": "Gridsight",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "2026 Gridsight. All rights reserved."
+   }
+  },
+  "holding": {
+   "sponsor": "Insight Partners",
+   "status": "current",
+   "status_note": "Led USD 26m Series B in September 2026",
+   "asset_class": "Venture capital",
+   "deal_type": "Venture round",
+   "value_creation_plan": "The round will accelerate Gridsight's US expansion while supporting continued growth in Australia; Insight said Gridsight's platform provides the intelligence, visibility and control needed to unlock latent capacity, connect more load and stay ahead of demand without waiting for new infrastructure.",
+   "value_creation_source_url": "https://www.pv-magazine-australia.com/press-releases/gridsight-raises-26-million-series-b-to-unlock-electric-grid-capacity-and-affordability/",
+   "notes": "Rachel Geller, Managing Director at Insight Partners, quoted."
+  }
+ },
+ {
+  "name": "AVK Power Solutions",
+  "website": "https://www.avk-seg.com/",
+  "description": "AVK is one of the largest and fastest-growing suppliers of power solutions for data centres and AI infrastructure in Europe and the UK, designing, installing and maintaining back-up power generators, behind-the-meter turnkey energy infrastructure including microgrids, and modular electrical power units.",
+  "sector": "Industrials / Energy infrastructure",
+  "subsector": "Data center power solutions (back-up generation, microgrids, behind-the-meter power)",
+  "country": "United Kingdom",
+  "founded_year": 1989,
+  "business_model": "B2B",
+  "email": "sales@avk-seg.com",
+  "email_type": "generic",
+  "employees": 253,
+  "employees_text": "The average monthly number of employees, including the director, during the year was ... Group 2025: 253",
+  "employees_as_of": "2025-03-31",
+  "revenue": 345950854,
+  "revenue_currency": "GBP",
+  "revenue_period": "FY2025 (12 months to 2025-03-31)",
+  "ebitda": 31000000,
+  "ebitda_currency": "GBP",
+  "ebitda_period": "FY2025 (12 months to 2025-03-31)",
+  "ebitda_basis": "reported",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Ben Pritchard",
+    "title": "Chief Executive Officer, AVK",
+    "source_url": "https://www.partnersgroup.com/en/news-and-views/press-releases/investment-news/detail?news_id=80e9420b-67c0-43f1-b298-e0dfa2aba73e",
+    "source_kind": "sponsor",
+    "evidence": "Ben Pritchard, Chief Executive Officer, AVK, says: \"Speed-to-power is now a defining opportunity for European data center operators.\""
+   }
+  ],
+  "notes": "UK group parent filing accounts is AVK/SEG Limited (Companies House 02412510, formerly AVK/SEG (UK) Limited, incorporated 10 August 1989, Maidenhead). FY to 31 March 2025: turnover GBP 345,950,854 (2024: 325,850,833); EBITDA GBP 31m (2024: 23m) as a key financial metric in the strategic report (company's own EBITDA, no adjustments stated); net assets GBP 59m. Management buyout in 2023. Partners Group agreed (6 August 2026) to acquire a majority stake, planning to invest over USD 1bn of equity initially; management retains a minority stake. AVK has delivered more than 20,000 projects and installed about 3.5 GW. Company site names a COO only by first name, so no COO recorded.",
+  "sources": {
+   "description": {
+    "url": "https://www.partnersgroup.com/en/news-and-views/press-releases/investment-news/detail?news_id=80e9420b-67c0-43f1-b298-e0dfa2aba73e",
+    "name": "Partners Group (About AVK)",
+    "kind": "sponsor",
+    "as_of": "2026-08-06",
+    "evidence": "AVK is one of the largest and fastest-growing suppliers of innovative power solutions for data centres and AI infrastructure in Europe and the UK. We specialise in all aspects of design, planning, implementation, and continuing maintenance."
+   },
+   "country": {
+    "url": "https://www.partnersgroup.com/en/news-and-views/press-releases/investment-news/detail?news_id=80e9420b-67c0-43f1-b298-e0dfa2aba73e",
+    "name": "Partners Group",
+    "kind": "sponsor",
+    "as_of": "2026-08-06",
+    "evidence": "Headquartered in the UK, AVK designs, installs, and maintains data center power solutions"
+   },
+   "founded_year": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/02412510",
+    "name": "Companies House - AVK/SEG Limited",
+    "kind": "registry",
+    "as_of": null,
+    "evidence": "AVK/SEG LIMITED ... Incorporated on 10 August 1989 ... Previous company names AVK/SEG (UK) LIMITED (registry incorporation date of the UK group parent)"
+   },
+   "business_model": {
+    "url": "https://www.partnersgroup.com/en/news-and-views/press-releases/investment-news/detail?news_id=80e9420b-67c0-43f1-b298-e0dfa2aba73e",
+    "name": "Partners Group",
+    "kind": "sponsor",
+    "as_of": "2026-08-06",
+    "evidence": "AVK's solutions help solve this through providing operators with mission-critical access to on-site power generation at accelerated timelines."
+   },
+   "email": {
+    "url": "https://www.avk-seg.com/",
+    "name": "AVK",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Get in touch | T. +44 (0)300 3730912 | E. sales@avk-seg.com"
+   },
+   "employees": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/02412510/filing-history/MzQ5MzQyNzI2OWFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - AVK/SEG Limited group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-03-31",
+    "evidence": "The average monthly number of employees, including the director, during the year was as follows: ... Group 2025 No. 253 (2024: 191)"
+   },
+   "revenue": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/02412510/filing-history/MzQ5MzQyNzI2OWFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - AVK/SEG Limited group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-03-31",
+    "evidence": "Turnover ... 345,950,854 (2025 £) 325,850,833 (2024 £); Key Financial Metrics: Revenue - £346m (2024: £326m)"
+   },
+   "ebitda": {
+    "url": "https://find-and-update.company-information.service.gov.uk/company/02412510/filing-history/MzQ5MzQyNzI2OWFkaXF6a2N4/document?format=pdf&download=0",
+    "name": "Companies House - AVK/SEG Limited group accounts FY2025",
+    "kind": "registry",
+    "as_of": "2025-03-31",
+    "evidence": "Key Financial Metrics ... EBITDA - £31m (2024: £23m) representing an increase of 35%"
+   }
+  },
+  "holding": {
+   "sponsor": "Partners Group",
+   "status_note": "Agreed August 2026 to acquire a majority stake; management retains a minority stake",
+   "asset_class": "Infrastructure",
+   "deal_type": "Buyout",
+   "value_creation_plan": "Alongside management, Partners Group has ambitions to transform AVK into an infrastructure platform offering long-term Energy-as-a-Service solutions to data centers, principally through microgrids, with AVK building and owning power assets and securing long-term contracted offtake agreements.",
+   "value_creation_source_url": "https://www.partnersgroup.com/en/news-and-views/press-releases/investment-news/detail?news_id=80e9420b-67c0-43f1-b298-e0dfa2aba73e",
+   "notes": "Invested through Partners Group's fourth direct infrastructure program; plans to initially invest over USD 1 billion of equity, supplemented by debt financing. Nicholas Pepper (Managing Director, Infrastructure) quoted. Status left blank: completion not confirmed in the release."
+  }
+ },
+ {
+  "name": "Flowa",
+  "website": "https://www.flowa.se/",
+  "description": "Flowa is a leading provider of engineered water and energy infrastructure solutions in the UK and the Nordics, specialising in temporary pumping, monitoring and control technology, water treatment and pumping station services for owners and operators of water, wastewater and energy infrastructure.",
+  "sector": "Industrials / Business Services",
+  "subsector": "Engineered water and wastewater infrastructure services (pump hire, monitoring and control, treatment)",
+  "country": "Sweden",
+  "business_model": "B2B (services and equipment for water utilities and infrastructure operators)",
+  "email": "info@flowa.se",
+  "email_type": "generic",
+  "employees": 340,
+  "employees_text": "EMPLOYEES 340",
+  "employees_as_of": "2026-06-10",
+  "revenue": 130000000,
+  "revenue_currency": "EUR",
+  "revenue_period": "FY2025",
+  "leaders": [
+   {
+    "role": "ceo",
+    "name": "Simon Göthberg",
+    "title": "CEO",
+    "source_url": "https://www.flowa.se/about-flowa/team/",
+    "source_kind": "company",
+    "evidence": "Team | Simon Göthberg | CEO"
+   },
+   {
+    "role": "cfo",
+    "name": "Erik Rothman",
+    "title": "CFO",
+    "source_url": "https://www.flowa.se/about-flowa/team/",
+    "source_kind": "company",
+    "evidence": "Erik Rothman | CFO"
+   },
+   {
+    "role": "managing_director",
+    "name": "Peter Lewington",
+    "title": "Managing Director, UK",
+    "source_url": "https://www.flowa.se/about-flowa/team/",
+    "source_kind": "company",
+    "evidence": "Peter Lewington | Managing Director, UK"
+   },
+   {
+    "role": "other",
+    "name": "Luke Beattie",
+    "title": "Director, UK operations",
+    "source_url": "https://www.flowa.se/about-flowa/team/",
+    "source_kind": "company",
+    "evidence": "Luke Beattie | Director, UK operations"
+   }
+  ],
+  "notes": "Legal entity Flowa Technology AB, head office Stockholm (c/o Vestum, Kungsgatan 26). Formerly the Flow Technology (previously 'Water') segment of Nasdaq Stockholm-listed Vestum (renamed Cynca Nordic), created in 2021 through the acquisition of Lakers Group; carved out as a separate entity in June 2026. Nordic Capital announced on 10 June 2026 an agreement to acquire Flowa from Vestum (completion subject to regulatory approvals). Revenue (EUR 130m, 2025) and headcount (340) are as stated on Nordic Capital's portfolio page; the page gives no date for the headcount, so the release date is used. No founded year recorded: the platform dates from 2021 (segment created by Vestum through the Lakers Group acquisition) and became a separate entity in June 2026, while its operating subsidiaries are older.",
+  "sources": {
+   "description": {
+    "url": "https://www.flowa.se/",
+    "name": "Flowa",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Flowa is a leading provider of engineered water and energy infrastructure solutions in the UK and the Nordics, specialising in temporary pumping, monitoring and control technology, water treatment and pumping station services for owners and operators of water, wastewater and energy infrastructure."
+   },
+   "country": {
+    "url": "https://www.nordiccapital.com/portfolio-cases/investments/flowa/",
+    "name": "Nordic Capital portfolio page",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "HEAD OFFICE | Stockholm"
+   },
+   "business_model": {
+    "url": "https://www.nordiccapital.com/insights/press-releases/nordic-capital-to-acquire-flowa-a-leading-provider-of-engineered-water-infrastructure-solutions/",
+    "name": "Nordic Capital",
+    "kind": "sponsor",
+    "as_of": "2026-06-10",
+    "evidence": "Flowa is well-positioned to serve water utilities and other players in the value chain, both as they work to upgrade ageing infrastructure and when failures require rapid response"
+   },
+   "email": {
+    "url": "https://www.flowa.se/",
+    "name": "Flowa",
+    "kind": "company",
+    "as_of": null,
+    "evidence": "Contact | c/o Vestum, Kungsgatan 26 | 111 35 Stockholm, Sweden | info@flowa.se"
+   },
+   "employees": {
+    "url": "https://www.nordiccapital.com/portfolio-cases/investments/flowa/",
+    "name": "Nordic Capital portfolio page",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "REVENUES 2025 | EUR 130 million | EMPLOYEES | 340 | INVESTMENT DATE | 2026 | HEAD OFFICE | Stockholm"
+   },
+   "revenue": {
+    "url": "https://www.nordiccapital.com/portfolio-cases/investments/flowa/",
+    "name": "Nordic Capital portfolio page",
+    "kind": "sponsor",
+    "as_of": null,
+    "evidence": "REVENUES 2025 | EUR 130 million"
+   }
+  },
+  "holding": {
+   "sponsor": "Nordic Capital",
+   "status": "current",
+   "status_note": "Agreed June 2026 to acquire Flowa Technology AB from Vestum AB (publ) (carve-out)",
+   "asset_class": "Private equity",
+   "deal_type": "Carve-out",
+   "value_creation_plan": "Nordic Capital will work closely with the management team to accelerate investments in Flowa's service capabilities, technology and geographic reach, with the ambition of building a leading platform for engineered water infrastructure solutions across the UK and the Nordics, organically and through selective acquisitions.",
+   "value_creation_source_url": "https://www.nordiccapital.com/insights/press-releases/nordic-capital-to-acquire-flowa-a-leading-provider-of-engineered-water-infrastructure-solutions/",
+   "notes": "Andreas Näsvik (Partner, Nordic Capital Advisors) quoted. Services & Industrial Tech sector. Portfolio page lists investment date 2026 and management Simon Göthberg (CEO)."
+  }
+ }
+]

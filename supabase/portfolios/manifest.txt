@@ -5,12 +5,14 @@ ardian.sql
 bain-capital.sql
 bc-partners.sql
 blackstone.sql
+brookfield.sql
 carlyle.sql
 cdr.sql
 cinven.sql
 cvc.sql
 eqt.sql
 general-atlantic.sql
+genstar.sql
 gtcr.sql
 hellman-friedman.sql
 hig.sql
@@ -23,6 +25,8 @@ permira.sql
 platinum-equity.sql
 silver-lake.sql
 summit-partners.sql
+ta-associates.sql
+tcv.sql
 thoma-bravo.sql
 tpg.sql
 triton.sql

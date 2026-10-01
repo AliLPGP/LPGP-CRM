@@ -17,6 +17,7 @@ export const INTEL_NAV: { href: string; label: string; match: (path: string, sea
   { href: "/funds", label: "Funds", match: (p) => p.startsWith("/funds") },
   { href: "/database/deals", label: "Deals", match: (p) => p.startsWith("/database/deals") },
   { href: "/database/portcos", label: "Portfolio companies", match: (p) => p.startsWith("/database/portcos") },
+  { href: "/database/commitments", label: "LP commitments", match: (p) => p.startsWith("/database/commitments") },
   // Sports is an asset class: it lives under that tab, not beside it.
   { href: "/database/asset-classes", label: "Asset classes", match: (p) => p.startsWith("/database/asset-classes") || p.startsWith("/database/sports") || p.startsWith("/database/lenders") || p.startsWith("/database/borrowers") },
   { href: "/database/market", label: "Service providers", match: (p) => p.startsWith("/database/market") || p.startsWith("/database/providers") },

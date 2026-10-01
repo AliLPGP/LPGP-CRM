@@ -183,6 +183,9 @@ export function FirmTable({ firms, limit }: { firms: DirectoryRecord[]; limit?: 
   );
 }
 
+/** An LP's name without its trailing parenthetical (the full name stays in the tooltip). */
+export const shortName = (n: string | null | undefined) => (n ?? "").replace(/\s*\([^)]*\)\s*$/, "") || (n ?? "");
+
 export function CommitmentTable({ rows, showClass = false }: { rows: NamedCommitment[]; showClass?: boolean }) {
   if (!rows.length) return <Empty>No disclosed commitments in this class yet.</Empty>;
   // Performance columns appear when any row carries them (an LP's own
@@ -212,16 +215,18 @@ export function CommitmentTable({ rows, showClass = false }: { rows: NamedCommit
         </thead>
         <tbody>
           {rows.map((c) => (
-            <tr key={c.id}>
-              <td className="whitespace-nowrap text-muted-foreground">{c.commitment_date_text ?? c.commitment_year ?? "—"}</td>
-              <td className="whitespace-nowrap">
-                {c.lp_company_id ? <Link href={`/companies/${c.lp_company_id}`} className="font-medium">{c.lp_label}</Link> : c.lp_label}
+            <tr key={c.id} className="align-top">
+              <td className="whitespace-nowrap align-top text-muted-foreground">{c.commitment_date_text ?? c.commitment_year ?? "—"}</td>
+              <td className="min-w-[180px] max-w-[260px] align-top" title={c.lp_label ?? undefined}>
+                <span className="line-clamp-2 leading-snug">
+                  {c.lp_company_id ? <Link href={`/companies/${c.lp_company_id}`} className="font-medium">{shortName(c.lp_label)}</Link> : shortName(c.lp_label)}
+                </span>
               </td>
-              <td className="max-w-[320px]">
-                {c.fund_id ? <Link href={`/funds/${c.fund_id}`}>{c.fund_label}</Link> : c.fund_label}
+              <td className="min-w-[220px] max-w-[340px] align-top" title={c.fund_label ?? undefined}>
+                <span className="line-clamp-2 leading-snug">{c.fund_id ? <Link href={`/funds/${c.fund_id}`}>{c.fund_label}</Link> : c.fund_label}</span>
               </td>
-              <td className="whitespace-nowrap">
-                {c.gp_company_id ? <Link href={`/companies/${c.gp_company_id}`}>{c.gp_label}</Link> : c.gp_label}
+              <td className="min-w-[140px] max-w-[220px] align-top" title={c.gp_label ?? undefined}>
+                <span className="line-clamp-2 leading-snug">{c.gp_company_id ? <Link href={`/companies/${c.gp_company_id}`}>{c.gp_label}</Link> : c.gp_label}</span>
               </td>
               {showClass ? <td>{c.asset_class ? classTag(c.asset_class) : null}</td> : null}
               <td className="num">{c.amount != null ? formatMoney(c.amount, c.currency) : (c.amount_text ?? "—")}</td>

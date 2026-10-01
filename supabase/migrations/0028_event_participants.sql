@@ -184,11 +184,11 @@ begin
   select count(*) into n_contacts_hit from ingest.ms_people where contact_id is not null;
 
   with ins as (
-    insert into public.contacts (company_id, first_name, last_name, full_name, job_title, email, phone, source)
+    insert into public.contacts (company_id, first_name, last_name, job_title, email, phone, source)
     select p.company_id,
            split_part(p.name, ' ', 1),
            nullif(btrim(substr(p.name, length(split_part(p.name, ' ', 1)) + 1)), ''),
-           p.name, nullif(p.title, ''), nullif(p.email, ''), nullif(p.phone, ''), 'mastersheet'
+           nullif(p.title, ''), nullif(p.email, ''), nullif(p.phone, ''), 'mastersheet'
       from ingest.ms_people p
      where p.contact_id is null and coalesce(btrim(p.name), '') <> ''
     returning id, full_name, company_id, email

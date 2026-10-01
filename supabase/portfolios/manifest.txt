@@ -27,6 +27,7 @@ pai.sql
 partners-group.sql
 permira.sql
 platinum-equity.sql
+providence.sql
 silver-lake.sql
 stone-point.sql
 summit-partners.sql

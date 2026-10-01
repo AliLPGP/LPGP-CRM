@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Mail, Phone, Link2, MapPin, Check, Minus } from "lucide-react";
 import { getContact, getNotes } from "@/lib/queries";
+import { getParticipationForContact } from "@/lib/event-participants";
+import { ContactEvents } from "@/components/events/event-history";
 import { CategoryBadge } from "@/components/category-badge";
 import { ConnectableBadge } from "@/components/directory/profile-sections";
 import { PersonAvatar } from "@/components/person-avatar";
@@ -35,7 +37,7 @@ export default async function ContactProfile({ params }: { params: Promise<{ id:
   const contact = await getContact(id);
   if (!contact) notFound();
 
-  const notes = await getNotes("contact", id);
+  const [notes, events] = await Promise.all([getNotes("contact", id), getParticipationForContact(id)]);
 
   // Profile coverage — how complete this record is.
   const coverageFields: [string, string | null][] = [
@@ -179,6 +181,15 @@ export default async function ContactProfile({ params }: { params: Promise<{ id:
           </ul>
         </div>
       </div>
+
+      {events.length ? (
+        <section className="rounded-xl border bg-card p-5">
+          <h2 className="font-semibold mb-3">
+            Events <span className="text-muted-foreground font-normal">· {events.length}</span>
+          </h2>
+          <ContactEvents rows={events} />
+        </section>
+      ) : null}
 
       {/* Editable details + notes */}
       <div className="grid gap-6 lg:grid-cols-3" data-no-print>

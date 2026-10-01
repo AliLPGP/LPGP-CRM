@@ -285,7 +285,7 @@ const cachedIndex = bigCache("directory-index-v4", buildIndex, {
 export async function getDirectoryIndex(): Promise<DirectoryIndex> {
   pendingIndex = null;
   try {
-    return await cachedIndex(await tableVersion("companies", "contacts", "service_relationships", "funds"));
+    return await cachedIndex(await tableVersion("companies", "contacts", "service_relationships", "funds", "portfolio_companies"));
   } catch {
     return pendingIndex ?? EMPTY_INDEX;
   }

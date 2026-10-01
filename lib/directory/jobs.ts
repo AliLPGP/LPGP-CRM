@@ -364,7 +364,7 @@ export async function runSignals(supabase: Admin, opts: { deadline: number; rota
 export type PortfolioFirm = { id: string; name: string; domain: string | null; country: string | null };
 
 /** The manager types whose investments are portfolio companies (not loans, not listed securities). */
-export const SPONSOR_TYPES = ["Private equity", "Growth equity", "Venture capital", "Alternative asset manager", "Multi-asset alternatives", "Infrastructure", "Other"];
+export const SPONSOR_TYPES = ["Private equity", "Growth equity", "Venture capital", "Alternative asset manager", "Multi-asset alternatives", "Infrastructure", "Private credit", "Asset manager", "Other"];
 
 /**
  * Sponsors to research, with nothing on file first: the Master Directory's
@@ -417,6 +417,11 @@ export function portfolioRows(gpId: string, companies: ResearchedCompany[], adde
       invested_year: year(c.invested_year),
       exit_year: year(c.exit_year),
       fund_name: c.fund_name?.slice(0, 200) ?? null,
+      status_note: c.status_note?.slice(0, 300) ?? null,
+      deal_type: c.deal_type?.slice(0, 80) ?? null,
+      asset_class: c.asset_class?.slice(0, 80) ?? null,
+      value_creation_plan: c.value_creation_plan?.slice(0, 600) ?? null,
+      value_creation_source_url: c.value_creation_source_url && /^https?:\/\//.test(c.value_creation_source_url) ? c.value_creation_source_url.slice(0, 600) : null,
       source: "web_research",
       source_url: c.source_url.slice(0, 600),
       added_by: addedBy,

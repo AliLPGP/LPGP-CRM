@@ -336,7 +336,7 @@ export async function offeringCounts(): Promise<Record<AssetClassKey, number>> {
 // --- Portfolio-company intelligence (migration 0022) ------------------------
 
 const PORTCO_INTEL_COLUMNS =
-  "key, name, domain, country, ch_number, ch_name, ch_status, ch_type, sic_codes, incorporated_on, registered_address, officers, accounts_period_end, accounts_type, accounts_url, currency, revenue, gross_profit, operating_profit, profit_before_tax, depreciation, amortisation, ebitda_derived, employees, net_assets, cash, creditors_over_year, executives, executives_at, ch_at";
+  "key, name, domain, country, ch_number, ch_name, ch_status, ch_type, sic_codes, incorporated_on, registered_address, officers, accounts_period_end, accounts_type, accounts_url, currency, revenue, gross_profit, operating_profit, profit_before_tax, depreciation, amortisation, ebitda_derived, employees, net_assets, cash, creditors_over_year, executives, executives_at, ch_at, website, description, sector, subsector, business_model, email, email_type, ceo, cfo, coo, managing_director, leaders, employees_as_of, employees_text, revenue_stated, revenue_currency, revenue_period, ebitda_stated, ebitda_currency, ebitda_period, ebitda_basis, founded_year, sources, profile_at";
 
 /** Intel rows for some company keys (`borrower_key(name)`), by key. Empty on any failure. */
 export async function getPortcoIntel(keys: string[]): Promise<Map<string, PortcoIntel>> {

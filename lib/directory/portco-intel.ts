@@ -35,14 +35,58 @@ export type PortcoIntel = {
   net_assets: number | null;
   cash: number | null;
   creditors_over_year: number | null;
+  /** Migration 0025: the profile, each field with its source in `sources`. Named executives are confirmed by a primary source or major press. */
+  website?: string | null;
+  description?: string | null;
+  sector?: string | null;
+  subsector?: string | null;
+  business_model?: string | null;
+  email?: string | null;
+  email_type?: string | null;
+  ceo?: string | null;
+  cfo?: string | null;
+  coo?: string | null;
+  managing_director?: string | null;
+  leaders?: { role: string; name: string; title?: string | null; source_url?: string | null; source_kind?: string | null; evidence?: string | null; confirmed?: boolean }[];
+  employees_as_of?: string | null;
+  employees_text?: string | null;
+  revenue_stated?: number | null;
+  revenue_currency?: string | null;
+  revenue_period?: string | null;
+  ebitda_stated?: number | null;
+  ebitda_currency?: string | null;
+  ebitda_period?: string | null;
+  ebitda_basis?: string | null;
+  founded_year?: number | null;
+  sources?: Record<string, { url?: string; name?: string; kind?: string; as_of?: string | null; evidence?: string | null }[]>;
+  profile_at?: string | null;
   executives: PortcoExecutive[];
   executives_at: string | null;
   ch_at: string | null;
 };
 
 /** The finance lead a record names: an executive titled for finance first, else a director whose occupation says so. */
+/** The confirmed holder of a role (primary source or major press), with the page that names them. */
+export function confirmedLeader(intel: PortcoIntel | undefined, role: "ceo" | "cfo" | "coo" | "managing_director"): { name: string; title: string; source_url: string | null } | null {
+  if (!intel) return null;
+  const name = intel[role];
+  if (!name) return null;
+  const l = (intel.leaders ?? []).find((x) => x.confirmed && x.role === role && x.name === name);
+  return { name, title: l?.title ?? role.toUpperCase().replace("MANAGING_DIRECTOR", "Managing Director"), source_url: l?.source_url ?? null };
+}
+
+/** How much to trust a source, by the kind the researcher recorded. */
+export function sourceTier(kind: string | null | undefined): "primary" | "press" | "secondary" {
+  const k = (kind ?? "").toLowerCase();
+  if (["filing", "registry", "company", "sponsor", "wire", "annual_report"].includes(k)) return "primary";
+  if (k === "press") return "press";
+  return "secondary";
+}
+
 export function financeLead(intel: PortcoIntel | undefined): { name: string; title: string } | null {
   if (!intel) return null;
+  const confirmed = confirmedLeader(intel, "cfo");
+  if (confirmed) return confirmed;
   const exec = intel.executives.find((e) => /\b(cfo|chief financial|finance director|financial director)\b/i.test(e.title));
   if (exec) return { name: exec.name, title: exec.title };
   const officer = intel.officers.find((o) => !o.resigned_on && /\b(cfo|chief financial|finance director|financial director|financial controller)\b/i.test(o.occupation ?? ""));
@@ -85,6 +129,8 @@ export function leadership(intel: PortcoIntel): { name: string; title: string; r
 /** The operations lead a record names: COO, operations director, head of operations. */
 export function operationsLead(intel: PortcoIntel | undefined): { name: string; title: string } | null {
   if (!intel) return null;
+  const confirmed = confirmedLeader(intel, "coo");
+  if (confirmed) return confirmed;
   const exec = intel.executives.find((e) => leadRole(e.title) === "operations");
   if (exec) return { name: exec.name, title: exec.title };
   const officer = intel.officers.find((o) => !o.resigned_on && leadRole(o.occupation) === "operations");
@@ -95,6 +141,8 @@ export function operationsLead(intel: PortcoIntel | undefined): { name: string; 
 /** The chief executive a record names. */
 export function chiefExec(intel: PortcoIntel | undefined): { name: string; title: string } | null {
   if (!intel) return null;
+  const confirmed = confirmedLeader(intel, "ceo");
+  if (confirmed) return confirmed;
   const exec = intel.executives.find((e) => leadRole(e.title) === "chief");
   return exec ? { name: exec.name, title: exec.title } : null;
 }

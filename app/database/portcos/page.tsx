@@ -92,6 +92,13 @@ export default async function PortcosPage({ searchParams }: { searchParams: Prom
           <button type="submit" className="h-8 rounded-[4px] border bg-card px-2.5 text-[12px] font-medium hover:bg-accent">
             Search
           </button>
+          <a
+            href={`/api/directory/portcos/export${sp.sponsor ? `?sponsor=${sp.sponsor}` : ""}`}
+            className="inline-flex h-8 items-center rounded-[4px] border bg-card px-2.5 text-[12px] font-medium hover:bg-accent"
+            title="The sheet: name, status, class, deal type, sector, country, website, email, description, business model, CEO, CFO, COO, managing director, employees, revenue, EBITDA, value creation plan, notes and sources"
+          >
+            Download sheet
+          </a>
         </form>
       }
     >
@@ -246,6 +253,7 @@ export default async function PortcosPage({ searchParams }: { searchParams: Prom
                   <th className="num">Since</th>
                   <th>Status</th>
                   <th className="num">Deal value</th>
+                  <th className="num defn" data-tip="As a filing, the company, the sponsor or major press states it, with its period. UK figures may come from accounts filed at Companies House.">Revenue</th>
                   <th>CFO · COO</th>
                   <th className="num">Deals</th>
                 </tr>
@@ -286,6 +294,16 @@ export default async function PortcosPage({ searchParams }: { searchParams: Prom
                           <>
                             {formatMoney(r.deal_value, r.deal_currency)}
                             <div className="text-[10px] text-muted-foreground">{DEAL_BASIS_LABEL[r.deal_value_basis ?? "unspecified"] ?? "as reported"}</div>
+                          </>
+                        ) : (
+                          "—"
+                        )}
+                      </td>
+                      <td className="num whitespace-nowrap">
+                        {ci?.revenue_stated != null || ci?.revenue != null ? (
+                          <>
+                            {formatMoney(ci.revenue_stated ?? ci.revenue, ci.revenue_stated != null ? ci.revenue_currency : ci.currency)}
+                            <div className="text-[10px] text-muted-foreground">{ci.revenue_stated != null ? (ci.revenue_period ?? "as stated") : `accounts ${ci.accounts_period_end ?? ""}`}</div>
                           </>
                         ) : (
                           "—"

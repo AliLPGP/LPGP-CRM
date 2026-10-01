@@ -172,6 +172,11 @@ export function PortfolioCompanies({
         <h2 className="font-semibold">Portfolio companies</h2>
         <span className="text-sm text-muted-foreground">({rows.length})</span>
         <div className="ml-auto flex flex-wrap gap-2">
+          {rows.length ? (
+            <Button size="sm" variant="outline" asChild>
+              <a href={`/api/directory/portcos/export?sponsor=${companyId}`}>Download sheet</a>
+            </Button>
+          ) : null}
           <Button size="sm" variant="outline" onClick={() => setAdding(!adding)}>
             <Plus className="h-3.5 w-3.5" /> Add
           </Button>

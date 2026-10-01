@@ -3,6 +3,7 @@ import { getReadClient } from "../supabase/server";
 import { chunk, fetchAll } from "../supabase/paged";
 import { bigCache } from "../supabase/big-cache";
 import { tableVersion } from "../supabase/version";
+import { cachedOrDirect } from "../supabase/safe";
 import { DIRECTORY_TAG } from "./index-server";
 
 // Reads behind Discover, lists and the richer company page. Like every read
@@ -384,22 +385,19 @@ async function buildAllDisclosedCommitments(version: string): Promise<NamedCommi
       .order("id")
       .range(from, to),
   );
-  if (!rows) return [];
+  // Thrown, not returned empty: a failure must never be cached for a day.
+  if (!rows) throw new Error("commitments unavailable");
   return nameCommitments(rows);
 }
 
 // Every workbook commitment, named — pages past the row cap and resolves
 // names in batches, so it is built once per import (the importer refreshes
 // the directory tag) rather than on every asset-class request.
-const cachedDisclosedCommitments = bigCache("all-disclosed-commitments-v2", buildAllDisclosedCommitments, { tags: [DIRECTORY_TAG], revalidate: 86400 });
+const cachedDisclosedCommitments = bigCache("all-disclosed-commitments-v3", buildAllDisclosedCommitments, { tags: [DIRECTORY_TAG], revalidate: 86400 });
 
 export async function getAllDisclosedCommitments(): Promise<NamedCommitment[]> {
   const version = await tableVersion("commitments");
-  try {
-    return await cachedDisclosedCommitments(version);
-  } catch {
-    return buildAllDisclosedCommitments(version);
-  }
+  return cachedOrDirect(() => cachedDisclosedCommitments(version), () => buildAllDisclosedCommitments(version), [] as NamedCommitment[]);
 }
 
 /** Names for the ids a commitment points at, so a row reads without joins. */

@@ -3,6 +3,7 @@ import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { fetchAll } from "../supabase/paged";
 import { tableVersion } from "../supabase/version";
+import { cachedOrDirect } from "../supabase/safe";
 import { ASSET_CLASSES, type AssetClassKey } from "./asset-classes";
 import { INTEL_TAG } from "./intelligence-queries";
 import { OFFERING_COLUMNS, POSITION_COLUMNS, type BookPosition, type CreditLender, type CreditPosition, type FundOffering } from "./filings-types";
@@ -63,13 +64,14 @@ export type OfferingStats = {
 const num = (v: unknown): number => (typeof v === "number" ? v : typeof v === "string" ? Number(v) : 0);
 const numOrNull = (v: unknown): number | null => (v == null ? null : num(v));
 
+const EMPTY_OFFERING_STATS: OfferingStats = { filings: 0, raising: 0, sold: 0, investors: 0, byMonth: [], byType: [], agents: [], states: [] };
+
 async function buildOfferingStats(assetClass: AssetClassKey | "", version: string): Promise<OfferingStats> {
   void version; // the filings row count, part of the cache key
-  const empty: OfferingStats = { filings: 0, raising: 0, sold: 0, investors: 0, byMonth: [], byType: [], agents: [], states: [] };
   const supabase = getReadClient();
-  if (!supabase) return empty;
+  if (!supabase) return EMPTY_OFFERING_STATS;
   const { data, error } = await supabase.rpc("offering_stats", { p_class: assetClass || null });
-  if (error || !data) return empty;
+  if (error || !data) throw new Error(`offering_stats: ${error?.message ?? "no data"}`);
   const d = data as Record<string, unknown>;
   const list = (k: string) => (Array.isArray(d[k]) ? (d[k] as Record<string, unknown>[]) : []);
   return {
@@ -84,15 +86,11 @@ async function buildOfferingStats(assetClass: AssetClassKey | "", version: strin
   };
 }
 
-const cachedOfferingStats = unstable_cache(buildOfferingStats, ["offering-stats-v1"], { tags: [INTEL_TAG], revalidate: 1800 });
+const cachedOfferingStats = unstable_cache(buildOfferingStats, ["offering-stats-v2"], { tags: [INTEL_TAG], revalidate: 1800 });
 
 export async function getOfferingStats(assetClass?: AssetClassKey | null): Promise<OfferingStats> {
   const version = await tableVersion("fund_offerings");
-  try {
-    return await cachedOfferingStats(assetClass ?? "", version);
-  } catch {
-    return buildOfferingStats(assetClass ?? "", version);
-  }
+  return cachedOrDirect(() => cachedOfferingStats(assetClass ?? "", version), () => buildOfferingStats(assetClass ?? "", version), EMPTY_OFFERING_STATS);
 }
 
 /** Every lender with a parsed loan book, largest book first. */
@@ -189,13 +187,14 @@ export type BookSummary = {
   byLender: { cik: string; name: string; ticker: string | null; positions: number; fairValue: number }[];
 };
 
+const EMPTY_BOOK_SUMMARY: BookSummary = { lenders: 0, positions: 0, fairValue: 0, byInstrument: [], spreadBins: [], avgSpread: null, avgRate: null, shared: [], byLender: [] };
+
 async function buildBookSummary(version: string): Promise<BookSummary> {
   void version;
-  const empty: BookSummary = { lenders: 0, positions: 0, fairValue: 0, byInstrument: [], spreadBins: [], avgSpread: null, avgRate: null, shared: [], byLender: [] };
   const supabase = getReadClient();
-  if (!supabase) return empty;
+  if (!supabase) return EMPTY_BOOK_SUMMARY;
   const { data, error } = await supabase.rpc("credit_book_summary");
-  if (error || !data) return empty;
+  if (error || !data) throw new Error(`credit_book_summary: ${error?.message ?? "no data"}`);
   const d = data as Record<string, unknown>;
   const list = (k: string) => (Array.isArray(d[k]) ? (d[k] as Record<string, unknown>[]) : []);
   return {
@@ -211,15 +210,11 @@ async function buildBookSummary(version: string): Promise<BookSummary> {
   };
 }
 
-const cachedBookSummary = unstable_cache(buildBookSummary, ["book-summary-v1"], { tags: [INTEL_TAG], revalidate: 1800 });
+const cachedBookSummary = unstable_cache(buildBookSummary, ["book-summary-v2"], { tags: [INTEL_TAG], revalidate: 1800 });
 
 export async function getBookSummary(): Promise<BookSummary> {
   const version = await tableVersion("credit_positions");
-  try {
-    return await cachedBookSummary(version);
-  } catch {
-    return buildBookSummary(version);
-  }
+  return cachedOrDirect(() => cachedBookSummary(version), () => buildBookSummary(version), EMPTY_BOOK_SUMMARY);
 }
 
 // --- Borrowers: the companies behind the loan books (migration 0021) ------
@@ -258,13 +253,14 @@ export type BorrowerSummary = {
 
 export type BorrowerFilter = "" | "stressed" | "pik" | "maturing" | "clubbed";
 
+const EMPTY_BORROWER_SUMMARY: BorrowerSummary = { borrowers: 0, fairValue: 0, clubbed: 0, stressed: 0, pik: 0, maturing: 0, markBins: [], largest: [], mostLenders: [] };
+
 async function buildBorrowerSummary(version: string): Promise<BorrowerSummary> {
   void version;
-  const empty: BorrowerSummary = { borrowers: 0, fairValue: 0, clubbed: 0, stressed: 0, pik: 0, maturing: 0, markBins: [], largest: [], mostLenders: [] };
   const supabase = getReadClient();
-  if (!supabase) return empty;
+  if (!supabase) return EMPTY_BORROWER_SUMMARY;
   const { data, error } = await supabase.rpc("borrower_summary");
-  if (error || !data) return empty;
+  if (error || !data) throw new Error(`borrower_summary: ${error?.message ?? "no data"}`);
   const d = data as Record<string, unknown>;
   const list = (k: string) => (Array.isArray(d[k]) ? (d[k] as Record<string, unknown>[]) : []);
   return {
@@ -280,17 +276,13 @@ async function buildBorrowerSummary(version: string): Promise<BorrowerSummary> {
   };
 }
 
-const cachedBorrowerSummary = unstable_cache(buildBorrowerSummary, ["borrower-summary-v1"], { tags: [INTEL_TAG], revalidate: 1800 });
+const cachedBorrowerSummary = unstable_cache(buildBorrowerSummary, ["borrower-summary-v2"], { tags: [INTEL_TAG], revalidate: 1800 });
 
 export async function getBorrowerSummary(): Promise<BorrowerSummary> {
   // The materialised view has its own write counters: a refresh or rebuild
   // changes the key even when no position changed.
   const version = await tableVersion("credit_positions", "borrowers");
-  try {
-    return await cachedBorrowerSummary(version);
-  } catch {
-    return buildBorrowerSummary(version);
-  }
+  return cachedOrDirect(() => cachedBorrowerSummary(version), () => buildBorrowerSummary(version), EMPTY_BORROWER_SUMMARY);
 }
 
 /** Borrowers by name and one of the desk's filters, largest first. */

@@ -6,6 +6,7 @@ import { getReadClient } from "../supabase/server";
 import { chunk, fetchAll } from "../supabase/paged";
 import { bigCache } from "../supabase/big-cache";
 import { tableVersion } from "../supabase/version";
+import { cachedOrDirect } from "../supabase/safe";
 import { ASSET_CLASSES, classOfGpType, classStatedByFundName, isAssetClassKey, type AssetClassKey } from "./asset-classes";
 import type { Deal, Signal, SportsInvestor, SportsTeam, TeamOwner } from "./intelligence-types";
 import type { DisclosedCommitment } from "./queries";
@@ -67,24 +68,21 @@ async function buildAllDeals(assetClass: AssetClassKey | "", version: string): P
     if (assetClass) q = q.eq("asset_class", assetClass);
     return q.order("date", { ascending: false, nullsFirst: false }).order("id").range(from, to);
   });
-  return rows ?? [];
+  // Thrown, not returned empty: a failure must never be cached for a day.
+  if (!rows) throw new Error("deals unavailable");
+  return rows;
 }
 
 // The whole ledger (or one class of it), paged past the row cap. The research
 // jobs and the dataset loader refresh the intelligence tag when they write;
 // the EDGAR ingest writes from inside the database, so the row count rides in
 // the key and a stale copy is dropped the moment a deal lands.
-const cachedAllDeals = bigCache("all-deals-v3", (version) => buildAllDeals("", version), { tags: [INTEL_TAG], revalidate: 86400 });
+const cachedAllDeals = bigCache("all-deals-v4", (version) => buildAllDeals("", version), { tags: [INTEL_TAG], revalidate: 86400 });
 
 /** Every deal, for the Deals page, or every deal of one class. */
 export async function getAllDeals(assetClass?: AssetClassKey | null): Promise<Deal[]> {
   const version = await tableVersion("deals");
-  let all: Deal[];
-  try {
-    all = await cachedAllDeals(version);
-  } catch {
-    all = await buildAllDeals("", version);
-  }
+  const all = await cachedOrDirect(() => cachedAllDeals(version), () => buildAllDeals("", version), [] as Deal[]);
   return assetClass ? all.filter((d) => d.asset_class === assetClass) : all;
 }
 
@@ -250,7 +248,8 @@ async function buildClassCounts(version: string): Promise<ClassCounts> {
   await Promise.all(
     ASSET_CLASSES.flatMap((c) =>
       (["deals", "signals"] as const).map(async (table) => {
-        const { count } = await supabase.from(table).select("id", { count: "exact", head: true }).eq("asset_class", c.key);
+        const { count, error } = await supabase.from(table).select("id", { count: "exact", head: true }).eq("asset_class", c.key);
+        if (error) throw new Error(`${table} count: ${error.message}`);
         counts[c.key][table] = count ?? 0;
       }),
     ),
@@ -258,14 +257,12 @@ async function buildClassCounts(version: string): Promise<ClassCounts> {
   return counts;
 }
 
-const cachedCounts = unstable_cache(buildClassCounts, ["intel-class-counts-v1"], { tags: [INTEL_TAG], revalidate: 3600 });
+const cachedCounts = unstable_cache(buildClassCounts, ["intel-class-counts-v2"], { tags: [INTEL_TAG], revalidate: 3600 });
 
 export async function getClassCounts(): Promise<ClassCounts> {
-  try {
-    return await cachedCounts(await tableVersion("deals", "signals"));
-  } catch {
-    return Object.fromEntries(ASSET_CLASSES.map((c) => [c.key, { deals: 0, signals: 0 }])) as ClassCounts;
-  }
+  const version = await tableVersion("deals", "signals");
+  const empty = Object.fromEntries(ASSET_CLASSES.map((c) => [c.key, { deals: 0, signals: 0 }])) as ClassCounts;
+  return cachedOrDirect(() => cachedCounts(version), () => buildClassCounts(version), empty);
 }
 
 /** Which class a disclosed LP commitment belongs to, from its fund's name

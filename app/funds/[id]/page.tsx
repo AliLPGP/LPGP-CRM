@@ -8,6 +8,8 @@ import { CategoryBadge } from "@/components/category-badge";
 import { CompanyLogo } from "@/components/company-logo";
 import { brandDomain } from "@/lib/directory/brand-domains";
 import { ROLE_LABEL, normalizeRole } from "@/lib/directory/providers";
+import { getFundDetails, getFundFormD } from "@/lib/fund-details";
+import { FundProfile as FundProfileSections } from "@/components/intel/fund-profile";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +26,7 @@ export default async function FundProfile({ params }: { params: Promise<{ id: st
   const fund = await getFund(id);
   if (!fund) notFound();
 
-  const commitments = await getCommitmentsForFund(id);
+  const [commitments, details, formD] = await Promise.all([getCommitmentsForFund(id), getFundDetails(id), getFundFormD(id)]);
   // Money stays in its own currency: only USD figures are summed.
   const totalCommitted = commitments.reduce((s, c) => s + (c.amount_usd ?? 0), 0);
   const providers = Array.isArray(fund.service_providers) ? fund.service_providers : [];
@@ -76,6 +78,8 @@ export default async function FundProfile({ params }: { params: Promise<{ id: st
           </p>
         ) : null}
       </div>
+
+      <FundProfileSections fund={fund} details={details} formD={formD} />
 
       {providers.length ? (
         <section className="sheen rounded-2xl border bg-card p-5">

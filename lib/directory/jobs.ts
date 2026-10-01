@@ -420,6 +420,8 @@ export function portfolioRows(gpId: string, companies: ResearchedCompany[], adde
       status_note: c.status_note?.slice(0, 300) ?? null,
       deal_type: c.deal_type?.slice(0, 80) ?? null,
       asset_class: c.asset_class?.slice(0, 80) ?? null,
+      asset_kind: c.asset_kind ?? null,
+      asset_location: c.asset_location?.slice(0, 160) ?? null,
       value_creation_plan: c.value_creation_plan?.slice(0, 600) ?? null,
       value_creation_source_url: c.value_creation_source_url && /^https?:\/\//.test(c.value_creation_source_url) ? c.value_creation_source_url.slice(0, 600) : null,
       source: "web_research",

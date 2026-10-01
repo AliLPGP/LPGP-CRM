@@ -190,32 +190,16 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
   }
   for (const [bi, set] of brandClients) brands[bi].clients = set.size;
 
-  // Funds on file per manager — Form ADV's named funds and any others. A
-  // failed read only costs the counts, not the index.
-  const funds = schemaReady
-    ? ((await fetchAll<{ company_id: string | null }>((from, to, first) =>
-        supabase
-          .from("funds")
-          .select("id, company_id", first ? { count: "exact" } : undefined)
-          .not("company_id", "is", null)
-          .order("id")
-          .range(from, to),
-      )) ?? [])
-    : [];
+  // Funds and portfolio companies per manager, counted by the database in
+  // one call (migration 0027). Falls back to nothing, not to 45 pages of rows.
   const fundCount = new Map<string, number>();
-  for (const f of funds) if (f.company_id) fundCount.set(f.company_id, (fundCount.get(f.company_id) ?? 0) + 1);
-
-  // Portfolio companies per GP (migration 0015). Missing table: no counts.
-  const portcos =
-    (await fetchAll<{ gp_company_id: string }>((from, to, first) =>
-      supabase
-        .from("portfolio_companies")
-        .select("id, gp_company_id", first ? { count: "exact" } : undefined)
-        .order("id")
-        .range(from, to),
-    )) ?? [];
   const portcoCount = new Map<string, number>();
-  for (const p of portcos) portcoCount.set(p.gp_company_id, (portcoCount.get(p.gp_company_id) ?? 0) + 1);
+  if (schemaReady) {
+    const { data } = await supabase.rpc("directory_rollups");
+    const r = data as { funds?: Record<string, number>; portcos?: Record<string, number> } | null;
+    for (const [k, v] of Object.entries(r?.funds ?? {})) fundCount.set(k, v);
+    for (const [k, v] of Object.entries(r?.portcos ?? {})) portcoCount.set(k, v);
+  }
 
   let advThrough: string | null = null;
   for (const c of companies) {

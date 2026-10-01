@@ -16,19 +16,39 @@ export async function fetchAll<T>(
   page: (from: number, to: number, first: boolean) => PromiseLike<PageResult>,
   size = 1000,
 ): Promise<T[] | null> {
-  const out: T[] = [];
-  let total: number | null = null;
-  for (let from = 0; ; ) {
-    const { data, error, count } = await page(from, from + size - 1, from === 0);
-    if (error) return null;
-    if (from === 0 && typeof count === "number") total = count;
-    const rows = (Array.isArray(data) ? data : []) as T[];
-    out.push(...rows);
-    from += rows.length;
-    if (rows.length === 0) break;
-    if (total != null ? out.length >= total : rows.length < size) break;
+  // The first page also asks for the exact count. When it says more pages
+  // exist, the rest are fetched together instead of one after another: sixty
+  // sequential round trips were most of a cold page's ten seconds.
+  const first = await page(0, size - 1, true);
+  if (first.error) return null;
+  const head = (Array.isArray(first.data) ? first.data : []) as T[];
+  const total = typeof first.count === "number" ? first.count : null;
+  if (head.length === 0 || (total != null ? head.length >= total : head.length < size)) return head;
+  // A server cap below `size` shows as a short first page with a larger count.
+  const step = head.length;
+  if (total != null) {
+    const starts: number[] = [];
+    for (let from = step; from < total; from += step) starts.push(from);
+    const out: T[][] = new Array(starts.length);
+    for (let i = 0; i < starts.length; i += 8) {
+      const batch = await Promise.all(starts.slice(i, i + 8).map((from) => page(from, from + step - 1, false)));
+      for (let j = 0; j < batch.length; j++) {
+        if (batch[j].error) return null;
+        out[i + j] = (Array.isArray(batch[j].data) ? batch[j].data : []) as T[];
+      }
+    }
+    return head.concat(...out);
   }
-  return out;
+  const all = [...head];
+  for (let from = all.length; ; ) {
+    const { data, error } = await page(from, from + size - 1, false);
+    if (error) return null;
+    const rows = (Array.isArray(data) ? data : []) as T[];
+    all.push(...rows);
+    from += rows.length;
+    if (rows.length < size) break;
+  }
+  return all;
 }
 
 /** Split `items` into runs of `size` (for `.in()` filters and batched writes). */

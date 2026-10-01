@@ -1,5 +1,4 @@
 import { listAccounts } from "@/lib/accounts";
-import { listCompaniesLite } from "@/lib/queries";
 import { opsSummaries } from "@/lib/ops-links";
 import { isOpsConfigured } from "@/lib/ops";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
@@ -14,9 +13,8 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Accounts — LPGP Connect" };
 
 export default async function AccountsPage() {
-  const [accounts, companies, ops] = await Promise.all([
+  const [accounts, ops] = await Promise.all([
     listAccounts(),
-    listCompaniesLite(),
     opsSummaries("account"),
   ]);
 
@@ -33,7 +31,7 @@ export default async function AccountsPage() {
         actions={
           <div className="flex flex-wrap items-start gap-2">
             <SyncAccountsButton configured={isOpsConfigured()} />
-            <NewAccountDialog companies={companies} />
+            <NewAccountDialog />
           </div>
         }
       />

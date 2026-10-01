@@ -317,3 +317,52 @@ export async function getBenchmarks(assetClass: AssetClassKey): Promise<Benchmar
   if (error || !data) return [];
   return data as Benchmark[];
 }
+
+// ---------------------------------------------------------------------------
+// The Deals page: the database filters, sorts and pages (migration 0029), so
+// a click moves one page of rows, never the 20k-deal ledger.
+// ---------------------------------------------------------------------------
+
+export type DealListRow = Pick<
+  Deal,
+  | "id" | "date" | "date_text" | "kind" | "asset_class" | "sport" | "target" | "target_country" | "target_team_id"
+  | "target_company_id" | "investor" | "investor_type" | "investor_company_id" | "investor_id" | "stake_pct"
+  | "amount" | "currency" | "valuation" | "valuation_currency" | "headline" | "summary"
+>;
+
+export type DealSearch = {
+  cls?: string | null;
+  kind?: string | null;
+  year?: number | null;
+  q?: string | null;
+  sort?: "date" | "amount" | "valuation";
+  offset?: number;
+  limit?: number;
+};
+
+export type DealSearchResult = {
+  total: number;
+  rows: DealListRow[];
+  kinds: [string, number][];
+  years: [number, number][];
+  investors: { name: string; n: number; companyId: string | null; investorId: string | null }[];
+};
+
+export const EMPTY_DEAL_SEARCH: DealSearchResult = { total: 0, rows: [], kinds: [], years: [], investors: [] };
+
+export async function searchDeals(s: DealSearch): Promise<DealSearchResult> {
+  const supabase = getReadClient();
+  if (!supabase) return EMPTY_DEAL_SEARCH;
+  const { data, error } = await supabase.rpc("deals_search", {
+    p_class: s.cls || null,
+    p_kind: s.kind || null,
+    p_year: s.year ?? null,
+    p_q: s.q?.trim() || null,
+    p_sort: s.sort ?? "date",
+    p_offset: s.offset ?? 0,
+    p_limit: s.limit ?? 100,
+  });
+  if (error || !data) return EMPTY_DEAL_SEARCH;
+  const r = data as DealSearchResult;
+  return { ...r, total: Number(r.total) };
+}

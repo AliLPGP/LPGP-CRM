@@ -1,16 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowDownWideNarrow, Search } from "lucide-react";
 import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, DEAL_KIND_LABEL, INVESTOR_TYPE_LABEL, type AssetClassKey } from "@/lib/directory/asset-classes";
-import { formatMoney, SPORT_LABEL, type Deal } from "@/lib/directory/intelligence-types";
+import { formatMoney, SPORT_LABEL } from "@/lib/directory/intelligence-types";
+import type { DealSearchResult } from "@/lib/directory/intelligence-queries";
 import { cn } from "@/lib/utils";
 import { dateLabel } from "./tables";
 import { Empty, Tag } from "./ui";
 
 // The Deals page: every sourced transaction, filtered and sorted in the
-// browser. Money is shown in the currency the source states and never
+// database. Money is shown in the currency the source states and never
 // summed across currencies.
 
 type Sort = "date" | "amount" | "valuation";
@@ -31,70 +32,72 @@ function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; chi
   );
 }
 
-export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClass?: AssetClassKey | null }) {
-  const [cls, setCls] = useState<AssetClassKey | null>(initialClass ?? null);
-  const [kind, setKind] = useState<string | null>(null);
-  const [year, setYear] = useState<number | null>(null);
-  const [q, setQ] = useState("");
-  const [sort, setSort] = useState<Sort>("date");
-  const [shown, setShown] = useState(100);
+type Filters = { cls: AssetClassKey | null; kind: string | null; year: number | null; q: string; sort: Sort };
 
-  const kinds = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const d of deals) if (!cls || d.asset_class === cls) m.set(d.kind, (m.get(d.kind) ?? 0) + 1);
-    return [...m.entries()].sort((a, b) => b[1] - a[1]);
-  }, [deals, cls]);
-  const years = useMemo(() => {
-    const m = new Map<number, number>();
-    for (const d of deals) {
-      const y = d.date ? Number(d.date.slice(0, 4)) : d.date_text ? Number((d.date_text.match(/\b(19|20)\d{2}\b/) ?? [])[0]) : NaN;
-      if (Number.isFinite(y)) m.set(y, (m.get(y) ?? 0) + 1);
-    }
-    return [...m.entries()].sort((a, b) => b[0] - a[0]).slice(0, 8);
-  }, [deals]);
+function paramsFor(f: Filters, offset: number): string {
+  const p = new URLSearchParams();
+  if (f.cls) p.set("class", f.cls);
+  if (f.kind) p.set("kind", f.kind);
+  if (f.year) p.set("year", String(f.year));
+  if (f.q.trim()) p.set("q", f.q.trim());
+  p.set("sort", f.sort);
+  p.set("offset", String(offset));
+  p.set("limit", "100");
+  return p.toString();
+}
 
-  const rows = useMemo(() => {
-    const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    const list = deals.filter((d) => {
-      if (cls && d.asset_class !== cls) return false;
-      if (kind && d.kind !== kind) return false;
-      if (year) {
-        const y = d.date ? Number(d.date.slice(0, 4)) : Number((d.date_text?.match(/\b(19|20)\d{2}\b/) ?? [])[0]);
-        if (y !== year) return false;
+// What is on screen: the rows the database returned for one set of filters.
+// The answer carries the filters it belongs to, so a slow reply never lands
+// on a newer click; while the next answer is in flight the last one stays up.
+type Shown = DealSearchResult & { key: string };
+
+export function DealLedger({ initial, initialClass }: { initial: DealSearchResult; initialClass?: AssetClassKey | null }) {
+  const [f, setF] = useState<Filters>({ cls: initialClass ?? null, kind: null, year: null, q: "", sort: "date" });
+  const key = JSON.stringify(f);
+  const [shown, setShown] = useState<Shown>(() => ({ ...initial, key }));
+  const [more, setMore] = useState(false);
+
+  useEffect(() => {
+    if (shown.key === key) return;
+    let live = true;
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/directory/deals/search?${paramsFor(f, 0)}`);
+        const json = (await res.json()) as DealSearchResult;
+        if (live) setShown({ ...json, key });
+      } catch {
+        /* keep what is on screen */
       }
-      if (words.length) {
-        const hay = `${d.headline} ${d.investor} ${d.target} ${d.seller ?? ""} ${d.summary ?? ""} ${d.target_country ?? ""}`.toLowerCase();
-        if (!words.every((w) => hay.includes(w))) return false;
-      }
-      return true;
-    });
-    if (sort === "date") {
-      const when = (d: Deal) => (d.date ? Date.parse(d.date) : -1);
-      return list.sort((a, b) => when(b) - when(a) || a.headline.localeCompare(b.headline));
-    }
-    // Money sorts within its currency: a £150M deal is never ranked against
-    // a $160M one. Rows without the figure follow, newest first.
-    const money = (d: Deal): [string, number] | null =>
-      sort === "amount" ? (d.amount != null ? [d.currency ?? "", d.amount] : null) : d.valuation != null ? [d.valuation_currency ?? "", d.valuation] : null;
-    return list.sort((a, b) => {
-      const ma = money(a);
-      const mb = money(b);
-      if (ma && mb) return ma[0].localeCompare(mb[0]) || mb[1] - ma[1] || a.headline.localeCompare(b.headline);
-      if (ma || mb) return ma ? -1 : 1;
-      return (b.date ? Date.parse(b.date) : -1) - (a.date ? Date.parse(a.date) : -1) || a.headline.localeCompare(b.headline);
-    });
-  }, [deals, cls, kind, year, q, sort]);
+    }, f.q === "" || shown.key.includes(`"q":"${f.q}"`) ? 0 : 250);
+    return () => {
+      live = false;
+      clearTimeout(timer);
+    };
+  }, [key, f, shown.key]);
 
-  const investors = useMemo(() => {
-    const m = new Map<string, { name: string; n: number; companyId: string | null; investorId: string | null }>();
-    for (const d of rows) {
-      const k = d.investor.toLowerCase();
-      const e = m.get(k) ?? { name: d.investor, n: 0, companyId: d.investor_company_id, investorId: d.investor_id };
-      e.n += 1;
-      m.set(k, e);
+  async function showMore() {
+    setMore(true);
+    try {
+      const res = await fetch(`/api/directory/deals/search?${paramsFor(f, shown.rows.length)}`);
+      const json = (await res.json()) as DealSearchResult;
+      setShown((cur) => (cur.key === key ? { ...cur, rows: [...cur.rows, ...json.rows] } : cur));
+    } finally {
+      setMore(false);
     }
-    return [...m.values()].sort((a, b) => b.n - a.n).slice(0, 8);
-  }, [rows]);
+  }
+
+  const loading = shown.key !== key;
+  const rows = shown.rows;
+  const total = shown.total;
+  const kinds = shown.kinds;
+  const years = shown.years;
+  const investors = shown.investors;
+  const { cls, kind, year, q, sort } = f;
+  const setCls = (v: AssetClassKey | null) => setF((x) => ({ ...x, cls: v, kind: null }));
+  const setKind = (v: string | null) => setF((x) => ({ ...x, kind: v }));
+  const setYear = (v: number | null) => setF((x) => ({ ...x, year: v }));
+  const setQ = (v: string) => setF((x) => ({ ...x, q: v }));
+  const setSort = (v: Sort) => setF((x) => ({ ...x, sort: v }));
 
   return (
     <div className="grid gap-4 xl:grid-cols-[200px_minmax(0,1fr)]">
@@ -103,10 +106,7 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
           <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
           <input
             value={q}
-            onChange={(e) => {
-              setQ(e.target.value);
-              setShown(100);
-            }}
+            onChange={(e) => setQ(e.target.value)}
             placeholder="Investor, target, words…"
             className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-2 text-[12.5px] outline-none focus-visible:border-ring"
           />
@@ -179,7 +179,7 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
         <div className="sheen overflow-hidden rounded-[4px] border bg-card">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b px-3 py-2 text-[12px]">
             <span>
-              <span className="figure">{rows.length.toLocaleString("en-US")}</span> <span className="text-muted-foreground">deals</span>
+              <span className={cn("figure", loading && "opacity-50")}>{total.toLocaleString("en-US")}</span> <span className="text-muted-foreground">deals{loading ? " …" : ""}</span>
             </span>
             <label className="flex items-center gap-1.5 text-muted-foreground">
               <ArrowDownWideNarrow className="h-3.5 w-3.5" />
@@ -205,7 +205,7 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.slice(0, shown).map((d) => {
+                  {rows.map((d) => {
                     const c = ASSET_CLASS_BY_KEY[d.asset_class as AssetClassKey];
                     return (
                       <tr key={d.id} className="linked">
@@ -245,10 +245,10 @@ export function DealLedger({ deals, initialClass }: { deals: Deal[]; initialClas
           ) : (
             <Empty>No deals match.</Empty>
           )}
-          {rows.length > shown ? (
+          {rows.length < total ? (
             <div className="border-t px-3 py-2">
-              <button type="button" onClick={() => setShown(shown + 200)} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
-                Show {Math.min(200, rows.length - shown)} more
+              <button type="button" disabled={more || loading} onClick={showMore} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent disabled:opacity-50">
+                {more ? "Loading…" : `Show ${Math.min(100, total - rows.length)} more`}
               </button>
             </div>
           ) : null}

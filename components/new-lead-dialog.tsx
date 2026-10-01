@@ -16,9 +16,9 @@ import { NativeSelect } from "@/components/ui/native-select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useCompanyOptions } from "@/components/use-company-options";
 import { cn } from "@/lib/utils";
 
-type CompanyLite = { id: string; name: string; category: string };
 type ProfileLite = { id: string; full_name: string | null };
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -39,12 +39,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
  * only when the person leaves that box ticked.
  */
 export function NewLeadDialog({
-  companies,
   profiles,
   isAdmin,
   defaultStage,
 }: {
-  companies: CompanyLite[];
   profiles: ProfileLite[];
   isAdmin: boolean;
   defaultStage?: string;
@@ -83,6 +81,7 @@ export function NewLeadDialog({
   const [conflicts, setConflicts] = useState<PipelineConflicts | null>(null);
   const [linkOptIn, setLinkOptIn] = useState<boolean | null>(null);
 
+  const companies = useCompanyOptions(companyName, open);
   const linkedCompany = companies.find(
     (c) => c.name.toLowerCase() === companyName.trim().toLowerCase(),
   );

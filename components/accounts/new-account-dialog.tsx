@@ -14,10 +14,10 @@ import { NativeSelect } from "@/components/ui/native-select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useCompanyOptions } from "@/components/use-company-options";
 
-type CompanyLite = { id: string; name: string; category: string };
 
-export function NewAccountDialog({ companies }: { companies: CompanyLite[] }) {
+export function NewAccountDialog() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
@@ -33,6 +33,7 @@ export function NewAccountDialog({ companies }: { companies: CompanyLite[] }) {
   const [opsBest, setOpsBest] = useState<OpsMatch | null>(null);
   const [linkOptIn, setLinkOptIn] = useState<boolean | null>(null);
 
+  const companies = useCompanyOptions(name, open);
   const linkedCompany = companies.find(
     (c) => c.name.toLowerCase() === name.trim().toLowerCase(),
   );

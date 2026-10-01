@@ -1,5 +1,5 @@
 import { isAssetClassKey, type AssetClassKey } from "@/lib/directory/asset-classes";
-import { getAllDeals } from "@/lib/directory/intelligence-queries";
+import { searchDeals } from "@/lib/directory/intelligence-queries";
 import { DealLedger } from "@/components/intel/deal-ledger";
 import { IntelShell } from "@/components/intel/shell";
 
@@ -7,15 +7,17 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Deals — LPGP Connect" };
 
 export default async function DealsPage({ searchParams }: { searchParams: Promise<{ class?: string }> }) {
-  const [{ class: cls }, deals] = await Promise.all([searchParams, getAllDeals()]);
-  const currencies = new Set(deals.map((d) => d.currency).filter(Boolean)).size;
+  const { class: cls } = await searchParams;
+  const initialClass = isAssetClassKey(cls) ? (cls as AssetClassKey) : null;
+  const initial = await searchDeals({ cls: initialClass });
+  const all = initialClass ? await searchDeals({ limit: 1 }) : initial;
   return (
     <IntelShell
       crumbs={[{ label: "Deals" }]}
       title="Deals"
-      description={`${deals.length.toLocaleString("en-US")} sourced transactions across every asset class — fund closes, acquisitions, stake sales, financings — each with the announcement or article that states it. Amounts stay in their own currency (${currencies} on file) and are never added across currencies.`}
+      description={`${all.total.toLocaleString("en-US")} sourced transactions across every asset class — fund closes, acquisitions, stake sales, financings — each with the announcement or article that states it. Amounts stay in the currency the source states and are never added across currencies.`}
     >
-      <DealLedger deals={deals} initialClass={isAssetClassKey(cls) ? (cls as AssetClassKey) : null} />
+      <DealLedger initial={initial} initialClass={initialClass} />
     </IntelShell>
   );
 }

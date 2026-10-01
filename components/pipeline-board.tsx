@@ -14,20 +14,17 @@ import { formatUsd } from "@/lib/utils";
 import { initials } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
-type CompanyLite = { id: string; name: string; category: string };
 type ProfileLite = { id: string; full_name: string | null };
 
 export function PipelineBoard({
   leads: initialLeads,
   currentUserId,
   isAdmin,
-  companies,
   profiles,
 }: {
   leads: LeadWithRefs[];
   currentUserId: string | null;
   isAdmin: boolean;
-  companies: CompanyLite[];
   profiles: ProfileLite[];
 }) {
   const [leads, setLeads] = useState(initialLeads);
@@ -117,7 +114,7 @@ export function PipelineBoard({
             <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search leads…" className="pl-9" />
           </div>
         </div>
-        <NewLeadDialog companies={companies} profiles={profiles} isAdmin={isAdmin} />
+        <NewLeadDialog profiles={profiles} isAdmin={isAdmin} />
       </div>
 
       {error ? <p className="text-sm text-destructive">{error}</p> : null}

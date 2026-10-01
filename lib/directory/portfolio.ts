@@ -22,7 +22,7 @@ export type PortfolioCompany = {
   /** What the sponsor paid, as a page states it (migration 0023). */
   deal_value?: number | null;
   deal_currency?: string | null;
-  deal_value_basis?: "enterprise_value" | "equity_value" | "stake_price" | "unspecified" | null;
+  deal_value_basis?: string | null;
   equity_invested?: number | null;
   stake_pct?: number | null;
   co_investors?: string[];
@@ -30,7 +30,7 @@ export type PortfolioCompany = {
   researched_at?: string | null;
 };
 
-export const DEAL_BASIS_LABEL: Record<string, string> = { enterprise_value: "enterprise value", equity_value: "equity value", stake_price: "price of the stake", unspecified: "as reported" };
+export const DEAL_BASIS_LABEL: Record<string, string> = { enterprise_value: "enterprise value", equity_value: "equity value", round_size: "round size", stake_price: "price of the stake", debt: "debt facility", unspecified: "as reported" };
 
 export function portfolioKey(gpId: string, name: string): string {
   const slug = name

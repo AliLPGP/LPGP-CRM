@@ -10,6 +10,10 @@ import { signalsNaming } from "@/lib/directory/intelligence-queries";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { LEAD_ROLE_LABEL, leadership, type PortcoIntel } from "@/lib/directory/portco-intel";
 import { DEAL_BASIS_LABEL } from "@/lib/directory/portfolio";
+import { getPortcoDeals } from "@/lib/directory/portco-queries";
+import { InvestmentLedger, InvestmentStrip, moneyFacts } from "@/components/intel/investments";
+import { DEAL_KIND_LABEL } from "@/lib/directory/asset-classes";
+import { AMOUNT_BASIS_LABEL } from "@/lib/directory/intelligence-types";
 import { formatUsd } from "@/lib/utils";
 
 // A company behind the deals: a sponsor's portfolio company, a lender's
@@ -24,8 +28,8 @@ const REGISTER = "https://find-and-update.company-information.service.gov.uk/com
 export async function generateMetadata({ params }: { params: Promise<{ key: string }> }) {
   const { key } = await params;
   const k = decodeURIComponent(key);
-  const [intel, borrower, holders] = await Promise.all([getPortcoIntel([k]), getBorrower(k), portcoHolders(k)]);
-  const name = intel.get(k)?.name ?? borrower?.borrower ?? holders[0]?.name;
+  const [intel, borrower, holders, deals] = await Promise.all([getPortcoIntel([k]), getBorrower(k), portcoHolders(k), getPortcoDeals(k)]);
+  const name = holders[0]?.name ?? intel.get(k)?.name ?? borrower?.borrower ?? deals[0]?.target;
   return { title: name ? `${name} — LPGP Connect` : "Company — LPGP Connect" };
 }
 
@@ -53,10 +57,13 @@ function Accounts({ intel }: { intel: PortcoIntel }) {
 export default async function PortcoPage({ params }: { params: Promise<{ key: string }> }) {
   const { key } = await params;
   const k = decodeURIComponent(key);
-  const [intelMap, borrower, holders] = await Promise.all([getPortcoIntel([k]), getBorrower(k), portcoHolders(k)]);
+  const [intelMap, borrower, holders, deals] = await Promise.all([getPortcoIntel([k]), getBorrower(k), portcoHolders(k), getPortcoDeals(k)]);
   const intel = intelMap.get(k) ?? null;
-  if (!intel && !borrower && !holders.length) notFound();
-  const name = intel?.name ?? borrower?.borrower ?? holders[0].name;
+  if (!intel && !borrower && !holders.length && !deals.length) notFound();
+  const name = holders[0]?.name ?? intel?.name ?? borrower?.borrower ?? deals[0].target;
+  const money = moneyFacts(deals);
+  const backers = new Set(deals.flatMap((d) => [d.investor, ...(d.co_investors ?? [])]).filter((x) => x && x !== "Undisclosed"));
+  const firstYear = deals.map((d) => (d.date ? Number(d.date.slice(0, 4)) : null)).filter((y): y is number => y != null).sort()[0];
   const domain = intel?.domain ?? holders.find((h) => h.domain)?.domain ?? null;
   const [positions, signals] = await Promise.all([borrower ? borrowerPositions(k) : [], signalsNaming([name], 12)]);
   const people = intel ? leadership(intel) : [];
@@ -68,7 +75,7 @@ export default async function PortcoPage({ params }: { params: Promise<{ key: st
 
   return (
     <IntelShell
-      crumbs={borrower ? [{ href: "/database/asset-classes/private-credit", label: "Private credit" }, { href: "/database/borrowers", label: "Borrowers" }, { label: name }] : [{ href: "/database/workflows/portfolio-management", label: "Portfolio management" }, { label: name }]}
+      crumbs={borrower ? [{ href: "/database/asset-classes/private-credit", label: "Private credit" }, { href: "/database/borrowers", label: "Borrowers" }, { label: name }] : [{ href: "/database/portcos", label: "Portfolio companies" }, { label: name }]}
       kicker={holders.length && borrower ? "Portfolio company · borrower" : holders.length ? "Portfolio company" : "Borrower"}
       title={
         <span className="flex items-center gap-3">
@@ -83,6 +90,27 @@ export default async function PortcoPage({ params }: { params: Promise<{ key: st
           : `In ${borrower?.lenders ?? 0} lender${borrower?.lenders === 1 ? "" : "s"}' latest schedule of investments.`)
       }
     >
+      {deals.length ? (
+        <StatStrip>
+          <Stat label="Deals on file" value={String(deals.length)} basis={`${deals.filter((d) => d.verified).length} checked against their page`} />
+          {money.largest.slice(0, 2).map((t) => (
+            <Stat
+              key={t.currency}
+              label={`Largest stated, ${t.currency}`}
+              value={formatMoney(t.amount, t.currency)}
+              basis={`${AMOUNT_BASIS_LABEL[t.basis ?? "unspecified"] ?? "as reported"} · ${(DEAL_KIND_LABEL[t.kind] ?? t.kind).toLowerCase()}`}
+              href={`/database/deals/${t.id}`}
+              defn="The biggest figure any announcement states for a deal around this company, in its own currency. An enterprise value is the whole company's price, not the sponsor's cheque."
+            />
+          ))}
+          {money.raised.slice(0, 2).map((t) => (
+            <Stat key={`r-${t.currency}`} label={`Raised in rounds, ${t.currency}`} value={formatMoney(t.total, t.currency)} basis={`${t.n} round${t.n === 1 ? "" : "s"} with a stated size`} defn="Funding rounds whose size the announcement states, added together within one currency. Currencies are never converted into each other." />
+          ))}
+          {!money.largest.length ? <Stat label="Stated amounts" value="—" basis="no announcement states a figure" /> : null}
+          <Stat label="Investors named" value={String(backers.size)} basis="leads and co-investors" />
+          <Stat label="First on file" value={firstYear ? String(firstYear) : "—"} basis="earliest dated announcement" />
+        </StatStrip>
+      ) : null}
       {intel ? <Accounts intel={intel} /> : null}
 
       {borrower ? (
@@ -99,6 +127,10 @@ export default async function PortcoPage({ params }: { params: Promise<{ key: st
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <div className="space-y-4">
+          <Box title="Investments and commitments" count={deals.length || null} flush defn="Every announcement on file that commits money to this company: buyouts, stakes, rounds with each named investor, add-ons it made, financings and exits. Each figure is as the page states it, with what it is; a checked mark means it was re-read against the page before it was stored.">
+            {deals.length ? <InvestmentStrip deals={deals} /> : null}
+            <InvestmentLedger deals={deals} />
+          </Box>
           <Box title="People" count={people.length || null} flush defn="Finance and operations first. A people-database preview names executives by title; the register lists the appointed officers with the occupation each declared.">
             {people.length ? (
               <table className="desk-table">

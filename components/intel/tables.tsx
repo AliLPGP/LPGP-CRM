@@ -4,7 +4,8 @@ import { CompanyLogo } from "@/components/company-logo";
 import { ASSET_CLASS_BY_KEY, DEAL_KIND_LABEL, INVESTOR_TYPE_LABEL, SIGNAL_KIND_LABEL, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { brandDomain } from "@/lib/directory/brand-domains";
 import { headcountLabel, sizeLabel, sizeTitle } from "@/lib/directory/format";
-import { formatMoney, type Deal, type Signal } from "@/lib/directory/intelligence-types";
+import { AMOUNT_BASIS_LABEL, formatMoney, type Deal, type Signal } from "@/lib/directory/intelligence-types";
+import { portcoHref } from "@/lib/directory/portco-intel";
 import { locationLabel, type DirectoryRecord } from "@/lib/directory/records";
 import { ROLE_LABEL } from "@/lib/directory/providers";
 import type { NamedCommitment } from "@/lib/directory/queries";
@@ -66,7 +67,16 @@ export function DealTable({ deals, showClass = true, compact = false }: { deals:
                     )}
                     {d.investor_type ? <span className="text-muted-foreground"> ({INVESTOR_TYPE_LABEL[d.investor_type] ?? d.investor_type})</span> : null}
                     <span className="text-muted-foreground"> → </span>
-                    {d.target_team_id ? <Link href={`/database/sports/${d.target_team_id}`}>{d.target}</Link> : d.target_company_id ? <Link href={`/companies/${d.target_company_id}`}>{d.target}</Link> : <span>{d.target}</span>}
+                    {d.target_team_id ? (
+                      <Link href={`/database/sports/${d.target_team_id}`}>{d.target}</Link>
+                    ) : d.target_company_id ? (
+                      <Link href={`/companies/${d.target_company_id}`}>{d.target}</Link>
+                    ) : d.target_key && d.target_kind === "company" ? (
+                      <Link href={portcoHref(d.target_key)}>{d.target}</Link>
+                    ) : (
+                      <span>{d.target}</span>
+                    )}
+                    {d.co_investors?.length ? <span className="text-muted-foreground"> · with {d.co_investors.slice(0, 3).join(", ")}{d.co_investors.length > 3 ? ` +${d.co_investors.length - 3}` : ""}</span> : null}
                     {d.target_country ? <span className="text-muted-foreground"> · {d.target_country}</span> : null}
                   </div>
                 ) : null}
@@ -77,7 +87,10 @@ export function DealTable({ deals, showClass = true, compact = false }: { deals:
               </td>
               {showClass ? <td>{classTag(d.asset_class)}</td> : null}
               <td className="num">{d.stake_pct != null ? `${d.stake_pct}%` : "—"}</td>
-              <td className="num">{formatMoney(d.amount, d.currency)}</td>
+              <td className="num">
+                {formatMoney(d.amount, d.currency)}
+                {d.amount != null && d.amount_basis && d.amount_basis !== "unspecified" ? <div className="text-[10px] text-muted-foreground">{AMOUNT_BASIS_LABEL[d.amount_basis] ?? d.amount_basis}</div> : null}
+              </td>
               {!compact ? <td className="num">{formatMoney(d.valuation, d.valuation_currency)}</td> : null}
             </tr>
           ))}

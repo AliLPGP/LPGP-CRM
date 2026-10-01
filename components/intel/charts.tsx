@@ -16,6 +16,18 @@ export const CLASS_HUE: Record<string, string> = {
   sports: "var(--chart-bar)",
 };
 
+/** Deal kinds in the validated slot order; identity follows the kind, never its rank. */
+export const DEAL_KIND_ORDER = ["company_acquisition", "minority_investment", "funding_round", "add_on_acquisition", "debt_financing", "company_exit", "ipo"] as const;
+export const KIND_HUE: Record<string, string> = {
+  company_acquisition: "var(--chart-1)",
+  minority_investment: "var(--chart-2)",
+  funding_round: "var(--chart-3)",
+  add_on_acquisition: "var(--chart-4)",
+  debt_financing: "var(--chart-5)",
+  company_exit: "var(--chart-6)",
+  ipo: "var(--chart-7)",
+};
+
 export type Column = { label: string; value: number; hint?: string };
 
 /** Columns over an ordered axis (months, quarters, years): counts or sums.
@@ -75,7 +87,7 @@ export function ShareBar({ segments, format = (v: number) => v.toLocaleString("e
   if (!total || !rows.length) return <p className="text-[12px] text-muted-foreground">Nothing to chart yet.</p>;
   return (
     <div>
-      <div className="flex h-3 w-full overflow-hidden rounded-[2px]" role="img" aria-label={rows.map((s) => `${s.label} ${Math.round((s.value / total) * 100)}%`).join(", ")}>
+      <div className="flex h-3 w-full gap-[2px] overflow-hidden rounded-[2px]" role="img" aria-label={rows.map((s) => `${s.label} ${Math.round((s.value / total) * 100)}%`).join(", ")}>
         {rows.map((s) => (
           <span key={s.key} title={`${s.label}: ${format(s.value)} (${Math.round((s.value / total) * 100)}%)`} style={{ width: `${(s.value / total) * 100}%`, background: s.hue ?? CLASS_HUE[s.key] ?? "var(--chart-bar)" }} />
         ))}

@@ -6,7 +6,8 @@ import { DealTable, SignalList, dateLabel } from "@/components/intel/tables";
 import { Box, Empty, Src, Stat, StatStrip, Tag } from "@/components/intel/ui";
 import { ASSET_CLASS_BY_KEY, DEAL_KIND_LABEL, INVESTOR_TYPE_LABEL, OWNERSHIP_TYPE_LABEL, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { getDeal, getSportsTeam, getTeamOwners, relatedDeals, signalsNaming } from "@/lib/directory/intelligence-queries";
-import { formatCount, formatMoney, SPORT_LABEL } from "@/lib/directory/intelligence-types";
+import { AMOUNT_BASIS_LABEL, formatCount, formatMoney, SPORT_LABEL } from "@/lib/directory/intelligence-types";
+import { portcoHref } from "@/lib/directory/portco-intel";
 import { getCompany } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
@@ -36,7 +37,16 @@ export default async function DealPage({ params }: { params: Promise<{ id: strin
   // Arithmetic only, and labelled as such: a stake and the price paid for it
   // imply the whole. Shown when both are stated in one currency.
   const implied = deal.amount != null && deal.stake_pct != null && deal.stake_pct > 0 && deal.currency ? deal.amount / (deal.stake_pct / 100) : null;
-  const targetHref = deal.target_team_id ? `/database/sports/${deal.target_team_id}` : deal.target_company_id ? `/companies/${deal.target_company_id}` : deal.target_fund_id ? `/funds/${deal.target_fund_id}` : null;
+  const targetHref = deal.target_team_id
+    ? `/database/sports/${deal.target_team_id}`
+    : deal.target_company_id
+      ? `/companies/${deal.target_company_id}`
+      : deal.target_fund_id
+        ? `/funds/${deal.target_fund_id}`
+        : deal.target_key && (deal.target_kind === "company" || deal.source === "web_research")
+          ? portcoHref(deal.target_key)
+          : null;
+  const basis = deal.amount_basis ? (AMOUNT_BASIS_LABEL[deal.amount_basis] ?? deal.amount_basis) : null;
   const investorHref = deal.investor_company_id ? `/companies/${deal.investor_company_id}` : deal.investor_id ? `/database/sports/investors/${deal.investor_id}` : null;
   const timeline = [...related.target, deal].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
 
@@ -60,7 +70,12 @@ export default async function DealPage({ params }: { params: Promise<{ id: strin
       actions={<Src url={deal.source_url} name={deal.source_name ?? "Source"} className="text-[12px]" />}
     >
       <StatStrip>
-        <Stat label="Amount" value={formatMoney(deal.amount, deal.currency)} basis={deal.currency ? `in ${deal.currency}, as the source states it` : "not stated"} />
+        <Stat
+          label="Amount"
+          value={formatMoney(deal.amount, deal.currency)}
+          basis={deal.currency ? `${basis ? basis + ", " : ""}in ${deal.currency}, as the source states it` : "not stated"}
+          defn={deal.verified ? "Re-read against the source page before it was stored." : deal.verified === false ? "The source page could not be re-read when the figure was checked." : undefined}
+        />
         <Stat label="Stake" value={deal.stake_pct != null ? `${deal.stake_pct}%` : "—"} basis={deal.seller ? `from ${deal.seller}` : undefined} />
         <Stat label="Valuation" value={formatMoney(deal.valuation, deal.valuation_currency)} basis={deal.valuation != null ? "as the source states it" : "not stated"} />
         <Stat
@@ -94,12 +109,27 @@ export default async function DealPage({ params }: { params: Promise<{ id: strin
                 {deal.target_country ? <span className="text-muted-foreground"> · {deal.target_country}</span> : null}
                 {targetCompany ? <span className="tag ml-1.5">Directory firm</span> : null}
               </dd>
+              {deal.co_investors?.length ? (
+                <>
+                  <dt>Alongside</dt>
+                  <dd>{deal.co_investors.join(", ")}</dd>
+                </>
+              ) : null}
+              {deal.round ? (
+                <>
+                  <dt>Round</dt>
+                  <dd>{deal.round}</dd>
+                </>
+              ) : null}
               <dt>Seller</dt>
               <dd>{deal.seller ?? "—"}</dd>
               <dt>Stake</dt>
               <dd className="figure">{deal.stake_pct != null ? `${deal.stake_pct}%` : "—"}</dd>
               <dt>Amount</dt>
-              <dd className="figure">{formatMoney(deal.amount, deal.currency)}{deal.amount != null && deal.currency ? <span className="text-muted-foreground"> {deal.currency}</span> : null}</dd>
+              <dd className="figure">
+                {formatMoney(deal.amount, deal.currency)}
+                {deal.amount != null && deal.currency ? <span className="text-muted-foreground"> {deal.currency}{basis ? ` · ${basis}` : ""}</span> : null}
+              </dd>
               <dt>Valuation</dt>
               <dd className="figure">{formatMoney(deal.valuation, deal.valuation_currency)}{deal.valuation != null && deal.valuation_currency ? <span className="text-muted-foreground"> {deal.valuation_currency}</span> : null}</dd>
               <dt>Asset class</dt>
@@ -109,6 +139,20 @@ export default async function DealPage({ params }: { params: Promise<{ id: strin
                 <Src url={deal.source_url} name={deal.source_name ?? "page"} className="text-[12.5px]" />
                 {deal.source_url ? <div className="truncate text-[11px] text-muted-foreground" title={deal.source_url}>{deal.source_url.replace(/^https?:\/\//, "")}</div> : null}
               </dd>
+              {deal.evidence ? (
+                <>
+                  <dt>The page says</dt>
+                  <dd>
+                    <blockquote className="border-l-2 pl-2 text-[12.5px] leading-snug">{deal.evidence}</blockquote>
+                  </dd>
+                </>
+              ) : null}
+              {deal.verified != null ? (
+                <>
+                  <dt>Checked</dt>
+                  <dd className="text-muted-foreground">{deal.verified ? "Re-read against the source page before it was stored" : "The source page could not be re-read at the check; shown as the release reported it"}</dd>
+                </>
+              ) : null}
               <dt>On record</dt>
               <dd className="text-muted-foreground">{RECORD_SOURCE[deal.source] ?? deal.source} · added {dateLabel(deal.created_at.slice(0, 10))}</dd>
             </dl>

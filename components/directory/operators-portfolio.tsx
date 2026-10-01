@@ -9,6 +9,7 @@ import { PersonAvatar } from "@/components/person-avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DEAL_BASIS_LABEL, type PortfolioCompany } from "@/lib/directory/portfolio";
+import { Columns } from "@/components/intel/charts";
 import { chiefExec, financeLead, operationsLead, portcoHref, type PortcoIntel } from "@/lib/directory/portco-intel";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { addPortfolioCompany, removePortfolioCompany } from "@/lib/directory/portfolio-actions";
@@ -406,6 +407,14 @@ function PortfolioSummary({ rows, intel }: { rows: PortfolioCompany[]; intel: Re
   const places = top((r) => r.hq?.split(",").pop() ?? null, 4);
   const withLeads = rows.filter((r) => r.intel_key && intel[r.intel_key] && (financeLead(intel[r.intel_key]) || operationsLead(intel[r.intel_key]))).length;
   const withAccounts = rows.filter((r) => r.intel_key && intel[r.intel_key]?.revenue != null).length;
+  const yearCounts = new Map<number, number>();
+  for (const r of rows) if (r.invested_year) yearCounts.set(r.invested_year, (yearCounts.get(r.invested_year) ?? 0) + 1);
+  const lastYear = Math.max(0, ...yearCounts.keys());
+  const byYear = lastYear
+    ? Array.from({ length: Math.min(12, lastYear - Math.min(...yearCounts.keys()) + 1) }, (_, i) => lastYear - 11 + i)
+        .filter((y) => y >= Math.min(...yearCounts.keys()))
+        .map((y) => ({ label: `’${String(y).slice(2)}`, value: yearCounts.get(y) ?? 0, hint: String(y) }))
+    : [];
   const cell = "min-w-0 border-l px-4 py-3 first:border-l-0";
   const label = "text-[10px] uppercase tracking-wide text-muted-foreground";
   const bars = (items: [string, number][]) => (
@@ -464,6 +473,12 @@ function PortfolioSummary({ rows, intel }: { rows: PortfolioCompany[]; intel: Re
         <div className={cell}>
           <div className={label}>Where</div>
           {bars(places)}
+        </div>
+      ) : null}
+      {byYear.length >= 3 ? (
+        <div className={cn(cell, "min-w-[220px]")} title="Companies by the year of investment the sponsor or the announcement gives.">
+          <div className={label}>Investments per year</div>
+          <Columns rows={byYear} height={44} className="mt-1" />
         </div>
       ) : null}
     </div>

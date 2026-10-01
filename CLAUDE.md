@@ -171,6 +171,25 @@ boundaries and keeps comment text ASCII.
   private equity, growth, venture, alternatives; the directory's firms before
   the SEC roster's; `scripts/research.ts portfolios`), up to 400 companies
   per manager, with `portfolioRows` shared by the per-firm route.
+- **Portco investments** (0024) — the money announced around portfolio
+  companies lives in `deals` (one ledger): `co_investors`, `round`,
+  `amount_basis` (enterprise value, equity value, round size, stake price,
+  debt, unspecified), `evidence` (the sentence on the page), `verified`
+  (re-read against the page before storing; false = page unreachable at the
+  check), and `target_key`, the `borrower_key` fold a loader may set to the
+  portfolio company it means (a trigger defaults it from `target`), so deals
+  join `portfolio_companies.intel_key` and the borrowers view.
+  `portco_summary()` serves `/database/portcos`, the portfolio desk; a
+  company's page (`/database/portcos/[key]`) opens with its investment strip
+  and ledger (`components/intel/investments.tsx`), and shows the largest
+  stated deal per currency and the total raised in rounds — never sums across
+  deal kinds or currencies. `data/portfolios/<sponsor>.json` holds each
+  sponsor's researched list and fact-checked deals (public facts, every row
+  with its page); `supabase/tools/portfolios_to_sql.py` turns research files
+  into those and into one idempotent loader per sponsor in
+  `supabase/portfolios/`, which `ingest.run_remote_sql` runs. Only verified
+  deals are loaded; a company named only in a release joins the portfolio
+  with that release as its source.
 - **Speed** — the API roles carry short statement timeouts (anon 3 s), so
   anything that aggregates a large table lives in SQL (`credit_book_summary`,
   `offering_stats`, `borrower_summary`), never in the app over paged rows.

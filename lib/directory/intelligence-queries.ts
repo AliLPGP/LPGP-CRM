@@ -20,7 +20,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const isUuid = (v: string | null | undefined): v is string => typeof v === "string" && UUID.test(v);
 
 const DEAL_COLUMNS =
-  "id, date, date_text, kind, asset_class, sport, target, target_kind, target_country, target_team_id, target_company_id, target_fund_id, investor, investor_type, investor_company_id, investor_id, seller, stake_pct, amount, currency, valuation, valuation_currency, headline, summary, source_name, source_url, source";
+  "id, date, date_text, kind, asset_class, sport, target, target_kind, target_country, target_team_id, target_company_id, target_fund_id, investor, investor_type, investor_company_id, investor_id, seller, stake_pct, amount, currency, valuation, valuation_currency, headline, summary, source_name, source_url, source, co_investors, round, amount_basis, verified, target_key";
 const SIGNAL_COLUMNS = "id, date, asset_class, kind, headline, summary, entities, company_ids, source_name, source_url, source";
 
 export type DealFilter = {
@@ -74,7 +74,7 @@ async function buildAllDeals(assetClass: AssetClassKey | "", version: string): P
 // jobs and the dataset loader refresh the intelligence tag when they write;
 // the EDGAR ingest writes from inside the database, so the row count rides in
 // the key and a stale copy is dropped the moment a deal lands.
-const cachedAllDeals = bigCache("all-deals-v2", (version) => buildAllDeals("", version), { tags: [INTEL_TAG], revalidate: 3600 });
+const cachedAllDeals = bigCache("all-deals-v3", (version) => buildAllDeals("", version), { tags: [INTEL_TAG], revalidate: 3600 });
 
 /** Every deal, for the Deals page, or every deal of one class. */
 export async function getAllDeals(assetClass?: AssetClassKey | null): Promise<Deal[]> {
@@ -91,7 +91,7 @@ export async function getAllDeals(assetClass?: AssetClassKey | null): Promise<De
 export async function getDeal(id: string): Promise<(Deal & { created_at: string; added_by: string | null }) | null> {
   const supabase = getReadClient();
   if (!supabase || !isUuid(id)) return null;
-  const { data } = await supabase.from("deals").select(`${DEAL_COLUMNS}, created_at, added_by`).eq("id", id).maybeSingle();
+  const { data } = await supabase.from("deals").select(`${DEAL_COLUMNS}, created_at, added_by, evidence`).eq("id", id).maybeSingle();
   return (data as unknown as (Deal & { created_at: string; added_by: string | null }) | null) ?? null;
 }
 

@@ -76,6 +76,7 @@ const DATA: NavItem[] = [
   { href: "/funds", label: "Funds", icon: Layers },
   { href: "/contacts", label: "People", icon: Users },
   { href: "/database/deals", label: "Deals", icon: Handshake },
+  { href: "/database/portcos", label: "Portfolio companies", icon: Building2 },
   { href: "/database/signals", label: "Signals", icon: Activity },
   {
     href: "/database/asset-classes",

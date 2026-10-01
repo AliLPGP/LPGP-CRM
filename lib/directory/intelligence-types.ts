@@ -197,6 +197,25 @@ export type Deal = {
   source_name: string | null;
   source_url: string | null;
   source: string;
+  /** Migration 0024: every other named investor, the round, what the amount is, and whether it was re-read against its page. */
+  co_investors?: string[];
+  round?: string | null;
+  amount_basis?: string | null;
+  verified?: boolean | null;
+  /** borrower_key of the company the deal is about: the portfolio company / borrower record it belongs to. */
+  target_key?: string | null;
+  /** The verbatim sentence on the source page that states the deal. */
+  evidence?: string | null;
+};
+
+/** What a stated amount is. A release that gives a number without saying is "as reported". */
+export const AMOUNT_BASIS_LABEL: Record<string, string> = {
+  enterprise_value: "enterprise value",
+  equity_value: "equity value",
+  round_size: "round size",
+  stake_price: "price of the stake",
+  debt: "debt facility",
+  unspecified: "as reported",
 };
 
 export type Signal = {

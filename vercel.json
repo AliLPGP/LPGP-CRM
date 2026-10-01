@@ -4,7 +4,9 @@
   "buildCommand": "pnpm next build",
   "installCommand": "pnpm install",
   "outputDirectory": ".next",
-  "regions": ["dub1"],
+  "regions": [
+    "dub1"
+  ],
   "crons": [
     {
       "path": "/api/directory/signals/refresh",
@@ -21,6 +23,10 @@
     {
       "path": "/api/directory/portcos/enrich",
       "schedule": "10 7 * * *"
+    },
+    {
+      "path": "/api/warm",
+      "schedule": "*/20 * * * *"
     }
   ]
 }

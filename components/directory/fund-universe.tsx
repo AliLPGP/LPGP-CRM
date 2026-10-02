@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Search, X } from "lucide-react";
+import { Search } from "lucide-react";
+import { FacetChips, FacetMenu } from "@/components/intel/facet-menu";
 import { CompanyLogo } from "@/components/company-logo";
 import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { brandDomain } from "@/lib/directory/brand-domains";
@@ -16,6 +17,11 @@ import { Figure } from "./viz";
 
 const PAGE = 100;
 const COLUMNS: ProviderRole[] = ["auditor", "administrator", "custodian"];
+
+/** The asset class a fund's stated strategy places it in. */
+const classOf = (r: { strategyCode: string | null }) => (r.strategyCode ? (STRATEGY_BY_KEY[r.strategyCode]?.classKey ?? null) : null);
+/** "2020s", "2010s"… from a vintage year. */
+const decadeOf = (y: number | null) => (y ? `${Math.floor(y / 10) * 10}s` : null);
 
 /** The statuses that mean a fund is still taking money. */
 const OPEN_STATUSES = new Set<string>(["Pre-marketing", "Raising", "First close", "Interim close"]);
@@ -60,52 +66,6 @@ function countsMany(rows: Row[], key: (r: Row) => string[]): [string, number][] 
 const sectorName = (code: string) => STRATEGY_BY_KEY[code]?.name ?? INDUSTRY_BY_CODE[code]?.name ?? code;
 const regionName = (code: string) => REGION_BY_CODE[code]?.name ?? code;
 const bandLabel = (key: string) => FUND_SIZE_BANDS.find((b) => b.key === key)?.label ?? key;
-
-function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={on}
-      className={cn(
-        "rounded-full border px-2.5 py-1 text-xs transition-colors",
-        on ? "border-primary bg-primary text-primary-foreground" : "bg-card text-muted-foreground hover:text-foreground",
-      )}
-    >
-      {children}
-    </button>
-  );
-}
-
-/** One facet row: the label, an "Any" pill and a pill per value with its count. */
-function Facet({
-  label,
-  value,
-  onChange,
-  options,
-  name,
-}: {
-  label: string;
-  value: string | null;
-  onChange: (v: string | null) => void;
-  options: [string, number][];
-  name?: (key: string) => string;
-}) {
-  if (!options.length) return null;
-  return (
-    <div className="flex flex-wrap items-center gap-1.5">
-      <span className="eyebrow mr-1">{label}</span>
-      <Pill on={!value} onClick={() => onChange(null)}>
-        Any
-      </Pill>
-      {options.map(([k, n]) => (
-        <Pill key={k} on={value === k} onClick={() => onChange(value === k ? null : k)}>
-          {name ? name(k) : k} <span className="figure opacity-70">{n}</span>
-        </Pill>
-      ))}
-    </div>
-  );
-}
 
 /**
  * Every fund on file — mostly the private funds managers name on Form ADV
@@ -153,34 +113,43 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
   );
 
   const [q, setQ] = useState("");
-  const [kind, setKind] = useState<string | null>(null);
-  const [domicile, setDomicile] = useState<string | null>(null);
-  const [strategyKey, setStrategyKey] = useState<string | null>(() => {
+  const [kinds_, setKinds] = useState<string[]>([]);
+  const [domiciles_, setDomiciles] = useState<string[]>([]);
+  const [classes, setClasses] = useState<string[]>([]);
+  const [strategyKeys, setStrategyKeys] = useState<string[]>(() => {
     const v = params.get("strategy");
-    return v && STRATEGY_BY_KEY[v] ? v : null;
+    return v && STRATEGY_BY_KEY[v] ? [v] : [];
   });
-  const [sector, setSector] = useState<string | null>(null);
-  const [region, setRegion] = useState<string | null>(null);
-  const [sizeBand, setSizeBand] = useState<string | null>(null);
-  const [status, setStatus] = useState<string | null>(() => params.get("status")?.trim() || null);
+  const [sectors_, setSectors] = useState<string[]>([]);
+  const [regions_, setRegions] = useState<string[]>([]);
+  const [sizeBands_, setSizeBands] = useState<string[]>([]);
+  const [vintages, setVintages] = useState<string[]>([]);
+  const [statuses_, setStatuses] = useState<string[]>(() => {
+    const v = params.get("status")?.trim();
+    return v ? [v] : [];
+  });
   const [provider, setProvider] = useState<{ brand: number; role: ProviderRole } | null>(null);
   const [shown, setShown] = useState(PAGE);
 
   const filtered = useMemo(() => {
     const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const any = (sel: string[], v: string | null) => !sel.length || (v != null && sel.includes(v));
+    const some = (sel: string[], vs: string[]) => !sel.length || vs.some((v) => sel.includes(v));
     return rows.filter(
       (r) =>
-        (!kind || r.kind === kind) &&
-        (!domicile || r.domicile === domicile) &&
-        (!strategyKey || r.strategyCode === strategyKey) &&
-        (!sector || r.sectorCodes.includes(sector)) &&
-        (!region || r.regionCodes.includes(region)) &&
-        (!sizeBand || r.sizeBand === sizeBand) &&
-        (!status || r.status === status) &&
+        any(kinds_, r.kind) &&
+        any(domiciles_, r.domicile) &&
+        any(classes, classOf(r)) &&
+        any(strategyKeys, r.strategyCode) &&
+        some(sectors_, r.sectorCodes) &&
+        some(regions_, r.regionCodes) &&
+        any(sizeBands_, r.sizeBand) &&
+        any(vintages, decadeOf(r.vintage)) &&
+        any(statuses_, r.status) &&
         (!provider || r.providers.some((p) => p.brand === provider.brand && p.role === provider.role)) &&
         words.every((w) => r.text.includes(w)),
     );
-  }, [rows, q, kind, domicile, strategyKey, sector, region, sizeBand, status, provider]);
+  }, [rows, q, kinds_, domiciles_, classes, strategyKeys, sectors_, regions_, sizeBands_, vintages, statuses_, provider]);
 
   const kinds = useMemo(() => counts(rows, (r) => r.kind), [rows]);
   const domiciles = useMemo(() => counts(rows, (r) => r.domicile), [rows]);
@@ -198,6 +167,11 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
     }
     return ASSET_CLASSES.filter((c) => byClass.has(c.key)).map((c) => ({ cls: c, options: byClass.get(c.key)! }));
   }, [rows]);
+  const classCounts = useMemo(() => {
+    const m = new Map(counts(rows, classOf));
+    return ASSET_CLASSES.filter((c) => m.has(c.key)).map((c) => [c.key, m.get(c.key)!] as [string, number]);
+  }, [rows]);
+  const vintageDecades = useMemo(() => counts(rows, (r) => decadeOf(r.vintage)).sort((a, b) => b[0].localeCompare(a[0])), [rows]);
   const sectors = useMemo(() => countsMany(rows, (r) => r.sectorCodes), [rows]);
   const regions = useMemo(() => countsMany(rows, (r) => r.regionCodes), [rows]);
   const sizeBands = useMemo(() => {
@@ -238,7 +212,7 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
     return <CompanyLogo name={name} domain={brandDomain(key)} size={18} />;
   };
 
-  const strategyOn = strategyKey ? STRATEGY_BY_KEY[strategyKey] : null;
+  const strategyOn = strategyKeys.length === 1 ? STRATEGY_BY_KEY[strategyKeys[0]] : null;
 
   return (
     <div className="space-y-5">
@@ -267,52 +241,40 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
             className="h-11 w-full rounded-xl border border-input bg-background/60 pl-10 pr-3 text-sm outline-none focus-visible:border-ring"
           />
         </div>
-        <Facet label="Vehicle" value={kind} onChange={setKind} options={kinds} />
-        <Facet label="Domicile" value={domicile} onChange={setDomicile} options={domiciles} />
-        {strategyGroups.length ? (
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="eyebrow mr-1">Strategy</span>
-            <Pill on={!strategyKey} onClick={() => setStrategyKey(null)}>
-              Any
-            </Pill>
-            {strategyGroups.map(({ cls, options }) => (
-              <span key={cls.key} className="inline-flex flex-wrap items-center gap-1.5">
-                <span className="ml-1.5 text-[10.5px] uppercase tracking-wide text-muted-foreground/80">{cls.short}</span>
-                {options.map(([k, n]) => (
-                  <Pill key={k} on={strategyKey === k} onClick={() => setStrategyKey(strategyKey === k ? null : k)}>
-                    {STRATEGY_BY_KEY[k]?.name ?? k} <span className="figure opacity-70">{n}</span>
-                  </Pill>
-                ))}
-              </span>
-            ))}
-          </div>
-        ) : null}
-        <Facet label="Sector" value={sector} onChange={setSector} options={sectors} name={sectorName} />
-        <Facet label="Region" value={region} onChange={setRegion} options={regions} name={regionName} />
-        <Facet label="Size band" value={sizeBand} onChange={setSizeBand} options={sizeBands} name={bandLabel} />
-        <Facet label="Status" value={status} onChange={setStatus} options={statuses} />
-        {status && !statuses.some(([k]) => k === status) ? (
-          <div className="flex items-center gap-2 text-xs">
-            <span className="eyebrow">Status</span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border py-0.5 pl-2 pr-1.5">
-              {status} <span className="text-muted-foreground">· none on file</span>
-              <button type="button" onClick={() => setStatus(null)} aria-label="Clear status">
-                <X className="h-3 w-3" />
-              </button>
-            </span>
-          </div>
-        ) : null}
-        {provider ? (
-          <div className="flex items-center gap-2 text-xs">
-            <span className="eyebrow">Provider</span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border py-0.5 pl-1 pr-1.5">
-              {logo(provider.brand)} {data.brands[provider.brand][1]} · {ROLE_LABEL[provider.role]}
-              <button type="button" onClick={() => setProvider(null)} aria-label="Clear provider">
-                <X className="h-3 w-3" />
-              </button>
-            </span>
-          </div>
-        ) : null}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <FacetMenu label="Asset class" groups={[{ label: "", options: classCounts.map(([k, n]) => ({ key: k, label: ASSET_CLASS_BY_KEY[k as AssetClassKey].name, count: n })) }]} selected={classes} onChange={setClasses} searchable={false} />
+          <FacetMenu
+            label="Strategy"
+            groups={strategyGroups.map(({ cls, options }) => ({ label: cls.name, options: options.map(([k, n]) => ({ key: k, label: STRATEGY_BY_KEY[k]?.name ?? k, count: n })) }))}
+            selected={strategyKeys}
+            onChange={setStrategyKeys}
+            width={320}
+          />
+          <FacetMenu label="Sector" groups={[{ label: "", options: sectors.map(([k, n]) => ({ key: k, label: sectorName(k), count: n })) }]} selected={sectors_} onChange={setSectors} width={300} />
+          <FacetMenu label="Region" groups={[{ label: "", options: regions.map(([k, n]) => ({ key: k, label: regionName(k), count: n })) }]} selected={regions_} onChange={setRegions} searchable={false} />
+          <FacetMenu label="Fund size" groups={[{ label: "", options: sizeBands.map(([k, n]) => ({ key: k, label: bandLabel(k), count: n })) }]} selected={sizeBands_} onChange={setSizeBands} searchable={false} width={220} />
+          <FacetMenu label="Vintage" groups={[{ label: "", options: vintageDecades.map(([k, n]) => ({ key: k, label: k, count: n })) }]} selected={vintages} onChange={setVintages} searchable={false} width={200} />
+          <FacetMenu label="Vehicle" groups={[{ label: "", options: kinds.map(([k, n]) => ({ key: k, label: k, count: n })) }]} selected={kinds_} onChange={setKinds} searchable={false} width={220} />
+          <FacetMenu label="Domicile" groups={[{ label: "", options: domiciles.map(([k, n]) => ({ key: k, label: k, count: n })) }]} selected={domiciles_} onChange={setDomiciles} width={240} />
+          <FacetMenu label="Status" groups={[{ label: "", options: statuses.map(([k, n]) => ({ key: k, label: k, count: n })) }]} selected={statuses_} onChange={setStatuses} searchable={false} width={220} />
+        </div>
+        <FacetChips
+          chips={[
+            ...classes.map((k) => ({ key: `c:${k}`, label: ASSET_CLASS_BY_KEY[k as AssetClassKey]?.name ?? k, remove: () => setClasses(classes.filter((x) => x !== k)) })),
+            ...strategyKeys.map((k) => ({ key: `s:${k}`, label: STRATEGY_BY_KEY[k]?.name ?? k, remove: () => setStrategyKeys(strategyKeys.filter((x) => x !== k)) })),
+            ...sectors_.map((k) => ({ key: `se:${k}`, label: sectorName(k), remove: () => setSectors(sectors_.filter((x) => x !== k)) })),
+            ...regions_.map((k) => ({ key: `r:${k}`, label: regionName(k), remove: () => setRegions(regions_.filter((x) => x !== k)) })),
+            ...sizeBands_.map((k) => ({ key: `b:${k}`, label: bandLabel(k), remove: () => setSizeBands(sizeBands_.filter((x) => x !== k)) })),
+            ...vintages.map((k) => ({ key: `v:${k}`, label: `Vintage ${k}`, remove: () => setVintages(vintages.filter((x) => x !== k)) })),
+            ...kinds_.map((k) => ({ key: `k:${k}`, label: k, remove: () => setKinds(kinds_.filter((x) => x !== k)) })),
+            ...domiciles_.map((k) => ({ key: `d:${k}`, label: k, remove: () => setDomiciles(domiciles_.filter((x) => x !== k)) })),
+            ...statuses_.map((k) => ({ key: `st:${k}`, label: statuses.some(([x]) => x === k) ? k : `${k} · none on file`, remove: () => setStatuses(statuses_.filter((x) => x !== k)) })),
+            ...(provider ? [{ key: "p", label: `${data.brands[provider.brand][1]} · ${ROLE_LABEL[provider.role]}`, remove: () => setProvider(null) }] : []),
+          ]}
+          onClearAll={() => {
+            setClasses([]); setStrategyKeys([]); setSectors([]); setRegions([]); setSizeBands([]); setVintages([]); setKinds([]); setDomiciles([]); setStatuses([]); setProvider(null);
+          }}
+        />
       </div>
 
       <div className="grid gap-3 sm:grid-cols-3">

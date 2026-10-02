@@ -231,7 +231,8 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     background-image: var(--page-glow);
-    background-attachment: fixed;
+    /* The glow scrolls with the page: a fixed attachment repaints the whole
+       viewport on every scroll frame, and Safari ignores it anyway. */
     background-repeat: no-repeat;
   }
   ::selection {
@@ -465,7 +466,7 @@
   color: var(--rail-fg);
   border-bottom: 2px solid transparent;
   white-space: nowrap;
-  transition: color 0.15s;
+  transition: color 150ms ease-out, border-color 150ms ease-out;
 }
 .topnav-section:hover,
 .topnav-section.is-on {
@@ -473,6 +474,13 @@
 }
 .topnav-section.is-on {
   border-bottom-color: var(--brass);
+}
+/* Keyboard focus on the graphite: the browser's ring is invisible here, so
+   the brass draws it on every link and button in the bar (the drawer and
+   the panels included), inset so it never spills past an edge. */
+.topnav :is(a, button):focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: -2px;
 }
 .topnav-panel {
   position: absolute;
@@ -482,7 +490,7 @@
   background: var(--rail-bg);
   border-bottom: 1px solid var(--rail-line);
   box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
-  animation: topnav-in 0.14s ease-out;
+  animation: menu-in 160ms ease-out both;
 }
 .topnav-dropdown {
   position: absolute;
@@ -492,16 +500,46 @@
   border: 1px solid var(--rail-line);
   border-radius: 6px;
   box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
-  animation: topnav-in 0.12s ease-out;
+  animation: menu-in 160ms ease-out both;
 }
-@keyframes topnav-in {
+/* The mobile drawer: the whole rail sliding over the page. */
+.topnav-drawer {
+  animation: drawer-in 180ms ease-out both;
+  overscroll-behavior: contain;
+}
+@keyframes drawer-in {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateX(-12px);
   }
   to {
     opacity: 1;
     transform: none;
+  }
+}
+/* A hairline of brass along the top of the bar while a navigation is in
+   flight: it runs to ~85% on its own and finishes when the route commits. */
+.topnav-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  z-index: 60;
+  background: var(--brass);
+  box-shadow: 0 0 8px color-mix(in oklab, var(--brass) 70%, transparent);
+  animation: progress-run 6s cubic-bezier(0.1, 0.6, 0.2, 1) both;
+  animation-delay: 80ms; /* a prefetched hop never shows it */
+  pointer-events: none;
+}
+@keyframes progress-run {
+  from {
+    width: 0;
+    opacity: 1;
+  }
+  to {
+    width: 85%;
+    opacity: 1;
   }
 }
 .topnav-link {
@@ -671,12 +709,27 @@
   padding: 7px 10px;
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
+  transition: background-color 120ms ease-out;
 }
 .desk-table tr:last-child td {
   border-bottom: 0;
 }
 .desk-table tbody tr:hover td {
   background: color-mix(in oklab, var(--accent) 45%, transparent);
+}
+/* A ledger that scrolls inside its panel keeps its header in view: add
+   .desk-sticky to the .desk-scroll wrapper (height from --desk-sticky-h,
+   70vh by default). Opt-in, because a header stuck to the page would slide
+   under the top bar. */
+.desk-scroll.desk-sticky {
+  max-height: var(--desk-sticky-h, 70vh);
+  overflow: auto;
+}
+.desk-scroll.desk-sticky .desk-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: color-mix(in oklab, var(--muted) 55%, var(--card));
 }
 .desk-table .num {
   text-align: right;
@@ -749,16 +802,38 @@
   font-weight: 500;
   color: var(--muted-foreground);
   white-space: nowrap;
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid transparent; /* reserves the underline's height, so the bar never moves */
   margin-bottom: -1px;
+  transition: color 150ms ease-out;
 }
 .desk-tab:hover {
   color: var(--foreground);
 }
+.desk-tab:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+  border-radius: 3px;
+}
+/* The underline is drawn, not bordered, so it can grow in under the tab
+   that just became active instead of appearing at once. */
+.desk-tab::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--brass);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 150ms ease-out;
+}
 .desk-tab[aria-current="page"],
 .desk-tab[data-active="true"] {
   color: var(--foreground);
-  border-bottom-color: var(--brass);
+}
+.desk-tab[aria-current="page"]::after,
+.desk-tab[data-active="true"]::after {
+  transform: scaleX(1);
 }
 .desk-tab .count {
   margin-left: 6px;
@@ -864,29 +939,65 @@
 }
 
 /* -- Motion --------------------------------------------------------------- */
+/* One system, four names. Everything is a fade with a small rise, ease-out,
+   under 200ms, and all of it switches off under prefers-reduced-motion.
 
-main > * {
-  animation: page-in 320ms cubic-bezier(0.21, 0.68, 0.4, 1) both;
-}
-@keyframes page-in {
+     .fade-in        opacity 0->1 with a 4px rise, 160ms   (tab content, a
+                     panel that just arrived, a row set that just changed)
+     .fade-in-fast   the same at 120ms                     (a chip, a count)
+     .menu-in        a menu or popover opening: the same fade and rise, 160ms,
+                     the keyframe the header panels use. A dropdown built
+                     from utility classes adopts it by adding the class to
+                     its floating element -- nothing else to wire up.
+     .topnav-drawer  the mobile drawer (above)
+
+   Row hover on .desk-table is a 120ms background transition; the active
+   tab underline (.desk-tab) grows in over 150ms. Nothing bounces and
+   nothing scales. */
+
+@keyframes fade-rise {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
+}
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-in {
+  animation: fade-rise 160ms ease-out both;
+}
+.fade-in-fast {
+  animation: fade-rise 120ms ease-out both;
+}
+.menu-in {
+  animation: menu-in 160ms ease-out both;
+}
+
+/* A route's content arrives the same way a panel does. */
+main > * {
+  animation: fade-rise 180ms ease-out both;
 }
 
 .modal-overlay {
-  animation: modal-overlay-in 180ms ease both;
+  animation: modal-overlay-in 160ms ease-out both;
 }
 .modal-panel {
-  animation: modal-panel-in 240ms cubic-bezier(0.21, 0.68, 0.36, 1.02) both;
+  animation: modal-panel-in 180ms ease-out both;
 }
 .quick-look {
-  animation: slide-in 260ms cubic-bezier(0.21, 0.68, 0.36, 1) both;
+  animation: slide-in 200ms ease-out both;
 }
 @keyframes slide-in {
   from {
@@ -909,11 +1020,11 @@ main > * {
 @keyframes modal-panel-in {
   from {
     opacity: 0;
-    transform: translateY(14px) scale(0.975);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
@@ -952,8 +1063,25 @@ main > * {
   animation: pulse-ring 2.2s ease-out infinite;
 }
 
+/* Reduced motion: everything above lands at once. The universal rule covers
+   the utility animations too (animate-pulse, animate-spin, the Radix menus),
+   and an infinite loop is cut to one pass so it cannot flicker. */
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
   main > *,
+  .fade-in,
+  .fade-in-fast,
+  .menu-in,
+  .topnav-panel,
+  .topnav-dropdown,
+  .topnav-drawer,
   .modal-overlay,
   .modal-panel,
   .quick-look,
@@ -961,8 +1089,9 @@ main > * {
   .pulse-ring {
     animation: none;
   }
-  html {
-    scroll-behavior: auto;
+  .topnav-progress {
+    animation: none;
+    width: 85%;
   }
   .lift:hover {
     transform: none;

@@ -30,6 +30,8 @@ export function CompanyLogo({
   const src = clean && current.attempt < SOURCES.length ? SOURCES[current.attempt](clean) : null;
 
   return (
+    // The box is sized here, in the one style the register reads, before any
+    // image arrives: a logo that lands late never moves the row.
     <span
       className="relative inline-grid place-items-center overflow-hidden rounded-md border bg-secondary text-secondary-foreground font-semibold shrink-0"
       style={{ width: size, height: size, fontSize: Math.round(size * 0.34) }}
@@ -46,7 +48,11 @@ export function CompanyLogo({
           // Hidden until it has actually loaded: no broken-image flash while a
           // source fails over to the next one.
           className={`absolute inset-0 h-full w-full bg-white object-contain p-[8%] transition-opacity ${current.loaded ? "opacity-100" : "opacity-0"}`}
+          // Off-screen rows do not fetch; decoding stays off the main thread;
+          // the logo host never learns which record was being read.
           loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
           onLoad={() => setState({ domain: clean, attempt: current.attempt, loaded: true })}
           onError={() => setState({ domain: clean, attempt: current.attempt + 1, loaded: false })}
         />

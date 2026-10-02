@@ -7,6 +7,9 @@ import type { Category } from "../types";
 import { zoneOf, type Zone } from "./geo";
 import { isOperatingRole } from "./operating";
 import { normalizeRole, providerBrand } from "./providers";
+import { classOfGpType, isAssetClassKey, type AssetClassKey } from "./asset-classes";
+import { STRATEGIES_BY_CLASS, strategiesInFirmText } from "./strategies";
+import { industryCodesInText, regionOfCountry, regionsInText, typeCodeOf } from "./taxonomy";
 import {
   EMPTY_INDEX,
   disclosesFrom,
@@ -23,7 +26,7 @@ export const DIRECTORY_TAG = "directory";
 const BASE_COLUMNS =
   "id, name, category, sub_type, domain, city, country, region, aum_usd, description, in_portfolio";
 
-const RICH_COLUMNS = `${BASE_COLUMNS}, directory_vertical, state, employee_count, adv_employee_count, founded_year, adv_firm_type, adv_last_filed, private_fund_count, regulatory_aum_usd, brand_aum_total_usd, private_fund_gross_assets, total_assets_usd, industry, service_lines, lifecycle, discloses_commitments, source`;
+const RICH_COLUMNS = `${BASE_COLUMNS}, directory_vertical, state, employee_count, adv_employee_count, founded_year, adv_firm_type, adv_last_filed, private_fund_count, regulatory_aum_usd, brand_aum_total_usd, private_fund_gross_assets, total_assets_usd, industry, service_lines, lifecycle, discloses_commitments, source, investor_type, alts_allocation_pct, geographic_focus`;
 
 type CompanyRow = {
   id: string;
@@ -54,6 +57,23 @@ type CompanyRow = {
   lifecycle?: string[] | null;
   discloses_commitments?: string | null;
   source?: string | null;
+  /** The LP sheet's own type words ("Public Pension Fund"). */
+  investor_type?: string | null;
+  alts_allocation_pct?: number | null;
+  geographic_focus?: string | null;
+};
+
+/** What the investor research job has stated about an LP (migration 0033). */
+type ProfileRow = {
+  company_id: string;
+  investor_type: string | null;
+  allocations: { class?: string; current_pct?: number | null }[] | null;
+  strategy_prefs: string[] | null;
+  region_prefs: string[] | null;
+  industry_prefs: string[] | null;
+  ticket_min_usd: number | null;
+  ticket_max_usd: number | null;
+  active_in_alternatives: boolean | null;
 };
 
 type RelRow = {
@@ -81,6 +101,22 @@ function linesText(lines: CompanyRow["service_lines"]): string | null {
     .map((l) => [l?.name, ...(Array.isArray(l?.capabilities) ? l.capabilities : [])].filter(Boolean).join(" · "))
     .join(" | ");
 }
+
+function strings(v: unknown): string[] {
+  return Array.isArray(v) ? v.filter((s): s is string => typeof s === "string" && s.length > 0) : [];
+}
+
+function numberOrNull(v: unknown): number | null {
+  if (v == null || v === "") return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
+
+function dedupe<T>(values: T[]): T[] {
+  return [...new Set(values)];
+}
+
+const CLASS_KEYS = Object.keys(STRATEGIES_BY_CLASS) as AssetClassKey[];
 
 // `version` is the row count of the tables the index reads: part of the cache
 // key, so growth the app did not write (the EDGAR ingest) still shows.
@@ -190,15 +226,40 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
   }
   for (const [bi, set] of brandClients) brands[bi].clients = set.size;
 
-  // Funds and portfolio companies per manager, counted by the database in
-  // one call (migration 0027). Falls back to nothing, not to 45 pages of rows.
+  // Funds and portfolio companies per manager, commitments per LP and the
+  // classes an LP plans for, counted by the database in one call (migrations
+  // 0027, 0033). Falls back to nothing, not to 45 pages of rows; a rollups
+  // function from before 0033 simply lacks the last two keys.
   const fundCount = new Map<string, number>();
   const portcoCount = new Map<string, number>();
+  const commitmentCount = new Map<string, number>();
+  const plansByLp = new Map<string, string[]>();
   if (schemaReady) {
     const { data } = await supabase.rpc("directory_rollups");
-    const r = data as { funds?: Record<string, number>; portcos?: Record<string, number> } | null;
+    const r = data as {
+      funds?: Record<string, number>;
+      portcos?: Record<string, number>;
+      commitments?: Record<string, number>;
+      plans?: Record<string, string[]>;
+    } | null;
     for (const [k, v] of Object.entries(r?.funds ?? {})) fundCount.set(k, v);
     for (const [k, v] of Object.entries(r?.portcos ?? {})) portcoCount.set(k, v);
+    for (const [k, v] of Object.entries(r?.commitments ?? {})) commitmentCount.set(k, v);
+    for (const [k, v] of Object.entries(r?.plans ?? {})) plansByLp.set(k, strings(v));
+  }
+
+  // What the investor research job has stated per LP (migration 0033). One
+  // plain select: a few thousand rows at most. Before the migration the
+  // table is missing and the read errors — that is an empty profile set,
+  // never a failed build.
+  const profiles = new Map<string, ProfileRow>();
+  if (schemaReady) {
+    const { data } = await supabase
+      .from("investor_profiles")
+      .select(
+        "company_id, investor_type, allocations, strategy_prefs, region_prefs, industry_prefs, ticket_min_usd, ticket_max_usd, active_in_alternatives",
+      );
+    for (const p of (data ?? []) as ProfileRow[]) if (p.company_id) profiles.set(p.company_id, p);
   }
 
   let advThrough: string | null = null;
@@ -209,6 +270,55 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
   const records: DirectoryRecord[] = companies.map((c) => {
     const { aum, kind } = aumOf(c);
     const adv = c.adv_firm_type === "Registered" || c.adv_firm_type === "ERA" ? c.adv_firm_type : null;
+    const profile = profiles.get(c.id) ?? null;
+    const firmText = [c.directory_vertical, c.description].filter(Boolean).join(" ");
+
+    // The type: the sub-type first; for an LP with none, the sheet's own
+    // type words, then its overview; a researched profile's type wins.
+    const typeCode =
+      (c.category === "LP" && profile?.investor_type) ||
+      typeCodeOf(c.category, c.sub_type, c.investor_type) ||
+      typeCodeOf(c.category, c.sub_type, c.description) ||
+      null;
+
+    // Allocations whose current figure is stated, as [class, pct].
+    const alloc: [string, number][] = [];
+    for (const a of Array.isArray(profile?.allocations) ? profile.allocations : []) {
+      const pct = numberOrNull(a?.current_pct);
+      if (a?.class && pct != null) alloc.push([a.class, pct]);
+    }
+
+    // Classes: a GP by its type and by any strategy its own words state; an
+    // LP by what it allocates to or plans for. Strategies: a GP's within
+    // those classes; an LP's stated preferences.
+    let classes: AssetClassKey[] = [];
+    let strategies: string[] = [];
+    if (c.category === "GP") {
+      const stated = CLASS_KEYS.flatMap((k) => strategiesInFirmText(firmText, k));
+      classes = dedupe([classOfGpType(c.sub_type), ...stated.map((s) => s.classKey)].filter((k): k is AssetClassKey => k != null));
+      strategies = dedupe(stated.map((s) => s.key));
+    } else if (c.category === "LP") {
+      const allocated = Array.isArray(profile?.allocations) ? profile.allocations.map((a) => a?.class) : [];
+      classes = dedupe([...allocated, ...(plansByLp.get(c.id) ?? [])].filter(isAssetClassKey));
+      strategies = strings(profile?.strategy_prefs);
+    }
+
+    const sectors = dedupe([
+      ...industryCodesInText([c.description, c.industry, c.directory_vertical].filter(Boolean).join(" ")),
+      ...(c.category === "LP" ? strings(profile?.industry_prefs) : []),
+    ]);
+    const regions = dedupe(
+      [regionOfCountry(c.country), ...regionsInText(c.geographic_focus), ...(c.category === "LP" ? strings(profile?.region_prefs) : [])].filter(
+        (r): r is string => r != null,
+      ),
+    );
+    const knownFunds =
+      c.category === "LP"
+        ? (commitmentCount.get(c.id) ?? 0)
+        : c.category === "GP"
+          ? (fundCount.get(c.id) ?? 0)
+          : (clientsByProvider.get(c.id)?.size ?? 0);
+
     return {
       id: c.id,
       name: c.name,
@@ -240,6 +350,18 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
       funds: fundCount.get(c.id) ?? 0,
       operators: operatorCount.get(c.id) ?? 0,
       portcos: portcoCount.get(c.id) ?? 0,
+      typeCode,
+      classes,
+      strategies,
+      sectors,
+      regions,
+      knownFunds,
+      altsPct: numberOrNull(c.alts_allocation_pct),
+      alloc,
+      ticketMin: numberOrNull(profile?.ticket_min_usd),
+      ticketMax: numberOrNull(profile?.ticket_max_usd),
+      activeAlts: typeof profile?.active_in_alternatives === "boolean" ? profile.active_in_alternatives : null,
+      plans: plansByLp.get(c.id) ?? [],
     };
   });
 
@@ -257,7 +379,7 @@ let pendingIndex: DirectoryIndex | null = null;
 
 // Several megabytes of records: sliced for the data cache and kept in
 // memory per instance (lib/supabase/big-cache.ts).
-const cachedIndex = bigCache("directory-index-v4", buildIndex, {
+const cachedIndex = bigCache("directory-index-v5", buildIndex, {
   tags: [DIRECTORY_TAG],
   revalidate: 86400,
 });
@@ -269,7 +391,18 @@ const cachedIndex = bigCache("directory-index-v4", buildIndex, {
 export async function getDirectoryIndex(): Promise<DirectoryIndex> {
   pendingIndex = null;
   try {
-    return await cachedIndex(await tableVersion("companies", "contacts", "service_relationships", "funds", "portfolio_companies"));
+    return await cachedIndex(
+      await tableVersion(
+        "companies",
+        "contacts",
+        "service_relationships",
+        "funds",
+        "portfolio_companies",
+        "investor_profiles",
+        "investor_plans",
+        "commitments",
+      ),
+    );
   } catch {
     return pendingIndex ?? EMPTY_INDEX;
   }

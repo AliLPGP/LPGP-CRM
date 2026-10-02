@@ -2,18 +2,18 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useState, useSyncExternalStore } from "react";
-import { Banknote,
-  Activity,
-  Building2,
+import { Fragment, Suspense, useState, useSyncExternalStore } from "react";
+import {
+  Briefcase,
   CalendarRange,
   ChevronDown,
   Command,
+  Compass,
   FileSpreadsheet,
   Gauge,
   Handshake,
   Kanban,
-  LayoutGrid,
+  Landmark,
   Layers,
   List,
   ListChecks,
@@ -26,6 +26,7 @@ import { Banknote,
   Settings,
   Shield,
   Star,
+  TrendingUp,
   Trophy,
   Upload,
   Users,
@@ -41,8 +42,10 @@ import type { SessionUser } from "@/lib/auth";
 
 /** `also`: other paths this entry owns (a firm's profile belongs to Discover).
  *  `children`: the entry's own sub-tree, shown when it or one of them is the
- *  page you're on — the way a data terminal nests books under a section. */
-type NavItem = { href: string; label: string; icon?: typeof Kanban; also?: string[]; children?: NavItem[] };
+ *  page you're on — the way a data terminal nests books under a section.
+ *  `heading`: on a child, a caption above it that opens a run of children
+ *  (a provider section's "Fund services" and "Transaction services"). */
+type NavItem = { href: string; label: string; icon?: typeof Kanban; also?: string[]; children?: NavItem[]; heading?: string };
 type NavGroup = { label: string; items: NavItem[]; collapsible?: boolean };
 
 const SELL: NavItem[] = [
@@ -56,48 +59,104 @@ const SELL: NavItem[] = [
   { href: "/import/leads", label: "Import leads", icon: FileSpreadsheet },
 ];
 
-// The intelligence section is laid out the way a data terminal is: the
-// records (firms by book, funds, people), then activity (deals, signals),
-// then the market views (asset classes with each class and the sports desk
-// under it, service providers), then the reader's own lists and imports.
+// The intelligence section is laid out the way a private-markets data desk
+// is: a section per kind of counterparty (investors, fund managers, funds,
+// performance, service providers, consultants, companies and deals), each
+// with the searches and ledgers a desk opens for it, then the workflows,
+// people, and the reader's own lists and imports. Several sections share a
+// page (a target list, the signals ledger): the entry carries the section's
+// view of it, and the query string says which.
 const DATA: NavItem[] = [
   { href: "/database", label: "Overview", icon: Gauge },
   {
-    href: "/database?view=table",
-    label: "Firms",
-    icon: Building2,
-    also: ["/companies"],
+    href: "/database?book=LP&view=table",
+    label: "Investors",
+    icon: Landmark,
     children: [
-      { href: "/database?book=GP", label: "Fund managers" },
-      { href: "/database?book=LP", label: "Limited partners" },
-      { href: "/database?book=SP", label: "Solution providers" },
+      { href: "/database?book=LP&view=table", label: "Advanced search" },
+      { href: "/database?book=LP&sort=newest&view=table", label: "Newly added investors" },
+      { href: "/database?book=LP&sort=updated&view=table", label: "Recently updated investors" },
+      { href: "/database/mandates", label: "Mandates & RFPs" },
+      { href: "/database/commitments", label: "By past investments" },
+      { href: "/database/commitments", label: "Investor documents" },
+      { href: "/database/signals?kind=news", label: "Investor news" },
+      { href: "/database/lists", label: "Target lists" },
     ],
   },
-  { href: "/funds", label: "Funds", icon: Layers },
-  { href: "/contacts", label: "People", icon: Users },
-  { href: "/database/deals", label: "Deals", icon: Handshake },
-  { href: "/database/portcos", label: "Portfolio companies", icon: Building2 },
-  { href: "/database/commitments", label: "LP commitments", icon: Banknote },
-  { href: "/database/signals", label: "Signals", icon: Activity },
   {
-    href: "/database/asset-classes",
-    label: "Asset classes",
-    icon: LayoutGrid,
-    also: ["/database/sports", "/database/lenders", "/database/borrowers"],
+    href: "/database?book=GP&view=table",
+    label: "Fund managers",
+    icon: Briefcase,
     children: [
-      { href: "/database/asset-classes/private-equity", label: "Private equity" },
-      { href: "/database/asset-classes/private-credit", label: "Private credit" },
-      { href: "/database/lenders", label: "Loan books" },
+      { href: "/database?book=GP&view=table", label: "Advanced search" },
+      { href: "/database/deals", label: "By deal activity" },
+      { href: "/database/asset-classes", label: "By asset class" },
+      { href: "/database?book=GP&sort=newest&view=table", label: "Newly added managers" },
+      { href: "/database?book=GP&sort=updated&view=table", label: "Recently updated managers" },
+      { href: "/database/portcos", label: "Portfolio companies" },
+      { href: "/database/signals", label: "Manager news" },
+      { href: "/database/lists", label: "Target lists" },
+    ],
+  },
+  {
+    href: "/funds",
+    label: "Funds",
+    icon: Layers,
+    children: [
+      { href: "/funds", label: "Advanced search" },
+      { href: "/database/deals?kind=fund_close", label: "Recently closed" },
+      { href: "/database/asset-classes/private-equity?tab=raises", label: "Fundraising (Form D)" },
+      { href: "/funds?strategy=pe_hybrid", label: "Evergreen funds" },
+      { href: "/database/signals", label: "Alerts" },
+      { href: "/database/lists", label: "Target lists" },
+    ],
+  },
+  {
+    href: "/database/performance?tab=funds",
+    label: "Performance",
+    icon: TrendingUp,
+    children: [
+      { href: "/database/performance?tab=funds", label: "Best performing funds" },
+      { href: "/database/performance?tab=managers", label: "Best performing managers" },
+      { href: "/database/performance?tab=benchmark", label: "Market benchmarks" },
+    ],
+  },
+  {
+    href: "/database?book=SP&view=table",
+    label: "Service providers",
+    icon: MapIcon,
+    also: ["/database/providers"],
+    // Two runs, the way a data product sells providers: the firms a fund
+    // retains, then the firms a transaction retains. Legal advisors and Law
+    // firms are one search under two names; the first lit entry carries the
+    // mark.
+    children: [
+      { heading: "Fund services", href: "/database?book=SP&itype=placement_agent&view=table", label: "Placement agents" },
+      { href: "/database?book=SP&itype=law_firm&view=table", label: "Law firms" },
+      { href: "/database?book=SP&itype=fund_administrator&view=table", label: "Fund administrators" },
+      { href: "/database?book=SP&itype=prime_broker&view=table", label: "Prime brokers" },
+      { href: "/database?book=SP&itype=auditor&view=table", label: "Auditors" },
+      { href: "/database?book=SP&itype=custodian&view=table", label: "Custodians" },
+      { href: "/database/market", label: "League tables" },
+      { href: "/database/lists", label: "Target lists" },
+      { heading: "Transaction services", href: "/database?book=SP&itype=bank&view=table", label: "Banks & financial advisors" },
+      { href: "/database?book=SP&itype=law_firm&view=table", label: "Legal advisors (law firms)" },
+      { href: "/database/lenders", label: "Debt providers (loan books)" },
       { href: "/database/borrowers", label: "Borrowers" },
-      { href: "/database/asset-classes/venture-capital", label: "Venture capital" },
-      { href: "/database/asset-classes/real-estate", label: "Real estate" },
-      { href: "/database/asset-classes/infrastructure", label: "Infrastructure" },
-      { href: "/database/asset-classes/secondaries", label: "Secondaries" },
-      { href: "/database/asset-classes/hedge-funds", label: "Hedge funds" },
+    ],
+  },
+  { href: "/database?book=LP,SP&itype=investment_consultant&view=table", label: "Investment consultants", icon: Compass },
+  {
+    href: "/database/deals",
+    label: "Companies & deals",
+    icon: Handshake,
+    children: [
+      { href: "/database/deals", label: "Deals" },
+      { href: "/database/portcos", label: "Portfolio companies" },
+      { href: "/database/borrowers", label: "Borrowers" },
       { href: "/database/sports", label: "Sports", icon: Trophy },
     ],
   },
-  { href: "/database/market", label: "Service providers", icon: MapIcon, also: ["/database/providers"] },
   {
     href: "/database/workflows",
     label: "Workflows",
@@ -115,6 +174,7 @@ const DATA: NavItem[] = [
       { href: "/database/workflows/portfolio-management", label: "Portfolio management" },
     ],
   },
+  { href: "/contacts", label: "People", icon: Users },
   { href: "/database/lists", label: "Lists", icon: ListChecks },
   { href: "/portfolio", label: "Watchlist", icon: Star },
   { href: "/import", label: "Import", icon: Upload, also: ["/import/directory"] },
@@ -125,36 +185,85 @@ const GROUPS: NavGroup[] = [
   { label: "Intelligence", items: DATA, collapsible: true },
 ];
 
-const ALL_HREFS = GROUPS.flatMap((g) => g.items.flatMap((i) => [i, ...(i.children ?? [])])).map((i) => i.href.split("?")[0]);
+const ALL_ITEMS = GROUPS.flatMap((g) => g.items.flatMap((i) => [i, ...(i.children ?? [])]));
+/** Path-only entries: the ones a deeper path can be more specific than. */
+const PATH_HREFS = ALL_ITEMS.filter((i) => !i.href.includes("?")).map((i) => i.href);
+/** Entries told apart by their query string. */
+const QUERY_ITEMS = ALL_ITEMS.filter((i) => i.href.includes("?"));
+
+/** The query keys that make one entry a different view from another on the
+ *  same path: the book and investor type on the directory, a page's tab, a
+ *  deal or signal kind, a fund strategy or status, and the sort when an entry
+ *  names one (the newly-added and recently-updated views are a sort order).
+ *  Anything else in the URL (the layout, a search, a sort no entry names) is
+ *  the reader's own and never decides. */
+const VIEW_KEYS = ["book", "itype", "tab", "kind", "strategy", "status", "class", "sort"];
+
+/** A comma-separated list as a canonical key, so `LP,SP` equals `SP,LP`. */
+const asSet = (v: string) => v.split(",").filter(Boolean).sort().join(",");
+
+/** How specifically a query entry matches the page: the number of view keys
+ *  it carries that the page agrees with, or null if any of them disagrees. */
+function specificity(item: NavItem, pathname: string, search: URLSearchParams | null): number | null {
+  const [href, query] = item.href.split("?");
+  if (!query || pathname !== href || !search) return null;
+  const want = new URLSearchParams(query);
+  let n = 0;
+  for (const k of VIEW_KEYS) {
+    const v = want.get(k);
+    if (v == null) continue;
+    const got = search.get(k);
+    if (got == null) return null;
+    if (k === "book" ? asSet(got) !== asSet(v) : got !== v) return null;
+    n += 1;
+  }
+  return n;
+}
 
 /**
  * The most specific matching entry wins, so /leads/workspace lights up "Call
  * workspace" rather than both it and "Leads", and /import/leads doesn't also
- * light "Import contacts". Entries that differ only by query string (Overview
- * and Firms on /database, the firm books) are told apart by the query — the
- * same rule as the in-page IntelNav; without one to read, Overview owns the
- * bare path.
+ * light "Import contacts". Entries that differ only by query string (the
+ * investor, manager and provider books on /database, a page's tabs, a kind
+ * of deal or signal) are told apart by the view keys in the query — the same
+ * rule as the in-page IntelNav; the entry carrying the most agreeing keys
+ * owns the page, and without a query to read, Overview owns the bare path.
  */
 function isActive(pathname: string, item: NavItem, search: URLSearchParams | null) {
   const [href, query] = item.href.split("?");
   if (item.also?.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return true;
-  if (item.href === "/database?view=table") return pathname === "/database" && Boolean(search?.toString());
   if (query) {
-    if (pathname !== href || !search) return false;
-    return [...new URLSearchParams(query).entries()].every(([k, v]) => search.get(k) === v);
+    const mine = specificity(item, pathname, search);
+    if (mine == null) return false;
+    return !QUERY_ITEMS.some((other) => other.href !== item.href && (specificity(other, pathname, search) ?? -1) > mine);
   }
   if (href === "/database") return pathname === "/database" && !search?.toString();
   if (href === "/" || href === "/import") return pathname === href;
   if (!pathname.startsWith(href)) return false;
-  return !ALL_HREFS.some(
+  // A view of this page that a query entry names belongs to that entry.
+  if (search && QUERY_ITEMS.some((other) => specificity(other, pathname, search) != null)) return false;
+  return !PATH_HREFS.some(
     (other) => other !== href && other.startsWith(href) && pathname.startsWith(other),
   );
+}
+
+/** An entry's tree holds the page: itself or one of its children is active. */
+function isWithin(pathname: string, item: NavItem, search: URLSearchParams | null) {
+  return isActive(pathname, item, search) || Boolean(item.children?.some((c) => isActive(pathname, c, search)));
 }
 
 /** A parent is lit only when none of its children is: the leaf carries the mark. */
 function isLit(pathname: string, item: NavItem, search: URLSearchParams | null) {
   if (!isActive(pathname, item, search)) return false;
   return !item.children?.some((c) => isActive(pathname, c, search));
+}
+
+/** A child is lit when it is active and no earlier sibling with the same
+ *  href is: two names for one search (Law firms, Legal advisors) light once. */
+function litChild(pathname: string, siblings: NavItem[], child: NavItem, search: URLSearchParams | null) {
+  if (!isActive(pathname, child, search)) return false;
+  const first = siblings.find((c) => c.href === child.href);
+  return first === child;
 }
 
 // Collapsed nav groups, and the rail itself folded to icons, remembered per
@@ -257,7 +366,7 @@ function RailLinkLive({ item, onNavigate, folded }: { item: NavItem; onNavigate?
  *  or on the chevron; the leaf carries the mark. A folded rail shows the
  *  icon alone and lights the parent for any page in its tree. */
 function RailEntry({ item, onNavigate, pathname, search, folded }: { item: NavItem; onNavigate?: () => void; pathname: string; search: URLSearchParams | null; folded?: boolean }) {
-  const within = isActive(pathname, item, search);
+  const within = isWithin(pathname, item, search);
   const [toggled, setToggled] = useState<boolean | null>(null);
   const open = !folded && Boolean(item.children?.length) && (toggled ?? within);
   return (
@@ -272,7 +381,14 @@ function RailEntry({ item, onNavigate, pathname, search, folded }: { item: NavIt
       {open ? (
         <div className="ml-[19px] mt-0.5 space-y-px border-l border-[var(--rail-line)] pl-2">
           {item.children!.map((child) => (
-            <RailLinkView key={child.href} item={child} onNavigate={onNavigate} on={isActive(pathname, child, search)} small />
+            <Fragment key={`${child.href} ${child.label}`}>
+              {child.heading ? (
+                <p className="px-2.5 pb-0.5 pt-2.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-[var(--rail-fg-dim)] first:pt-1">
+                  {child.heading}
+                </p>
+              ) : null}
+              <RailLinkView item={child} onNavigate={onNavigate} on={litChild(pathname, item.children!, child, search)} small />
+            </Fragment>
           ))}
         </div>
       ) : null}
@@ -360,7 +476,7 @@ function NavBody({ user, onNavigate, folded }: { user: SessionUser | null; onNav
       {GROUPS.map((group) => {
         // A collapsed group still opens for the page you're on; a folded rail
         // shows every group as icons, with a hairline between them.
-        const holdsActive = group.items.some((i) => isActive(pathname, i, null));
+        const holdsActive = group.items.some((i) => isWithin(pathname, i, null));
         const open = folded || !group.collapsible || !collapsed.has(group.label) || holdsActive;
         return (
           <div key={group.label} className={cn("space-y-0.5", folded && "border-t border-[var(--rail-line)] pt-3 first:border-t-0 first:pt-0")}>
@@ -387,7 +503,7 @@ function NavBody({ user, onNavigate, folded }: { user: SessionUser | null; onNav
               </p>
             )}
             {open
-              ? group.items.map((item) => <RailLink key={item.href} item={item} onNavigate={onNavigate} folded={folded} />)
+              ? group.items.map((item) => <RailLink key={`${item.href} ${item.label}`} item={item} onNavigate={onNavigate} folded={folded} />)
               : null}
           </div>
         );

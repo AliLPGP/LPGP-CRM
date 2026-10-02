@@ -7,6 +7,7 @@ import type { Category } from "../types";
 import { canonicalCountry, subregionOf, SUBREGIONS, type Subregion, type Zone, ZONES } from "./geo";
 import { PROVIDER_ROLES, type ProviderRole } from "./providers";
 import { providerPairs, type DirectoryBrand, type DirectoryRecord } from "./records";
+import { isAssetClassKey, type AssetClassKey } from "./asset-classes";
 
 export type ProviderFilter = { key: string; role: ProviderRole | null };
 
@@ -47,6 +48,30 @@ export type DirectoryFilters = {
   hasOperators: boolean;
   /** GPs with portfolio companies on file. */
   hasPortcos: boolean;
+  /** Asset classes a firm manages, allocates to or plans for. */
+  classes: AssetClassKey[];
+  /** Strategy keys (strategies.ts) stated by the firm or preferred by the LP. */
+  strategies: string[];
+  /** Industry codes (taxonomy.ts). */
+  sectors: string[];
+  /** Region codes (taxonomy.ts): HQ or a stated focus or preference. */
+  prefRegions: string[];
+  /** Taxonomy type codes, across books: an investment consultant sits in LP and SP. */
+  typeCodes: string[];
+  /** The commitment an LP writes per fund, USD. */
+  ticketMin: number | null;
+  ticketMax: number | null;
+  /** Allocation to alternatives, percent. */
+  altsMin: number | null;
+  altsMax: number | null;
+  /** Current allocation to one class, percent. */
+  allocClass: AssetClassKey | null;
+  allocMin: number | null;
+  allocMax: number | null;
+  /** LPs with a stated plan for the next twelve months. */
+  hasPlans: boolean;
+  /** Show LPs that say they no longer invest in alternatives. */
+  includeInactive: boolean;
   /** Free-text terms ranked by relevance. */
   keywords: string;
   /** Company ids to find lookalikes of. */
@@ -78,6 +103,20 @@ export const EMPTY_FILTERS: DirectoryFilters = {
   portfolio: false,
   hasOperators: false,
   hasPortcos: false,
+  classes: [],
+  strategies: [],
+  sectors: [],
+  prefRegions: [],
+  typeCodes: [],
+  ticketMin: null,
+  ticketMax: null,
+  altsMin: null,
+  altsMax: null,
+  allocClass: null,
+  allocMin: null,
+  allocMax: null,
+  hasPlans: false,
+  includeInactive: false,
   keywords: "",
   like: [],
   sort: null,
@@ -110,7 +149,19 @@ export function hasStructuredFilters(f: DirectoryFilters): boolean {
     f.discloses ||
     f.portfolio ||
     f.hasOperators ||
-    f.hasPortcos
+    f.hasPortcos ||
+    f.classes.length > 0 ||
+    f.strategies.length > 0 ||
+    f.sectors.length > 0 ||
+    f.prefRegions.length > 0 ||
+    f.typeCodes.length > 0 ||
+    f.ticketMin != null ||
+    f.ticketMax != null ||
+    f.altsMin != null ||
+    f.altsMax != null ||
+    f.allocClass != null ||
+    f.hasPlans ||
+    f.includeInactive
   );
 }
 
@@ -145,7 +196,7 @@ export function matches(
   r: DirectoryRecord,
   f: DirectoryFilters,
   ctx: FilterContext,
-  skip?: "books" | "types" | "zones" | "countries" | "adv",
+  skip?: "books" | "types" | "zones" | "countries" | "adv" | "classes" | "strategies" | "sectors" | "prefRegions" | "typeCodes",
 ): boolean {
   if (skip !== "books" && f.books.length && !f.books.includes(r.category)) return false;
   if (skip !== "types" && f.types.length && !(r.subType && f.types.includes(r.subType))) return false;
@@ -186,6 +237,27 @@ export function matches(
   if (f.portfolio && !r.portfolio) return false;
   if (f.hasOperators && !r.operators) return false;
   if (f.hasPortcos && !r.portcos) return false;
+  if (skip !== "classes" && f.classes.length && !f.classes.some((k) => r.classes.includes(k))) return false;
+  if (skip !== "strategies" && f.strategies.length && !f.strategies.some((k) => r.strategies.includes(k))) return false;
+  if (skip !== "sectors" && f.sectors.length && !f.sectors.some((k) => r.sectors.includes(k))) return false;
+  if (skip !== "prefRegions" && f.prefRegions.length && !f.prefRegions.some((k) => r.regions.includes(k))) return false;
+  if (skip !== "typeCodes" && f.typeCodes.length && !(r.typeCode && f.typeCodes.includes(r.typeCode))) return false;
+  if (f.ticketMin != null || f.ticketMax != null) {
+    // The LP's range overlaps the asked one; no stated ticket at all fails.
+    if (r.ticketMin == null && r.ticketMax == null) return false;
+    if (f.ticketMin != null && r.ticketMax != null && r.ticketMax < f.ticketMin) return false;
+    if (f.ticketMax != null && r.ticketMin != null && r.ticketMin > f.ticketMax) return false;
+  }
+  if (f.altsMin != null && !(r.altsPct != null && r.altsPct >= f.altsMin)) return false;
+  if (f.altsMax != null && !(r.altsPct != null && r.altsPct <= f.altsMax)) return false;
+  if (f.allocClass) {
+    const pct = r.alloc.find(([k]) => k === f.allocClass)?.[1];
+    if (pct == null) return false;
+    if (f.allocMin != null && pct < f.allocMin) return false;
+    if (f.allocMax != null && pct > f.allocMax) return false;
+  }
+  if (f.hasPlans && r.plans.length === 0) return false;
+  if (!f.includeInactive && r.activeAlts === false) return false;
   return true;
 }
 
@@ -207,12 +279,31 @@ function rangeParam(min: number | null, max: number | null): string | null {
   return `${min ?? ""}-${max ?? ""}`;
 }
 
+/** "class:min-max" — an allocation to one class; the class alone means "any stated figure". */
+function allocFrom(v: string | null): [AssetClassKey | null, number | null, number | null] {
+  if (!v) return [null, null, null];
+  const i = v.indexOf(":");
+  const cls = i < 0 ? v : v.slice(0, i);
+  if (!isAssetClassKey(cls)) return [null, null, null];
+  const [min, max] = range(i < 0 ? null : v.slice(i + 1));
+  return [cls, min, max];
+}
+
+function allocParam(cls: AssetClassKey | null, min: number | null, max: number | null): string | null {
+  if (!cls) return null;
+  const r = rangeParam(min, max);
+  return r ? `${cls}:${r}` : cls;
+}
+
 type Params = { get(name: string): string | null };
 
 export function filtersFromParams(p: Params): DirectoryFilters {
   const [aumMin, aumMax] = range(p.get("aum"));
   const [empMin, empMax] = range(p.get("emp"));
   const [foundedMin, foundedMax] = range(p.get("founded"));
+  const [ticketMin, ticketMax] = range(p.get("ticket"));
+  const [altsMin, altsMax] = range(p.get("alts"));
+  const [allocClass, allocMin, allocMax] = allocFrom(p.get("alloc"));
   const has = new Set(list(p.get("has")));
   const bookParam = p.get("book") ?? p.get("category");
   return {
@@ -249,6 +340,20 @@ export function filtersFromParams(p: Params): DirectoryFilters {
     portfolio: has.has("portfolio"),
     hasOperators: has.has("operators"),
     hasPortcos: has.has("portcos"),
+    classes: list(p.get("class")).filter(isAssetClassKey),
+    strategies: list(p.get("strategy")),
+    sectors: list(p.get("sector")),
+    prefRegions: list(p.get("pref")),
+    typeCodes: list(p.get("itype")),
+    ticketMin,
+    ticketMax,
+    altsMin,
+    altsMax,
+    allocClass,
+    allocMin,
+    allocMax,
+    hasPlans: has.has("plans"),
+    includeInactive: p.get("inactive") === "1",
     keywords: p.get("kw") ?? "",
     like: list(p.get("like")),
     sort: (p.get("sort") as SortKey | null) ?? null,
@@ -281,8 +386,18 @@ export function filtersToParams(f: DirectoryFilters): URLSearchParams {
     f.portfolio && "portfolio",
     f.hasOperators && "operators",
     f.hasPortcos && "portcos",
+    f.hasPlans && "plans",
   ].filter(Boolean) as string[];
   set("has", has.join(","));
+  set("class", f.classes.join(","));
+  set("strategy", f.strategies.join(","));
+  set("sector", f.sectors.join(","));
+  set("pref", f.prefRegions.join(","));
+  set("itype", f.typeCodes.join(","));
+  set("ticket", rangeParam(f.ticketMin, f.ticketMax));
+  set("alts", rangeParam(f.altsMin, f.altsMax));
+  set("alloc", allocParam(f.allocClass, f.allocMin, f.allocMax));
+  set("inactive", f.includeInactive ? "1" : null);
   set("kw", f.keywords.trim());
   set("like", f.like.join(","));
   set("sort", f.sort);

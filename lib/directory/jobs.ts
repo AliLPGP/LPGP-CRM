@@ -4,6 +4,8 @@ import { ASSET_CLASSES, type AssetClass } from "./asset-classes";
 import { researchBenchmarks } from "./benchmark-research";
 import { researchCommitments, type LpInput } from "./commitments-research";
 import { researchDeals } from "./deals-research";
+import { researchFund, type FundInput } from "./fund-research";
+import { researchInvestor, type InvestorInput } from "./investor-research";
 import { portfolioDomain, portfolioKey } from "./portfolio";
 import { researchPortfolio, type ResearchedCompany } from "./portfolio-research";
 import { firmMatcher } from "./firm-match";
@@ -507,4 +509,320 @@ export function portfolioRowSql(row: Record<string, unknown>): string {
   };
   const updates = cols.filter((c) => c !== "external_key" && c !== "gp_company_id" && c !== "added_by").map((c) => `${c} = excluded.${c}`);
   return `insert into public.portfolio_companies (${cols.join(", ")}) values (${cols.map((c) => lit(row[c])).join(", ")}) on conflict (external_key) do update set ${updates.join(", ")};`;
+}
+
+// --- Investor profiles and plans (migration 0033) -----------------------------
+
+type InvestorBatchRow = {
+  id: string;
+  name: string;
+  domain: string | null;
+  country: string | null;
+  sub_type: string | null;
+  investor_type: string | null;
+  total_assets_usd: number | null;
+  alts_allocation_pct: number | null;
+  commitments: number | null;
+  funds_named: string[] | null;
+};
+
+function investorInput(r: InvestorBatchRow): InvestorInput {
+  return {
+    id: r.id,
+    name: r.name,
+    domain: r.domain,
+    country: r.country,
+    subType: r.sub_type,
+    knownFunds: Array.isArray(r.funds_named) ? r.funds_named.filter((f): f is string => typeof f === "string").slice(0, 8) : [],
+    investorType: r.investor_type,
+    totalAssetsUsd: r.total_assets_usd == null ? null : Number(r.total_assets_usd),
+    altsAllocationPct: r.alts_allocation_pct == null ? null : Number(r.alts_allocation_pct),
+    commitments: r.commitments == null ? null : Number(r.commitments),
+  };
+}
+
+/**
+ * The LPs to research: the next page of `investor_research_batch` (LPs with
+ * nothing on file, best-documented first), or the LPs named — those come
+ * straight from `companies`, researched or not, so a profile can be redone.
+ */
+export async function investorTargets(supabase: Admin, opts: { limit: number; offset?: number; ids?: string[] }): Promise<InvestorInput[]> {
+  if (opts.ids?.length) {
+    const ids = [...new Set(opts.ids)].slice(0, 50);
+    const { data, error } = await supabase
+      .from("companies")
+      .select("id, name, domain, country, sub_type, investor_type, total_assets_usd, alts_allocation_pct")
+      .in("id", ids)
+      .eq("category", "LP");
+    if (error) throw new Error(`Reading investors: ${error.message}`);
+    const rows = (data as Omit<InvestorBatchRow, "commitments" | "funds_named">[] | null) ?? [];
+    const named = new Map<string, string[]>();
+    if (rows.length) {
+      const { data: held } = await supabase.from("commitments").select("lp_company_id, fund_name").in("lp_company_id", rows.map((r) => r.id)).limit(2000);
+      for (const c of (held as { lp_company_id: string; fund_name: string | null }[] | null) ?? []) {
+        if (!c.fund_name) continue;
+        const l = named.get(c.lp_company_id) ?? [];
+        if (!l.includes(c.fund_name)) l.push(c.fund_name);
+        named.set(c.lp_company_id, l);
+      }
+    }
+    return rows.slice(0, opts.limit).map((r) => investorInput({ ...r, commitments: named.get(r.id)?.length ?? 0, funds_named: named.get(r.id) ?? [] }));
+  }
+  const { data, error } = await supabase.rpc("investor_research_batch", { p_limit: opts.limit, p_offset: opts.offset ?? 0 });
+  if (error) throw new Error(`Reading the investor batch: ${error.message}`);
+  return ((Array.isArray(data) ? data : []) as InvestorBatchRow[]).filter((r) => r && typeof r.id === "string" && typeof r.name === "string").map(investorInput);
+}
+
+export type InvestorJobResult = {
+  /** Investors whose profile was written (including an honest "no public data"). */
+  done: number;
+  fields: number;
+  plans: number;
+  /** Values the loader dropped for want of a qualifying source. */
+  dropped: number;
+  failed: string[];
+  outOfTime: string[];
+  errors: string[];
+};
+
+type UpsertCounts = Record<string, unknown>;
+const count = (r: UpsertCounts | null | undefined, key: string): number => (r && typeof r[key] === "number" ? (r[key] as number) : 0);
+
+/**
+ * Research each LP's profile and plans, two at a time, and write them through
+ * `investor_profile_upsert` — the function keeps only sourced values. LPs the
+ * deadline does not reach are reported, not retried.
+ */
+export async function runInvestors(
+  supabase: Admin,
+  opts: { limit: number; offset?: number; ids?: string[]; deadline: number; log?: JobLog },
+): Promise<InvestorJobResult> {
+  const log = opts.log ?? (() => {});
+  const today = new Date().toISOString().slice(0, 10);
+  const lps = await investorTargets(supabase, { limit: opts.limit, offset: opts.offset, ids: opts.ids });
+  const result: InvestorJobResult = { done: 0, fields: 0, plans: 0, dropped: 0, failed: [], outOfTime: [], errors: [] };
+  if (!lps.length) {
+    log("investors: nothing to research");
+    return result;
+  }
+  for (let i = 0; i < lps.length; i += 2) {
+    const batch = lps.slice(i, i + 2);
+    if (timeLeft(opts.deadline) < 60_000) {
+      result.outOfTime.push(...batch.map((l) => l.name));
+      continue;
+    }
+    log(`investors: ${batch.map((l) => l.name).join(" · ")}…`);
+    const outcomes = await Promise.all(batch.map((lp) => researchInvestor(lp, { today, deadline: opts.deadline })));
+    for (let j = 0; j < batch.length; j++) {
+      const lp = batch[j];
+      const r = outcomes[j];
+      if (!r.ok) {
+        if (r.error === OUT_OF_TIME) result.outOfTime.push(lp.name);
+        else result.failed.push(`${lp.name}: ${r.error}`);
+        log(`  ${lp.name}: ${r.error}`);
+        continue;
+      }
+      const { data, error } = await supabase.rpc("investor_profile_upsert", { p: [r.row] });
+      if (error) {
+        result.failed.push(`${lp.name}: saving — ${error.message}`);
+        log(`  ${lp.name}: saving failed — ${error.message}`);
+        continue;
+      }
+      const counts = (data ?? null) as UpsertCounts | null;
+      if (count(counts, "unknown_company")) {
+        result.failed.push(`${lp.name}: not a company the database knows`);
+        continue;
+      }
+      result.done += 1;
+      result.fields += count(counts, "fields");
+      result.plans += count(counts, "plans");
+      result.dropped += count(counts, "dropped_no_source");
+      log(
+        `  ${lp.name}: ${count(counts, "fields")} fields, ${count(counts, "plans")} plans, ${r.searches} searches` +
+          `${count(counts, "dropped_no_source") ? `, ${count(counts, "dropped_no_source")} dropped for want of a source` : ""}` +
+          `${r.row.research_state === "no_public_data" ? " (no public data)" : ""}`,
+      );
+    }
+  }
+  if (result.outOfTime.length) result.errors.push(`${OUT_OF_TIME} Not reached: ${result.outOfTime.join(", ")}.`);
+  result.errors.push(...result.failed);
+  return result;
+}
+
+// --- Fund profiles (migration 0032/0033) ----------------------------------------
+
+type FundBatchRow = {
+  id: string;
+  name: string;
+  name_filed: string | null;
+  manager: { name: string; domain: string | null } | null;
+  size_usd: number | null;
+  target_usd: number | null;
+  vintage: number | null;
+  strategy: string | null;
+  vehicle_kind: string | null;
+  domicile: string | null;
+  lp_commitments: number | null;
+  form_d: FundInput["form_d"];
+};
+
+function fundInput(r: FundBatchRow): FundInput {
+  return {
+    id: r.id,
+    name: r.name,
+    name_filed: r.name_filed ?? null,
+    manager: r.manager && typeof r.manager === "object" && typeof r.manager.name === "string" ? { name: r.manager.name, domain: r.manager.domain ?? null } : null,
+    vintage: r.vintage == null ? null : Number(r.vintage),
+    size_usd: r.size_usd == null ? null : Number(r.size_usd),
+    target_usd: r.target_usd == null ? null : Number(r.target_usd),
+    strategy: r.strategy ?? null,
+    vehicle_kind: r.vehicle_kind ?? null,
+    domicile: r.domicile ?? null,
+    lp_commitments: r.lp_commitments == null ? null : Number(r.lp_commitments),
+    form_d: r.form_d && typeof r.form_d === "object" ? r.form_d : null,
+  };
+}
+
+/**
+ * The funds to research: the next page of `fund_research_batch` (most-held
+ * and best-documented first, nothing on file), or the funds named — read
+ * straight from `funds` with their manager and latest Form D, researched or
+ * not, so a profile can be redone.
+ */
+export async function fundTargets(supabase: Admin, opts: { limit: number; offset?: number; ids?: string[] }): Promise<FundInput[]> {
+  if (opts.ids?.length) {
+    const ids = [...new Set(opts.ids)].slice(0, 50);
+    const { data, error } = await supabase
+      .from("funds")
+      .select("id, name, name_filed, company_id, vintage_year, fund_size_usd, target_size_usd, strategy, vehicle_kind, domicile")
+      .in("id", ids);
+    if (error) throw new Error(`Reading funds: ${error.message}`);
+    type FundRow = { id: string; name: string; name_filed: string | null; company_id: string | null; vintage_year: number | null; fund_size_usd: number | null; target_size_usd: number | null; strategy: string | null; vehicle_kind: string | null; domicile: string | null };
+    const rows = ((data as FundRow[] | null) ?? []).slice(0, opts.limit);
+    const managerIds = [...new Set(rows.map((r) => r.company_id).filter((x): x is string => Boolean(x)))];
+    const managers = new Map<string, { name: string; domain: string | null }>();
+    if (managerIds.length) {
+      const { data: cos } = await supabase.from("companies").select("id, name, domain").in("id", managerIds);
+      for (const c of (cos as { id: string; name: string; domain: string | null }[] | null) ?? []) managers.set(c.id, { name: c.name, domain: c.domain });
+    }
+    const formD = new Map<string, NonNullable<FundInput["form_d"]>>();
+    if (rows.length) {
+      const { data: offs } = await supabase
+        .from("fund_offerings")
+        .select("fund_id, filing_date, first_sale_date, offering_amount, amount_sold, investors_count, min_investment, source_url")
+        .in("fund_id", rows.map((r) => r.id))
+        .order("filing_date", { ascending: false, nullsFirst: false });
+      type Off = { fund_id: string; first_sale_date: string | null; offering_amount: number | null; amount_sold: number | null; investors_count: number | null; min_investment: number | null; source_url: string | null };
+      for (const o of (offs as Off[] | null) ?? []) {
+        if (formD.has(o.fund_id)) continue;
+        formD.set(o.fund_id, { first_sale: o.first_sale_date, offering: o.offering_amount, sold: o.amount_sold, investors: o.investors_count, min_investment: o.min_investment, url: o.source_url });
+      }
+    }
+    return rows.map((r) =>
+      fundInput({
+        id: r.id,
+        name: r.name,
+        name_filed: r.name_filed,
+        manager: r.company_id ? (managers.get(r.company_id) ?? null) : null,
+        size_usd: r.fund_size_usd,
+        target_usd: r.target_size_usd,
+        vintage: r.vintage_year,
+        strategy: r.strategy,
+        vehicle_kind: r.vehicle_kind,
+        domicile: r.domicile,
+        lp_commitments: null,
+        form_d: formD.get(r.id) ?? null,
+      }),
+    );
+  }
+  const { data, error } = await supabase.rpc("fund_research_batch", { p_limit: opts.limit, p_offset: opts.offset ?? 0 });
+  if (error) throw new Error(`Reading the fund batch: ${error.message}`);
+  return ((Array.isArray(data) ? data : []) as FundBatchRow[]).filter((r) => r && typeof r.id === "string" && typeof r.name === "string").map(fundInput);
+}
+
+export type FundDetailsJobResult = {
+  done: number;
+  fields: number;
+  /** Funds placed in the taxonomy (strategy, regions or industries written). */
+  placed: number;
+  dropped: number;
+  failed: string[];
+  outOfTime: string[];
+  errors: string[];
+};
+
+/**
+ * Research each fund's profile, two at a time, write it through
+ * `fund_details_upsert` (sourced values only; fees and terms from primary or
+ * press sources only) and then the taxonomy codes beside it. Funds the
+ * deadline does not reach are reported, not retried.
+ */
+export async function runFundDetails(
+  supabase: Admin,
+  opts: { limit: number; offset?: number; ids?: string[]; deadline: number; log?: JobLog },
+): Promise<FundDetailsJobResult> {
+  const log = opts.log ?? (() => {});
+  const today = new Date().toISOString().slice(0, 10);
+  const funds = await fundTargets(supabase, { limit: opts.limit, offset: opts.offset, ids: opts.ids });
+  const result: FundDetailsJobResult = { done: 0, fields: 0, placed: 0, dropped: 0, failed: [], outOfTime: [], errors: [] };
+  if (!funds.length) {
+    log("funds: nothing to research");
+    return result;
+  }
+  for (let i = 0; i < funds.length; i += 2) {
+    const batch = funds.slice(i, i + 2);
+    if (timeLeft(opts.deadline) < 60_000) {
+      result.outOfTime.push(...batch.map((f) => f.name));
+      continue;
+    }
+    log(`funds: ${batch.map((f) => f.name).join(" · ")}…`);
+    const outcomes = await Promise.all(batch.map((fund) => researchFund(fund, { today, deadline: opts.deadline })));
+    for (let j = 0; j < batch.length; j++) {
+      const fund = batch[j];
+      const r = outcomes[j];
+      if (!r.ok) {
+        if (r.error === OUT_OF_TIME) result.outOfTime.push(fund.name);
+        else result.failed.push(`${fund.name}: ${r.error}`);
+        log(`  ${fund.name}: ${r.error}`);
+        continue;
+      }
+      const { data, error } = await supabase.rpc("fund_details_upsert", { p: [r.row] });
+      if (error) {
+        result.failed.push(`${fund.name}: saving — ${error.message}`);
+        log(`  ${fund.name}: saving failed — ${error.message}`);
+        continue;
+      }
+      const counts = (data ?? null) as UpsertCounts | null;
+      if (count(counts, "unknown_fund")) {
+        result.failed.push(`${fund.name}: not a fund the database knows`);
+        continue;
+      }
+      result.done += 1;
+      result.fields += count(counts, "fields");
+      result.dropped += count(counts, "dropped_no_source");
+      // The taxonomy codes are columns of their own (0033), outside the
+      // upsert's element: written once the row exists.
+      const codes = r.codes;
+      let placed = "";
+      if (codes.strategy_code || codes.region_codes.length || codes.industry_codes.length) {
+        const { error: codeError } = await supabase
+          .from("fund_details")
+          .update({ strategy_code: codes.strategy_code, region_codes: codes.region_codes, industry_codes: codes.industry_codes })
+          .eq("fund_id", fund.id);
+        if (codeError) result.errors.push(`${fund.name}: taxonomy codes — ${codeError.message}`);
+        else {
+          result.placed += 1;
+          placed = [codes.strategy_code, ...codes.region_codes, ...codes.industry_codes].filter(Boolean).join(", ");
+        }
+      }
+      log(
+        `  ${fund.name}: ${count(counts, "fields")} fields, ${r.searches} searches` +
+          `${count(counts, "dropped_no_source") ? `, ${count(counts, "dropped_no_source")} dropped for want of a source` : ""}` +
+          `${placed ? ` — placed: ${placed}` : ""}${r.row.research_state === "no_public_data" ? " (no public data)" : ""}`,
+      );
+    }
+  }
+  if (result.outOfTime.length) result.errors.push(`${OUT_OF_TIME} Not reached: ${result.outOfTime.join(", ")}.`);
+  result.errors.push(...result.failed);
+  return result;
 }

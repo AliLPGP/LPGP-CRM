@@ -10,11 +10,19 @@
  *   npx tsx --conditions react-server scripts/research.ts commitments [--limit 20] [--since 2024-01-01]
  *   npx tsx --conditions react-server scripts/research.ts portfolios [--limit 50] [--roster] [--redo]
  *   npx tsx --conditions react-server scripts/research.ts portfolios --targets sponsors.json --out rows.sql
+ *   npx tsx --conditions react-server scripts/research.ts investors [--limit 20] [--offset 0] [--id <company uuid>]
+ *   npx tsx --conditions react-server scripts/research.ts funds [--limit 20] [--offset 0] [--id <fund uuid>]
  *   npx tsx --conditions react-server scripts/research.ts all
  *
  * Needs ANTHROPIC_API_KEY, NEXT_PUBLIC_SUPABASE_URL and
  * SUPABASE_SERVICE_ROLE_KEY (read from .env.local when present). "clubs"
  * takes the clubs without figures; "--all" re-researches every club.
+ * "investors" takes the next page of LPs with no profile on file (migration
+ * 0033's investor_research_batch) and "funds" the next page of funds with no
+ * profile (0032's fund_research_batch), best-documented first; "--offset"
+ * pages past a batch already run, "--id" names one record instead and
+ * re-researches it. Neither runs under "all": each record is a minute of
+ * paid searching.
  * The react-server condition is what lets the server-only modules load
  * outside Next.
  */
@@ -46,8 +54,8 @@ async function main() {
   const job = process.argv[2];
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!job || !["benchmarks", "deals", "signals", "clubs", "commitments", "portfolios", "all"].includes(job)) {
-    console.error("usage: research.ts benchmarks | deals | signals | clubs | commitments | portfolios | all");
+  if (!job || !["benchmarks", "deals", "signals", "clubs", "commitments", "portfolios", "investors", "funds", "all"].includes(job)) {
+    console.error("usage: research.ts benchmarks | deals | signals | clubs | commitments | portfolios | investors | funds | all");
     process.exit(2);
   }
   if (!process.env.ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY is required");
@@ -81,7 +89,7 @@ async function main() {
 
   // Imported after the env is loaded: these modules read it at import time.
   const { ASSET_CLASSES, ASSET_CLASS_BY_KEY, isAssetClassKey } = await import("../lib/directory/asset-classes");
-  const { disclosingLps, portfolioTargets, runBenchmarks, runClubs, runCommitments, runDeals, runPortfolios, runSignals } = await import("../lib/directory/jobs");
+  const { disclosingLps, portfolioTargets, runBenchmarks, runClubs, runCommitments, runDeals, runFundDetails, runInvestors, runPortfolios, runSignals } = await import("../lib/directory/jobs");
   const log = (line: string) => console.log(`${new Date().toISOString().slice(11, 19)} ${line}`);
   const far = Date.now() + 6 * 60 * 60 * 1000; // no function limit here: six hours
   const cls = arg("class");
@@ -124,6 +132,18 @@ async function main() {
     log(`portfolios: ${firms.length} sponsors to read`);
     const r = await runPortfolios(supabase, firms, { deadline: far, addedBy: null, log });
     log(`portfolios done: ${r.companies} companies across ${r.firms} sponsors, errors: ${r.errors.join("; ") || "none"}`);
+  }
+  if (job === "investors") {
+    // The next page of LPs with no profile on file, or the one named with --id.
+    const id = arg("id");
+    const r = await runInvestors(supabase, { limit: id ? 1 : Number(arg("limit") ?? 20), offset: Number(arg("offset") ?? 0), ids: id ? [id] : undefined, deadline: far, log });
+    log(`investors done: ${r.done} profiles, ${r.fields} fields, ${r.plans} plans${r.dropped ? `, ${r.dropped} values dropped for want of a source` : ""}, errors: ${r.errors.join("; ") || "none"}`);
+  }
+  if (job === "funds") {
+    // The next page of funds with no profile on file, or the one named with --id.
+    const id = arg("id");
+    const r = await runFundDetails(supabase, { limit: id ? 1 : Number(arg("limit") ?? 20), offset: Number(arg("offset") ?? 0), ids: id ? [id] : undefined, deadline: far, log });
+    log(`funds done: ${r.done} profiles, ${r.fields} fields, ${r.placed} placed in the taxonomy${r.dropped ? `, ${r.dropped} values dropped for want of a source` : ""}, errors: ${r.errors.join("; ") || "none"}`);
   }
   log("Open the app: cached reads refresh within the hour, or press any research button once to refresh them now.");
 }

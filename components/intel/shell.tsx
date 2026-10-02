@@ -11,17 +11,59 @@ import { cn } from "@/lib/utils";
 
 export type Crumb = { href?: string; label: string };
 
+/** The directory's book as the URL carries it, as a canonical key: `LP,SP` and `SP,LP` are one book. */
+const bookOf = (s: URLSearchParams) => (s.get("book") ?? s.get("category") ?? "").split(",").filter(Boolean).sort().join(",");
+
+const FUND_DEAL_KINDS = new Set(["fund_close", "fundraise"]);
+
+// One tab per section of the desk, the same seven the rail lists plus the
+// workflows, people and lists. Pages several sections share are told apart
+// by the query: the book on the directory, the kind of signal or deal, the
+// Form D tab of an asset-class page.
 export const INTEL_NAV: { href: string; label: string; match: (path: string, search: URLSearchParams) => boolean }[] = [
   { href: "/database", label: "Overview", match: (p, s) => p === "/database" && !s.toString() },
-  { href: "/database?view=table", label: "Firms", match: (p, s) => (p === "/database" && s.toString() !== "") || p.startsWith("/companies") },
-  { href: "/funds", label: "Funds", match: (p) => p.startsWith("/funds") },
-  { href: "/database/deals", label: "Deals", match: (p) => p.startsWith("/database/deals") },
-  { href: "/database/portcos", label: "Portfolio companies", match: (p) => p.startsWith("/database/portcos") },
-  { href: "/database/commitments", label: "LP commitments", match: (p) => p.startsWith("/database/commitments") },
-  // Sports is an asset class: it lives under that tab, not beside it.
-  { href: "/database/asset-classes", label: "Asset classes", match: (p) => p.startsWith("/database/asset-classes") || p.startsWith("/database/sports") || p.startsWith("/database/lenders") || p.startsWith("/database/borrowers") },
-  { href: "/database/market", label: "Service providers", match: (p) => p.startsWith("/database/market") || p.startsWith("/database/providers") },
-  { href: "/database/signals", label: "Signals", match: (p) => p.startsWith("/database/signals") },
+  {
+    href: "/database?book=LP&view=table",
+    label: "Investors",
+    match: (p, s) =>
+      (p === "/database" && (bookOf(s) === "LP" || s.get("itype") === "investment_consultant")) ||
+      p.startsWith("/database/mandates") ||
+      p.startsWith("/database/commitments") ||
+      (p.startsWith("/database/signals") && s.get("kind") === "news"),
+  },
+  {
+    href: "/database?book=GP&view=table",
+    label: "Fund managers",
+    match: (p, s) =>
+      (p === "/database" && bookOf(s) === "GP") ||
+      (p.startsWith("/database/asset-classes") && s.get("tab") !== "raises") ||
+      (p.startsWith("/database/signals") && s.get("kind") !== "news"),
+  },
+  {
+    href: "/funds",
+    label: "Funds",
+    match: (p, s) =>
+      p.startsWith("/funds") ||
+      (p.startsWith("/database/deals") && FUND_DEAL_KINDS.has(s.get("kind") ?? "")) ||
+      (p.startsWith("/database/asset-classes/") && s.get("tab") === "raises"),
+  },
+  { href: "/database/performance?tab=funds", label: "Performance", match: (p) => p.startsWith("/database/performance") },
+  {
+    href: "/database?book=SP&view=table",
+    label: "Service providers",
+    match: (p, s) =>
+      (p === "/database" && bookOf(s) === "SP") || p.startsWith("/database/market") || p.startsWith("/database/providers") || p.startsWith("/database/lenders"),
+  },
+  // Sports is an asset class sold as deals: it lives here, beside the borrowers and portfolio companies.
+  {
+    href: "/database/deals",
+    label: "Companies & deals",
+    match: (p, s) =>
+      (p.startsWith("/database/deals") && !FUND_DEAL_KINDS.has(s.get("kind") ?? "")) ||
+      p.startsWith("/database/portcos") ||
+      p.startsWith("/database/borrowers") ||
+      p.startsWith("/database/sports"),
+  },
   { href: "/database/workflows", label: "Workflows", match: (p) => p.startsWith("/database/workflows") },
   { href: "/contacts", label: "People", match: (p) => p.startsWith("/contacts") },
   { href: "/database/lists", label: "Lists", match: (p) => p.startsWith("/database/lists") },

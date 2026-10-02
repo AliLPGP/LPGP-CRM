@@ -2,16 +2,23 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Search, X } from "lucide-react";
 import { CompanyLogo } from "@/components/company-logo";
+import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { brandDomain } from "@/lib/directory/brand-domains";
 import type { PackedFundUniverse } from "@/lib/directory/fund-universe";
 import { PROVIDER_ROLES, ROLE_LABEL, type ProviderRole } from "@/lib/directory/providers";
+import { STRATEGY_BY_KEY } from "@/lib/directory/strategies";
+import { FUND_SIZE_BANDS, FUNDRAISING_STATUSES, INDUSTRY_BY_CODE, REGION_BY_CODE } from "@/lib/directory/taxonomy";
 import { cn, formatUsd } from "@/lib/utils";
 import { Figure } from "./viz";
 
 const PAGE = 100;
 const COLUMNS: ProviderRole[] = ["auditor", "administrator", "custodian"];
+
+/** The statuses that mean a fund is still taking money. */
+const OPEN_STATUSES = new Set<string>(["Pre-marketing", "Raising", "First close", "Interim close"]);
 
 type Row = {
   id: string;
@@ -26,6 +33,11 @@ type Row = {
   strategy: string | null;
   source: string | null;
   providers: { brand: number; role: ProviderRole }[];
+  strategyCode: string | null;
+  sectorCodes: string[];
+  regionCodes: string[];
+  sizeBand: string | null;
+  status: string | null;
   text: string;
 };
 
@@ -37,6 +49,17 @@ function counts(rows: Row[], key: (r: Row) => string | null): [string, number][]
   }
   return [...m.entries()].sort((a, b) => b[1] - a[1]);
 }
+
+/** Counts over a list-valued facet: a fund in two regions counts in both. */
+function countsMany(rows: Row[], key: (r: Row) => string[]): [string, number][] {
+  const m = new Map<string, number>();
+  for (const r of rows) for (const k of key(r)) m.set(k, (m.get(k) ?? 0) + 1);
+  return [...m.entries()].sort((a, b) => b[1] - a[1]);
+}
+
+const sectorName = (code: string) => STRATEGY_BY_KEY[code]?.name ?? INDUSTRY_BY_CODE[code]?.name ?? code;
+const regionName = (code: string) => REGION_BY_CODE[code]?.name ?? code;
+const bandLabel = (key: string) => FUND_SIZE_BANDS.find((b) => b.key === key)?.label ?? key;
 
 function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
@@ -54,12 +77,48 @@ function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; chi
   );
 }
 
+/** One facet row: the label, an "Any" pill and a pill per value with its count. */
+function Facet({
+  label,
+  value,
+  onChange,
+  options,
+  name,
+}: {
+  label: string;
+  value: string | null;
+  onChange: (v: string | null) => void;
+  options: [string, number][];
+  name?: (key: string) => string;
+}) {
+  if (!options.length) return null;
+  return (
+    <div className="flex flex-wrap items-center gap-1.5">
+      <span className="eyebrow mr-1">{label}</span>
+      <Pill on={!value} onClick={() => onChange(null)}>
+        Any
+      </Pill>
+      {options.map(([k, n]) => (
+        <Pill key={k} on={value === k} onClick={() => onChange(value === k ? null : k)}>
+          {name ? name(k) : k} <span className="figure opacity-70">{n}</span>
+        </Pill>
+      ))}
+    </div>
+  );
+}
+
 /**
  * Every fund on file — mostly the private funds managers name on Form ADV
  * Schedule D — searchable by name, manager or provider, and faceted by what
- * the fund's own legal name says (vehicle kind, domicile).
+ * the fund's own legal name says (vehicle kind, domicile, strategy, sector,
+ * region, size band) and, once researched, by its fundraising status.
+ *
+ * `?strategy=<key>` and `?status=<value>` seed the facets on first render so a
+ * link from the navigation opens the right cut; after that the state is local.
  */
 export function FundUniverse({ data }: { data: PackedFundUniverse }) {
+  const params = useSearchParams();
+
   const rows = useMemo<Row[]>(
     () =>
       data.funds.map((f) => {
@@ -82,6 +141,11 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
           strategy: f[8],
           source: f[9],
           providers,
+          strategyCode: f[12] ?? null,
+          sectorCodes: f[13] ?? [],
+          regionCodes: f[14] ?? [],
+          sizeBand: f[15] ?? null,
+          status: f[16] ?? null,
           text: [f[2], managerName, ...providers.map((p) => data.brands[p.brand]?.[1])].join(" ").toLowerCase(),
         };
       }),
@@ -91,6 +155,14 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
   const [q, setQ] = useState("");
   const [kind, setKind] = useState<string | null>(null);
   const [domicile, setDomicile] = useState<string | null>(null);
+  const [strategyKey, setStrategyKey] = useState<string | null>(() => {
+    const v = params.get("strategy");
+    return v && STRATEGY_BY_KEY[v] ? v : null;
+  });
+  const [sector, setSector] = useState<string | null>(null);
+  const [region, setRegion] = useState<string | null>(null);
+  const [sizeBand, setSizeBand] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(() => params.get("status")?.trim() || null);
   const [provider, setProvider] = useState<{ brand: number; role: ProviderRole } | null>(null);
   const [shown, setShown] = useState(PAGE);
 
@@ -100,13 +172,45 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
       (r) =>
         (!kind || r.kind === kind) &&
         (!domicile || r.domicile === domicile) &&
+        (!strategyKey || r.strategyCode === strategyKey) &&
+        (!sector || r.sectorCodes.includes(sector)) &&
+        (!region || r.regionCodes.includes(region)) &&
+        (!sizeBand || r.sizeBand === sizeBand) &&
+        (!status || r.status === status) &&
         (!provider || r.providers.some((p) => p.brand === provider.brand && p.role === provider.role)) &&
         words.every((w) => r.text.includes(w)),
     );
-  }, [rows, q, kind, domicile, provider]);
+  }, [rows, q, kind, domicile, strategyKey, sector, region, sizeBand, status, provider]);
 
   const kinds = useMemo(() => counts(rows, (r) => r.kind), [rows]);
   const domiciles = useMemo(() => counts(rows, (r) => r.domicile), [rows]);
+  // Strategies grouped by asset class, in the classes' own order; within a
+  // class the most-used first.
+  const strategyGroups = useMemo(() => {
+    const all = counts(rows, (r) => r.strategyCode);
+    const byClass = new Map<AssetClassKey, [string, number][]>();
+    for (const [k, n] of all) {
+      const cls = STRATEGY_BY_KEY[k]?.classKey;
+      if (!cls) continue;
+      const list = byClass.get(cls) ?? [];
+      list.push([k, n]);
+      byClass.set(cls, list);
+    }
+    return ASSET_CLASSES.filter((c) => byClass.has(c.key)).map((c) => ({ cls: c, options: byClass.get(c.key)! }));
+  }, [rows]);
+  const sectors = useMemo(() => countsMany(rows, (r) => r.sectorCodes), [rows]);
+  const regions = useMemo(() => countsMany(rows, (r) => r.regionCodes), [rows]);
+  const sizeBands = useMemo(() => {
+    const m = new Map(counts(rows, (r) => r.sizeBand));
+    return FUND_SIZE_BANDS.filter((b) => m.has(b.key)).map((b) => [b.key, m.get(b.key)!] as [string, number]);
+  }, [rows]);
+  const statuses = useMemo(() => {
+    const order = (s: string) => {
+      const i = (FUNDRAISING_STATUSES as readonly string[]).indexOf(s);
+      return i < 0 ? FUNDRAISING_STATUSES.length : i;
+    };
+    return counts(rows, (r) => r.status).sort((a, b) => order(a[0]) - order(b[0]) || b[1] - a[1]);
+  }, [rows]);
   const managers = useMemo(() => new Set(filtered.map((r) => r.managerName).filter(Boolean)).size, [filtered]);
   const topProviders = useMemo(() => {
     const out = new Map<ProviderRole, [number, number][]>();
@@ -118,6 +222,8 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
     return out;
   }, [filtered]);
   const adv = rows.filter((r) => r.source === "form_adv").length;
+  const withStrategy = rows.filter((r) => r.strategyCode).length;
+  const raising = rows.filter((r) => r.status && OPEN_STATUSES.has(r.status)).length;
 
   if (!rows.length) {
     return (
@@ -132,13 +238,17 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
     return <CompanyLogo name={name} domain={brandDomain(key)} size={18} />;
   };
 
+  const strategyOn = strategyKey ? STRATEGY_BY_KEY[strategyKey] : null;
+
   return (
     <div className="space-y-5">
       <section className="stand rounded-3xl px-5 py-6 md:px-8">
         <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
-        <div className="relative grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4">
+        <div className="relative grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-6">
           <Figure label="Funds on file" value={rows.length.toLocaleString("en-US")} sub={`${adv.toLocaleString("en-US")} named on Form ADV Schedule D`} />
           <Figure label="Managers" value={new Set(rows.map((r) => r.managerName).filter(Boolean)).size.toLocaleString("en-US")} sub="with at least one fund" />
+          <Figure label="With a stated strategy" value={withStrategy.toLocaleString("en-US")} sub="by the fund's own name, or as researched" />
+          <Figure label="Raising" value={raising.toLocaleString("en-US")} sub="pre-marketing to interim close, as researched" />
           <Figure label="Co-investment vehicles" value={(kinds.find(([k]) => k === "Co-investment")?.[1] ?? 0).toLocaleString("en-US")} sub="by the fund's own name" />
           <Figure label="Luxembourg vehicles" value={(domiciles.find(([k]) => k === "Luxembourg")?.[1] ?? 0).toLocaleString("en-US")} sub="SCSp, RAIF and named Lux funds" />
         </div>
@@ -157,28 +267,41 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
             className="h-11 w-full rounded-xl border border-input bg-background/60 pl-10 pr-3 text-sm outline-none focus-visible:border-ring"
           />
         </div>
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="eyebrow mr-1">Vehicle</span>
-          <Pill on={!kind} onClick={() => setKind(null)}>
-            Any
-          </Pill>
-          {kinds.map(([k, n]) => (
-            <Pill key={k} on={kind === k} onClick={() => setKind(kind === k ? null : k)}>
-              {k} <span className="figure opacity-70">{n}</span>
+        <Facet label="Vehicle" value={kind} onChange={setKind} options={kinds} />
+        <Facet label="Domicile" value={domicile} onChange={setDomicile} options={domiciles} />
+        {strategyGroups.length ? (
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="eyebrow mr-1">Strategy</span>
+            <Pill on={!strategyKey} onClick={() => setStrategyKey(null)}>
+              Any
             </Pill>
-          ))}
-        </div>
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="eyebrow mr-1">Domicile</span>
-          <Pill on={!domicile} onClick={() => setDomicile(null)}>
-            Any
-          </Pill>
-          {domiciles.map(([k, n]) => (
-            <Pill key={k} on={domicile === k} onClick={() => setDomicile(domicile === k ? null : k)}>
-              {k} <span className="figure opacity-70">{n}</span>
-            </Pill>
-          ))}
-        </div>
+            {strategyGroups.map(({ cls, options }) => (
+              <span key={cls.key} className="inline-flex flex-wrap items-center gap-1.5">
+                <span className="ml-1.5 text-[10.5px] uppercase tracking-wide text-muted-foreground/80">{cls.short}</span>
+                {options.map(([k, n]) => (
+                  <Pill key={k} on={strategyKey === k} onClick={() => setStrategyKey(strategyKey === k ? null : k)}>
+                    {STRATEGY_BY_KEY[k]?.name ?? k} <span className="figure opacity-70">{n}</span>
+                  </Pill>
+                ))}
+              </span>
+            ))}
+          </div>
+        ) : null}
+        <Facet label="Sector" value={sector} onChange={setSector} options={sectors} name={sectorName} />
+        <Facet label="Region" value={region} onChange={setRegion} options={regions} name={regionName} />
+        <Facet label="Size band" value={sizeBand} onChange={setSizeBand} options={sizeBands} name={bandLabel} />
+        <Facet label="Status" value={status} onChange={setStatus} options={statuses} />
+        {status && !statuses.some(([k]) => k === status) ? (
+          <div className="flex items-center gap-2 text-xs">
+            <span className="eyebrow">Status</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border py-0.5 pl-2 pr-1.5">
+              {status} <span className="text-muted-foreground">· none on file</span>
+              <button type="button" onClick={() => setStatus(null)} aria-label="Clear status">
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          </div>
+        ) : null}
         {provider ? (
           <div className="flex items-center gap-2 text-xs">
             <span className="eyebrow">Provider</span>
@@ -220,6 +343,11 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
             <span className="figure">{filtered.length.toLocaleString("en-US")}</span>{" "}
             <span className="text-muted-foreground">funds · {managers.toLocaleString("en-US")} managers</span>
           </span>
+          {strategyOn ? (
+            <span className="text-xs text-muted-foreground">
+              {ASSET_CLASS_BY_KEY[strategyOn.classKey].name} · {strategyOn.name}
+            </span>
+          ) : null}
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-[12.5px]">
@@ -248,6 +376,17 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
                       {r.size != null ? <span className="figure">{formatUsd(r.size)}</span> : null}
                       {r.vintage ? <span>Vintage {r.vintage}</span> : null}
                       {r.strategy ? <span>{r.strategy}</span> : null}
+                      {r.strategyCode ? (
+                        <span className="rounded border border-primary/30 px-1.5 text-foreground">{STRATEGY_BY_KEY[r.strategyCode]?.name ?? r.strategyCode}</span>
+                      ) : null}
+                      {r.regionCodes.map((code) => (
+                        <span key={code} className="rounded border px-1.5">
+                          {regionName(code)}
+                        </span>
+                      ))}
+                      {r.status ? (
+                        <span className={cn("rounded border px-1.5", OPEN_STATUSES.has(r.status) && "border-[var(--brass)] text-foreground")}>{r.status}</span>
+                      ) : null}
                     </div>
                   </td>
                   <td className="px-3 py-2.5">
@@ -300,7 +439,9 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
       </div>
       <p className="text-xs text-muted-foreground">
         Fund names are as filed on Form ADV Schedule D, shown in title case. A fund is called a feeder, co-investment vehicle or
-        Luxembourg-domiciled only when its legal name says so; providers are the ones the filing names alongside it.
+        Luxembourg-domiciled only when its legal name says so; its strategy, sector and region are read from that name, or from
+        the researched profile where one is on file; providers are the ones the filing names alongside it. A fundraising status
+        appears only once a fund has been researched.
       </p>
     </div>
   );

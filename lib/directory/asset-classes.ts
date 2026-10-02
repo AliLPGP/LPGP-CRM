@@ -14,6 +14,7 @@ export type AssetClassKey =
   | "venture_capital"
   | "real_estate"
   | "infrastructure"
+  | "natural_resources"
   | "secondaries"
   | "hedge_funds"
   | "sports";
@@ -75,7 +76,16 @@ export const ASSET_CLASSES: AssetClass[] = [
     short: "Infra",
     blurb: "Energy transition, digital, transport and utilities — managers, funds and platform deals.",
     gpTypes: ["Infrastructure", "Real assets"],
-    fundName: /\b(INFRASTRUCTURE|INFRA\b|ENERGY\s+TRANSITION|RENEWABLE|DIGITAL\s+INFRA|POWER\s+FUND|NATURAL\s+RESOURCES|TIMBER|FARMLAND)/,
+    fundName: /\b(INFRASTRUCTURE|INFRA\b|ENERGY\s+TRANSITION|RENEWABLE|DIGITAL\s+INFRA|POWER\s+FUND)/,
+  },
+  {
+    key: "natural_resources",
+    slug: "natural-resources",
+    name: "Natural resources",
+    short: "NatRes",
+    blurb: "Farmland, timberland, metals and mining, oil and gas, water — the real-asset managers and funds outside infrastructure.",
+    gpTypes: ["Natural resources"],
+    fundName: /\b(NATURAL\s+RESOURCES?|TIMBER(LAND)?|FOREST(RY)?|FARMLAND|AGRICULTUR(E|AL)|AGRI\b|MINING|METALS|OIL\s*(&|AND)\s*GAS|UPSTREAM|WATER\s+FUND)\b/,
   },
   {
     key: "secondaries",
@@ -131,7 +141,7 @@ export function classStatedByFundName(name: string | null | undefined): AssetCla
   const upper = name.toUpperCase();
   // Narrower classes first: "REAL ESTATE CREDIT FUND" is credit into real
   // estate — the name says both, credit is what the vehicle does.
-  for (const key of ["private_credit", "secondaries", "infrastructure", "real_estate", "venture_capital", "hedge_funds", "sports", "private_equity"] as AssetClassKey[]) {
+  for (const key of ["private_credit", "secondaries", "natural_resources", "infrastructure", "real_estate", "venture_capital", "hedge_funds", "sports", "private_equity"] as AssetClassKey[]) {
     const re = ASSET_CLASS_BY_KEY[key].fundName;
     if (re && re.test(upper)) return key;
   }

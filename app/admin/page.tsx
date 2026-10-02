@@ -26,7 +26,7 @@ export default async function AdminPage() {
           <code className="font-mono text-xs">profiles.role = &apos;admin&apos;</code>).
         </p>
         <Link href="/" className="mt-4 inline-block text-sm text-primary hover:underline">
-          Back to pipeline
+          Back to the command centre
         </Link>
       </div>
     );
@@ -81,19 +81,19 @@ export default async function AdminPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-muted/40 text-muted-foreground">
-              <tr>
-                <th className="text-left font-medium px-5 py-2.5">Company</th>
-                <th className="text-left font-medium px-3 py-2.5">Stage</th>
-                <th className="text-left font-medium px-3 py-2.5">Market</th>
-                <th className="text-right font-medium px-3 py-2.5">Value</th>
-                <th className="text-left font-medium px-5 py-2.5">Owner</th>
+              <tr className="text-[11px] font-semibold uppercase tracking-[0.1em]">
+                <th className="px-5 py-2.5 text-left">Company</th>
+                <th className="px-3 py-2.5 text-left">Stage</th>
+                <th className="px-3 py-2.5 text-left">Market</th>
+                <th className="px-3 py-2.5 text-right">Value</th>
+                <th className="px-5 py-2.5 text-left">Owner</th>
               </tr>
             </thead>
             <tbody>
               {leads.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-5 py-10 text-center text-muted-foreground">
-                    No leads yet.
+                  <td colSpan={5} className="px-5 py-10 text-center text-sm text-muted-foreground">
+                    No leads to allocate yet — they arrive from the Leads page or a spreadsheet import.
                   </td>
                 </tr>
               ) : (

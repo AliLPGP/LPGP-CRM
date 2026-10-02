@@ -41,7 +41,7 @@ export function SeriesRevenueChart({
   if (!data.length) {
     return (
       <p className="rounded-xl border border-dashed px-4 py-8 text-center text-sm text-muted-foreground">
-        No events allocated yet.
+        No sponsor money is allocated to an event in the ops panel yet — the series fill as deals are recorded against events.
       </p>
     );
   }
@@ -89,7 +89,7 @@ export function SeriesRevenueChart({
                 the baseline; the target sits on the same scale as a tick. */}
             <div className="relative mt-1.5 h-2.5 w-full rounded-full bg-[var(--chart-track)]">
               <div
-                className="absolute inset-y-0 left-0 rounded-l-full rounded-r-[4px] transition-[width] duration-700 ease-out"
+                className="absolute inset-y-0 left-0 rounded-l-full rounded-r-[4px] transition-[width] duration-300 ease-out motion-reduce:transition-none"
                 style={{ width: `${Math.max(1.5, actualPct)}%`, background: color }}
               />
               {d.target > 0 ? (
@@ -173,7 +173,7 @@ export function EventBar({
     <div className="relative h-2.5 w-full rounded-full bg-[var(--chart-track)]">
       <div
         className={cn(
-          "absolute inset-y-0 left-0 rounded-l-full rounded-r-[4px] transition-[width] duration-700 ease-out",
+          "absolute inset-y-0 left-0 rounded-l-full rounded-r-[4px] transition-[width] duration-300 ease-out motion-reduce:transition-none",
           hit ? "bg-[var(--success)]" : "bg-[var(--chart-bar)]",
         )}
         style={{ width: `${Math.max(1.5, Math.min(100, actualPct))}%` }}
@@ -223,7 +223,7 @@ export function ProgressMeter({
       <div className="relative mt-3 h-3 w-full overflow-hidden rounded-full bg-[var(--chart-track)]">
         <div
           className={cn(
-            "h-full rounded-l-full rounded-r-[4px] transition-[width] duration-700 ease-out",
+            "h-full rounded-l-full rounded-r-[4px] transition-[width] duration-300 ease-out motion-reduce:transition-none",
             hit ? "bg-[var(--success)]" : "bg-[var(--chart-bar)]",
           )}
           style={{ width: `${Math.max(target > 0 ? 1.5 : 0, Math.min(100, pct))}%` }}

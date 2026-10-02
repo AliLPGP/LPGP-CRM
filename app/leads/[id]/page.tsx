@@ -4,16 +4,15 @@ import { ArrowLeft, Building2, Mail, Phone, Link2 } from "lucide-react";
 import { getLead, listProfiles } from "@/lib/crm";
 import { getNotes } from "@/lib/queries";
 import { getSessionUser } from "@/lib/auth";
-import { STAGE_META } from "@/lib/pipeline";
 import { formatUsd } from "@/lib/utils";
 import { CategoryBadge } from "@/components/category-badge";
 import { LeadEditor } from "@/components/lead-editor";
+import { StageBadge } from "@/components/leads-table";
 import { NotesPanel } from "@/components/notes-panel";
 import { ConvertLeadButton } from "@/components/accounts/convert-lead-button";
 import { OpsAllocations } from "@/components/accounts/ops-allocations";
 import { dealsFromLinks, listOpsLinks } from "@/lib/ops-links";
 import { opsPanelUrl } from "@/lib/ops";
-import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -30,36 +29,23 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
 
   const isAdmin = user?.role === "admin";
   const canEdit = Boolean(isAdmin || (user && lead.owner_id === user.id));
-  const kind = STAGE_META[lead.stage]?.kind ?? "open";
 
   return (
     <div className="mx-auto max-w-5xl px-4 md:px-6 py-8 space-y-6">
-      <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
-        <ArrowLeft className="h-4 w-4" /> Pipeline
+      <Link href="/leads" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
+        <ArrowLeft className="h-4 w-4" /> Leads
       </Link>
 
       {/* Header */}
       <div className="sheen rounded-2xl border bg-card p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Lead</p>
-            <h1 className="mt-1 text-2xl md:text-3xl font-semibold tracking-tight">
+            <p className="eyebrow">Lead</p>
+            <h1 className="display mt-1 text-[26px] leading-tight md:text-[30px]">
               {lead.company_name ?? lead.company?.name ?? "Untitled lead"}
             </h1>
             <div className="mt-2.5 flex flex-wrap items-center gap-2 text-sm">
-              <span
-                className={cn(
-                  "inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium bg-secondary text-foreground/80",
-                )}
-              >
-                <span
-                  className={cn(
-                    "h-1.5 w-1.5 rounded-full",
-                    kind === "won" ? "bg-foreground" : kind === "lost" ? "bg-foreground/30" : "bg-foreground/60",
-                  )}
-                />
-                {lead.stage}
-              </span>
+              <StageBadge stage={lead.stage} />
               {lead.market ? (
                 <span className="rounded-md border bg-secondary px-2.5 py-1 text-xs font-medium text-foreground/80">
                   {lead.market} Market
@@ -74,10 +60,8 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
             </div>
           </div>
           <div className="text-right">
-            {lead.value_usd != null ? (
-              <div className="text-2xl font-semibold tabular">{formatUsd(lead.value_usd)}</div>
-            ) : null}
-            <div className="text-sm text-muted-foreground mt-0.5">
+            <div className="figure text-2xl">{lead.value_usd != null ? formatUsd(lead.value_usd) : "—"}</div>
+            <div className="mt-0.5 text-sm text-muted-foreground">
               Owner: <span className="text-foreground">{lead.owner?.full_name ?? "Unassigned"}</span>
             </div>
             <div className="mt-3 flex justify-end">

@@ -9,7 +9,6 @@ import {
   Loader2,
   MapPin,
   Pencil,
-  Search,
   Sparkles,
   Target,
   UserRound,
@@ -28,6 +27,9 @@ import { EventBar } from "@/components/events/charts";
 import { RecordDealDialog } from "@/components/ops/record-deal-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/empty-state";
+import { FacetChips, FacetMenu } from "@/components/intel/facet-menu";
+import { ListToolbar, SortSelect, facetOptions } from "@/components/list-toolbar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/ui/modal";
@@ -55,6 +57,21 @@ export type EventRow = {
 
 /** Filter value for events the tracker has not assigned to a producer team. */
 const NO_PRODUCER = "__none__";
+const NO_SERIES = "unassigned";
+
+type Sort = "date" | "allocated" | "progress" | "name";
+const SORTS: { value: Sort; label: string }[] = [
+  { value: "date", label: "Date" },
+  { value: "allocated", label: "Allocated" },
+  { value: "progress", label: "Against target" },
+  { value: "name", label: "Name" },
+];
+/** Where an event stands against its target, as a facet. */
+type Standing = "hit" | "short" | "none";
+const STANDING_LABEL: Record<Standing, string> = { hit: "Hitting target", short: "Short of target", none: "No target set" };
+const standingOf = (e: EventRow): Standing => (e.target ? ((e.progress ?? 0) >= 1 ? "hit" : "short") : "none");
+const seriesLabel = (k: string) => (k === NO_SERIES ? "Unassigned" : `${SERIES_MAP[k as SeriesId]?.code ?? ""} · ${SERIES_MAP[k as SeriesId]?.short ?? k}`);
+const producerLabel = (k: string) => (k === NO_PRODUCER ? "No producer" : k);
 
 export function EventTable({
   events,
@@ -67,16 +84,19 @@ export function EventTable({
 }) {
   const router = useRouter();
   const [q, setQ] = useState("");
-  const [seriesFilter, setSeriesFilter] = useState("");
-  const [producerFilter, setProducerFilter] = useState("");
+  const [seriesSel, setSeriesSel] = useState<string[]>([]);
+  const [producerSel, setProducerSel] = useState<string[]>([]);
+  const [standingSel, setStandingSel] = useState<string[]>([]);
+  const [sort, setSort] = useState<Sort>("date");
   const [editing, setEditing] = useState<EventRow | null>(null);
   const [acceptBusy, setAcceptBusy] = useState(false);
 
   const shown = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return events.filter((e) => {
-      if (seriesFilter && (e.series ?? "unassigned") !== seriesFilter) return false;
-      if (producerFilter && (e.producer || NO_PRODUCER) !== producerFilter) return false;
+    const rows = events.filter((e) => {
+      if (seriesSel.length && !seriesSel.includes(e.series ?? NO_SERIES)) return false;
+      if (producerSel.length && !producerSel.includes(e.producer || NO_PRODUCER)) return false;
+      if (standingSel.length && !standingSel.includes(standingOf(e))) return false;
       if (!needle) return true;
       return (
         e.name.toLowerCase().includes(needle) ||
@@ -84,121 +104,136 @@ export function EventTable({
         e.producer.toLowerCase().includes(needle)
       );
     });
-  }, [events, q, seriesFilter, producerFilter]);
+    return rows.sort((a, b) => {
+      switch (sort) {
+        case "allocated":
+          return b.actual - a.actual;
+        case "progress":
+          return (b.progress ?? -1) - (a.progress ?? -1);
+        case "name":
+          return a.name.localeCompare(b.name);
+        default:
+          // Dated events in order, undated after them.
+          return (a.date ?? "9999").localeCompare(b.date ?? "9999") || a.name.localeCompare(b.name);
+      }
+    });
+  }, [events, q, seriesSel, producerSel, standingSel, sort]);
 
   // Shared scale across every visible row, so bar lengths are comparable.
   const scale = Math.max(1, ...shown.map((e) => Math.max(e.actual, e.target ?? 0)));
   const inferred = events.filter((e) => e.seriesInferred && e.series);
 
-  return (
-    <section className="rounded-2xl border bg-card">
-      <div className="flex flex-wrap items-center gap-2 border-b p-4">
-        <div className="relative min-w-[200px] flex-1">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Search events…"
-            className="pl-9"
-          />
-        </div>
-        <NativeSelect
-          className="w-[190px]"
-          value={seriesFilter}
-          onChange={(e) => setSeriesFilter(e.target.value)}
-          aria-label="Series"
-        >
-          <option value="">All series</option>
-          {SERIES.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.code} · {s.short}
-            </option>
-          ))}
-          <option value="unassigned">Unassigned</option>
-        </NativeSelect>
-        <NativeSelect
-          className="w-[170px]"
-          value={producerFilter}
-          onChange={(e) => setProducerFilter(e.target.value)}
-          aria-label="Producer"
-        >
-          <option value="">All producers</option>
-          {PRODUCERS.map((p) => (
-            <option key={p} value={p}>
-              {p}
-            </option>
-          ))}
-          <option value={NO_PRODUCER}>No producer</option>
-        </NativeSelect>
-        <span className="text-xs text-muted-foreground">
-          {shown.length} of {events.length}
-        </span>
-      </div>
+  const seriesOptions = facetOptions(events, (e) => e.series ?? NO_SERIES, { order: [...SERIES.map((s) => s.id), NO_SERIES], label: seriesLabel }).filter((o) => o.count > 0);
+  const producerOptions = facetOptions(events, (e) => e.producer || NO_PRODUCER, { order: [...PRODUCERS, NO_PRODUCER], label: producerLabel }).filter((o) => o.count > 0);
+  const standingOptions = facetOptions(events, standingOf, { order: ["hit", "short", "none"], label: (k) => STANDING_LABEL[k as Standing] });
+  const clearAll = () => {
+    setQ("");
+    setSeriesSel([]);
+    setProducerSel([]);
+    setStandingSel([]);
+  };
 
-      {/* Inferred-series nudge. The page guesses from the event's name; this
-          is how a guess becomes a stored fact. */}
-      {inferred.length ? (
-        <div className="flex flex-wrap items-center gap-3 border-b bg-[var(--ops-soft)] px-4 py-2.5">
-          <Sparkles className="h-4 w-4 shrink-0 text-[var(--ops)]" />
-          <p className="min-w-0 flex-1 text-[13px]">
-            <span className="font-medium">{inferred.length} event</span>
-            {inferred.length === 1 ? " has" : "s have"} a series suggested from{" "}
-            {inferred.length === 1 ? "its" : "their"} name. Confirm to save{" "}
-            {inferred.length === 1 ? "it" : "them"}.
-          </p>
-          <Button
-            size="sm"
-            variant="outline"
-            disabled={acceptBusy}
-            onClick={async () => {
-              setAcceptBusy(true);
-              await acceptInferredSeries(
-                inferred.map((e) => ({
-                  opsEventId: e.opsEventId,
-                  eventName: e.name,
-                  series: e.series as string,
-                })),
-              );
-              setAcceptBusy(false);
+  return (
+    <div className="space-y-3">
+      <ListToolbar
+        search={{ value: q, onChange: setQ, placeholder: "Search events, cities or producers" }}
+        facets={
+          <>
+            <FacetMenu label="Series" groups={[{ label: "", options: seriesOptions }]} selected={seriesSel} onChange={setSeriesSel} searchable={false} width={260} />
+            <FacetMenu label="Producer" groups={[{ label: "", options: producerOptions }]} selected={producerSel} onChange={setProducerSel} searchable={false} width={220} />
+            <FacetMenu label="Target" groups={[{ label: "", options: standingOptions }]} selected={standingSel} onChange={setStandingSel} searchable={false} width={220} />
+          </>
+        }
+        sort={<SortSelect value={sort} onChange={setSort} options={SORTS} />}
+        shown={shown.length}
+        total={events.length}
+        noun="events"
+        chips={
+          <FacetChips
+            chips={[
+              ...seriesSel.map((k) => ({ key: `s:${k}`, label: seriesLabel(k), remove: () => setSeriesSel(seriesSel.filter((x) => x !== k)) })),
+              ...producerSel.map((k) => ({ key: `p:${k}`, label: producerLabel(k), remove: () => setProducerSel(producerSel.filter((x) => x !== k)) })),
+              ...standingSel.map((k) => ({ key: `t:${k}`, label: STANDING_LABEL[k as Standing], remove: () => setStandingSel(standingSel.filter((x) => x !== k)) })),
+            ]}
+            onClearAll={clearAll}
+          />
+        }
+      />
+
+      <section className="sheen rounded-2xl border bg-card">
+        {/* Inferred-series nudge. The page guesses from the event's name; this
+            is how a guess becomes a stored fact. */}
+        {inferred.length ? (
+          <div className="flex flex-wrap items-center gap-3 border-b bg-[var(--ops-soft)] px-4 py-2.5">
+            <Sparkles className="h-4 w-4 shrink-0 text-[var(--ops)]" />
+            <p className="min-w-0 flex-1 text-[13px]">
+              <span className="font-medium">{inferred.length} event</span>
+              {inferred.length === 1 ? " has" : "s have"} a series suggested from{" "}
+              {inferred.length === 1 ? "its" : "their"} name. Confirm to save{" "}
+              {inferred.length === 1 ? "it" : "them"}.
+            </p>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={acceptBusy}
+              onClick={async () => {
+                setAcceptBusy(true);
+                await acceptInferredSeries(
+                  inferred.map((e) => ({
+                    opsEventId: e.opsEventId,
+                    eventName: e.name,
+                    series: e.series as string,
+                  })),
+                );
+                setAcceptBusy(false);
+                router.refresh();
+              }}
+            >
+              {acceptBusy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
+              Confirm all
+            </Button>
+          </div>
+        ) : null}
+
+        <ul className="divide-y">
+          {shown.map((e) => (
+            <EventRowItem
+              key={e.opsEventId}
+              event={e}
+              scale={scale}
+              currency={currency}
+              canRecordDeals={canRecordDeals}
+              onEdit={() => setEditing(e)}
+            />
+          ))}
+          {shown.length === 0 ? (
+            <li className="p-3">
+              <EmptyState
+                title="No events match these filters"
+                description={`${events.length} events are in the ops panel; none carry every filter you have set.`}
+                action={
+                  <button type="button" onClick={clearAll} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+                    Clear filters
+                  </button>
+                }
+              />
+            </li>
+          ) : null}
+        </ul>
+
+        {editing ? (
+          <TargetDialog
+            key={editing.opsEventId}
+            event={editing}
+            onClose={() => setEditing(null)}
+            onSaved={() => {
+              setEditing(null);
               router.refresh();
             }}
-          >
-            {acceptBusy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null}
-            Confirm all
-          </Button>
-        </div>
-      ) : null}
-
-      <ul className="divide-y">
-        {shown.map((e) => (
-          <EventRowItem
-            key={e.opsEventId}
-            event={e}
-            scale={scale}
-            currency={currency}
-            canRecordDeals={canRecordDeals}
-            onEdit={() => setEditing(e)}
           />
-        ))}
-        {shown.length === 0 ? (
-          <li className="px-4 py-10 text-center text-sm text-muted-foreground">
-            No events match that filter.
-          </li>
         ) : null}
-      </ul>
-
-      {editing ? (
-        <TargetDialog
-          key={editing.opsEventId}
-          event={editing}
-          onClose={() => setEditing(null)}
-          onSaved={() => {
-            setEditing(null);
-            router.refresh();
-          }}
-        />
-      ) : null}
-    </section>
+      </section>
+    </div>
   );
 }
 
@@ -257,7 +292,7 @@ function EventRowItem({
 
   return (
     <li>
-      <div className="grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_auto]">
+      <div className="grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 transition-colors duration-[120ms] hover:bg-muted/30 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_auto]">
         {/* Identity */}
         <div className="min-w-0">
           <button
@@ -364,12 +399,12 @@ function EventRowItem({
             ) : null}
           </div>
           {sponsors === null ? (
-            <p className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <p className="inline-flex min-h-[40px] items-center gap-1.5 text-xs text-muted-foreground">
               <Loader2 className="h-3 w-3 animate-spin" /> Loading from the ops panel…
             </p>
           ) : sponsors.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              No sponsors allocated to this event yet.
+            <p className="min-h-[40px] text-sm text-muted-foreground">
+              No sponsor&apos;s money is allocated to this event in the tracker yet — record a deal against it and it appears here.
             </p>
           ) : (
             <ul className="grid gap-1.5 sm:grid-cols-2 xl:grid-cols-3">

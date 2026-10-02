@@ -11,7 +11,7 @@ import { NewAccountDialog } from "@/components/accounts/new-account-dialog";
 import { SyncAccountsButton } from "@/components/accounts/sync-accounts-button";
 import { PageHeader } from "@/components/page-header";
 import { SetupNotice } from "@/components/setup-notice";
-import { StatCard } from "@/components/stat-card";
+import { StatCard, StatRow } from "@/components/stat-card";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Accounts — LPGP Connect" };
@@ -34,49 +34,45 @@ export default async function AccountsPage() {
   const sponsorships = await sponsorshipsByAccount();
   const yearTotals = totalsByYear(sponsorships);
   const active = accounts.filter((a) => a.status === "Active").length;
+  const renewalDue = accounts.filter((a) => a.status === "Renewal due").length;
   const contacts = accounts.reduce((n, a) => n + a.contact_count, 0);
+  const withContact = accounts.filter((a) => a.contact_count > 0).length;
   const linked = accounts.filter((a) => ops[a.id]).length;
+  // The latest year on the sponsor lists, one figure per currency — never
+  // added across currencies, so each currency becomes its own card.
+  const latestYear = yearTotals.length ? Math.max(...yearTotals.map((t) => t.year)) : null;
+  const latest = yearTotals.filter((t) => t.year === latestYear);
 
   return (
     <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 md:px-6">
       <PageHeader
         eyebrow="Sales CRM"
         title="Accounts"
-        description="Sponsors you've won. Every company with a deal in the ops panel gets an account here automatically, and each new deal updates it; points of contact, activity history and event allocations hang off it."
+        description="Sponsors you've won. Every company with a deal in the ops panel gets an account here automatically; points of contact, activity history and event allocations hang off it."
         actions={
-          <div className="flex flex-wrap items-start gap-2">
+          <>
             <SyncAccountsButton configured={isOpsConfigured()} />
             <NewAccountDialog />
-          </div>
+          </>
         }
       />
 
       {!isSupabaseConfigured() ? <SetupNotice /> : null}
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Accounts" value={accounts.length} accent="bg-primary" />
-        <StatCard label="Active" value={active} dot="bg-emerald-500" />
-        <StatCard label="Points of contact" value={contacts} />
-        <StatCard
-          label="Linked to ops panel"
-          value={linked}
-          sublabel={linked ? "Event allocations in sync" : "None linked yet"}
-          dot="bg-amber-500"
-        />
-      </div>
+      <StatRow>
+        <StatCard label="Accounts" value={accounts.length} basis={`${active} active · ${renewalDue} renewal due`} />
+        <StatCard label="Points of contact" value={contacts} basis={`${withContact} of ${accounts.length} accounts have one`} />
+        <StatCard label="Linked to ops panel" value={linked} basis={linked ? "Event allocations in sync" : isOpsConfigured() ? "None matched to a tracker deal yet" : "Ops panel not connected"} />
+        {latest.map((t) => (
+          <StatCard
+            key={`${t.year}-${t.currency}`}
+            label={`${t.year} sponsorship (${t.currency})`}
+            value={formatOpsMoney(t.amount, t.currency)}
+            basis={`${t.accounts} sponsors on the ${t.year} list, ${t.currency} only`}
+          />
+        ))}
+      </StatRow>
 
-      {yearTotals.length ? (
-        <p className="text-xs text-muted-foreground">
-          From the sponsor lists:{" "}
-          {yearTotals.map((t, i) => (
-            <span key={`${t.year}-${t.currency}`}>
-              {i ? " · " : ""}
-              <span className="font-medium text-foreground">{t.year}</span> {formatOpsMoney(t.amount, t.currency)} across {t.accounts} sponsors
-            </span>
-          ))}
-          . Each currency is totalled on its own; the ops panel stays the source of truth for money.
-        </p>
-      ) : null}
       <AccountsBrowser accounts={accounts} opsByAccount={ops} sponsorships={sponsorships} />
     </div>
   );

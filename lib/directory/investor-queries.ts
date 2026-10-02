@@ -2,8 +2,9 @@ import "server-only";
 import { getReadClient } from "@/lib/supabase/server";
 import { chunk, fetchAll } from "@/lib/supabase/paged";
 import type { SourceRef } from "@/lib/fund-details";
-import { fundClass, type AssetClassKey } from "./asset-classes";
-import { typeCodeOf, type PlanStatus } from "./taxonomy";
+import { fundClass, isAssetClassKey, type AssetClassKey } from "./asset-classes";
+import { strategiesInFundName } from "./strategies";
+import { bandOf, FUND_SIZE_BANDS, typeCodeOf, type PlanStatus } from "./taxonomy";
 
 // What the investor research job writes (migration 0033): an LP's profile in
 // the categories a desk expects, its plans for the next twelve months, and
@@ -104,8 +105,27 @@ export type FundPerformanceRow = {
   multiple_max: number | null;
   as_of: string | null;
   sources: PerformanceSource[];
+  // Migration 0034. Each ratio is arithmetic on one LP's own stated figures
+  // (never on a null), taken as the median across the LPs that state both
+  // terms; the UI labels them as arithmetic.
+  /** Median of distributed / contributed per reporting LP. */
+  dpi_median: number | null;
+  /** Median of residual value / contributed per reporting LP. */
+  rvpi_median: number | null;
+  /** Median of contributed / commitment, in percent, per reporting LP. */
+  called_pct_median: number | null;
+  /** The fund's size as filed, USD, from `funds`. */
+  fund_size_usd: number | null;
+  /** The researched profile's fundraising status (FUNDRAISING_STATUSES); null when no profile row. */
+  fundraising_status: string | null;
+  /** LP rows that state a contributed figure. */
+  lps_with_cash: number;
   /** The fund's own name first, its manager's type second. */
   class: AssetClassKey | null;
+  /** The first strategy-axis key the fund's own name states within its class. */
+  strategyKey: string | null;
+  /** FUND_SIZE_BANDS key for fund_size_usd. */
+  sizeBand: string | null;
   /** Rank within our own sample of the same class and vintage, only when that sample holds eight funds or more. */
   quartile: { q: 1 | 2 | 3 | 4; of: number } | null;
 };
@@ -118,10 +138,122 @@ export type ManagerPerformanceRow = {
   funds: number;
   /** Median of the funds' median net IRRs, as the LPs report them. */
   net_irr_median: number | null;
+  /** Median of the funds' median DPIs (arithmetic on LP-stated figures). */
+  dpi_median: number | null;
+  /** Sum of the sizes as filed (USD) of the manager's funds in the sample that carry one, and how many do. */
+  raised_usd: number | null;
+  sized: number;
   /** Limited partners reporting across those funds (sum of per-fund counts). */
   lps: number;
   best: { fund_id: string; fund_name: string; net_irr_median: number | null; multiple_median: number | null; vintage_year: number | null } | null;
 };
+
+// --- Performance desk facets (the URL is the state) ----------------------------
+
+/** Fund type and status, folded from the profile's fundraising status. Liquidated, and commingled against separate account, are not offered: nothing on file states them. */
+export const PERFORMANCE_STATUS_GROUPS = [
+  { key: "raising", label: "Raising", statuses: ["Pre-marketing", "Raising", "First close", "Interim close"] },
+  { key: "closed", label: "Closed", statuses: ["Final close", "Closed"] },
+  { key: "evergreen", label: "Evergreen", statuses: ["Evergreen"] },
+  { key: "none", label: "Not on file", statuses: [] },
+] as const;
+export type PerformanceStatusKey = (typeof PERFORMANCE_STATUS_GROUPS)[number]["key"];
+
+export const PERFORMANCE_SORTS = ["irr", "multiple", "dpi", "size", "vintage"] as const;
+export type PerformanceSort = (typeof PERFORMANCE_SORTS)[number];
+export const PERFORMANCE_SORT_LABEL: Record<PerformanceSort, string> = { irr: "Net IRR", multiple: "Net multiple", dpi: "DPI", size: "Fund size", vintage: "Vintage" };
+
+/** "Up to date" means an as-of date within this many months of the newest as-of date across the whole sample. */
+export const PERFORMANCE_LATEST_MONTHS = 18;
+
+export type PerformanceFilters = {
+  cls: AssetClassKey | null;
+  status: PerformanceStatusKey | null;
+  size: string | null;
+  vintageMin: number | null;
+  vintageMax: number | null;
+  latest: boolean;
+  sort: PerformanceSort;
+};
+
+/** The filters a performance URL carries. Anything unrecognised is ignored, not an error. */
+export function performanceFilters(params: Record<string, string | string[] | undefined>): PerformanceFilters {
+  const one = (k: string): string | null => {
+    const v = params[k];
+    const s = Array.isArray(v) ? v[0] : v;
+    return s ? String(s) : null;
+  };
+  const statusKey = one("status");
+  const sizeKey = one("size");
+  const vintage = (one("vintage") ?? "").match(/^(\d{4})?(?:-(\d{4})?)?$/);
+  const year = (s: string | undefined) => (s ? Number(s) : null);
+  const sortKey = one("sort");
+  return {
+    cls: isAssetClassKey(one("class")) ? (one("class") as AssetClassKey) : null,
+    status: PERFORMANCE_STATUS_GROUPS.some((g) => g.key === statusKey) ? (statusKey as PerformanceStatusKey) : null,
+    size: FUND_SIZE_BANDS.some((b) => b.key === sizeKey) ? sizeKey : null,
+    vintageMin: vintage ? year(vintage[1]) : null,
+    vintageMax: vintage ? (one("vintage")?.includes("-") ? year(vintage[2]) : year(vintage[1])) : null,
+    latest: one("latest") === "1",
+    sort: (PERFORMANCE_SORTS as readonly string[]).includes(sortKey ?? "") ? (sortKey as PerformanceSort) : "irr",
+  };
+}
+
+/** The same filters back as query-string pairs (defaults left out), for links and the export. */
+export function performanceQuery(f: PerformanceFilters, extra: Record<string, string | undefined> = {}): string {
+  const pairs: [string, string | undefined][] = [
+    ["class", f.cls ?? undefined],
+    ["status", f.status ?? undefined],
+    ["size", f.size ?? undefined],
+    ["vintage", f.vintageMin != null || f.vintageMax != null ? `${f.vintageMin ?? ""}-${f.vintageMax ?? ""}` : undefined],
+    ["latest", f.latest ? "1" : undefined],
+    ["sort", f.sort === "irr" ? undefined : f.sort],
+    ...Object.entries(extra),
+  ];
+  const qs = pairs
+    .filter(([, v]) => v)
+    .map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`)
+    .join("&");
+  return qs ? `?${qs}` : "";
+}
+
+/** Whether an as-of date falls within the "up to date" window behind the newest one in the sample. */
+export function isUpToDate(asOf: string | null, newest: string | null): boolean {
+  if (!asOf || !newest) return false;
+  const limit = new Date(newest);
+  limit.setUTCMonth(limit.getUTCMonth() - PERFORMANCE_LATEST_MONTHS);
+  return new Date(asOf) >= limit;
+}
+
+export function performanceStatusKey(status: string | null): PerformanceStatusKey {
+  return PERFORMANCE_STATUS_GROUPS.find((g) => (g.statuses as readonly string[]).includes(status ?? ""))?.key ?? "none";
+}
+
+/** The sample narrowed by every filter but the sort. Pure, so the page can count facets on partial filter sets. */
+export function filterPerformance(rows: FundPerformanceRow[], f: Partial<PerformanceFilters>, newest: string | null): FundPerformanceRow[] {
+  return rows.filter(
+    (r) =>
+      (!f.cls || r.class === f.cls) &&
+      (!f.status || performanceStatusKey(r.fundraising_status) === f.status) &&
+      (!f.size || r.sizeBand === f.size) &&
+      (f.vintageMin == null || (r.vintage_year != null && r.vintage_year >= f.vintageMin)) &&
+      (f.vintageMax == null || (r.vintage_year != null && r.vintage_year <= f.vintageMax)) &&
+      (!f.latest || isUpToDate(r.as_of, newest)),
+  );
+}
+
+/** Sorted descending on the chosen figure, blanks last, then most LPs reporting, then name. */
+export function sortPerformance(rows: FundPerformanceRow[], sort: PerformanceSort): FundPerformanceRow[] {
+  const key = (r: FundPerformanceRow): number | null =>
+    sort === "irr" ? r.net_irr_median : sort === "multiple" ? r.multiple_median : sort === "dpi" ? r.dpi_median : sort === "size" ? r.fund_size_usd : r.vintage_year;
+  return [...rows].sort((a, b) => {
+    const ka = key(a);
+    const kb = key(b);
+    if (ka == null && kb != null) return 1;
+    if (kb == null && ka != null) return -1;
+    return (kb ?? 0) - (ka ?? 0) || b.lps - a.lps || (b.net_irr_median ?? -Infinity) - (a.net_irr_median ?? -Infinity) || a.fund_name.localeCompare(b.fund_name);
+  });
+}
 
 const PROFILE_COLUMNS =
   "company_id, investor_type, aum_usd, aum_as_of, allocations, strategy_prefs, region_prefs, industry_prefs, ticket_min_usd, ticket_max_usd, practices, active_in_alternatives, overview, sources, research_state, researched_at";
@@ -130,7 +262,7 @@ const PLAN_COLUMNS =
   "id, company_id, asset_class, status, plan_types, strategies, regions, ticket_min_usd, ticket_max_usd, new_gp_relationships, funds_planned, note, source_url, source_name, source_kind, as_of, created_at";
 
 const PERFORMANCE_COLUMNS =
-  "fund_id, fund_name, company_id, manager_name, vintage_year, lps, net_irr_median, net_irr_min, net_irr_max, multiple_median, multiple_min, multiple_max, as_of, sources";
+  "fund_id, fund_name, company_id, manager_name, vintage_year, lps, net_irr_median, net_irr_min, net_irr_max, multiple_median, multiple_min, multiple_max, as_of, sources, dpi_median, rvpi_median, called_pct_median, fund_size_usd, fundraising_status, lps_with_cash";
 
 const num = (v: unknown): number | null => (v == null || v === "" || Number.isNaN(Number(v)) ? null : Number(v));
 
@@ -336,6 +468,8 @@ async function loadPerformance(): Promise<FundPerformanceRow[]> {
   const rows: FundPerformanceRow[] = raw.map((r) => {
     const m = r.company_id ? managers.get(r.company_id as string) : undefined;
     const fundName = String(r.fund_name ?? "");
+    const cls = fundClass(fundName, m?.sub_type)?.key ?? null;
+    const fundSize = num(r.fund_size_usd);
     return {
       fund_id: r.fund_id as string,
       fund_name: fundName,
@@ -359,7 +493,15 @@ async function loadPerformance(): Promise<FundPerformanceRow[]> {
             as_of: (s.as_of as string | null) ?? null,
           }))
         : [],
-      class: fundClass(fundName, m?.sub_type)?.key ?? null,
+      dpi_median: num(r.dpi_median),
+      rvpi_median: num(r.rvpi_median),
+      called_pct_median: num(r.called_pct_median),
+      fund_size_usd: fundSize,
+      fundraising_status: (r.fundraising_status as string | null) ?? null,
+      lps_with_cash: num(r.lps_with_cash) ?? 0,
+      class: cls,
+      strategyKey: cls ? (strategiesInFundName(fundName, cls).find((s) => s.axis === "strategy")?.key ?? null) : null,
+      sizeBand: bandOf(FUND_SIZE_BANDS, fundSize)?.key ?? null,
       quartile: null,
     };
   });
@@ -383,13 +525,17 @@ async function loadPerformance(): Promise<FundPerformanceRow[]> {
   return rows;
 }
 
-/** Funds with LP-reported performance, most reported first, optionally in one class. */
-export async function listFundPerformance({ cls, limit = 500 }: { cls?: string | null; limit?: number }): Promise<FundPerformanceRow[]> {
+/** The whole sample with the newest as-of date across it, which the "up to date" facet measures from. */
+export async function performanceSample(): Promise<{ rows: FundPerformanceRow[]; newest: string | null }> {
   const rows = await loadPerformance();
-  const kept = cls ? rows.filter((r) => r.class === cls) : rows;
-  return kept
-    .sort((a, b) => b.lps - a.lps || (b.net_irr_median ?? -Infinity) - (a.net_irr_median ?? -Infinity) || a.fund_name.localeCompare(b.fund_name))
-    .slice(0, limit);
+  const newest = rows.reduce<string | null>((best, r) => (r.as_of && (!best || r.as_of > best) ? r.as_of : best), null);
+  return { rows, newest };
+}
+
+/** Funds with LP-reported performance under the desk's filters, sorted as asked; the page and the export read the same list. */
+export async function listFundPerformance(filters: Partial<PerformanceFilters> & { limit?: number }): Promise<FundPerformanceRow[]> {
+  const { rows, newest } = await performanceSample();
+  return sortPerformance(filterPerformance(rows, filters, newest), filters.sort ?? "irr").slice(0, filters.limit ?? 500);
 }
 
 /** Managers by the LP-reported performance of their funds: most funds with a figure first, then median net IRR. */
@@ -404,12 +550,16 @@ export async function managerPerformance(): Promise<ManagerPerformanceRow[]> {
   for (const [company_id, funds] of byManager) {
     const withIrr = funds.filter((f) => f.net_irr_median != null);
     const best = [...withIrr].sort((a, b) => (b.net_irr_median ?? 0) - (a.net_irr_median ?? 0))[0] ?? funds[0] ?? null;
+    const sized = funds.filter((f) => f.fund_size_usd != null);
     out.push({
       company_id,
       manager_name: funds[0]?.manager_name ?? null,
       manager_sub_type: funds[0]?.manager_sub_type ?? null,
       funds: funds.length,
       net_irr_median: median(withIrr.map((f) => f.net_irr_median as number)),
+      dpi_median: median(funds.filter((f) => f.dpi_median != null).map((f) => f.dpi_median as number)),
+      raised_usd: sized.length ? sized.reduce((n, f) => n + (f.fund_size_usd as number), 0) : null,
+      sized: sized.length,
       lps: funds.reduce((n, f) => n + f.lps, 0),
       best: best ? { fund_id: best.fund_id, fund_name: best.fund_name, net_irr_median: best.net_irr_median, multiple_median: best.multiple_median, vintage_year: best.vintage_year } : null,
     });

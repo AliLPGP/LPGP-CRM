@@ -14,6 +14,7 @@ import {
 } from "@/lib/directory/queries";
 import { getDirectoryIndex } from "@/lib/directory/index-server";
 import { getDeals, getSignals, teamsHeldBy } from "@/lib/directory/intelligence-queries";
+import { getInvestorPlans, getInvestorProfile } from "@/lib/directory/investor-queries";
 import { getFundOfferings, getPortcoIntel, lendersManagedBy } from "@/lib/directory/filings-queries";
 import { LenderTable, OfferingTable } from "@/components/intel/filings-tables";
 import { formatMoney } from "@/lib/directory/intelligence-types";
@@ -48,6 +49,7 @@ import {
   type RoleRank,
 } from "@/components/directory/profile-sections";
 import { FundLineup } from "@/components/directory/fund-lineup";
+import { InvestorProfile, ManagerProfile } from "@/components/directory/investor-profile";
 import { OperatingPartners, PortfolioCompanies } from "@/components/directory/operators-portfolio";
 import { PeerBenchmark } from "@/components/directory/peer-benchmark";
 import { IntelShell } from "@/components/intel/shell";
@@ -57,7 +59,7 @@ import { formatUsd } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-const TABS = ["overview", "deals", "funds", "portfolio", "people", "events", "providers", "clients", "signals", "peers", "notes"] as const;
+const TABS = ["overview", "investor", "manager", "deals", "funds", "portfolio", "people", "events", "providers", "clients", "signals", "peers", "notes"] as const;
 type Tab = (typeof TABS)[number];
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -79,7 +81,7 @@ export default async function CompanyProfile({
   if (!company) notFound();
   const tab: Tab = (TABS as readonly string[]).includes(tabParam ?? "") ? (tabParam as Tab) : "overview";
 
-  const [contacts, funds, providers, providerClients, commitments, notes, lists, onLists, similar, index, portcos, deals, signals, held, user, offerings, lenders, eventRows] =
+  const [contacts, funds, providers, providerClients, commitments, notes, lists, onLists, similar, index, portcos, deals, signals, held, user, offerings, lenders, eventRows, investorProfile, investorPlans] =
     await Promise.all([
       getContactsForCompany(id),
       getCompanyFunds(id),
@@ -99,6 +101,10 @@ export default async function CompanyProfile({
       getFundOfferings({ gpCompanyId: id, limit: 200 }),
       lendersManagedBy(id),
       getParticipationForCompany(id),
+      // The researched investor profile and plans (migration 0033); null and
+      // empty until the research job has been by, or on an older database.
+      company.category === "LP" ? getInvestorProfile(id) : Promise.resolve(null),
+      company.category === "LP" ? getInvestorPlans(id) : Promise.resolve([]),
     ]);
   const [asLp, asGp] = await Promise.all([nameCommitments(commitments.asLp), nameCommitments(commitments.asGp)]);
 
@@ -129,6 +135,8 @@ export default async function CompanyProfile({
 
   const tabs = [
     { key: "overview", label: "Overview", count: null as number | null },
+    ...(company.category === "LP" ? [{ key: "investor", label: "Investor profile", count: null as number | null }] : []),
+    ...(company.category === "GP" ? [{ key: "manager", label: "Manager profile", count: null as number | null }] : []),
     { key: "deals", label: "Deals", count: dealCount },
     ...(funds.length || company.category === "GP" ? [{ key: "funds", label: "Funds", count: funds.length }] : []),
     ...(ownsCompanies ? [{ key: "portfolio", label: "Portfolio", count: portcos.length }] : []),
@@ -280,6 +288,9 @@ export default async function CompanyProfile({
           </div>
         </div>
       ) : null}
+
+      {tab === "investor" && company.category === "LP" ? <InvestorProfile company={company} profile={investorProfile} plans={investorPlans} commitments={asLp} /> : null}
+      {tab === "manager" && company.category === "GP" ? <ManagerProfile company={company} funds={funds} /> : null}
 
       {tab === "deals" ? (
         <div className="space-y-4">

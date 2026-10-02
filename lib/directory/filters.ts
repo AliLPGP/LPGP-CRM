@@ -19,7 +19,17 @@ export type SortKey =
   | "employees"
   | "founded"
   | "contacts"
-  | "similarity";
+  | "similarity"
+  /** Most recently added to the directory. */
+  | "newest"
+  /** Most recently edited. */
+  | "updated";
+
+const SORT_KEYS: SortKey[] = ["complete", "relevance", "aum", "name", "employees", "founded", "contacts", "similarity", "newest", "updated"];
+
+export function isSortKey(v: unknown): v is SortKey {
+  return typeof v === "string" && (SORT_KEYS as string[]).includes(v);
+}
 
 export type DirectoryFilters = {
   books: Category[];
@@ -306,6 +316,7 @@ export function filtersFromParams(p: Params): DirectoryFilters {
   const [allocClass, allocMin, allocMax] = allocFrom(p.get("alloc"));
   const has = new Set(list(p.get("has")));
   const bookParam = p.get("book") ?? p.get("category");
+  const sort = p.get("sort");
   return {
     books: list(bookParam)
       .map((b) => b.toUpperCase())
@@ -356,7 +367,7 @@ export function filtersFromParams(p: Params): DirectoryFilters {
     includeInactive: p.get("inactive") === "1",
     keywords: p.get("kw") ?? "",
     like: list(p.get("like")),
-    sort: (p.get("sort") as SortKey | null) ?? null,
+    sort: isSortKey(sort) ? sort : null,
   };
 }
 

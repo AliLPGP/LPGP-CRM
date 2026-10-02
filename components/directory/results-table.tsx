@@ -2,18 +2,19 @@
 
 import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ArrowDownWideNarrow, Check, Columns3, Mail, Sparkles, Users } from "lucide-react";
 import { CategoryBadge } from "@/components/category-badge";
 import { CompanyLogo } from "@/components/company-logo";
-import { ASSET_CLASS_BY_KEY, isAssetClassKey } from "@/lib/directory/asset-classes";
+import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, isAssetClassKey, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { brandDomain } from "@/lib/directory/brand-domains";
-import type { SortKey } from "@/lib/directory/filters";
+import { filtersFromParams, type SortKey } from "@/lib/directory/filters";
 import { headcountLabel, sizeLabel, sizeTitle } from "@/lib/directory/format";
 import { locationLabel, providerPairs, type DirectoryRecord } from "@/lib/directory/records";
 import { highlight, snippet } from "@/lib/directory/search";
 import { STRATEGY_BY_KEY } from "@/lib/directory/strategies";
 import { REGION_BY_CODE, typeNameOf } from "@/lib/directory/taxonomy";
-import { cn } from "@/lib/utils";
+import { cn, formatUsd } from "@/lib/utils";
 import type { Directory } from "./use-directory";
 import type { ResultRow } from "./use-results";
 
@@ -22,6 +23,9 @@ const PAGE = 50;
 // --- Columns ------------------------------------------------------------------
 // The registry is the one list the header, the cells and the picker read.
 // "firm" is always on; "match" only exists in a keyword or lookalike search.
+// The per-class pair (what a manager's funds state, and what it has raised)
+// exists once per asset class: on by default while that class is filtered,
+// offered in the chooser otherwise.
 
 export type ColumnKey =
   | "firm"
@@ -35,9 +39,22 @@ export type ColumnKey =
   | "employees"
   | "contacts"
   | "providers"
-  | "match";
+  | "match"
+  | `strategies:${AssetClassKey}`
+  | `raised:${AssetClassKey}`;
 
-export const COLUMNS: { key: ColumnKey; label: string; align?: "left" | "right"; min?: "md" | "xl"; default: boolean }[] = [
+export type Column = {
+  key: ColumnKey;
+  label: string;
+  align?: "left" | "right";
+  min?: "md" | "xl";
+  /** On until chosen otherwise; a per-class column's default follows the class filter instead. */
+  default: boolean;
+  /** Set on the per-class pair. */
+  classKey?: AssetClassKey;
+};
+
+export const COLUMNS: Column[] = [
   { key: "firm", label: "Firm", default: true },
   { key: "type", label: "Type", default: true },
   { key: "location", label: "Location", min: "md", default: false },
@@ -50,15 +67,26 @@ export const COLUMNS: { key: ColumnKey; label: string; align?: "left" | "right";
   { key: "contacts", label: "People", align: "right", min: "md", default: true },
   { key: "providers", label: "Providers", min: "xl", default: true },
   { key: "match", label: "Match", align: "right", default: true },
+  ...ASSET_CLASSES.flatMap((a): Column[] => [
+    { key: `strategies:${a.key}`, label: `${a.short}: strategies`, min: "md", default: false, classKey: a.key },
+    { key: `raised:${a.key}`, label: `${a.short}: raised, last 10 yrs`, align: "right", min: "md", default: false, classKey: a.key },
+  ]),
 ];
+
+const COLUMN_BY_KEY = new Map(COLUMNS.map((c) => [c.key, c]));
 
 /** Columns whose head sorts the results. */
 const SORT_OF: Partial<Record<ColumnKey, SortKey>> = { firm: "name", size: "aum", employees: "employees", contacts: "contacts" };
 
-const DEFAULT_COLUMNS: ColumnKey[] = COLUMNS.filter((c) => c.default).map((c) => c.key);
-
 /** The viewer's own column choice: a per-browser convenience, never shared. */
 export const COLUMNS_STORAGE_KEY = "discover.columns";
+
+/** What the viewer chose explicitly; every other column takes its default.
+ *  Kept as two lists so a column the viewer never touched can follow a
+ *  default that moves with the class filter. */
+type ColumnChoice = { on: ColumnKey[]; off: ColumnKey[] };
+
+const NO_CHOICE: ColumnChoice = { on: [], off: [] };
 
 const columnListeners = new Set<() => void>();
 
@@ -79,36 +107,67 @@ function readStoredColumns(): string | null {
   }
 }
 
-function writeStoredColumns(keys: ColumnKey[]) {
+function writeStoredColumns(choice: ColumnChoice) {
   try {
-    localStorage.setItem(COLUMNS_STORAGE_KEY, JSON.stringify(keys));
+    localStorage.setItem(COLUMNS_STORAGE_KEY, JSON.stringify(choice));
   } catch {
     // Private window or blocked storage: the choice lasts for this page only.
   }
   for (const cb of columnListeners) cb();
 }
 
-function parseColumns(raw: string | null): ColumnKey[] {
-  if (!raw) return DEFAULT_COLUMNS;
+function isColumnKey(k: unknown): k is ColumnKey {
+  return typeof k === "string" && COLUMN_BY_KEY.has(k as ColumnKey);
+}
+
+function keyList(v: unknown): ColumnKey[] {
+  return Array.isArray(v) ? v.filter(isColumnKey) : [];
+}
+
+function parseChoice(raw: string | null): ColumnChoice {
+  if (!raw) return NO_CHOICE;
   try {
     const parsed: unknown = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return DEFAULT_COLUMNS;
-    const keys = parsed.filter((k): k is ColumnKey => typeof k === "string" && COLUMNS.some((c) => c.key === k));
-    return keys.length ? keys : DEFAULT_COLUMNS;
+    if (Array.isArray(parsed)) {
+      // The older form listed the columns that were on. Those were the
+      // fixed columns only, so a fixed one missing is off; a per-class one
+      // missing had no say and takes its default.
+      const on = keyList(parsed);
+      const off = COLUMNS.filter((c) => !c.classKey && c.key !== "firm" && !on.includes(c.key)).map((c) => c.key);
+      return { on, off };
+    }
+    if (parsed && typeof parsed === "object") {
+      const o = parsed as { on?: unknown; off?: unknown };
+      return { on: keyList(o.on), off: keyList(o.off) };
+    }
+    return NO_CHOICE;
   } catch {
-    return DEFAULT_COLUMNS;
+    return NO_CHOICE;
   }
 }
 
+/** Is the column on: by the viewer's choice, else by its default. */
+function columnOn(c: Column, choice: ColumnChoice, classes: AssetClassKey[]): boolean {
+  if (choice.on.includes(c.key)) return true;
+  if (choice.off.includes(c.key)) return false;
+  return c.classKey ? classes.includes(c.classKey) : c.default;
+}
+
 /**
- * The chosen columns. Read through an external-store subscription so the
- * server render (which has no storage) and the first client render agree,
+ * The viewer's column choice. Read through an external-store subscription so
+ * the server render (which has no storage) and the first client render agree,
  * and a change in another tab lands here too.
  */
-function useColumns(): [ColumnKey[], (next: ColumnKey[]) => void] {
+function useColumnChoice(): [ColumnChoice, (next: ColumnChoice) => void] {
   const raw = useSyncExternalStore(subscribeColumns, readStoredColumns, () => null);
-  const columns = useMemo(() => parseColumns(raw), [raw]);
-  return [columns, writeStoredColumns];
+  const choice = useMemo(() => parseChoice(raw), [raw]);
+  return [choice, writeStoredColumns];
+}
+
+/** The classes the current search filters by: the per-class columns' default. */
+function useFilteredClasses(): AssetClassKey[] {
+  const params = useSearchParams();
+  return useMemo(() => filtersFromParams(params).classes, [params]);
 }
 
 function responsive(min: "md" | "xl" | undefined): string | undefined {
@@ -162,16 +221,52 @@ function SortHead({
 }
 
 function ColumnPicker({
-  columns,
+  choice,
+  classes,
   onChange,
   mode,
 }: {
-  columns: ColumnKey[];
-  onChange: (next: ColumnKey[]) => void;
+  choice: ColumnChoice;
+  classes: AssetClassKey[];
+  onChange: (next: ColumnChoice) => void;
   mode: "all" | "keywords" | "similar";
 }) {
   const [open, setOpen] = useState(false);
-  const choices = COLUMNS.filter((c) => c.key !== "firm" && (c.key !== "match" || mode !== "all"));
+  const fixed = COLUMNS.filter((c) => !c.classKey && c.key !== "firm" && (c.key !== "match" || mode !== "all"));
+  const perClass = COLUMNS.filter((c) => c.classKey);
+
+  function setOn(key: ColumnKey, on: boolean) {
+    onChange({
+      on: on ? [...choice.on.filter((k) => k !== key), key] : choice.on.filter((k) => k !== key),
+      off: on ? choice.off.filter((k) => k !== key) : [...choice.off.filter((k) => k !== key), key],
+    });
+  }
+
+  function row(c: Column) {
+    const on = columnOn(c, choice, classes);
+    const label = c.key === "match" ? (mode === "similar" ? "Match" : "Fit") : c.label;
+    return (
+      <button
+        key={c.key}
+        type="button"
+        onClick={() => setOn(c.key, !on)}
+        aria-pressed={on}
+        className="flex w-full items-center gap-2 rounded px-1.5 py-1 text-left text-[13px] hover:bg-accent/60"
+      >
+        <span
+          className={cn(
+            "grid h-4 w-4 shrink-0 place-items-center rounded border",
+            on ? "border-primary bg-primary text-primary-foreground" : "border-input bg-card",
+          )}
+        >
+          {on ? <Check className="h-3 w-3" /> : null}
+        </span>
+        <span className="flex-1">{label}</span>
+        {c.min ? <span className="text-[10px] uppercase tracking-wide text-muted-foreground">{c.min}+</span> : null}
+      </button>
+    );
+  }
+
   return (
     <div className="relative">
       <button
@@ -185,35 +280,18 @@ function ColumnPicker({
       {open ? (
         <>
           <button className="fixed inset-0 z-30 cursor-default" aria-label="Close" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 z-40 mt-1 w-56 rounded-md border bg-popover p-1.5 shadow-[var(--shadow-pop)]">
+          <div className="absolute right-0 z-40 mt-1 max-h-[70vh] w-64 overflow-y-auto rounded-md border bg-popover p-1.5 shadow-[var(--shadow-pop)]">
             <p className="desk-label px-1.5 pb-1 pt-0.5">Show columns</p>
-            {choices.map((c) => {
-              const on = columns.includes(c.key);
-              const label = c.key === "match" ? (mode === "similar" ? "Match" : "Fit") : c.label;
-              return (
-                <button
-                  key={c.key}
-                  type="button"
-                  onClick={() => onChange(on ? columns.filter((k) => k !== c.key) : [...columns, c.key])}
-                  aria-pressed={on}
-                  className="flex w-full items-center gap-2 rounded px-1.5 py-1 text-left text-[13px] hover:bg-accent/60"
-                >
-                  <span
-                    className={cn(
-                      "grid h-4 w-4 shrink-0 place-items-center rounded border",
-                      on ? "border-primary bg-primary text-primary-foreground" : "border-input bg-card",
-                    )}
-                  >
-                    {on ? <Check className="h-3 w-3" /> : null}
-                  </span>
-                  <span className="flex-1">{label}</span>
-                  {c.min ? <span className="text-[10px] uppercase tracking-wide text-muted-foreground">{c.min}+</span> : null}
-                </button>
-              );
-            })}
+            {fixed.map(row)}
+            <p className="desk-label mt-2 px-1.5 pb-1 pt-0.5">Per asset class</p>
+            <p className="px-1.5 pb-1 text-[11px] leading-snug text-muted-foreground">
+              What a manager&apos;s fund names state. Raised is the sum of stated fund sizes as filed, in USD — never an estimate.
+              On by default for a filtered class.
+            </p>
+            {perClass.map(row)}
             <button
               type="button"
-              onClick={() => onChange(DEFAULT_COLUMNS)}
+              onClick={() => onChange(NO_CHOICE)}
               className="mt-1 w-full rounded px-1.5 py-1 text-left text-xs text-muted-foreground hover:bg-accent/60 hover:text-foreground"
             >
               Reset to default
@@ -238,6 +316,35 @@ const pctLabel = (n: number) => `${Number(n.toFixed(1))}%`;
 function allocationTitle(r: DirectoryRecord): string | undefined {
   if (!r.alloc.length) return r.altsPct != null ? "Alternatives, as the investor publishes it" : undefined;
   return r.alloc.map(([k, p]) => `${isAssetClassKey(k) ? ASSET_CLASS_BY_KEY[k].name : k} ${pctLabel(p)}`).join(" · ");
+}
+
+/** Strategy-axis names a manager's words or fund names state within one class. */
+function classStrategyNames(r: DirectoryRecord, classKey: AssetClassKey): string[] {
+  const out: string[] = [];
+  for (const k of r.strategies) {
+    const s = STRATEGY_BY_KEY[k];
+    if (s && s.classKey === classKey && s.axis === "strategy") out.push(s.name);
+  }
+  return out;
+}
+
+/** What the manager raised in one class over the last ten vintages, as filed. */
+function RaisedCell({ r, classKey, className }: { r: DirectoryRecord; classKey: AssetClassKey; className: string }) {
+  const hit = r.raised.find(([k]) => k === classKey);
+  const funds = hit?.[2] ?? 0;
+  const sum = hit?.[1] ?? 0;
+  const plural = funds === 1 ? "fund" : "funds";
+  const title =
+    sum > 0
+      ? `Stated fund sizes as filed, USD, summed across the sized ones of ${funds} ${plural} with a vintage in the last ten years — never an estimate`
+      : funds > 0
+        ? `${funds} ${plural} with a vintage in the last ten years, none with a stated size`
+        : undefined;
+  return (
+    <td className={cn(className, "whitespace-nowrap tabular", sum > 0 ? undefined : "text-muted-foreground")} title={title}>
+      {sum > 0 ? formatUsd(sum) : "—"}
+    </td>
+  );
 }
 
 function NamesCell({ names, tags }: { names: string[]; tags?: boolean }) {
@@ -293,25 +400,40 @@ export function ResultsTable({
   onQuickLook: (id: string) => void;
 }) {
   const [shown, setShown] = useState(PAGE);
-  const [columns, setColumns] = useColumns();
+  const [choice, setChoice] = useColumnChoice();
+  const classes = useFilteredClasses();
   const visible = rows.slice(0, shown);
   const allOn = visible.length > 0 && visible.every((r) => selected.has(r.record.id));
-  const active = COLUMNS.filter((c) => c.key === "firm" || (columns.includes(c.key) && (c.key !== "match" || mode !== "all")));
+  const active = COLUMNS.filter(
+    (c) => c.key === "firm" || (columnOn(c, choice, classes) && (c.key !== "match" || mode !== "all")),
+  );
 
-  function head(c: (typeof COLUMNS)[number]) {
+  function head(c: Column) {
     const sortKey = c.key === "match" ? (mode === "similar" ? "similarity" : "relevance") : SORT_OF[c.key];
     const label = c.key === "match" ? (mode === "similar" ? "Match" : "Fit") : c.label;
     const cls = cn(c.key === "firm" && "min-w-[300px]", responsive(c.min));
     if (sortKey) return <SortHead key={c.key} label={label} k={sortKey} sort={sort} onSort={onSort} align={c.align} className={cls} />;
     return (
-      <th key={c.key} className={cn("px-3 py-2.5 font-medium", c.align === "right" ? "text-right" : "text-left", cls)}>
+      <th
+        key={c.key}
+        className={cn("px-3 py-2.5 font-medium", c.align === "right" ? "text-right" : "text-left", cls)}
+        title={c.classKey && c.key.startsWith("raised:") ? "Stated fund sizes as filed, USD, never estimates" : undefined}
+      >
         {label}
       </th>
     );
   }
 
-  function cell(c: (typeof COLUMNS)[number], r: DirectoryRecord, score: number | null, reasons: string[]) {
+  function cell(c: Column, r: DirectoryRecord, score: number | null, reasons: string[]) {
     const base = cn("px-3 py-3", c.align === "right" && "text-right", responsive(c.min));
+    if (c.classKey) {
+      if (c.key.startsWith("raised:")) return <RaisedCell key={c.key} r={r} classKey={c.classKey} className={base} />;
+      return (
+        <td key={c.key} className={base}>
+          <NamesCell names={classStrategyNames(r, c.classKey)} tags />
+        </td>
+      );
+    }
     switch (c.key) {
       case "firm": {
         const meta = [locationLabel(r), r.founded ? `Est. ${r.founded}` : null].filter(Boolean) as string[];
@@ -461,7 +583,7 @@ export function ResultsTable({
     <div className="space-y-2">
       {/* Outside the card: its rounded corners clip overflow, and the picker drops below the header row. */}
       <div className="flex items-center justify-end">
-        <ColumnPicker columns={columns} onChange={setColumns} mode={mode} />
+        <ColumnPicker choice={choice} classes={classes} onChange={setChoice} mode={mode} />
       </div>
       <div className="sheen overflow-hidden rounded-2xl border bg-card">
         <div className="overflow-x-auto">

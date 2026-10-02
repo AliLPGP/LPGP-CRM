@@ -441,6 +441,118 @@
   border-color: var(--rail-line);
 }
 
+/* -- The top bar ----------------------------------------------------------- */
+/* The rail turned on its side: the same graphite, the strip of light along
+   its bottom edge, and the section panels hanging from it. */
+.topnav {
+  position: relative;
+}
+.topnav::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16) 8%, rgba(255, 255, 255, 0.16) 92%, transparent);
+  pointer-events: none;
+}
+.topnav-section {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--rail-fg);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.topnav-section:hover,
+.topnav-section.is-on {
+  color: #f3efe6;
+}
+.topnav-section.is-on {
+  border-bottom-color: var(--brass);
+}
+.topnav-panel {
+  position: absolute;
+  inset-inline: -24px;
+  top: 100%;
+  z-index: 50;
+  background: var(--rail-bg);
+  border-bottom: 1px solid var(--rail-line);
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+  animation: topnav-in 0.14s ease-out;
+}
+.topnav-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  z-index: 50;
+  background: var(--rail-bg);
+  border: 1px solid var(--rail-line);
+  border-radius: 6px;
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+  animation: topnav-in 0.12s ease-out;
+}
+@keyframes topnav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.topnav-link {
+  display: block;
+  border-radius: 4px;
+  padding: 6px 8px;
+  color: var(--rail-fg);
+  transition: background 0.12s, color 0.12s;
+}
+.topnav-link:hover,
+.topnav-link.is-on {
+  background: var(--rail-hover);
+  color: #f3efe6;
+}
+.topnav-icon {
+  display: inline-grid;
+  place-items: center;
+  height: 32px;
+  width: 32px;
+  border-radius: 6px;
+  color: var(--rail-fg-dim);
+  transition: color 0.12s, background 0.12s;
+}
+.topnav-icon:hover {
+  color: #f3efe6;
+  background: var(--rail-hover);
+}
+.topnav-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--rail-line);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--rail-fg-dim);
+  font-size: 12.5px;
+  transition: border-color 0.12s, color 0.12s;
+}
+@media (min-width: 640px) {
+  .topnav-search {
+    width: 220px;
+  }
+}
+.topnav-search:hover {
+  border-color: rgba(237, 231, 219, 0.5);
+  color: #f3efe6;
+}
+
 /* -- The stand (hero panels) ----------------------------------------------- */
 /* A full graphite panel in both themes, like the rail: the page's one black
    object, carrying cream lettering and a strip of light along its top edge.

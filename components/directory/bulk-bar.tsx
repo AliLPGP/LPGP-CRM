@@ -8,6 +8,7 @@ import { addCompaniesToPipeline, addToList, type BulkPipelineResult } from "@/li
 import { deleteCompanies } from "@/lib/actions";
 import { CATEGORIES } from "@/lib/categories";
 import { toCsv } from "@/lib/csv";
+import { ASSET_CLASSES } from "@/lib/directory/asset-classes";
 import { AUM_KIND_LABEL, type DirectoryRecord } from "@/lib/directory/records";
 import { STRATEGY_BY_KEY } from "@/lib/directory/strategies";
 import { REGION_BY_CODE, typeNameOf } from "@/lib/directory/taxonomy";
@@ -18,13 +19,22 @@ import { cn } from "@/lib/utils";
 
 export type ListOption = { id: string; name: string; item_count: number };
 
+/** Epoch days back to an ISO date. */
+function isoDay(days: number | null): string | null {
+  return days == null ? null : new Date(days * 86400000).toISOString().slice(0, 10);
+}
+
 /** Download records as a CSV the way Excel expects it (BOM, CRLF). */
 export function downloadCsv(records: DirectoryRecord[], filename: string) {
+  // One raised column per class any exported firm has a figure for: the sum
+  // of stated fund sizes as filed, USD, last ten vintages — never an estimate.
+  const raisedClasses = ASSET_CLASSES.filter((a) => records.some((r) => r.raised.some(([k, sum]) => k === a.key && sum > 0)));
   const csv = toCsv(
     [
       "Name", "Book", "Type", "Type (taxonomy)", "City", "State", "Country", "Size (USD)", "Size basis", "Employees",
       "Founded", "Form ADV", "Private funds", "Known funds", "Alternatives %", "Strategies", "Regions",
-      "Key contacts", "Website", "Description",
+      ...raisedClasses.map((a) => `${a.short}: raised 10y (USD)`),
+      "Key contacts", "Website", "Description", "Created", "Updated",
     ],
     records.map((r) => [
       r.name,
@@ -44,9 +54,15 @@ export function downloadCsv(records: DirectoryRecord[], filename: string) {
       r.altsPct,
       r.strategies.map((k) => STRATEGY_BY_KEY[k]?.name ?? k).join("; ") || null,
       r.regions.map((k) => REGION_BY_CODE[k]?.name ?? k).join("; ") || null,
+      ...raisedClasses.map((a) => {
+        const sum = r.raised.find(([k]) => k === a.key)?.[1] ?? 0;
+        return sum > 0 ? Math.round(sum) : null;
+      }),
       r.contacts,
       r.domain ? `https://${r.domain}` : null,
       r.description,
+      isoDay(r.created),
+      isoDay(r.updated),
     ]),
   );
   const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });

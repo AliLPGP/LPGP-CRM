@@ -7,8 +7,8 @@ import type { Category } from "../types";
 import { zoneOf, type Zone } from "./geo";
 import { isOperatingRole } from "./operating";
 import { normalizeRole, providerBrand } from "./providers";
-import { classOfGpType, isAssetClassKey, type AssetClassKey } from "./asset-classes";
-import { STRATEGIES_BY_CLASS, strategiesInFirmText } from "./strategies";
+import { classOfGpType, fundClass, isAssetClassKey, type AssetClassKey } from "./asset-classes";
+import { STRATEGIES_BY_CLASS, strategiesInFirmText, strategiesInFundName } from "./strategies";
 import { industryCodesInText, regionOfCountry, regionsInText, typeCodeOf } from "./taxonomy";
 import {
   EMPTY_INDEX,
@@ -26,7 +26,7 @@ export const DIRECTORY_TAG = "directory";
 const BASE_COLUMNS =
   "id, name, category, sub_type, domain, city, country, region, aum_usd, description, in_portfolio";
 
-const RICH_COLUMNS = `${BASE_COLUMNS}, directory_vertical, state, employee_count, adv_employee_count, founded_year, adv_firm_type, adv_last_filed, private_fund_count, regulatory_aum_usd, brand_aum_total_usd, private_fund_gross_assets, total_assets_usd, industry, service_lines, lifecycle, discloses_commitments, source, investor_type, alts_allocation_pct, geographic_focus`;
+const RICH_COLUMNS = `${BASE_COLUMNS}, directory_vertical, state, employee_count, adv_employee_count, founded_year, adv_firm_type, adv_last_filed, private_fund_count, regulatory_aum_usd, brand_aum_total_usd, private_fund_gross_assets, total_assets_usd, industry, service_lines, lifecycle, discloses_commitments, source, investor_type, alts_allocation_pct, geographic_focus, created_at, updated_at`;
 
 type CompanyRow = {
   id: string;
@@ -61,6 +61,25 @@ type CompanyRow = {
   investor_type?: string | null;
   alts_allocation_pct?: number | null;
   geographic_focus?: string | null;
+  created_at?: string | null;
+  updated_at?: string | null;
+};
+
+/** A fund as filed: its name places it in a class, its size is the figure as stated. */
+type FundRow = {
+  company_id: string | null;
+  name: string | null;
+  vintage_year: number | null;
+  fund_size_usd: number | string | null;
+  target_size_usd: number | string | null;
+};
+
+/** What a manager's own fund names say, folded per manager. */
+type FundFold = {
+  classes: Set<AssetClassKey>;
+  strategies: Set<string>;
+  /** Per class: stated sizes summed, and every fund counted, last ten vintages. */
+  raised: Map<AssetClassKey, { sum: number; funds: number }>;
 };
 
 /** What the investor research job has stated about an LP (migration 0033). */
@@ -116,7 +135,47 @@ function dedupe<T>(values: T[]): T[] {
   return [...new Set(values)];
 }
 
+/** A timestamp as whole days since the epoch: enough to sort by, a third of the bytes. */
+function epochDays(v: string | null | undefined): number | null {
+  if (!v) return null;
+  const ms = Date.parse(v);
+  return Number.isFinite(ms) ? Math.floor(ms / 86400000) : null;
+}
+
 const CLASS_KEYS = Object.keys(STRATEGIES_BY_CLASS) as AssetClassKey[];
+
+/** Vintages this recent count as "raised in the last ten years". */
+const RAISED_SINCE = new Date().getUTCFullYear() - 10;
+
+// Each manager's funds, read by name: a fund whose own name states a class
+// adds that class and its strategies to the manager; one that merely
+// inherits the manager's type adds nothing new. Sizes are summed per class
+// as filed (USD, stated sizes only — a target is not money raised) over the
+// last ten vintages, and every fund of those vintages is counted whether or
+// not it is sized.
+function foldFunds(funds: FundRow[], subTypeById: Map<string, string | null>): Map<string, FundFold> {
+  const out = new Map<string, FundFold>();
+  for (const f of funds) {
+    if (!f.company_id || !f.name) continue;
+    const placed = fundClass(f.name, subTypeById.get(f.company_id));
+    if (!placed || placed.basis !== "name") continue;
+    let fold = out.get(f.company_id);
+    if (!fold) {
+      fold = { classes: new Set(), strategies: new Set(), raised: new Map() };
+      out.set(f.company_id, fold);
+    }
+    fold.classes.add(placed.key);
+    for (const s of strategiesInFundName(f.name, placed.key)) if (s.axis === "strategy") fold.strategies.add(s.key);
+    if (f.vintage_year != null && f.vintage_year >= RAISED_SINCE) {
+      const r = fold.raised.get(placed.key) ?? { sum: 0, funds: 0 };
+      r.funds += 1;
+      const size = numberOrNull(f.fund_size_usd);
+      if (size != null && size > 0) r.sum += size;
+      fold.raised.set(placed.key, r);
+    }
+  }
+  return out;
+}
 
 // `version` is the row count of the tables the index reads: part of the cache
 // key, so growth the app did not write (the EDGAR ingest) still shows.
@@ -262,6 +321,26 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
     for (const p of (data ?? []) as ProfileRow[]) if (p.company_id) profiles.set(p.company_id, p);
   }
 
+  // Every fund once (~32k rows, paged in parallel), so a manager's search
+  // row can say what its funds' names state and what it has raised per
+  // class. A failed read means no funds, never a failed build.
+  let fundRows: FundRow[] | null = null;
+  if (schemaReady) {
+    try {
+      fundRows = await fetchAll<FundRow>((from, to, first) =>
+        supabase
+          .from("funds")
+          .select("company_id, name, vintage_year, fund_size_usd, target_size_usd", first ? { count: "exact" } : undefined)
+          .not("company_id", "is", null)
+          .order("id")
+          .range(from, to),
+      );
+    } catch {
+      fundRows = null;
+    }
+  }
+  const fundFolds = foldFunds(fundRows ?? [], new Map(companies.map((c) => [c.id, c.sub_type])));
+
   let advThrough: string | null = null;
   for (const c of companies) {
     if (c.adv_last_filed && (!advThrough || c.adv_last_filed > advThrough)) advThrough = c.adv_last_filed;
@@ -293,10 +372,17 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
     // those classes; an LP's stated preferences.
     let classes: AssetClassKey[] = [];
     let strategies: string[] = [];
+    const raised: [string, number, number][] = [];
     if (c.category === "GP") {
       const stated = CLASS_KEYS.flatMap((k) => strategiesInFirmText(firmText, k));
-      classes = dedupe([classOfGpType(c.sub_type), ...stated.map((s) => s.classKey)].filter((k): k is AssetClassKey => k != null));
-      strategies = dedupe(stated.map((s) => s.key));
+      const fromFunds = fundFolds.get(c.id);
+      classes = dedupe(
+        [classOfGpType(c.sub_type), ...stated.map((s) => s.classKey), ...(fromFunds?.classes ?? [])].filter(
+          (k): k is AssetClassKey => k != null,
+        ),
+      );
+      strategies = dedupe([...stated.map((s) => s.key), ...(fromFunds?.strategies ?? [])]);
+      for (const [k, r] of fromFunds?.raised ?? []) raised.push([k, r.sum, r.funds]);
     } else if (c.category === "LP") {
       const allocated = Array.isArray(profile?.allocations) ? profile.allocations.map((a) => a?.class) : [];
       classes = dedupe([...allocated, ...(plansByLp.get(c.id) ?? [])].filter(isAssetClassKey));
@@ -362,6 +448,9 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
       ticketMax: numberOrNull(profile?.ticket_max_usd),
       activeAlts: typeof profile?.active_in_alternatives === "boolean" ? profile.active_in_alternatives : null,
       plans: plansByLp.get(c.id) ?? [],
+      raised,
+      created: epochDays(c.created_at),
+      updated: epochDays(c.updated_at),
     };
   });
 
@@ -379,7 +468,7 @@ let pendingIndex: DirectoryIndex | null = null;
 
 // Several megabytes of records: sliced for the data cache and kept in
 // memory per instance (lib/supabase/big-cache.ts).
-const cachedIndex = bigCache("directory-index-v5", buildIndex, {
+const cachedIndex = bigCache("directory-index-v6", buildIndex, {
   tags: [DIRECTORY_TAG],
   revalidate: 86400,
 });

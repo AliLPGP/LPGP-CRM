@@ -135,6 +135,9 @@ export function useResults(dir: Directory, filters: DirectoryFilters): Results {
       employees: desc((r) => r.employees),
       founded: desc((r) => r.founded),
       contacts: desc((r) => r.contacts),
+      // Epoch days; a record with no date sorts last.
+      newest: desc((r) => r.created),
+      updated: desc((r) => r.updated),
       name: byName,
     };
     rows.sort(order[sort] ?? order.aum);

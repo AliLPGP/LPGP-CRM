@@ -5,73 +5,79 @@
 
 /*
   ===========================================================================
-  LPGP Connect -- "Pavilion"
+  LPGP Connect -- "Nocturne"
   ===========================================================================
-  The look is taken from our own exhibition stands: matte graphite panels,
-  a crisp strip of light along their edges, warm walnut behind them and a
-  pale oak floor. Black, cream and wood. Nothing else.
+  The look of the brand's site: pure black, white lettering, one electric
+  blue. Nothing warm, nothing glossy. Dark is the product's own register and
+  the default; light is the same drawing on white paper.
 
-    brand    graphite/cream  -- inverted between modes, the way the stands put
-                               white lettering on a black panel
-    brass    walnut          -- the single warm flourish: the mark, focus,
-                               money figures, active markers
-    success  pine            -- won, paid, connected
-    ops      cognac          -- anything sourced from the ops panel
-    danger   claret          -- lost, destructive, do-not-call
+    brand    white/black      -- inverted between modes: the lettering is
+                                always the opposite of the page
+    primary  electric blue    -- the one colour: the primary button, focus,
+                                selection, the eyebrow, the magnitude bar
+    brass    blue             -- the flourish token kept under its old name
+                                so nothing breaks; on black it is the lighter
+                                step the site sets its eyebrows in, since the
+                                button blue is under 3:1 as small text
+    success  green            -- won, paid, connected
+    ops      teal             -- anything sourced from the ops panel
+    danger   red              -- lost, destructive, do-not-call
 
-  Depth is carried by a light-line, not by a drop shadow: a 1px luminous
-  hairline along the top edge of a panel, which is exactly what the LED strip
-  does on the stand. Shadows stay faint so surfaces read as matte, not glossy.
+  Depth is carried by a light-line, not by a drop shadow: a 1px hairline
+  along the top edge of a panel -- white at low alpha on black, black at low
+  alpha on white. The only shadow left is the popover's.
 */
 
 :root {
-  /* -- Neutrals: pale oak and bone ---------------------------------------- */
-  --background: #f4f1ea;
-  --foreground: #1d1f23;
-  --card: #fbfaf7;
-  --card-foreground: #1d1f23;
+  /* -- Neutrals: white paper --------------------------------------------- */
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: #fafafa;
+  --card-foreground: #0a0a0a;
   --popover: #ffffff;
-  --popover-foreground: #1d1f23;
-  --secondary: #ebe7dd;
-  --secondary-foreground: #2a2c31;
-  --muted: #edeae1;
-  --muted-foreground: #6b685f;
-  --border: #e0dacd;
-  --input: #cfc7b6;
+  --popover-foreground: #0a0a0a;
+  --secondary: #f0f0f2;
+  --secondary-foreground: #0a0a0a;
+  --muted: #f4f4f5;
+  --muted-foreground: #6b6b70;
+  --border: #e6e6e6;
+  --input: #d4d4d8;
 
-  /* -- Brand: the panel itself -------------------------------------------- */
-  /* Primary is near-black here, so a button reads like the stand's own
-     lettering: cream on graphite, no colour at all. */
-  --primary: #1d1f23;
-  --primary-foreground: #f7f4ed;
-  --accent: #efe8da;
-  --accent-foreground: #6a4526;
-  --ring: #a87b52;
-  --brand: #1d1f23;
-  --brand-foreground: #f7f4ed;
-  /* The one warm note, from the walnut wall behind the stands. */
-  --brand-2: #7a4f2c;
-  --brass: #a87b52;
+  /* -- Brand: black lettering on white, one blue ------------------------- */
+  --primary: #1f3feb;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1733d0;
+  /* The soft tint behind a selected row, chip or tab: the blue at 12%. */
+  --primary-soft: rgba(31, 63, 235, 0.12);
+  --accent: #f0f0f2;
+  --accent-foreground: #0a0a0a;
+  --ring: #1f3feb;
+  --brand: #0a0a0a;
+  --brand-foreground: #ffffff;
+  --brand-2: #1f3feb;
+  --brass: #1f3feb;
 
   /* -- Semantics ---------------------------------------------------------- */
-  --success: #2f6b4f;
-  --success-soft: #e4ede7;
+  --success: #1c7a45;
+  --success-soft: #e7f5ec;
   --warning: #8a5a12;
-  --warning-soft: #f6ecda;
-  --ops: #97601c;
-  --ops-soft: #f4e9d8;
-  --destructive: #9a2233;
-  --destructive-foreground: #fbfaf7;
-  --gold: #8a6a1e;
+  --warning-soft: #fbf1dc;
+  --ops: #0e7c8c;
+  --ops-soft: #e3f3f5;
+  --destructive: #d12b45;
+  --destructive-foreground: #ffffff;
+  --gold: #1f3feb;
 
   /* -- Chart slots -------------------------------------------------------- */
   /* Series identity, one hue per programme series. Unchanged by the retheme
      on purpose: colour follows the entity, so repainting a series because the
      furniture changed would break every chart anyone has already read.
-     Re-validated as a set against the bone card (#fbfaf7): lightness band,
+     Re-validated as a set against the white card (#fafafa): lightness band,
      chroma floor, adjacent-pair CVD separation (worst dE 9.1) and the
      normal-vision floor (19.6) all pass. Three slots sit under 3:1 here, so
-     they are only ever a chip beside a visible text label. */
+     they are only ever a chip beside a visible text label. The blue accent
+     is never a series hue; against chart-1 it measures dE 13.6 here and 17.2
+     on black, against chart-5 35+. */
   --chart-1: #2a78d6;
   --chart-2: #eb6834;
   --chart-3: #1baf7a;
@@ -80,66 +86,65 @@
   --chart-6: #008300;
   --chart-7: #4a3aa7;
   /* Magnitude bars use one hue; colour carries size, not identity -- so the
-     bar wears the walnut and never a series hue. */
-  --chart-bar: #7a4f2c;
-  --chart-track: #e7e1d4;
+     bar wears the blue and never a series hue. */
+  --chart-bar: #1f3feb;
+  --chart-track: #ececee;
 
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
-  /* The light-line. On a pale surface it is a soft shadow-edge rather than a
-     glow -- the same geometry, read the way daylight reads it. */
-  --hairline: rgba(29, 31, 35, 0.07);
-  --hairline-strong: rgba(29, 31, 35, 0.12);
+  /* The light-line: black at low alpha on white. */
+  --hairline: rgba(0, 0, 0, 0.06);
+  --hairline-strong: rgba(0, 0, 0, 0.12);
 
-  /* Ambient page light: warm, low and off to one side, like the wood wall
-     bouncing light back into the room. No colour cast beyond that. */
-  --page-glow:
-    radial-gradient(1200px 640px at 6% -14%, rgba(168, 123, 82, 0.1), transparent 60%),
-    radial-gradient(900px 520px at 100% -6%, rgba(122, 79, 44, 0.06), transparent 56%);
+  /* No ambient light: the page is flat. */
+  --page-glow: none;
 
-  --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-  --shadow-card: 0 1px 2px rgba(29, 31, 35, 0.04), 0 14px 30px -24px rgba(29, 31, 35, 0.22);
-  --shadow-pop: 0 24px 54px -22px rgba(29, 31, 35, 0.3);
+  --sheen: linear-gradient(180deg, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0));
+  --shadow-card: none;
+  --shadow-pop: 0 24px 54px -22px rgba(0, 0, 0, 0.3);
 }
 
 .dark {
-  /* The stand itself: matte panel, lifted card, lighter control. */
-  --background: #121316;
-  --foreground: #ede7db;
-  --card: #1a1c20;
-  --card-foreground: #ede7db;
-  --popover: #202328;
-  --popover-foreground: #ede7db;
-  --secondary: #24272c;
-  --secondary-foreground: #ede7db;
-  --muted: #24272c;
-  --muted-foreground: #9a958a;
-  --border: #2a2d33;
-  --input: #383c43;
+  /* Black, with two steps of elevation. */
+  --background: #000000;
+  --foreground: #f2f2f2;
+  --card: #0b0b0c;
+  --card-foreground: #f2f2f2;
+  --popover: #111113;
+  --popover-foreground: #f2f2f2;
+  --secondary: #161618;
+  --secondary-foreground: #f2f2f2;
+  --muted: #141416;
+  --muted-foreground: #9a9a9f;
+  --border: #222326;
+  --input: #333336;
 
-  /* Inverted, as on the stand: the lettering is the light thing. */
-  --primary: #ede7db;
-  --primary-foreground: #16171a;
-  --accent: #2c2a26;
-  --accent-foreground: #e8d9bf;
-  --ring: #c89a63;
-  --brand: #ede7db;
-  --brand-foreground: #16171a;
-  --brand-2: #c89a63;
-  --brass: #c89a63;
+  /* The lettering is the light thing; the blue is the same blue. */
+  --primary: #1f3feb;
+  --primary-foreground: #ffffff;
+  --primary-hover: #3556f5;
+  --primary-soft: rgba(31, 63, 235, 0.16);
+  --accent: #161618;
+  --accent-foreground: #f2f2f2;
+  --ring: #3556f5;
+  --brand: #f2f2f2;
+  --brand-foreground: #000000;
+  --brand-2: #1f3feb;
+  /* The site's eyebrow blue on black: 6.3:1, where the button blue is 3.0. */
+  --brass: #6e84f3;
 
-  --success: #6fc79b;
-  --success-soft: #16261f;
-  --warning: #e8b77a;
-  --warning-soft: #2a2117;
-  --ops: #e8b77a;
-  --ops-soft: #2a2117;
-  --destructive: #ee8090;
-  --destructive-foreground: #1b0d11;
-  --gold: #dfbe86;
+  --success: #5ccb8a;
+  --success-soft: #0f1f16;
+  --warning: #e2b35c;
+  --warning-soft: #211b10;
+  --ops: #58c2d1;
+  --ops-soft: #0f1f22;
+  --destructive: #f0607a;
+  --destructive-foreground: #ffffff;
+  --gold: #6e84f3;
 
-  /* The same seven hues, re-stepped for the graphite card and re-validated
-     against it (#1a1c20) -- not an automatic flip. All seven clear 3:1 here,
+  /* The same seven hues, re-stepped for black and re-validated against the
+     card (#0b0b0c) -- not an automatic flip. All seven clear 3:1 here,
      worst adjacent CVD dE 8.4, normal-vision floor 19.3. */
   --chart-1: #3987e5;
   --chart-2: #d95926;
@@ -148,20 +153,17 @@
   --chart-5: #d55181;
   --chart-6: #008300;
   --chart-7: #9085e9;
-  --chart-bar: #c89a63;
-  --chart-track: #262a30;
+  --chart-bar: #1f3feb;
+  --chart-track: #1c1c1f;
 
-  /* Here the hairline is literal: the LED strip along a panel's edge. */
-  --hairline: rgba(255, 255, 255, 0.1);
-  --hairline-strong: rgba(255, 255, 255, 0.22);
+  /* The light-line: white at low alpha on black. */
+  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline-strong: rgba(255, 255, 255, 0.18);
 
-  --page-glow:
-    radial-gradient(1100px 620px at 8% -12%, rgba(200, 154, 99, 0.09), transparent 58%),
-    radial-gradient(900px 520px at 102% -4%, rgba(168, 123, 82, 0.05), transparent 54%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 24%);
+  --page-glow: none;
 
-  --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0));
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.45), 0 16px 34px -26px rgba(0, 0, 0, 0.8);
+  --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+  --shadow-card: none;
   --shadow-pop: 0 30px 66px -26px rgba(0, 0, 0, 0.85);
 }
 
@@ -189,6 +191,8 @@
   --color-brand-foreground: var(--brand-foreground);
   --color-brand-2: var(--brand-2);
   --color-brass: var(--brass);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);
   --color-warning: var(--warning);
@@ -220,6 +224,10 @@
   }
   html {
     scroll-behavior: smooth;
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
   }
   html,
   body {
@@ -230,13 +238,12 @@
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* Kept as a hook (none in both modes): the page is flat. */
     background-image: var(--page-glow);
-    /* The glow scrolls with the page: a fixed attachment repaints the whole
-       viewport on every scroll frame, and Safari ignores it anyway. */
     background-repeat: no-repeat;
   }
   ::selection {
-    background: color-mix(in oklab, var(--brass) 30%, transparent);
+    background: color-mix(in oklab, var(--primary) 35%, transparent);
   }
 
   /* Numbers line up in tables and hero figures */
@@ -282,8 +289,8 @@
 
 /* -- Type ----------------------------------------------------------------- */
 
-/* Display: the same grotesque, pulled tight and a shade lighter than before.
-   The stands say everything in one weight; a heavy title would shout. */
+/* Display: the same grotesque, pulled tight. The site says everything in one
+   weight; a heavy title would shout. */
 .display {
   font-weight: 650;
   letter-spacing: -0.025em;
@@ -307,12 +314,18 @@
   color: var(--muted-foreground);
 }
 
-/* Signage caps: the stand's own lettering, widely tracked. For a mark or a
-   panel title, never for a sentence. */
-.wordmark {
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+/* The eyebrow: the site's "01 -- EVENTS" line. Mono, widely tracked, in the
+   blue. For a mark or a panel title, never for a sentence. In the components
+   layer so a utility on the element (a size, a grey) still wins. */
+@layer components {
+  .wordmark {
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
 }
 
 /* -- Surfaces ------------------------------------------------------------- */
@@ -322,9 +335,9 @@
   box-shadow: var(--shadow-card);
 }
 
-/* The light-line: a 1px luminous edge along the top of a panel, which is what
-   the LED strip does on the stand. It is what separates one surface from the
-   next here -- borders stay quiet and shadows stay faint. */
+/* The light-line: a 1px edge along the top of a panel, white at low alpha on
+   black and black at low alpha on white. It is what separates one surface
+   from the next here -- borders stay quiet and there are no shadows. */
 .sheen {
   position: relative;
   isolation: isolate;
@@ -355,26 +368,22 @@
   pointer-events: none;
 }
 
-/* A panel that carries the strip all the way round, for the few surfaces that
-   should read as a standing object rather than a sheet of paper. */
+/* A panel that carries the hairline all the way round, for the few surfaces
+   that should read as a standing object rather than a sheet of paper. */
 .panel {
   position: relative;
-  box-shadow:
-    inset 0 0 0 1px var(--hairline),
-    var(--shadow-card);
+  box-shadow: inset 0 0 0 1px var(--hairline);
 }
 
 .lift {
-  transition: border-color 180ms ease, box-shadow 240ms ease, transform 240ms ease;
+  transition: border-color 180ms ease, transform 240ms ease;
 }
 .lift:hover {
-  border-color: color-mix(in oklab, var(--brass) 45%, var(--border));
-  box-shadow: var(--shadow-pop);
+  border-color: color-mix(in oklab, var(--primary) 55%, var(--border));
   transform: translateY(-2px);
 }
 
-/* The mark's gradient: panel into walnut, the two materials the stand is
-   actually made of. */
+/* The mark's gradient: lettering into the blue. */
 .brand-gradient {
   background-image: linear-gradient(135deg, var(--brand), var(--brand-2));
 }
@@ -400,26 +409,33 @@
   opacity: 0.85;
 }
 
-/* -- The rail (app sidebar) ----------------------------------------------- */
-/* Always the matte panel, in both themes -- the fixed black element the rest
-   of the room is arranged against. Brand tokens are re-pointed inside it, so
-   anything nested reads cream-on-graphite without knowing about the rail. */
+/* -- The rail (the black bar) ---------------------------------------------- */
+/* Always black, in both themes -- the site's header is the fixed element the
+   rest of the page is arranged against. Brand tokens are re-pointed inside
+   it, so anything nested reads white-on-black without knowing about the rail. */
 .rail {
-  --rail-bg: #121316;
-  --rail-fg: #ded8cc;
-  --rail-fg-dim: #8d887e;
-  --rail-line: #26292f;
-  --rail-hover: #1e2126;
-  --brand: #ede7db;
-  --brand-2: #c89a63;
-  --brass: #c89a63;
+  --rail-bg: #000000;
+  --rail-fg: #d4d4d8;
+  --rail-fg-strong: #f2f2f2;
+  --rail-fg-dim: #9a9a9f;
+  --rail-line: #1f2023;
+  --rail-hover: #141416;
+  --background: #000000;
+  --foreground: #f2f2f2;
+  --card: #0b0b0c;
+  --popover: #111113;
+  --popover-foreground: #f2f2f2;
+  --muted-foreground: #9a9a9f;
+  --border: #1f2023;
+  --brand: #f2f2f2;
+  --brand-foreground: #000000;
+  --brand-2: #1f3feb;
+  --brass: #6e84f3;
+  --primary-soft: rgba(31, 63, 235, 0.16);
   background: var(--rail-bg);
   color: var(--rail-fg);
-  background-image:
-    radial-gradient(520px 260px at 20% -10%, rgba(200, 154, 99, 0.12), transparent 62%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 20%);
 }
-/* The strip of light down the rail's inner edge, exactly as on the stands. */
+/* The hairline down the rail's inner edge. */
 .rail-edge {
   position: relative;
 }
@@ -429,13 +445,7 @@
   inset-block: 0;
   right: 0;
   width: 1px;
-  background: linear-gradient(
-    180deg,
-    transparent,
-    rgba(255, 255, 255, 0.16) 12%,
-    rgba(255, 255, 255, 0.16) 88%,
-    transparent
-  );
+  background: var(--rail-line);
   pointer-events: none;
 }
 .rail-line {
@@ -443,8 +453,8 @@
 }
 
 /* -- The top bar ----------------------------------------------------------- */
-/* The rail turned on its side: the same graphite, the strip of light along
-   its bottom edge, and the section panels hanging from it. */
+/* The site's header: black, one hairline along its bottom edge, and the
+   section panels hanging from it. */
 .topnav {
   position: relative;
 }
@@ -454,13 +464,13 @@
   inset-inline: 0;
   bottom: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16) 8%, rgba(255, 255, 255, 0.16) 92%, transparent);
+  background: var(--rail-line);
   pointer-events: none;
 }
 .topnav-section {
   display: inline-flex;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 9px;
   font-size: 13px;
   font-weight: 500;
   color: var(--rail-fg);
@@ -470,14 +480,14 @@
 }
 .topnav-section:hover,
 .topnav-section.is-on {
-  color: #f3efe6;
+  color: var(--rail-fg-strong);
 }
 .topnav-section.is-on {
   border-bottom-color: var(--brass);
 }
-/* Keyboard focus on the graphite: the browser's ring is invisible here, so
-   the brass draws it on every link and button in the bar (the drawer and
-   the panels included), inset so it never spills past an edge. */
+/* Keyboard focus on black: the browser's ring is invisible here, so the blue
+   draws it on every link and button in the bar (the drawer and the panels
+   included), inset so it never spills past an edge. */
 .topnav :is(a, button):focus-visible {
   outline: 2px solid var(--brass);
   outline-offset: -2px;
@@ -489,7 +499,7 @@
   z-index: 50;
   background: var(--rail-bg);
   border-bottom: 1px solid var(--rail-line);
-  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--shadow-pop);
   animation: menu-in 160ms ease-out both;
 }
 .topnav-dropdown {
@@ -499,7 +509,7 @@
   background: var(--rail-bg);
   border: 1px solid var(--rail-line);
   border-radius: 6px;
-  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--shadow-pop);
   animation: menu-in 160ms ease-out both;
 }
 /* The mobile drawer: the whole rail sliding over the page. */
@@ -517,8 +527,8 @@
     transform: none;
   }
 }
-/* A hairline of brass along the top of the bar while a navigation is in
-   flight: it runs to ~85% on its own and finishes when the route commits. */
+/* A blue hairline along the top of the bar while a navigation is in flight:
+   it runs to ~85% on its own and finishes when the route commits. */
 .topnav-progress {
   position: absolute;
   top: 0;
@@ -527,7 +537,6 @@
   width: 0;
   z-index: 60;
   background: var(--brass);
-  box-shadow: 0 0 8px color-mix(in oklab, var(--brass) 70%, transparent);
   animation: progress-run 6s cubic-bezier(0.1, 0.6, 0.2, 1) both;
   animation-delay: 80ms; /* a prefetched hop never shows it */
   pointer-events: none;
@@ -549,10 +558,14 @@
   color: var(--rail-fg);
   transition: background 0.12s, color 0.12s;
 }
-.topnav-link:hover,
-.topnav-link.is-on {
+.topnav-link:hover {
   background: var(--rail-hover);
-  color: #f3efe6;
+  color: var(--rail-fg-strong);
+}
+/* The page shown: the blue tint, the selected state everywhere else too. */
+.topnav-link.is-on {
+  background: var(--primary-soft);
+  color: var(--rail-fg-strong);
 }
 .topnav-icon {
   display: inline-grid;
@@ -564,7 +577,7 @@
   transition: color 0.12s, background 0.12s;
 }
 .topnav-icon:hover {
-  color: #f3efe6;
+  color: var(--rail-fg-strong);
   background: var(--rail-hover);
 }
 .topnav-search {
@@ -576,75 +589,74 @@
   padding: 0 10px;
   border: 1px solid var(--rail-line);
   border-radius: 6px;
-  background: rgba(0, 0, 0, 0.25);
+  background: #0b0b0c;
   color: var(--rail-fg-dim);
   font-size: 12.5px;
   transition: border-color 0.12s, color 0.12s;
 }
 @media (min-width: 640px) {
   .topnav-search {
-    width: 220px;
+    width: 200px;
   }
 }
 .topnav-search:hover {
-  border-color: rgba(237, 231, 219, 0.5);
-  color: #f3efe6;
+  border-color: #333336;
+  color: var(--rail-fg-strong);
 }
 
 /* -- The stand (hero panels) ----------------------------------------------- */
-/* A full graphite panel in both themes, like the rail: the page's one black
-   object, carrying cream lettering and a strip of light along its top edge.
-   Every neutral token is re-pointed inside it, so a card, an input or a
-   button nested in the stand reads correctly without knowing where it is. */
+/* A black panel in both themes, like the site's hero: the page's one black
+   object, carrying white lettering and a hairline along its top edge. Every
+   neutral token is re-pointed inside it, so a card, an input or a button
+   nested in the stand reads correctly without knowing where it is. */
 .stand {
-  --background: #121316;
-  --foreground: #ede7db;
-  --card: #1b1d22;
-  --card-foreground: #ede7db;
-  --popover: #202328;
-  --popover-foreground: #ede7db;
-  --secondary: #24272c;
-  --secondary-foreground: #ede7db;
-  --muted: #24272c;
-  --muted-foreground: #a39e92;
-  --border: #2d3037;
-  --input: #3a3e46;
-  --primary: #ede7db;
-  --primary-foreground: #16171a;
-  --accent: #2c2a26;
-  --accent-foreground: #e8d9bf;
-  --ring: #c89a63;
-  --brand: #ede7db;
-  --brand-2: #c89a63;
-  --brass: #c89a63;
-  --chart-bar: #c89a63;
-  --chart-track: #2a2d33;
-  --hairline: rgba(255, 255, 255, 0.1);
-  --hairline-strong: rgba(255, 255, 255, 0.24);
-  --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --background: #000000;
+  --foreground: #f2f2f2;
+  --card: #0b0b0c;
+  --card-foreground: #f2f2f2;
+  --popover: #111113;
+  --popover-foreground: #f2f2f2;
+  --secondary: #161618;
+  --secondary-foreground: #f2f2f2;
+  --muted: #141416;
+  --muted-foreground: #9a9a9f;
+  --border: #222326;
+  --input: #333336;
+  --primary: #1f3feb;
+  --primary-foreground: #ffffff;
+  --primary-hover: #3556f5;
+  --primary-soft: rgba(31, 63, 235, 0.16);
+  --accent: #161618;
+  --accent-foreground: #f2f2f2;
+  --ring: #3556f5;
+  --brand: #f2f2f2;
+  --brand-foreground: #000000;
+  --brand-2: #1f3feb;
+  --brass: #6e84f3;
+  --chart-bar: #1f3feb;
+  --chart-track: #1c1c1f;
+  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline-strong: rgba(255, 255, 255, 0.18);
+  --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+  --shadow-card: none;
   --shadow-pop: 0 30px 66px -26px rgba(0, 0, 0, 0.85);
   position: relative;
   isolation: isolate;
   overflow: hidden;
   color: var(--foreground);
-  background-color: #141518;
-  background-image:
-    radial-gradient(900px 420px at 12% -20%, rgba(200, 154, 99, 0.16), transparent 60%),
-    radial-gradient(700px 380px at 105% 120%, rgba(168, 123, 82, 0.1), transparent 60%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 40%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  background-color: #000000;
+  box-shadow: inset 0 0 0 1px #222326;
 }
 .stand::after {
   content: "";
   position: absolute;
-  inset-inline: 6%;
+  inset-inline: 0;
   top: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34) 20%, rgba(255, 255, 255, 0.34) 80%, transparent);
+  background: var(--hairline-strong);
   pointer-events: none;
 }
-/* Fine grid etched into the stand, the way a panel's joints show. */
+/* Fine grid etched into the stand. */
 .stand-grid {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
@@ -656,12 +668,12 @@
 /* -- The desk (intelligence section) --------------------------------------- */
 /* The database screens read like a terminal, not a brochure: square corners,
    thin rules, small-caps labels, tabular figures, and data before
-   decoration -- the PitchBook / Preqin register. Same Pavilion palette; the
+   decoration -- the PitchBook / Preqin register. Same Nocturne palette; the
    surfaces go flat and the type gets tighter. Set on the section wrapper. */
 .desk {
   --radius: 0.25rem;
   --shadow-card: none;
-  --shadow-pop: 0 12px 32px -12px rgba(29, 31, 35, 0.28);
+  --shadow-pop: 0 12px 32px -12px rgba(0, 0, 0, 0.28);
   --sheen: linear-gradient(180deg, transparent, transparent);
   font-size: 13px;
 }
@@ -930,7 +942,7 @@
   border-bottom: 0;
 }
 
-/* A magnitude bar: one walnut hue, a quiet track. */
+/* A magnitude bar: the one blue, a quiet track. */
 .bar-track {
   background: var(--chart-track);
 }

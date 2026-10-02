@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * A magnitude chart: one row per category, the bar's length against the
- * largest row. One hue — the walnut `--chart-bar` — because here colour
+ * largest row. One hue — the blue `--chart-bar` — because here colour
  * carries size, not identity; the label beside each bar names the row, and
  * every bar is direct-labelled with its figure so nothing is read off length
  * alone. Bars are 6px, square at the baseline and rounded at the data end.

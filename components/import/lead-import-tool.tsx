@@ -424,7 +424,7 @@ function StepHeading({ n, title, done }: { n: number; title: string; done?: bool
       <span
         className={cn(
           "grid h-6 w-6 place-items-center rounded-full text-xs font-bold",
-          done ? "bg-emerald-600 text-white" : "bg-primary/12 text-primary",
+          done ? "bg-[var(--success)] text-white" : "bg-primary-soft text-primary",
         )}
       >
         {done ? <CheckCircle2 className="h-3.5 w-3.5" /> : n}
@@ -479,7 +479,7 @@ function ImportSummaryCard({
   return (
     <div className="space-y-4">
       <section className="rounded-2xl border bg-card p-6 text-center">
-        <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-emerald-500/12 text-emerald-600 dark:text-emerald-400">
+        <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[var(--success-soft)] text-[var(--success)]">
           <BadgeCheck className="h-7 w-7" />
         </span>
         <h2 className="mt-4 text-xl font-semibold">
@@ -504,9 +504,9 @@ function ImportSummaryCard({
       </section>
 
       {summary.opsMatches.length ? (
-        <section className="rounded-2xl border border-amber-500/40 bg-amber-500/[0.06] p-5 dark:border-amber-400/30">
+        <section className="rounded-2xl border border-[var(--ops)]/40 bg-[var(--ops-soft)]/60 p-5">
           <div className="flex items-center gap-2">
-            <Radar className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+            <Radar className="h-4 w-4 text-[var(--ops)]" />
             <h3 className="font-semibold">
               {summary.opsMatches.length} already in the ops panel
             </h3>
@@ -519,7 +519,7 @@ function ImportSummaryCard({
             {summary.opsMatches.map((m) => (
               <li
                 key={m.company}
-                className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg border border-amber-500/25 bg-card/70 px-3 py-2 text-sm"
+                className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-lg border border-[var(--ops)]/30 bg-card/70 px-3 py-2 text-sm"
               >
                 <span className="font-medium">{m.company}</span>
                 <span className="text-muted-foreground">

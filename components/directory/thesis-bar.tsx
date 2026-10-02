@@ -70,7 +70,7 @@ export function ThesisBar({
               <X className="h-3.5 w-3.5" />
             </button>
           ) : null}
-          <button type="submit" className="inline-flex h-6 items-center gap-1 rounded-[3px] bg-foreground px-2 text-[11.5px] font-medium text-background">
+          <button type="submit" className="inline-flex h-6 items-center gap-1 rounded-[3px] bg-primary px-2 text-[11.5px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover">
             {pending ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
             Search
           </button>
@@ -86,7 +86,7 @@ export function ThesisBar({
           e.preventDefault();
           onSubmit(text);
         }}
-        className="sheen flex items-center gap-2 rounded-[4px] border bg-card p-1.5 pl-3 transition-colors focus-within:border-[var(--brass)]/60"
+        className="sheen flex items-center gap-2 rounded-[4px] border bg-card p-1.5 pl-3 transition-colors focus-within:border-primary"
         role="search"
       >
         <Sparkles className="h-4 w-4 shrink-0 text-[var(--brass)]" />
@@ -110,7 +110,7 @@ export function ThesisBar({
             <X className="h-4 w-4" />
           </button>
         ) : null}
-        <button type="submit" className="inline-flex h-8 items-center gap-1.5 rounded-[4px] bg-primary px-3 text-[13px] font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+        <button type="submit" className="inline-flex h-8 items-center gap-1.5 rounded-[4px] bg-primary px-3 text-[13px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover">
           {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
           Search
           <ArrowRight className="h-4 w-4" />
@@ -130,7 +130,7 @@ export function ThesisBar({
               }}
               className={cn(
                 "shrink-0 whitespace-nowrap rounded-[4px] border bg-card px-2 py-0.5 text-muted-foreground transition-colors",
-                "hover:border-[var(--brass)]/50 hover:text-foreground",
+                "hover:border-primary/60 hover:text-foreground",
               )}
             >
               {t}

@@ -8,8 +8,11 @@ import { cn } from "@/lib/utils";
 // is `p-3`, a control is 32px tall (`h-8`) and 12.5px type, a label is
 // `.desk-label`, a figure is `.figure`, and the one radius is 4px.
 
-/** The one button on the desk: a quiet bordered pill, 12px type. Export, columns, "Show more". */
-export const deskButton = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12px] transition-colors hover:bg-accent disabled:cursor-default disabled:opacity-50";
+/** The one button on the desk: a quiet outlined pill (the #333 border on black), 12px type. Export, columns, "Show more". */
+export const deskButton = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border border-input bg-card px-2.5 text-[12px] transition-colors hover:bg-accent disabled:cursor-default disabled:opacity-50";
+
+/** The desk's primary button: the blue with white text. One per screen, for the action that moves things. */
+export const deskPrimary = "inline-flex h-8 items-center gap-1.5 rounded-[4px] bg-primary px-3 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover disabled:cursor-default disabled:opacity-50";
 
 /** A boxed section with a quiet header strip. */
 export function Box({
@@ -220,7 +223,7 @@ export function ShowMore({
   );
 }
 
-/** A small horizontal bar for a value against the row's maximum. */
+/** A small horizontal bar for a value against the row's maximum, in the one blue (`--chart-bar`). */
 export function Bar({ value, max, className }: { value: number; max: number; className?: string }) {
   const pct = max > 0 ? Math.max(1.5, Math.round((value / max) * 100)) : 0;
   return (

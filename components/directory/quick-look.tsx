@@ -15,7 +15,7 @@ import { findSimilar } from "@/lib/directory/similar";
 import { cn } from "@/lib/utils";
 import type { Directory } from "./use-directory";
 
-const PRIMARY = "inline-flex h-8 items-center gap-1.5 rounded-[4px] bg-foreground px-3 text-[12.5px] font-medium text-background";
+const PRIMARY = "inline-flex h-8 items-center gap-1.5 rounded-[4px] bg-primary px-3 text-[12.5px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover";
 const OUTLINE = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-3 text-[12.5px] hover:bg-accent";
 
 /**

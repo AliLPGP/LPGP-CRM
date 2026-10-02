@@ -114,7 +114,7 @@ function SavedMenu({ saved, onPick, userId, isAdmin }: { saved: SavedSearch[]; o
       {open ? (
         <>
           <button className="fixed inset-0 z-30 cursor-default" aria-label="Close" onClick={() => setOpen(false)} />
-          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 w-80 overflow-hidden rounded-[4px] border bg-popover text-popover-foreground shadow-lg")}>
+          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 w-80 overflow-hidden rounded-[4px] border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]")}>
             <ul className="max-h-80 overflow-y-auto py-1">
               {saved.map((s) => (
                 <li key={s.id} className="group flex items-center gap-2 px-3 py-1.5 hover:bg-accent">

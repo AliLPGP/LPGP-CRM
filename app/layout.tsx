@@ -24,15 +24,16 @@ export const metadata: Metadata = {
     "Sales CRM for LPGP Connect — pipeline, call workspace, sponsor accounts and a private-markets intelligence database, wired to the ops panel.",
 };
 
-// Applied before paint so a dark-mode reload never flashes white.
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}})();`;
+// Applied before paint so a reload never flashes the other mode. Dark is the
+// product's own register: a stored choice wins, otherwise the page is dark.
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');document.documentElement.classList.toggle('dark',t!=='light');}catch(e){document.documentElement.classList.add('dark');}})();`;
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const user = await getSessionUser();
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${mono.variable} antialiased`}
+      className={`${sans.variable} ${mono.variable} dark antialiased`}
       // The theme script sets `dark` on this element before React hydrates.
       suppressHydrationWarning
     >

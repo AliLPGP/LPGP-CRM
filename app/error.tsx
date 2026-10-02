@@ -10,7 +10,7 @@ export default function Error({ reset }: { error: Error & { digest?: string }; r
       <p className="wordmark text-[10px] text-brass">Error</p>
       <h1 className="display mt-2 text-[22px] leading-tight md:text-[26px]">This page could not be drawn.</h1>
       <div className="mt-5 flex items-center gap-1.5">
-        <button type="button" onClick={reset} className="inline-flex h-8 items-center rounded-[4px] bg-foreground px-3 text-[12.5px] font-medium text-background transition-opacity hover:opacity-90">
+        <button type="button" onClick={reset} className="inline-flex h-8 items-center rounded-[4px] bg-primary px-3 text-[12.5px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover">
           Try again
         </button>
         <Link href="/database" className="inline-flex h-8 items-center rounded-[4px] border bg-card px-3 text-[12.5px] transition-colors hover:bg-accent">

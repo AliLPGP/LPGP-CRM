@@ -234,7 +234,7 @@ function sectionOf(pathname: string, search: URLSearchParams | null): string | n
 }
 
 // --- Navigation in flight ----------------------------------------------------------
-// A thin brass line along the top of the bar while a route is being fetched.
+// A thin blue line along the top of the bar while a route is being fetched.
 // Next's `useLinkStatus` only answers inside the Link that was clicked, and a
 // panel link unmounts the moment its panel closes, so the bar keys on the
 // URL instead: a click records the page it left from, and the bar shows
@@ -545,14 +545,14 @@ function UserMenu({ user }: { user: SessionUser | null }) {
         aria-expanded={open}
         aria-haspopup="menu"
         aria-label="Account"
-        className="grid h-8 w-8 place-items-center rounded-full bg-[var(--brass)] text-[11px] font-bold text-[#121316]"
+        className="grid h-8 w-8 place-items-center rounded-full bg-[var(--primary)] text-[11px] font-bold text-white"
       >
         {initials(user.name)}
       </button>
       {open ? (
         <div className="topnav-dropdown right-0 w-60" role="menu">
           <div className="border-b border-[var(--rail-line)] px-3 py-2.5">
-            <p className="truncate text-[13px] font-medium text-[#f3efe6]">{user.name}</p>
+            <p className="truncate text-[13px] font-medium text-[var(--rail-fg-strong)]">{user.name}</p>
             <p className="truncate text-[11px] text-[var(--rail-fg-dim)]">
               {user.email} · {user.role === "admin" ? "Admin" : "Member"}
             </p>
@@ -621,9 +621,12 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
   }, [open]);
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} className="topnav-icon lg:hidden">
-        <Menu className="h-5 w-5" />
-      </button>
+      {/* Wrapped: .topnav-icon is unlayered CSS, so lg:hidden on the button itself would lose to it. */}
+      <span className="lg:hidden">
+        <button type="button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} className="topnav-icon">
+          <Menu className="h-5 w-5" />
+        </button>
+      </span>
       {open ? (
         <div className="rail topnav-drawer fixed inset-0 z-50 overflow-y-auto lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="flex items-center justify-between border-b border-[var(--rail-line)] px-4 py-3">
@@ -695,10 +698,11 @@ function Brand({ onClick }: { onClick?: () => void }) {
       }}
       className="group flex items-center gap-2.5 rounded-[4px] py-2"
     >
-      <LpgpMark className="h-7 w-7 shrink-0 text-[var(--rail-fg)]" />
+      {/* The mark and the name are white on the black bar; the blue is only the eyebrow line beneath. */}
+      <LpgpMark className="h-7 w-7 shrink-0 text-white" />
       <span className="leading-none">
-        <span className="block text-[14px] font-bold tracking-tight text-[#f3efe6]">LPGP Connect</span>
-        <span className="wordmark mt-0.5 block text-[8.5px] text-[var(--brass)]">Private markets intelligence</span>
+        <span className="block text-[14px] font-bold tracking-tight text-white">LPGP Connect</span>
+        <span className="wordmark mt-0.5 hidden whitespace-nowrap text-[7.5px] tracking-[0.12em] text-[var(--brass)] xl:block">Private markets intelligence</span>
       </span>
     </Link>
   );

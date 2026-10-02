@@ -123,7 +123,7 @@ export function IntelShell({
 }: {
   crumbs?: Crumb[];
   title?: React.ReactNode;
-  /** A small line above the title: the entity's type or its parent. */
+  /** A small line above the title: the entity's type or its parent, set as the blue eyebrow. */
   kicker?: React.ReactNode;
   description?: React.ReactNode;
   actions?: React.ReactNode;
@@ -141,7 +141,7 @@ export function IntelShell({
       {title ? (
         <header className="flex flex-wrap items-end justify-between gap-3">
           <div className="min-w-0">
-            {kicker ? <div className="desk-label mb-1">{kicker}</div> : null}
+            {kicker ? <div className="wordmark mb-1.5">{kicker}</div> : null}
             <h1 className="display text-[22px] leading-tight md:text-[26px]">{title}</h1>
             {description ? <p className="mt-1 max-w-3xl text-[12.5px] text-muted-foreground">{description}</p> : null}
           </div>

@@ -215,7 +215,7 @@ boundaries and keeps comment text ASCII.
   portfolio, clients and peers are fetched on request. Long ledgers
   (`profile-ledgers.tsx`) carry every row and draw a hundred at a time.
 - **Taxonomy** (`lib/directory/taxonomy.ts`, with `asset-classes.ts` and `strategies.ts`) — the vocabulary a private-markets data product searches by, at its level of detail: nine asset classes (natural resources is its own class since 0033-era code), strategies on a **strategy** axis (buyout, growth, co-investment, direct lending, core / core-plus / value-add / opportunistic, seed / early stage, …) and a **sector** axis (property types, infrastructure sectors, the industries a PE fund names), investor types (public and private pensions, superannuation, insurers, endowments, foundations, sovereign wealth, DFIs, banks, asset and wealth managers, single and multi family offices, fund of funds, consultants…), manager and provider types, core industries with industry focus, target regions above `geo.ts`'s HQ subregions, AUM / ticket / fund-size bands, and the mandate vocabulary. Every classifier reads words the record carries — a sub-type, a fund's legal name, a firm's own overview, a stated focus — and places nothing those words do not say. The Discover index carries the result per firm (`typeCode`, `classes`, `strategies`, `sectors`, `regions`, `knownFunds`, allocation and ticket figures, `plans`, and per-class `raised` from stated fund sizes in the last ten years), the rail filters by it, the results table has a column registry with a chooser (`discover.columns` in localStorage, per-viewer), and the funds page facets by strategy, sector, region, size band and status. No dry powder: nobody states it and we do not estimate.
-- **Header** (`components/top-nav.tsx`) — the product's navigation is a top bar in the rail's graphite: one panel per section (investors, fund managers, funds, performance, service providers split into fund and transaction services, companies & deals, tools), every page listed once, the quick search, and the sales CRM as one menu that a reader can put away (`nav:crm` in localStorage) until it moves to its own product. The section a page belongs to is decided by `INTEL_NAV`'s matchers in `components/intel/shell.tsx`; `IntelShell` no longer draws section tabs by default.
+- **Header** (`components/top-nav.tsx`) — the product's navigation is the black top bar: one panel per section (investors, fund managers, funds, performance, service providers split into fund and transaction services, companies & deals, tools), every page listed once, the quick search, and the sales CRM as one menu that a reader can put away (`nav:crm` in localStorage) until it moves to its own product. The section a page belongs to is decided by `INTEL_NAV`'s matchers in `components/intel/shell.tsx`; `IntelShell` no longer draws section tabs by default.
 - **The demo standard** — every list screen is held to one shape: a
   `StatStrip` of 4–6 `Stat`s with a basis line, then one toolbar in one order
   (search · facet dropdowns · sort · result count · columns/export on the
@@ -230,10 +230,10 @@ boundaries and keeps comment text ASCII.
   system in `globals.css`: 160 ms fade-in (`.fade-in`, `.menu-in`), 120 ms
   row hover, tab panels that keep a floor height so the tab bar never moves,
   everything off under `prefers-reduced-motion`; `NavProgress` in the header
-  draws a 2 px brass bar while a navigation is in flight. Every route has a
+  draws a 2 px blue bar while a navigation is in flight. Every route has a
   `loading.tsx` that mirrors its real layout (`ListSkeleton`, `skeletons.tsx`);
   every empty state says what fills it and offers the one action; a blank is
-  "—" or "Not on file", never a zero. Magnitude bars wear the walnut
+  "—" or "Not on file", never a zero. Magnitude bars wear the blue
   (`BarList`); the seven hues stay on the series chart.
 - **Speed** — the API roles carry short statement timeouts (anon 3 s), so
   anything that aggregates a large table lives in SQL (`credit_book_summary`,
@@ -419,33 +419,44 @@ an account within a day.
   id they answer). The React Compiler lint is enforced; don't reach for an
   escape hatch, restructure instead.
 - The intelligence screens (`/database/*`, `/companies/[id]`, `/funds`,
-  `/contacts`) wear the **desk** register on top of Pavilion: the `.desk`
+  `/contacts`) wear the **desk** register on top of Nocturne: the `.desk`
   wrapper (`IntelShell` in `components/intel/shell.tsx`) drops the radius to
   4px, flattens surfaces and sets 13px type; `.desk-table` for dense ledgers,
   `.desk-label` small caps, `.desk-tabs` underline tabs, `.defn` for a hover
   definition, `.tag`, `.kv`. Primitives in `components/intel/ui.tsx` (`Box`,
   `Stat`, `StatStrip`, `Src`, `Tag`, `SubTabs`, `Bar`). Every figure that
   came from a page shows its `Src`.
-- The theme is **"Pavilion"** (`app/globals.css`), taken from our own exhibition
-  stands: matte graphite panels, cream lettering, walnut behind them. Primary is
-  near-black in light mode and cream in dark — inverted, the way a stand puts
-  white lettering on a black panel — and `--brass` is the single warm flourish.
-  Depth comes from a **light-line** (the `.sheen` top hairline, the rail's
-  `.rail-edge`), not from drop shadows: the stands are matte, and a glossy panel
-  would break the illusion. The rail is always the dark panel in both modes and
-  re-points `--brand`/`--brass` inside itself, so nested components need no
-  special casing.
+- The theme is **"Nocturne"** (`app/globals.css`), the brand site's own look:
+  pure black, white lettering, one electric blue (`#1F3FEB`). **Dark is the
+  default** (the layout's theme script: a stored choice wins, else dark);
+  light is the same drawing on white. `--primary` is the blue in both modes
+  with `--primary-hover` and `--primary-soft` (the blue at 12–16 %, the tint
+  behind anything selected); `--brass` keeps its name as the flourish token
+  and is the blue too — on black it is the lighter step the site sets its
+  eyebrows in (`#6E84F3`), because the button blue is under 3:1 as small
+  text. Nothing warm: `--ops` is a teal, the semantics are green and red.
+  Depth comes from a **light-line** (the `.sheen` top hairline, white at low
+  alpha on black and black at low alpha on white), never from a drop shadow;
+  the popover's `--shadow-pop` is the one shadow left. The rail (the header)
+  is always black in both modes, re-points the neutral and brand tokens
+  inside itself, and carries a 1 px `#1F2023` bottom edge; the mark and the
+  name are white on it, the blue only on the eyebrow beneath.
 - `.display` is tight sans for titles; `.figure` is tabular mono for money and
-  counts; `.wordmark` is the widely-tracked signage caps, for a mark or a panel
-  label and never for a sentence. No serif — the brand mark is monochrome
-  geometry and a flourish fights it.
+  counts; `.wordmark` is the site's eyebrow — JetBrains Mono, 10.5 px,
+  0.18 em tracking, uppercase, in the blue — for a kicker or a panel label
+  and never for a sentence; `.desk-label` stays the muted grey small caps for
+  table columns and keys. No serif — the brand mark is monochrome geometry
+  and a flourish fights it.
 - Charts follow the `dataviz` method: form before colour, one axis, categorical
   hues assigned by entity and never cycled. The seven hues in `--chart-1..7`
   are validated against both card surfaces — re-run the skill's validator
-  before changing any of them. They deliberately survived the Pavilion retheme:
-  a muted earth-tone set was measured and fails the chroma floor, CVD
-  separation and the normal-vision floor. Magnitude bars (`--chart-bar`) wear
-  the walnut instead, because there colour carries size rather than identity.
+  before changing any of them. They survived both the Pavilion and the
+  Nocturne rethemes: a muted earth-tone set was measured and fails the chroma
+  floor, CVD separation and the normal-vision floor, and the seven pass as a
+  set on `#fafafa` and `#0b0b0c`. The blue accent is never a series hue
+  (ΔE 17.2 from chart-1 on black, 13.6 on white; 35+ from chart-5).
+  Magnitude bars (`--chart-bar`) wear the blue instead, because there colour
+  carries size rather than identity.
 - The programme has **five series** (`lib/events-catalogue.ts`): Private Debt,
   one CFO/COO portfolio (the Private Markets, Private Equity & Debt and Private
   Equity conferences are one series, `cfo-coo`; the three old ids fold into it

@@ -144,7 +144,7 @@ export function OpsAllocations({
                       </Badge>
                     ) : null}
                     {(d.paid_inc_vat ?? 0) > 0 ? (
-                      <Badge className="border-transparent bg-emerald-500/12 text-[10px] text-emerald-700 dark:text-emerald-300">
+                      <Badge className="border-transparent bg-[var(--success-soft)] text-[10px] text-[var(--success)]">
                         <BadgeCheck className="h-3 w-3" /> Paid
                       </Badge>
                     ) : null}

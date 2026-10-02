@@ -1,13 +1,13 @@
-import { BadgeCheck, Clock, FileWarning, Radar, Receipt } from "lucide-react";
+import { Radar } from "lucide-react";
 import { getSessionUser } from "@/lib/auth";
 import { getMyDeals } from "@/lib/my-deals";
 import { isOpsConfigured, isOpsWriteEnabled, opsPanelUrl } from "@/lib/ops";
 import { formatOpsMoney } from "@/lib/ops-types";
 import { MyDealsTable } from "@/components/deals/my-deals-table";
 import { RecordDealDialog } from "@/components/ops/record-deal-dialog";
-import { Kpi } from "@/components/dashboard/panels";
 import { PageHeader } from "@/components/page-header";
 import { EmptyState } from "@/components/empty-state";
+import { StatCard, StatRow } from "@/components/stat-card";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "My deals — LPGP Connect" };
@@ -25,10 +25,6 @@ export default async function MyDealsPage() {
         error: null as string | null,
       };
 
-  // The first currency is the headline; the rest are listed rather than added
-  // to it, because summing GBP and USD into one figure would be a lie.
-  const primary = totals[0];
-
   return (
     <div className="mx-auto max-w-[95rem] space-y-6 px-4 py-8 md:px-6">
       <PageHeader
@@ -40,60 +36,34 @@ export default async function MyDealsPage() {
 
       {!isOpsConfigured() || error ? (
         <EmptyState
-          icon={<Radar className="mx-auto h-8 w-8" />}
+          icon={<Radar />}
           title="Not reading the ops panel"
-          description={error ?? "Connect the ops panel in Settings to see your deals."}
+          description={error ?? "Your deals live in the ops panel; connect it in Settings and they appear here."}
         />
       ) : (
         <>
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            <Kpi
+          {/* One contracted card per currency: GBP and USD are never added into one figure. */}
+          <StatRow>
+            <StatCard
               label="My deals"
-              value={String(deals.length)}
-              sub={
-                initials
-                  ? `Stamped ${initials} in the tracker, plus any you've added`
-                  : "Set your initials in Admin → Team to pick these up automatically"
-              }
-              tone="brand"
-              icon={<Receipt className="h-4 w-4" />}
+              value={deals.length}
+              basis={initials ? `Stamped ${initials} in the tracker, plus any you added` : "Set your initials in Admin → Team to pick these up"}
             />
-            <Kpi
-              label="Contracted"
-              value={primary ? formatOpsMoney(primary.contracted, primary.currency) : "—"}
-              sub={
-                totals.length > 1
-                  ? `plus ${totals
-                      .slice(1)
-                      .map((t) => formatOpsMoney(t.contracted, t.currency))
-                      .join(", ")}`
-                  : primary
-                    ? `${formatOpsMoney(primary.paid, primary.currency)} received`
-                    : "Nothing yet"
-              }
-              tone="neutral"
-            />
-            <Kpi
-              label="Need an invoice"
-              value={String(needInvoice)}
-              sub={
-                needInvoice
-                  ? "No agreement on file — the admin has to send one"
-                  : "Every deal has its agreement filed"
-              }
-              tone="ops"
-              icon={<FileWarning className="h-4 w-4" />}
-            />
-            <Kpi
-              label="Awaiting signature"
-              value={String(awaitingSignature)}
-              sub={awaitingSignature ? "Sent, waiting on the signed copy" : "Nothing outstanding"}
-              tone="success"
-              icon={
-                awaitingSignature ? <Clock className="h-4 w-4" /> : <BadgeCheck className="h-4 w-4" />
-              }
-            />
-          </div>
+            {totals.length ? (
+              totals.map((t) => (
+                <StatCard
+                  key={t.currency}
+                  label={`Contracted (${t.currency})`}
+                  value={formatOpsMoney(t.contracted, t.currency)}
+                  basis={`${formatOpsMoney(t.paid, t.currency)} received, ${t.currency} deals only`}
+                />
+              ))
+            ) : (
+              <StatCard label="Contracted" value="—" basis="No deals on file yet" />
+            )}
+            <StatCard label="Need an invoice" value={needInvoice} basis={needInvoice ? "No agreement on file — the admin has to send one" : "Every deal has its agreement filed"} />
+            <StatCard label="Awaiting signature" value={awaitingSignature} basis={awaitingSignature ? "Sent, waiting on the signed copy" : "Nothing outstanding"} />
+          </StatRow>
 
           <MyDealsTable deals={deals} opsPanelUrl={opsPanelUrl()} />
         </>

@@ -4,6 +4,7 @@ import { isAdminConfigured } from "@/lib/supabase/admin";
 import { lushaConfigured } from "@/lib/lusha";
 import { isOpsConfigured, isOpsWriteEnabled, opsPanelUrl, pingOps } from "@/lib/ops";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { PageHeader } from "@/components/page-header";
 
 export const metadata = { title: "Settings — LPGP Connect" };
 
@@ -54,13 +55,10 @@ export default async function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 md:px-6 py-8 space-y-8">
-      <div>
-        <h1 className="display text-[28px] leading-tight md:text-[34px]">Settings</h1>
-        <p className="text-muted-foreground mt-1">Appearance, connections and data setup.</p>
-      </div>
+      <PageHeader eyebrow="Sales CRM" title="Settings" description="Appearance, connections and data setup." />
 
       {/* Appearance */}
-      <section className="rounded-xl border bg-card p-5">
+      <section className="sheen rounded-2xl border bg-card p-5">
         <h2 className="font-semibold">Appearance</h2>
         <p className="text-sm text-muted-foreground mt-0.5 mb-3">
           Switch between light and dark. Your choice is remembered on this device.
@@ -69,7 +67,7 @@ export default async function SettingsPage() {
       </section>
 
       {/* Connections */}
-      <section className="rounded-xl border bg-card p-5">
+      <section className="sheen rounded-2xl border bg-card p-5">
         <h2 className="font-semibold">Connections</h2>
         <div className="mt-2 divide-y">
           <StatusRow
@@ -94,7 +92,7 @@ export default async function SettingsPage() {
       </section>
 
       {/* Ops panel */}
-      <section className="rounded-xl border bg-card p-5">
+      <section className="sheen rounded-2xl border bg-card p-5">
         <div className="flex items-center gap-2">
           <span className="grid h-7 w-7 place-items-center rounded-lg bg-[var(--ops-soft)] text-[var(--ops)]">
             <Radar className="h-3.5 w-3.5" />
@@ -173,7 +171,7 @@ export default async function SettingsPage() {
       </section>
 
       {/* Database setup */}
-      <section className="rounded-xl border bg-card p-5">
+      <section className="sheen rounded-2xl border bg-card p-5">
         <h2 className="font-semibold">Database</h2>
         <p className="text-sm text-muted-foreground mt-0.5">
           Run the schema once in the Supabase SQL editor to create the tables this CRM uses.

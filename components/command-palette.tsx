@@ -27,6 +27,7 @@ import {
   Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { startNavigation } from "@/components/top-nav";
 
 type PaletteHit = {
   kind: "lead" | "account" | "company" | "contact";
@@ -206,6 +207,7 @@ export function CommandPalette() {
     setQuery("");
     setResult(null);
     setCursor(0);
+    startNavigation(href); // the header's progress line runs until the page arrives
     router.push(href);
   }
 
@@ -223,7 +225,7 @@ export function CommandPalette() {
         role="dialog"
         aria-modal="true"
         aria-label="Search and commands"
-        className="modal-panel relative flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl border bg-popover shadow-2xl"
+        className="modal-panel relative flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-xl border bg-popover shadow-[var(--shadow-pop)]"
       >
         <div className="flex items-center gap-2.5 border-b px-4">
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />

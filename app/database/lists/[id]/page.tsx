@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { IntelShell } from "@/components/intel/shell";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
 import { getSessionUser } from "@/lib/auth";
 import { getDirectoryIndex } from "@/lib/directory/index-server";
 import { getDirectoryList } from "@/lib/directory/queries";
@@ -25,10 +23,7 @@ export default async function ListPage({ params }: { params: Promise<{ id: strin
   const packed = packIndex({ ...index, records: index.records.filter((r) => ids.has(r.id)), brands: [] });
   const canDelete = Boolean(user && (user.role === "admin" || !data.list.owner_id || data.list.owner_id === user.id));
   return (
-    <IntelShell wide={false}>
-      <Link href="/database/lists" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
-        <ArrowLeft className="h-4 w-4" /> Lists
-      </Link>
+    <IntelShell wide={false} crumbs={[{ href: "/database/lists", label: "Lists" }, { label: data.list.name }]}>
       <ListDetail list={data.list} items={data.items} packed={packed} canDelete={canDelete} />
     </IntelShell>
   );

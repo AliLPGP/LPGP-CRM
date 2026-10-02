@@ -15,7 +15,7 @@ import { CompanyLogo } from "@/components/company-logo";
 import { Columns, ShareBar } from "@/components/intel/charts";
 import { LenderTable, OfferingTable } from "@/components/intel/filings-tables";
 import { IntelShell } from "@/components/intel/shell";
-import { CommitmentTable, DealTable, FirmTable, ProviderMini, SignalList } from "@/components/intel/tables";
+import { CommitmentTable, DealTable, FirmTable, ProviderMini, ShowMore, SignalList } from "@/components/intel/tables";
 import { Box, Empty, Src, Stat, StatStrip, SubTabs, Tag } from "@/components/intel/ui";
 import { formatUsd } from "@/lib/utils";
 import { formatMoney } from "@/lib/directory/intelligence-types";
@@ -23,6 +23,8 @@ import { formatMoney } from "@/lib/directory/intelligence-types";
 export const dynamic = "force-dynamic";
 
 const TABS = ["overview", "strategies", "managers", "funds", "commitments", "deals", "raises", "loans", "assets", "signals"] as const;
+/** Rows a ledger tab shows before "Show more". */
+const STEP = 200;
 
 // What "the asset" means in each class: the unit an investor actually owns.
 const ASSET_VIEW: Record<string, { tab: string; title: string; blurb: string; kind?: "company" | "infrastructure_asset" | "property"; cls?: string }> = {
@@ -45,12 +47,13 @@ export default async function AssetClassPage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ tab?: string; strategy?: string }>;
+  searchParams: Promise<{ tab?: string; strategy?: string; n?: string }>;
 }) {
-  const [{ slug }, { tab: tabParam, strategy: strategyParam }] = await Promise.all([params, searchParams]);
+  const [{ slug }, { tab: tabParam, strategy: strategyParam, n: nParam }] = await Promise.all([params, searchParams]);
   const cls = assetClassBySlug(slug);
   if (!cls) notFound();
   const tab: Tab = (TABS as readonly string[]).includes(tabParam ?? "") ? (tabParam as Tab) : "overview";
+  const limit = Math.min(3000, Math.max(STEP, Math.floor(Number(nParam)) || STEP));
   const isSports = cls.key === "sports";
   const isCredit = cls.key === "private_credit";
   // Form D raises are read per class; the loan books only on the credit desk.
@@ -58,7 +61,7 @@ export default async function AssetClassPage({
     getClassPage(cls),
     getSessionUser(),
     isSports ? null : getOfferingStats(cls.key),
-    tabParam === "raises" && !isSports ? getFundOfferings({ assetClass: cls.key, limit: 600 }) : Promise.resolve([]),
+    tabParam === "raises" && !isSports ? getFundOfferings({ assetClass: cls.key, limit }) : Promise.resolve([]),
     isCredit ? getBookSummary() : null,
     tabParam === "loans" && isCredit ? listCreditLenders() : Promise.resolve([]),
   ]);
@@ -220,7 +223,7 @@ export default async function AssetClassPage({
                   ))}
                 </ul>
               ) : (
-                <Empty>No disclosed commitments in this class yet.</Empty>
+                <Empty>No disclosed commitment is placed in this class yet. They arrive with the LP disclosures the database loads monthly.</Empty>
               )}
             </Box>
           </div>
@@ -238,56 +241,64 @@ export default async function AssetClassPage({
       {tab === "funds" ? (
         <Box title="Funds" count={page.funds.length} flush defn="Funds whose own name places them in this class come first (tagged 'by name'); the rest are funds of managers in the class.">
           {page.funds.length ? (
-            <div className="overflow-x-auto">
-              <table className="desk-table">
-                <thead>
-                  <tr>
-                    <th>Fund</th>
-                    <th>Manager</th>
-                    <th>Placed by</th>
-                    <th>Vehicle</th>
-                    <th>Domicile</th>
-                    <th className="num">Size</th>
-                    <th>Providers</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {page.funds.slice(0, 400).map((f) => (
-                    <tr key={f.id}>
-                      <td className="max-w-[360px]">
-                        <Link href={`/funds/${f.id}`} className="font-medium">
-                          {f.name}
-                        </Link>
-                      </td>
-                      <td className="whitespace-nowrap">
-                        {f.manager ? (
-                          <Link href={`/companies/${f.manager.id}`} className="inline-flex items-center gap-1.5">
-                            <CompanyLogo name={f.manager.name} domain={f.manager.domain} size={16} /> {f.manager.name}
-                          </Link>
-                        ) : (
-                          (f.managerName ?? "—")
-                        )}
-                      </td>
-                      <td>
-                        <Tag strong={f.basis === "name"}>{f.basis === "name" ? "Fund name" : "Manager type"}</Tag>
-                      </td>
-                      <td className="text-muted-foreground">{f.kind ?? "—"}</td>
-                      <td className="text-muted-foreground">{f.domicile ?? "—"}</td>
-                      <td className="num">{f.size != null ? formatUsd(f.size) : "—"}</td>
-                      <td className="text-[11.5px] text-muted-foreground">
-                        {f.providers
-                          .slice(0, 3)
-                          .map((p) => p.name)
-                          .join(" · ") || "—"}
-                      </td>
+            <>
+              <div className="desk-scroll">
+                <table className="desk-table">
+                  <thead>
+                    <tr>
+                      <th>Fund</th>
+                      <th>Manager</th>
+                      <th>Placed by</th>
+                      <th>Vehicle</th>
+                      <th>Domicile</th>
+                      <th className="num">Size</th>
+                      <th>Providers</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-              {page.funds.length > 400 ? <p className="px-3 py-2 text-[11px] text-muted-foreground">Showing 400 of {page.funds.length.toLocaleString("en-US")} — the Funds page searches all of them.</p> : null}
-            </div>
+                  </thead>
+                  <tbody>
+                    {page.funds.slice(0, limit).map((f) => (
+                      <tr key={f.id} className="linked">
+                        <td className="min-w-[240px] max-w-[360px]">
+                          <Link href={`/funds/${f.id}`} className="cover block truncate font-medium" title={f.name}>
+                            {f.name}
+                          </Link>
+                        </td>
+                        <td className="max-w-[220px] whitespace-nowrap">
+                          {f.manager ? (
+                            <Link href={`/companies/${f.manager.id}`} className="inline-flex max-w-full items-center gap-1.5">
+                              <CompanyLogo name={f.manager.name} domain={f.manager.domain} size={16} /> <span className="truncate">{f.manager.name}</span>
+                            </Link>
+                          ) : (
+                            <span className="block truncate text-muted-foreground">{f.managerName ?? "—"}</span>
+                          )}
+                        </td>
+                        <td>
+                          <Tag strong={f.basis === "name"}>{f.basis === "name" ? "Fund name" : "Manager type"}</Tag>
+                        </td>
+                        <td className="text-muted-foreground">{f.kind ?? "—"}</td>
+                        <td className="text-muted-foreground">{f.domicile ?? "—"}</td>
+                        <td className="num">{f.size != null ? formatUsd(f.size) : "—"}</td>
+                        <td className="max-w-[260px] truncate text-[11.5px] text-muted-foreground" title={f.providers.map((p) => p.name).join(", ")}>
+                          {f.providers
+                            .slice(0, 3)
+                            .map((p) => p.name)
+                            .join(" · ") || "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <ShowMore href={`${base}?tab=funds&n=${limit + STEP}`} step={STEP} left={page.funds.length - Math.min(limit, page.funds.length)} />
+            </>
           ) : (
-            <Empty>No funds placed in this class yet.</Empty>
+            <Empty>
+              No funds placed in this class yet. Funds arrive with the Master Directory import (Form ADV Schedule D) and the SEC&rsquo;s Form D filings;{" "}
+              <Link href="/funds" className="underline underline-offset-2 hover:text-foreground">
+                the Funds page
+              </Link>{" "}
+              searches every one on file.
+            </Empty>
           )}
         </Box>
       ) : null}
@@ -333,7 +344,7 @@ export default async function AssetClassPage({
           </div>
           <Box title="Form D raises" count={raises.filings} flush defn="The latest Form D per pooled fund in this class, newest filing first. Sold-to-date and investor counts are the fund's own figures; the general partner is the related person the filing names as such.">
             <OfferingTable rows={offerings} showClass={false} />
-            {raises.filings > offerings.length ? <p className="px-3 py-2 text-[11px] text-muted-foreground">Showing the newest {offerings.length.toLocaleString("en-US")} of {raises.filings.toLocaleString("en-US")}.</p> : null}
+            <ShowMore href={`${base}?tab=raises&n=${limit + STEP}`} step={STEP} left={raises.filings - offerings.length} />
           </Box>
         </div>
       ) : null}
@@ -393,15 +404,23 @@ export default async function AssetClassPage({
                 </thead>
                 <tbody>
                   {assetRows.map((r) => (
-                    <tr key={r.id}>
+                    <tr key={r.id} className={r.intel_key ? "linked" : undefined}>
                       <td className="max-w-[300px]">
-                        <span className="block truncate font-medium">{r.intel_key ? <Link href={portcoHref(r.intel_key)}>{r.name}</Link> : r.name}</span>
+                        <span className="block truncate font-medium" title={r.name}>
+                          {r.intel_key ? (
+                            <Link href={portcoHref(r.intel_key)} className="cover">
+                              {r.name}
+                            </Link>
+                          ) : (
+                            r.name
+                          )}
+                        </span>
                       </td>
-                      <td className="max-w-[200px] truncate">
+                      <td className="max-w-[200px] truncate" title={r.gp?.name ?? undefined}>
                         <Link href={`/companies/${r.gp_company_id}?tab=portfolio`}>{r.gp?.name ?? "Sponsor"}</Link>
                       </td>
-                      <td className="max-w-[200px] truncate text-muted-foreground">{r.asset_location ?? r.hq ?? "—"}</td>
-                      <td className="max-w-[180px] truncate text-muted-foreground">{r.sector ?? "—"}</td>
+                      <td className="max-w-[200px] truncate text-muted-foreground" title={r.asset_location ?? r.hq ?? undefined}>{r.asset_location ?? r.hq ?? "—"}</td>
+                      <td className="max-w-[180px] truncate text-muted-foreground" title={r.sector ?? undefined}>{r.sector ?? "—"}</td>
                       <td className="num text-muted-foreground">{r.invested_year ?? "—"}</td>
                       <td>{r.status ? <Tag>{r.status}</Tag> : "—"}</td>
                     </tr>

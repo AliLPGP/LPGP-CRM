@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { Loader2, Search, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+/** The desk's button shape, so a research button sits level with the toolbar's. */
+const DESK = "h-8 rounded-[4px] px-2.5 text-[12px] font-medium shadow-none";
+
 // The buttons that run the in-app research jobs. Each posts to a route that
 // searches the web on the server with the app's own Anthropic key and saves
 // what it finds with sources; the page refreshes when it returns.
@@ -32,6 +35,7 @@ export function ResearchClubButton({ teamId, researched, aiReady }: { teamId: st
       <Button
         size="sm"
         variant="outline"
+        className={DESK}
         disabled={pending}
         onClick={() =>
           start(async () => {
@@ -82,7 +86,7 @@ export function ResearchClubsRunner({ teamIds, aiReady }: { teamIds: string[]; a
   }
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <Button size="sm" onClick={() => void run()} disabled={state?.running}>
+      <Button size="sm" className={DESK} onClick={() => void run()} disabled={state?.running}>
         {state?.running ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Search className="h-3.5 w-3.5" />}
         Research {teamIds.length} clubs without figures
       </Button>
@@ -90,6 +94,7 @@ export function ResearchClubsRunner({ teamIds, aiReady }: { teamIds: string[]; a
         <Button
           size="sm"
           variant="outline"
+          className={DESK}
           onClick={() => {
             stop.current = true;
           }}
@@ -121,6 +126,7 @@ export function ResearchCommitmentsButton({ aiReady, limit = 4 }: { aiReady: boo
       <Button
         size="sm"
         variant="outline"
+        className={DESK}
         disabled={pending}
         onClick={() =>
           start(async () => {
@@ -155,6 +161,7 @@ export function ResearchClassButton({ assetClass, kind, aiReady }: { assetClass:
       <Button
         size="sm"
         variant="outline"
+        className={DESK}
         disabled={pending}
         onClick={() =>
           start(async () => {
@@ -189,6 +196,7 @@ export function EnrichPortcosButton({ ready }: { ready: boolean }) {
       <Button
         size="sm"
         variant="outline"
+        className={DESK}
         disabled={pending}
         onClick={() =>
           start(async () => {
@@ -231,13 +239,14 @@ export function ResearchQueueRunner({ kind, aiReady }: { kind: "investors" | "fu
     <span className="inline-flex items-center gap-2">
       {message ? <span className="max-w-[420px] text-[11px] text-muted-foreground">{message}</span> : null}
       {pending ? (
-        <Button size="sm" variant="outline" onClick={() => { stop.current = true; setMessage((m) => `${m ?? ""} Stopping after this batch…`); }}>
+        <Button size="sm" variant="outline" className={DESK} onClick={() => { stop.current = true; setMessage((m) => `${m ?? ""} Stopping after this batch…`); }}>
           <Square className="h-3.5 w-3.5" /> Stop
         </Button>
       ) : (
         <Button
           size="sm"
           variant="outline"
+          className={DESK}
           onClick={() =>
             start(async () => {
               stop.current = false;

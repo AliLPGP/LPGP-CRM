@@ -4,10 +4,12 @@ import { useMemo } from "react";
 import type { Category } from "@/lib/types";
 import type { AssetClassKey } from "@/lib/directory/asset-classes";
 import { matches, type DirectoryFilters, type SortKey } from "@/lib/directory/filters";
-import type { Zone } from "@/lib/directory/geo";
+import { EMPLOYEE_PRESETS } from "@/lib/directory/format";
+import { subregionOf, type Subregion, type Zone } from "@/lib/directory/geo";
 import type { DirectoryRecord } from "@/lib/directory/records";
 import { relevance } from "@/lib/directory/search";
 import { findSimilar } from "@/lib/directory/similar";
+import { AUM_BANDS, type Band } from "@/lib/directory/taxonomy";
 import type { Directory } from "./use-directory";
 
 export type ResultRow = {
@@ -29,7 +31,25 @@ export type Facets = {
   /** Region codes (taxonomy.ts), from HQ and stated focus. */
   prefRegions: Map<string, number>;
   typeCodes: Map<string, number>;
+  /** HQ subregions (geo.ts), beside the zones and countries in the Location menu. */
+  regions: Map<Subregion, number>;
+  /** Firms per AUM band (taxonomy.ts), ignoring the size filter itself. */
+  aumBands: Map<string, number>;
+  /** Firms per headcount band (format.ts), ignoring the headcount filter itself. */
+  empBands: Map<string, number>;
 };
+
+/** The band a figure falls in: lower bound inclusive, upper exclusive, open-ended at the ends. */
+export function bandOf(bands: Band[], v: number | null): string | null {
+  if (v == null) return null;
+  for (const b of bands) {
+    if ((b.min == null || v >= b.min) && (b.max == null || v < b.max)) return b.key;
+  }
+  return null;
+}
+
+/** Headcount presets as bands keyed by their label. */
+export const EMP_BANDS: Band[] = EMPLOYEE_PRESETS.map((p) => ({ key: p.label, label: p.label, min: p.min, max: p.max }));
 
 export type Results = {
   rows: ResultRow[];
@@ -105,10 +125,26 @@ export function useResults(dir: Directory, filters: DirectoryFilters): Results {
       sectors: new Map(),
       prefRegions: new Map(),
       typeCodes: new Map(),
+      regions: new Map(),
+      aumBands: new Map(),
+      empBands: new Map(),
     };
+    // `matches` can skip one of the list facets; the range facets are counted
+    // against the same filters with that one range lifted. A record that
+    // passes everything passes the lifted set too, so only the misses re-run.
+    const noRegions: DirectoryFilters = { ...filters, regions: [] };
+    const noAum: DirectoryFilters = { ...filters, aumMin: null, aumMax: null };
+    const noEmp: DirectoryFilters = { ...filters, empMin: null, empMax: null };
     for (const row of candidates.list) {
       const r = row.record;
-      if (matches(r, filters, ctx)) rows.push(row);
+      const passes = matches(r, filters, ctx);
+      if (passes) rows.push(row);
+      const sub = subregionOf(r.country);
+      if (sub && (passes || (filters.regions.length > 0 && matches(r, noRegions, ctx)))) bump(facets.regions, sub);
+      const aumBand = bandOf(AUM_BANDS, r.aum);
+      if (aumBand && (passes || ((filters.aumMin != null || filters.aumMax != null) && matches(r, noAum, ctx)))) bump(facets.aumBands, aumBand);
+      const empBand = bandOf(EMP_BANDS, r.employees);
+      if (empBand && (passes || ((filters.empMin != null || filters.empMax != null) && matches(r, noEmp, ctx)))) bump(facets.empBands, empBand);
       if (matches(r, filters, ctx, "books")) bump(facets.books, r.category);
       if (r.subType && matches(r, filters, ctx, "types")) bump(facets.types, r.subType);
       if (r.zone && matches(r, filters, ctx, "zones")) bump(facets.zones, r.zone);

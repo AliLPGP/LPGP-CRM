@@ -1,196 +1,153 @@
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  BadgeCheck,
-  CalendarDays,
-  CircleDot,
-  Mail,
-  Phone,
-  Radar,
-  TrendingUp,
-  Users,
-} from "lucide-react";
-import { LEAD_STAGES, STAGE_META } from "@/lib/pipeline";
+import { ArrowUpRight, BadgeCheck, CalendarClock, CircleDot, Flame, Mail, Phone, Timer, Users } from "lucide-react";
+import { LEAD_STAGES } from "@/lib/pipeline";
 import { ACTIVITY_LABELS, formatDuration } from "@/lib/sales";
 import { formatOpsMoney, type OpsEvent } from "@/lib/ops-types";
 import { formatEventDate } from "@/lib/event-date";
 import type { ActivityWithRefs, LeadWithRefs } from "@/lib/types";
-import { cn, formatUsd, timeAgo } from "@/lib/utils";
+import { BarList } from "@/components/charts/bar-list";
+import { EmptyState } from "@/components/empty-state";
+import { formatUsd, timeAgo } from "@/lib/utils";
 
-/* ── KPI tile ─────────────────────────────────────────────────────────────── */
+/* ── The one panel ────────────────────────────────────────────────────────── */
 
-export function Kpi({
-  label,
-  value,
-  sub,
-  tone = "neutral",
+/**
+ * Every block on the command centre is this: a title, one line saying what
+ * the block counts, an optional link to the full screen, and the body. One
+ * register for the whole dashboard; the stat cards above are the other.
+ */
+export function Panel({
+  title,
+  basis,
   href,
-  icon,
+  hrefLabel,
+  children,
 }: {
-  label: string;
-  value: string;
-  sub?: string;
-  tone?: "neutral" | "brand" | "success" | "ops";
+  title: string;
+  basis: string;
   href?: string;
-  icon?: React.ReactNode;
+  hrefLabel?: string;
+  children: React.ReactNode;
 }) {
-  const toneRing = {
-    neutral: "text-muted-foreground bg-muted",
-    brand: "text-[var(--brand)] bg-[var(--accent)]",
-    success: "text-[var(--success)] bg-[var(--success-soft)]",
-    ops: "text-[var(--ops)] bg-[var(--ops-soft)]",
-  }[tone];
-
-  const body = (
-    <div className={cn("sheen h-full rounded-2xl border bg-card p-5", href && "lift")}>
+  return (
+    <section className="sheen flex min-h-[280px] flex-col rounded-2xl border bg-card p-5">
       <div className="flex items-start justify-between gap-3">
-        <span className="eyebrow">{label}</span>
-        {icon ? (
-          <span className={cn("grid h-8 w-8 place-items-center rounded-lg", toneRing)}>{icon}</span>
+        <div>
+          <h2 className="font-semibold">{title}</h2>
+          <p className="text-xs text-muted-foreground">{basis}</p>
+        </div>
+        {href ? (
+          <Link href={href} className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-[var(--brand)] hover:underline">
+            {hrefLabel ?? "Open"} <ArrowUpRight className="h-3 w-3" />
+          </Link>
         ) : null}
       </div>
-      <p className="figure mt-3 text-[2.25rem] leading-none">{value}</p>
-      {sub ? <p className="mt-2 text-sm text-muted-foreground">{sub}</p> : null}
-    </div>
-  );
-
-  return href ? (
-    <Link href={href} className="block h-full">
-      {body}
-    </Link>
-  ) : (
-    body
+      <div className="mt-4 flex-1">{children}</div>
+    </section>
   );
 }
 
-/* ── Pipeline funnel ──────────────────────────────────────────────────────── */
+/* ── Today's calls ────────────────────────────────────────────────────────── */
 
-export function StageFunnel({ leads }: { leads: LeadWithRefs[] }) {
+/** The queue as the workspace will walk it: overdue call-backs, then priority, then stalest. */
+export function TodaysCalls({ queue, now, limit = 8 }: { queue: LeadWithRefs[]; now: number; limit?: number }) {
+  return (
+    <Panel title="Today's calls" basis={queue.length ? `${queue.length} in your queue — overdue call-backs first, then priority, then stalest` : "Your open leads, in the order the workspace dials them"} href="/leads/workspace" hrefLabel="Start calling">
+      {queue.length === 0 ? (
+        <EmptyState
+          title="Nothing to call"
+          description="Every open lead you own has been worked, or none is assigned to you yet. Import a list or add a lead to fill the queue."
+          action={
+            <Link href="/import/leads" className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+              Import leads
+            </Link>
+          }
+        />
+      ) : (
+        <ul className="divide-y">
+          {queue.slice(0, limit).map((l) => {
+            const due = l.callback_at && new Date(l.callback_at).getTime() <= now;
+            const Icon = due ? CalendarClock : l.priority === "High" ? Flame : Timer;
+            return (
+              <li key={l.id}>
+                <Link href={`/leads/${l.id}`} className="-mx-2 flex items-center gap-3 rounded-lg px-2 py-2 transition-colors duration-[120ms] hover:bg-muted/40">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-muted text-muted-foreground">
+                    <Icon className={due || l.priority === "High" ? "h-3.5 w-3.5 text-[var(--ops)]" : "h-3.5 w-3.5"} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-medium">{l.company_name ?? "Unnamed"}</span>
+                    <span className="block truncate text-[11px] text-muted-foreground">
+                      {l.contact_name ?? "No contact"} · {l.stage}
+                      {due ? ` · call-back due ${timeAgo(l.callback_at)}` : l.last_activity_at ? ` · last touch ${timeAgo(l.last_activity_at)}` : " · never called"}
+                    </span>
+                  </span>
+                  {l.value_usd != null ? <span className="tabular shrink-0 text-xs text-muted-foreground">{formatUsd(l.value_usd)}</span> : null}
+                </Link>
+              </li>
+            );
+          })}
+          {queue.length > limit ? (
+            <li className="pt-2 text-[12px] text-muted-foreground">
+              {queue.length - limit} more in the workspace
+            </li>
+          ) : null}
+        </ul>
+      )}
+    </Panel>
+  );
+}
+
+/* ── Pipeline by stage ────────────────────────────────────────────────────── */
+
+export function PipelineByStage({ leads }: { leads: LeadWithRefs[] }) {
   const rows = LEAD_STAGES.map((stage) => {
     const inStage = leads.filter((l) => l.stage === stage);
+    const value = inStage.reduce((n, l) => n + (l.value_usd ?? 0), 0);
     return {
-      stage,
-      kind: STAGE_META[stage].kind,
-      count: inStage.length,
-      value: inStage.reduce((n, l) => n + (l.value_usd ?? 0), 0),
+      key: stage,
+      label: stage,
+      value: inStage.length,
+      sub: value > 0 ? formatUsd(value) : undefined,
+      href: "/pipeline",
+      title: `${stage}: ${inStage.length} lead${inStage.length === 1 ? "" : "s"}${value > 0 ? `, ${formatUsd(value)} as entered` : ""}`,
     };
   });
-  const peak = Math.max(1, ...rows.map((r) => r.count));
-
   return (
-    <section className="rounded-2xl border bg-card p-5">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <h2 className="font-semibold">Pipeline</h2>
-          <p className="text-xs text-muted-foreground">{leads.length} leads in the book</p>
-        </div>
-        <Link
-          href="/pipeline"
-          className="inline-flex items-center gap-1 text-xs font-medium text-[var(--brand)] hover:underline"
-        >
-          Open board <ArrowUpRight className="h-3 w-3" />
-        </Link>
-      </div>
-
-      <ul className="mt-4 space-y-2.5">
-        {rows.map((r) => (
-          <li key={r.stage}>
-            <div className="flex items-baseline justify-between gap-3 text-sm">
-              <span className="font-medium">{r.stage}</span>
-              <span className="flex items-baseline gap-2">
-                {r.value > 0 ? (
-                  <span className="tabular text-xs text-muted-foreground">{formatUsd(r.value)}</span>
-                ) : null}
-                <span className="tabular font-semibold">{r.count}</span>
-              </span>
-            </div>
-            <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-muted">
-              <div
-                className={cn(
-                  "h-full rounded-full transition-[width] duration-700 ease-out",
-                  r.kind === "won"
-                    ? "bg-[var(--success)]"
-                    : r.kind === "lost"
-                      ? "bg-[var(--destructive)]/70"
-                      : "brand-gradient",
-                )}
-                style={{ width: `${Math.round((r.count / peak) * 100)}%` }}
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <Panel title="Pipeline by stage" basis={`${leads.length} leads in the book · lead values as entered, USD`} href="/pipeline" hrefLabel="Open board">
+      {leads.length === 0 ? (
+        <EmptyState title="No leads in the book" description="The pipeline fills as leads are added or imported." />
+      ) : (
+        <BarList rows={rows} />
+      )}
+    </Panel>
   );
 }
 
 /* ── Ops panel: revenue by event ──────────────────────────────────────────── */
 
-export function OpsEventsPanel({
-  events,
-  error,
-}: {
-  events: OpsEvent[] | null;
-  error: string | null;
-}) {
+export function OpsEventsPanel({ events, error }: { events: OpsEvent[] | null; error: string | null }) {
+  const rows = (events ?? []).slice(0, 6).map((e) => {
+    const pct = e.allocated_total ? Math.round((e.allocated_paid / e.allocated_total) * 100) : 0;
+    return {
+      key: String(e.id),
+      label: e.name,
+      value: e.allocated_total,
+      display: formatOpsMoney(e.allocated_total),
+      sub: `${e.deal_count} sponsor${e.deal_count === 1 ? "" : "s"} · ${pct}% paid · ${formatEventDate(e)}`,
+      href: "/events",
+      title: `${e.name}: ${formatOpsMoney(e.allocated_total)} allocated, ${formatOpsMoney(e.allocated_paid)} paid`,
+    };
+  });
   return (
-    <section className="rounded-2xl border bg-card p-5">
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <span className="grid h-7 w-7 place-items-center rounded-lg bg-[var(--ops-soft)] text-[var(--ops)]">
-            <Radar className="h-3.5 w-3.5" />
-          </span>
-          <div>
-            <h2 className="font-semibold">Event revenue</h2>
-            <p className="text-xs text-muted-foreground">Allocated in the ops panel</p>
-          </div>
-        </div>
-      </div>
-
+    <Panel title="Event revenue" basis="Allocated in the ops panel, the six largest · each event in its own currency" href="/events" hrefLabel="All events">
       {error ? (
-        <p className="mt-4 rounded-xl border border-dashed px-4 py-6 text-center text-sm text-muted-foreground">
-          {error}
-        </p>
-      ) : !events?.length ? (
-        <p className="mt-4 rounded-xl border border-dashed px-4 py-6 text-center text-sm text-muted-foreground">
-          No portfolio events in the ops panel yet.
-        </p>
+        <EmptyState title="Not reading the ops panel" description={error} />
+      ) : !rows.length ? (
+        <EmptyState title="No portfolio events yet" description="Events and their sponsors live in the tracker; add one there and its revenue appears here." />
       ) : (
-        <ul className="mt-4 space-y-2.5">
-          {events.slice(0, 6).map((e) => {
-            const pct = e.allocated_total
-              ? Math.round((e.allocated_paid / e.allocated_total) * 100)
-              : 0;
-            return (
-              <li key={e.id}>
-                <div className="flex items-baseline justify-between gap-3 text-sm">
-                  <span className="min-w-0 truncate font-medium">{e.name}</span>
-                  <span className="tabular shrink-0 text-xs text-muted-foreground">
-                    {formatOpsMoney(e.allocated_total)}
-                  </span>
-                </div>
-                <div className="mt-1 flex items-center gap-2">
-                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
-                    <div
-                      className="h-full rounded-full bg-[var(--success)] transition-[width] duration-700 ease-out"
-                      style={{ width: `${Math.min(100, pct)}%` }}
-                    />
-                  </div>
-                  <span className="tabular w-16 shrink-0 text-right text-[11px] text-muted-foreground">
-                    {pct}% paid
-                  </span>
-                </div>
-                <p className="mt-0.5 text-[11px] text-muted-foreground">
-                  {e.deal_count} sponsor{e.deal_count === 1 ? "" : "s"}
-                  {` · ${formatEventDate(e)}`}
-                  {e.location ? ` · ${e.location}` : ""}
-                </p>
-              </li>
-            );
-          })}
-        </ul>
+        <BarList rows={rows} />
       )}
-    </section>
+    </Panel>
   );
 }
 
@@ -207,14 +164,11 @@ const ACTIVITY_ICON = {
 
 export function ActivityFeed({ activities }: { activities: ActivityWithRefs[] }) {
   return (
-    <section className="rounded-2xl border bg-card p-5">
-      <h2 className="font-semibold">Team activity</h2>
+    <Panel title="Team activity" basis="The last ten calls, emails and notes logged by anyone">
       {activities.length === 0 ? (
-        <p className="mt-4 rounded-xl border border-dashed px-4 py-6 text-center text-sm text-muted-foreground">
-          Nothing logged yet. Calls made in the workspace show up here.
-        </p>
+        <EmptyState title="Nothing logged yet" description="Calls made in the workspace and notes left on a lead or account show up here." />
       ) : (
-        <ul className="mt-4 space-y-3">
+        <ul className="space-y-3">
           {activities.map((a) => {
             const Icon = ACTIVITY_ICON[a.type] ?? CircleDot;
             const subject = a.lead_name ?? a.account_name ?? a.subject ?? "—";
@@ -232,9 +186,7 @@ export function ActivityFeed({ activities }: { activities: ActivityWithRefs[] })
                       {a.outcome ? ` · ${a.outcome}` : ""}
                     </span>
                   </p>
-                  {a.body ? (
-                    <p className="line-clamp-2 text-xs text-muted-foreground">{a.body}</p>
-                  ) : null}
+                  {a.body ? <p className="line-clamp-2 text-xs text-muted-foreground">{a.body}</p> : null}
                   <p className="text-[11px] text-muted-foreground">
                     {timeAgo(a.occurred_at)}
                     {a.owner?.full_name ? ` · ${a.owner.full_name}` : ""}
@@ -246,89 +198,6 @@ export function ActivityFeed({ activities }: { activities: ActivityWithRefs[] })
           })}
         </ul>
       )}
-    </section>
-  );
-}
-
-/* ── Top sponsors ─────────────────────────────────────────────────────────── */
-
-export function SponsorStrip({
-  accounts,
-}: {
-  accounts: { id: string; name: string; status: string; contacts: number; events: string[] }[];
-}) {
-  return (
-    <section className="rounded-2xl border bg-card p-5">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <h2 className="font-semibold">Sponsors</h2>
-          <p className="text-xs text-muted-foreground">Accounts with live allocations</p>
-        </div>
-        <Link
-          href="/accounts"
-          className="inline-flex items-center gap-1 text-xs font-medium text-[var(--brand)] hover:underline"
-        >
-          All accounts <ArrowUpRight className="h-3 w-3" />
-        </Link>
-      </div>
-
-      {accounts.length === 0 ? (
-        <p className="mt-4 rounded-xl border border-dashed px-4 py-6 text-center text-sm text-muted-foreground">
-          No sponsor accounts yet — convert a confirmed lead to create one.
-        </p>
-      ) : (
-        <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-          {accounts.slice(0, 6).map((a) => (
-            <li key={a.id}>
-              <Link
-                href={`/accounts/${a.id}`}
-                className="lift block rounded-xl border bg-background px-3 py-2.5"
-              >
-                <p className="truncate text-sm font-medium">{a.name}</p>
-                <p className="mt-0.5 flex items-center gap-2 text-[11px] text-muted-foreground">
-                  <span className="inline-flex items-center gap-1">
-                    <Users className="h-3 w-3" /> {a.contacts}
-                  </span>
-                  {a.events.length ? (
-                    <span className="inline-flex min-w-0 items-center gap-1">
-                      <CalendarDays className="h-3 w-3 shrink-0" />
-                      <span className="truncate">{a.events.join(", ")}</span>
-                    </span>
-                  ) : (
-                    <span>{a.status}</span>
-                  )}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
-  );
-}
-
-/* ── Conversion strip ─────────────────────────────────────────────────────── */
-
-export function ConnectRate({ calls, connects }: { calls: number; connects: number }) {
-  const pct = calls ? Math.round((connects / calls) * 100) : 0;
-  return (
-    <div className="sheen rounded-2xl border bg-card p-5">
-      <div className="flex items-start justify-between gap-3">
-        <span className="eyebrow">Connect rate · 7 days</span>
-        <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--success-soft)] text-[var(--success)]">
-          <TrendingUp className="h-4 w-4" />
-        </span>
-      </div>
-      <p className="figure mt-3 text-[2.25rem] leading-none">{pct}%</p>
-      <p className="mt-2 text-sm text-muted-foreground">
-        {connects} connected of {calls} call{calls === 1 ? "" : "s"}
-      </p>
-      <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted">
-        <div
-          className="h-full rounded-full bg-[var(--success)] transition-[width] duration-700 ease-out"
-          style={{ width: `${Math.min(100, pct)}%` }}
-        />
-      </div>
-    </div>
+    </Panel>
   );
 }

@@ -241,12 +241,12 @@ function LeadPane({
     <div className="space-y-4">
       <div className="rounded-2xl border bg-card p-5">
         <div className="flex items-start gap-4">
-          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 text-lg font-bold text-primary">
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-accent text-lg font-semibold text-accent-foreground">
             {initials(lead.company_name)}
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="truncate text-2xl font-bold tracking-tight">
+              <h1 className="display truncate text-2xl">
                 {lead.company_name ?? "Unnamed company"}
               </h1>
               {lead.category ? (
@@ -255,7 +255,7 @@ function LeadPane({
                 </Badge>
               ) : null}
               {lead.priority === "High" ? (
-                <Badge className="bg-orange-500/15 text-orange-600 dark:text-orange-400 border-transparent text-[10px]">
+                <Badge className="border-transparent bg-[var(--ops-soft)] text-[var(--ops)] text-[10px]">
                   <Flame className="h-3 w-3" /> High
                 </Badge>
               ) : null}
@@ -315,7 +315,7 @@ function LeadPane({
         </div>
 
         {callbackDue ? (
-          <p className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-amber-500/10 px-2.5 py-1.5 text-xs font-medium text-amber-700 dark:text-amber-300">
+          <p className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-[var(--ops-soft)] px-2.5 py-1.5 text-xs font-medium text-[var(--ops)]">
             <CalendarClock className="h-3.5 w-3.5" />
             Call-back was due {timeAgo(lead.callback_at)}
           </p>
@@ -366,7 +366,7 @@ function ContactRow({
       <span
         className={cn(
           "grid h-8 w-8 shrink-0 place-items-center rounded-lg",
-          emphasis && value ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400" : "bg-muted text-muted-foreground",
+          emphasis && value ? "bg-[var(--success-soft)] text-[var(--success)]" : "bg-muted text-muted-foreground",
         )}
       >
         {icon}
@@ -401,12 +401,12 @@ function ContactRow({
 /** The ops-panel context strip — what this sponsor already pays for. */
 function OpsStrip({ ops }: { ops: OpsLeadSummary }) {
   return (
-    <div className="rounded-2xl border border-amber-500/35 bg-amber-500/[0.06] p-4 dark:border-amber-400/25">
+    <div className="rounded-2xl border border-[var(--ops)]/35 bg-[var(--ops-soft)] p-4">
       <div className="flex items-center gap-2">
-        <Radar className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+        <Radar className="h-4 w-4 text-[var(--ops)]" />
         <p className="text-sm font-semibold">Live in the ops panel</p>
         {ops.paid ? (
-          <Badge className="border-transparent bg-emerald-500/15 text-[10px] text-emerald-700 dark:text-emerald-300">
+          <Badge className="border-transparent bg-[var(--success-soft)] text-[10px] text-[var(--success)]">
             Paid
           </Badge>
         ) : null}
@@ -420,7 +420,7 @@ function OpsStrip({ ops }: { ops: OpsLeadSummary }) {
           {ops.events.map((e) => (
             <li
               key={e.event_id}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-card/70 px-2 py-1 text-[11px]"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--ops)]/30 bg-card/70 px-2 py-1 text-[11px]"
             >
               <span className="font-medium">{e.event_name}</span>
               <span className="tabular text-muted-foreground">
@@ -662,7 +662,7 @@ function CallPane({
             <a
               href={tel}
               onClick={() => setStartedAt(Date.now())}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--success)] px-4 py-3 text-sm font-semibold text-white transition-colors hover:opacity-90"
             >
               <Phone className="h-4 w-4" />
               Call {lead.contact_phone}
@@ -711,10 +711,10 @@ function CallPane({
                   "group flex items-center justify-between gap-2 rounded-xl border px-3 py-2.5 text-left text-sm font-medium transition-all active:scale-[0.98]",
                   active
                     ? d.kind === "reached"
-                      ? "border-emerald-500 bg-emerald-500/12 text-emerald-700 dark:text-emerald-300"
+                      ? "border-[var(--success)] bg-[var(--success-soft)] text-[var(--success)]"
                       : d.kind === "dead"
                         ? "border-destructive bg-destructive/10 text-destructive"
-                        : "border-amber-500 bg-amber-500/12 text-amber-700 dark:text-amber-300"
+                        : "border-[var(--ops)] bg-[var(--ops-soft)] text-[var(--ops)]"
                     : "hover:border-foreground/25 hover:bg-accent/60",
                 )}
               >

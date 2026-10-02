@@ -59,7 +59,7 @@ function CountList({ rows, href }: { rows: Count[]; href?: (key: string) => stri
 
 function ClassTable({ classes }: { classes: WorkflowData["classes"] }) {
   return (
-    <div className="overflow-x-auto">
+    <div className="desk-scroll">
       <table className="desk-table">
         <thead>
           <tr>
@@ -73,9 +73,9 @@ function ClassTable({ classes }: { classes: WorkflowData["classes"] }) {
         </thead>
         <tbody>
           {classes.map((c) => (
-            <tr key={c.cls.key}>
+            <tr key={c.cls.key} className="linked">
               <td>
-                <Link href={`/database/asset-classes/${c.cls.slug}`} className="font-medium">
+                <Link href={`/database/asset-classes/${c.cls.slug}`} className="cover font-medium">
                   {c.cls.name}
                 </Link>
               </td>
@@ -409,7 +409,7 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
             <Ranges rows={d.sizeByClass.filter((s) => s.q).map((s) => ({ key: s.cls.key, label: s.cls.name, ...s.q!, n: s.q!.n }))} format={formatUsd} />
           </Box>
           <Box title="Manager size by class" flush defn="The same distributions as figures: quartiles of regulatory AUM per class.">
-            <div className="overflow-x-auto">
+            <div className="desk-scroll">
               <table className="desk-table">
                 <thead>
                   <tr>
@@ -506,7 +506,7 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
           </div>
           <Split>
             <Box title="Where disclosed capital goes" flush defn="Commitments per class. The USD column adds only commitments the disclosure states in USD; other currencies are counted, never converted.">
-              <div className="overflow-x-auto">
+              <div className="desk-scroll">
                 <table className="desk-table">
                   <thead>
                     <tr>
@@ -582,7 +582,7 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
           <Split>
             <Box title="Portfolio companies" count={d.portcos.length} flush>
               {d.portcos.length ? (
-                <div className="overflow-x-auto">
+                <div className="desk-scroll">
                   <table className="desk-table">
                     <thead>
                       <tr>
@@ -596,22 +596,26 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
                     </thead>
                     <tbody>
                       {d.portcos.slice(0, 60).map((p) => (
-                        <tr key={p.id}>
-                          <td>
+                        <tr key={p.id} className={p.intel_key ? "linked" : undefined}>
+                          <td className="min-w-[180px] max-w-[280px]">
                             <span className="flex items-center gap-2 font-medium">
                               <CompanyLogo name={p.name} domain={p.domain} size={18} />
                               {p.intel_key ? (
-                                <Link href={portcoHref(p.intel_key)} className="hover:underline">
+                                <Link href={portcoHref(p.intel_key)} className="cover truncate" title={p.name}>
                                   {p.name}
                                 </Link>
                               ) : (
-                                p.name
+                                <span className="truncate" title={p.name}>
+                                  {p.name}
+                                </span>
                               )}
                             </span>
                           </td>
-                          <td>{p.gp ? <Link href={`/companies/${p.gp.id}?tab=portfolio`}>{p.gp.name}</Link> : "—"}</td>
-                          <td className="text-muted-foreground">{p.sector ?? "—"}</td>
-                          <td className="text-muted-foreground">{p.hq ?? "—"}</td>
+                          <td className="max-w-[180px] truncate" title={p.gp?.name}>
+                            {p.gp ? <Link href={`/companies/${p.gp.id}?tab=portfolio`}>{p.gp.name}</Link> : "—"}
+                          </td>
+                          <td className="max-w-[160px] truncate text-muted-foreground" title={p.sector ?? undefined}>{p.sector ?? "—"}</td>
+                          <td className="max-w-[160px] truncate text-muted-foreground" title={p.hq ?? undefined}>{p.hq ?? "—"}</td>
                           <td className="num">{p.invested_year ?? "—"}{p.exit_year ? <span className="text-muted-foreground"> → {p.exit_year}</span> : null}</td>
                           <td>{p.status ? <Tag>{p.status}</Tag> : "—"}</td>
                         </tr>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Landmark } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { matches, type DirectoryFilters } from "@/lib/directory/filters";
 import { filers, leagueTable, rolesForTypes } from "@/lib/directory/market";
 import { PROVIDER_ROLES, ROLE_PLURAL, type ProviderRole } from "@/lib/directory/providers";
@@ -39,7 +39,9 @@ export function managerScope(dir: Directory, filters: DirectoryFilters) {
 /**
  * "Fund administrators serving venture firms": the directory holds a handful
  * of administrators as firms, but Form ADV names every one those managers
- * use. This shows that ranking beside the results.
+ * use. This shows that ranking beside the results, on the desk register: a
+ * boxed league table with a magnitude bar per brand and a short row of role
+ * toggles (five at most, so pills rather than a menu).
  */
 export function ProviderLeaders({ dir, filters }: { dir: Directory; filters: DirectoryFilters }) {
   const fromTypes = rolesForTypes(filters.types);
@@ -57,10 +59,9 @@ export function ProviderLeaders({ dir, filters }: { dir: Directory; filters: Dir
   if (filters.clientTypes.length) params.set("type", filters.clientTypes.join(","));
 
   return (
-    <div className="sheen rounded-2xl border bg-card">
-      <div className="flex flex-wrap items-center gap-2 border-b px-5 py-3">
-        <Landmark className="h-4 w-4 text-muted-foreground" />
-        <h3 className="text-sm font-semibold">
+    <section className="sheen rounded-[4px] border bg-card">
+      <header className="flex flex-wrap items-center gap-2 border-b px-3 py-2">
+        <h3 className="desk-label text-foreground">
           {ROLE_PLURAL[role]} named on Form ADV by {league.covered.toLocaleString("en-US")} {scopeLabel} managers
         </h3>
         {roles.length > 1 ? (
@@ -70,38 +71,36 @@ export function ProviderLeaders({ dir, filters }: { dir: Directory; filters: Dir
                 key={r}
                 type="button"
                 onClick={() => setPicked(r)}
-                className={cn(
-                  "rounded-full border px-2 py-0.5 text-xs",
-                  r === role ? "border-primary bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
-                )}
+                aria-pressed={r === role}
+                className={cn("tag hover:text-foreground", r === role && "border-foreground bg-foreground text-background hover:text-background")}
               >
                 {ROLE_PLURAL[r]}
               </button>
             ))}
           </div>
         ) : null}
-      </div>
+      </header>
       <ol className="divide-y">
         {league.rows.map((row, i) => (
-          <li key={row.brand.key} className="flex items-center gap-3 px-5 py-2 text-sm">
-            <span className="w-4 tabular text-xs text-muted-foreground">{i + 1}</span>
-            <Link href={`/database/providers/${row.brand.key}`} className="w-44 truncate font-medium hover:text-primary">
+          <li key={row.brand.key} className="flex items-center gap-3 px-3 py-1.5 text-[12.5px]">
+            <span className="figure w-4 text-[11px] text-muted-foreground">{i + 1}</span>
+            <Link href={`/database/providers/${row.brand.key}`} className="w-44 truncate font-medium hover:underline">
               {row.brand.name}
             </Link>
-            <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--chart-track)]">
-              <span className="block h-full rounded-full bg-[var(--chart-bar)]" style={{ width: `${(row.clients / top) * 100}%` }} />
+            <span className="bar-track h-[5px] flex-1 overflow-hidden rounded-[2px]">
+              <span className="bar-fill block h-full" style={{ width: `${Math.max(1.5, (row.clients / top) * 100)}%` }} />
             </span>
-            <span className="w-24 text-right tabular text-xs text-muted-foreground">
+            <span className="figure w-24 text-right text-[11px] text-muted-foreground">
               {row.clients} · {Math.round(row.share * 100)}%
             </span>
           </li>
         ))}
       </ol>
-      <div className="border-t px-5 py-2.5">
-        <Link href={`/database/market?${params}`} className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground">
+      <div className="border-t px-3 py-2">
+        <Link href={`/database/market?${params}`} className="inline-flex items-center gap-1 text-[11.5px] text-muted-foreground hover:text-foreground">
           Full league table <ArrowRight className="h-3 w-3" />
         </Link>
       </div>
-    </div>
+    </section>
   );
 }

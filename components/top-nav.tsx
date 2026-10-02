@@ -233,6 +233,49 @@ function sectionOf(pathname: string, search: URLSearchParams | null): string | n
   return null;
 }
 
+// --- Navigation in flight ----------------------------------------------------------
+// A thin brass line along the top of the bar while a route is being fetched.
+// Next's `useLinkStatus` only answers inside the Link that was clicked, and a
+// panel link unmounts the moment its panel closes, so the bar keys on the
+// URL instead: a click records the page it left from, and the bar shows
+// until the page shown is no longer that one. A click on the page already
+// shown records nothing, so the line can never run with nowhere to go.
+
+const NAV_EVENT = "nav-progress";
+let navFrom: string | null = null;
+
+/** A URL as path plus query, serialised one way so two spellings of the same page compare equal. */
+function keyOf(url: string): string {
+  try {
+    const u = new URL(url, "http://x");
+    const q = u.searchParams.toString();
+    return q ? `${u.pathname}?${q}` : u.pathname;
+  } catch {
+    return url;
+  }
+}
+
+/** Marks a navigation to `href` as started from the page the browser shows now. The command palette calls it too. */
+export function startNavigation(href: string) {
+  if (typeof window === "undefined") return;
+  const from = keyOf(window.location.href);
+  navFrom = keyOf(href) === from ? null : from;
+  window.dispatchEvent(new Event(NAV_EVENT));
+}
+
+function subscribeNav(cb: () => void) {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener(NAV_EVENT, cb);
+  return () => window.removeEventListener(NAV_EVENT, cb);
+}
+
+function NavProgress({ pathname, search }: { pathname: string; search: URLSearchParams | null }) {
+  const from = useSyncExternalStore(subscribeNav, () => navFrom, () => null);
+  const q = search?.toString() ?? "";
+  const pending = from != null && from === keyOf(q ? `${pathname}?${q}` : pathname);
+  return pending ? <span className="topnav-progress" aria-hidden /> : null;
+}
+
 // --- The CRM menu, put away or shown, remembered per browser -------------------
 
 const CRM_KEY = "nav:crm";
@@ -327,23 +370,45 @@ function useDismiss(open: boolean, close: () => void) {
   return ref;
 }
 
+/** Whether a menu item is the page shown: a link with a query must match it exactly; a bare path matches whatever query the page carries. */
+function isCurrent(href: string, pathname: string, search: URLSearchParams | null): boolean {
+  if (!href.includes("?")) return href === pathname;
+  const q = search?.toString() ?? "";
+  return keyOf(href) === keyOf(q ? `${pathname}?${q}` : pathname);
+}
+
 function MenuLink({ item, onNavigate, on }: { item: Item; onNavigate: () => void; on?: boolean }) {
   return (
-    <Link href={item.href} onClick={onNavigate} className={cn("topnav-link", on && "is-on")} aria-current={on ? "page" : undefined}>
+    <Link
+      href={item.href}
+      onClick={() => {
+        startNavigation(item.href);
+        onNavigate();
+      }}
+      className={cn("topnav-link", on && "is-on")}
+      aria-current={on ? "page" : undefined}
+    >
       <span className="block text-[13px] font-medium leading-tight">{item.label}</span>
       {item.note ? <span className="mt-0.5 block text-[11px] leading-tight text-[var(--rail-fg-dim)]">{item.note}</span> : null}
     </Link>
   );
 }
 
-function SectionPanel({ section, onNavigate, pathname }: { section: Section; onNavigate: () => void; pathname: string }) {
+function SectionPanel({ section, onNavigate, pathname, search }: { section: Section; onNavigate: () => void; pathname: string; search: URLSearchParams | null }) {
   return (
     <div className="topnav-panel" role="menu" aria-label={section.label}>
       <div className="mx-auto flex max-w-[1480px] gap-8 px-5 py-5 md:px-7">
         <div className="hidden w-56 shrink-0 lg:block">
           <p className="wordmark text-[10px] text-[var(--brass)]">{section.label}</p>
           <p className="mt-2 text-[12.5px] leading-relaxed text-[var(--rail-fg-dim)]">{section.blurb}</p>
-          <Link href={section.href} onClick={onNavigate} className="mt-3 inline-block text-[12.5px] font-medium text-[var(--rail-fg)] hover:text-white">
+          <Link
+            href={section.href}
+            onClick={() => {
+              startNavigation(section.href);
+              onNavigate();
+            }}
+            className="topnav-link mt-2 -ml-2 inline-block text-[12.5px] font-medium"
+          >
             Open {section.label.toLowerCase()} →
           </Link>
         </div>
@@ -354,7 +419,7 @@ function SectionPanel({ section, onNavigate, pathname }: { section: Section; onN
               <ul className="space-y-0.5">
                 {col.items.map((it) => (
                   <li key={it.href + it.label}>
-                    <MenuLink item={it} onNavigate={onNavigate} on={it.href.split("?")[0] === pathname && !it.href.includes("?")} />
+                    <MenuLink item={it} onNavigate={onNavigate} on={isCurrent(it.href, pathname, search)} />
                   </li>
                 ))}
               </ul>
@@ -381,7 +446,16 @@ function DesktopNav({ pathname, search }: { pathname: string; search: URLSearchP
     leave.current = window.setTimeout(() => setOpen(null), 160);
   };
   return (
-    <div ref={ref} className="relative hidden flex-1 items-stretch lg:flex" onMouseLeave={scheduleClose} onMouseEnter={() => leave.current && window.clearTimeout(leave.current)}>
+    <div
+      ref={ref}
+      className="relative hidden flex-1 items-stretch lg:flex"
+      onMouseLeave={scheduleClose}
+      onMouseEnter={() => leave.current && window.clearTimeout(leave.current)}
+      // Tabbing out of the bar and its panel closes the panel, as the pointer leaving does.
+      onBlur={(e) => {
+        if (open && !ref.current?.contains(e.relatedTarget as Node | null)) close();
+      }}
+    >
       <ul className="flex items-stretch gap-0.5">
         {SECTIONS.map((s) => {
           const on = current === s.key;
@@ -396,13 +470,13 @@ function DesktopNav({ pathname, search }: { pathname: string; search: URLSearchP
                 className={cn("topnav-section", (on || isOpen) && "is-on")}
               >
                 {s.label}
-                <ChevronDown className={cn("ml-1 h-3 w-3 opacity-60 transition-transform", isOpen && "rotate-180")} />
+                <ChevronDown className={cn("ml-1 h-3 w-3 opacity-60 transition-transform duration-150", isOpen && "rotate-180")} />
               </button>
             </li>
           );
         })}
       </ul>
-      {open ? <SectionPanel section={SECTIONS.find((s) => s.key === open)!} onNavigate={close} pathname={pathname} /> : null}
+      {open ? <SectionPanel section={SECTIONS.find((s) => s.key === open)!} onNavigate={close} pathname={pathname} search={search} /> : null}
     </div>
   );
 }
@@ -419,7 +493,7 @@ function CrmMenu({ pathname }: { pathname: string }) {
       <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-haspopup="menu" className={cn("topnav-section", (on || open) && "is-on")}>
         <span className="wordmark mr-1.5 text-[9px] text-[var(--brass)]">CRM</span>
         Sales
-        <ChevronDown className={cn("ml-1 h-3 w-3 opacity-60 transition-transform", open && "rotate-180")} />
+        <ChevronDown className={cn("ml-1 h-3 w-3 opacity-60 transition-transform duration-150", open && "rotate-180")} />
       </button>
       {open ? (
         <div className="topnav-dropdown right-0 w-64" role="menu">
@@ -485,13 +559,13 @@ function UserMenu({ user }: { user: SessionUser | null }) {
           </div>
           <ul className="p-2">
             <li>
-              <Link href="/settings" onClick={close} className="topnav-link flex items-center gap-2">
+              <Link href="/settings" onClick={() => { startNavigation("/settings"); close(); }} className="topnav-link flex items-center gap-2">
                 <Settings className="h-3.5 w-3.5 opacity-70" /> Settings
               </Link>
             </li>
             {user.role === "admin" ? (
               <li>
-                <Link href="/admin" onClick={close} className="topnav-link flex items-center gap-2">
+                <Link href="/admin" onClick={() => { startNavigation("/admin"); close(); }} className="topnav-link flex items-center gap-2">
                   <Shield className="h-3.5 w-3.5 opacity-70" /> Team & assignments
                 </Link>
               </li>
@@ -528,16 +602,33 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
   const [section, setSection] = useState<string | null>(null);
   const [crmShown] = useCrmShown();
   const close = () => setOpen(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  // While the drawer is up the page behind it does not scroll, Escape puts it
+  // away, and focus starts on the close button so the keyboard is inside it.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} aria-label="Open menu" className="topnav-icon lg:hidden">
+      <button type="button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} className="topnav-icon lg:hidden">
         <Menu className="h-5 w-5" />
       </button>
       {open ? (
-        <div className="rail fixed inset-0 z-50 overflow-y-auto lg:hidden" role="dialog" aria-modal="true">
+        <div className="rail topnav-drawer fixed inset-0 z-50 overflow-y-auto lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="flex items-center justify-between border-b border-[var(--rail-line)] px-4 py-3">
             <Brand onClick={close} />
-            <button type="button" onClick={close} aria-label="Close menu" className="topnav-icon">
+            <button ref={closeRef} type="button" onClick={close} aria-label="Close menu" className="topnav-icon">
               <X className="h-5 w-5" />
             </button>
           </div>
@@ -557,10 +648,10 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
                     className="flex w-full items-center justify-between py-3 text-[14px] font-medium text-[var(--rail-fg)]"
                   >
                     {s.label}
-                    <ChevronDown className={cn("h-4 w-4 opacity-60 transition-transform", isOpen && "rotate-180")} />
+                    <ChevronDown className={cn("h-4 w-4 opacity-60 transition-transform duration-150", isOpen && "rotate-180")} />
                   </button>
                   {isOpen ? (
-                    <div className="pb-3">
+                    <div className="fade-in-fast pb-3">
                       {s.columns.map((col, i) => (
                         <div key={i} className="mb-2">
                           {col.heading ? <p className="wordmark mb-1 px-2 text-[9.5px] text-[var(--rail-fg-dim)]">{col.heading}</p> : null}
@@ -579,7 +670,7 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
               );
             })}
             <div className="flex items-center justify-between py-3">
-              <Link href="/settings" onClick={close} className="text-[13px] text-[var(--rail-fg)]">
+              <Link href="/settings" onClick={() => { startNavigation("/settings"); close(); }} className="text-[13px] text-[var(--rail-fg)]">
                 Settings
               </Link>
               <div className="flex items-center gap-2">
@@ -596,8 +687,15 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
 
 function Brand({ onClick }: { onClick?: () => void }) {
   return (
-    <Link href="/database" onClick={onClick} className="group flex items-center gap-2.5 py-2">
-      <LpgpMark className="h-7 w-7 shrink-0 text-[var(--rail-fg)] transition-transform group-hover:scale-105" />
+    <Link
+      href="/database"
+      onClick={() => {
+        startNavigation("/database");
+        onClick?.();
+      }}
+      className="group flex items-center gap-2.5 rounded-[4px] py-2"
+    >
+      <LpgpMark className="h-7 w-7 shrink-0 text-[var(--rail-fg)]" />
       <span className="leading-none">
         <span className="block text-[14px] font-bold tracking-tight text-[#f3efe6]">LPGP Connect</span>
         <span className="wordmark mt-0.5 block text-[8.5px] text-[var(--brass)]">Private markets intelligence</span>
@@ -618,6 +716,7 @@ function NavLive({ user }: { user: SessionUser | null }) {
 function NavRow({ user, pathname, search }: { user: SessionUser | null; pathname: string; search: URLSearchParams | null }) {
   return (
     <div className="mx-auto flex h-14 max-w-[1480px] items-stretch gap-3 px-4 md:px-6">
+      <NavProgress pathname={pathname} search={search} />
       <MobileDrawer user={user} pathname={pathname} />
       <Brand />
       <DesktopNav pathname={pathname} search={search} />

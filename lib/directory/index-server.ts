@@ -125,6 +125,24 @@ function strings(v: unknown): string[] {
   return Array.isArray(v) ? v.filter((s): s is string => typeof s === "string" && s.length > 0) : [];
 }
 
+// The index ships every firm's overview to the browser, and the list only
+// ever shows its opening lines: the full text lives on the profile. Cut at a
+// word, with an ellipsis so a cut never reads as the whole. Classification
+// (industries, strategies, the type code) runs on the full text first.
+function opening(text: string | null | undefined, max: number): string | null {
+  if (!text) return null;
+  const t = text.trim();
+  if (t.length <= max) return t || null;
+  const cut = t.slice(0, max);
+  const at = cut.lastIndexOf(" ");
+  return `${(at > max * 0.6 ? cut.slice(0, at) : cut).replace(/[\s,;:(–-]+$/, "")}…`;
+}
+
+/** Overview characters the index carries; the quick look shows this much. */
+const DESCRIPTION_CHARS = 300;
+/** Service-line characters the index carries. */
+const LINES_CHARS = 160;
+
 function numberOrNull(v: unknown): number | null {
   if (v == null || v === "") return null;
   const n = Number(v);
@@ -424,9 +442,9 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
       privateFunds: c.private_fund_count ?? null,
       contacts: contactCount.get(c.id) ?? 0,
       connectable: connectableCount.get(c.id) ?? 0,
-      description: c.description,
+      description: opening(c.description, DESCRIPTION_CHARS),
       industry: c.industry ?? null,
-      lines: linesText(c.service_lines),
+      lines: opening(linesText(c.service_lines), LINES_CHARS),
       lifecycle: Array.isArray(c.lifecycle) ? c.lifecycle : [],
       discloses: disclosesFrom(c.discloses_commitments),
       portfolio: Boolean(c.in_portfolio),
@@ -468,7 +486,7 @@ let pendingIndex: DirectoryIndex | null = null;
 
 // Several megabytes of records: sliced for the data cache and kept in
 // memory per instance (lib/supabase/big-cache.ts).
-const cachedIndex = bigCache("directory-index-v6", buildIndex, {
+const cachedIndex = bigCache("directory-index-v7", buildIndex, {
   tags: [DIRECTORY_TAG],
   revalidate: 86400,
 });

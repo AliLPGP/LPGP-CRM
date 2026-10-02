@@ -2,14 +2,14 @@
 
 import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
-import { Search } from "lucide-react";
 import type { LeadWithRefs } from "@/lib/types";
 import { LEAD_STAGES, STAGE_META, MARKET_LABELS } from "@/lib/pipeline";
 import { moveLeadStage } from "@/lib/crm-actions";
 import { NewLeadDialog } from "@/components/new-lead-dialog";
 import { EventChips } from "@/components/pipeline/event-chips";
-import { NativeSelect } from "@/components/ui/native-select";
-import { Input } from "@/components/ui/input";
+import { FacetChips, FacetMenu } from "@/components/intel/facet-menu";
+import { ListToolbar, facetOptions } from "@/components/list-toolbar";
+import { ownerGroups, ownerLabel, ownerMatches } from "@/components/leads-table";
 import { formatUsd } from "@/lib/utils";
 import { initials } from "@/lib/utils";
 import { cn } from "@/lib/utils";
@@ -28,8 +28,8 @@ export function PipelineBoard({
   profiles: ProfileLite[];
 }) {
   const [leads, setLeads] = useState(initialLeads);
-  const [market, setMarket] = useState("ALL");
-  const [owner, setOwner] = useState("ALL");
+  const [markets, setMarkets] = useState<string[]>([]);
+  const [owners, setOwners] = useState<string[]>([]);
   const [q, setQ] = useState("");
   const [dragId, setDragId] = useState<string | null>(null);
   const [overStage, setOverStage] = useState<string | null>(null);
@@ -39,9 +39,8 @@ export function PipelineBoard({
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     return leads.filter((l) => {
-      if (market !== "ALL" && (l.market ?? "") !== market) return false;
-      if (owner === "ME" && l.owner_id !== currentUserId) return false;
-      if (owner !== "ALL" && owner !== "ME" && l.owner_id !== owner) return false;
+      if (markets.length && !markets.includes(l.market ?? "")) return false;
+      if (!ownerMatches(l, owners, currentUserId)) return false;
       if (!needle) return true;
       return (
         (l.company_name ?? "").toLowerCase().includes(needle) ||
@@ -49,7 +48,7 @@ export function PipelineBoard({
         (l.owner?.full_name ?? "").toLowerCase().includes(needle)
       );
     });
-  }, [leads, market, owner, q, currentUserId]);
+  }, [leads, markets, owners, q, currentUserId]);
 
   const byStage = useMemo(() => {
     const map = new Map<string, LeadWithRefs[]>();
@@ -85,37 +84,36 @@ export function PipelineBoard({
     });
   }
 
+  const marketOptions = facetOptions(leads, (l) => l.market, { label: (k) => MARKET_LABELS[k] ?? k });
+  const owner = ownerGroups(leads, profiles, currentUserId);
+
   return (
-    <div className="space-y-4">
-      {/* Toolbar */}
-      <div className="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
-        <div className="flex flex-wrap items-center gap-2">
-          <NativeSelect className="w-36" value={market} onChange={(e) => setMarket(e.target.value)}>
-            <option value="ALL">All markets</option>
-            {Object.keys(MARKET_LABELS).map((m) => (
-              <option key={m} value={m}>
-                {MARKET_LABELS[m]}
-              </option>
-            ))}
-          </NativeSelect>
-          <NativeSelect className="w-40" value={owner} onChange={(e) => setOwner(e.target.value)}>
-            <option value="ALL">All owners</option>
-            <option value="ME">My leads</option>
-            {profiles
-              .filter((p) => p.id !== currentUserId)
-              .map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.full_name ?? "Unnamed"}
-                </option>
-              ))}
-          </NativeSelect>
-          <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search leads…" className="pl-9" />
-          </div>
-        </div>
-        <NewLeadDialog profiles={profiles} isAdmin={isAdmin} />
-      </div>
+    <div className="space-y-3">
+      <ListToolbar
+        search={{ value: q, onChange: setQ, placeholder: "Search company, contact or owner" }}
+        facets={
+          <>
+            <FacetMenu label="Market" groups={[{ label: "", options: marketOptions }]} selected={markets} onChange={setMarkets} searchable={false} width={200} />
+            <FacetMenu label="Owner" groups={owner} selected={owners} onChange={setOwners} width={240} />
+          </>
+        }
+        shown={filtered.length}
+        total={leads.length}
+        noun="leads"
+        actions={<NewLeadDialog profiles={profiles} isAdmin={isAdmin} />}
+        chips={
+          <FacetChips
+            chips={[
+              ...markets.map((k) => ({ key: `m:${k}`, label: MARKET_LABELS[k] ?? k, remove: () => setMarkets(markets.filter((x) => x !== k)) })),
+              ...owners.map((k) => ({ key: `o:${k}`, label: ownerLabel(k, profiles), remove: () => setOwners(owners.filter((x) => x !== k)) })),
+            ]}
+            onClearAll={() => {
+              setMarkets([]);
+              setOwners([]);
+            }}
+          />
+        }
+      />
 
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
 
@@ -135,31 +133,29 @@ export function PipelineBoard({
               onDragLeave={() => setOverStage((s) => (s === stage ? null : s))}
               onDrop={() => onDrop(stage)}
               className={cn(
-                "rounded-xl border bg-muted/30 flex flex-col min-h-[60vh] transition-colors",
+                "flex min-h-[60vh] flex-col rounded-xl border bg-muted/30 transition-colors duration-[120ms]",
                 overStage === stage ? "border-primary bg-accent/40" : "",
               )}
             >
-              <div className="flex items-center justify-between gap-2 px-3 py-2.5 border-b">
+              <div className="flex items-center justify-between gap-2 border-b px-3 py-2.5">
                 <div className="flex items-center gap-2">
                   <span
                     className={cn(
                       "h-2 w-2 rounded-full",
-                      meta.kind === "won"
-                        ? "bg-foreground"
-                        : meta.kind === "lost"
-                          ? "bg-foreground/30"
-                          : "bg-foreground/60",
+                      meta.kind === "won" ? "bg-foreground" : meta.kind === "lost" ? "bg-foreground/30" : "bg-foreground/60",
                     )}
                   />
                   <span className="text-sm font-semibold">{stage}</span>
-                  <span className="text-xs text-muted-foreground tabular">{items.length}</span>
+                  <span className="tabular text-xs text-muted-foreground">{items.length}</span>
                 </div>
-                {total > 0 ? <span className="text-xs text-muted-foreground tabular">{formatUsd(total)}</span> : null}
+                {total > 0 ? <span className="tabular text-xs text-muted-foreground">{formatUsd(total)}</span> : null}
               </div>
 
-              <div className="flex-1 p-2 space-y-2 overflow-y-auto">
+              <div className="flex-1 space-y-2 overflow-y-auto p-2">
                 {items.length === 0 ? (
-                  <p className="text-xs text-muted-foreground text-center py-6">Drop leads here</p>
+                  <p className="py-6 text-center text-xs text-muted-foreground">
+                    {filtered.length === leads.length ? `No leads at ${stage} — drag one here to move it` : "None at this stage match the filters"}
+                  </p>
                 ) : (
                   items.map((l) => (
                     <div
@@ -172,14 +168,14 @@ export function PipelineBoard({
                       }}
                       onDragEnd={() => setDragId(null)}
                       className={cn(
-                        "rounded-lg border bg-card p-3 shadow-sm hover:border-primary/40 transition-colors",
+                        "rounded-lg border bg-card p-3 transition-colors duration-[120ms] hover:border-primary/40",
                         canMove(l) ? "cursor-grab active:cursor-grabbing" : "",
                         dragId === l.id ? "opacity-50" : "",
                       )}
                     >
                       <Link href={`/leads/${l.id}`} className="block">
                         <div className="flex items-start justify-between gap-2">
-                          <span className="font-medium text-sm leading-tight hover:text-primary">
+                          <span className="text-sm font-medium leading-tight hover:underline">
                             {l.company_name ?? l.company?.name ?? "Untitled lead"}
                           </span>
                           {l.market ? (
@@ -189,7 +185,7 @@ export function PipelineBoard({
                           ) : null}
                         </div>
                         {l.contact_name ? (
-                          <p className="mt-0.5 text-xs text-muted-foreground truncate">
+                          <p className="mt-0.5 truncate text-xs text-muted-foreground">
                             {[l.contact_name, l.contact_title].filter(Boolean).join(" · ")}
                           </p>
                         ) : null}
@@ -200,13 +196,13 @@ export function PipelineBoard({
                         ) : null}
                         <div className="mt-2.5 flex items-center justify-between">
                           <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                            <span className="grid h-5 w-5 place-items-center rounded-full bg-accent text-accent-foreground text-[9px] font-semibold">
+                            <span className="grid h-5 w-5 place-items-center rounded-full bg-accent text-[9px] font-semibold text-accent-foreground">
                               {initials(l.owner?.full_name ?? "?")}
                             </span>
-                            <span className="truncate max-w-[90px]">{l.owner?.full_name ?? "Unassigned"}</span>
+                            <span className="max-w-[90px] truncate">{l.owner?.full_name ?? "Unassigned"}</span>
                           </span>
                           {l.value_usd != null ? (
-                            <span className="text-xs font-medium tabular">{formatUsd(l.value_usd)}</span>
+                            <span className="tabular text-xs font-medium">{formatUsd(l.value_usd)}</span>
                           ) : null}
                         </div>
                       </Link>

@@ -43,20 +43,22 @@ export function OfferingTable({ rows, showClass = true, limit }: { rows: FundOff
           {list.map((o) => {
             const agent = o.placement_agents.find((a) => a.broker_dealer || a.name);
             return (
-              <tr key={o.id}>
+              <tr key={o.id} className={o.fund_id ? "linked" : undefined}>
                 <td className="whitespace-nowrap text-muted-foreground">
                   {dateLabel(o.filing_date)}
                   {o.form === "D/A" ? <span className="ml-1 text-[10px]">amend.</span> : null}
                 </td>
                 <td className="min-w-[260px] max-w-[460px]">
                   {o.fund_id ? (
-                    <Link href={`/funds/${o.fund_id}`} className="font-medium leading-snug">
+                    <Link href={`/funds/${o.fund_id}`} className="cover block truncate font-medium leading-snug" title={o.issuer_name}>
                       {o.issuer_name}
                     </Link>
                   ) : (
-                    <span className="font-medium leading-snug">{o.issuer_name}</span>
+                    <span className="block truncate font-medium leading-snug" title={o.issuer_name}>
+                      {o.issuer_name}
+                    </span>
                   )}
-                  <div className="mt-0.5 text-[11.5px] leading-snug text-muted-foreground">
+                  <div className="mt-0.5 truncate text-[11.5px] leading-snug text-muted-foreground">
                     {o.gp_company_id ? <Link href={`/companies/${o.gp_company_id}`} className="text-foreground">{o.general_partner ?? "Manager"}</Link> : (o.general_partner ?? "GP not named")}
                     {o.state ? ` · ${o.state}` : ""}
                     {o.first_sale_date ? ` · first sale ${dateLabel(o.first_sale_date)}` : o.first_sale_pending ? " · no sale yet" : ""}
@@ -134,7 +136,7 @@ export function LenderTable({ rows }: { rows: CreditLender[] }) {
 
 export function PositionTable({ rows, showLender = false, limit }: { rows: (CreditPosition | BookPosition)[]; showLender?: boolean; limit?: number }) {
   const list = limit ? rows.slice(0, limit) : rows;
-  if (!list.length) return <Empty>No positions match.</Empty>;
+  if (!list.length) return <Empty>No position matches. Books tag the borrower&rsquo;s legal name, so a shorter name finds more.</Empty>;
   return (
     <div className="desk-scroll">
       <table className="desk-table">
@@ -155,18 +157,18 @@ export function PositionTable({ rows, showLender = false, limit }: { rows: (Cred
           {list.map((p) => {
             const mark = p.cost && p.fair_value != null ? (p.fair_value / p.cost) * 100 : null;
             return (
-              <tr key={p.id}>
+              <tr key={p.id} className="linked">
                 <td className="min-w-[220px] max-w-[380px]">
                   {p.borrower_company_id ? (
-                    <Link href={`/companies/${p.borrower_company_id}`} className="font-medium leading-snug">
+                    <Link href={`/companies/${p.borrower_company_id}`} className="cover block truncate font-medium leading-snug" title={p.borrower}>
                       {p.borrower}
                     </Link>
                   ) : (
-                    <Link href={`/database/lenders?q=${encodeURIComponent(p.borrower)}`} className="font-medium leading-snug" title="Every lender holding this borrower">
+                    <Link href={`/database/lenders?q=${encodeURIComponent(p.borrower)}`} className="cover block truncate font-medium leading-snug" title={`${p.borrower} — every lender holding this borrower`}>
                       {p.borrower}
                     </Link>
                   )}
-                  {p.industry ? <div className="text-[11px] text-muted-foreground">{p.industry}</div> : null}
+                  {p.industry ? <div className="truncate text-[11px] text-muted-foreground">{p.industry}</div> : null}
                 </td>
                 {showLender ? (
                   <td className="whitespace-nowrap">

@@ -29,19 +29,19 @@ import {
 import { NotesPanel } from "@/components/notes-panel";
 import { RecordDealDialog } from "@/components/ops/record-deal-dialog";
 import { isOpsWriteEnabled } from "@/lib/ops";
+import { AccountStatusBadge } from "@/components/accounts/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EmptyState } from "@/components/empty-state";
-import { cn, initials, timeAgo } from "@/lib/utils";
+import { StatCard, StatRow } from "@/components/stat-card";
+import { fadeIn } from "@/components/motion";
+import { initials, timeAgo } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-const STATUS_STYLE: Record<string, string> = {
-  Active: "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300",
-  "Renewal due": "bg-amber-500/12 text-amber-700 dark:text-amber-300",
-  Prospect: "bg-sky-500/12 text-sky-700 dark:text-sky-300",
-  Churned: "bg-destructive/12 text-destructive",
-};
+// Tab panels keep one floor so the bar never moves when the content under it
+// changes height, and each panel fades in rather than snapping.
+const TAB_PANEL = `min-h-[320px] ${fadeIn.className}`;
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -74,23 +74,22 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
         <ArrowLeft className="h-4 w-4" /> Accounts
       </Link>
 
-      {/* Hero */}
-      <header className="rounded-2xl border bg-card p-5 md:p-6">
+      {/* Header */}
+      <header className="sheen rounded-2xl border bg-card p-5 md:p-6">
         <div className="flex flex-wrap items-start gap-4">
-          <span className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 text-xl font-bold text-primary">
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-accent text-lg font-semibold text-accent-foreground">
             {initials(account.name)}
           </span>
           <div className="min-w-0 flex-1">
-            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">{account.name}</h1>
+            <p className="eyebrow">Account</p>
+            <h1 className="display mt-1 text-[26px] leading-tight md:text-[30px]">{account.name}</h1>
             <div className="mt-2 flex flex-wrap items-center gap-1.5">
-              <Badge className={cn("border-transparent", STATUS_STYLE[account.status] ?? "")}>
-                {account.status}
-              </Badge>
+              <AccountStatusBadge status={account.status} />
               {account.category ? <Badge variant="outline">{account.category}</Badge> : null}
               {account.tier ? <Badge variant="secondary">{account.tier}</Badge> : null}
               {account.health ? <Badge variant="outline">{account.health}</Badge> : null}
               {linked ? (
-                <Badge className="border-transparent bg-amber-500/12 text-amber-700 dark:text-amber-300">
+                <Badge className="border-transparent bg-[var(--ops-soft)] text-[var(--ops)]">
                   <Radar className="h-3 w-3" /> In ops panel
                 </Badge>
               ) : null}
@@ -143,22 +142,20 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
         </div>
       </header>
 
+      {/* The account's numbers: what the sponsor lists say it paid, per year
+          and per currency. Where the account is linked to tracker deals the
+          Events & money tab carries the live figures. */}
       {paid.length ? (
-        <section className="rounded-2xl border bg-card p-5">
-          <h2 className="text-sm font-semibold">Paid, by year</h2>
-          <p className="mt-0.5 text-xs text-muted-foreground">From the sponsor lists. Where this account is linked to ops-panel deals, the tracker&apos;s figures are the live ones.</p>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
-            {paid.map((p) => (
-              <div key={`${p.year}-${p.currency}`} className="rounded-xl border bg-background p-3.5">
-                <p className="eyebrow">{p.year}</p>
-                <p className="mt-1 text-xl font-semibold tabular">{p.amount != null ? formatOpsMoney(p.amount, p.currency) : "No amount on the list"}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">
-                  {p.deals} deal{p.deals === 1 ? "" : "s"} · {p.currency}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
+        <StatRow>
+          {paid.map((p) => (
+            <StatCard
+              key={`${p.year}-${p.currency}`}
+              label={`${p.year} · ${p.currency}`}
+              value={p.amount != null ? formatOpsMoney(p.amount, p.currency) : "—"}
+              basis={p.amount != null ? `${p.deals} deal${p.deals === 1 ? "" : "s"} on the ${p.year} sponsor list` : `On the ${p.year} list, no amount stated`}
+            />
+          ))}
+        </StatRow>
       ) : null}
 
       <Tabs defaultValue="contacts" className="gap-4">
@@ -180,11 +177,11 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
           <TabsTrigger value="notes">Notes</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="contacts">
+        <TabsContent value="contacts" className={TAB_PANEL} style={fadeIn.style}>
           <PointsOfContact accountId={id} accountName={account.name} contacts={contacts} />
         </TabsContent>
 
-        <TabsContent value="events">
+        <TabsContent value="events" className={TAB_PANEL} style={fadeIn.style}>
           <OpsAllocations
             deals={deals}
             links={links}
@@ -193,7 +190,7 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
           />
         </TabsContent>
 
-        <TabsContent value="activity">
+        <TabsContent value="activity" className={TAB_PANEL} style={fadeIn.style}>
           {activities.length === 0 ? (
             <EmptyState
               title="Nothing logged yet"
@@ -236,7 +233,7 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
           )}
         </TabsContent>
 
-        <TabsContent value="notes">
+        <TabsContent value="notes" className={TAB_PANEL} style={fadeIn.style}>
           <NotesPanel entityType="account" entityId={id} notes={notes} />
         </TabsContent>
       </Tabs>

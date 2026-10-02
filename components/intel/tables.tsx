@@ -15,6 +15,19 @@ import { Empty, Src, Tag } from "./ui";
 // commitments. Server components; dense, sortable in the browser where a
 // screen wraps them in a client table.
 
+/** The one "Show more" every ledger ends with: a link that lengthens the page, scroll kept. */
+export function ShowMore({ href, step, left }: { href: string; step: number; left: number }) {
+  if (left <= 0) return null;
+  return (
+    <div className="border-t px-3 py-2">
+      <Link href={href} scroll={false} className="inline-flex rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+        Show {Math.min(step, left).toLocaleString("en-US")} more
+        <span className="ml-1 text-muted-foreground">of {left.toLocaleString("en-US")} left</span>
+      </Link>
+    </div>
+  );
+}
+
 export function dateLabel(iso: string | null | undefined, text?: string | null): string {
   if (iso) {
     const d = new Date(`${iso}T00:00:00Z`);
@@ -33,7 +46,7 @@ function classTag(key: string) {
 }
 
 export function DealTable({ deals, showClass = true, compact = false }: { deals: Deal[]; showClass?: boolean; compact?: boolean }) {
-  if (!deals.length) return <Empty>No deals on file yet.</Empty>;
+  if (!deals.length) return <Empty>No deals on file here yet. The deals research job records them from announcements, one asset class at a time, from each class&rsquo;s page.</Empty>;
   return (
     <div className="desk-scroll">
       <table className="desk-table">
@@ -53,7 +66,7 @@ export function DealTable({ deals, showClass = true, compact = false }: { deals:
             <tr key={d.id} className="linked">
               <td className="whitespace-nowrap text-muted-foreground">{dateLabel(d.date, d.date_text)}</td>
               <td className={compact ? "min-w-[200px] max-w-[420px]" : "min-w-[280px] max-w-[520px]"}>
-                <Link href={`/database/deals/${d.id}`} className="cover block font-medium leading-snug">
+                <Link href={`/database/deals/${d.id}`} className="cover block truncate font-medium leading-snug" title={d.headline}>
                   {d.headline}
                 </Link>
                 {!compact ? (
@@ -102,7 +115,7 @@ export function DealTable({ deals, showClass = true, compact = false }: { deals:
 
 export function SignalList({ signals, showClass = true, limit }: { signals: Signal[]; showClass?: boolean; limit?: number }) {
   const rows = limit ? signals.slice(0, limit) : signals;
-  if (!rows.length) return <Empty>No signals yet. The refresh job adds them daily once ANTHROPIC_API_KEY is set.</Empty>;
+  if (!rows.length) return <Empty>No signals here yet. The daily refresh adds dated news per asset class once ANTHROPIC_API_KEY is set.</Empty>;
   return (
     <ul className="divide-y">
       {rows.map((s) => (
@@ -140,9 +153,9 @@ export function SignalList({ signals, showClass = true, limit }: { signals: Sign
 
 export function FirmTable({ firms, limit }: { firms: DirectoryRecord[]; limit?: number }) {
   const rows = limit ? firms.slice(0, limit) : firms;
-  if (!rows.length) return <Empty>No firms in this class yet.</Empty>;
+  if (!rows.length) return <Empty>No firms here yet. Firms arrive with the Master Directory import and the SEC adviser roster.</Empty>;
   return (
-    <div className="overflow-x-auto">
+    <div className="desk-scroll">
       <table className="desk-table">
         <thead>
           <tr>
@@ -158,16 +171,18 @@ export function FirmTable({ firms, limit }: { firms: DirectoryRecord[]; limit?: 
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.id}>
-              <td>
-                <Link href={`/companies/${r.id}`} className="flex items-center gap-2 font-medium">
+            <tr key={r.id} className="linked">
+              <td className="min-w-[200px] max-w-[320px]">
+                <span className="flex items-center gap-2 font-medium">
                   <CompanyLogo name={r.name} domain={r.domain} size={22} />
-                  <span className="truncate">{r.name}</span>
+                  <Link href={`/companies/${r.id}`} className="cover truncate" title={r.name}>
+                    {r.name}
+                  </Link>
                   <CategoryBadge category={r.category} className="ml-1 rounded-[3px] px-1.5 py-0 text-[10px]" />
-                </Link>
+                </span>
               </td>
-              <td className="whitespace-nowrap text-muted-foreground">{r.subType ?? "—"}</td>
-              <td className="whitespace-nowrap text-muted-foreground">{locationLabel(r) ?? "—"}</td>
+              <td className="max-w-[180px] truncate text-muted-foreground" title={r.subType ?? undefined}>{r.subType ?? "—"}</td>
+              <td className="max-w-[180px] truncate text-muted-foreground" title={locationLabel(r) ?? undefined}>{locationLabel(r) ?? "—"}</td>
               <td className="num" title={sizeTitle(r)}>
                 {sizeLabel(r)}
               </td>
@@ -197,7 +212,7 @@ function sourceLabel(url: string | null | undefined, type: string | null | undef
 }
 
 export function CommitmentTable({ rows, showClass = false }: { rows: NamedCommitment[]; showClass?: boolean }) {
-  if (!rows.length) return <Empty>No disclosed commitments in this class yet.</Empty>;
+  if (!rows.length) return <Empty>No disclosed commitments here yet. They arrive with the LP disclosures the database loads monthly, and from “Research LP commitments” on the Fundraising workflow.</Empty>;
   // Performance columns appear when any row carries them (an LP's own
   // fund-by-fund review); a press-sourced commitment leaves them blank.
   const perf = rows.some((c) => c.net_irr != null || c.multiple != null || c.contributed != null);

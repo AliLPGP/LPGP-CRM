@@ -126,14 +126,14 @@ export function ClassifyControl({ companyId }: { companyId: string }) {
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  // Desk register: a dashed 4px box, the three books as desk buttons.
   return (
-    <div className="flex flex-wrap items-center gap-2 rounded-xl border border-dashed bg-card px-4 py-3 text-sm">
+    <div className="flex flex-wrap items-center gap-2 rounded-[4px] border border-dashed bg-card px-3 py-2 text-[12.5px]">
       <span className="text-muted-foreground">Unclassified in the Master Directory. Place it in a book:</span>
       {CATEGORY_ORDER.map((c) => (
-        <Button
+        <button
           key={c}
-          size="sm"
-          variant="outline"
+          type="button"
           disabled={pending}
           onClick={() =>
             start(async () => {
@@ -143,11 +143,12 @@ export function ClassifyControl({ companyId }: { companyId: string }) {
               else router.refresh();
             })
           }
+          className="inline-flex h-8 items-center rounded-[4px] border bg-card px-2.5 text-[12px] font-medium hover:bg-accent disabled:pointer-events-none disabled:opacity-50"
         >
           {CATEGORIES[c].name}
-        </Button>
+        </button>
       ))}
-      {pending ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /> : null}
+      {pending ? <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" /> : null}
       {error ? <span className="text-destructive">{error}</span> : null}
     </div>
   );

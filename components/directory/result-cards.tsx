@@ -19,7 +19,7 @@ import type { ResultRow } from "./use-results";
 const PAGE = 48;
 
 /** The one "show more" button every desk list ends with. */
-const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent";
+const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent max-md:min-h-10";
 
 /** A quiet icon button in a card's corner; shown on hover, always reachable by keyboard. */
 const ICON = "grid h-6 w-6 place-items-center rounded-[3px] text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100";

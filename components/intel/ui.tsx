@@ -91,7 +91,7 @@ export function Stat({
 /** A row of Stats, ruled between. */
 export function StatStrip({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("sheen grid rounded-[4px] border bg-card", className)} style={{ gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))" }}>
+    <div className={cn("stat-strip sheen grid rounded-[4px] border bg-card", className)}>
       {children}
     </div>
   );

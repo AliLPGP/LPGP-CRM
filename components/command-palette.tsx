@@ -214,7 +214,9 @@ export function CommandPalette() {
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[60] flex items-start justify-center p-4 pt-[12vh]">
+    // On a phone the palette is the whole screen: no margin, no rounding, the
+    // box under the notch, a Cancel button where the keyboard hints were.
+    <div className="fixed inset-0 z-[60] flex items-start justify-center p-4 pt-[12vh] max-md:p-0">
       <button
         className="modal-overlay absolute inset-0 bg-black/70 backdrop-blur-[3px]"
         aria-label="Close search"
@@ -225,7 +227,7 @@ export function CommandPalette() {
         role="dialog"
         aria-modal="true"
         aria-label="Search and commands"
-        className="modal-panel relative flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-lg border bg-popover shadow-[var(--shadow-pop)]"
+        className="modal-panel relative flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-lg border bg-popover shadow-[var(--shadow-pop)] max-md:h-full max-md:max-h-none max-md:max-w-none max-md:rounded-none max-md:border-0 max-md:pt-[env(safe-area-inset-top)]"
       >
         <div className="flex items-center gap-2.5 border-b px-4">
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -256,9 +258,12 @@ export function CommandPalette() {
             className="h-12 flex-1 bg-transparent text-[15px] outline-none placeholder:text-muted-foreground"
           />
           {searching ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /> : null}
-          <kbd className="rounded border px-1.5 py-0.5 text-[10px] text-muted-foreground tabular">
+          <kbd className="rounded border px-1.5 py-0.5 text-[10px] text-muted-foreground tabular max-md:hidden">
             esc
           </kbd>
+          <button type="button" onClick={() => setOpen(false)} className="-mr-2 min-h-10 px-2 text-[14px] text-muted-foreground md:hidden">
+            Cancel
+          </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-2">
@@ -309,7 +314,7 @@ export function CommandPalette() {
           ) : null}
         </div>
 
-        <div className="flex items-center gap-3 border-t bg-muted/40 px-4 py-2 text-[11px] text-muted-foreground">
+        <div className="flex items-center gap-3 border-t bg-muted/40 px-4 py-2 text-[11px] text-muted-foreground max-md:hidden">
           <span className="inline-flex items-center gap-1">
             <kbd className="rounded border px-1">↑</kbd>
             <kbd className="rounded border px-1">↓</kbd> navigate

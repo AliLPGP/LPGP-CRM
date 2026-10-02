@@ -88,7 +88,8 @@ export function IntelNav() {
 
 export function Crumbs({ items }: { items: Crumb[] }) {
   return (
-    <ol className="flex flex-wrap items-center gap-1 text-[11.5px] text-muted-foreground">
+    // On a phone the last two crumbs stand for the trail (globals.css, .crumbs).
+    <ol className="crumbs flex flex-wrap items-center gap-1 text-[11.5px] text-muted-foreground">
       <li>
         <Link href="/database" className="hover:text-foreground">
           Intelligence

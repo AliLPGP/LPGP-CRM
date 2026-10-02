@@ -82,7 +82,7 @@ export function ListSkeleton({
         </div>
       ) : null}
       {stats > 0 ? (
-        <div className="grid rounded-[4px] border bg-card" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))" }}>
+        <div className="stat-strip grid rounded-[4px] border bg-card">
           {Array.from({ length: stats }, (_, i) => (
             <div key={i} className="space-y-2 border-l px-3 py-2.5 first:border-l-0">
               <Bone className="h-2.5 w-20" />

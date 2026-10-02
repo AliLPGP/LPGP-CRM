@@ -220,7 +220,8 @@ export function BulkBar({
 
   return (
     <>
-      <div className="animate-[topnav-in_160ms_ease-out] sticky bottom-4 z-30 mx-auto flex w-fit max-w-full flex-wrap items-center gap-1 rounded-[4px] border bg-popover px-2 py-1.5 shadow-[var(--shadow-pop)] motion-reduce:animate-none">
+      {/* Under lg it sits above the bottom tab bar. */}
+      <div className="animate-[topnav-in_160ms_ease-out] sticky bottom-4 z-30 mx-auto flex w-fit max-w-full flex-wrap items-center gap-1 rounded-[4px] border bg-popover px-2 py-1.5 shadow-[var(--shadow-pop)] motion-reduce:animate-none max-lg:bottom-[calc(var(--mobile-tabs)+1rem)]">
         <span className="px-1.5 text-[12.5px] font-medium">
           <span className="figure">{ids.length}</span> selected
         </span>

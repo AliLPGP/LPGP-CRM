@@ -459,7 +459,7 @@ function PortfolioSummary({ rows, intel }: { rows: PortfolioCompany[]; intel: Re
         .map((y) => ({ label: `’${String(y).slice(2)}`, value: yearCounts.get(y) ?? 0, hint: String(y) }))
     : [];
   return (
-    <div className="grid border-b" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))" }}>
+    <div className="stat-strip grid border-b">
       <Stat label="Companies" value={rows.length} basis={`${current} current · ${realized} realized${unstated ? ` · ${unstated} not stated` : ""}`} />
       {stated.map(([ccy, e]) => (
         <Stat

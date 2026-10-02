@@ -12,7 +12,7 @@ export function Bone({ className, style }: { className: string; style?: React.CS
 /** The stat strip's six figures. */
 export function StripSkeleton() {
   return (
-    <div className="grid rounded-[4px] border bg-card" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))" }} aria-hidden>
+    <div className="stat-strip grid rounded-[4px] border bg-card" aria-hidden>
       {Array.from({ length: 6 }, (_, i) => (
         <div key={i} className="space-y-2 border-l px-3 py-2.5 first:border-l-0">
           <Bone className="h-2.5 w-20" />

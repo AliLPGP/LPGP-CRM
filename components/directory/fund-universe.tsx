@@ -241,7 +241,8 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
             className="h-11 w-full rounded-xl border border-input bg-background/60 pl-10 pr-3 text-sm outline-none focus-visible:border-ring"
           />
         </div>
-        <div className="flex flex-wrap items-center gap-1.5">
+        {/* One row that scrolls sideways on a phone (globals.css, .facet-row); wraps wider. */}
+        <div className="facet-row flex flex-wrap items-center gap-1.5">
           <FacetMenu label="Asset class" groups={[{ label: "", options: classCounts.map(([k, n]) => ({ key: k, label: ASSET_CLASS_BY_KEY[k as AssetClassKey].name, count: n })) }]} selected={classes} onChange={setClasses} searchable={false} />
           <FacetMenu
             label="Strategy"

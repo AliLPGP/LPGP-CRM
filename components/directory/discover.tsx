@@ -23,6 +23,7 @@ import { DashboardSearch } from "@/components/dashboard-search";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/ui/modal";
+import { usePhone } from "@/components/use-media-query";
 import { cn, formatUsd } from "@/lib/utils";
 import { BulkBar, downloadCsv, type ListOption } from "./bulk-bar";
 import { CardsSkeleton, FacetBones, LedgerSkeleton, StripSkeleton } from "./discover-skeleton";
@@ -56,7 +57,7 @@ const SORTS: { key: SortKey; label: string }[] = [
 const TOOL = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-50";
 
 /** The one "show more" button style, used here for the relax-a-filter offers. */
-const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent";
+const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent max-md:min-h-10";
 
 /** A menu's open panel: the header's own fade-and-rise, off under reduced motion. */
 const POP = "animate-[topnav-in_160ms_ease-out] motion-reduce:animate-none";
@@ -209,7 +210,10 @@ export function Discover({
   const filters = useMemo(() => filtersFromParams(params), [params]);
   const q = params.get("q") ?? "";
   const viewParam = params.get("view");
-  const view: View = viewParam === "cards" ? "cards" : "table";
+  // The URL's view wins; with none asked for, a phone reads cards and
+  // anything wider the ledger. Derived from the viewport, never set by it.
+  const phone = usePhone();
+  const view: View = viewParam === "cards" ? "cards" : viewParam === "table" ? "table" : phone ? "cards" : "table";
   const results = useResults(dir, filters);
   const everything = overview.insights;
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -406,19 +410,22 @@ export function Discover({
           {/* The toolbar every list screen shares: search · facets · sort · count · layout, columns, saved, export. */}
           <div className="flex flex-wrap items-center gap-1.5">
             <ThesisBar key={q} compact initial={q} onSubmit={submitThesis} pending={aiPending} aiReady={aiReady} />
-            {ready ? <FacetBar dir={dir} filters={filters} facets={results.facets} onChange={(f) => navigate(f)} /> : <FacetBones />}
-            <select
-              value={results.sort}
-              onChange={(e) => navigate({ ...filters, sort: e.target.value as SortKey })}
-              className="h-8 rounded-[4px] border border-input bg-card px-2 text-[12.5px] text-foreground outline-none"
-              aria-label="Sort"
-            >
-              {sorts.map((s) => (
-                <option key={s.key} value={s.key}>
-                  {s.label}
-                </option>
-              ))}
-            </select>
+            {/* On a phone the facets and the sort are one row that scrolls sideways; wider, they sit in the bar as before. */}
+            <div className="facet-row md:contents">
+              {ready ? <FacetBar dir={dir} filters={filters} facets={results.facets} onChange={(f) => navigate(f)} /> : <FacetBones />}
+              <select
+                value={results.sort}
+                onChange={(e) => navigate({ ...filters, sort: e.target.value as SortKey })}
+                className="h-8 rounded-[4px] border border-input bg-card px-2 text-[12.5px] text-foreground outline-none"
+                aria-label="Sort"
+              >
+                {sorts.map((s) => (
+                  <option key={s.key} value={s.key}>
+                    {s.label}
+                  </option>
+                ))}
+              </select>
+            </div>
             <span className="px-1 text-[12.5px]">
               {ready ? (
                 <>
@@ -441,7 +448,8 @@ export function Discover({
                   <button
                     key={v}
                     type="button"
-                    onClick={() => navigate(filters, { view: v === "table" && !isEmptyQuery(filters) ? null : v })}
+                    // The table is the default off a phone, so there the URL only names the cards; a phone writes either, since its default is the cards.
+                    onClick={() => navigate(filters, { view: v === "table" && !isEmptyQuery(filters) && !phone ? null : v })}
                     className={cn("grid w-8 place-items-center transition-colors", view === v ? "bg-foreground text-background" : "text-muted-foreground hover:bg-accent hover:text-foreground")}
                     aria-pressed={view === v}
                     title={label}
@@ -590,7 +598,7 @@ export function Discover({
       />
 
       {notice ? (
-        <div className={cn(POP, "fixed bottom-20 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-[4px] border bg-popover px-3 py-2 text-[12.5px] shadow-[var(--shadow-pop)]")}>
+        <div className={cn(POP, "fixed bottom-20 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-[4px] border bg-popover px-3 py-2 text-[12.5px] shadow-[var(--shadow-pop)] max-lg:bottom-[calc(var(--mobile-tabs)+1rem)]")}>
           {notice}
           <button type="button" onClick={() => setNotice(null)} className="text-muted-foreground hover:text-foreground" aria-label="Dismiss">
             <X className="h-3.5 w-3.5" />

@@ -285,6 +285,17 @@
     border: 3px solid transparent;
     background-clip: padding-box;
   }
+
+  /* On a phone a desk grid that names its columns only from sm/md/lg up has
+     one implicit `auto` track, which grows to the widest unbreakable thing
+     inside it (a nowrap sub-line, a table) and pushes the page out. One
+     column of minmax(0, 1fr) instead, so it fills the viewport exactly; any
+     grid-cols-* utility that applies still wins, since utilities beat base. */
+  @media (max-width: 767px) {
+    .desk .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
 }
 
 /* -- Type ----------------------------------------------------------------- */
@@ -942,6 +953,11 @@
   border-bottom: 0;
 }
 
+/* The stat strip: as many cells as fit at 150px; two columns on a phone (below). */
+.stat-strip {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
 /* A magnitude bar: the one blue, a quiet track. */
 .bar-track {
   background: var(--chart-track);
@@ -1075,6 +1091,285 @@ main > * {
   animation: pulse-ring 2.2s ease-out infinite;
 }
 
+/* -- The phone ------------------------------------------------------------ */
+/* Everything here applies under lg (the tab bar) or under md (the phone
+   itself); the desktop drawing is untouched. The product on a phone is the
+   same product: the black rail, a tab bar along the bottom, ledgers that
+   scroll sideways with their first column held, and facets that rise as a
+   sheet from the bottom edge instead of dropping from a button. */
+
+:root {
+  /* The bottom tab bar's height, with the home indicator's inset beneath it. */
+  --mobile-tabs: calc(56px + env(safe-area-inset-bottom, 0px));
+}
+
+/* The bottom tab bar (components/mobile-tabs.tsx): black like the rail, five
+   cells, the lit one in the blue. */
+.mobile-tabs {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  height: var(--mobile-tabs);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-top: 1px solid var(--rail-line);
+  background: var(--rail-bg);
+}
+.mobile-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--rail-fg-dim);
+  -webkit-tap-highlight-color: transparent;
+  transition: color 120ms ease-out;
+}
+.mobile-tab > span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mobile-tab.is-on {
+  color: var(--brass);
+}
+.mobile-tab:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: -2px;
+}
+/* From lg the header carries the sections; the bar is unlayered CSS, so the
+   utility `lg:hidden` on it would lose and it is put away here instead. */
+@media (min-width: 1024px) {
+  .mobile-tabs {
+    display: none;
+  }
+}
+
+/* A facet as a bottom sheet (FacetMenu, MoreFilters under 768px): full width,
+   at most 70vh, rising 180ms over a backdrop, with a drag-handle bar. The
+   panel is portaled to the body, so no panel's stacking context can trap it. */
+.facet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.55);
+  animation: modal-overlay-in 160ms ease-out both;
+}
+.facet-sheet {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 51;
+  display: flex;
+  flex-direction: column;
+  max-height: 70vh;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow: var(--shadow-pop);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  animation: sheet-in 180ms ease-out both;
+}
+.facet-handle {
+  display: block;
+  width: 36px;
+  height: 4px;
+  margin: 8px auto 2px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--foreground) 25%, transparent);
+}
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  /* The frame pads for the tab bar, so the footer and the last row clear it. */
+  .app-frame {
+    padding-bottom: var(--mobile-tabs);
+  }
+  /* The rail's controls at a thumb's size. */
+  .topnav-icon {
+    height: 40px;
+    width: 40px;
+  }
+  .topnav-search {
+    height: 40px;
+    min-width: 40px;
+  }
+  .topnav-link {
+    padding: 10px 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* The type floor: nothing under 12px on a phone. The small-caps labels,
+     the tags and the arbitrary sizes the desk sets below that come up to it. */
+  .desk-label,
+  .tag,
+  .wordmark,
+  .eyebrow,
+  .desk-table th,
+  .kv > dt,
+  .desk-tab .count,
+  .text-\[9px\],
+  .text-\[9\.5px\],
+  .text-\[10px\],
+  .text-\[10\.5px\],
+  .text-\[11px\],
+  .text-\[11\.5px\] {
+    font-size: 12px;
+  }
+
+  /* Inputs at 16px, so iOS does not zoom into one on focus. */
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Touch: every 32px control is 40px here (the square icon buttons keep
+     their shape), rows and tabs are 40px or taller. */
+  :is(button, a, label, select, input, form, [role="group"]).h-8:not(.w-8) {
+    height: 40px;
+  }
+  .desk-table td {
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+  .desk-tab {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  /* A profile's thirteen tabs run in one row and scroll, as a native segment does. */
+  .desk-tabs {
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ledgers: the wrapper scrolls sideways with momentum, the first column
+     holds with the surface behind it, every cell keeps a width worth reading. */
+  .desk-scroll,
+  .desk :has(> .desk-table) {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-gutter: auto;
+    /* The wrapper contributes no width of its own, so a wide ledger scrolls
+       inside it instead of pushing the page (and everything beside it in a
+       grid column) out past the viewport. */
+    contain: inline-size;
+  }
+  .desk-table :is(th, td):not(.w-8):not(.w-10):not(.w-12):not(.w-16) {
+    min-width: 96px;
+  }
+  .desk-table :is(th, td):first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    max-width: 60vw;
+    background-color: var(--card);
+    box-shadow: inset -1px 0 0 var(--border);
+  }
+  .desk-table thead th:first-child {
+    background: color-mix(in oklab, var(--muted) 55%, var(--card));
+  }
+  .desk-table tbody tr:hover td:first-child {
+    background: color-mix(in oklab, var(--accent) 45%, var(--card));
+  }
+  /* The row's cover link is boxed by the held cell now, so it is stretched
+     across the row from there; the other links keep their place above it. */
+  .desk-table tr.linked a.cover::after {
+    right: auto;
+    width: 100vw;
+  }
+  /* A ledger whose first column is a checkbox (Discover's results) holds its
+     second column instead, beside the checkbox. */
+  .desk-table.lead-2 :is(th, td):first-child {
+    max-width: none;
+    box-shadow: none;
+  }
+  .desk-table.lead-2 :is(th, td):nth-child(2) {
+    position: sticky;
+    left: 2rem;
+    z-index: 2;
+    max-width: 60vw;
+    background-color: var(--card);
+    box-shadow: inset -1px 0 0 var(--border);
+  }
+  .desk-table.lead-2 thead th:nth-child(2) {
+    background: color-mix(in oklab, var(--muted) 55%, var(--card));
+  }
+  .desk-table.lead-2 tbody tr:hover td:nth-child(2) {
+    background: color-mix(in oklab, var(--accent) 45%, var(--card));
+  }
+
+  /* The facet bar: one row that scrolls sideways, bleeding to the page's
+     edges; the chips wrap beneath it as before. */
+  .facet-row {
+    display: flex;
+    flex: none;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+    width: calc(100% + 32px);
+    margin-inline: -16px;
+    padding-inline: 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    contain: inline-size;
+  }
+  .facet-row::-webkit-scrollbar {
+    display: none;
+  }
+  .facet-row > * {
+    flex-shrink: 0;
+  }
+
+  /* The stat strip in two columns, ruled between and beneath the first pair. */
+  .stat-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stat-strip > * {
+    min-width: 0; /* a cell's desktop floor (min-w-[200px]) would overrun two columns */
+  }
+  .stat-strip > :nth-child(odd) {
+    border-left: 0;
+  }
+  .stat-strip > :nth-child(n + 3) {
+    border-top: 1px solid var(--border);
+  }
+
+  /* Crumbs keep their last two; an ellipsis stands for the rest. */
+  .crumbs li:not(:nth-last-child(-n + 2)) {
+    display: none;
+  }
+  .crumbs li:nth-last-child(2):not(:first-child) > svg {
+    display: none;
+  }
+  .crumbs li:nth-last-child(2):not(:first-child)::before {
+    content: "…";
+    margin-right: 2px;
+  }
+}
+
 /* Reduced motion: everything above lands at once. The universal rule covers
    the utility animations too (animate-pulse, animate-spin, the Radix menus),
    and an infinite loop is cut to one pass so it cannot flicker. */
@@ -1097,6 +1392,8 @@ main > * {
   .modal-overlay,
   .modal-panel,
   .quick-look,
+  .facet-backdrop,
+  .facet-sheet,
   .shimmer,
   .pulse-ring {
     animation: none;

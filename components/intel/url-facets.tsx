@@ -103,6 +103,8 @@ export function UrlFacets({
     <div className={cn("space-y-2", className)}>
       <div className="flex flex-wrap items-center gap-1.5">
         {search ? <SearchBox param={search.param} placeholder={search.placeholder} width={search.width} value={params.get(search.param) ?? ""} onCommit={(v) => navigate({ [search.param]: v })} /> : null}
+        {/* On a phone the facets and the sort are one row that scrolls sideways; wider, they sit in the bar as before. */}
+        <div className="facet-row md:contents">
         {facets.map((f) => {
           const selected = selectedOf(f);
           // A value a link brought that no option offers still shows as ticked;
@@ -146,6 +148,7 @@ export function UrlFacets({
             </select>
           </label>
         ) : null}
+        </div>
         {count ? (
           <span className="px-1 text-[12px]" aria-live="polite">
             <span className={cn("figure", pending && "opacity-50")}>{count.value.toLocaleString("en-US")}</span>

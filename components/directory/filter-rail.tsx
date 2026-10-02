@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Check, ChevronDown, Plus, Search, SlidersHorizontal, X } from "lucide-react";
 import { FacetMenu, type FacetGroup, type FacetOption } from "@/components/intel/facet-menu";
+import { usePhone } from "@/components/use-media-query";
 import { CATEGORIES, DIRECTORY_BOOKS, isCategory } from "@/lib/categories";
 import { ASSET_CLASSES, isAssetClassKey } from "@/lib/directory/asset-classes";
 import { toggle, type DirectoryFilters } from "@/lib/directory/filters";
@@ -225,9 +227,9 @@ function Option({
       onClick={onClick}
       title={title}
       aria-pressed={on}
-      className={cn("flex w-full items-center gap-2 rounded-[3px] px-1.5 py-1 text-left text-[12.5px] hover:bg-accent", count === 0 && !on && "opacity-50")}
+      className={cn("flex w-full items-center gap-2 rounded-[3px] px-1.5 py-1 text-left text-[12.5px] hover:bg-accent max-md:min-h-10 max-md:text-[14px]", count === 0 && !on && "opacity-50")}
     >
-      <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border", on ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
+      <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border max-md:h-4 max-md:w-4", on ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
         {on ? <Check className="h-2.5 w-2.5" /> : null}
       </span>
       <span className="min-w-0 flex-1 truncate">{label}</span>
@@ -445,7 +447,8 @@ const PANEL_WIDTH = 760;
  * The long tail behind one button: headcount, founding year, Form ADV status,
  * service providers, ticket size, allocations, a custom size range, the
  * data-on-file toggles, the type as recorded. Opens below the button, or
- * right-aligned when the panel would run off the viewport.
+ * right-aligned when the panel would run off the viewport; on a phone it is
+ * a bottom sheet, one column, portaled to the body like FacetMenu's.
  */
 export function MoreFilters({
   dir,
@@ -461,12 +464,17 @@ export function MoreFilters({
   const [open, setOpen] = useState(false);
   const [alignRight, setAlignRight] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const phone = usePhone();
   const set = (patch: Partial<DirectoryFilters>) => onChange({ ...filters, ...patch });
 
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      const t = e.target as Node;
+      // The sheet is portaled, so it is outside the button's subtree in the DOM.
+      if (ref.current?.contains(t) || sheetRef.current?.contains(t)) return;
+      setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -479,39 +487,24 @@ export function MoreFilters({
     };
   }, [open]);
 
+  // A sheet holds the page behind it still, as the header's drawer does.
+  useEffect(() => {
+    if (!open || !phone) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open, phone]);
+
   const count = moreCount(filters);
   const empSelected = bandsIn(EMP_BANDS, filters.empMin, filters.empMax);
   const ticketSelected = bandsIn(TICKET_BANDS, filters.ticketMin, filters.ticketMax);
 
-  return (
-    <div ref={ref} className="relative">
-      <button
-        type="button"
-        onClick={() => {
-          const r = ref.current?.getBoundingClientRect();
-          setAlignRight(Boolean(r && r.left + PANEL_WIDTH > window.innerWidth && r.right - PANEL_WIDTH >= 0));
-          setOpen(!open);
-        }}
-        aria-expanded={open}
-        aria-haspopup="dialog"
-        className={cn(
-          "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] transition-colors hover:bg-accent",
-          count ? "border-foreground/60 text-foreground" : "text-muted-foreground",
-        )}
-      >
-        <SlidersHorizontal className="h-3.5 w-3.5" />
-        More filters
-        {count ? <span className="figure rounded-[3px] bg-primary px-1 text-[10.5px] leading-4 text-primary-foreground">{count}</span> : null}
-        <ChevronDown className={cn("h-3 w-3 opacity-60 transition-transform", open && "rotate-180")} />
-      </button>
-      {open ? (
-        <div
-          role="dialog"
-          aria-label="More filters"
-          className={cn(POP, "absolute top-[calc(100%+4px)] z-40 rounded-[4px] border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]", alignRight ? "right-0" : "left-0")}
-          style={{ width: `min(${PANEL_WIDTH}px, calc(100vw - 32px))` }}
-        >
-          <div className="grid max-h-[70vh] gap-x-6 gap-y-5 overflow-y-auto p-4 sm:grid-cols-2 lg:grid-cols-3">
+  // The panel's sections and its footer, the same in the dropdown and the sheet.
+  const panel = (
+    <>
+      <div className="grid max-h-[70vh] gap-x-6 gap-y-5 overflow-y-auto p-4 sm:grid-cols-2 lg:grid-cols-3 max-md:max-h-none max-md:min-h-0 max-md:flex-1">
             <Section title="Headcount">
               {EMP_BANDS.map((b) => (
                 <Option
@@ -638,19 +631,74 @@ export function MoreFilters({
               />
             </Section>
 
-            <Section title="Type as recorded" hint="The directory's own type words, before the taxonomy places them.">
-              <TypeList filters={filters} facets={facets} onToggle={(t) => set({ types: toggle(filters.types, t) })} />
-            </Section>
+        <Section title="Type as recorded" hint="The directory's own type words, before the taxonomy places them.">
+          <TypeList filters={filters} facets={facets} onToggle={(t) => set({ types: toggle(filters.types, t) })} />
+        </Section>
+      </div>
+      <div className="flex items-center justify-between gap-2 border-t px-3 py-2">
+        <button
+          type="button"
+          onClick={() => set(MORE_BLANK)}
+          className="rounded-[4px] px-2 py-1 text-[12px] text-muted-foreground hover:text-foreground max-md:h-11 max-md:px-3 max-md:text-[13px]"
+          disabled={!count}
+        >
+          Clear these
+        </button>
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          className="rounded-[4px] bg-primary px-3 py-1 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover max-md:h-11 max-md:flex-1 max-md:text-[14px]"
+        >
+          Done
+        </button>
+      </div>
+    </>
+  );
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => {
+          const r = ref.current?.getBoundingClientRect();
+          setAlignRight(Boolean(r && r.left + PANEL_WIDTH > window.innerWidth && r.right - PANEL_WIDTH >= 0));
+          setOpen(!open);
+        }}
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        className={cn(
+          "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] transition-colors hover:bg-accent",
+          count ? "border-foreground/60 text-foreground" : "text-muted-foreground",
+        )}
+      >
+        <SlidersHorizontal className="h-3.5 w-3.5" />
+        More filters
+        {count ? <span className="figure rounded-[3px] bg-primary px-1 text-[10.5px] leading-4 text-primary-foreground">{count}</span> : null}
+        <ChevronDown className={cn("h-3 w-3 opacity-60 transition-transform", open && "rotate-180")} />
+      </button>
+      {open ? (
+        phone ? (
+          createPortal(
+            <>
+              <button type="button" className="facet-backdrop" aria-label="Close" onClick={() => setOpen(false)} />
+              <div ref={sheetRef} role="dialog" aria-label="More filters" className="facet-sheet desk">
+                <span className="facet-handle" aria-hidden />
+                <p className="px-4 pb-1 pt-1 text-[14px] font-medium">More filters</p>
+                {panel}
+              </div>
+            </>,
+            document.body,
+          )
+        ) : (
+          <div
+            role="dialog"
+            aria-label="More filters"
+            className={cn(POP, "absolute top-[calc(100%+4px)] z-40 rounded-[4px] border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]", alignRight ? "right-0" : "left-0")}
+            style={{ width: `min(${PANEL_WIDTH}px, calc(100vw - 32px))` }}
+          >
+            {panel}
           </div>
-          <div className="flex items-center justify-between border-t px-3 py-2">
-            <button type="button" onClick={() => set(MORE_BLANK)} className="rounded-[4px] px-2 py-1 text-[12px] text-muted-foreground hover:text-foreground" disabled={!count}>
-              Clear these
-            </button>
-            <button type="button" onClick={() => setOpen(false)} className="rounded-[4px] bg-primary px-3 py-1 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover">
-              Done
-            </button>
-          </div>
-        </div>
+        )
       ) : null}
     </div>
   );

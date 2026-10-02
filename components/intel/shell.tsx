@@ -16,8 +16,8 @@ const bookOf = (s: URLSearchParams) => (s.get("book") ?? s.get("category") ?? ""
 
 const FUND_DEAL_KINDS = new Set(["fund_close", "fundraise"]);
 
-// One tab per section of the desk, the same seven the rail lists plus the
-// workflows, people and lists. Pages several sections share are told apart
+// One matcher per section of the desk — the header reads these to light the
+// section a page belongs to, and `IntelNav` can still draw them as tabs. Pages several sections share are told apart
 // by the query: the book on the directory, the kind of signal or deal, the
 // Form D tab of an asset-class page.
 export const INTEL_NAV: { href: string; label: string; match: (path: string, search: URLSearchParams) => boolean }[] = [
@@ -119,7 +119,7 @@ export function IntelShell({
   tabs,
   children,
   wide = true,
-  nav = true,
+  nav = false,
 }: {
   crumbs?: Crumb[];
   title?: React.ReactNode;
@@ -131,6 +131,7 @@ export function IntelShell({
   tabs?: React.ReactNode;
   children: React.ReactNode;
   wide?: boolean;
+  /** The section tabs; off by default now the header carries the sections. */
   nav?: boolean;
 }) {
   return (

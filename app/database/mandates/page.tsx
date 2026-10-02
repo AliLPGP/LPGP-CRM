@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { IntelShell } from "@/components/intel/shell";
+import { ResearchQueueRunner } from "@/components/intel/research-buttons";
+import { getSessionUser } from "@/lib/auth";
 import { dateLabel } from "@/components/intel/tables";
 import { Box, Empty, Src, Stat, StatStrip, SubTabs, Tag } from "@/components/intel/ui";
 import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, isAssetClassKey, type AssetClassKey } from "@/lib/directory/asset-classes";
@@ -42,6 +44,7 @@ function TagList({ items, title }: { items: string[]; title?: string }) {
 
 export default async function MandatesPage({ searchParams }: { searchParams: Promise<Search> }) {
   const sp = await searchParams;
+  const isAdmin = (await getSessionUser())?.role === "admin";
   const cls: AssetClassKey | null = isAssetClassKey(sp.class) ? sp.class : null;
   const status: PlanStatus | null = (PLAN_STATUSES as readonly string[]).includes(sp.status ?? "") ? (sp.status as PlanStatus) : null;
   const region = sp.region && REGION_BY_CODE[sp.region] ? sp.region : null;
@@ -87,6 +90,7 @@ export default async function MandatesPage({ searchParams }: { searchParams: Pro
       description="What investors say they will do over the next twelve months, in their own words: pacing plans in board papers, investment policy statements, RFP notices and interviews, one line per asset class with the page that states it. A ticket is shown in USD only; a figure the statement does not give is blank."
       actions={
         <form action="/database/mandates" className="flex flex-wrap items-center gap-1.5">
+          {isAdmin ? <ResearchQueueRunner kind="investors" aiReady={Boolean(process.env.ANTHROPIC_API_KEY)} /> : null}
           {cls ? <input type="hidden" name="class" value={cls} /> : null}
           {status ? <input type="hidden" name="status" value={status} /> : null}
           <select name="region" defaultValue={region ?? ""} className="h-8 max-w-[200px] rounded-[4px] border bg-card px-2 text-[12px]">

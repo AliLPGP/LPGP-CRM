@@ -76,6 +76,14 @@ export async function listDirectoryLists(): Promise<DirectoryList[]> {
   }));
 }
 
+/** The lists by name alone, for a profile's "Add to list" menu: no item counts, no owners. */
+export async function listDirectoryListNames(): Promise<{ id: string; name: string }[]> {
+  const supabase = getReadClient();
+  if (!supabase) return [];
+  const { data } = await supabase.from("directory_lists").select("id, name").order("updated_at", { ascending: false });
+  return ((data ?? []) as { id: string; name: string }[]).map((l) => ({ id: l.id, name: l.name }));
+}
+
 export async function getDirectoryList(
   id: string,
 ): Promise<{ list: DirectoryList; items: DirectoryListItem[] } | null> {

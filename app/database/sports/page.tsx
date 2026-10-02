@@ -117,7 +117,7 @@ export default async function SportsPage({ searchParams }: { searchParams: Promi
       {tab === "investors" ? (
         <Box title="Investors in sport" count={investors.length} flush defn="Funds, sovereign investors, family offices and groups that hold stakes in clubs, teams or leagues. Where the investor is a firm in the directory, the row links to its profile.">
           {investors.length ? (
-            <div className="overflow-x-auto">
+            <div className="desk-scroll">
               <table className="desk-table">
                 <thead>
                   <tr>
@@ -133,12 +133,14 @@ export default async function SportsPage({ searchParams }: { searchParams: Promi
                   {[...investors]
                     .sort((a, b) => b.holdings.length - a.holdings.length || a.name.localeCompare(b.name))
                     .map((i) => (
-                      <tr key={i.id}>
-                        <td>
-                          <Link href={`${base}/investors/${i.id}`} className="flex items-center gap-2 font-medium">
+                      <tr key={i.id} className="linked">
+                        <td className="min-w-[200px] max-w-[300px]">
+                          <span className="flex items-center gap-2 font-medium">
                             <CompanyLogo name={i.name} domain={i.domain} size={22} />
-                            {i.name}
-                          </Link>
+                            <Link href={`${base}/investors/${i.id}`} className="cover truncate" title={i.name}>
+                              {i.name}
+                            </Link>
+                          </span>
                         </td>
                         <td>
                           <Tag>{INVESTOR_TYPE_LABEL[i.investor_type ?? "other"] ?? i.investor_type}</Tag>
@@ -147,7 +149,7 @@ export default async function SportsPage({ searchParams }: { searchParams: Promi
                         <td className="num" title={i.aum_as_of ?? undefined}>
                           {formatMoney(i.aum, i.aum_currency)}
                         </td>
-                        <td className="max-w-[420px] text-[11.5px]">
+                        <td className="max-w-[420px] truncate text-[11.5px]" title={i.holdings.map((h) => h.target).join(", ")}>
                           {i.holdings
                             .slice(0, 6)
                             .map((h) => `${h.target}${h.stake_pct != null ? ` ${h.stake_pct}%` : ""}`)
@@ -169,7 +171,7 @@ export default async function SportsPage({ searchParams }: { searchParams: Promi
               </table>
             </div>
           ) : (
-            <Empty>No investors loaded yet.</Empty>
+            <Empty>No investors in sport on file yet. They arrive with the intelligence dataset and as clubs are researched — each stake with the page that states it.</Empty>
           )}
         </Box>
       ) : null}
@@ -182,7 +184,7 @@ export default async function SportsPage({ searchParams }: { searchParams: Promi
 
       {tab === "leagues" ? (
         <Box title="Leagues" count={leagues.size} flush>
-          <div className="overflow-x-auto">
+          <div className="desk-scroll">
             <table className="desk-table">
               <thead>
                 <tr>

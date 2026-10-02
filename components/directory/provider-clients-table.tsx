@@ -14,7 +14,7 @@ export type ClientMeta = { roles: string[]; funds: number; examples: string[] };
 
 type Sort = "funds" | "aum" | "name";
 
-/** A provider's Form ADV clients, selectable into lists and the pipeline. */
+/** A provider's Form ADV clients as a desk ledger, selectable into lists and the pipeline. */
 export function ProviderClientsTable({
   packed,
   meta,
@@ -44,8 +44,8 @@ export function ProviderClientsTable({
   }, [index, meta, sort]);
   const allOn = rows.length > 0 && rows.every((r) => selected.has(r.id));
 
-  const head = (label: string, k: Sort, align: "left" | "right" = "left", className?: string) => (
-    <th className={cn("px-3 py-2.5 font-medium", align === "right" ? "text-right" : "text-left", className)}>
+  const head = (label: string, k: Sort, className?: string) => (
+    <th className={className}>
       <button type="button" onClick={() => setSort(k)} className={cn("inline-flex items-center gap-1 hover:text-foreground", sort === k && "text-foreground")}>
         {label}
         {sort === k ? <ArrowDownWideNarrow className="h-3 w-3" /> : null}
@@ -55,25 +55,25 @@ export function ProviderClientsTable({
 
   return (
     <>
-      <div className="sheen overflow-hidden rounded-2xl border bg-card">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/40 text-xs text-muted-foreground">
+      <div className="sheen rounded-[4px] border bg-card">
+        <div className="desk-scroll">
+          <table className="desk-table">
+            <thead>
               <tr>
-                <th className="w-10 py-2.5 pl-4 pr-1">
+                <th className="w-8">
                   <input
                     type="checkbox"
                     checked={allOn}
                     onChange={() => setSelected(allOn ? new Set() : new Set(rows.map((r) => r.id)))}
-                    className="h-4 w-4 accent-[var(--primary)]"
+                    className="h-3.5 w-3.5 accent-[var(--foreground)]"
                     aria-label="Select all"
                   />
                 </th>
                 {head("Manager", "name")}
-                {head("Size", "aum", "right")}
-                <th className="hidden px-3 py-2.5 text-left font-medium md:table-cell">Engaged as</th>
-                {head("Funds", "funds", "right")}
-                <th className="hidden px-5 py-2.5 text-left font-medium xl:table-cell">Funds filed, e.g.</th>
+                {head("Size", "aum", "num")}
+                <th className="hidden md:table-cell">Engaged as</th>
+                {head("Funds", "funds", "num")}
+                <th className="hidden xl:table-cell">Funds filed, e.g.</th>
               </tr>
             </thead>
             <tbody>
@@ -81,8 +81,8 @@ export function ProviderClientsTable({
                 const m = meta[r.id];
                 const on = selected.has(r.id);
                 return (
-                  <tr key={r.id} className={cn("border-t align-top hover:bg-muted/30", on && "bg-accent/40")}>
-                    <td className="py-3 pl-4 pr-1">
+                  <tr key={r.id} className={cn("align-top", on && "bg-accent/40")}>
+                    <td>
                       <input
                         type="checkbox"
                         checked={on}
@@ -92,31 +92,31 @@ export function ProviderClientsTable({
                           else next.add(r.id);
                           setSelected(next);
                         }}
-                        className="mt-1 h-4 w-4 accent-[var(--primary)]"
+                        className="mt-0.5 h-3.5 w-3.5 accent-[var(--foreground)]"
                         aria-label={`Select ${r.name}`}
                       />
                     </td>
-                    <td className="px-3 py-3">
-                      <div className="flex gap-3">
-                        <CompanyLogo name={r.name} domain={r.domain} size={30} />
+                    <td>
+                      <div className="flex gap-2.5">
+                        <CompanyLogo name={r.name} domain={r.domain} size={24} />
                         <div className="min-w-0">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <Link href={`/companies/${r.id}`} className="font-semibold hover:text-primary">
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <Link href={`/companies/${r.id}`} className="font-medium hover:underline">
                               {r.name}
                             </Link>
-                            {r.category !== "GP" ? <CategoryBadge category={r.category} /> : null}
-                            {r.subType ? <span className="text-xs text-muted-foreground">{r.subType}</span> : null}
+                            {r.category !== "GP" ? <CategoryBadge category={r.category} className="rounded-[3px] px-1.5 py-0 text-[10px]" /> : null}
+                            {r.subType ? <span className="text-[11px] text-muted-foreground">{r.subType}</span> : null}
                           </div>
-                          <p className="mt-0.5 text-xs text-muted-foreground">{locationLabel(r) ?? ""}</p>
+                          <p className="mt-0.5 text-[11px] text-muted-foreground">{locationLabel(r) ?? ""}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-3 text-right tabular" title={sizeTitle(r)}>
+                    <td className="num whitespace-nowrap" title={sizeTitle(r)}>
                       {sizeLabel(r)}
                     </td>
-                    <td className="hidden px-3 py-3 text-muted-foreground md:table-cell">{m.roles.join(", ")}</td>
-                    <td className="whitespace-nowrap px-3 py-3 text-right tabular">{m.funds || "—"}</td>
-                    <td className="hidden max-w-[320px] px-5 py-3 text-xs text-muted-foreground xl:table-cell">
+                    <td className="hidden text-muted-foreground md:table-cell">{m.roles.join(", ")}</td>
+                    <td className="num whitespace-nowrap">{m.funds || "—"}</td>
+                    <td className="hidden max-w-[320px] text-[11.5px] text-muted-foreground xl:table-cell">
                       <span className="line-clamp-2">{m.examples.join(" · ")}</span>
                     </td>
                   </tr>
@@ -126,7 +126,7 @@ export function ProviderClientsTable({
           </table>
         </div>
       </div>
-      {notice ? <p className="text-sm text-muted-foreground">{notice}</p> : null}
+      {notice ? <p className="text-[12px] text-muted-foreground">{notice}</p> : null}
       <BulkBar
         selected={selected}
         records={index.records}

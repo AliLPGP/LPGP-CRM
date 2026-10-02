@@ -1,63 +1,34 @@
+import { Fragment } from "react";
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  Briefcase,
-  CircleCheck,
-  CircleDashed,
-  FileText,
-  Handshake,
-  Landmark,
-  Mail,
-  ScrollText,
-  Sparkles,
-} from "lucide-react";
+import { CircleCheck, CircleDashed, Mail } from "lucide-react";
 import type { Company } from "@/lib/types";
 import type { DisclosedCommitment, FiledProvider, ProviderClient } from "@/lib/directory/queries";
 import type { SimilarHit } from "@/lib/directory/similar";
 import { normalizeRole, PROVIDER_ROLES, ROLE_LABEL, ROLE_PLURAL } from "@/lib/directory/providers";
 import { CategoryBadge } from "@/components/category-badge";
 import { CompanyLogo } from "@/components/company-logo";
+import { Box, Src, Tag } from "@/components/intel/ui";
 import { cn, formatUsd } from "@/lib/utils";
 
-// The Inven-style one-pager, section by section. Server components: nothing
-// here needs the browser.
+// The Inven-style one-pager, section by section, on the desk register: a
+// `Box` per section, `.kv` for facts, `.desk-table` for ledgers, and a `Src`
+// on every figure that came from a page. Server components: nothing here
+// needs the browser.
 
-function Panel({
-  icon,
-  title,
-  count,
-  action,
-  children,
-  className,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  count?: number | string;
-  action?: React.ReactNode;
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <section className={cn("sheen overflow-hidden rounded-2xl border bg-card", className)}>
-      <div className="flex items-center gap-2 border-b px-5 py-3.5">
-        <span className="text-muted-foreground">{icon}</span>
-        <h2 className="font-semibold">{title}</h2>
-        {count != null ? <span className="text-sm text-muted-foreground">({count})</span> : null}
-        {action ? <div className="ml-auto">{action}</div> : null}
-      </div>
-      {children}
-    </section>
-  );
-}
+/** The one "Show N more" button style every desk screen uses. */
+export const MORE_BUTTON = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent disabled:opacity-50";
 
-function Fact({ label, value, hint }: { label: string; value: React.ReactNode; hint?: string | null }) {
-  return (
-    <div className="min-w-0 bg-card p-4">
-      <p className="eyebrow">{label}</p>
-      <div className="figure mt-2 truncate text-xl">{value}</div>
-      {hint ? <p className="mt-1 truncate text-xs text-muted-foreground" title={hint}>{hint}</p> : null}
-    </div>
-  );
+/** A desk action button, level with the facet menus (h-8). */
+export const DESK_BUTTON = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12px] hover:bg-accent disabled:pointer-events-none disabled:opacity-50";
+
+/**
+ * A tab's content. It fades in over 160 ms (nothing else on a profile is
+ * animated) and keeps a floor height, so the tab bar above it never moves
+ * while the next tab is loading. Key it by the tab so a switch replays the
+ * fade on a fresh node.
+ */
+export function TabPanel({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <div className={cn("fade-in min-h-[480px] [animation:topnav-in_.16s_ease-out] motion-reduce:[animation:none]", className)}>{children}</div>;
 }
 
 /** Headline size and what it is, from the best figure the record has. */
@@ -80,125 +51,61 @@ export function headlineSize(c: Company): { value: number | null; basis: string 
   return { value: null, basis: null };
 }
 
-export function KeyFacts({
-  company,
-  contacts,
-  connectable,
-  signal,
-}: {
-  company: Company;
-  contacts: number;
-  connectable: number;
-  /** Replaces the Form ADV fact for books where it says nothing (LPs, SPs). */
-  signal?: { label: string; value: React.ReactNode; hint?: string | null };
-}) {
-  const size = headlineSize(company);
-  const staff = company.employee_count ?? company.adv_employee_count ?? null;
-  const staffHint = company.employee_count ? "Lusha" : company.adv_employee_count ? "Form ADV" : company.employee_range;
-  const us = company.country === "United States";
-  const hq = (
-    us && company.city
-      ? [company.city, company.state]
-      : [company.city, company.country]
-  )
-    .filter(Boolean)
-    .join(", ");
-  const adv = company.adv_firm_type === "ERA" ? "Exempt reporting" : company.adv_firm_type === "Registered" ? "SEC registered" : null;
-  return (
-    <div className="sheen grid grid-cols-2 gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-3 lg:grid-cols-6">
-      <Fact label="Size" value={size.value != null ? formatUsd(size.value) : company.aum ?? "—"} hint={size.basis} />
-      <Fact label="Team" value={staff != null ? staff.toLocaleString("en-US") : company.employee_range ?? "—"} hint={staffHint} />
-      <Fact label="Founded" value={company.founded_year ?? "—"} hint={company.years_active ? `${company.years_active} years active` : null} />
-      <Fact label="HQ" value={<span className="font-sans text-base font-semibold">{hq || company.hq_location || company.region || "—"}</span>} />
-      {signal && !adv ? (
-        <Fact label={signal.label} value={signal.value} hint={signal.hint} />
-      ) : (
-        <Fact
-          label="Form ADV"
-          value={<span className="font-sans text-base font-semibold">{adv ?? "Not on file"}</span>}
-          hint={company.private_fund_count != null ? `${company.private_fund_count} private funds` : company.adv_last_filed ? `Filed ${company.adv_last_filed}` : null}
-        />
-      )}
-      <Fact
-        label="Key contacts"
-        value={contacts}
-        hint={connectable ? `${connectable} with a direct email on file` : contacts ? "Names and titles" : null}
-      />
-    </div>
-  );
-}
-
 export function Overview({ company }: { company: Company }) {
   const lines = Array.isArray(company.service_lines) ? company.service_lines : [];
   const lifecycle = new Set(Array.isArray(company.lifecycle) ? company.lifecycle : []);
   const stages = ["Formation", "Fundraising", "Operations", "Value creation", "Exit"];
-  const lpFacts: [string, React.ReactNode][] = [];
+  const facts: [string, React.ReactNode][] = [];
+  const fact = (k: string, v: React.ReactNode) => facts.push([k, v]);
+  if (company.directory_vertical) fact("Vertical", company.directory_vertical);
+  if (company.industry) {
+    fact(
+      "Industry",
+      <>
+        {company.industry} <span className="text-[10.5px] text-muted-foreground">Lusha</span>
+      </>,
+    );
+  }
   if (company.category === "LP") {
-    if (company.investor_type) lpFacts.push(["Investor type", company.investor_type]);
-    if (company.total_assets_usd) lpFacts.push(["Total assets", formatUsd(Number(company.total_assets_usd))]);
-    if (company.alts_allocation_pct != null) lpFacts.push(["Alternatives allocation", `${company.alts_allocation_pct}%`]);
+    if (company.investor_type) fact("Investor type", company.investor_type);
+    if (company.total_assets_usd) fact("Total assets", <span className="figure">{formatUsd(Number(company.total_assets_usd))}</span>);
+    if (company.alts_allocation_pct != null) fact("Alternatives allocation", <span className="figure">{company.alts_allocation_pct}%</span>);
     if (company.discloses_commitments) {
-      lpFacts.push([
+      fact(
         "Commitment disclosure",
-        company.disclosure_source_url ? (
-          <a href={company.disclosure_source_url} target="_blank" rel="noreferrer" className="hover:text-primary">
-            {company.discloses_commitments} <ArrowUpRight className="inline h-3 w-3" />
-          </a>
-        ) : (
-          company.discloses_commitments
-        ),
-      ]);
+        <>
+          {company.discloses_commitments} <Src url={company.disclosure_source_url} name="disclosure page" />
+        </>,
+      );
     }
   }
-  const hasAnything = company.description || lines.length || lifecycle.size || lpFacts.length || company.directory_vertical || company.industry;
+  const hasAnything = company.description || lines.length || lifecycle.size || facts.length;
   if (!hasAnything) return null;
   return (
-    <Panel icon={<FileText className="h-4 w-4" />} title="Overview">
-      <div className="space-y-5 p-5">
-        {company.description ? <p className="max-w-[75ch] text-[15px] leading-relaxed text-foreground/85">{company.description}</p> : null}
-        {(company.directory_vertical || company.industry) ? (
-          <dl className="flex flex-wrap gap-x-8 gap-y-2 text-sm">
-            {company.directory_vertical ? (
-              <div>
-                <dt className="eyebrow">Vertical</dt>
-                <dd className="mt-1">{company.directory_vertical}</dd>
-              </div>
-            ) : null}
-            {company.industry ? (
-              <div>
-                <dt className="eyebrow">Industry (Lusha)</dt>
-                <dd className="mt-1">{company.industry}</dd>
-              </div>
-            ) : null}
-          </dl>
-        ) : null}
-        {lpFacts.length ? (
-          <dl className="grid gap-x-8 gap-y-3 text-sm sm:grid-cols-2">
-            {lpFacts.map(([k, v]) => (
-              <div key={k}>
-                <dt className="eyebrow">{k}</dt>
-                <dd className="mt-1">{v}</dd>
-              </div>
+    <Box title="Overview">
+      <div className="space-y-3">
+        {company.description ? <p className="max-w-[80ch] text-[13px] leading-relaxed">{company.description}</p> : null}
+        {facts.length ? (
+          <dl className="kv text-[12.5px]">
+            {facts.map(([k, v]) => (
+              <Fragment key={k}>
+                <dt>{k}</dt>
+                <dd>{v}</dd>
+              </Fragment>
             ))}
           </dl>
         ) : null}
         {lifecycle.size ? (
           <div>
-            <p className="eyebrow">Fund lifecycle coverage</p>
-            <div className="mt-2 flex flex-wrap gap-1.5">
+            <div className="desk-label">Fund lifecycle coverage</div>
+            <div className="mt-1.5 flex flex-wrap gap-1">
               {stages.map((s) => {
                 const on = lifecycle.has(s);
                 return (
-                  <span
-                    key={s}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs",
-                      on ? "border-primary/40 bg-accent text-foreground" : "text-muted-foreground",
-                    )}
-                  >
+                  <Tag key={s} strong={on} className={on ? undefined : "opacity-60"}>
                     {on ? <CircleCheck className="h-3 w-3" /> : <CircleDashed className="h-3 w-3" />}
                     {s}
-                  </span>
+                  </Tag>
                 );
               })}
             </div>
@@ -206,28 +113,26 @@ export function Overview({ company }: { company: Company }) {
         ) : null}
         {lines.length ? (
           <div>
-            <p className="eyebrow">Service lines</p>
-            <div className="mt-2 grid gap-3 md:grid-cols-2">
+            <div className="desk-label">Service lines</div>
+            <ul className="mt-1.5 divide-y rounded-[4px] border">
               {lines.map((l) => (
-                <div key={l.name} className="rounded-xl border bg-background/50 p-4">
-                  <p className="font-semibold">{l.name}</p>
-                  {l.description ? <p className="mt-1 text-sm text-muted-foreground">{l.description}</p> : null}
+                <li key={l.name} className="px-3 py-2">
+                  <p className="text-[12.5px] font-medium">{l.name}</p>
+                  {l.description ? <p className="mt-0.5 text-[12px] leading-snug text-muted-foreground">{l.description}</p> : null}
                   {l.capabilities?.length ? (
-                    <div className="mt-2.5 flex flex-wrap gap-1">
+                    <div className="mt-1.5 flex flex-wrap gap-1">
                       {l.capabilities.map((cap) => (
-                        <span key={cap} className="rounded-md border bg-card px-1.5 py-0.5 text-[11.5px] text-foreground/80">
-                          {cap}
-                        </span>
+                        <Tag key={cap}>{cap}</Tag>
                       ))}
                     </div>
                   ) : null}
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         ) : null}
       </div>
-    </Panel>
+    </Box>
   );
 }
 
@@ -235,16 +140,16 @@ function ProviderRow({ r }: { r: FiledProvider }) {
   const where = r.provider_locations.length ? `Office: ${r.provider_locations.join("; ")}` : "";
   const filed = r.provider_entities.length ? `Filed as: ${r.provider_entities.join("; ")}` : "";
   return (
-    <li className="flex items-baseline gap-3 text-sm">
+    <li className="flex items-baseline gap-3 text-[12.5px]">
       <Link
         href={r.provider_key ? `/database/providers/${r.provider_key}` : "#"}
-        className="min-w-0 flex-1 truncate font-medium hover:text-primary"
+        className="min-w-0 flex-1 truncate font-medium hover:underline"
         title={[filed, where].filter(Boolean).join("\n") || undefined}
       >
         {r.provider_brand ?? r.provider_entities[0] ?? "Provider"}
       </Link>
       {r.fund_count ? (
-        <span className="shrink-0 whitespace-nowrap tabular text-xs text-muted-foreground">
+        <span className="figure shrink-0 whitespace-nowrap text-[11px] text-muted-foreground">
           {r.fund_count} fund{r.fund_count === 1 ? "" : "s"}
         </span>
       ) : null}
@@ -254,22 +159,22 @@ function ProviderRow({ r }: { r: FiledProvider }) {
 
 const SHOWN = 8;
 
-/** The first few providers in a role, the rest a click away. */
+/** The first few providers in a role, the rest a click away (no browser state: a `details`). */
 function ProviderRows({ rows }: { rows: FiledProvider[] }) {
   return (
     <>
-      <ul className="mt-2.5 space-y-1.5">
+      <ul className="mt-2 space-y-1">
         {rows.slice(0, SHOWN).map((r) => (
           <ProviderRow key={r.id} r={r} />
         ))}
       </ul>
       {rows.length > SHOWN ? (
-        <details className="group mt-1.5">
-          <summary className="cursor-pointer list-none text-xs font-medium text-muted-foreground hover:text-foreground">
+        <details className="group mt-2">
+          <summary className={cn("inline-block cursor-pointer list-none", MORE_BUTTON)}>
             <span className="group-open:hidden">Show {rows.length - SHOWN} more</span>
             <span className="hidden group-open:inline">Show fewer</span>
           </summary>
-          <ul className="mt-1.5 space-y-1.5">
+          <ul className="mt-2 space-y-1">
             {rows.slice(SHOWN).map((r) => (
               <ProviderRow key={r.id} r={r} />
             ))}
@@ -292,31 +197,30 @@ export function FiledProviders({ rows }: { rows: FiledProvider[] }) {
   }
   const roles = [...PROVIDER_ROLES, "other" as const].filter((r) => byRole.has(r));
   return (
-    <Panel
-      icon={<Briefcase className="h-4 w-4" />}
+    <Box
       title="Service providers"
-      count={filed.length || undefined}
-      action={filed[0]?.filed ? <span className="text-xs text-muted-foreground">Form ADV Schedule D · {filed[0].filed}</span> : null}
+      count={filed.length || null}
+      flush
+      defn="The auditors, administrators, custodians, prime brokers and marketers this manager names for its private funds on Form ADV Schedule D, with how many of its funds each serves."
+      action={filed[0]?.filed ? <span className="text-[11px] text-muted-foreground">Form ADV Schedule D · {filed[0].filed}</span> : null}
     >
       {roles.length ? (
         <div className="grid gap-px bg-border md:grid-cols-2">
           {roles.map((role) => (
-            <div key={role} className="bg-card p-4">
-              <p className="eyebrow">{ROLE_PLURAL[role]}</p>
+            <div key={role} className="bg-card p-3">
+              <div className="desk-label">{ROLE_PLURAL[role]}</div>
               <ProviderRows rows={byRole.get(role)!.sort((a, b) => (b.fund_count ?? 0) - (a.fund_count ?? 0))} />
             </div>
           ))}
         </div>
       ) : null}
       {samples.length ? (
-        <div className="border-t px-5 py-3 text-sm">
-          <p className="text-xs text-muted-foreground">
-            Sample links from the original seed (illustrative, not filed):{" "}
-            {samples.map((s) => `${s.provider_brand ?? "Provider"} (${s.role ?? "role"})`).join(", ")}
-          </p>
-        </div>
+        <p className="border-t px-3 py-2 text-[11px] text-muted-foreground">
+          Sample links from the original seed (illustrative, not filed):{" "}
+          {samples.map((s) => `${s.provider_brand ?? "Provider"} (${s.role ?? "role"})`).join(", ")}
+        </p>
       ) : null}
-    </Panel>
+    </Box>
   );
 }
 
@@ -345,61 +249,63 @@ export function ProviderClients({
   }
   const list = [...byClient.values()].sort((a, b) => b.funds - a.funds || a.client.name.localeCompare(b.client.name));
   return (
-    <Panel
-      icon={<Handshake className="h-4 w-4" />}
+    <Box
       title="Clients on Form ADV"
       count={list.length}
+      flush
+      defn="Managers whose Form ADV Schedule D names this firm as a service provider, the role they engage it in, and how many of their private funds it serves."
       action={
         brandKey ? (
-          <Link href={`/database/providers/${brandKey}`} className="text-xs font-medium text-muted-foreground hover:text-foreground">
-            Provider page <ArrowUpRight className="inline h-3 w-3" />
+          <Link href={`/database/providers/${brandKey}`} className="text-[11.5px] text-muted-foreground hover:text-foreground">
+            Provider page
           </Link>
         ) : null
       }
     >
       {ranks.length ? (
-        <div className="flex flex-wrap gap-2 border-b px-5 py-3">
+        <div className="flex flex-wrap gap-1.5 border-b px-3 py-2">
           {ranks.map((r) => (
-            <span key={r.role} className="rounded-full border bg-accent/40 px-2.5 py-1 text-xs">
-              <span className="font-semibold">#{r.rank}</span> {ROLE_LABEL[r.role].toLowerCase()} ·{" "}
-              <span className="tabular">{r.clients}</span> of {r.of.toLocaleString("en-US")} managers
-            </span>
+            <Tag key={r.role} strong>
+              <span className="figure">#{r.rank}</span> {ROLE_LABEL[r.role].toLowerCase()} · <span className="figure">{r.clients}</span> of {r.of.toLocaleString("en-US")} managers
+            </Tag>
           ))}
         </div>
       ) : null}
-      <div className="max-h-[420px] overflow-y-auto">
-        <table className="w-full text-sm">
-          <thead className="sticky top-0 bg-muted/60 text-xs text-muted-foreground backdrop-blur">
-            <tr>
-              <th className="px-5 py-2 text-left font-medium">Manager</th>
-              <th className="px-3 py-2 text-left font-medium">Engaged as</th>
-              <th className="px-5 py-2 text-right font-medium">Funds</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list.map(({ client, roles, funds }) => (
-              <tr key={client.id} className="border-t hover:bg-muted/30">
-                <td className="px-5 py-2">
-                  <Link href={`/companies/${client.id}`} className="inline-flex items-center gap-2 font-medium hover:text-primary">
-                    <CompanyLogo name={client.name} domain={client.domain} size={22} />
-                    {client.name}
-                  </Link>
-                  {client.sub_type ? <span className="ml-2 text-xs text-muted-foreground">{client.sub_type}</span> : null}
-                </td>
-                <td className="px-3 py-2 text-muted-foreground">{[...roles].join(", ")}</td>
-                <td className="px-5 py-2 text-right tabular">{funds || "—"}</td>
+      {list.length ? (
+        <div className="desk-scroll max-h-[480px] overflow-y-auto">
+          <table className="desk-table">
+            <thead>
+              <tr>
+                <th>Manager</th>
+                <th>Engaged as</th>
+                <th className="num">Funds</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {list.map(({ client, roles, funds }) => (
+                <tr key={client.id} className="linked">
+                  <td>
+                    <Link href={`/companies/${client.id}`} className="cover flex items-center gap-2 font-medium">
+                      <CompanyLogo name={client.name} domain={client.domain} size={20} />
+                      <span className="truncate">{client.name}</span>
+                      {client.sub_type ? <span className="text-[11px] font-normal text-muted-foreground">{client.sub_type}</span> : null}
+                    </Link>
+                  </td>
+                  <td className="text-muted-foreground">{[...roles].join(", ")}</td>
+                  <td className="num">{funds || "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : null}
       {samples.length ? (
-        <p className="border-t px-5 py-3 text-xs text-muted-foreground">
+        <p className="border-t px-3 py-2 text-[11px] text-muted-foreground">
           Sample links from the original seed (illustrative, not filed):{" "}
           {samples.map((s) => `${s.client!.name} (${s.role ?? "role"})`).join(", ")}
         </p>
       ) : null}
-    </Panel>
+    </Box>
   );
 }
 
@@ -412,34 +318,35 @@ function Amount({ c }: { c: DisclosedCommitment }) {
     const upTo = c.amount_text?.toLowerCase().startsWith("up to");
     return (
       <span title={c.amount_text ?? undefined}>
-        {upTo ? <span className="mr-1 font-sans text-xs font-normal text-muted-foreground">up to</span> : null}
+        {upTo ? <span className="mr-1 text-[11px] font-normal text-muted-foreground">up to</span> : null}
         {c.currency} {short}
       </span>
     );
   }
   if (c.amount_usd != null) return <>{formatUsd(c.amount_usd)}</>;
-  return <span className="font-sans text-xs font-normal text-muted-foreground">{c.amount_text ?? "Undisclosed"}</span>;
+  return <span className="text-[11px] font-normal text-muted-foreground">{c.amount_text ?? "Undisclosed"}</span>;
 }
 
 /** Public commitments — as the LP that made them or the manager that won them. */
 export function Commitments({ rows, as }: { rows: NamedCommitment[]; as: "lp" | "gp" }) {
   if (!rows.length) return null;
   return (
-    <Panel
-      icon={<Landmark className="h-4 w-4" />}
+    <Box
       title={as === "lp" ? "Commitments made" : "Commitments received"}
       count={rows.length}
-      action={<span className="text-xs text-muted-foreground">Amounts in their own currency, never converted</span>}
+      flush
+      defn={as === "lp" ? "Commitments this investor has disclosed to funds, from its own reports and the public registers." : "Commitments LPs have disclosed to this manager's funds, from their own reports and the public registers."}
+      action={<span className="text-[11px] text-muted-foreground">Amounts in their own currency, never converted</span>}
     >
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-muted/40 text-xs text-muted-foreground">
+      <div className="desk-scroll">
+        <table className="desk-table">
+          <thead>
             <tr>
-              <th className="px-5 py-2 text-left font-medium">Fund</th>
-              <th className="px-3 py-2 text-left font-medium">{as === "lp" ? "Manager" : "LP"}</th>
-              <th className="px-3 py-2 text-left font-medium">When</th>
-              <th className="px-3 py-2 text-right font-medium">Amount</th>
-              <th className="px-5 py-2 text-left font-medium">Source</th>
+              <th>Fund</th>
+              <th>{as === "lp" ? "Manager" : "LP"}</th>
+              <th>When</th>
+              <th className="num">Amount</th>
+              <th>Source</th>
             </tr>
           </thead>
           <tbody>
@@ -447,49 +354,37 @@ export function Commitments({ rows, as }: { rows: NamedCommitment[]; as: "lp" | 
               const otherId = as === "lp" ? c.gp_company_id : c.lp_company_id;
               const otherName = as === "lp" ? c.gp_label : c.lp_label;
               return (
-                <tr key={c.id} className="border-t align-top hover:bg-muted/30">
-                  <td className="px-5 py-2.5 font-medium">
+                <tr key={c.id} className="align-top">
+                  <td className="max-w-[360px] font-medium">
                     {c.fund_id ? (
-                      <Link href={`/funds/${c.fund_id}`} className="hover:text-primary">
+                      <Link href={`/funds/${c.fund_id}`} className="hover:underline">
                         {c.fund_label ?? "—"}
                       </Link>
                     ) : (
-                      c.fund_label ?? "—"
+                      (c.fund_label ?? "—")
                     )}
                   </td>
-                  <td className="px-3 py-2.5 text-muted-foreground">
+                  <td className="text-muted-foreground">
                     {otherId ? (
-                      <Link href={`/companies/${otherId}`} className="hover:text-primary">
+                      <Link href={`/companies/${otherId}`} className="hover:underline">
                         {otherName ?? "—"}
                       </Link>
                     ) : (
-                      otherName ?? "—"
+                      (otherName ?? "—")
                     )}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-2.5 text-muted-foreground">
-                    {c.commitment_date_text ?? c.commitment_date ?? "—"}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-2.5 text-right tabular font-medium">
+                  <td className="whitespace-nowrap text-muted-foreground">{c.commitment_date_text ?? c.commitment_date ?? "—"}</td>
+                  <td className="num whitespace-nowrap">
                     <Amount c={c} />
                   </td>
-                  <td className="px-5 py-2.5 text-xs text-muted-foreground">
-                    {c.source === "sample" ? (
-                      <span className="rounded border border-dashed px-1.5 py-0.5">Sample</span>
-                    ) : c.source_url ? (
-                      <a href={c.source_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-primary">
-                        {c.disclosure_type ?? "Source"} <ArrowUpRight className="h-3 w-3" />
-                      </a>
-                    ) : (
-                      c.disclosure_type ?? "—"
-                    )}
-                  </td>
+                  <td>{c.source === "sample" ? <Tag title="From the original seed; illustrative, not filed">Sample</Tag> : <Src url={c.source_url} name={c.disclosure_type ?? "Source"} />}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
-    </Panel>
+    </Box>
   );
 }
 
@@ -508,107 +403,99 @@ export function AdvPanel({ company }: { company: Company }) {
     ["Private funds", company.private_fund_count != null ? String(company.private_fund_count) : null],
     ["Employees (ADV)", company.adv_employee_count != null ? company.adv_employee_count.toLocaleString("en-US") : null],
     ["Last filed", company.adv_last_filed ?? null],
-  ];
+  ].filter((f): f is [string, string] => Boolean(f[1]));
   return (
-    <Panel
-      icon={<ScrollText className="h-4 w-4" />}
+    <Box
       title="Form ADV"
-      action={
-        company.adv_source_url ? (
-          <a href={company.adv_source_url} target="_blank" rel="noreferrer" className="text-xs font-medium text-muted-foreground hover:text-foreground">
-            IAPD <ArrowUpRight className="inline h-3 w-3" />
-          </a>
-        ) : null
-      }
+      flush
+      defn="Regulatory AUM is reported per SEC-registered entity; exempt reporting advisers report private fund gross assets instead. The match to an entity comes from the Master Directory — check the CRD if a figure looks off."
+      action={company.adv_source_url ? <Src url={company.adv_source_url} name="IAPD" className="text-[11.5px]" /> : null}
     >
-      <dl className="grid gap-px bg-border sm:grid-cols-3">
-        {facts
-          .filter(([, v]) => v)
-          .map(([k, v]) => (
-            <div key={k} className="bg-card px-5 py-3">
-              <dt className="eyebrow">{k}</dt>
-              <dd className="figure mt-1.5 text-lg">{v}</dd>
-            </div>
+      {facts.length ? (
+        <dl className="kv px-3 py-1 text-[12.5px]">
+          {facts.map(([k, v]) => (
+            <Fragment key={k}>
+              <dt>{k}</dt>
+              <dd className="figure">{v}</dd>
+            </Fragment>
           ))}
-      </dl>
+        </dl>
+      ) : null}
       {entities.length ? (
-        <div className="overflow-x-auto border-t">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/40 text-xs text-muted-foreground">
+        <div className={cn("desk-scroll", facts.length && "border-t")}>
+          <table className="desk-table">
+            <thead>
               <tr>
-                <th className="px-5 py-2 text-left font-medium">Filing entity</th>
-                <th className="px-3 py-2 text-left font-medium">CRD</th>
-                <th className="px-3 py-2 text-left font-medium">Status</th>
-                <th className="px-3 py-2 text-right font-medium">Regulatory AUM</th>
-                <th className="px-5 py-2 text-left font-medium">Filed</th>
+                <th>Filing entity</th>
+                <th>CRD</th>
+                <th>Status</th>
+                <th className="num">Regulatory AUM</th>
+                <th>Filed</th>
               </tr>
             </thead>
             <tbody>
               {entities.map((e) => (
-                <tr key={`${e.crd}-${e.entity}`} className="border-t">
-                  <td className="px-5 py-2 font-medium">{e.entity ?? "—"}</td>
-                  <td className="px-3 py-2 tabular">
+                <tr key={`${e.crd}-${e.entity}`}>
+                  <td className="font-medium">{e.entity ?? "—"}</td>
+                  <td className="figure">
                     {e.source_url ? (
-                      <a href={e.source_url} target="_blank" rel="noreferrer" className="hover:text-primary">
+                      <a href={e.source_url} target="_blank" rel="noreferrer" className="hover:underline">
                         {e.crd ?? "—"}
                       </a>
                     ) : (
-                      e.crd ?? "—"
+                      (e.crd ?? "—")
                     )}
                   </td>
-                  <td className="px-3 py-2 text-muted-foreground">{e.firm_type === "ERA" ? "Exempt reporting" : e.firm_type ?? "—"}</td>
-                  <td className="px-3 py-2 text-right tabular">{e.regulatory_aum_usd ? formatUsd(e.regulatory_aum_usd) : "—"}</td>
-                  <td className="px-5 py-2 text-muted-foreground">{e.last_filed ?? "—"}</td>
+                  <td className="text-muted-foreground">{e.firm_type === "ERA" ? "Exempt reporting" : (e.firm_type ?? "—")}</td>
+                  <td className="num">{e.regulatory_aum_usd ? formatUsd(e.regulatory_aum_usd) : "—"}</td>
+                  <td className="text-muted-foreground">{e.last_filed ?? "—"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       ) : null}
-      <p className="border-t px-5 py-2.5 text-xs text-muted-foreground">
-        Regulatory AUM is reported per SEC-registered entity; exempt reporting advisers report private fund gross assets instead.
-        The match to an entity comes from the Master Directory — check the CRD if a figure looks off.
-      </p>
-    </Panel>
+    </Box>
   );
 }
 
 export function SimilarFirms({ hits, companyId }: { hits: SimilarHit[]; companyId: string }) {
   if (!hits.length) return null;
   return (
-    <Panel
-      icon={<Sparkles className="h-4 w-4" />}
+    <Box
       title="Similar firms"
+      count={hits.length}
+      flush
+      defn="Firms the directory scores closest on book, type, size, place and the words in their own overviews. The score is out of 100."
       action={
-        <Link href={`/database?like=${companyId}`} className="text-xs font-medium text-muted-foreground hover:text-foreground">
-          See all <ArrowUpRight className="inline h-3 w-3" />
+        <Link href={`/database?like=${companyId}`} className="text-[11.5px] text-muted-foreground hover:text-foreground">
+          See all
         </Link>
       }
     >
       <ul className="divide-y">
         {hits.map((h) => (
-          <li key={h.record.id} className="px-5 py-3">
-            <div className="flex items-center gap-2.5">
-              <CompanyLogo name={h.record.name} domain={h.record.domain} size={28} />
-              <Link href={`/companies/${h.record.id}`} className="min-w-0 flex-1 truncate font-medium hover:text-primary">
-                {h.record.name}
-              </Link>
-              <CategoryBadge category={h.record.category} />
-              <span className="tabular text-xs text-muted-foreground">{h.score}</span>
-            </div>
-            {h.reasons[0] ? <p className="mt-1 truncate pl-[38px] text-xs text-muted-foreground">{h.reasons[0]}</p> : null}
+          <li key={h.record.id}>
+            <Link href={`/companies/${h.record.id}`} className="flex items-center gap-2.5 px-3 py-2 hover:bg-accent/40">
+              <CompanyLogo name={h.record.name} domain={h.record.domain} size={24} />
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[12.5px] font-medium">{h.record.name}</span>
+                {h.reasons[0] ? <span className="block truncate text-[11px] text-muted-foreground">{h.reasons[0]}</span> : null}
+              </span>
+              <CategoryBadge category={h.record.category} className="rounded-[3px] px-1.5 py-0 text-[10px]" />
+              <span className="figure w-6 text-right text-[11px] text-muted-foreground">{h.score}</span>
+            </Link>
           </li>
         ))}
       </ul>
-    </Panel>
+    </Box>
   );
 }
-
 
 export function ConnectableBadge() {
   return (
     <span
-      className="inline-flex items-center gap-1 rounded border px-1.5 py-px text-[10px] font-medium text-[var(--success)]"
+      className="tag text-[var(--success)]"
       title="The team's master sheet holds a direct email for this person. The import keeps only that yes/no, not the address, so it is not shown here."
     >
       <Mail className="h-2.5 w-2.5" /> Email in master sheet

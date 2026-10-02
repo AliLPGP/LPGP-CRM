@@ -3,9 +3,9 @@
 import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ArrowDownWideNarrow, Check, Columns3, Mail, Sparkles, Users } from "lucide-react";
-import { CategoryBadge } from "@/components/category-badge";
+import { ArrowDownWideNarrow, Check, Columns3, Eye, Mail, Sparkles, Users } from "lucide-react";
 import { CompanyLogo } from "@/components/company-logo";
+import { Tag } from "@/components/intel/ui";
 import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, isAssetClassKey, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { brandDomain } from "@/lib/directory/brand-domains";
 import { filtersFromParams, type SortKey } from "@/lib/directory/filters";
@@ -19,6 +19,12 @@ import type { Directory } from "./use-directory";
 import type { ResultRow } from "./use-results";
 
 const PAGE = 50;
+
+/** The one "show more" button every desk list ends with. */
+const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent";
+
+/** The menu's open panel: the header's own fade-and-rise, off under reduced motion. */
+const POP = "animate-[topnav-in_160ms_ease-out] motion-reduce:animate-none";
 
 // --- Columns ------------------------------------------------------------------
 // The registry is the one list the header, the cells and the picker read.
@@ -37,6 +43,7 @@ export type ColumnKey =
   | "strategies"
   | "regions"
   | "employees"
+  | "founded"
   | "contacts"
   | "providers"
   | "match"
@@ -57,13 +64,14 @@ export type Column = {
 export const COLUMNS: Column[] = [
   { key: "firm", label: "Firm", default: true },
   { key: "type", label: "Type", default: true },
-  { key: "location", label: "Location", min: "md", default: false },
+  { key: "location", label: "Location", min: "md", default: true },
   { key: "size", label: "Size", align: "right", default: true },
   { key: "knownFunds", label: "Funds", align: "right", min: "md", default: true },
   { key: "allocation", label: "Alternatives", align: "right", min: "xl", default: false },
   { key: "strategies", label: "Strategies", min: "xl", default: true },
   { key: "regions", label: "Regions", min: "xl", default: false },
   { key: "employees", label: "Team", align: "right", min: "md", default: true },
+  { key: "founded", label: "Est.", align: "right", min: "xl", default: false },
   { key: "contacts", label: "People", align: "right", min: "md", default: true },
   { key: "providers", label: "Providers", min: "xl", default: true },
   { key: "match", label: "Match", align: "right", default: true },
@@ -76,7 +84,7 @@ export const COLUMNS: Column[] = [
 const COLUMN_BY_KEY = new Map(COLUMNS.map((c) => [c.key, c]));
 
 /** Columns whose head sorts the results. */
-const SORT_OF: Partial<Record<ColumnKey, SortKey>> = { firm: "name", size: "aum", employees: "employees", contacts: "contacts" };
+const SORT_OF: Partial<Record<ColumnKey, SortKey>> = { firm: "name", size: "aum", employees: "employees", founded: "founded", contacts: "contacts" };
 
 /** The viewer's own column choice: a per-browser convenience, never shared. */
 export const COLUMNS_STORAGE_KEY = "discover.columns";
@@ -156,7 +164,8 @@ function columnOn(c: Column, choice: ColumnChoice, classes: AssetClassKey[]): bo
 /**
  * The viewer's column choice. Read through an external-store subscription so
  * the server render (which has no storage) and the first client render agree,
- * and a change in another tab lands here too.
+ * and a change in another tab lands here too. The toolbar's button and the
+ * table both read it, so the one store keeps them in step.
  */
 function useColumnChoice(): [ColumnChoice, (next: ColumnChoice) => void] {
   const raw = useSyncExternalStore(subscribeColumns, readStoredColumns, () => null);
@@ -190,6 +199,13 @@ function Highlighted({ text, query }: { text: string; query: string }) {
   );
 }
 
+/** The header sticks under the top bar once the table no longer scrolls sideways (md and up). */
+const STICKY = "md:sticky md:top-14 md:z-[2]";
+const STICKY_STYLE: React.CSSProperties = {
+  background: "color-mix(in oklab, var(--muted) 55%, var(--card))",
+  boxShadow: "inset 0 -1px 0 var(--border)",
+};
+
 function SortHead({
   label,
   k,
@@ -207,12 +223,8 @@ function SortHead({
 }) {
   const on = sort === k;
   return (
-    <th className={cn("px-3 py-2.5 font-medium", align === "right" ? "text-right" : "text-left", className)}>
-      <button
-        type="button"
-        onClick={() => onSort(k)}
-        className={cn("inline-flex items-center gap-1 hover:text-foreground", on && "text-foreground")}
-      >
+    <th className={cn(STICKY, align === "right" && "num", className)} style={STICKY_STYLE} aria-sort={on ? "descending" : undefined}>
+      <button type="button" onClick={() => onSort(k)} className={cn("inline-flex items-center gap-1 hover:text-foreground", on && "text-foreground")}>
         {label}
         {on ? <ArrowDownWideNarrow className="h-3 w-3" /> : null}
       </button>
@@ -220,17 +232,13 @@ function SortHead({
   );
 }
 
-function ColumnPicker({
-  choice,
-  classes,
-  onChange,
-  mode,
-}: {
-  choice: ColumnChoice;
-  classes: AssetClassKey[];
-  onChange: (next: ColumnChoice) => void;
-  mode: "all" | "keywords" | "similar";
-}) {
+/**
+ * The toolbar's "Columns" button: the chooser over the registry. Sits in the
+ * toolbar's right-hand cluster, beside Export, on every list screen.
+ */
+export function ColumnsButton({ mode }: { mode: "all" | "keywords" | "similar" }) {
+  const [choice, onChange] = useColumnChoice();
+  const classes = useFilteredClasses();
   const [open, setOpen] = useState(false);
   const fixed = COLUMNS.filter((c) => !c.classKey && c.key !== "firm" && (c.key !== "match" || mode !== "all"));
   const perClass = COLUMNS.filter((c) => c.classKey);
@@ -246,23 +254,12 @@ function ColumnPicker({
     const on = columnOn(c, choice, classes);
     const label = c.key === "match" ? (mode === "similar" ? "Match" : "Fit") : c.label;
     return (
-      <button
-        key={c.key}
-        type="button"
-        onClick={() => setOn(c.key, !on)}
-        aria-pressed={on}
-        className="flex w-full items-center gap-2 rounded px-1.5 py-1 text-left text-[13px] hover:bg-accent/60"
-      >
-        <span
-          className={cn(
-            "grid h-4 w-4 shrink-0 place-items-center rounded border",
-            on ? "border-primary bg-primary text-primary-foreground" : "border-input bg-card",
-          )}
-        >
-          {on ? <Check className="h-3 w-3" /> : null}
+      <button key={c.key} type="button" onClick={() => setOn(c.key, !on)} aria-pressed={on} className="flex w-full items-center gap-2 rounded-[3px] px-2 py-1 text-left text-[12.5px] hover:bg-accent">
+        <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border", on ? "border-foreground bg-foreground text-background" : "border-input")}>
+          {on ? <Check className="h-2.5 w-2.5" /> : null}
         </span>
         <span className="flex-1">{label}</span>
-        {c.min ? <span className="text-[10px] uppercase tracking-wide text-muted-foreground">{c.min}+</span> : null}
+        {c.min ? <span className="desk-label text-[9.5px]">{c.min}+</span> : null}
       </button>
     );
   }
@@ -273,27 +270,22 @@ function ColumnPicker({
         type="button"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
-        className="inline-flex h-7 items-center gap-1.5 rounded-md px-2 text-xs text-muted-foreground hover:bg-accent hover:text-foreground"
+        className="inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
       >
         <Columns3 className="h-3.5 w-3.5" /> Columns
       </button>
       {open ? (
         <>
           <button className="fixed inset-0 z-30 cursor-default" aria-label="Close" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 z-40 mt-1 max-h-[70vh] w-64 overflow-y-auto rounded-md border bg-popover p-1.5 shadow-[var(--shadow-pop)]">
-            <p className="desk-label px-1.5 pb-1 pt-0.5">Show columns</p>
+          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 max-h-[70vh] w-64 overflow-y-auto rounded-[4px] border bg-popover p-1.5 text-popover-foreground shadow-lg")}>
+            <p className="desk-label px-2 pb-1 pt-1">Show columns</p>
             {fixed.map(row)}
-            <p className="desk-label mt-2 px-1.5 pb-1 pt-0.5">Per asset class</p>
-            <p className="px-1.5 pb-1 text-[11px] leading-snug text-muted-foreground">
-              What a manager&apos;s fund names state. Raised is the sum of stated fund sizes as filed, in USD — never an estimate.
-              On by default for a filtered class.
+            <p className="desk-label mt-2 px-2 pb-1 pt-1">Per asset class</p>
+            <p className="px-2 pb-1 text-[11px] leading-snug text-muted-foreground">
+              What a manager&apos;s fund names state. Raised is the sum of stated fund sizes as filed, in USD — never an estimate. On by default for a filtered class.
             </p>
             {perClass.map(row)}
-            <button
-              type="button"
-              onClick={() => onChange(NO_CHOICE)}
-              className="mt-1 w-full rounded px-1.5 py-1 text-left text-xs text-muted-foreground hover:bg-accent/60 hover:text-foreground"
-            >
+            <button type="button" onClick={() => onChange(NO_CHOICE)} className="mt-1 w-full rounded-[3px] px-2 py-1 text-left text-[12px] text-muted-foreground hover:bg-accent hover:text-foreground">
               Reset to default
             </button>
           </div>
@@ -341,7 +333,7 @@ function RaisedCell({ r, classKey, className }: { r: DirectoryRecord; classKey: 
         ? `${funds} ${plural} with a vintage in the last ten years, none with a stated size`
         : undefined;
   return (
-    <td className={cn(className, "whitespace-nowrap tabular", sum > 0 ? undefined : "text-muted-foreground")} title={title}>
+    <td className={cn(className, "num", sum > 0 ? undefined : "text-muted-foreground")} title={title}>
       {sum > 0 ? formatUsd(sum) : "—"}
     </td>
   );
@@ -352,26 +344,21 @@ function NamesCell({ names, tags }: { names: string[]; tags?: boolean }) {
   const shown = names.slice(0, 2);
   const rest = names.length - shown.length;
   return (
-    <span className="flex flex-wrap items-center gap-1">
-      {shown.map((n) =>
-        tags ? (
-          <span key={n} className="tag">
-            {n}
-          </span>
-        ) : (
-          <span key={n} className="text-[12.5px]">
-            {n}
-          </span>
-        ),
-      )}
+    <span className="flex items-center gap-1 whitespace-nowrap" title={names.join(" · ")}>
+      {shown.map((n) => (tags ? <Tag key={n}>{n}</Tag> : <span key={n}>{n}</span>))}
       {rest > 0 ? <span className="figure text-[11px] text-muted-foreground">+{rest}</span> : null}
     </span>
   );
 }
 
+/** A quiet icon button at the row's end; shown on hover, always reachable by keyboard. */
+const ROW_ICON = "grid h-6 w-6 place-items-center rounded-[3px] text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100";
+
 /**
- * Discover's results. Shows fifty at a time; it's keyed by the query upstream,
- * so a new search starts back at the first fifty.
+ * Discover's results as a desk ledger. Fifty at a time; it's keyed by the
+ * query upstream, so a new search starts back at the first fifty. The firm's
+ * name is the link that covers the row; the checkbox and the two row buttons
+ * (quick look, lookalikes) sit above that cover.
  */
 export function ResultsTable({
   dir,
@@ -396,27 +383,26 @@ export function ResultsTable({
   onToggle: (id: string) => void;
   onToggleMany: (ids: string[], on: boolean) => void;
   onSimilar: (id: string) => void;
-  /** Row click: the firm at a glance, without leaving the results. */
+  /** The firm at a glance, without leaving the results. */
   onQuickLook: (id: string) => void;
 }) {
   const [shown, setShown] = useState(PAGE);
-  const [choice, setChoice] = useColumnChoice();
+  const [choice] = useColumnChoice();
   const classes = useFilteredClasses();
   const visible = rows.slice(0, shown);
   const allOn = visible.length > 0 && visible.every((r) => selected.has(r.record.id));
-  const active = COLUMNS.filter(
-    (c) => c.key === "firm" || (columnOn(c, choice, classes) && (c.key !== "match" || mode !== "all")),
-  );
+  const active = COLUMNS.filter((c) => c.key === "firm" || (columnOn(c, choice, classes) && (c.key !== "match" || mode !== "all")));
 
   function head(c: Column) {
     const sortKey = c.key === "match" ? (mode === "similar" ? "similarity" : "relevance") : SORT_OF[c.key];
     const label = c.key === "match" ? (mode === "similar" ? "Match" : "Fit") : c.label;
-    const cls = cn(c.key === "firm" && "min-w-[300px]", responsive(c.min));
+    const cls = cn(c.key === "firm" && "min-w-[280px]", responsive(c.min));
     if (sortKey) return <SortHead key={c.key} label={label} k={sortKey} sort={sort} onSort={onSort} align={c.align} className={cls} />;
     return (
       <th
         key={c.key}
-        className={cn("px-3 py-2.5 font-medium", c.align === "right" ? "text-right" : "text-left", cls)}
+        className={cn(STICKY, c.align === "right" && "num", cls)}
+        style={STICKY_STYLE}
         title={c.classKey && c.key.startsWith("raised:") ? "Stated fund sizes as filed, USD, never estimates" : undefined}
       >
         {label}
@@ -425,7 +411,7 @@ export function ResultsTable({
   }
 
   function cell(c: Column, r: DirectoryRecord, score: number | null, reasons: string[]) {
-    const base = cn("px-3 py-3", c.align === "right" && "text-right", responsive(c.min));
+    const base = responsive(c.min) ?? "";
     if (c.classKey) {
       if (c.key.startsWith("raised:")) return <RaisedCell key={c.key} r={r} classKey={c.classKey} className={base} />;
       return (
@@ -436,44 +422,28 @@ export function ResultsTable({
     }
     switch (c.key) {
       case "firm": {
-        const meta = [locationLabel(r), r.founded ? `Est. ${r.founded}` : null].filter(Boolean) as string[];
-        const blurb =
-          mode === "keywords" ? snippet(r.description ?? r.lines, query, 170) : (r.description ?? r.lines)?.slice(0, 170);
+        // Two lines at most: the name with its type, then the opening of the
+        // overview (the sentence that matched, in a keyword search; the first
+        // reason, for a lookalike). The full text is one hover away.
+        const text = r.description ?? r.lines;
+        const blurb = mode === "similar" && reasons.length ? reasons[0] : mode === "keywords" ? snippet(text, query, 140) : text;
         return (
-          <td key={c.key} className={base}>
-            <div className="flex gap-3">
-              <CompanyLogo name={r.name} domain={r.domain} size={40} />
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <Link href={`/companies/${r.id}`} className="font-semibold hover:text-primary">
+          <td key={c.key} className={cn(base, "max-w-[460px]")}>
+            <div className="flex items-center gap-2.5">
+              <CompanyLogo name={r.name} domain={r.domain} size={26} />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5">
+                  <Link href={`/companies/${r.id}`} className="cover min-w-0 truncate font-medium">
                     {r.name}
                   </Link>
-                  <CategoryBadge category={r.category} />
-                  {r.subType ? <span className="text-xs text-muted-foreground">{r.subType}</span> : null}
-                  {r.adv ? (
-                    <span
-                      className="rounded border px-1.5 py-px text-[10px] font-medium uppercase tracking-wide text-muted-foreground"
-                      title={r.adv === "ERA" ? "Exempt reporting adviser (Form ADV)" : "SEC-registered adviser (Form ADV)"}
-                    >
-                      {r.adv === "ERA" ? "ERA" : "RIA"}
-                    </span>
-                  ) : null}
+                  {r.subType ? <span className="max-w-[160px] shrink-0 truncate text-[11.5px] text-muted-foreground">{r.subType}</span> : null}
+                  {r.adv ? <Tag title={r.adv === "ERA" ? "Exempt reporting adviser (Form ADV)" : "SEC-registered adviser (Form ADV)"}>{r.adv === "ERA" ? "ERA" : "RIA"}</Tag> : null}
                 </div>
-                {mode === "similar" && reasons.length ? (
-                  <ul className="mt-1 space-y-0.5 text-[12.5px] text-muted-foreground">
-                    {reasons.map((x) => (
-                      <li key={x} className="flex gap-1.5">
-                        <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-[var(--brass)]" />
-                        <span className="line-clamp-1">{x}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : blurb ? (
-                  <p className="mt-0.5 line-clamp-2 max-w-[62ch] text-[12.5px] leading-snug text-muted-foreground">
+                {blurb ? (
+                  <p className="truncate text-[11.5px] leading-snug text-muted-foreground" title={text ?? blurb}>
                     {mode === "keywords" ? <Highlighted text={blurb} query={query} /> : blurb}
                   </p>
                 ) : null}
-                {meta.length ? <p className="mt-1 text-xs text-muted-foreground">{meta.join(" · ")}</p> : null}
               </div>
             </div>
           </td>
@@ -482,32 +452,34 @@ export function ResultsTable({
       case "type": {
         const name = typeNameOf(r.category, r.typeCode);
         return (
-          <td key={c.key} className={cn(base, "text-[12.5px]")}>
+          <td key={c.key} className={cn(base, "max-w-[180px] truncate")} title={name ?? undefined}>
             {name ?? <span className="text-muted-foreground">—</span>}
           </td>
         );
       }
-      case "location":
+      case "location": {
+        const place = locationLabel(r);
         return (
-          <td key={c.key} className={cn(base, "whitespace-nowrap text-[12.5px]")}>
-            {locationLabel(r) ?? <span className="text-muted-foreground">—</span>}
+          <td key={c.key} className={cn(base, "max-w-[180px] truncate")} title={place ?? undefined}>
+            {place ?? <span className="text-muted-foreground">—</span>}
           </td>
         );
+      }
       case "size":
         return (
-          <td key={c.key} className={cn(base, "whitespace-nowrap tabular")} title={sizeTitle(r)}>
+          <td key={c.key} className={cn(base, "num")} title={sizeTitle(r)}>
             {sizeLabel(r)}
           </td>
         );
       case "knownFunds":
         return (
-          <td key={c.key} className={cn(base, "whitespace-nowrap tabular text-muted-foreground")} title={knownFundsTitle(r)}>
+          <td key={c.key} className={cn(base, "num text-muted-foreground")} title={knownFundsTitle(r)}>
             {r.knownFunds ? r.knownFunds.toLocaleString("en-US") : "—"}
           </td>
         );
       case "allocation":
         return (
-          <td key={c.key} className={cn(base, "whitespace-nowrap tabular text-muted-foreground")} title={allocationTitle(r)}>
+          <td key={c.key} className={cn(base, "num text-muted-foreground")} title={allocationTitle(r)}>
             {r.altsPct != null ? pctLabel(r.altsPct) : "—"}
           </td>
         );
@@ -525,18 +497,21 @@ export function ResultsTable({
         );
       case "employees":
         return (
-          <td key={c.key} className={cn(base, "whitespace-nowrap tabular text-muted-foreground")}>
+          <td key={c.key} className={cn(base, "num text-muted-foreground")}>
             {headcountLabel(r.employees)}
+          </td>
+        );
+      case "founded":
+        return (
+          <td key={c.key} className={cn(base, "num text-muted-foreground")}>
+            {r.founded ?? "—"}
           </td>
         );
       case "contacts":
         return (
-          <td key={c.key} className={cn(base, "whitespace-nowrap")}>
+          <td key={c.key} className={cn(base, "num")}>
             {r.contacts ? (
-              <span
-                className="inline-flex items-center gap-1 tabular text-muted-foreground"
-                title={r.connectable ? `${r.connectable} with a direct email on file` : undefined}
-              >
+              <span className="inline-flex items-center gap-1 text-muted-foreground" title={r.connectable ? `${r.connectable} with a direct email on file` : undefined}>
                 {r.connectable ? <Mail className="h-3 w-3 text-[var(--success)]" /> : <Users className="h-3 w-3" />}
                 {r.contacts}
               </span>
@@ -554,24 +529,25 @@ export function ResultsTable({
                 const b = dir.brands[i];
                 return (
                   <span key={b.key} title={b.name}>
-                    <CompanyLogo name={b.name} domain={brandDomain(b.key, b.companyId ? dir.byId.get(b.companyId)?.domain : null)} size={22} />
+                    <CompanyLogo name={b.name} domain={brandDomain(b.key, b.companyId ? dir.byId.get(b.companyId)?.domain : null)} size={20} />
                   </span>
                 );
               })}
               {brands.length > 4 ? <span className="figure text-[11px] text-muted-foreground">+{brands.length - 4}</span> : null}
+              {brands.length === 0 ? <span className="text-muted-foreground">—</span> : null}
             </span>
           </td>
         );
       }
       case "match":
         return (
-          <td key={c.key} className={base}>
+          <td key={c.key} className={cn(base, "num")}>
             {score != null ? (
               <span className="inline-flex items-center gap-1.5">
-                <span className="h-1.5 w-10 overflow-hidden rounded-full bg-[var(--chart-track)]">
-                  <span className="block h-full rounded-full bg-[var(--chart-bar)]" style={{ width: `${score}%` }} />
+                <span className="h-[5px] w-10 overflow-hidden rounded-[2px] bar-track">
+                  <span className="block h-full bar-fill" style={{ width: `${score}%` }} />
                 </span>
-                <span className="tabular text-xs text-muted-foreground">{score}</span>
+                <span className="figure text-xs text-muted-foreground">{score}</span>
               </span>
             ) : null}
           </td>
@@ -581,93 +557,57 @@ export function ResultsTable({
 
   return (
     <div className="space-y-2">
-      {/* Outside the card: its rounded corners clip overflow, and the picker drops below the header row. */}
-      <div className="flex items-center justify-end">
-        <ColumnPicker choice={choice} classes={classes} onChange={setChoice} mode={mode} />
-      </div>
-      <div className="sheen overflow-hidden rounded-2xl border bg-card">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/40 text-xs text-muted-foreground">
-              <tr>
-                <th className="w-10 py-2.5 pl-4 pr-1">
-                  <input
-                    type="checkbox"
-                    checked={allOn}
-                    onChange={() => onToggleMany(visible.map((r) => r.record.id), !allOn)}
-                    className="h-4 w-4 accent-[var(--primary)]"
-                    aria-label="Select all shown"
-                  />
-                </th>
-                {active.map(head)}
-                <th className="w-10 pr-4" />
-              </tr>
-            </thead>
-            <tbody>
-              {visible.map(({ record: r, score, reasons }) => {
-                const on = selected.has(r.id);
-                return (
-                  <tr
-                    key={r.id}
-                    onClick={(e) => {
-                      // Links, boxes and buttons keep their own behaviour.
-                      if ((e.target as HTMLElement).closest("a,button,input")) return;
-                      onQuickLook(r.id);
-                    }}
-                    className={cn("group cursor-pointer border-t align-top transition-colors hover:bg-muted/30", on && "bg-accent/40")}
-                  >
-                    <td className="py-3 pl-4 pr-1">
-                      <input
-                        type="checkbox"
-                        checked={on}
-                        onChange={() => onToggle(r.id)}
-                        className="mt-1 h-4 w-4 accent-[var(--primary)]"
-                        aria-label={`Select ${r.name}`}
-                      />
-                    </td>
-                    {active.map((c) => cell(c, r, score, reasons))}
-                    <td className="py-3 pr-4 text-right">
-                      <button
-                        type="button"
-                        onClick={() => onSimilar(r.id)}
-                        className="rounded-md p-1.5 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground focus:opacity-100 group-hover:opacity-100"
-                        title="Find similar firms"
-                        aria-label={`Find firms similar to ${r.name}`}
-                      >
-                        <Sparkles className="h-4 w-4" />
+      <div className="sheen rounded-[4px] border bg-card max-md:overflow-x-auto">
+        <table className="desk-table">
+          <thead>
+            <tr>
+              <th className={cn(STICKY, "w-8 pr-0")} style={STICKY_STYLE}>
+                <input
+                  type="checkbox"
+                  checked={allOn}
+                  onChange={() => onToggleMany(visible.map((r) => r.record.id), !allOn)}
+                  className="block h-3.5 w-3.5 accent-[var(--primary)]"
+                  aria-label="Select all shown"
+                />
+              </th>
+              {active.map(head)}
+              <th className={cn(STICKY, "w-16")} style={STICKY_STYLE} aria-label="Row actions" />
+            </tr>
+          </thead>
+          <tbody>
+            {visible.map(({ record: r, score, reasons }) => {
+              const on = selected.has(r.id);
+              return (
+                <tr key={r.id} className={cn("linked group", on && "bg-accent/40")}>
+                  <td className="relative z-[1] w-8 pr-0">
+                    <input type="checkbox" checked={on} onChange={() => onToggle(r.id)} className="block h-3.5 w-3.5 accent-[var(--primary)]" aria-label={`Select ${r.name}`} />
+                  </td>
+                  {active.map((c) => cell(c, r, score, reasons))}
+                  <td className="relative z-[1] w-16">
+                    <span className="flex items-center justify-end gap-0.5">
+                      <button type="button" onClick={() => onQuickLook(r.id)} className={ROW_ICON} title="Quick look" aria-label={`Quick look at ${r.name}`}>
+                        <Eye className="h-3.5 w-3.5" />
                       </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                      <button type="button" onClick={() => onSimilar(r.id)} className={ROW_ICON} title="Find similar firms" aria-label={`Find firms similar to ${r.name}`}>
+                        <Sparkles className="h-3.5 w-3.5" />
+                      </button>
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-3 text-[12px] text-muted-foreground">
         <span>
           Showing {visible.length.toLocaleString("en-US")} of {rows.length.toLocaleString("en-US")}
         </span>
-        <div className="flex gap-2">
-          {rows.length > shown ? (
-            <button
-              type="button"
-              onClick={() => setShown(shown + PAGE)}
-              className="rounded-md border bg-card px-3 py-1.5 text-foreground hover:bg-accent"
-            >
-              Show {Math.min(PAGE, rows.length - shown)} more
-            </button>
-          ) : null}
-          {rows.length > shown + PAGE ? (
-            <button
-              type="button"
-              onClick={() => setShown(rows.length)}
-              className="rounded-md px-3 py-1.5 hover:bg-accent hover:text-foreground"
-            >
-              Show all
-            </button>
-          ) : null}
-        </div>
+        {rows.length > shown ? (
+          <button type="button" onClick={() => setShown(shown + PAGE)} className={cn(MORE, "text-foreground")}>
+            Show {Math.min(PAGE, rows.length - shown)} more
+          </button>
+        ) : null}
       </div>
     </div>
   );

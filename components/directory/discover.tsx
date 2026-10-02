@@ -3,25 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import {
-  ArrowLeft,
-  Bookmark,
-  BookmarkPlus,
-  ChevronDown,
-  Download,
-  LayoutGrid,
-  Layers,
-  ListChecks,
-  Loader2,
-  Map as MapIcon,
-  Plug,
-  Rows3,
-  SlidersHorizontal,
-  Sparkles,
-  Trash2,
-  Upload,
-  X,
-} from "lucide-react";
+import { Bookmark, BookmarkPlus, Download, LayoutGrid, Loader2, Rows3, Sparkles, Trash2, Upload, X } from "lucide-react";
 import { deleteSavedSearch, saveSearch } from "@/lib/directory/actions";
 import { interpretThesisWithAi } from "@/lib/directory/ai-actions";
 import {
@@ -38,7 +20,6 @@ import type { PackedIndex } from "@/lib/directory/records";
 import type { WorldGeometry } from "@/lib/directory/world-map";
 import { interpret, readingToFilters } from "@/lib/directory/thesis";
 import type { SavedSearch } from "@/lib/directory/queries";
-import { CATEGORIES } from "@/lib/categories";
 import { DashboardSearch } from "@/components/dashboard-search";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,13 +27,13 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/ui/moda
 import { cn, formatUsd } from "@/lib/utils";
 import { BulkBar, downloadCsv, type ListOption } from "./bulk-bar";
 import { describeFilters, FilterChips } from "./filter-chips";
-import { FilterRail } from "./filter-rail";
+import { FacetBar } from "./filter-rail";
 import { DiscoverOverview, type OverviewCommitment } from "./overview";
 import { ProviderLeaders } from "./provider-leaders";
 import { QuickLook } from "./quick-look";
 import { ResultCards } from "./result-cards";
 import { ResultInsights } from "./result-insights";
-import { ResultsTable } from "./results-table";
+import { ColumnsButton, ResultsTable } from "./results-table";
 import { ThesisBar } from "./thesis-bar";
 import { compact, Figure } from "./viz";
 import { useDirectory } from "./use-directory";
@@ -71,17 +52,18 @@ const SORTS: { key: SortKey; label: string }[] = [
   { key: "name", label: "Name" },
 ];
 
-function SaveSearchModal({
-  open,
-  onClose,
-  query,
-  params,
-}: {
-  open: boolean;
-  onClose: () => void;
-  query: string;
-  params: string;
-}) {
+/** A toolbar button: the facet buttons' own shape, so the row reads as one. */
+const TOOL = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-50";
+
+/** The one "show more" button style, used here for the relax-a-filter offers. */
+const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent";
+
+/** A menu's open panel: the header's own fade-and-rise, off under reduced motion. */
+const POP = "animate-[topnav-in_160ms_ease-out] motion-reduce:animate-none";
+
+const n = (v: number) => v.toLocaleString("en-US");
+
+function SaveSearchModal({ open, onClose, query, params }: { open: boolean; onClose: () => void; query: string; params: string }) {
   const [name, setName] = useState(query.slice(0, 80));
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
@@ -119,33 +101,23 @@ function SaveSearchModal({
   );
 }
 
-function SavedMenu({
-  saved,
-  onPick,
-  userId,
-  isAdmin,
-}: {
-  saved: SavedSearch[];
-  onPick: (s: SavedSearch) => void;
-  userId: string | null;
-  isAdmin: boolean;
-}) {
+function SavedMenu({ saved, onPick, userId, isAdmin }: { saved: SavedSearch[]; onPick: (s: SavedSearch) => void; userId: string | null; isAdmin: boolean }) {
   const [open, setOpen] = useState(false);
   const [pending, start] = useTransition();
   const router = useRouter();
   if (!saved.length) return null;
   return (
     <div className="relative">
-      <Button variant="outline" size="sm" onClick={() => setOpen(!open)} aria-expanded={open}>
-        <Bookmark className="h-4 w-4" /> Saved <ChevronDown className="h-3.5 w-3.5" />
-      </Button>
+      <button type="button" className={TOOL} onClick={() => setOpen(!open)} aria-expanded={open} title="Saved searches">
+        <Bookmark className="h-3.5 w-3.5" /> Saved
+      </button>
       {open ? (
         <>
           <button className="fixed inset-0 z-30 cursor-default" aria-label="Close" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 z-40 mt-1.5 w-80 overflow-hidden rounded-xl border bg-popover shadow-[var(--shadow-pop)]">
+          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 w-80 overflow-hidden rounded-[4px] border bg-popover text-popover-foreground shadow-lg")}>
             <ul className="max-h-80 overflow-y-auto py-1">
               {saved.map((s) => (
-                <li key={s.id} className="group flex items-center gap-2 px-3 py-2 hover:bg-accent/60">
+                <li key={s.id} className="group flex items-center gap-2 px-3 py-1.5 hover:bg-accent">
                   <button
                     type="button"
                     className="min-w-0 flex-1 text-left"
@@ -154,8 +126,8 @@ function SavedMenu({
                       onPick(s);
                     }}
                   >
-                    <span className="block truncate text-sm font-medium">{s.name}</span>
-                    <span className="block truncate text-xs text-muted-foreground">
+                    <span className="block truncate text-[12.5px] font-medium">{s.name}</span>
+                    <span className="block truncate text-[11.5px] text-muted-foreground">
                       {s.query ?? "Filters"}
                       {s.owner_name ? ` · ${s.owner_name}` : ""}
                     </span>
@@ -170,7 +142,7 @@ function SavedMenu({
                           router.refresh();
                         })
                       }
-                      className="rounded p-1 text-muted-foreground opacity-0 hover:text-destructive group-hover:opacity-100"
+                      className="rounded-[3px] p-1 text-muted-foreground opacity-0 hover:text-destructive focus-visible:opacity-100 group-hover:opacity-100"
                       aria-label={`Delete ${s.name}`}
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -227,7 +199,6 @@ export function Discover({
   const [aiPending, startAi] = useTransition();
   const [notice, setNotice] = useState<string | null>(null);
   const [saveOpen, setSaveOpen] = useState(false);
-  const [railOpen, setRailOpen] = useState(false);
   const [lushaOpen, setLushaOpen] = useState(false);
   const [peek, setPeek] = useState<string | null>(null);
 
@@ -284,10 +255,17 @@ export function Discover({
     navigate(next);
   }
 
+  /** Everything off, the thesis too: home when no view was asked for, else the whole book. */
+  function clearAll() {
+    navigate(EMPTY_FILTERS, { q: null, push: true });
+  }
+
   const chips = describeFilters(filters, dir);
   const signature = filtersToParams(filters).toString();
   const showLeaders = filters.clientTypes.length > 0 || (filters.books.includes("SP") && filters.types.length > 0);
 
+  // With nothing matching, which one filter costs the most results: the
+  // empty state offers to drop it, with the count that would come back.
   const relax = useMemo(() => {
     if (results.rows.length || !chips.length) return [];
     return chips
@@ -303,41 +281,14 @@ export function Discover({
 
   const peekRecord = peek ? (dir.byId.get(peek) ?? null) : null;
 
-  const actions = (
-    <div className="flex flex-wrap items-center gap-1.5">
-      <Button asChild variant="outline" size="sm">
-        <Link href="/database/market">
-          <MapIcon className="h-4 w-4" /> Market map
-        </Link>
-      </Button>
-      <Button asChild variant="outline" size="sm">
-        <Link href="/funds">
-          <Layers className="h-4 w-4" /> Funds
-        </Link>
-      </Button>
-      <Button asChild variant="outline" size="sm">
-        <Link href="/database/lists">
-          <ListChecks className="h-4 w-4" /> Lists
-        </Link>
-      </Button>
-      {isAdmin ? (
-        <Button asChild variant="outline" size="sm">
-          <Link href="/import/directory">
-            <Upload className="h-4 w-4" /> Import
-          </Link>
-        </Button>
-      ) : null}
-    </div>
-  );
-
   if (!dir.records.length) {
     return (
-      <div className="stand rounded-3xl px-6 py-14 text-center">
+      <div className="stand rounded-[4px] px-6 py-14 text-center">
         <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
         <div className="relative">
           <p className="wordmark text-[11px] text-[var(--brass)]">LPGP Intelligence</p>
           <p className="display mt-3 text-2xl">The directory is empty</p>
-          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+          <p className="mx-auto mt-2 max-w-md text-[12.5px] text-muted-foreground">
             Import the Master Directory workbook to load every firm, key contact, Form ADV provider link and named fund.
           </p>
           {isAdmin ? (
@@ -350,68 +301,54 @@ export function Discover({
     );
   }
 
-  const bookCounts = results.facets.books;
-  const total = [...bookCounts.values()].reduce((a, b) => a + b, 0);
   const regulatory = everything.raum;
-  const advThrough = dir.advThrough
-    ? new Date(dir.advThrough).toLocaleDateString("en-GB", { month: "short", year: "numeric" })
-    : null;
+  const advThrough = dir.advThrough ? new Date(dir.advThrough).toLocaleDateString("en-GB", { month: "short", year: "numeric" }) : null;
+  const sorts = SORTS.filter((s) => (s.key !== "relevance" || results.mode === "keywords") && (s.key !== "similarity" || results.mode === "similar"));
 
   return (
-    <div className="space-y-5">
-      {/* The stand: search first, the scale of the book right under it. */}
-      <section className={cn("stand rounded-[6px]", home ? "px-5 pb-5 pt-5 md:px-7 md:pb-6 md:pt-6" : "px-4 py-3 md:px-5")}>
-        <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
-        <div className="relative space-y-5">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div className="min-w-0">
-              {home ? (
-                <>
-                  <p className="wordmark text-[10px] text-[var(--brass)]">Intelligence desk</p>
-                  <h1 className="display mt-2 max-w-3xl text-[22px] leading-[1.1] md:text-[28px]">
-                    Every LP, GP and provider in your market, searchable in a sentence.
-                  </h1>
-                  <p className="mt-2 max-w-2xl text-[12.5px] text-muted-foreground">
-                    {everything.total.toLocaleString("en-US")} firms, {everything.people.toLocaleString("en-US")} named
-                    decision-makers, {everything.funds.toLocaleString("en-US")} funds and{" "}
-                    {Math.round(everything.providerLinks).toLocaleString("en-US")} Form ADV service-provider links
-                    {advThrough ? ` — filings through ${advThrough}` : ""}.
-                  </p>
-                </>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => navigate(EMPTY_FILTERS, { q: null, push: true, view: null })}
-                  className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5" /> Intelligence overview
-                </button>
-              )}
+    <div className="space-y-4">
+      {home ? (
+        // The stand: the one black panel, for the home only — the search
+        // first, the scale of the book right under it.
+        <section className="stand rounded-[4px] px-5 pb-5 pt-5 md:px-7 md:pb-6 md:pt-6">
+          <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
+          <div className="relative space-y-5">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="wordmark text-[10px] text-[var(--brass)]">Intelligence desk</p>
+                <h1 className="display mt-2 max-w-3xl text-[22px] leading-[1.1] md:text-[28px]">Every LP, GP and provider in your market, searchable in a sentence.</h1>
+                <p className="mt-2 max-w-2xl text-[12.5px] text-muted-foreground">
+                  {n(everything.total)} firms, {n(everything.people)} named decision-makers, {n(everything.funds)} funds and {n(Math.round(everything.providerLinks))} Form ADV
+                  service-provider links{advThrough ? ` — filings through ${advThrough}` : ""}.
+                </p>
+              </div>
+              {isAdmin ? (
+                <Link href="/import/directory" className={TOOL}>
+                  <Upload className="h-3.5 w-3.5" /> Import
+                </Link>
+              ) : null}
             </div>
-            {actions}
-          </div>
 
-          <ThesisBar key={q} initial={q} onSubmit={submitThesis} pending={aiPending} aiReady={aiReady} examples={home} />
+            <ThesisBar key={q} initial={q} onSubmit={submitThesis} pending={aiPending} aiReady={aiReady} examples />
 
-          {home ? (
             <div className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-[var(--border)] pt-4 sm:grid-cols-3 lg:grid-cols-6">
               <Figure label="Firms" value={compact(everything.total)} sub="across four books" onClick={() => navigate(EMPTY_FILTERS, { push: true, view: "table" })} />
-              <Figure label="General partners" value={compact(everything.books.GP)} sub={`${everything.filers.toLocaleString("en-US")} with Form ADV providers`} onClick={() => navigate({ ...EMPTY_FILTERS, books: ["GP"] }, { push: true })} />
+              <Figure label="General partners" value={compact(everything.books.GP)} sub={`${n(everything.filers)} with Form ADV providers`} onClick={() => navigate({ ...EMPTY_FILTERS, books: ["GP"] }, { push: true })} />
               <Figure label="Limited partners" value={compact(everything.books.LP)} sub="pensions, SWFs, insurers, E&Fs" onClick={() => navigate({ ...EMPTY_FILTERS, books: ["LP"] }, { push: true })} />
-              <Figure label="Decision-makers" value={compact(everything.people)} sub={`${everything.connectable.toLocaleString("en-US")} with a direct email`} onClick={() => navigate({ ...EMPTY_FILTERS, hasContacts: true }, { push: true })} />
+              <Figure label="Decision-makers" value={compact(everything.people)} sub={`${n(everything.connectable)} with a direct email`} onClick={() => navigate({ ...EMPTY_FILTERS, hasContacts: true }, { push: true })} />
               <Figure label="Funds on file" value={compact(everything.funds)} sub="named on Form ADV Schedule D" />
               <Figure
                 label="Regulatory AUM"
                 value={regulatory.firms ? formatUsd(regulatory.sum) : "—"}
-                sub={regulatory.firms ? `Form ADV, ${regulatory.firms.toLocaleString("en-US")} advisers · brand totals once` : "no Form ADV sizes yet"}
+                sub={regulatory.firms ? `Form ADV, ${n(regulatory.firms)} advisers · brand totals once` : "no Form ADV sizes yet"}
               />
             </div>
-          ) : null}
-        </div>
-      </section>
+          </div>
+        </section>
+      ) : null}
 
       {!dir.schemaReady ? (
-        <div className="rounded-2xl border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-4 py-3 text-sm">
+        <div className="rounded-[4px] border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-3 py-2 text-[12.5px]">
           Some directory features are off until the directory SQL runs — see the setup steps above, then{" "}
           <Link href="/import/directory" className="font-medium underline underline-offset-2">
             import the workbook
@@ -433,35 +370,48 @@ export function Discover({
         />
       ) : (
         <>
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div className="min-w-0 flex-1 space-y-2">
-              {results.mode === "similar" && results.seeds.length ? (
-                <div className="flex flex-wrap items-center gap-2 text-sm">
-                  <Sparkles className="h-4 w-4 text-[var(--brass)]" />
-                  <span>
-                    Firms most like <span className="font-semibold">{results.seeds.map((s) => s.name).join(", ")}</span> — by
-                    profile, type, size, place and shared providers
-                  </span>
-                </div>
-              ) : null}
-              <FilterChips chips={chips} filters={filters} onChange={(f) => navigate(f)} />
-              {aiPending ? (
-                <p className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <Loader2 className="h-3 w-3 animate-spin" /> Refining the reading with AI…
-                </p>
-              ) : notes.q === q && notes.notes.length ? (
-                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-                  {notes.ai ? <Sparkles className="h-3 w-3 text-[var(--brass)]" /> : null}
-                  <span>{notes.notes.join(" · ")}</span>
-                  {notes.ai ? (
-                    <button type="button" onClick={applyRuleReading} className="font-medium text-foreground/80 underline-offset-2 hover:underline">
-                      Use the quick reading instead
-                    </button>
-                  ) : null}
-                </p>
-              ) : null}
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
+          <ResultInsights rows={results.rows} />
+
+          {/* The toolbar every list screen shares: search · facets · sort · count · layout, columns, saved, export. */}
+          <div className="flex flex-wrap items-center gap-1.5">
+            <ThesisBar key={q} compact initial={q} onSubmit={submitThesis} pending={aiPending} aiReady={aiReady} />
+            <FacetBar dir={dir} filters={filters} facets={results.facets} onChange={(f) => navigate(f)} />
+            <select
+              value={results.sort}
+              onChange={(e) => navigate({ ...filters, sort: e.target.value as SortKey })}
+              className="h-8 rounded-[4px] border border-input bg-card px-2 text-[12.5px] text-foreground outline-none"
+              aria-label="Sort"
+            >
+              {sorts.map((s) => (
+                <option key={s.key} value={s.key}>
+                  {s.label}
+                </option>
+              ))}
+            </select>
+            <span className="px-1 text-[12.5px]">
+              <span className="figure">{n(results.rows.length)}</span> <span className="text-muted-foreground">firms</span>
+            </span>
+            <div className="ml-auto flex flex-wrap items-center gap-1.5">
+              <div className="inline-flex h-8 overflow-hidden rounded-[4px] border bg-card" role="group" aria-label="Layout">
+                {(
+                  [
+                    ["table", Rows3, "Table"],
+                    ["cards", LayoutGrid, "Cards"],
+                  ] as const
+                ).map(([v, Icon, label]) => (
+                  <button
+                    key={v}
+                    type="button"
+                    onClick={() => navigate(filters, { view: v === "table" && !isEmptyQuery(filters) ? null : v })}
+                    className={cn("grid w-8 place-items-center transition-colors", view === v ? "bg-foreground text-background" : "text-muted-foreground hover:bg-accent hover:text-foreground")}
+                    aria-pressed={view === v}
+                    title={label}
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                  </button>
+                ))}
+              </div>
+              {view === "table" ? <ColumnsButton mode={results.mode} /> : null}
               <SavedMenu
                 saved={saved}
                 userId={userId}
@@ -472,190 +422,112 @@ export function Discover({
                 }}
               />
               {!isEmptyQuery(filters) ? (
-                <Button variant="outline" size="sm" onClick={() => setSaveOpen(true)} disabled={!userId}>
-                  <BookmarkPlus className="h-4 w-4" /> Save search
-                </Button>
+                <button type="button" className={TOOL} onClick={() => setSaveOpen(true)} disabled={!userId} title="Save this search for the team">
+                  <BookmarkPlus className="h-3.5 w-3.5" /> Save
+                </button>
               ) : null}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => downloadCsv(results.rows.map((r) => r.record), `lpgp-discover-${results.rows.length}.csv`)}
-                disabled={!results.rows.length}
-              >
-                <Download className="h-4 w-4" /> Export {results.rows.length.toLocaleString("en-US")}
-              </Button>
+              <button type="button" className={TOOL} onClick={() => downloadCsv(results.rows.map((r) => r.record), `lpgp-discover-${results.rows.length}.csv`)} disabled={!results.rows.length}>
+                <Download className="h-3.5 w-3.5" /> Export
+              </button>
             </div>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-[272px_minmax(0,1fr)]">
-            <aside className={cn("space-y-3 lg:block", railOpen ? "block" : "hidden")}>
-              <FilterRail dir={dir} filters={filters} facets={results.facets} onChange={(f) => navigate(f)} />
-              <button
-                type="button"
-                onClick={() => setLushaOpen(!lushaOpen)}
-                className="flex w-full items-center gap-2 rounded-2xl border bg-card px-4 py-3 text-left text-sm hover:bg-accent/40"
-              >
-                <Plug className="h-4 w-4 text-muted-foreground" />
-                <span className="flex-1">
-                  <span className="font-medium">Not in the database?</span>
-                  <span className="block text-xs text-muted-foreground">Search Lusha for new firms and people</span>
-                </span>
-                <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform", lushaOpen && "rotate-180")} />
-              </button>
-            </aside>
+          <FilterChips chips={chips} filters={filters} onChange={(f) => navigate(f)} onClearAll={clearAll} />
 
-            <section className="min-w-0 space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="inline-flex flex-wrap rounded-lg border bg-card p-1">
-                  <button
-                    type="button"
-                    onClick={() => navigate({ ...filters, books: [] })}
-                    className={cn(
-                      "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
-                      filters.books.length === 0 ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
-                    )}
-                  >
-                    All <span className="ml-1 tabular text-xs opacity-75">{total.toLocaleString("en-US")}</span>
-                  </button>
-                  {(["LP", "GP", "SP", "UN"] as const).map((b) => {
-                    const n = bookCounts.get(b) ?? 0;
-                    if (b === "UN" && n === 0 && !filters.books.includes("UN")) return null;
-                    const on = filters.books.length === 1 && filters.books[0] === b;
-                    return (
-                      <button
-                        key={b}
-                        type="button"
-                        onClick={() => navigate({ ...filters, books: on ? [] : [b] })}
-                        className={cn(
-                          "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
-                          on ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
-                        )}
-                        title={CATEGORIES[b].name}
-                      >
-                        {CATEGORIES[b].label}
-                        <span className="ml-1 tabular text-xs opacity-75">{n.toLocaleString("en-US")}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm" className="lg:hidden" onClick={() => setRailOpen(!railOpen)}>
-                    <SlidersHorizontal className="h-4 w-4" /> Filters
-                  </Button>
-                  <div className="inline-flex rounded-lg border bg-card p-0.5" role="group" aria-label="Layout">
-                    {(
-                      [
-                        ["table", Rows3, "Table"],
-                        ["cards", LayoutGrid, "Cards"],
-                      ] as const
-                    ).map(([v, Icon, label]) => (
-                      <button
-                        key={v}
-                        type="button"
-                        onClick={() => navigate(filters, { view: v === "table" && !isEmptyQuery(filters) ? null : v })}
-                        className={cn(
-                          "grid h-7 w-8 place-items-center rounded-md transition-colors",
-                          view === v ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
-                        )}
-                        aria-pressed={view === v}
-                        title={label}
-                      >
-                        <Icon className="h-4 w-4" />
-                      </button>
-                    ))}
-                  </div>
-                  <label className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="hidden sm:inline">Sort</span>
-                    <select
-                      value={results.sort}
-                      onChange={(e) => navigate({ ...filters, sort: e.target.value as SortKey })}
-                      className="h-8 rounded-md border border-input bg-card px-2 text-sm text-foreground outline-none"
-                    >
-                      {SORTS.filter(
-                        (s) =>
-                          (s.key !== "relevance" || results.mode === "keywords") &&
-                          (s.key !== "similarity" || results.mode === "similar"),
-                      ).map((s) => (
-                        <option key={s.key} value={s.key}>
-                          {s.label}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-              </div>
-
-              {lushaOpen ? (
-                <div className="rounded-2xl border bg-card p-4">
-                  <DashboardSearch lushaReady={lushaReady} adminReady={adminReady} />
-                </div>
+          {results.mode === "similar" && results.seeds.length ? (
+            <p className="flex flex-wrap items-center gap-1.5 text-[12px] text-muted-foreground">
+              <Sparkles className="h-3.5 w-3.5 text-[var(--brass)]" />
+              Firms most like <span className="font-medium text-foreground">{results.seeds.map((s) => s.name).join(", ")}</span> — by profile, type, size, place and shared providers
+            </p>
+          ) : null}
+          {aiPending ? (
+            <p className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground">
+              <Loader2 className="h-3 w-3 animate-spin" /> Refining the reading with AI…
+            </p>
+          ) : notes.q === q && notes.notes.length ? (
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-muted-foreground">
+              {notes.ai ? <Sparkles className="h-3 w-3 text-[var(--brass)]" /> : null}
+              <span>{notes.notes.join(" · ")}</span>
+              {notes.ai ? (
+                <button type="button" onClick={applyRuleReading} className="font-medium text-foreground/80 underline-offset-2 hover:underline">
+                  Use the quick reading instead
+                </button>
               ) : null}
+            </p>
+          ) : null}
 
-              <ResultInsights dir={dir} rows={results.rows} filters={filters} onChange={(f) => navigate(f)} />
+          {showLeaders ? <ProviderLeaders dir={dir} filters={filters} /> : null}
 
-              {showLeaders ? <ProviderLeaders dir={dir} filters={filters} /> : null}
-
-              {results.rows.length === 0 ? (
-                <div className="sheen rounded-2xl border bg-card px-6 py-14 text-center">
-                  <div className="space-y-3">
-                    <p className="font-semibold">No firms match all of that</p>
-                    {relax.length ? (
-                      <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
-                        <span className="text-muted-foreground">Try without</span>
-                        {relax.map((r) => (
-                          <button
-                            key={r.chip.key}
-                            type="button"
-                            onClick={() => navigate(r.next)}
-                            className="inline-flex items-center gap-1 rounded-full border bg-card px-2.5 py-1 hover:border-[var(--brass)]/50"
-                          >
-                            <X className="h-3 w-3" /> {r.chip.label}
-                            <span className="tabular text-xs text-muted-foreground">→ {r.count}</span>
-                          </button>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-muted-foreground">Try fewer words, or clear the filters.</p>
-                    )}
-                  </div>
+          {results.rows.length === 0 ? (
+            <div className="sheen rounded-[4px] border bg-card px-4 py-8 text-center">
+              <p className="text-[13px]">
+                No firm in the directory matches all of that
+                {relax.length ? " — the nearest cut is one filter away." : chips.length ? "." : " — try fewer words."}
+              </p>
+              {relax.length ? (
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
+                  {relax.map((r) => (
+                    <button key={r.chip.key} type="button" onClick={() => navigate(r.next)} className={cn(MORE, "inline-flex items-center gap-1.5")}>
+                      <X className="h-3 w-3 text-muted-foreground" />
+                      Without {r.chip.group.toLowerCase()} {r.chip.label}
+                      <span className="figure text-muted-foreground">→ {n(r.count)}</span>
+                    </button>
+                  ))}
                 </div>
-              ) : view === "cards" ? (
-                <ResultCards
-                  key={signature}
-                  dir={dir}
-                  rows={results.rows}
-                  query={filters.keywords}
-                  mode={results.mode}
-                  selected={selected}
-                  onToggle={toggle}
-                  onQuickLook={setPeek}
-                  onSimilar={(id) => navigate({ ...EMPTY_FILTERS, like: [id] }, { q: null, push: true })}
-                />
-              ) : (
-                <ResultsTable
-                  key={signature}
-                  dir={dir}
-                  rows={results.rows}
-                  sort={results.sort}
-                  onSort={(k) => navigate({ ...filters, sort: k })}
-                  query={filters.keywords}
-                  mode={results.mode}
-                  selected={selected}
-                  onToggle={toggle}
-                  onToggleMany={(ids, on) => {
-                    const next = new Set(selected);
-                    for (const id of ids) {
-                      if (on) next.add(id);
-                      else next.delete(id);
-                    }
-                    setSelected(next);
-                  }}
-                  onQuickLook={setPeek}
-                  onSimilar={(id) => navigate({ ...EMPTY_FILTERS, like: [id] }, { q: null, push: true })}
-                />
-              )}
-            </section>
+              ) : chips.length ? (
+                <button type="button" onClick={clearAll} className={cn(MORE, "mt-3")}>
+                  Clear the filters
+                </button>
+              ) : null}
+            </div>
+          ) : view === "cards" ? (
+            <ResultCards
+              key={signature}
+              dir={dir}
+              rows={results.rows}
+              query={filters.keywords}
+              mode={results.mode}
+              selected={selected}
+              onToggle={toggle}
+              onQuickLook={setPeek}
+              onSimilar={(id) => navigate({ ...EMPTY_FILTERS, like: [id] }, { q: null, push: true })}
+            />
+          ) : (
+            <ResultsTable
+              key={signature}
+              dir={dir}
+              rows={results.rows}
+              sort={results.sort}
+              onSort={(k) => navigate({ ...filters, sort: k })}
+              query={filters.keywords}
+              mode={results.mode}
+              selected={selected}
+              onToggle={toggle}
+              onToggleMany={(ids, on) => {
+                const next = new Set(selected);
+                for (const id of ids) {
+                  if (on) next.add(id);
+                  else next.delete(id);
+                }
+                setSelected(next);
+              }}
+              onQuickLook={setPeek}
+              onSimilar={(id) => navigate({ ...EMPTY_FILTERS, like: [id] }, { q: null, push: true })}
+            />
+          )}
+
+          {/* A firm the directory lacks: Lusha, from the same screen. */}
+          <div className="text-[12px] text-muted-foreground">
+            Not in the database?{" "}
+            <button type="button" onClick={() => setLushaOpen(!lushaOpen)} className="font-medium text-foreground/80 underline-offset-2 hover:underline" aria-expanded={lushaOpen}>
+              {lushaOpen ? "Hide the Lusha search" : "Search Lusha for new firms and people"}
+            </button>
           </div>
+          {lushaOpen ? (
+            <div className={cn(POP, "rounded-[4px] border bg-card p-3")}>
+              <DashboardSearch lushaReady={lushaReady} adminReady={adminReady} />
+            </div>
+          ) : null}
         </>
       )}
 
@@ -673,10 +545,10 @@ export function Discover({
       />
 
       {notice ? (
-        <div className="fixed bottom-20 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-xl border bg-popover px-4 py-2.5 text-sm shadow-[var(--shadow-pop)]">
+        <div className={cn(POP, "fixed bottom-20 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-[4px] border bg-popover px-3 py-2 text-[12.5px] shadow-[var(--shadow-pop)]")}>
           {notice}
           <button type="button" onClick={() => setNotice(null)} className="text-muted-foreground hover:text-foreground" aria-label="Dismiss">
-            <X className="h-4 w-4" />
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
       ) : null}
@@ -692,9 +564,7 @@ export function Discover({
         onNotice={setNotice}
       />
 
-      {saveOpen ? (
-        <SaveSearchModal open onClose={() => setSaveOpen(false)} query={q} params={`${signature}${q ? `&q=${encodeURIComponent(q)}` : ""}`} />
-      ) : null}
+      {saveOpen ? <SaveSearchModal open onClose={() => setSaveOpen(false)} query={q} params={`${signature}${q ? `&q=${encodeURIComponent(q)}` : ""}`} /> : null}
     </div>
   );
 }

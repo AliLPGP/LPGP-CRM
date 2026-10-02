@@ -2,59 +2,56 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowDownWideNarrow, Search } from "lucide-react";
+import { ArrowDownWideNarrow, Search, X } from "lucide-react";
 import { CompanyLogo } from "@/components/company-logo";
 import { OWNERSHIP_TYPE_LABEL } from "@/lib/directory/asset-classes";
 import { formatCount, formatMoney, type ClubRow } from "@/lib/directory/intelligence-types";
-import { cn } from "@/lib/utils";
+import { FacetChips, FacetMenu } from "./facet-menu";
 import { Empty, Src, Tag } from "./ui";
 
-// The clubs league table, sorted and filtered in the browser. Revenue and
-// valuation are shown as the source states them — mixed currencies, never
-// converted — so a sort by revenue orders within each currency.
+// The clubs league table, sorted and filtered in the browser: the desk's
+// toolbar (search, a dropdown per facet, the sort, the count), chips, then
+// the table. Revenue and valuation are shown as the source states them —
+// mixed currencies, never converted — so a sort by revenue orders within
+// each currency.
 
 export type { ClubRow } from "@/lib/directory/intelligence-types";
 
 type Sort = "revenue" | "valuation" | "followers" | "capacity" | "name";
 
-function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={on}
-      className={cn("rounded-[3px] border px-2 py-0.5 text-[11.5px] transition-colors", on ? "border-foreground bg-foreground text-background" : "bg-card text-muted-foreground hover:text-foreground")}
-    >
-      {children}
-    </button>
-  );
+function counts(rows: ClubRow[], key: (c: ClubRow) => string | null): [string, number][] {
+  const m = new Map<string, number>();
+  for (const c of rows) {
+    const k = key(c);
+    if (k) m.set(k, (m.get(k) ?? 0) + 1);
+  }
+  return [...m.entries()].sort((a, b) => b[1] - a[1]);
 }
 
 export function ClubTable({ clubs }: { clubs: ClubRow[] }) {
-  const [league, setLeague] = useState<string | null>(null);
-  const [owner, setOwner] = useState<string | null>(null);
-  const [backed, setBacked] = useState(false);
+  const [leagues_, setLeagues] = useState<string[]>([]);
+  const [owners_, setOwners] = useState<string[]>([]);
+  const [backed_, setBacked] = useState<string[]>([]);
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<Sort>("revenue");
 
-  const leagues = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const c of clubs) if (c.league) m.set(c.league, (m.get(c.league) ?? 0) + 1);
-    return [...m.entries()].sort((a, b) => b[1] - a[1]);
-  }, [clubs]);
-  const ownerTypes = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const c of clubs) if (c.ownership_type) m.set(c.ownership_type, (m.get(c.ownership_type) ?? 0) + 1);
-    return [...m.entries()].sort((a, b) => b[1] - a[1]);
-  }, [clubs]);
+  // Each facet counts under every other filter but its own. A few hundred
+  // clubs: counted on every render, no memo needed.
+  const passes = (c: ClubRow, omit?: "league" | "owner" | "backed") =>
+    (omit === "league" || !leagues_.length || leagues_.includes(c.league ?? "")) &&
+    (omit === "owner" || !owners_.length || owners_.includes(c.ownership_type ?? "")) &&
+    (omit === "backed" || !backed_.length || c.institutional > 0);
+  const leagues = counts(clubs.filter((c) => passes(c, "league")), (c) => c.league);
+  const ownerTypes = counts(clubs.filter((c) => passes(c, "owner")), (c) => c.ownership_type);
+  const backedCount = clubs.filter((c) => passes(c, "backed") && c.institutional > 0).length;
 
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
     const list = clubs.filter(
       (c) =>
-        (!league || c.league === league) &&
-        (!owner || c.ownership_type === owner) &&
-        (!backed || c.institutional > 0) &&
+        (!leagues_.length || leagues_.includes(c.league ?? "")) &&
+        (!owners_.length || owners_.includes(c.ownership_type ?? "")) &&
+        (!backed_.length || c.institutional > 0) &&
         (!needle || `${c.name} ${c.short_name ?? ""} ${c.city ?? ""} ${c.topInvestor?.name ?? ""} ${c.ownership_summary ?? ""}`.toLowerCase().includes(needle)),
     );
     const cur = (c: string | null) => c ?? "";
@@ -79,21 +76,28 @@ export function ClubTable({ clubs }: { clubs: ClubRow[] }) {
       if (sort === "followers" || sort === "capacity") return vb - va || a.name.localeCompare(b.name);
       return ra - rb || vb - va || a.name.localeCompare(b.name);
     });
-  }, [clubs, league, owner, backed, q, sort]);
+  }, [clubs, leagues_, owners_, backed_, q, sort]);
+
+  const filtered = Boolean(leagues_.length || owners_.length || backed_.length || q);
 
   return (
-    <div className="space-y-3">
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="relative w-full sm:w-64">
-          <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Club, city, investor…" className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-2 text-[12.5px] outline-none focus-visible:border-ring" />
+    <div className="space-y-2">
+      <div className="flex flex-wrap items-center gap-1.5">
+        <div className="relative w-56">
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Club, city, investor…" aria-label="Search clubs" className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-7 text-[12.5px] outline-none focus-visible:border-ring" />
+          {q ? (
+            <button type="button" aria-label="Clear search" onClick={() => setQ("")} className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-muted-foreground hover:text-foreground">
+              <X className="h-3 w-3" />
+            </button>
+          ) : null}
         </div>
-        <Pill on={backed} onClick={() => setBacked(!backed)}>
-          Institutional money on the cap table
-        </Pill>
-        <label className="ml-auto flex items-center gap-1.5 text-[12px] text-muted-foreground">
+        <FacetMenu label="League" groups={[{ label: "", options: leagues.map(([k, n]) => ({ key: k, label: k, count: n })) }]} selected={leagues_} onChange={setLeagues} width={260} />
+        <FacetMenu label="Ownership" groups={[{ label: "", options: ownerTypes.map(([k, n]) => ({ key: k, label: OWNERSHIP_TYPE_LABEL[k] ?? k, count: n })) }]} selected={owners_} onChange={setOwners} searchable={false} width={220} />
+        <FacetMenu label="Cap table" groups={[{ label: "", options: [{ key: "1", label: "Institutional money on the cap table", count: backedCount }] }]} selected={backed_} onChange={setBacked} searchable={false} width={260} />
+        <label className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent" title="Sort">
           <ArrowDownWideNarrow className="h-3.5 w-3.5" />
-          <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="h-7 rounded-[4px] border border-input bg-card px-1.5 text-[12px] text-foreground">
+          <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="bg-transparent text-[12.5px] text-foreground outline-none" aria-label="Sort by">
             <option value="revenue">Revenue</option>
             <option value="valuation">Valuation</option>
             <option value="followers">Following</option>
@@ -101,37 +105,30 @@ export function ClubTable({ clubs }: { clubs: ClubRow[] }) {
             <option value="name">Name</option>
           </select>
         </label>
+        <span className="px-1 text-[12px]">
+          <span className="figure">{rows.length.toLocaleString("en-US")}</span> <span className="text-muted-foreground">clubs</span>
+        </span>
       </div>
-      <div className="flex flex-wrap gap-1">
-        <Pill on={!league} onClick={() => setLeague(null)}>
-          All leagues
-        </Pill>
-        {leagues.map(([l, n]) => (
-          <Pill key={l} on={league === l} onClick={() => setLeague(league === l ? null : l)}>
-            {l} <span className="figure opacity-70">{n}</span>
-          </Pill>
-        ))}
-      </div>
-      <div className="flex flex-wrap gap-1">
-        <Pill on={!owner} onClick={() => setOwner(null)}>
-          Any ownership
-        </Pill>
-        {ownerTypes.map(([t, n]) => (
-          <Pill key={t} on={owner === t} onClick={() => setOwner(owner === t ? null : t)}>
-            {OWNERSHIP_TYPE_LABEL[t] ?? t} <span className="figure opacity-70">{n}</span>
-          </Pill>
-        ))}
-      </div>
+      <FacetChips
+        chips={[
+          ...leagues_.map((k) => ({ key: `l:${k}`, label: k, remove: () => setLeagues(leagues_.filter((x) => x !== k)) })),
+          ...owners_.map((k) => ({ key: `o:${k}`, label: OWNERSHIP_TYPE_LABEL[k] ?? k, remove: () => setOwners(owners_.filter((x) => x !== k)) })),
+          ...backed_.map((k) => ({ key: `b:${k}`, label: "Institutional money on the cap table", remove: () => setBacked([]) })),
+        ]}
+        onClearAll={() => {
+          setLeagues([]);
+          setOwners([]);
+          setBacked([]);
+        }}
+      />
 
       <div className="sheen overflow-hidden rounded-[4px] border bg-card">
         <div className="flex items-center justify-between border-b px-3 py-2 text-[12px]">
-          <span>
-            <span className="figure">{rows.length}</span> <span className="text-muted-foreground">clubs</span>
-          </span>
+          <span className="desk-label text-foreground">Clubs</span>
           <span className="text-[11px] text-muted-foreground">Figures as each source states them; hover a figure for its season or year.</span>
         </div>
         {rows.length ? (
-          <div className="overflow-x-auto">
+          <div className="desk-scroll">
             <table className="desk-table">
               <thead>
                 <tr>
@@ -148,14 +145,16 @@ export function ClubTable({ clubs }: { clubs: ClubRow[] }) {
               </thead>
               <tbody>
                 {rows.map((c, i) => (
-                  <tr key={c.id}>
+                  <tr key={c.id} className="linked">
                     <td className="num text-muted-foreground">{i + 1}</td>
-                    <td>
-                      <Link href={`/database/sports/${c.id}`} className="flex items-center gap-2 font-medium">
+                    <td className="min-w-[180px] max-w-[260px]">
+                      <span className="flex items-center gap-2 font-medium">
                         <CompanyLogo name={c.short_name ?? c.name} domain={c.domain} size={22} />
-                        <span className="truncate">{c.short_name ?? c.name}</span>
-                      </Link>
-                      <div className="pl-[30px] text-[10.5px] text-muted-foreground">{[c.city, c.country].filter(Boolean).join(", ")}</div>
+                        <Link href={`/database/sports/${c.id}`} className="cover truncate" title={c.name}>
+                          {c.short_name ?? c.name}
+                        </Link>
+                      </span>
+                      <div className="truncate pl-[30px] text-[10.5px] text-muted-foreground">{[c.city, c.country].filter(Boolean).join(", ")}</div>
                     </td>
                     <td className="whitespace-nowrap text-muted-foreground">{c.league ?? "—"}</td>
                     <td>
@@ -163,7 +162,7 @@ export function ClubTable({ clubs }: { clubs: ClubRow[] }) {
                     </td>
                     <td className="max-w-[220px]">
                       {c.topInvestor ? (
-                        <span className="truncate">
+                        <span className="block truncate" title={c.topInvestor.name}>
                           {c.topInvestor.companyId ? (
                             <Link href={`/companies/${c.topInvestor.companyId}`} className="font-medium">
                               {c.topInvestor.name}
@@ -200,7 +199,24 @@ export function ClubTable({ clubs }: { clubs: ClubRow[] }) {
             </table>
           </div>
         ) : (
-          <Empty>No clubs match.</Empty>
+          <Empty>
+            No club matches this cut.{" "}
+            {filtered ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setLeagues([]);
+                  setOwners([]);
+                  setBacked([]);
+                  setQ("");
+                }}
+                className="underline underline-offset-2 hover:text-foreground"
+              >
+                Clear the filters
+              </button>
+            ) : null}{" "}
+            to see every club on file.
+          </Empty>
         )}
       </div>
       <p className="text-[11px] text-muted-foreground">

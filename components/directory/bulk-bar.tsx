@@ -60,12 +60,13 @@ export function downloadCsv(records: DirectoryRecord[], filename: string) {
       }),
       r.contacts,
       r.domain ? `https://${r.domain}` : null,
+      // The index carries each overview's opening lines; the profile has the rest.
       r.description,
       isoDay(r.created),
       isoDay(r.updated),
     ]),
   );
-  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -112,6 +113,8 @@ function AddToListModal({
     });
   }
 
+  const row = "flex cursor-pointer items-center gap-3 rounded-[4px] border px-3 py-2 text-sm";
+
   return (
     <Modal open={open} onClose={onClose} size="sm">
       <ModalHeader
@@ -122,13 +125,13 @@ function AddToListModal({
       />
       <ModalBody className="space-y-1.5">
         {lists.map((l) => (
-          <label key={l.id} className={cn("flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 text-sm", choice === l.id && "border-primary bg-accent/40")}>
+          <label key={l.id} className={cn(row, choice === l.id && "border-foreground/60 bg-accent/40")}>
             <input type="radio" name="list" checked={choice === l.id} onChange={() => setChoice(l.id)} className="accent-[var(--primary)]" />
             <span className="flex-1 truncate">{l.name}</span>
-            <span className="tabular text-xs text-muted-foreground">{l.item_count}</span>
+            <span className="figure text-xs text-muted-foreground">{l.item_count}</span>
           </label>
         ))}
-        <label className={cn("flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 text-sm", choice === "new" && "border-primary bg-accent/40")}>
+        <label className={cn(row, choice === "new" && "border-foreground/60 bg-accent/40")}>
           <input type="radio" name="list" checked={choice === "new"} onChange={() => setChoice("new")} className="accent-[var(--primary)]" />
           <span className="flex-1">New list</span>
         </label>
@@ -150,15 +153,7 @@ function AddToListModal({
   );
 }
 
-function PipelineModal({
-  open,
-  onClose,
-  result,
-}: {
-  open: boolean;
-  onClose: () => void;
-  result: BulkPipelineResult | null;
-}) {
+function PipelineModal({ open, onClose, result }: { open: boolean; onClose: () => void; result: BulkPipelineResult | null }) {
   return (
     <Modal open={open} onClose={onClose} size="md">
       <ModalHeader
@@ -190,6 +185,10 @@ function PipelineModal({
   );
 }
 
+/** One action in the floating bar. */
+const ACTION = "inline-flex h-7 items-center gap-1.5 rounded-[4px] px-2 text-[12.5px] hover:bg-accent disabled:pointer-events-none disabled:opacity-50";
+
+/** What a selection can become: a list, a pipeline, a lookalike search, a file. Floats over the results while anything is ticked. */
 export function BulkBar({
   selected,
   records,
@@ -221,17 +220,17 @@ export function BulkBar({
 
   return (
     <>
-      <div className="sticky bottom-4 z-30 mx-auto flex w-fit max-w-full flex-wrap items-center gap-1.5 rounded-2xl border bg-popover px-3 py-2 shadow-[var(--shadow-pop)]">
-        <span className="px-1.5 text-sm font-medium">
+      <div className="animate-[topnav-in_160ms_ease-out] sticky bottom-4 z-30 mx-auto flex w-fit max-w-full flex-wrap items-center gap-1 rounded-[4px] border bg-popover px-2 py-1.5 shadow-[var(--shadow-pop)] motion-reduce:animate-none">
+        <span className="px-1.5 text-[12.5px] font-medium">
           <span className="figure">{ids.length}</span> selected
         </span>
         <span className="mx-1 h-5 w-px bg-border" />
-        <Button size="sm" variant="ghost" onClick={() => setListOpen(true)} disabled={!signedIn}>
-          <ListPlus className="h-4 w-4" /> Add to list
-        </Button>
-        <Button
-          size="sm"
-          variant="ghost"
+        <button type="button" className={ACTION} onClick={() => setListOpen(true)} disabled={!signedIn}>
+          <ListPlus className="h-3.5 w-3.5" /> Add to list
+        </button>
+        <button
+          type="button"
+          className={ACTION}
           disabled={!signedIn || pending}
           onClick={() =>
             start(async () => {
@@ -241,36 +240,25 @@ export function BulkBar({
             })
           }
         >
-          {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Kanban className="h-4 w-4" />} Add to pipeline
-        </Button>
-        <Button size="sm" variant="ghost" onClick={() => onSimilar(ids.slice(0, 10))}>
-          <Sparkles className="h-4 w-4" /> Find similar
-        </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => downloadCsv(records.filter((r) => selected.has(r.id)), `lpgp-firms-${ids.length}.csv`)}
-        >
-          <Download className="h-4 w-4" /> Export
-        </Button>
+          {pending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Kanban className="h-3.5 w-3.5" />} Add to pipeline
+        </button>
+        <button type="button" className={ACTION} onClick={() => onSimilar(ids.slice(0, 10))}>
+          <Sparkles className="h-3.5 w-3.5" /> Find similar
+        </button>
+        <button type="button" className={ACTION} onClick={() => downloadCsv(records.filter((r) => selected.has(r.id)), `lpgp-firms-${ids.length}.csv`)}>
+          <Download className="h-3.5 w-3.5" /> Export
+        </button>
         {isAdmin ? (
-          <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive" onClick={() => setConfirmDelete(true)}>
-            <Trash2 className="h-4 w-4" /> Delete
-          </Button>
+          <button type="button" className={cn(ACTION, "text-destructive hover:text-destructive")} onClick={() => setConfirmDelete(true)}>
+            <Trash2 className="h-3.5 w-3.5" /> Delete
+          </button>
         ) : null}
-        <button
-          type="button"
-          onClick={onClear}
-          className="ml-1 grid h-8 w-8 place-items-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground"
-          aria-label="Clear selection"
-        >
-          <X className="h-4 w-4" />
+        <button type="button" onClick={onClear} className="ml-1 grid h-7 w-7 place-items-center rounded-[4px] text-muted-foreground hover:bg-accent hover:text-foreground" aria-label="Clear selection">
+          <X className="h-3.5 w-3.5" />
         </button>
       </div>
 
-      {listOpen ? (
-        <AddToListModal open onClose={() => setListOpen(false)} ids={ids} lists={lists} onDone={onNotice} />
-      ) : null}
+      {listOpen ? <AddToListModal open onClose={() => setListOpen(false)} ids={ids} lists={lists} onDone={onNotice} /> : null}
       <PipelineModal open={pipeline != null} onClose={() => setPipeline(null)} result={pipeline} />
       <ConfirmModal
         open={confirmDelete}

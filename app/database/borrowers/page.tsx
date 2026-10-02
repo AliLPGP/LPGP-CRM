@@ -8,27 +8,34 @@ import { EnrichPortcosButton } from "@/components/intel/research-buttons";
 import { IntelShell } from "@/components/intel/shell";
 import { dateLabel } from "@/components/intel/tables";
 import { Box, Empty, Stat, StatStrip, Tag } from "@/components/intel/ui";
+import { UrlFacets } from "@/components/intel/url-facets";
 import { formatUsd } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Borrowers — LPGP Connect" };
 
-const FILTERS: { key: BorrowerFilter; label: string; defn: string }[] = [
-  { key: "", label: "All", defn: "Every borrower in a parsed lender's latest book." },
+// The companies behind the loan books, folded from every parsed lender's
+// latest schedule of investments. The URL is the state: one flag at a time
+// (`f`), a name search (`q`); the toolbar writes both.
+
+const FILTERS: { key: Exclude<BorrowerFilter, "">; label: string; defn: string }[] = [
   { key: "stressed", label: "Marked under 90", defn: "Lenders carry the debt below 90 cents on the dollar of cost." },
   { key: "pik", label: "Paying in kind", defn: "Part of the coupon is paid in kind rather than cash." },
   { key: "maturing", label: "Maturing within 18 months", defn: "The earliest tagged maturity falls within eighteen months." },
-  { key: "clubbed", label: "Several lenders", defn: "Held by more than one of the parsed lenders." },
+  { key: "clubbed", label: "Held by several lenders", defn: "Held by more than one of the parsed lenders." },
 ];
+const LIMIT = 300;
 
 export default async function BorrowersPage({ searchParams }: { searchParams: Promise<{ q?: string; f?: string }> }) {
   const { q, f } = await searchParams;
   const query = (q ?? "").trim();
   const filter = (FILTERS.some((x) => x.key === f) ? f : "") as BorrowerFilter;
-  const [summary, rows, intelCounts, user] = await Promise.all([getBorrowerSummary(), searchBorrowers(query, filter), portcoIntelCounts(), getSessionUser()]);
+  const [summary, rows, intelCounts, user] = await Promise.all([getBorrowerSummary(), searchBorrowers(query, filter, LIMIT), portcoIntelCounts(), getSessionUser()]);
   const intel = await getPortcoIntel(rows.map((r) => r.key));
   const enrichReady = user?.role === "admin" && Boolean(process.env.COMPANIES_HOUSE_API_KEY || process.env.LUSHA_API_KEY);
   const href = (nf: BorrowerFilter) => `/database/borrowers?${[query ? `q=${encodeURIComponent(query)}` : "", nf ? `f=${nf}` : ""].filter(Boolean).join("&")}`;
+  const flagCount: Record<Exclude<BorrowerFilter, "">, number> = { stressed: summary.stressed, pik: summary.pik, maturing: summary.maturing, clubbed: summary.clubbed };
+  const flagLabel = FILTERS.find((x) => x.key === filter)?.label;
 
   return (
     <IntelShell
@@ -36,18 +43,6 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
       kicker="Private credit"
       title="Borrowers"
       description="The private companies behind the loan books: who lends to each, how much, at what spread, whether any of it is paid in kind, when it matures, and how the lenders mark it. Folded from every parsed lender's latest schedule of investments; every figure is one a lender tagged in its own filing."
-      actions={
-        <div className="flex flex-wrap items-center gap-2">
-        <EnrichPortcosButton ready={enrichReady} />
-        <form action="/database/borrowers" className="flex items-center gap-1.5">
-          {filter ? <input type="hidden" name="f" value={filter} /> : null}
-          <input id="borrower-q" name="q" defaultValue={query} placeholder="Company name…" className="h-8 w-56 rounded-[4px] border bg-card px-2.5 text-[12px] outline-none focus:border-foreground" />
-          <button type="submit" className="h-8 rounded-[4px] border bg-card px-2.5 text-[12px] font-medium hover:bg-accent">
-            Search
-          </button>
-        </form>
-        </div>
-      }
     >
       <StatStrip>
         <Stat label="Borrowers" value={summary.borrowers.toLocaleString("en-US")} basis={`${formatUsd(summary.fairValue)} at fair value`} />
@@ -58,16 +53,26 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
         <Stat label="Filed accounts" value={intelCounts.accounts.toLocaleString("en-US")} basis={`${intelCounts.rows.toLocaleString("en-US")} on the UK register`} defn="Borrowers and portfolio companies whose latest accounts filed at Companies House state a turnover or operating profit." />
       </StatStrip>
 
-      <div className="flex flex-wrap gap-1.5">
-        {FILTERS.map((x) => (
-          <Link key={x.key || "all"} href={href(x.key)} className={`tag defn hover:text-foreground ${filter === x.key ? "bg-foreground text-background" : ""}`} data-tip={x.defn}>
-            {x.label}
-          </Link>
-        ))}
-      </div>
-
-      <div className="space-y-4">
-        <Box title={query ? `Borrowers matching “${query}”` : FILTERS.find((x) => x.key === filter)?.label === "All" ? "Largest borrowers" : FILTERS.find((x) => x.key === filter)?.label} count={rows.length} flush defn="Weighted by fair value. Mark is fair value over cost across the lenders that state both. Spread is over the reference rate.">
+      <UrlFacets
+        search={{ param: "q", placeholder: "Company name…" }}
+        facets={[
+          {
+            param: "f",
+            label: "Flag",
+            searchable: false,
+            width: 260,
+            groups: [{ label: "", options: FILTERS.map((x) => ({ key: x.key, label: x.label, count: flagCount[x.key] })) }],
+          },
+        ]}
+        count={{ value: rows.length, noun: rows.length >= LIMIT ? "borrowers shown, largest first" : "borrowers" }}
+        right={<EnrichPortcosButton ready={enrichReady} />}
+      >
+        <Box
+          title={query ? `Borrowers matching “${query}”` : flagLabel ?? "Largest borrowers"}
+          count={rows.length}
+          flush
+          defn={`${FILTERS.find((x) => x.key === filter)?.defn ?? "Every borrower in a parsed lender's latest book."} Weighted by fair value. Mark is fair value over cost across the lenders that state both. Spread is over the reference rate.`}
+        >
           {rows.length ? (
             <div className="desk-scroll">
               <table className="desk-table">
@@ -87,52 +92,72 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((b) => (
-                    <tr key={b.key}>
-                      <td className="min-w-[220px] max-w-[360px]">
-                        <Link href={portcoHref(b.key)} className="font-medium leading-snug" title="The company: people, filed accounts, every lender's line">
-                          {b.borrower}
-                        </Link>
-                        <div className="truncate text-[11px] text-muted-foreground">{b.lender_names?.slice(0, 3).join(" · ")}{(b.lender_names?.length ?? 0) > 3 ? " …" : ""}</div>
-                        {financeLead(intel.get(b.key)) ? (
-                          <div className="truncate text-[11px]" title={financeLead(intel.get(b.key))!.title}>
-                            <span className="text-muted-foreground">Finance: </span>
-                            {financeLead(intel.get(b.key))!.name}
+                  {rows.map((b) => {
+                    const ci = intel.get(b.key);
+                    const lead = financeLead(ci);
+                    return (
+                      <tr key={b.key} className="linked">
+                        <td className="min-w-[220px] max-w-[360px]">
+                          <Link href={portcoHref(b.key)} className="cover block truncate font-medium leading-snug" title={`${b.borrower} — the company: people, filed accounts, every lender's line`}>
+                            {b.borrower}
+                          </Link>
+                          <div className="truncate text-[11px] text-muted-foreground" title={b.lender_names?.join(" · ")}>
+                            {b.lender_names?.slice(0, 3).join(" · ")}
+                            {(b.lender_names?.length ?? 0) > 3 ? " …" : ""}
                           </div>
-                        ) : null}
-                      </td>
-                      <td className="max-w-[260px] truncate whitespace-nowrap text-[11.5px] text-muted-foreground" title={b.instruments ?? undefined}>{b.instruments ?? "—"}</td>
-                      <td className="num">{b.lenders}</td>
-                      <td className="num">{formatUsd(b.fair_value ?? 0)}</td>
-                      <td className="num">
-                        {intel.get(b.key)?.revenue != null ? (
-                          <a href={intel.get(b.key)!.accounts_url ?? undefined} target="_blank" rel="noreferrer" className="hover:underline" title={`Accounts to ${intel.get(b.key)!.accounts_period_end ?? "latest period"}`}>
-                            {formatMoney(intel.get(b.key)!.revenue, intel.get(b.key)!.currency)}
-                          </a>
-                        ) : (
-                          "—"
-                        )}
-                      </td>
-                      <td className="num">{intel.get(b.key)?.ebitda_derived != null ? formatMoney(intel.get(b.key)!.ebitda_derived, intel.get(b.key)!.currency) : "—"}</td>
-                      <td className={`num ${b.mark != null && b.mark < 0.9 ? "text-[var(--destructive)]" : ""}`}>{b.mark != null ? `${Math.round(b.mark * 100)}` : "—"}</td>
-                      <td className="num">{b.spread != null ? `${Math.round(b.spread * 100)} bp` : "—"}</td>
-                      <td className="num">{b.rate != null ? `${b.rate.toFixed(2)}%` : "—"}</td>
-                      <td className="num">{b.pik_rate != null && b.pik_rate > 0 ? <Tag strong>{b.pik_rate.toFixed(2)}%</Tag> : "—"}</td>
-                      <td className="whitespace-nowrap text-muted-foreground">{b.next_maturity ? dateLabel(b.next_maturity) : "—"}</td>
-                    </tr>
-                  ))}
+                          {lead ? (
+                            <div className="truncate text-[11px]" title={lead.title}>
+                              <span className="text-muted-foreground">Finance: </span>
+                              {lead.name}
+                            </div>
+                          ) : null}
+                        </td>
+                        <td className="max-w-[260px] truncate whitespace-nowrap text-[11.5px] text-muted-foreground" title={b.instruments ?? undefined}>
+                          {b.instruments ?? "—"}
+                        </td>
+                        <td className="num">{b.lenders}</td>
+                        <td className="num">{formatUsd(b.fair_value ?? 0)}</td>
+                        <td className="num">
+                          {ci?.revenue != null ? (
+                            <a href={ci.accounts_url ?? undefined} target="_blank" rel="noreferrer" className="hover:underline" title={`Accounts to ${ci.accounts_period_end ?? "latest period"}`}>
+                              {formatMoney(ci.revenue, ci.currency)}
+                            </a>
+                          ) : (
+                            "—"
+                          )}
+                        </td>
+                        <td className="num">{ci?.ebitda_derived != null ? formatMoney(ci.ebitda_derived, ci.currency) : "—"}</td>
+                        <td className={`num ${b.mark != null && b.mark < 0.9 ? "text-[var(--destructive)]" : ""}`}>{b.mark != null ? `${Math.round(b.mark * 100)}` : "—"}</td>
+                        <td className="num">{b.spread != null ? `${Math.round(b.spread * 100)} bp` : "—"}</td>
+                        <td className="num">{b.rate != null ? `${b.rate.toFixed(2)}%` : "—"}</td>
+                        <td className="num">{b.pik_rate != null && b.pik_rate > 0 ? <Tag strong>{b.pik_rate.toFixed(2)}%</Tag> : "—"}</td>
+                        <td className="whitespace-nowrap text-muted-foreground">{b.next_maturity ? dateLabel(b.next_maturity) : "—"}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
+          ) : query || filter ? (
+            <Empty>
+              No borrower matches this cut.{" "}
+              <Link href="/database/borrowers" className="underline underline-offset-2 hover:text-foreground">
+                Clear the filters
+              </Link>{" "}
+              to see the largest borrowers across every book.
+            </Empty>
           ) : (
-            <Empty>No borrowers match.</Empty>
+            <Empty>No borrowers on file yet. They appear as the database parses each lender&rsquo;s 10-Q and 10-K schedule of investments from EDGAR.</Empty>
           )}
         </Box>
-        <div className="grid gap-4 lg:grid-cols-2">
-          <Box title="How lenders mark their books" defn="Borrowers by mark (fair value over cost, in cents on the dollar) across every parsed book.">
-            <Columns rows={summary.markBins.map((b) => ({ label: b.label, value: b.count }))} height={100} />
-          </Box>
-          <Box title="Held by the most lenders" count={summary.mostLenders.length} flush defn="Club deals and syndications: the borrowers most of the parsed lenders share.">
+      </UrlFacets>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Box title="How lenders mark their books" defn="Borrowers by mark (fair value over cost, in cents on the dollar) across every parsed book.">
+          <Columns rows={summary.markBins.map((b) => ({ label: b.label, value: b.count }))} height={100} />
+        </Box>
+        <Box title="Held by the most lenders" count={summary.mostLenders.length} flush defn="Club deals and syndications: the borrowers most of the parsed lenders share.">
+          {summary.mostLenders.length ? (
             <ul className="divide-y">
               {summary.mostLenders.map((b) => (
                 <li key={b.key} className="flex items-center gap-2 px-3 py-1.5 text-[12px]">
@@ -144,8 +169,10 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                 </li>
               ))}
             </ul>
-          </Box>
-        </div>
+          ) : (
+            <Empty>No borrower is held by more than one parsed lender yet.</Empty>
+          )}
+        </Box>
       </div>
     </IntelShell>
   );

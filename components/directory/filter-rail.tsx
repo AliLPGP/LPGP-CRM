@@ -1,72 +1,222 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Check, ChevronDown, ChevronRight, Plus, RotateCcw, Search } from "lucide-react";
-import { CATEGORIES } from "@/lib/categories";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Check, ChevronDown, Plus, Search, SlidersHorizontal, X } from "lucide-react";
+import { FacetMenu, type FacetGroup, type FacetOption } from "@/components/intel/facet-menu";
+import { CATEGORIES, DIRECTORY_BOOKS, isCategory } from "@/lib/categories";
 import { ASSET_CLASSES, isAssetClassKey } from "@/lib/directory/asset-classes";
-import { EMPTY_FILTERS, hasStructuredFilters, toggle, type DirectoryFilters } from "@/lib/directory/filters";
-import { AUM_PRESETS, EMPLOYEE_PRESETS, parseMoney } from "@/lib/directory/format";
-import { ZONES, ZONE_LABEL } from "@/lib/directory/geo";
+import { toggle, type DirectoryFilters } from "@/lib/directory/filters";
+import { parseMoney } from "@/lib/directory/format";
+import { SUBREGIONS, ZONES, ZONE_LABEL, type Subregion, type Zone } from "@/lib/directory/geo";
 import { PROVIDER_ROLES, ROLE_LABEL, type ProviderRole } from "@/lib/directory/providers";
-import { STRATEGIES_BY_CLASS, type Strategy } from "@/lib/directory/strategies";
+import { STRATEGIES_BY_CLASS } from "@/lib/directory/strategies";
 import {
+  AUM_BANDS,
   INDUSTRIES,
   INVESTOR_TYPE_GROUPS,
   INVESTOR_TYPES,
   MANAGER_TYPES,
   PROVIDER_TYPES,
-  REGIONS,
   TICKET_BANDS,
+  type Band,
 } from "@/lib/directory/taxonomy";
 import { cn, formatUsd } from "@/lib/utils";
-import type { Facets } from "./use-results";
+import { EMP_BANDS, type Facets } from "./use-results";
 import type { Directory } from "./use-directory";
 
-function Section({
-  title,
-  children,
-  defaultOpen = true,
-  count,
+// Discover's filters, as a data product lays them out: one dropdown per
+// dimension across the top of the results (FacetBar), and the long tail —
+// ranges, toggles, the provider picker — behind one "More filters" panel.
+// Every control reads and writes the same DirectoryFilters the URL carries;
+// nothing here keeps a filter of its own.
+
+/** A menu's open panel: the header's own fade-and-rise, off under reduced motion. */
+const POP = "animate-[topnav-in_160ms_ease-out] motion-reduce:animate-none";
+
+const INPUT = "h-8 w-full rounded-[4px] border border-input bg-background px-2 text-[12.5px] outline-none focus-visible:border-ring";
+
+const opt = (key: string, label: string, count: number): FacetOption => ({ key, label, count });
+
+// --- Bands ----------------------------------------------------------------------
+// A range filter (aumMin / aumMax) shown as a menu of bands: the bands wholly
+// inside the range read as ticked, and ticking bands sets the one range that
+// spans them. Adjacent bands make exactly their union; a gap between two
+// ticked bands is filled, and the chip says the range plainly.
+
+/** The bands that sit wholly inside [min, max]. */
+function bandsIn(bands: Band[], min: number | null, max: number | null): string[] {
+  if (min == null && max == null) return [];
+  return bands
+    .filter((b) => (b.min ?? -Infinity) >= (min ?? -Infinity) && (b.max ?? Infinity) <= (max ?? Infinity))
+    .map((b) => b.key);
+}
+
+/** The one range spanning a set of bands. */
+function spanOf(bands: Band[], keys: string[]): [number | null, number | null] {
+  const picked = bands.filter((b) => keys.includes(b.key));
+  if (!picked.length) return [null, null];
+  const min = picked.some((b) => b.min == null) ? null : Math.min(...picked.map((b) => b.min as number));
+  const max = picked.some((b) => b.max == null) ? null : Math.max(...picked.map((b) => b.max as number));
+  return [min, max];
+}
+
+/** Band options that the results carry, or that are ticked. */
+function bandOptions(bands: Band[], counts: Map<string, number>, selected: string[]): FacetOption[] {
+  return bands
+    .filter((b) => (counts.get(b.key) ?? 0) > 0 || selected.includes(b.key))
+    .map((b) => opt(b.key, b.label, counts.get(b.key) ?? 0));
+}
+
+// --- The bar ----------------------------------------------------------------------
+
+/**
+ * The facet dropdowns: Book, Asset class, Strategy (grouped by class, sectors
+ * after strategies), Industry, Type (investors by family, then managers and
+ * providers), Location (zone, region, country) and Size (AUM bands). Each
+ * lists what the current results carry, or what is ticked — never the whole
+ * vocabulary — with a count beside every value.
+ */
+export function FacetBar({
+  dir,
+  filters,
+  facets,
+  onChange,
 }: {
-  title: string;
-  children: React.ReactNode;
-  defaultOpen?: boolean;
-  count?: number;
+  dir: Directory;
+  filters: DirectoryFilters;
+  facets: Facets;
+  onChange: (next: DirectoryFilters) => void;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
+  const set = (patch: Partial<DirectoryFilters>) => onChange({ ...filters, ...patch });
+
+  const books: FacetGroup[] = [
+    {
+      label: "",
+      options: DIRECTORY_BOOKS.filter((b) => (facets.books.get(b) ?? 0) > 0 || filters.books.includes(b)).map((b) =>
+        opt(b, CATEGORIES[b].name, facets.books.get(b) ?? 0),
+      ),
+    },
+  ];
+
+  const classes: FacetGroup[] = [
+    {
+      label: "",
+      options: ASSET_CLASSES.filter((c) => (facets.classes.get(c.key) ?? 0) > 0 || filters.classes.includes(c.key)).map((c) =>
+        opt(c.key, c.name, facets.classes.get(c.key) ?? 0),
+      ),
+    },
+  ];
+
+  const strategies: FacetGroup[] = [];
+  for (const cls of ASSET_CLASSES) {
+    const present = STRATEGIES_BY_CLASS[cls.key].filter(
+      (s) => (facets.strategies.get(s.key) ?? 0) > 0 || filters.strategies.includes(s.key),
+    );
+    const how = present.filter((s) => s.axis === "strategy");
+    const what = present.filter((s) => s.axis === "sector");
+    if (how.length) strategies.push({ label: cls.name, options: how.map((s) => opt(s.key, s.name, facets.strategies.get(s.key) ?? 0)) });
+    if (what.length) strategies.push({ label: `${cls.name} · sectors`, options: what.map((s) => opt(s.key, s.name, facets.strategies.get(s.key) ?? 0)) });
+  }
+
+  const industries: FacetGroup[] = [
+    {
+      label: "",
+      options: INDUSTRIES.filter((i) => (facets.sectors.get(i.code) ?? 0) > 0 || filters.sectors.includes(i.code)).map((i) =>
+        opt(i.code, i.name, facets.sectors.get(i.code) ?? 0),
+      ),
+    },
+  ];
+
+  // A code is one facet value whichever book it belongs to ("bank" is an
+  // investor type and a provider type), so it is listed once.
+  const types: FacetGroup[] = [];
+  {
+    const listed = new Set<string>();
+    const families: [string, { code: string; name: string }[]][] = [
+      ...INVESTOR_TYPE_GROUPS.map((g): [string, { code: string; name: string }[]] => [g, INVESTOR_TYPES.filter((t) => t.group === g)]),
+      ["Fund managers", MANAGER_TYPES],
+      ["Service providers", PROVIDER_TYPES],
+    ];
+    for (const [label, list] of families) {
+      const options: FacetOption[] = [];
+      for (const t of list) {
+        if (listed.has(t.code)) continue;
+        const n = facets.typeCodes.get(t.code) ?? 0;
+        if (n > 0 || filters.typeCodes.includes(t.code)) {
+          listed.add(t.code);
+          options.push(opt(t.code, t.name, n));
+        }
+      }
+      if (options.length) types.push({ label, options });
+    }
+  }
+
+  // Location is three filters in one menu, told apart by a key prefix.
+  const locationSelected = [
+    ...filters.zones.map((z) => `z:${z}`),
+    ...filters.regions.map((r) => `r:${r}`),
+    ...filters.countries.map((c) => `c:${c}`),
+  ];
+  const countries = [...facets.countries.entries()].sort((a, b) => b[1] - a[1]);
+  for (const c of filters.countries) if (!facets.countries.has(c)) countries.push([c, 0]);
+  const location: FacetGroup[] = [
+    { label: "Zone", options: ZONES.filter((z) => (facets.zones.get(z) ?? 0) > 0 || filters.zones.includes(z)).map((z) => opt(`z:${z}`, ZONE_LABEL[z], facets.zones.get(z) ?? 0)) },
+    { label: "Region", options: SUBREGIONS.filter((r) => (facets.regions.get(r) ?? 0) > 0 || filters.regions.includes(r)).map((r) => opt(`r:${r}`, r, facets.regions.get(r) ?? 0)) },
+    { label: "Country", options: countries.map(([c, n]) => opt(`c:${c}`, c, n)) },
+  ].filter((g) => g.options.length);
+
+  const sizeSelected = bandsIn(AUM_BANDS, filters.aumMin, filters.aumMax);
+  const sizes: FacetGroup[] = [{ label: "", options: bandOptions(AUM_BANDS, facets.aumBands, sizeSelected) }];
+
   return (
-    <div className="border-b last:border-b-0">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between px-4 py-3 text-left"
-        aria-expanded={open}
-      >
-        <span className="eyebrow">
-          {title}
-          {count ? <span className="ml-1.5 text-[var(--brass)]">· {count}</span> : null}
-        </span>
-        <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform", open && "rotate-180")} />
-      </button>
-      {open ? <div className="px-4 pb-4">{children}</div> : null}
-    </div>
+    <>
+      <FacetMenu label="Book" groups={books} selected={filters.books} onChange={(next) => set({ books: next.filter(isCategory) })} searchable={false} width={240} />
+      <FacetMenu label="Asset class" groups={classes} selected={filters.classes} onChange={(next) => set({ classes: next.filter(isAssetClassKey) })} searchable={false} width={240} />
+      <FacetMenu label="Strategy" groups={strategies} selected={filters.strategies} onChange={(next) => set({ strategies: next })} width={320} />
+      <FacetMenu label="Industry" groups={industries} selected={filters.sectors} onChange={(next) => set({ sectors: next })} width={280} />
+      <FacetMenu label="Type" groups={types} selected={filters.typeCodes} onChange={(next) => set({ typeCodes: next })} width={300} />
+      <FacetMenu
+        label="Location"
+        groups={location}
+        selected={locationSelected}
+        onChange={(next) =>
+          set({
+            zones: next.filter((k) => k.startsWith("z:")).map((k) => k.slice(2) as Zone),
+            regions: next.filter((k) => k.startsWith("r:")).map((k) => k.slice(2) as Subregion),
+            countries: next.filter((k) => k.startsWith("c:")).map((k) => k.slice(2)),
+          })
+        }
+        width={300}
+      />
+      <FacetMenu
+        label="Size"
+        groups={sizes}
+        selected={sizeSelected}
+        onChange={(next) => {
+          const [aumMin, aumMax] = spanOf(AUM_BANDS, next);
+          set({ aumMin, aumMax });
+        }}
+        searchable={false}
+        width={220}
+      />
+      <MoreFilters dir={dir} filters={filters} facets={facets} onChange={onChange} />
+    </>
   );
 }
+
+// --- The "More filters" panel -----------------------------------------------------
 
 function Option({
   on,
   label,
   count,
   onClick,
-  muted,
   title,
 }: {
   on: boolean;
   label: string;
   count?: number;
   onClick: () => void;
-  muted?: boolean;
-  /** For a label the rail is too narrow for. */
   title?: string;
 }) {
   return (
@@ -74,90 +224,29 @@ function Option({
       type="button"
       onClick={onClick}
       title={title}
-      className={cn(
-        "flex w-full items-center gap-2 rounded-md px-1.5 py-1 text-left text-[13px] transition-colors hover:bg-accent/60",
-        muted && !on && "opacity-50",
-      )}
       aria-pressed={on}
+      className={cn("flex w-full items-center gap-2 rounded-[3px] px-1.5 py-1 text-left text-[12.5px] hover:bg-accent", count === 0 && !on && "opacity-50")}
     >
-      <span
-        className={cn(
-          "grid h-4 w-4 shrink-0 place-items-center rounded border",
-          on ? "border-primary bg-primary text-primary-foreground" : "border-input bg-card",
-        )}
-      >
-        {on ? <Check className="h-3 w-3" /> : null}
+      <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border", on ? "border-foreground bg-foreground text-background" : "border-input")}>
+        {on ? <Check className="h-2.5 w-2.5" /> : null}
       </span>
       <span className="min-w-0 flex-1 truncate">{label}</span>
-      {count != null ? <span className="tabular text-xs text-muted-foreground">{count.toLocaleString("en-US")}</span> : null}
+      {count != null ? <span className="figure text-[11px] text-muted-foreground">{count.toLocaleString("en-US")}</span> : null}
     </button>
   );
 }
 
-function Pill({ on, children, onClick }: { on: boolean; children: React.ReactNode; onClick: () => void }) {
+function Section({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={on}
-      className={cn(
-        "rounded-full border px-2.5 py-1 text-xs transition-colors",
-        on ? "border-primary bg-primary text-primary-foreground" : "bg-card text-muted-foreground hover:text-foreground",
-      )}
-    >
+    <div className="min-w-0">
+      <p className="desk-label pb-1.5">{title}</p>
       {children}
-    </button>
-  );
-}
-
-/** A collapsible group inside a section: an asset class's strategies, a family of investor types. */
-function Group({
-  title,
-  size,
-  ticked,
-  defaultOpen,
-  children,
-}: {
-  title: string;
-  /** How many options the group holds, shown while it is folded. */
-  size: number;
-  /** How many of them are ticked. */
-  ticked: number;
-  defaultOpen: boolean;
-  children: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div>
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center gap-1 rounded-md px-1 py-1 text-left text-[12.5px] font-medium hover:bg-accent/60"
-        aria-expanded={open}
-      >
-        <ChevronRight className={cn("h-3 w-3 shrink-0 text-muted-foreground transition-transform", open && "rotate-90")} />
-        <span className="min-w-0 flex-1 truncate">{title}</span>
-        {ticked ? <span className="tabular text-xs text-[var(--brass)]">{ticked}</span> : null}
-        {!open ? <span className="tabular text-xs text-muted-foreground">{size}</span> : null}
-      </button>
-      {open ? <div className="ml-2 space-y-0.5 border-l pl-1.5">{children}</div> : null}
+      {hint ? <p className="mt-1.5 text-[11px] leading-snug text-muted-foreground">{hint}</p> : null}
     </div>
   );
 }
 
-function sorted<K>(map: Map<K, number>): [K, number][] {
-  return [...map.entries()].sort((a, b) => b[1] - a[1]);
-}
-
-function MoneyInput({
-  value,
-  placeholder,
-  onCommit,
-}: {
-  value: number | null;
-  placeholder: string;
-  onCommit: (v: number | null) => void;
-}) {
+function MoneyInput({ value, placeholder, onCommit }: { value: number | null; placeholder: string; onCommit: (v: number | null) => void }) {
   const [text, setText] = useState(value != null ? formatUsd(value).replace("$", "") : "");
   const commit = () => onCommit(text.trim() ? parseMoney(text) : null);
   return (
@@ -169,21 +258,13 @@ function MoneyInput({
         if (e.key === "Enter") commit();
       }}
       placeholder={placeholder}
-      className="h-8 w-full rounded-md border border-input bg-card px-2 text-xs outline-none focus-visible:border-ring"
+      className={INPUT}
       inputMode="decimal"
     />
   );
 }
 
-function YearInput({
-  value,
-  placeholder,
-  onCommit,
-}: {
-  value: number | null;
-  placeholder: string;
-  onCommit: (v: number | null) => void;
-}) {
+function YearInput({ value, placeholder, onCommit }: { value: number | null; placeholder: string; onCommit: (v: number | null) => void }) {
   const [text, setText] = useState(value != null ? String(value) : "");
   const commit = () => {
     const n = Number(text);
@@ -198,24 +279,14 @@ function YearInput({
         if (e.key === "Enter") commit();
       }}
       placeholder={placeholder}
-      className="h-8 w-full rounded-md border border-input bg-card px-2 text-xs outline-none focus-visible:border-ring"
+      className={INPUT}
       inputMode="numeric"
     />
   );
 }
 
 /** A share of a portfolio, 0–100. Anything else commits as "no bound". */
-function PercentInput({
-  value,
-  placeholder,
-  onCommit,
-  label,
-}: {
-  value: number | null;
-  placeholder: string;
-  onCommit: (v: number | null) => void;
-  label: string;
-}) {
+function PercentInput({ value, placeholder, onCommit, label }: { value: number | null; placeholder: string; onCommit: (v: number | null) => void; label: string }) {
   const [text, setText] = useState(value != null ? String(value) : "");
   const commit = () => {
     const n = Number(text.replace("%", "").trim());
@@ -232,10 +303,10 @@ function PercentInput({
         }}
         placeholder={placeholder}
         aria-label={label}
-        className="h-8 w-full rounded-md border border-input bg-card pl-2 pr-6 text-xs outline-none focus-visible:border-ring"
+        className={cn(INPUT, "pr-6")}
         inputMode="decimal"
       />
-      <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">%</span>
+      <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">%</span>
     </div>
   );
 }
@@ -247,25 +318,15 @@ function ProviderPicker({ dir, onAdd }: { dir: Directory; onAdd: (key: string, r
     const needle = q.trim().toLowerCase();
     const pool = dir.brands.filter((b) => b.clients >= 1);
     const hits = needle ? pool.filter((b) => b.name.toLowerCase().includes(needle)) : pool;
-    return [...hits].sort((a, b) => b.clients - a.clients).slice(0, 8);
+    return [...hits].sort((a, b) => b.clients - a.clients).slice(0, 6);
   }, [q, dir.brands]);
   return (
-    <div className="space-y-2">
+    <div className="space-y-1.5">
       <div className="relative">
         <Search className="absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="KPMG, Citco, J.P. Morgan…"
-          className="h-8 w-full rounded-md border border-input bg-card pl-7 pr-2 text-xs outline-none focus-visible:border-ring"
-        />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="KPMG, Citco, J.P. Morgan…" className={cn(INPUT, "pl-7")} />
       </div>
-      <select
-        value={role}
-        onChange={(e) => setRole(e.target.value as ProviderRole | "")}
-        className="h-8 w-full rounded-md border border-input bg-card px-2 text-xs outline-none"
-        aria-label="As"
-      >
+      <select value={role} onChange={(e) => setRole(e.target.value as ProviderRole | "")} className={INPUT} aria-label="As">
         <option value="">In any role</option>
         {PROVIDER_ROLES.map((r) => (
           <option key={r} value={r}>
@@ -273,7 +334,7 @@ function ProviderPicker({ dir, onAdd }: { dir: Directory; onAdd: (key: string, r
           </option>
         ))}
       </select>
-      <div className="space-y-0.5">
+      <div>
         {matchesQ.map((b) => (
           <button
             key={b.key}
@@ -282,22 +343,111 @@ function ProviderPicker({ dir, onAdd }: { dir: Directory; onAdd: (key: string, r
               onAdd(b.key, role || null);
               setQ("");
             }}
-            className="flex w-full items-center gap-2 rounded-md px-1.5 py-1 text-left text-[13px] hover:bg-accent/60"
+            className="flex w-full items-center gap-2 rounded-[3px] px-1.5 py-1 text-left text-[12.5px] hover:bg-accent"
           >
             <Plus className="h-3.5 w-3.5 text-muted-foreground" />
             <span className="min-w-0 flex-1 truncate">{b.name}</span>
-            <span className="tabular text-xs text-muted-foreground" title="GP clients on Form ADV">
+            <span className="figure text-[11px] text-muted-foreground" title="GP clients on Form ADV">
               {b.clients}
             </span>
           </button>
         ))}
-        {matchesQ.length === 0 ? <p className="px-1.5 text-xs text-muted-foreground">No provider by that name.</p> : null}
+        {matchesQ.length === 0 ? <p className="px-1.5 text-[11.5px] text-muted-foreground">No provider by that name.</p> : null}
       </div>
     </div>
   );
 }
 
-export function FilterRail({
+/** The sub-types as the directory records them, searchable, the most common first. */
+function TypeList({ filters, facets, onToggle }: { filters: DirectoryFilters; facets: Facets; onToggle: (t: string) => void }) {
+  const [q, setQ] = useState("");
+  const needle = q.trim().toLowerCase();
+  const all = [...facets.types.entries()].sort((a, b) => b[1] - a[1]);
+  for (const t of filters.types) if (!facets.types.has(t)) all.push([t, 0]);
+  const rows = needle ? all.filter(([t]) => t.toLowerCase().includes(needle)) : all.slice(0, 8);
+  return (
+    <div className="space-y-1.5">
+      {all.length > 8 ? (
+        <div className="relative">
+          <Search className="absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={`Search ${all.length} types`} className={cn(INPUT, "pl-7")} />
+        </div>
+      ) : null}
+      <div className="max-h-44 overflow-y-auto">
+        {rows.map(([t, n]) => (
+          <Option key={t} on={filters.types.includes(t)} label={t} count={n} onClick={() => onToggle(t)} />
+        ))}
+        {rows.length === 0 ? <p className="px-1.5 text-[11.5px] text-muted-foreground">No type by that name among these firms.</p> : null}
+      </div>
+    </div>
+  );
+}
+
+/** The More-panel's own filters, blank: what its Clear button sets. */
+const MORE_BLANK: Partial<DirectoryFilters> = {
+  types: [],
+  empMin: null,
+  empMax: null,
+  foundedMin: null,
+  foundedMax: null,
+  adv: [],
+  providers: [],
+  ticketMin: null,
+  ticketMax: null,
+  allocClass: null,
+  allocMin: null,
+  allocMax: null,
+  altsMin: null,
+  altsMax: null,
+  hasContacts: false,
+  connectable: false,
+  hasWebsite: false,
+  discloses: false,
+  hasPlans: false,
+  portfolio: false,
+  hasOperators: false,
+  hasPortcos: false,
+  includeInactive: false,
+};
+
+type Flag = "hasContacts" | "connectable" | "hasWebsite" | "discloses" | "hasPlans" | "portfolio" | "hasOperators" | "hasPortcos";
+
+const FLAGS: [Flag, string][] = [
+  ["hasContacts", "Has key contacts"],
+  ["connectable", "Direct email on file"],
+  ["hasWebsite", "Has website"],
+  ["discloses", "Discloses commitments (LPs)"],
+  ["hasPlans", "Has a plan for the next 12 months"],
+  ["portfolio", "In portfolio"],
+  ["hasOperators", "Operating partners on file"],
+  ["hasPortcos", "Portfolio companies on file"],
+];
+
+/** How many of the panel's filters are set, for the button's badge. */
+function moreCount(f: DirectoryFilters): number {
+  return (
+    f.types.length +
+    (f.empMin != null || f.empMax != null ? 1 : 0) +
+    (f.foundedMin != null || f.foundedMax != null ? 1 : 0) +
+    f.adv.length +
+    f.providers.length +
+    (f.ticketMin != null || f.ticketMax != null ? 1 : 0) +
+    (f.allocClass != null ? 1 : 0) +
+    (f.altsMin != null || f.altsMax != null ? 1 : 0) +
+    FLAGS.filter(([k]) => f[k]).length +
+    (f.includeInactive ? 1 : 0)
+  );
+}
+
+const PANEL_WIDTH = 760;
+
+/**
+ * The long tail behind one button: headcount, founding year, Form ADV status,
+ * service providers, ticket size, allocations, a custom size range, the
+ * data-on-file toggles, the type as recorded. Opens below the button, or
+ * right-aligned when the panel would run off the viewport.
+ */
+export function MoreFilters({
   dir,
   filters,
   facets,
@@ -308,388 +458,200 @@ export function FilterRail({
   facets: Facets;
   onChange: (next: DirectoryFilters) => void;
 }) {
-  const [countryQ, setCountryQ] = useState("");
-  const [allCountries, setAllCountries] = useState(false);
-  const [allTypes, setAllTypes] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [alignRight, setAlignRight] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const set = (patch: Partial<DirectoryFilters>) => onChange({ ...filters, ...patch });
 
-  const types = sorted(facets.types);
-  const shownTypes = allTypes ? types : types.slice(0, 10);
-  const countries = sorted(facets.countries).filter(([c]) => c.toLowerCase().includes(countryQ.trim().toLowerCase()));
-  // Keep ticked values visible even when a narrower search has zero of them.
-  for (const c of filters.countries) if (!countries.some(([x]) => x === c)) countries.push([c, 0]);
-  const shownCountries = allCountries || countryQ ? countries : countries.slice(0, 8);
-  const hasAny = hasStructuredFilters(filters);
-
-  // The data-product facets. Each shows what the current results carry (or
-  // what is ticked), never the whole vocabulary.
-  const classRows = ASSET_CLASSES.filter((c) => (facets.classes.get(c.key) ?? 0) > 0 || filters.classes.includes(c.key));
-  const strategyGroups = ASSET_CLASSES.map((cls) => {
-    const present = STRATEGIES_BY_CLASS[cls.key].filter(
-      (s) => (facets.strategies.get(s.key) ?? 0) > 0 || filters.strategies.includes(s.key),
-    );
-    return {
-      cls,
-      strategies: present.filter((s) => s.axis === "strategy"),
-      sectors: present.filter((s) => s.axis === "sector"),
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
-  }).filter((g) => g.strategies.length || g.sectors.length);
-  const industryRows = INDUSTRIES.filter((i) => (facets.sectors.get(i.code) ?? 0) > 0 || filters.sectors.includes(i.code));
-  const typeGroups: { title: string; entries: { code: string; name: string }[] }[] = [];
-  {
-    // A code is one facet value whichever book it belongs to ("bank" is an
-    // investor type and a provider type), so it is listed once.
-    const listed = new Set<string>();
-    const wanted = (code: string) => !listed.has(code) && ((facets.typeCodes.get(code) ?? 0) > 0 || filters.typeCodes.includes(code));
-    const families: [string, { code: string; name: string }[]][] = [
-      ...INVESTOR_TYPE_GROUPS.map((g): [string, { code: string; name: string }[]] => [g, INVESTOR_TYPES.filter((t) => t.group === g)]),
-      ["Fund managers", MANAGER_TYPES],
-      ["Service providers", PROVIDER_TYPES],
-    ];
-    for (const [title, list] of families) {
-      const entries = list.filter((t) => wanted(t.code));
-      for (const t of entries) listed.add(t.code);
-      if (entries.length) typeGroups.push({ title, entries });
-    }
-  }
-  const ticketOn = filters.ticketMin != null || filters.ticketMax != null;
-  const allocOn = filters.allocClass != null || filters.allocMin != null || filters.allocMax != null;
-  const altsOn = filters.altsMin != null || filters.altsMax != null;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
-  const strategyOption = (s: Strategy) => (
-    <Option
-      key={s.key}
-      on={filters.strategies.includes(s.key)}
-      label={s.name}
-      count={facets.strategies.get(s.key) ?? 0}
-      muted={!facets.strategies.get(s.key)}
-      onClick={() => set({ strategies: toggle(filters.strategies, s.key) })}
-    />
-  );
+  const count = moreCount(filters);
+  const empSelected = bandsIn(EMP_BANDS, filters.empMin, filters.empMax);
+  const ticketSelected = bandsIn(TICKET_BANDS, filters.ticketMin, filters.ticketMax);
 
   return (
-    <div className="sheen overflow-hidden rounded-2xl border bg-card">
-      <div className="flex items-center justify-between border-b px-4 py-3">
-        <span className="text-sm font-semibold">Filters</span>
-        {hasAny ? (
-          <button
-            type="button"
-            onClick={() => onChange({ ...EMPTY_FILTERS, keywords: filters.keywords, like: filters.like })}
-            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
-          >
-            <RotateCcw className="h-3 w-3" /> Reset
-          </button>
-        ) : null}
-      </div>
-
-      <Section title="Book" count={filters.books.length}>
-        <div className="space-y-0.5">
-          {(["LP", "GP", "SP", "UN"] as const).map((b) => (
-            <Option
-              key={b}
-              on={filters.books.includes(b)}
-              label={CATEGORIES[b].name}
-              count={facets.books.get(b) ?? 0}
-              muted={!facets.books.get(b)}
-              onClick={() => set({ books: toggle(filters.books, b) })}
-            />
-          ))}
-        </div>
-      </Section>
-
-      <Section title="Type" count={filters.types.length}>
-        <div className="space-y-0.5">
-          {shownTypes.map(([t, n]) => (
-            <Option key={t} on={filters.types.includes(t)} label={t} count={n} onClick={() => set({ types: toggle(filters.types, t) })} />
-          ))}
-          {filters.types
-            .filter((t) => !types.some(([x]) => x === t))
-            .map((t) => (
-              <Option key={t} on label={t} count={0} onClick={() => set({ types: toggle(filters.types, t) })} />
-            ))}
-          {types.length > 10 ? (
-            <button type="button" onClick={() => setAllTypes(!allTypes)} className="px-1.5 pt-1 text-xs text-muted-foreground hover:text-foreground">
-              {allTypes ? "Fewer" : `All ${types.length} types`}
-            </button>
-          ) : null}
-          {types.length === 0 && filters.types.length === 0 ? (
-            <p className="px-1.5 text-xs text-muted-foreground">No types recorded for these firms.</p>
-          ) : null}
-        </div>
-      </Section>
-
-      <Section title="Asset class" count={filters.classes.length}>
-        <div className="space-y-0.5">
-          {classRows.map((c) => (
-            <Option
-              key={c.key}
-              on={filters.classes.includes(c.key)}
-              label={c.name}
-              count={facets.classes.get(c.key) ?? 0}
-              muted={!facets.classes.get(c.key)}
-              onClick={() => set({ classes: toggle(filters.classes, c.key) })}
-            />
-          ))}
-          {classRows.length === 0 ? <p className="px-1.5 text-xs text-muted-foreground">No asset class on file for these firms.</p> : null}
-        </div>
-        <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
-          Managers by their type and the strategies they state; investors by the classes they allocate to or plan for.
-        </p>
-      </Section>
-
-      <Section title="Strategy" count={filters.strategies.length}>
-        <div className="space-y-0.5">
-          {strategyGroups.map((g) => {
-            const ticked = [...g.strategies, ...g.sectors].filter((s) => filters.strategies.includes(s.key)).length;
-            return (
-              <Group
-                key={g.cls.key}
-                title={g.cls.name}
-                size={g.strategies.length + g.sectors.length}
-                ticked={ticked}
-                defaultOpen={ticked > 0 || filters.classes.includes(g.cls.key)}
-              >
-                {g.strategies.map(strategyOption)}
-                {g.sectors.length ? (
-                  <>
-                    <p className={cn("desk-label px-1.5 pb-0.5", g.strategies.length && "pt-1.5")}>Sectors</p>
-                    {g.sectors.map(strategyOption)}
-                  </>
-                ) : null}
-              </Group>
-            );
-          })}
-          {strategyGroups.length === 0 ? (
-            <p className="px-1.5 text-xs text-muted-foreground">No strategy stated by these firms.</p>
-          ) : null}
-        </div>
-      </Section>
-
-      <Section title="Industry" defaultOpen={filters.sectors.length > 0} count={filters.sectors.length}>
-        <div className="space-y-0.5">
-          {industryRows.map((i) => (
-            <Option
-              key={i.code}
-              on={filters.sectors.includes(i.code)}
-              label={i.name}
-              count={facets.sectors.get(i.code) ?? 0}
-              muted={!facets.sectors.get(i.code)}
-              onClick={() => set({ sectors: toggle(filters.sectors, i.code) })}
-            />
-          ))}
-          {industryRows.length === 0 ? <p className="px-1.5 text-xs text-muted-foreground">No industry named by these firms.</p> : null}
-        </div>
-      </Section>
-
-      <Section title="Investor type" count={filters.typeCodes.length}>
-        <div className="space-y-0.5">
-          {typeGroups.map((g) => {
-            const ticked = g.entries.filter((t) => filters.typeCodes.includes(t.code)).length;
-            return (
-              <Group key={g.title} title={g.title} size={g.entries.length} ticked={ticked} defaultOpen={ticked > 0}>
-                {g.entries.map((t) => (
-                  <Option
-                    key={t.code}
-                    on={filters.typeCodes.includes(t.code)}
-                    label={t.name}
-                    count={facets.typeCodes.get(t.code) ?? 0}
-                    muted={!facets.typeCodes.get(t.code)}
-                    onClick={() => set({ typeCodes: toggle(filters.typeCodes, t.code) })}
-                  />
-                ))}
-              </Group>
-            );
-          })}
-          {typeGroups.length === 0 ? <p className="px-1.5 text-xs text-muted-foreground">No classified type for these firms.</p> : null}
-        </div>
-      </Section>
-
-      <Section title="Geographic preference" defaultOpen={filters.prefRegions.length > 0} count={filters.prefRegions.length}>
-        <div className="space-y-0.5">
-          {REGIONS.map((r) => (
-            <Option
-              key={r.code}
-              on={filters.prefRegions.includes(r.code)}
-              label={r.name}
-              count={facets.prefRegions.get(r.code) ?? 0}
-              muted={!facets.prefRegions.get(r.code)}
-              onClick={() => set({ prefRegions: toggle(filters.prefRegions, r.code) })}
-            />
-          ))}
-        </div>
-        <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
-          Where a firm sits, and the regions its stated focus or an investor&apos;s own preferences name.
-        </p>
-      </Section>
-
-      <Section title="Ticket size" defaultOpen={ticketOn} count={ticketOn ? 1 : 0}>
-        <div className="flex flex-wrap gap-1.5">
-          {TICKET_BANDS.map((b) => {
-            const on = filters.ticketMin === b.min && filters.ticketMax === b.max;
-            return (
-              <Pill key={b.key} on={on} onClick={() => set(on ? { ticketMin: null, ticketMax: null } : { ticketMin: b.min, ticketMax: b.max })}>
-                {b.label}
-              </Pill>
-            );
-          })}
-        </div>
-        <div key={`${filters.ticketMin}-${filters.ticketMax}`} className="mt-2.5 grid grid-cols-2 gap-2">
-          <MoneyInput value={filters.ticketMin} placeholder="Min, e.g. 10m" onCommit={(v) => set({ ticketMin: v })} />
-          <MoneyInput value={filters.ticketMax} placeholder="Max, e.g. 100m" onCommit={(v) => set({ ticketMax: v })} />
-        </div>
-        <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
-          The commitment an investor writes per fund, in USD as it states it. Investors with no stated range are left out.
-        </p>
-      </Section>
-
-      <Section title="Allocation" defaultOpen={allocOn || altsOn} count={(allocOn ? 1 : 0) + (altsOn ? 1 : 0)}>
-        <p className="desk-label px-0.5 pb-1.5">Current allocation to</p>
-        <select
-          value={filters.allocClass ?? ""}
-          onChange={(e) => {
-            const v = e.target.value;
-            set(isAssetClassKey(v) ? { allocClass: v } : { allocClass: null, allocMin: null, allocMax: null });
-          }}
-          className="h-8 w-full rounded-md border border-input bg-card px-2 text-xs outline-none"
-          aria-label="Asset class allocated to"
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => {
+          const r = ref.current?.getBoundingClientRect();
+          setAlignRight(Boolean(r && r.left + PANEL_WIDTH > window.innerWidth && r.right - PANEL_WIDTH >= 0));
+          setOpen(!open);
+        }}
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        className={cn(
+          "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] transition-colors hover:bg-accent",
+          count ? "border-foreground/60 text-foreground" : "text-muted-foreground",
+        )}
+      >
+        <SlidersHorizontal className="h-3.5 w-3.5" />
+        More filters
+        {count ? <span className="figure rounded-[3px] bg-foreground px-1 text-[10.5px] leading-4 text-background">{count}</span> : null}
+        <ChevronDown className={cn("h-3 w-3 opacity-60 transition-transform", open && "rotate-180")} />
+      </button>
+      {open ? (
+        <div
+          role="dialog"
+          aria-label="More filters"
+          className={cn(POP, "absolute top-[calc(100%+4px)] z-40 rounded-[4px] border bg-popover text-popover-foreground shadow-lg", alignRight ? "right-0" : "left-0")}
+          style={{ width: `min(${PANEL_WIDTH}px, calc(100vw - 32px))` }}
         >
-          <option value="">Any asset class</option>
-          {ASSET_CLASSES.map((c) => (
-            <option key={c.key} value={c.key}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-        <div key={`${filters.allocClass}-${filters.allocMin}-${filters.allocMax}`} className="mt-2 grid grid-cols-2 gap-2">
-          <PercentInput value={filters.allocMin} placeholder="Min" label="Minimum allocation" onCommit={(v) => set({ allocMin: v })} />
-          <PercentInput value={filters.allocMax} placeholder="Max" label="Maximum allocation" onCommit={(v) => set({ allocMax: v })} />
-        </div>
-        <p className="desk-label mt-3 px-0.5 pb-1.5">Alternatives, % of portfolio</p>
-        <div key={`${filters.altsMin}-${filters.altsMax}`} className="grid grid-cols-2 gap-2">
-          <PercentInput value={filters.altsMin} placeholder="Min" label="Minimum alternatives share" onCommit={(v) => set({ altsMin: v })} />
-          <PercentInput value={filters.altsMax} placeholder="Max" label="Maximum alternatives share" onCommit={(v) => set({ altsMax: v })} />
-        </div>
-        <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
-          Shares as the investor publishes them. A firm with no stated figure is left out while a bound is set.
-        </p>
-      </Section>
+          <div className="grid max-h-[70vh] gap-x-6 gap-y-5 overflow-y-auto p-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Section title="Headcount">
+              {EMP_BANDS.map((b) => (
+                <Option
+                  key={b.key}
+                  on={empSelected.includes(b.key)}
+                  label={b.label}
+                  count={facets.empBands.get(b.key) ?? 0}
+                  onClick={() => {
+                    const [empMin, empMax] = spanOf(EMP_BANDS, toggle(empSelected, b.key));
+                    set({ empMin, empMax });
+                  }}
+                />
+              ))}
+            </Section>
 
-      <Section title="Location" count={filters.zones.length + filters.countries.length + filters.cities.length + filters.regions.length + filters.states.length}>
-        <div className="flex flex-wrap gap-1.5">
-          {ZONES.map((z) => (
-            <Pill key={z} on={filters.zones.includes(z)} onClick={() => set({ zones: toggle(filters.zones, z) })}>
-              <span title={ZONE_LABEL[z]}>{z}</span>
-              <span className="ml-1 tabular opacity-70">{facets.zones.get(z) ?? 0}</span>
-            </Pill>
-          ))}
-        </div>
-        <div className="relative mt-3">
-          <Search className="absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-          <input
-            value={countryQ}
-            onChange={(e) => setCountryQ(e.target.value)}
-            placeholder="Country"
-            className="h-8 w-full rounded-md border border-input bg-card pl-7 pr-2 text-xs outline-none focus-visible:border-ring"
-          />
-        </div>
-        <div className="mt-2 space-y-0.5">
-          {shownCountries.map(([c, n]) => (
-            <Option key={c} on={filters.countries.includes(c)} label={c} count={n} onClick={() => set({ countries: toggle(filters.countries, c) })} />
-          ))}
-          {!countryQ && countries.length > 8 ? (
-            <button type="button" onClick={() => setAllCountries(!allCountries)} className="px-1.5 pt-1 text-xs text-muted-foreground hover:text-foreground">
-              {allCountries ? "Fewer" : `All ${countries.length} countries`}
+            <Section title="Founded">
+              <div key={`${filters.foundedMin}-${filters.foundedMax}`} className="grid grid-cols-2 gap-2">
+                <YearInput value={filters.foundedMin} placeholder="From" onCommit={(v) => set({ foundedMin: v })} />
+                <YearInput value={filters.foundedMax} placeholder="To" onCommit={(v) => set({ foundedMax: v })} />
+              </div>
+            </Section>
+
+            <Section title="Form ADV">
+              {(
+                [
+                  ["Registered", "SEC registered adviser"],
+                  ["ERA", "Exempt reporting adviser"],
+                  ["None", "No ADV on record"],
+                ] as const
+              ).map(([k, label]) => (
+                <Option key={k} on={filters.adv.includes(k)} label={label} count={facets.adv.get(k) ?? 0} onClick={() => set({ adv: toggle(filters.adv, k) })} />
+              ))}
+            </Section>
+
+            <Section title="Service providers" hint="Managers whose Form ADV names this auditor, administrator, custodian, prime broker or placement agent.">
+              {filters.providers.length ? (
+                <div className="mb-2 flex flex-wrap gap-1">
+                  {filters.providers.map((p) => (
+                    <span key={`${p.key}:${p.role ?? ""}`} className="inline-flex items-center gap-1 rounded-[4px] border bg-card py-0.5 pl-2 pr-1 text-[12px]">
+                      {dir.brandByKey.get(p.key)?.name ?? p.key}
+                      {p.role ? <span className="text-muted-foreground">· {ROLE_LABEL[p.role].toLowerCase()}</span> : null}
+                      <button
+                        type="button"
+                        onClick={() => set({ providers: filters.providers.filter((q) => !(q.key === p.key && q.role === p.role)) })}
+                        aria-label={`Remove ${p.key}`}
+                        className="rounded p-0.5 text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+              <ProviderPicker
+                dir={dir}
+                onAdd={(key, role) => {
+                  if (!filters.providers.some((p) => p.key === key && p.role === role)) set({ providers: [...filters.providers, { key, role }] });
+                }}
+              />
+            </Section>
+
+            <Section title="Ticket size" hint="The commitment an investor writes per fund, in USD as it states it. Investors with no stated range are left out.">
+              {TICKET_BANDS.map((b) => (
+                <Option
+                  key={b.key}
+                  on={ticketSelected.includes(b.key)}
+                  label={b.label}
+                  onClick={() => {
+                    const [ticketMin, ticketMax] = spanOf(TICKET_BANDS, toggle(ticketSelected, b.key));
+                    set({ ticketMin, ticketMax });
+                  }}
+                />
+              ))}
+              <div key={`${filters.ticketMin}-${filters.ticketMax}`} className="mt-2 grid grid-cols-2 gap-2">
+                <MoneyInput value={filters.ticketMin} placeholder="Min, e.g. 10m" onCommit={(v) => set({ ticketMin: v })} />
+                <MoneyInput value={filters.ticketMax} placeholder="Max, e.g. 100m" onCommit={(v) => set({ ticketMax: v })} />
+              </div>
+            </Section>
+
+            <Section title="Allocation" hint="Shares as the investor publishes them. A firm with no stated figure is left out while a bound is set.">
+              <select
+                value={filters.allocClass ?? ""}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  set(isAssetClassKey(v) ? { allocClass: v } : { allocClass: null, allocMin: null, allocMax: null });
+                }}
+                className={INPUT}
+                aria-label="Asset class allocated to"
+              >
+                <option value="">Current allocation to any class</option>
+                {ASSET_CLASSES.map((c) => (
+                  <option key={c.key} value={c.key}>
+                    Allocates to {c.name.toLowerCase()}
+                  </option>
+                ))}
+              </select>
+              <div key={`${filters.allocClass}-${filters.allocMin}-${filters.allocMax}`} className="mt-2 grid grid-cols-2 gap-2">
+                <PercentInput value={filters.allocMin} placeholder="Min" label="Minimum allocation" onCommit={(v) => set({ allocMin: v })} />
+                <PercentInput value={filters.allocMax} placeholder="Max" label="Maximum allocation" onCommit={(v) => set({ allocMax: v })} />
+              </div>
+              <p className="desk-label mt-3 pb-1.5">Alternatives, % of portfolio</p>
+              <div key={`${filters.altsMin}-${filters.altsMax}`} className="grid grid-cols-2 gap-2">
+                <PercentInput value={filters.altsMin} placeholder="Min" label="Minimum alternatives share" onCommit={(v) => set({ altsMin: v })} />
+                <PercentInput value={filters.altsMax} placeholder="Max" label="Maximum alternatives share" onCommit={(v) => set({ altsMax: v })} />
+              </div>
+            </Section>
+
+            <Section title="Size, any range" hint="Regulatory AUM from Form ADV for managers; total assets for LPs. The Size menu offers the bands.">
+              <div key={`${filters.aumMin}-${filters.aumMax}`} className="grid grid-cols-2 gap-2">
+                <MoneyInput value={filters.aumMin} placeholder="Min, e.g. 500m" onCommit={(v) => set({ aumMin: v })} />
+                <MoneyInput value={filters.aumMax} placeholder="Max, e.g. 10b" onCommit={(v) => set({ aumMax: v })} />
+              </div>
+            </Section>
+
+            <Section title="Data on file">
+              {FLAGS.map(([k, label]) => (
+                <Option key={k} on={filters[k]} label={label} onClick={() => set({ [k]: !filters[k] } as Partial<DirectoryFilters>)} />
+              ))}
+              <Option
+                on={filters.includeInactive}
+                label="Include investors no longer in alternatives"
+                title="Investors whose own statements say they have stopped investing in alternatives are hidden unless this is on"
+                onClick={() => set({ includeInactive: !filters.includeInactive })}
+              />
+            </Section>
+
+            <Section title="Type as recorded" hint="The directory's own type words, before the taxonomy places them.">
+              <TypeList filters={filters} facets={facets} onToggle={(t) => set({ types: toggle(filters.types, t) })} />
+            </Section>
+          </div>
+          <div className="flex items-center justify-between border-t px-3 py-2">
+            <button type="button" onClick={() => set(MORE_BLANK)} className="rounded-[4px] px-2 py-1 text-[12px] text-muted-foreground hover:text-foreground" disabled={!count}>
+              Clear these
             </button>
-          ) : null}
+            <button type="button" onClick={() => setOpen(false)} className="rounded-[4px] bg-foreground px-3 py-1 text-[12px] font-medium text-background">
+              Done
+            </button>
+          </div>
         </div>
-      </Section>
-
-      <Section title="Size" count={filters.aumMin != null || filters.aumMax != null ? 1 : 0}>
-        <div className="flex flex-wrap gap-1.5">
-          {AUM_PRESETS.map((p) => {
-            const on = filters.aumMin === p.min && filters.aumMax === p.max;
-            return (
-              <Pill key={p.label} on={on} onClick={() => set(on ? { aumMin: null, aumMax: null } : { aumMin: p.min, aumMax: p.max })}>
-                {p.label}
-              </Pill>
-            );
-          })}
-        </div>
-        <div key={`${filters.aumMin}-${filters.aumMax}`} className="mt-2.5 grid grid-cols-2 gap-2">
-          <MoneyInput value={filters.aumMin} placeholder="Min, e.g. 500m" onCommit={(v) => set({ aumMin: v })} />
-          <MoneyInput value={filters.aumMax} placeholder="Max, e.g. 10b" onCommit={(v) => set({ aumMax: v })} />
-        </div>
-        <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
-          Regulatory AUM from Form ADV for managers; total assets for LPs.
-        </p>
-      </Section>
-
-      <Section title="Headcount" defaultOpen={false} count={filters.empMin != null || filters.empMax != null ? 1 : 0}>
-        <div className="flex flex-wrap gap-1.5">
-          {EMPLOYEE_PRESETS.map((p) => {
-            const on = filters.empMin === p.min && filters.empMax === p.max;
-            return (
-              <Pill key={p.label} on={on} onClick={() => set(on ? { empMin: null, empMax: null } : { empMin: p.min, empMax: p.max })}>
-                {p.label}
-              </Pill>
-            );
-          })}
-        </div>
-      </Section>
-
-      <Section title="Founded" defaultOpen={false} count={filters.foundedMin != null || filters.foundedMax != null ? 1 : 0}>
-        <div key={`${filters.foundedMin}-${filters.foundedMax}`} className="grid grid-cols-2 gap-2">
-          <YearInput value={filters.foundedMin} placeholder="From" onCommit={(v) => set({ foundedMin: v })} />
-          <YearInput value={filters.foundedMax} placeholder="To" onCommit={(v) => set({ foundedMax: v })} />
-        </div>
-      </Section>
-
-      <Section title="Form ADV" defaultOpen={false} count={filters.adv.length}>
-        <div className="space-y-0.5">
-          {(
-            [
-              ["Registered", "SEC registered adviser"],
-              ["ERA", "Exempt reporting adviser"],
-              ["None", "No ADV on record"],
-            ] as const
-          ).map(([k, label]) => (
-            <Option key={k} on={filters.adv.includes(k)} label={label} count={facets.adv.get(k) ?? 0} onClick={() => set({ adv: toggle(filters.adv, k) })} />
-          ))}
-        </div>
-      </Section>
-
-      <Section title="Service providers" defaultOpen={filters.providers.length > 0} count={filters.providers.length}>
-        <p className="mb-2 text-[11px] leading-snug text-muted-foreground">
-          Managers whose Form ADV names this auditor, administrator, custodian, prime broker or placement agent.
-        </p>
-        <ProviderPicker
-          dir={dir}
-          onAdd={(key, role) => {
-            if (!filters.providers.some((p) => p.key === key && p.role === role)) {
-              set({ providers: [...filters.providers, { key, role }] });
-            }
-          }}
-        />
-      </Section>
-
-      <Section title="Data on file" defaultOpen={filters.hasOperators || filters.hasPortcos || filters.hasPlans || filters.includeInactive}>
-        <div className="space-y-0.5">
-          <Option on={filters.hasContacts} label="Has key contacts" onClick={() => set({ hasContacts: !filters.hasContacts })} />
-          <Option on={filters.connectable} label="Direct email on file" onClick={() => set({ connectable: !filters.connectable })} />
-          <Option on={filters.hasWebsite} label="Has website" onClick={() => set({ hasWebsite: !filters.hasWebsite })} />
-          <Option on={filters.discloses} label="Discloses commitments (LPs)" onClick={() => set({ discloses: !filters.discloses })} />
-          <Option on={filters.hasPlans} label="Has a plan for the next 12 months" onClick={() => set({ hasPlans: !filters.hasPlans })} />
-          <Option on={filters.portfolio} label="In portfolio" onClick={() => set({ portfolio: !filters.portfolio })} />
-          <Option on={filters.hasOperators} label="Operating partners on file" onClick={() => set({ hasOperators: !filters.hasOperators })} />
-          <Option on={filters.hasPortcos} label="Portfolio companies on file" onClick={() => set({ hasPortcos: !filters.hasPortcos })} />
-          <Option
-            on={filters.includeInactive}
-            label="Include investors no longer investing in alternatives"
-            title="Investors whose own statements say they have stopped investing in alternatives are hidden unless this is on"
-            onClick={() => set({ includeInactive: !filters.includeInactive })}
-          />
-        </div>
-      </Section>
+      ) : null}
     </div>
   );
 }

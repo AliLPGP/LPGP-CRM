@@ -2,35 +2,23 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowDownWideNarrow, Search } from "lucide-react";
+import { ArrowDownWideNarrow, Search, X } from "lucide-react";
 import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, DEAL_KIND_LABEL, INVESTOR_TYPE_LABEL, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { formatMoney, SPORT_LABEL } from "@/lib/directory/intelligence-types";
 import type { DealSearchResult } from "@/lib/directory/intelligence-queries";
 import { cn } from "@/lib/utils";
+import { FacetChips, FacetMenu } from "./facet-menu";
 import { dateLabel } from "./tables";
-import { Empty, Tag } from "./ui";
+import { Box, Empty, Tag } from "./ui";
 
 // The Deals page: every sourced transaction, filtered and sorted in the
-// database. Money is shown in the currency the source states and never
-// summed across currencies.
+// database, one page of rows at a time. The toolbar is the desk's: search,
+// a dropdown per facet, the sort, the count; the chips under it say what is
+// on. Money is shown in the currency the source states and never summed
+// across currencies.
 
 type Sort = "date" | "amount" | "valuation";
-
-function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={on}
-      className={cn(
-        "rounded-[3px] border px-2 py-0.5 text-[11.5px] transition-colors",
-        on ? "border-foreground bg-foreground text-background" : "bg-card text-muted-foreground hover:text-foreground",
-      )}
-    >
-      {children}
-    </button>
-  );
-}
+const PAGE = 100;
 
 type Filters = { cls: AssetClassKey | null; kind: string | null; year: number | null; q: string; sort: Sort };
 
@@ -42,8 +30,14 @@ function paramsFor(f: Filters, offset: number): string {
   if (f.q.trim()) p.set("q", f.q.trim());
   p.set("sort", f.sort);
   p.set("offset", String(offset));
-  p.set("limit", "100");
+  p.set("limit", String(PAGE));
   return p.toString();
+}
+
+/** One value or none: a facet menu ticks, the ledger keeps the newest tick. */
+function one<T extends string>(selected: T[], next: string[]): T | null {
+  const added = next.find((k) => !selected.includes(k as T));
+  return (added ?? (next.length ? next[0] : null)) as T | null;
 }
 
 // What is on screen: the rows the database returned for one set of filters.
@@ -51,7 +45,18 @@ function paramsFor(f: Filters, offset: number): string {
 // on a newer click; while the next answer is in flight the last one stays up.
 type Shown = DealSearchResult & { key: string };
 
-export function DealLedger({ initial, initialClass, initialKind }: { initial: DealSearchResult; initialClass?: AssetClassKey | null; initialKind?: string | null }) {
+export function DealLedger({
+  initial,
+  initialClass,
+  initialKind,
+  classCounts,
+}: {
+  initial: DealSearchResult;
+  initialClass?: AssetClassKey | null;
+  initialKind?: string | null;
+  /** Deals per asset class across the whole ledger, for the class menu's counts. */
+  classCounts: Partial<Record<AssetClassKey, number>>;
+}) {
   const [f, setF] = useState<Filters>({ cls: initialClass ?? null, kind: initialKind ?? null, year: null, q: "", sort: "date" });
   const key = JSON.stringify(f);
   const [shown, setShown] = useState<Shown>(() => ({ ...initial, key }));
@@ -98,162 +103,155 @@ export function DealLedger({ initial, initialClass, initialKind }: { initial: De
   const setYear = (v: number | null) => setF((x) => ({ ...x, year: v }));
   const setQ = (v: string) => setF((x) => ({ ...x, q: v }));
   const setSort = (v: Sort) => setF((x) => ({ ...x, sort: v }));
+  const filtered = Boolean(cls || kind || year);
+
+  const classOptions = ASSET_CLASSES.filter((c) => (classCounts[c.key] ?? 0) > 0 || c.key === cls).map((c) => ({ key: c.key, label: c.name, count: classCounts[c.key] ?? 0 }));
+  const kindOptions = kinds.map(([k, n]) => ({ key: k, label: DEAL_KIND_LABEL[k] ?? k, count: n }));
+  const yearOptions = years.map(([y, n]) => ({ key: String(y), label: String(y), count: n }));
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[200px_minmax(0,1fr)]">
-      <aside className="space-y-4">
-        <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+    <div className="space-y-2">
+      <div className="flex flex-wrap items-center gap-1.5">
+        <div className="relative w-56">
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Investor, target, words…"
-            className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-2 text-[12.5px] outline-none focus-visible:border-ring"
+            aria-label="Search deals"
+            className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-7 text-[12.5px] outline-none focus-visible:border-ring"
           />
-        </div>
-        <div>
-          <div className="desk-label mb-1.5">Asset class</div>
-          <div className="flex flex-wrap gap-1">
-            <Pill on={!cls} onClick={() => setCls(null)}>
-              All
-            </Pill>
-            {ASSET_CLASSES.map((c) => (
-              <Pill key={c.key} on={cls === c.key} onClick={() => setCls(cls === c.key ? null : c.key)}>
-                {c.short}
-              </Pill>
-            ))}
-          </div>
-        </div>
-        <div>
-          <div className="desk-label mb-1.5">Kind</div>
-          <div className="flex flex-wrap gap-1">
-            <Pill on={!kind} onClick={() => setKind(null)}>
-              Any
-            </Pill>
-            {kinds.map(([k, n]) => (
-              <Pill key={k} on={kind === k} onClick={() => setKind(kind === k ? null : k)}>
-                {DEAL_KIND_LABEL[k] ?? k} <span className="figure opacity-70">{n}</span>
-              </Pill>
-            ))}
-          </div>
-        </div>
-        <div>
-          <div className="desk-label mb-1.5">Year</div>
-          <div className="flex flex-wrap gap-1">
-            <Pill on={!year} onClick={() => setYear(null)}>
-              Any
-            </Pill>
-            {years.map(([y, n]) => (
-              <Pill key={y} on={year === y} onClick={() => setYear(year === y ? null : y)}>
-                {y} <span className="figure opacity-70">{n}</span>
-              </Pill>
-            ))}
-          </div>
-        </div>
-        {investors.length ? (
-          <div>
-            <div className="desk-label mb-1.5">Most active in this view</div>
-            <ul className="space-y-0.5 text-[12px]">
-              {investors.map((i) => (
-                <li key={i.name} className="flex items-center gap-2">
-                  {i.companyId ? (
-                    <Link href={`/companies/${i.companyId}`} className="min-w-0 flex-1 truncate hover:underline">
-                      {i.name}
-                    </Link>
-                  ) : i.investorId ? (
-                    <Link href={`/database/sports/investors/${i.investorId}`} className="min-w-0 flex-1 truncate hover:underline">
-                      {i.name}
-                    </Link>
-                  ) : (
-                    <span className="min-w-0 flex-1 truncate">{i.name}</span>
-                  )}
-                  <span className="figure text-[11px] text-muted-foreground">{i.n}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-      </aside>
-
-      <section className="min-w-0">
-        <div className="sheen overflow-hidden rounded-[4px] border bg-card">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b px-3 py-2 text-[12px]">
-            <span>
-              <span className={cn("figure", loading && "opacity-50")}>{total.toLocaleString("en-US")}</span> <span className="text-muted-foreground">deals{loading ? " …" : ""}</span>
-            </span>
-            <label className="flex items-center gap-1.5 text-muted-foreground">
-              <ArrowDownWideNarrow className="h-3.5 w-3.5" />
-              <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="h-7 rounded-[4px] border border-input bg-card px-1.5 text-[12px] text-foreground">
-                <option value="date">Newest</option>
-                <option value="amount">Largest amount, per currency</option>
-                <option value="valuation">Highest valuation, per currency</option>
-              </select>
-            </label>
-          </div>
-          {rows.length ? (
-            <div className="desk-scroll">
-              <table className="desk-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Deal · investor → target</th>
-                    <th>Kind</th>
-                    <th>Class</th>
-                    <th className="num">Stake</th>
-                    <th className="num">Amount</th>
-                    <th className="num">Valuation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((d) => {
-                    const c = ASSET_CLASS_BY_KEY[d.asset_class as AssetClassKey];
-                    return (
-                      <tr key={d.id} className="linked">
-                        <td className="whitespace-nowrap text-muted-foreground">{dateLabel(d.date, d.date_text)}</td>
-                        <td className="min-w-[260px] max-w-[380px]">
-                          <Link href={`/database/deals/${d.id}`} className="cover block font-medium leading-snug">
-                            {d.headline}
-                          </Link>
-                          <div className="mt-0.5 text-[11.5px] leading-snug">
-                            {d.investor_company_id ? (
-                              <Link href={`/companies/${d.investor_company_id}`}>{d.investor}</Link>
-                            ) : d.investor_id ? (
-                              <Link href={`/database/sports/investors/${d.investor_id}`}>{d.investor}</Link>
-                            ) : (
-                              <span>{d.investor}</span>
-                            )}
-                            {d.investor_type ? <span className="text-muted-foreground"> ({INVESTOR_TYPE_LABEL[d.investor_type] ?? d.investor_type})</span> : null}
-                            <span className="text-muted-foreground"> → </span>
-                            {d.target_team_id ? <Link href={`/database/sports/${d.target_team_id}`}>{d.target}</Link> : d.target_company_id ? <Link href={`/companies/${d.target_company_id}`}>{d.target}</Link> : <span>{d.target}</span>}
-                            <span className="text-muted-foreground">{[d.sport ? SPORT_LABEL[d.sport] ?? d.sport : null, d.target_country].filter(Boolean).map((s) => ` · ${s}`).join("")}</span>
-                          </div>
-                          {d.summary ? <div className="mt-0.5 line-clamp-1 text-[11px] leading-snug text-muted-foreground">{d.summary}</div> : null}
-                        </td>
-                        <td>
-                          <Tag>{DEAL_KIND_LABEL[d.kind] ?? d.kind}</Tag>
-                        </td>
-                        <td>{c ? <Link href={`/database/asset-classes/${c.slug}`} className="tag hover:text-foreground">{c.short}</Link> : null}</td>
-                        <td className="num">{d.stake_pct != null ? `${d.stake_pct}%` : "—"}</td>
-                        <td className="num">{formatMoney(d.amount, d.currency)}</td>
-                        <td className="num">{formatMoney(d.valuation, d.valuation_currency)}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <Empty>No deals match.</Empty>
-          )}
-          {rows.length < total ? (
-            <div className="border-t px-3 py-2">
-              <button type="button" disabled={more || loading} onClick={showMore} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent disabled:opacity-50">
-                {more ? "Loading…" : `Show ${Math.min(100, total - rows.length)} more`}
-              </button>
-            </div>
+          {q ? (
+            <button type="button" aria-label="Clear search" onClick={() => setQ("")} className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-muted-foreground hover:text-foreground">
+              <X className="h-3 w-3" />
+            </button>
           ) : null}
         </div>
-      </section>
+        <FacetMenu label="Asset class" groups={[{ label: "", options: classOptions }]} selected={cls ? [cls] : []} onChange={(next) => setCls(one(cls ? [cls] : [], next))} searchable={false} width={220} />
+        <FacetMenu label="Kind" groups={[{ label: "", options: kindOptions }]} selected={kind ? [kind] : []} onChange={(next) => setKind(one(kind ? [kind] : [], next))} searchable={false} width={240} />
+        <FacetMenu label="Year" groups={[{ label: "", options: yearOptions }]} selected={year ? [String(year)] : []} onChange={(next) => setYear(Number(one(year ? [String(year)] : [], next)) || null)} searchable={false} width={180} />
+        <label className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent" title="Sort">
+          <ArrowDownWideNarrow className="h-3.5 w-3.5" />
+          <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="bg-transparent text-[12.5px] text-foreground outline-none" aria-label="Sort by">
+            <option value="date">Newest</option>
+            <option value="amount">Largest amount, per currency</option>
+            <option value="valuation">Highest valuation, per currency</option>
+          </select>
+        </label>
+        <span className="px-1 text-[12px]" aria-live="polite">
+          <span className={cn("figure", loading && "opacity-50")}>{total.toLocaleString("en-US")}</span> <span className="text-muted-foreground">deals{loading ? " …" : ""}</span>
+        </span>
+      </div>
+      <FacetChips
+        chips={[
+          ...(cls ? [{ key: "c", label: ASSET_CLASS_BY_KEY[cls].name, remove: () => setCls(null) }] : []),
+          ...(kind ? [{ key: "k", label: DEAL_KIND_LABEL[kind] ?? kind, remove: () => setKind(null) }] : []),
+          ...(year ? [{ key: "y", label: String(year), remove: () => setYear(null) }] : []),
+        ]}
+        onClearAll={() => setF((x) => ({ ...x, cls: null, kind: null, year: null }))}
+      />
+
+      <div className={cn("sheen overflow-hidden rounded-[4px] border bg-card transition-opacity duration-150 ease-out", loading && "opacity-60")} aria-busy={loading || undefined}>
+        {rows.length ? (
+          <div className="desk-scroll">
+            <table className="desk-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Deal · investor → target</th>
+                  <th>Kind</th>
+                  <th>Class</th>
+                  <th className="num">Stake</th>
+                  <th className="num">Amount</th>
+                  <th className="num">Valuation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((d) => {
+                  const c = ASSET_CLASS_BY_KEY[d.asset_class as AssetClassKey];
+                  return (
+                    <tr key={d.id} className="linked">
+                      <td className="whitespace-nowrap text-muted-foreground">{dateLabel(d.date, d.date_text)}</td>
+                      <td className="min-w-[260px] max-w-[380px]">
+                        <Link href={`/database/deals/${d.id}`} className="cover block truncate font-medium leading-snug" title={d.headline}>
+                          {d.headline}
+                        </Link>
+                        <div className="mt-0.5 truncate text-[11.5px] leading-snug">
+                          {d.investor_company_id ? (
+                            <Link href={`/companies/${d.investor_company_id}`}>{d.investor}</Link>
+                          ) : d.investor_id ? (
+                            <Link href={`/database/sports/investors/${d.investor_id}`}>{d.investor}</Link>
+                          ) : (
+                            <span>{d.investor}</span>
+                          )}
+                          {d.investor_type ? <span className="text-muted-foreground"> ({INVESTOR_TYPE_LABEL[d.investor_type] ?? d.investor_type})</span> : null}
+                          <span className="text-muted-foreground"> → </span>
+                          {d.target_team_id ? <Link href={`/database/sports/${d.target_team_id}`}>{d.target}</Link> : d.target_company_id ? <Link href={`/companies/${d.target_company_id}`}>{d.target}</Link> : <span>{d.target}</span>}
+                          <span className="text-muted-foreground">{[d.sport ? SPORT_LABEL[d.sport] ?? d.sport : null, d.target_country].filter(Boolean).map((s) => ` · ${s}`).join("")}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <Tag>{DEAL_KIND_LABEL[d.kind] ?? d.kind}</Tag>
+                      </td>
+                      <td>{c ? <Link href={`/database/asset-classes/${c.slug}`} className="tag hover:text-foreground">{c.short}</Link> : null}</td>
+                      <td className="num">{d.stake_pct != null ? `${d.stake_pct}%` : "—"}</td>
+                      <td className="num">{formatMoney(d.amount, d.currency)}</td>
+                      <td className="num">{formatMoney(d.valuation, d.valuation_currency)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <Empty>
+            {filtered || q ? (
+              <>
+                No deal matches this cut.{" "}
+                <button type="button" onClick={() => setF((x) => ({ ...x, cls: null, kind: null, year: null, q: "" }))} className="underline underline-offset-2 hover:text-foreground">
+                  Clear the filters
+                </button>{" "}
+                to see every sourced transaction.
+              </>
+            ) : (
+              <>
+                No deals on file yet. The deals research job fills this ledger from announcements and articles, one asset class at a time, from each class&rsquo;s page.
+              </>
+            )}
+          </Empty>
+        )}
+        {rows.length < total ? (
+          <div className="border-t px-3 py-2">
+            <button type="button" disabled={more || loading} onClick={showMore} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent disabled:opacity-50">
+              {more ? "Loading…" : `Show ${Math.min(PAGE, total - rows.length)} more`}
+              {!more ? <span className="ml-1 text-muted-foreground">of {(total - rows.length).toLocaleString("en-US")} left</span> : null}
+            </button>
+          </div>
+        ) : null}
+      </div>
+
+      {investors.length ? (
+        <Box title="Most active in this view" count={investors.length} flush defn="The investors named most often in the deals the filters leave, with how many each.">
+          <ul className="grid gap-x-4 gap-y-0.5 px-3 py-2 text-[12px] sm:grid-cols-2 lg:grid-cols-4">
+            {investors.map((i) => (
+              <li key={i.name} className="flex items-center gap-2">
+                {i.companyId ? (
+                  <Link href={`/companies/${i.companyId}`} className="min-w-0 flex-1 truncate hover:underline">
+                    {i.name}
+                  </Link>
+                ) : i.investorId ? (
+                  <Link href={`/database/sports/investors/${i.investorId}`} className="min-w-0 flex-1 truncate hover:underline">
+                    {i.name}
+                  </Link>
+                ) : (
+                  <span className="min-w-0 flex-1 truncate">{i.name}</span>
+                )}
+                <span className="figure text-[11px] text-muted-foreground">{i.n}</span>
+              </li>
+            ))}
+          </ul>
+        </Box>
+      ) : null}
     </div>
   );
 }

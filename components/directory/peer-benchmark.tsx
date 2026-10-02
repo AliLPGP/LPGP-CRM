@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BarChart3 } from "lucide-react";
+import { Box } from "@/components/intel/ui";
 import type { DirectoryRecord } from "@/lib/directory/records";
 import { formatUsd } from "@/lib/utils";
 
@@ -50,8 +50,8 @@ function Strip({ firm, peers, metric }: { firm: DirectoryRecord; peers: Director
   return (
     <div>
       <div className="flex items-baseline justify-between gap-3">
-        <span className="text-sm font-medium">{metric.label}</span>
-        <span className="text-xs text-muted-foreground">
+        <span className="desk-label text-foreground">{metric.label}</span>
+        <span className="text-[11.5px] text-muted-foreground">
           <span className="figure text-foreground">{metric.format(mine)}</span> · #{rank} of {values.length + 1} ·{" "}
           {rank === 1
             ? "the largest"
@@ -62,7 +62,7 @@ function Strip({ firm, peers, metric }: { firm: DirectoryRecord; peers: Director
                 : `smaller than ${100 - pct}% of peers`}
         </span>
       </div>
-      <div className="relative mt-3 h-7">
+      <div className="relative mt-2.5 h-7">
         <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-border" />
         {drawn.map((p) => (
           <Link
@@ -97,21 +97,21 @@ export function PeerBenchmark({ firm, records }: { firm: DirectoryRecord; record
   const peerLabel = sameType.length >= 6 ? `${firm.subType} ${firm.category === "GP" ? "managers" : "firms"}` : `the ${firm.category} book`;
 
   return (
-    <section id="peers" className="sheen scroll-mt-20 rounded-2xl border bg-card">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b px-5 py-3.5">
-        <div className="flex items-center gap-2">
-          <BarChart3 className="h-4 w-4 text-muted-foreground" />
-          <h2 className="font-semibold">How it compares</h2>
-        </div>
-        <span className="text-xs text-muted-foreground">
+    <Box
+      id="peers"
+      title="How it compares"
+      defn="The firm's own figure against every peer that has one, on a log scale. Peers are firms of the same type when there are six or more, else the whole book."
+      action={
+        <span className="text-[11px] text-muted-foreground">
           Against {peers.length.toLocaleString("en-US")} {peerLabel} · each dot is a firm
         </span>
-      </div>
-      <div className="space-y-6 px-5 py-5">
+      }
+    >
+      <div className="space-y-5">
         {strips.map(({ m }) => (
           <Strip key={m.label} firm={firm} peers={peers} metric={m} />
         ))}
       </div>
-    </section>
+    </Box>
   );
 }

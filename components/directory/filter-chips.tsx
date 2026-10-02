@@ -191,35 +191,40 @@ export function describeFilters(f: DirectoryFilters, dir: Directory): Chip[] {
   return chips;
 }
 
+/** The selections across every facet, as removable chips under the bar — the
+ *  same chips every desk list wears, with the facet named before the value
+ *  because Discover has thirty of them. */
 export function FilterChips({
   chips,
   onChange,
+  onClearAll,
   filters,
 }: {
   chips: Chip[];
   filters: DirectoryFilters;
   onChange: (next: DirectoryFilters) => void;
+  onClearAll: () => void;
 }) {
   if (!chips.length) return null;
   return (
-    <div className="flex flex-wrap items-center gap-1.5">
+    <div className="flex flex-wrap items-center gap-1.5 text-[12px]">
       {chips.map((c) => (
-        <span
-          key={c.key}
-          className="inline-flex max-w-full items-center gap-1.5 whitespace-nowrap rounded-full border bg-card py-1 pl-2.5 pr-1 text-[12.5px] shadow-xs"
-        >
+        <span key={c.key} className="inline-flex max-w-full items-center gap-1 whitespace-nowrap rounded-[4px] border bg-card py-0.5 pl-2 pr-1">
           <span className="text-muted-foreground">{c.group}</span>
-          <span className="truncate font-medium">{c.label}</span>
+          <span className="truncate">{c.label}</span>
           <button
             type="button"
             onClick={() => onChange(c.remove(filters))}
-            className="grid h-5 w-5 place-items-center rounded-full text-muted-foreground hover:bg-accent hover:text-foreground"
+            className="rounded p-0.5 text-muted-foreground hover:text-foreground"
             aria-label={`Remove ${c.group} ${c.label}`}
           >
             <X className="h-3 w-3" />
           </button>
         </span>
       ))}
+      <button type="button" onClick={onClearAll} className="px-1 text-muted-foreground hover:text-foreground">
+        Clear all
+      </button>
     </div>
   );
 }

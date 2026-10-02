@@ -85,6 +85,14 @@ export type DirectoryRecord = {
   activeAlts: boolean | null;
   /** Classes the LP says it will invest in or is considering over the next twelve months. */
   plans: string[];
+  /** GP: per class its funds' names state, [classKey, sum of stated fund
+   *  sizes in USD as filed, funds] over vintages in the last ten years. The
+   *  sum covers sized funds only; the count covers every fund. Never a
+   *  target size, never a conversion, never an estimate. */
+  raised: [string, number, number][];
+  /** When the record was created / last edited, as epoch days. */
+  created: number | null;
+  updated: number | null;
 };
 
 export type DirectoryBrand = {
@@ -145,6 +153,8 @@ type Packed = [
   // 30..41, appended in this order; an older payload stops at 29 and unpacks with defaults.
   string | null, AssetClassKey[], string[], string[], string[], number,
   number | null, [string, number][], number | null, number | null, boolean | null, string[],
+  // 42..44: raised per class, created, updated.
+  [string, number, number][], number | null, number | null,
 ];
 
 export type PackedIndex = {
@@ -169,6 +179,7 @@ export function packIndex(index: DirectoryIndex): PackedIndex {
       r.operators, r.portcos,
       r.typeCode, r.classes, r.strategies, r.sectors, r.regions, r.knownFunds,
       r.altsPct, r.alloc, r.ticketMin, r.ticketMax, r.activeAlts, r.plans,
+      r.raised, r.created, r.updated,
     ]),
     brands: index.brands.map((b) => [b.key, b.name, b.companyId, b.clients]),
   };
@@ -200,6 +211,9 @@ export function unpackIndex(packed: PackedIndex): DirectoryIndex {
       ticketMax: p[39] ?? null,
       activeAlts: p[40] ?? null,
       plans: p[41] ?? [],
+      raised: p[42] ?? [],
+      created: p[43] ?? null,
+      updated: p[44] ?? null,
     })),
     brands: packed.brands.map(([key, name, companyId, clients]) => ({ key, name, companyId, clients })),
   };

@@ -64,7 +64,9 @@ const SORTS: { key: SortKey; label: string }[] = [
   { key: "similarity", label: "Most similar" },
   { key: "aum", label: "Largest" },
   { key: "employees", label: "Most people" },
-  { key: "founded", label: "Newest" },
+  { key: "founded", label: "Longest established" },
+  { key: "newest", label: "Newly added" },
+  { key: "updated", label: "Recently updated" },
   { key: "contacts", label: "Most contacts" },
   { key: "name", label: "Name" },
 ];

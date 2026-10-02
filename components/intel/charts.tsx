@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 // The desk's charts: server-rendered SVG, one axis, form before colour.
-// Magnitude wears the walnut (--chart-bar); identity (an asset class, a
+// Magnitude wears the blue (--chart-bar); identity (an asset class, a
 // book) takes a fixed hue from --chart-1..7 by entity, never cycled per
 // render. Every chart is drawn to scale from the rows it is handed.
 

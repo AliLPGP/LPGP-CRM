@@ -6,7 +6,7 @@ import { CompanyLogo } from "@/components/company-logo";
 import { cn } from "@/lib/utils";
 
 // Small building blocks shared by Discover's dashboard, the result insights
-// and the market map. Bars carry magnitude, so they wear the one walnut hue
+// and the market map. Bars carry magnitude, so they wear the one blue
 // (--chart-bar) and never a series colour.
 
 export function Panel({

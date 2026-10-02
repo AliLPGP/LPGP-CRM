@@ -255,7 +255,7 @@ export function ColumnsButton({ mode }: { mode: "all" | "keywords" | "similar" }
     const label = c.key === "match" ? (mode === "similar" ? "Match" : "Fit") : c.label;
     return (
       <button key={c.key} type="button" onClick={() => setOn(c.key, !on)} aria-pressed={on} className="flex w-full items-center gap-2 rounded-[3px] px-2 py-1 text-left text-[12.5px] hover:bg-accent">
-        <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border", on ? "border-foreground bg-foreground text-background" : "border-input")}>
+        <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border", on ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
           {on ? <Check className="h-2.5 w-2.5" /> : null}
         </span>
         <span className="flex-1">{label}</span>
@@ -277,7 +277,7 @@ export function ColumnsButton({ mode }: { mode: "all" | "keywords" | "similar" }
       {open ? (
         <>
           <button className="fixed inset-0 z-30 cursor-default" aria-label="Close" onClick={() => setOpen(false)} />
-          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 max-h-[70vh] w-64 overflow-y-auto rounded-[4px] border bg-popover p-1.5 text-popover-foreground shadow-lg")}>
+          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 max-h-[70vh] w-64 overflow-y-auto rounded-[4px] border bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-pop)]")}>
             <p className="desk-label px-2 pb-1 pt-1">Show columns</p>
             {fixed.map(row)}
             <p className="desk-label mt-2 px-2 pb-1 pt-1">Per asset class</p>

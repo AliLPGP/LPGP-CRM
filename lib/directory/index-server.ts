@@ -1,4 +1,5 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
 import { fetchAll } from "../supabase/paged";
 import { bigCache } from "../supabase/big-cache";
@@ -6,6 +7,7 @@ import { tableVersion } from "../supabase/version";
 import type { Category } from "../types";
 import { zoneOf, type Zone } from "./geo";
 import { isOperatingRole } from "./operating";
+import { buildOverview, type DirectoryOverview } from "./overview";
 import { normalizeRole, providerBrand } from "./providers";
 import { classOfGpType, fundClass, isAssetClassKey, type AssetClassKey } from "./asset-classes";
 import { STRATEGIES_BY_CLASS, strategiesInFirmText, strategiesInFundName } from "./strategies";
@@ -13,6 +15,7 @@ import { industryCodesInText, regionOfCountry, regionsInText, typeCodeOf } from 
 import {
   EMPTY_INDEX,
   disclosesFrom,
+  packIndex,
   roleIndex,
   type AumKind,
   type DirectoryBrand,
@@ -26,7 +29,7 @@ export const DIRECTORY_TAG = "directory";
 const BASE_COLUMNS =
   "id, name, category, sub_type, domain, city, country, region, aum_usd, description, in_portfolio";
 
-const RICH_COLUMNS = `${BASE_COLUMNS}, directory_vertical, state, employee_count, adv_employee_count, founded_year, adv_firm_type, adv_last_filed, private_fund_count, regulatory_aum_usd, brand_aum_total_usd, private_fund_gross_assets, total_assets_usd, industry, service_lines, lifecycle, discloses_commitments, source, investor_type, alts_allocation_pct, geographic_focus, created_at, updated_at`;
+const RICH_COLUMNS = `${BASE_COLUMNS}, directory_vertical, state, employee_count, adv_employee_count, founded_year, adv_firm_type, adv_last_filed, private_fund_count, regulatory_aum_usd, brand_aum_total_usd, private_fund_gross_assets, total_assets_usd, industry, service_lines, discloses_commitments, source, investor_type, alts_allocation_pct, geographic_focus, created_at, updated_at`;
 
 type CompanyRow = {
   id: string;
@@ -54,7 +57,6 @@ type CompanyRow = {
   total_assets_usd?: number | null;
   industry?: string | null;
   service_lines?: { name?: string; capabilities?: string[] }[] | null;
-  lifecycle?: string[] | null;
   discloses_commitments?: string | null;
   source?: string | null;
   /** The LP sheet's own type words ("Public Pension Fund"). */
@@ -445,7 +447,6 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
       description: opening(c.description, DESCRIPTION_CHARS),
       industry: c.industry ?? null,
       lines: opening(linesText(c.service_lines), LINES_CHARS),
-      lifecycle: Array.isArray(c.lifecycle) ? c.lifecycle : [],
       discloses: disclosesFrom(c.discloses_commitments),
       portfolio: Boolean(c.in_portfolio),
       directory: c.source === "master_directory",
@@ -485,32 +486,99 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
 let pendingIndex: DirectoryIndex | null = null;
 
 // Several megabytes of records: sliced for the data cache and kept in
-// memory per instance (lib/supabase/big-cache.ts).
-const cachedIndex = bigCache("directory-index-v7", buildIndex, {
+// memory per instance (lib/supabase/big-cache.ts). The key's suffix is the
+// record shape: bump it with records.ts so a cached index from before a
+// field change is never unpacked by code expecting the new one.
+const cachedIndex = bigCache("directory-index-v8", buildIndex, {
   tags: [DIRECTORY_TAG],
   revalidate: 86400,
 });
+
+/**
+ * The directory's version: a fingerprint of every table the index reads.
+ * It keys the server caches and the browser's fetch of the index, so an
+ * import, an edit or the ingest's own growth is a new version everywhere.
+ */
+export function getDirectoryVersion(): Promise<string> {
+  return tableVersion(
+    "companies",
+    "contacts",
+    "service_relationships",
+    "funds",
+    "portfolio_companies",
+    "investor_profiles",
+    "investor_plans",
+    "commitments",
+  );
+}
+
+/** The index for one version. Never throws. */
+async function indexForVersion(version: string): Promise<DirectoryIndex> {
+  pendingIndex = null;
+  try {
+    return await cachedIndex(version);
+  } catch {
+    return pendingIndex ?? EMPTY_INDEX;
+  }
+}
 
 /**
  * The whole directory as compact records, cached across requests and
  * invalidated by imports and edits (tag `directory`). Never throws.
  */
 export async function getDirectoryIndex(): Promise<DirectoryIndex> {
-  pendingIndex = null;
+  return indexForVersion(await getDirectoryVersion());
+}
+
+// Discover's home figures, a few kilobytes beside the multi-megabyte index:
+// cached on their own so a cold instance paints the stand without first
+// pulling every slice of the index. An index before migration 0013 is not
+// cached (see buildIndex), so its overview is not either.
+class NotReady extends Error {}
+
+const cachedOverview = unstable_cache(
+  async (version: string): Promise<DirectoryOverview> => {
+    const index = await indexForVersion(version);
+    if (!index.schemaReady) throw new NotReady();
+    return buildOverview(index, version);
+  },
+  ["directory-overview-v1"],
+  { tags: [DIRECTORY_TAG], revalidate: 86400 },
+);
+
+/** What the Discover page renders on the server: the version to fetch, and the figures. Never throws. */
+export async function getDirectoryOverview(): Promise<DirectoryOverview> {
+  const version = await getDirectoryVersion();
   try {
-    return await cachedIndex(
-      await tableVersion(
-        "companies",
-        "contacts",
-        "service_relationships",
-        "funds",
-        "portfolio_companies",
-        "investor_profiles",
-        "investor_plans",
-        "commitments",
-      ),
-    );
+    return await cachedOverview(version);
   } catch {
-    return pendingIndex ?? EMPTY_INDEX;
+    return buildOverview(await indexForVersion(version), version);
   }
+}
+
+// The packed index as the route sends it, serialised once per version per
+// instance: too big for the data cache, and cheap enough to pack again on a
+// cold start since the index itself is warm.
+let packedJson: { version: string; body: string } | null = null;
+
+/** What `tableVersion` returns: the planner fingerprint, the count fallback, or "none". */
+const VERSION_SHAPE = /^[a-z0-9_:.x]{1,512}$/;
+
+/**
+ * The packed index for the version a page was rendered from (`asked`), when
+ * it looks like one. That index is warm in this instance or sliced in the
+ * data cache, so the browser's fetch never waits for a rebuild because the
+ * ingest moved the fingerprint between the page and the fetch — during an
+ * EDGAR run that is every minute, and a rebuild is five seconds. Anything
+ * else is answered from the current version. The content is always built
+ * from the live tables; the version only names the cache entry.
+ */
+export async function getPackedIndexJson(asked: string | null = null): Promise<{ version: string; body: string }> {
+  const version = asked && VERSION_SHAPE.test(asked) ? asked : await getDirectoryVersion();
+  if (packedJson?.version === version) return packedJson;
+  const index = await indexForVersion(version);
+  const body = JSON.stringify({ ...packIndex(index), version });
+  // A not-yet-migrated index is served but, like the index itself, not kept.
+  if (index.schemaReady) packedJson = { version, body };
+  return { version, body };
 }

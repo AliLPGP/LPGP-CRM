@@ -216,7 +216,7 @@ export function CommandPalette() {
   return createPortal(
     <div className="fixed inset-0 z-[60] flex items-start justify-center p-4 pt-[12vh]">
       <button
-        className="modal-overlay absolute inset-0 bg-black/55 backdrop-blur-[3px]"
+        className="modal-overlay absolute inset-0 bg-black/70 backdrop-blur-[3px]"
         aria-label="Close search"
         onClick={() => setOpen(false)}
       />
@@ -225,7 +225,7 @@ export function CommandPalette() {
         role="dialog"
         aria-modal="true"
         aria-label="Search and commands"
-        className="modal-panel relative flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-xl border bg-popover shadow-[var(--shadow-pop)]"
+        className="modal-panel relative flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-lg border bg-popover shadow-[var(--shadow-pop)]"
       >
         <div className="flex items-center gap-2.5 border-b px-4">
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -328,7 +328,7 @@ export function CommandPalette() {
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mb-1">
-      <p className="px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+      <p className="wordmark px-2.5 py-1.5 text-[10px] text-muted-foreground">
         {label}
       </p>
       <div className="space-y-0.5">{children}</div>
@@ -359,8 +359,9 @@ function Row({
       onMouseEnter={onHover}
       onClick={onSelect}
       className={cn(
-        "flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition-colors",
-        active ? "bg-accent text-accent-foreground" : "hover:bg-accent/60",
+        "flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left transition-colors",
+        // The selected row wears the blue tint; the hover stays neutral.
+        active ? "bg-primary-soft text-foreground" : "hover:bg-accent",
       )}
     >
       <span

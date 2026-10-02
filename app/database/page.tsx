@@ -1,7 +1,8 @@
+import { preload } from "react-dom";
 import { getSessionUser } from "@/lib/auth";
-import { getDirectoryIndex } from "@/lib/directory/index-server";
+import { getDirectoryOverview } from "@/lib/directory/index-server";
 import { getRecentCommitments, listDirectoryLists, listSavedSearches } from "@/lib/directory/queries";
-import { packIndex } from "@/lib/directory/records";
+import { indexUrl } from "@/lib/directory/records";
 import { getDirectorySetup, missingSql, sqlDone, upgradeOnly } from "@/lib/directory/setup";
 import { worldGeometry } from "@/lib/directory/world-map";
 import { lushaConfigured } from "@/lib/lusha";
@@ -16,9 +17,13 @@ import { IntelShell } from "@/components/intel/shell";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Discover — LPGP Connect" };
 
+// The page ships without the index: the stand's figures come from the cached
+// overview, and the browser fetches the packed index from /api/directory/index
+// (preloaded from the head, so the request is in flight before hydration).
+
 export default async function DatabasePage() {
-  const [index, user, lists, saved, setup, recent] = await Promise.all([
-    getDirectoryIndex(),
+  const [overview, user, lists, saved, setup, recent] = await Promise.all([
+    getDirectoryOverview(),
     getSessionUser(),
     listDirectoryLists(),
     listSavedSearches(),
@@ -28,6 +33,8 @@ export default async function DatabasePage() {
   const isAdmin = user?.role === "admin";
   const parts = isAdmin ? await missingSql(setup) : [];
   const needsSetup = setup.configured && (parts.length > 0 || !setup.lastImport || !setup.datasetLoaded);
+
+  preload(indexUrl(overview.version), { as: "fetch", crossOrigin: "anonymous" });
 
   let geometry = null;
   try {
@@ -53,7 +60,7 @@ export default async function DatabasePage() {
   return (
     <IntelShell>
       {!isSupabaseConfigured() ? <SetupNotice /> : null}
-      {needsSetup && (isAdmin || !index.records.some((r) => r.directory)) ? (
+      {needsSetup && (isAdmin || !overview.hasDirectoryFirms) ? (
         <DirectorySetupPanel
           state={{
             sqlDone: parts.length === 0 && sqlDone(setup),
@@ -67,7 +74,7 @@ export default async function DatabasePage() {
         />
       ) : null}
       <Discover
-        packed={packIndex(index)}
+        overview={overview}
         lists={lists.map((l) => ({ id: l.id, name: l.name, item_count: l.item_count }))}
         saved={saved}
         userId={user?.id ?? null}

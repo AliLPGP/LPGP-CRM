@@ -269,7 +269,7 @@ export function PortfolioCompanies({
             <option value="">Unknown</option>
           </select>
           <input value={form.investedYear} onChange={(e) => setForm({ ...form, investedYear: e.target.value })} placeholder="Year" inputMode="numeric" className={INPUT} />
-          <button type="submit" disabled={pending || !form.name.trim()} className={`${DESK_BUTTON} bg-foreground text-background hover:bg-foreground/90`}>
+          <button type="submit" disabled={pending || !form.name.trim()} className={`${DESK_BUTTON} border-primary bg-primary text-primary-foreground hover:bg-primary-hover`}>
             Save
           </button>
         </form>

@@ -107,7 +107,7 @@ export function instrumentGroup(instrument: string | null | undefined): string {
   return "Other";
 }
 
-/** One fixed hue per seniority group, never cycled; the walnut track for the groups that carry no seniority. */
+/** One fixed hue per seniority group, never cycled; the blue bar for the groups that carry no seniority. */
 export const INSTRUMENT_HUE: Record<string, string> = {
   "First lien / senior secured": "var(--chart-2)",
   "Second lien": "var(--chart-1)",

@@ -196,8 +196,45 @@ boundaries and keeps comment text ASCII.
 - **Account sponsorships** (0031) — `account_sponsorships`: what a sponsor paid per year (`amount`, `currency`, `deals`) as the sales team's sponsor lists state it, one row per account per year per currency (2025 and 2026 loaded). The ops panel stays the source of truth for money; these rows are the list's own history. RLS is on with **no policy**: the anon key cannot read it, `lib/account-sponsorships.ts` reads with the service role on the server. Accounts show the years on the card, in the page header (per-currency totals) and on the account page. The lists are never committed; they were loaded straight into the database.
 - **Fund profile** (0032) — `fund_details`: the categories a desk expects of a fund (overview, core industry and focus, geographic scope/core/exposure, fundraising status and launch, target, hard cap, closes, co-investment, legal structure, term, investment period, extensions, GP commitment, management fee and basis, carry, hurdle, SFDR and ESG, series), one row per fund, each value with `sources[field] = {url, name, kind, as_of}`. `funds` keeps what the filings give; a fund with no row is "not yet researched" and every fund page shows every category (`components/intel/fund-profile.tsx`), with the SEC Form D facts we already hold beside Fundraising. `fund_details_upsert(jsonb)` is the only loader: a value with no http(s) source is dropped, and fees, terms and structure also need a primary or press source (`source_tier`). `fund_research_batch(n, offset)` returns the next funds to research, most-held and best-documented first, with what the filings already say. Preqin is a licensed product: its pages are only a model for the categories, never a source.
 - **Investor intelligence** (0033, 0034) — `investor_profiles` (one row per LP: type code, AUM with as-of, `allocations` per asset class as `[{class, current_pct, target_pct, current_usd, as_of}]`, strategy / region / industry preferences, ticket range, practices, whether still active in alternatives, every field with `sources[field]`), `investor_plans` (the next twelve months, one row per investor per asset class per source: status investing | considering | not_investing, plan types, strategies, regions, ticket, new GP relationships; a plan without an http(s) source is never stored), `investor_profile_upsert(jsonb)` (the only loader, same mechanics as `fund_details_upsert`: no source, no value; AUM, allocations, ticket and the active flag need a primary or press source) and `investor_research_batch(n, offset)` (LPs not yet researched, most-committed first). `fund_performance` is a view over `commitments`: for every fund an LP disclosure gives a figure for, the median / min / max net IRR and multiple across those LPs, and (0034) DPI, RVPI and called % as arithmetic on each LP's own stated contributed, distributed and remaining figures — CalPERS stores "cash out and remaining" together, so its RVPI subtracts distributed; the view's header says so. `directory_rollups()` also returns commitments per LP and the classes each investor has a live plan in. `/database/mandates` and `/database/performance` read these; a company page has an **Investor profile** tab (LPs) and a **Manager profile** tab (GPs). The research jobs (`investor-research.ts`, `fund-research.ts`, `runInvestors` / `runFundDetails`, `scripts/research.ts investors|funds`, admin POST routes under `/api/directory/{investors,funds}/research`) fill them from the investor's or manager's own documents; nothing has been run yet.
+- **Company profile** (0037) — a firm's page in a few round trips.
+  `fund_offerings_for(gp, fund)` finds the issuers a filing links to a firm
+  first and only then takes each one's latest filing (the
+  `fund_offerings_latest` view sorted all 48k filings for one manager and
+  hit the anon statement limit on every profile); `company_commitments`
+  returns a firm's commitments as LP and as manager with the fund, LP and
+  manager names joined in, in `nameCommitments`'s shape; and
+  `company_profile_counts` returns what the header and tab bar count, each
+  capped where the app capped the list. `lib/directory/profile-queries.ts`
+  caches those three reads and the portfolio per firm, keyed by the
+  fingerprint of the tables each one reads (`table_versions`), and dedupes
+  the light reads per request. The page (`app/companies/[id]/page.tsx`)
+  draws the shell from the firm's row, the counts and the in-memory index;
+  each tab is an async component in `tabs.tsx` behind Suspense. Light tabs
+  come with the page and switch in the browser (`profile-tabs.tsx` writes
+  `?tab=` with `pushState`); deals, the investor profile, funds, the
+  portfolio, clients and peers are fetched on request. Long ledgers
+  (`profile-ledgers.tsx`) carry every row and draw a hundred at a time.
 - **Taxonomy** (`lib/directory/taxonomy.ts`, with `asset-classes.ts` and `strategies.ts`) — the vocabulary a private-markets data product searches by, at its level of detail: nine asset classes (natural resources is its own class since 0033-era code), strategies on a **strategy** axis (buyout, growth, co-investment, direct lending, core / core-plus / value-add / opportunistic, seed / early stage, …) and a **sector** axis (property types, infrastructure sectors, the industries a PE fund names), investor types (public and private pensions, superannuation, insurers, endowments, foundations, sovereign wealth, DFIs, banks, asset and wealth managers, single and multi family offices, fund of funds, consultants…), manager and provider types, core industries with industry focus, target regions above `geo.ts`'s HQ subregions, AUM / ticket / fund-size bands, and the mandate vocabulary. Every classifier reads words the record carries — a sub-type, a fund's legal name, a firm's own overview, a stated focus — and places nothing those words do not say. The Discover index carries the result per firm (`typeCode`, `classes`, `strategies`, `sectors`, `regions`, `knownFunds`, allocation and ticket figures, `plans`, and per-class `raised` from stated fund sizes in the last ten years), the rail filters by it, the results table has a column registry with a chooser (`discover.columns` in localStorage, per-viewer), and the funds page facets by strategy, sector, region, size band and status. No dry powder: nobody states it and we do not estimate.
-- **Header** (`components/top-nav.tsx`) — the product's navigation is a top bar in the rail's graphite: one panel per section (investors, fund managers, funds, performance, service providers split into fund and transaction services, companies & deals, tools), every page listed once, the quick search, and the sales CRM as one menu that a reader can put away (`nav:crm` in localStorage) until it moves to its own product. The section a page belongs to is decided by `INTEL_NAV`'s matchers in `components/intel/shell.tsx`; `IntelShell` no longer draws section tabs by default.
+- **Header** (`components/top-nav.tsx`) — the product's navigation is the black top bar: one panel per section (investors, fund managers, funds, performance, service providers split into fund and transaction services, companies & deals, tools), every page listed once, the quick search, and the sales CRM as one menu that a reader can put away (`nav:crm` in localStorage) until it moves to its own product. The section a page belongs to is decided by `INTEL_NAV`'s matchers in `components/intel/shell.tsx`; `IntelShell` no longer draws section tabs by default.
+- **The demo standard** — every list screen is held to one shape: a
+  `StatStrip` of 4–6 `Stat`s with a basis line, then one toolbar in one order
+  (search · facet dropdowns · sort · result count · columns/export on the
+  right), chips under it, a `.desk-table` whose rows are covered by one link,
+  and one "Show N more" button. Filters are dropdowns, never a wall of pills:
+  `FacetMenu` / `FacetChips` (`components/intel/facet-menu.tsx`) for client
+  pages, `UrlFacets` (`components/intel/url-facets.tsx`) for server-rendered
+  desks (search on Enter, a declarative facet spec, the URL written in a
+  transition with the ledger dimmed 150 ms), `ListToolbar`
+  (`components/list-toolbar.tsx`) on the sales CRM. Discover's rail is a
+  `FacetBar` plus a "More filters" dropdown for the long tail. Motion is one
+  system in `globals.css`: 160 ms fade-in (`.fade-in`, `.menu-in`), 120 ms
+  row hover, tab panels that keep a floor height so the tab bar never moves,
+  everything off under `prefers-reduced-motion`; `NavProgress` in the header
+  draws a 2 px blue bar while a navigation is in flight. Every route has a
+  `loading.tsx` that mirrors its real layout (`ListSkeleton`, `skeletons.tsx`);
+  every empty state says what fills it and offers the one action; a blank is
+  "—" or "Not on file", never a zero. Magnitude bars wear the blue
+  (`BarList`); the seven hues stay on the series chart.
 - **Speed** — the API roles carry short statement timeouts (anon 3 s), so
   anything that aggregates a large table lives in SQL (`credit_book_summary`,
   `offering_stats`, `borrower_summary`), never in the app over paged rows.
@@ -211,8 +248,18 @@ boundaries and keeps comment text ASCII.
   that can pass 2 MB must use it too, or every request rebuilds it. Every
   desk route has a `loading.tsx` so a click answers at once. The Funds page
   ships its best-documented 3,000 rows and pulls the rest from
-  `/api/directory/funds` (edge-cached) after paint. Vercel functions run in
-  `dub1`, beside the Supabase project.
+  `/api/directory/funds` (edge-cached) after paint. Discover ships **without
+  the index**: the page renders the stand, the stat strip and the home from
+  `getDirectoryOverview()` (a few kilobytes, `unstable_cache`d per version)
+  and preloads `/api/directory/index?v=<version>&f=<WIRE_VERSION>`, which
+  the browser fetches once per version into a module-level cache
+  (`components/directory/use-directory.ts`, `useSyncExternalStore`, parsed
+  and BM25-indexed in idle slices) shared by Discover, the quick look and the
+  market map. The route serves the version asked (warm from the page's own
+  render), is edge-cached for a day, and the wire format in `records.ts`
+  (string table, flag bits, trailing defaults dropped) is versioned by
+  `WIRE_VERSION`; bump it and the `bigCache` key together whenever a record
+  slot changes. Vercel functions run in `dub1`, beside the Supabase project.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).
@@ -372,33 +419,44 @@ an account within a day.
   id they answer). The React Compiler lint is enforced; don't reach for an
   escape hatch, restructure instead.
 - The intelligence screens (`/database/*`, `/companies/[id]`, `/funds`,
-  `/contacts`) wear the **desk** register on top of Pavilion: the `.desk`
+  `/contacts`) wear the **desk** register on top of Nocturne: the `.desk`
   wrapper (`IntelShell` in `components/intel/shell.tsx`) drops the radius to
   4px, flattens surfaces and sets 13px type; `.desk-table` for dense ledgers,
   `.desk-label` small caps, `.desk-tabs` underline tabs, `.defn` for a hover
   definition, `.tag`, `.kv`. Primitives in `components/intel/ui.tsx` (`Box`,
   `Stat`, `StatStrip`, `Src`, `Tag`, `SubTabs`, `Bar`). Every figure that
   came from a page shows its `Src`.
-- The theme is **"Pavilion"** (`app/globals.css`), taken from our own exhibition
-  stands: matte graphite panels, cream lettering, walnut behind them. Primary is
-  near-black in light mode and cream in dark — inverted, the way a stand puts
-  white lettering on a black panel — and `--brass` is the single warm flourish.
-  Depth comes from a **light-line** (the `.sheen` top hairline, the rail's
-  `.rail-edge`), not from drop shadows: the stands are matte, and a glossy panel
-  would break the illusion. The rail is always the dark panel in both modes and
-  re-points `--brand`/`--brass` inside itself, so nested components need no
-  special casing.
+- The theme is **"Nocturne"** (`app/globals.css`), the brand site's own look:
+  pure black, white lettering, one electric blue (`#1F3FEB`). **Dark is the
+  default** (the layout's theme script: a stored choice wins, else dark);
+  light is the same drawing on white. `--primary` is the blue in both modes
+  with `--primary-hover` and `--primary-soft` (the blue at 12–16 %, the tint
+  behind anything selected); `--brass` keeps its name as the flourish token
+  and is the blue too — on black it is the lighter step the site sets its
+  eyebrows in (`#6E84F3`), because the button blue is under 3:1 as small
+  text. Nothing warm: `--ops` is a teal, the semantics are green and red.
+  Depth comes from a **light-line** (the `.sheen` top hairline, white at low
+  alpha on black and black at low alpha on white), never from a drop shadow;
+  the popover's `--shadow-pop` is the one shadow left. The rail (the header)
+  is always black in both modes, re-points the neutral and brand tokens
+  inside itself, and carries a 1 px `#1F2023` bottom edge; the mark and the
+  name are white on it, the blue only on the eyebrow beneath.
 - `.display` is tight sans for titles; `.figure` is tabular mono for money and
-  counts; `.wordmark` is the widely-tracked signage caps, for a mark or a panel
-  label and never for a sentence. No serif — the brand mark is monochrome
-  geometry and a flourish fights it.
+  counts; `.wordmark` is the site's eyebrow — JetBrains Mono, 10.5 px,
+  0.18 em tracking, uppercase, in the blue — for a kicker or a panel label
+  and never for a sentence; `.desk-label` stays the muted grey small caps for
+  table columns and keys. No serif — the brand mark is monochrome geometry
+  and a flourish fights it.
 - Charts follow the `dataviz` method: form before colour, one axis, categorical
   hues assigned by entity and never cycled. The seven hues in `--chart-1..7`
   are validated against both card surfaces — re-run the skill's validator
-  before changing any of them. They deliberately survived the Pavilion retheme:
-  a muted earth-tone set was measured and fails the chroma floor, CVD
-  separation and the normal-vision floor. Magnitude bars (`--chart-bar`) wear
-  the walnut instead, because there colour carries size rather than identity.
+  before changing any of them. They survived both the Pavilion and the
+  Nocturne rethemes: a muted earth-tone set was measured and fails the chroma
+  floor, CVD separation and the normal-vision floor, and the seven pass as a
+  set on `#fafafa` and `#0b0b0c`. The blue accent is never a series hue
+  (ΔE 17.2 from chart-1 on black, 13.6 on white; 35+ from chart-5).
+  Magnitude bars (`--chart-bar`) wear the blue instead, because there colour
+  carries size rather than identity.
 - The programme has **five series** (`lib/events-catalogue.ts`): Private Debt,
   one CFO/COO portfolio (the Private Markets, Private Equity & Debt and Private
   Equity conferences are one series, `cfo-coo`; the three old ids fold into it

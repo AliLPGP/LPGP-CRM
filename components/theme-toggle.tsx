@@ -57,7 +57,7 @@ export function ThemeToggle({ variant = "rail" }: { variant?: "rail" | "switch" 
       type="button"
       onClick={() => setTheme(!isDark)}
       aria-label="Toggle dark mode"
-      className="rail-line flex w-full items-center justify-between rounded-lg border bg-black/25 px-2.5 py-2 text-[13px] font-medium text-[var(--rail-fg)] transition-colors hover:bg-[var(--rail-hover)] hover:text-white"
+      className="rail-line flex w-full items-center justify-between rounded-lg border bg-[#0b0b0c] px-2.5 py-2 text-[13px] font-medium text-[var(--rail-fg)] transition-colors hover:bg-[var(--rail-hover)] hover:text-white"
     >
       <span className="flex items-center gap-2.5">
         {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
@@ -66,7 +66,7 @@ export function ThemeToggle({ variant = "rail" }: { variant?: "rail" | "switch" 
       <span
         className={cn(
           "relative h-5 w-9 rounded-full transition-colors",
-          isDark ? "bg-[var(--brand)]" : "bg-white/20",
+          isDark ? "bg-[var(--primary)]" : "bg-white/20",
         )}
       >
         <span

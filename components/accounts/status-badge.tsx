@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * An account's status, in the theme's own inks rather than a Tailwind
- * palette: active is the success tone, a renewal due is the ops amber,
+ * palette: active is the success tone, a renewal due is the ops teal,
  * churned is the destructive claret, a prospect is quiet. One place, so the
  * card and the account page say it the same way.
  */

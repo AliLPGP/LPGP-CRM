@@ -227,7 +227,7 @@ function Option({
       aria-pressed={on}
       className={cn("flex w-full items-center gap-2 rounded-[3px] px-1.5 py-1 text-left text-[12.5px] hover:bg-accent", count === 0 && !on && "opacity-50")}
     >
-      <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border", on ? "border-foreground bg-foreground text-background" : "border-input")}>
+      <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border", on ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
         {on ? <Check className="h-2.5 w-2.5" /> : null}
       </span>
       <span className="min-w-0 flex-1 truncate">{label}</span>
@@ -501,14 +501,14 @@ export function MoreFilters({
       >
         <SlidersHorizontal className="h-3.5 w-3.5" />
         More filters
-        {count ? <span className="figure rounded-[3px] bg-foreground px-1 text-[10.5px] leading-4 text-background">{count}</span> : null}
+        {count ? <span className="figure rounded-[3px] bg-primary px-1 text-[10.5px] leading-4 text-primary-foreground">{count}</span> : null}
         <ChevronDown className={cn("h-3 w-3 opacity-60 transition-transform", open && "rotate-180")} />
       </button>
       {open ? (
         <div
           role="dialog"
           aria-label="More filters"
-          className={cn(POP, "absolute top-[calc(100%+4px)] z-40 rounded-[4px] border bg-popover text-popover-foreground shadow-lg", alignRight ? "right-0" : "left-0")}
+          className={cn(POP, "absolute top-[calc(100%+4px)] z-40 rounded-[4px] border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]", alignRight ? "right-0" : "left-0")}
           style={{ width: `min(${PANEL_WIDTH}px, calc(100vw - 32px))` }}
         >
           <div className="grid max-h-[70vh] gap-x-6 gap-y-5 overflow-y-auto p-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -646,7 +646,7 @@ export function MoreFilters({
             <button type="button" onClick={() => set(MORE_BLANK)} className="rounded-[4px] px-2 py-1 text-[12px] text-muted-foreground hover:text-foreground" disabled={!count}>
               Clear these
             </button>
-            <button type="button" onClick={() => setOpen(false)} className="rounded-[4px] bg-foreground px-3 py-1 text-[12px] font-medium text-background">
+            <button type="button" onClick={() => setOpen(false)} className="rounded-[4px] bg-primary px-3 py-1 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover">
               Done
             </button>
           </div>

@@ -1,7 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { getReadClient } from "../supabase/server";
-import { fetchAll } from "../supabase/paged";
+import { chunk, fetchAll } from "../supabase/paged";
 import { tableVersion } from "../supabase/version";
 import { cachedOrDirect } from "../supabase/safe";
 import { ASSET_CLASSES, type AssetClassKey } from "./asset-classes";
@@ -26,6 +26,22 @@ export type OfferingFilter = { assetClass?: AssetClassKey | null; gpCompanyId?: 
 export async function getFundOfferings(f: OfferingFilter = {}): Promise<FundOffering[]> {
   const supabase = getReadClient();
   if (!supabase) return [];
+  if (f.gpCompanyId && !isUuid(f.gpCompanyId)) return [];
+  if (f.fundId && !isUuid(f.fundId)) return [];
+  if (f.gpCompanyId || f.fundId) {
+    // One manager's or one fund's filings. The view is "the latest filing
+    // per issuer" over every filing, so filtering it sorted all 48k rows
+    // and ran into the API role's statement limit; `fund_offerings_for`
+    // (migration 0037) finds the issuers the firm is linked to first and
+    // says the same thing. Before that migration, the view below.
+    let q = supabase
+      .rpc("fund_offerings_for", { p_gp: f.gpCompanyId ?? null, p_fund: f.fundId ?? null, p_pooled: f.pooledOnly !== false, p_limit: 100_000 })
+      .select(OFFERING_COLUMNS);
+    if (f.assetClass) q = q.eq("asset_class", f.assetClass);
+    if (f.soldOnly) q = q.gt("amount_sold", 0);
+    const { data, error } = await q.order("filing_date", { ascending: false, nullsFirst: false }).order("amount_sold", { ascending: false, nullsFirst: false }).limit(f.limit ?? 500);
+    if (!error && data) return data as unknown as FundOffering[];
+  }
   let q = supabase.from("fund_offerings_latest").select(OFFERING_COLUMNS);
   if (f.assetClass) q = q.eq("asset_class", f.assetClass);
   if (f.pooledOnly !== false) q = q.eq("is_pooled", true);
@@ -330,14 +346,19 @@ export async function offeringCounts(): Promise<Record<AssetClassKey, number>> {
 const PORTCO_INTEL_COLUMNS =
   "key, name, domain, country, ch_number, ch_name, ch_status, ch_type, sic_codes, incorporated_on, registered_address, officers, accounts_period_end, accounts_type, accounts_url, currency, revenue, gross_profit, operating_profit, profit_before_tax, depreciation, amortisation, ebitda_derived, employees, net_assets, cash, creditors_over_year, executives, executives_at, ch_at, website, description, sector, subsector, business_model, email, email_type, ceo, cfo, coo, managing_director, leaders, employees_as_of, employees_text, revenue_stated, revenue_currency, revenue_period, ebitda_stated, ebitda_currency, ebitda_period, ebitda_basis, founded_year, sources, profile_at";
 
-/** Intel rows for some company keys (`borrower_key(name)`), by key. Empty on any failure. */
-export async function getPortcoIntel(keys: string[]): Promise<Map<string, PortcoIntel>> {
+/**
+ * Intel rows for some company keys (`borrower_key(name)`), by key. Empty on
+ * any failure. A caller that reads only part of a record (a sponsor's
+ * portfolio tab) names its columns, so a thousand keys do not move every
+ * officer list and source note. The batches of 200 keys go together.
+ */
+export async function getPortcoIntel(keys: string[], columns: string = PORTCO_INTEL_COLUMNS): Promise<Map<string, PortcoIntel>> {
   const out = new Map<string, PortcoIntel>();
   const supabase = getReadClient();
   const wanted = [...new Set(keys.filter(Boolean))];
   if (!supabase || !wanted.length) return out;
-  for (let i = 0; i < wanted.length; i += 200) {
-    const { data, error } = await supabase.from("portco_intel").select(PORTCO_INTEL_COLUMNS).in("key", wanted.slice(i, i + 200));
+  const pages = await Promise.all(chunk(wanted, 200).map((batch) => supabase.from("portco_intel").select(columns).in("key", batch)));
+  for (const { data, error } of pages) {
     if (error || !data) return out;
     for (const row of data as unknown as PortcoIntel[]) out.set(row.key, row);
   }

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { CommitmentTable, dateLabel } from "@/components/intel/tables";
+import { dateLabel } from "@/components/intel/tables";
+import { CommitmentLedger } from "@/components/directory/profile-ledgers";
 import { Box, Empty, Src, Tag } from "@/components/intel/ui";
 import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, classOfGpType, fundClass, isAssetClassKey, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { formatMoney } from "@/lib/directory/intelligence-types";
@@ -260,7 +261,7 @@ export function InvestorProfile({
           ) : null
         }
       >
-        {disclosed.length ? <CommitmentTable rows={disclosed} showClass /> : <Empty>No disclosed commitments on file for this investor.</Empty>}
+        {disclosed.length ? <CommitmentLedger rows={disclosed} showClass /> : <Empty>No disclosed commitments on file for this investor.</Empty>}
       </Box>
     </div>
   );

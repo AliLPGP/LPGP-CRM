@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useState, useSyncExternalStore } from "react";
+import { Fragment, Suspense, useState, useSyncExternalStore } from "react";
 import {
   Briefcase,
   CalendarRange,
@@ -42,8 +42,10 @@ import type { SessionUser } from "@/lib/auth";
 
 /** `also`: other paths this entry owns (a firm's profile belongs to Discover).
  *  `children`: the entry's own sub-tree, shown when it or one of them is the
- *  page you're on — the way a data terminal nests books under a section. */
-type NavItem = { href: string; label: string; icon?: typeof Kanban; also?: string[]; children?: NavItem[] };
+ *  page you're on — the way a data terminal nests books under a section.
+ *  `heading`: on a child, a caption above it that opens a run of children
+ *  (a provider section's "Fund services" and "Transaction services"). */
+type NavItem = { href: string; label: string; icon?: typeof Kanban; also?: string[]; children?: NavItem[]; heading?: string };
 type NavGroup = { label: string; items: NavItem[]; collapsible?: boolean };
 
 const SELL: NavItem[] = [
@@ -72,6 +74,8 @@ const DATA: NavItem[] = [
     icon: Landmark,
     children: [
       { href: "/database?book=LP&view=table", label: "Advanced search" },
+      { href: "/database?book=LP&sort=newest&view=table", label: "Newly added investors" },
+      { href: "/database?book=LP&sort=updated&view=table", label: "Recently updated investors" },
       { href: "/database/mandates", label: "Mandates & RFPs" },
       { href: "/database/commitments", label: "By past investments" },
       { href: "/database/commitments", label: "Investor documents" },
@@ -85,7 +89,10 @@ const DATA: NavItem[] = [
     icon: Briefcase,
     children: [
       { href: "/database?book=GP&view=table", label: "Advanced search" },
+      { href: "/database/deals", label: "By deal activity" },
       { href: "/database/asset-classes", label: "By asset class" },
+      { href: "/database?book=GP&sort=newest&view=table", label: "Newly added managers" },
+      { href: "/database?book=GP&sort=updated&view=table", label: "Recently updated managers" },
       { href: "/database/portcos", label: "Portfolio companies" },
       { href: "/database/signals", label: "Manager news" },
       { href: "/database/lists", label: "Target lists" },
@@ -119,10 +126,22 @@ const DATA: NavItem[] = [
     label: "Service providers",
     icon: MapIcon,
     also: ["/database/providers"],
+    // Two runs, the way a data product sells providers: the firms a fund
+    // retains, then the firms a transaction retains. Legal advisors and Law
+    // firms are one search under two names; the first lit entry carries the
+    // mark.
     children: [
-      { href: "/database?book=SP&view=table", label: "Advanced search" },
+      { heading: "Fund services", href: "/database?book=SP&itype=placement_agent&view=table", label: "Placement agents" },
+      { href: "/database?book=SP&itype=law_firm&view=table", label: "Law firms" },
+      { href: "/database?book=SP&itype=fund_administrator&view=table", label: "Fund administrators" },
+      { href: "/database?book=SP&itype=prime_broker&view=table", label: "Prime brokers" },
+      { href: "/database?book=SP&itype=auditor&view=table", label: "Auditors" },
+      { href: "/database?book=SP&itype=custodian&view=table", label: "Custodians" },
       { href: "/database/market", label: "League tables" },
-      { href: "/database/lenders", label: "Loan books" },
+      { href: "/database/lists", label: "Target lists" },
+      { heading: "Transaction services", href: "/database?book=SP&itype=bank&view=table", label: "Banks & financial advisors" },
+      { href: "/database?book=SP&itype=law_firm&view=table", label: "Legal advisors (law firms)" },
+      { href: "/database/lenders", label: "Debt providers (loan books)" },
       { href: "/database/borrowers", label: "Borrowers" },
     ],
   },
@@ -174,9 +193,11 @@ const QUERY_ITEMS = ALL_ITEMS.filter((i) => i.href.includes("?"));
 
 /** The query keys that make one entry a different view from another on the
  *  same path: the book and investor type on the directory, a page's tab, a
- *  deal or signal kind, a fund strategy or status. Anything else in the URL
- *  (the layout, a search, a sort) is the reader's own and never decides. */
-const VIEW_KEYS = ["book", "itype", "tab", "kind", "strategy", "status", "class"];
+ *  deal or signal kind, a fund strategy or status, and the sort when an entry
+ *  names one (the newly-added and recently-updated views are a sort order).
+ *  Anything else in the URL (the layout, a search, a sort no entry names) is
+ *  the reader's own and never decides. */
+const VIEW_KEYS = ["book", "itype", "tab", "kind", "strategy", "status", "class", "sort"];
 
 /** A comma-separated list as a canonical key, so `LP,SP` equals `SP,LP`. */
 const asSet = (v: string) => v.split(",").filter(Boolean).sort().join(",");
@@ -235,6 +256,14 @@ function isWithin(pathname: string, item: NavItem, search: URLSearchParams | nul
 function isLit(pathname: string, item: NavItem, search: URLSearchParams | null) {
   if (!isActive(pathname, item, search)) return false;
   return !item.children?.some((c) => isActive(pathname, c, search));
+}
+
+/** A child is lit when it is active and no earlier sibling with the same
+ *  href is: two names for one search (Law firms, Legal advisors) light once. */
+function litChild(pathname: string, siblings: NavItem[], child: NavItem, search: URLSearchParams | null) {
+  if (!isActive(pathname, child, search)) return false;
+  const first = siblings.find((c) => c.href === child.href);
+  return first === child;
 }
 
 // Collapsed nav groups, and the rail itself folded to icons, remembered per
@@ -352,7 +381,14 @@ function RailEntry({ item, onNavigate, pathname, search, folded }: { item: NavIt
       {open ? (
         <div className="ml-[19px] mt-0.5 space-y-px border-l border-[var(--rail-line)] pl-2">
           {item.children!.map((child) => (
-            <RailLinkView key={`${child.href} ${child.label}`} item={child} onNavigate={onNavigate} on={isActive(pathname, child, search)} small />
+            <Fragment key={`${child.href} ${child.label}`}>
+              {child.heading ? (
+                <p className="px-2.5 pb-0.5 pt-2.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-[var(--rail-fg-dim)] first:pt-1">
+                  {child.heading}
+                </p>
+              ) : null}
+              <RailLinkView item={child} onNavigate={onNavigate} on={litChild(pathname, item.children!, child, search)} small />
+            </Fragment>
           ))}
         </div>
       ) : null}

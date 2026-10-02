@@ -94,6 +94,12 @@ export const PROVIDER_TYPES: ProviderType[] = [
   PT("law_firm", "Law firm", ["Law firm"]),
   PT("placement_agent", "Placement agent", ["Placement agent"], ["placement_agent", "marketer"]),
   PT("bank", "Bank / lender", ["Bank"]),
+  // A provider with sub-type "Bank" stays `bank`. The three codes below exist
+  // so links and research can target them; no directory sub-type feeds them
+  // yet, so nothing maps to them until a researcher or an import says so.
+  PT("financial_advisor", "Financial & M&A advisor", []),
+  PT("debt_provider", "Debt provider / lender", []),
+  PT("real_estate_broker", "Real estate broker", []),
   PT("investment_consultant", "Investment consultant", ["Consulting"]),
   PT("technology_vendor", "Technology vendor", ["Technology vendor"]),
   PT("data_research", "Data, research & ratings", ["Research & analytics", "Valuation & ratings"]),

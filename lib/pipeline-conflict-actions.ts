@@ -9,7 +9,9 @@ import {
 } from "./pipeline-conflicts";
 import type { PipelineConflicts } from "./types";
 
-export type { KnownEvent };
+// No type re-export here: Turbopack registers every export of a "use server"
+// module as an action, and a re-exported type became a ReferenceError at
+// module evaluation. Consumers import the type from pipeline-conflicts.
 
 /** Heads-up for a company someone is about to add. Null when signed out. */
 export async function checkPipelineConflicts(

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CalendarDays, Check, Loader2, Search } from "lucide-react";
-import type { KnownEvent } from "@/lib/pipeline-conflict-actions";
+import type { KnownEvent } from "@/lib/pipeline-conflicts";
 import { formatEventDate } from "@/lib/event-date";
 import { PRODUCERS } from "@/lib/events-catalogue";
 import type { LeadEvent } from "@/lib/types";

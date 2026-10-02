@@ -43,8 +43,11 @@ export function ListToolbar({
             className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-2 text-[12.5px] outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring"
           />
         </label>
-        {facets}
-        {sort}
+        {/* On a phone the facets and the sort are one row that scrolls sideways; wider, they sit in the bar as before. */}
+        <div className="facet-row md:contents">
+          {facets}
+          {sort}
+        </div>
         <span className="tabular whitespace-nowrap px-1 text-[12px] text-muted-foreground">
           {shown === total ? total.toLocaleString("en-US") : `${shown.toLocaleString("en-US")} of ${total.toLocaleString("en-US")}`} {noun}
         </span>
@@ -101,7 +104,7 @@ export function ShowMore({
   if (remaining <= 0) return null;
   return (
     <div className={cn("flex items-center gap-2 px-1", className)}>
-      <button type="button" onClick={onClick} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] transition-colors hover:bg-accent">
+      <button type="button" onClick={onClick} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] transition-colors hover:bg-accent max-md:min-h-10">
         Show {Math.min(step, remaining).toLocaleString("en-US")} more
       </button>
       <span className="text-[12px] text-muted-foreground">{remaining.toLocaleString("en-US")} not shown</span>

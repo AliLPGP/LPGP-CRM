@@ -20,7 +20,7 @@ export function ShowMore({ href, step, left }: { href: string; step: number; lef
   if (left <= 0) return null;
   return (
     <div className="border-t px-3 py-2">
-      <Link href={href} scroll={false} className="inline-flex rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+      <Link href={href} scroll={false} className="inline-flex items-center rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent max-md:min-h-10">
         Show {Math.min(step, left).toLocaleString("en-US")} more
         <span className="ml-1 text-muted-foreground">of {left.toLocaleString("en-US")} left</span>
       </Link>

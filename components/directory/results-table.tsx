@@ -21,7 +21,7 @@ import type { ResultRow } from "./use-results";
 const PAGE = 50;
 
 /** The one "show more" button every desk list ends with. */
-const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent";
+const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent max-md:min-h-10";
 
 /** The menu's open panel: the header's own fade-and-rise, off under reduced motion. */
 const POP = "animate-[topnav-in_160ms_ease-out] motion-reduce:animate-none";
@@ -558,7 +558,8 @@ export function ResultsTable({
   return (
     <div className="space-y-2">
       <div className="sheen rounded-[4px] border bg-card max-md:overflow-x-auto">
-        <table className="desk-table">
+        {/* lead-2: on a phone the firm column (the second, after the checkbox) is the one held at the left edge. */}
+        <table className="desk-table lead-2">
           <thead>
             <tr>
               <th className={cn(STICKY, "w-8 pr-0")} style={STICKY_STYLE}>

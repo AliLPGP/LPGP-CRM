@@ -312,6 +312,30 @@ function useCrmShown(): [boolean, () => void] {
   return [shown, toggle];
 }
 
+// --- The mobile drawer, open or shut -------------------------------------------
+// One store, so the bar's menu button and the bottom tab bar's "More" open the
+// same drawer; the drawer reads it like the CRM flag above.
+
+const DRAWER_EVENT = "nav-drawer";
+let drawerOpen = false;
+
+function subscribeDrawer(cb: () => void) {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener(DRAWER_EVENT, cb);
+  return () => window.removeEventListener(DRAWER_EVENT, cb);
+}
+
+function setDrawer(open: boolean) {
+  if (drawerOpen === open) return;
+  drawerOpen = open;
+  window.dispatchEvent(new Event(DRAWER_EVENT));
+}
+
+/** Opens the phone menu from anywhere (the bottom tab bar's "More" uses this). */
+export function openMobileMenu() {
+  setDrawer(true);
+}
+
 // --- Theme, as an icon ------------------------------------------------------------
 
 function subscribeTheme(cb: () => void) {
@@ -598,10 +622,10 @@ function SearchTrigger() {
 }
 
 function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: string }) {
-  const [open, setOpen] = useState(false);
+  const open = useSyncExternalStore(subscribeDrawer, () => drawerOpen, () => false);
   const [section, setSection] = useState<string | null>(null);
   const [crmShown] = useCrmShown();
-  const close = () => setOpen(false);
+  const close = () => setDrawer(false);
   const closeRef = useRef<HTMLButtonElement>(null);
   // While the drawer is up the page behind it does not scroll, Escape puts it
   // away, and focus starts on the close button so the keyboard is inside it.
@@ -611,7 +635,7 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
     document.body.style.overflow = "hidden";
     closeRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") setDrawer(false);
     };
     document.addEventListener("keydown", onKey);
     return () => {
@@ -623,7 +647,7 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
     <>
       {/* Wrapped: .topnav-icon is unlayered CSS, so lg:hidden on the button itself would lose to it. */}
       <span className="lg:hidden">
-        <button type="button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} className="topnav-icon">
+        <button type="button" onClick={() => setDrawer(true)} aria-label="Open menu" aria-expanded={open} className="topnav-icon">
           <Menu className="h-5 w-5" />
         </button>
       </span>

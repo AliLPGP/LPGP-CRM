@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Bookmark, Briefcase, ExternalLink, ListChecks, Sparkles } from "lucide-react";
 import { CATEGORIES } from "@/lib/categories";
 import { brandDomain } from "@/lib/directory/brand-domains";
 import { EMPTY_FILTERS, type DirectoryFilters } from "@/lib/directory/filters";
-import { showcase, type Insights } from "@/lib/directory/insights";
+import type { DirectoryOverview } from "@/lib/directory/overview";
 import { PROVIDER_ROLES, ROLE_PLURAL, type ProviderRole } from "@/lib/directory/providers";
 import { locationLabel } from "@/lib/directory/records";
 import type { WorldGeometry } from "@/lib/directory/world-map";
@@ -14,7 +14,6 @@ import type { Category } from "@/lib/types";
 import { CompanyLogo } from "@/components/company-logo";
 import { Box, Empty } from "@/components/intel/ui";
 import { cn, formatUsd } from "@/lib/utils";
-import type { Directory } from "./use-directory";
 import { BarRow, LogoStack } from "./viz";
 import { WorldMap } from "./world-panel";
 
@@ -68,12 +67,13 @@ function money(amount: number | null, currency: string | null, text: string | nu
 /**
  * Discover's home under the stand: the three books, the map, the league
  * tables, the strategy mix and the latest disclosures, each a cut of the
- * index that one click turns into a search. Counts the stand already shows
- * are not repeated here.
+ * index that one click turns into a search. Everything here is the server's
+ * summary (lib/directory/overview.ts), so the home paints whole before the
+ * index reaches the browser. Counts the stand already shows are not
+ * repeated here.
  */
 export function DiscoverOverview({
-  dir,
-  insights,
+  overview,
   geometry,
   commitments,
   lists,
@@ -81,8 +81,7 @@ export function DiscoverOverview({
   onApply,
   onQuickLook,
 }: {
-  dir: Directory;
-  insights: Insights;
+  overview: DirectoryOverview;
   geometry: WorldGeometry | null;
   commitments: OverviewCommitment[];
   lists: { id: string; name: string; item_count: number }[];
@@ -92,41 +91,24 @@ export function DiscoverOverview({
 }) {
   const [role, setRole] = useState<ProviderRole>("administrator");
   const apply = (patch: Partial<DirectoryFilters>) => onApply({ ...EMPTY_FILTERS, ...patch });
+  const { insights } = overview;
 
-  const byBook = useMemo(() => {
-    const out = new Map<Category, typeof dir.records>();
-    for (const r of dir.records) out.set(r.category, [...(out.get(r.category) ?? []), r]);
-    return out;
-  }, [dir]);
-
-  const typesByBook = useMemo(() => {
-    const out = new Map<Category, { key: string; count: number }[]>();
-    for (const [book, recs] of byBook) {
-      const m = new Map<string, number>();
-      for (const r of recs) if (r.subType) m.set(r.subType, (m.get(r.subType) ?? 0) + 1);
-      out.set(
-        book,
-        [...m.entries()].map(([key, count]) => ({ key, count })).sort((a, b) => b.count - a.count),
-      );
-    }
-    return out;
-  }, [byBook]);
-
-  const gpTypes = typesByBook.get("GP") ?? [];
-  const leaders = insights.leaders[role];
+  const gpTypes = overview.books.find((b) => b.book === "GP")?.types ?? [];
+  const leaders = overview.leaders[role];
   const decadeMax = Math.max(1, ...insights.decades.map((d) => d.count));
   const decades = insights.decades.filter((d) => d.key >= 1950);
   const earlier = insights.decades.filter((d) => d.key < 1950).reduce((s, d) => s + d.count, 0);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" data-discover-ready="1">
       {/* Books */}
       <div className="grid gap-4 md:grid-cols-3">
         {BOOK_ORDER.map((book) => {
-          const recs = byBook.get(book) ?? [];
-          const types = (typesByBook.get(book) ?? []).slice(0, 3);
-          const logos = showcase(recs, 7);
-          const share = insights.total ? recs.length / insights.total : 0;
+          const data = overview.books.find((b) => b.book === book);
+          const count = data?.count ?? 0;
+          const types = (data?.types ?? []).slice(0, 3);
+          const logos = data?.logos ?? [];
+          const share = insights.total ? count / insights.total : 0;
           return (
             <button
               key={book}
@@ -137,7 +119,7 @@ export function DiscoverOverview({
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="desk-label">{CATEGORIES[book].name}</p>
-                  <p className="figure mt-2 text-[30px] leading-none">{recs.length.toLocaleString("en-US")}</p>
+                  <p className="figure mt-2 text-[30px] leading-none">{count.toLocaleString("en-US")}</p>
                 </div>
                 <span className="figure rounded-[3px] border px-1.5 py-0.5 text-[11px] text-muted-foreground">{Math.round(share * 100)}%</span>
               </div>
@@ -221,23 +203,19 @@ export function DiscoverOverview({
             ))}
           </div>
           <div className="space-y-0.5">
-            {leaders.map((l, i) => {
-              const b = dir.brands[l.brand];
-              const company = b.companyId ? dir.byId.get(b.companyId) : undefined;
-              return (
-                <BarRow
-                  key={b.key}
-                  rank={i + 1}
-                  leading={<CompanyLogo name={b.name} domain={brandDomain(b.key, company?.domain)} size={26} />}
-                  label={b.name}
-                  value={l.clients}
-                  display={l.clients.toLocaleString("en-US")}
-                  max={leaders[0]?.clients ?? 1}
-                  sub={`${Math.round(l.share * 100)}% of the ${insights.roleFilers[role].toLocaleString("en-US")} managers naming ${ROLE_PLURAL[role].toLowerCase()}`}
-                  href={`/database/providers/${b.key}`}
-                />
-              );
-            })}
+            {leaders.map((l, i) => (
+              <BarRow
+                key={l.key}
+                rank={i + 1}
+                leading={<CompanyLogo name={l.name} domain={brandDomain(l.key, l.domain)} size={26} />}
+                label={l.name}
+                value={l.clients}
+                display={l.clients.toLocaleString("en-US")}
+                max={leaders[0]?.clients ?? 1}
+                sub={`${Math.round(l.share * 100)}% of the ${insights.roleFilers[role].toLocaleString("en-US")} managers naming ${ROLE_PLURAL[role].toLowerCase()}`}
+                href={`/database/providers/${l.key}`}
+              />
+            ))}
             {leaders.length === 0 ? <Empty>No filed providers in this role yet.</Empty> : null}
           </div>
         </Box>

@@ -198,6 +198,25 @@ boundaries and keeps comment text ASCII.
 - **Investor intelligence** (0033, 0034) — `investor_profiles` (one row per LP: type code, AUM with as-of, `allocations` per asset class as `[{class, current_pct, target_pct, current_usd, as_of}]`, strategy / region / industry preferences, ticket range, practices, whether still active in alternatives, every field with `sources[field]`), `investor_plans` (the next twelve months, one row per investor per asset class per source: status investing | considering | not_investing, plan types, strategies, regions, ticket, new GP relationships; a plan without an http(s) source is never stored), `investor_profile_upsert(jsonb)` (the only loader, same mechanics as `fund_details_upsert`: no source, no value; AUM, allocations, ticket and the active flag need a primary or press source) and `investor_research_batch(n, offset)` (LPs not yet researched, most-committed first). `fund_performance` is a view over `commitments`: for every fund an LP disclosure gives a figure for, the median / min / max net IRR and multiple across those LPs, and (0034) DPI, RVPI and called % as arithmetic on each LP's own stated contributed, distributed and remaining figures — CalPERS stores "cash out and remaining" together, so its RVPI subtracts distributed; the view's header says so. `directory_rollups()` also returns commitments per LP and the classes each investor has a live plan in. `/database/mandates` and `/database/performance` read these; a company page has an **Investor profile** tab (LPs) and a **Manager profile** tab (GPs). The research jobs (`investor-research.ts`, `fund-research.ts`, `runInvestors` / `runFundDetails`, `scripts/research.ts investors|funds`, admin POST routes under `/api/directory/{investors,funds}/research`) fill them from the investor's or manager's own documents; nothing has been run yet.
 - **Taxonomy** (`lib/directory/taxonomy.ts`, with `asset-classes.ts` and `strategies.ts`) — the vocabulary a private-markets data product searches by, at its level of detail: nine asset classes (natural resources is its own class since 0033-era code), strategies on a **strategy** axis (buyout, growth, co-investment, direct lending, core / core-plus / value-add / opportunistic, seed / early stage, …) and a **sector** axis (property types, infrastructure sectors, the industries a PE fund names), investor types (public and private pensions, superannuation, insurers, endowments, foundations, sovereign wealth, DFIs, banks, asset and wealth managers, single and multi family offices, fund of funds, consultants…), manager and provider types, core industries with industry focus, target regions above `geo.ts`'s HQ subregions, AUM / ticket / fund-size bands, and the mandate vocabulary. Every classifier reads words the record carries — a sub-type, a fund's legal name, a firm's own overview, a stated focus — and places nothing those words do not say. The Discover index carries the result per firm (`typeCode`, `classes`, `strategies`, `sectors`, `regions`, `knownFunds`, allocation and ticket figures, `plans`, and per-class `raised` from stated fund sizes in the last ten years), the rail filters by it, the results table has a column registry with a chooser (`discover.columns` in localStorage, per-viewer), and the funds page facets by strategy, sector, region, size band and status. No dry powder: nobody states it and we do not estimate.
 - **Header** (`components/top-nav.tsx`) — the product's navigation is a top bar in the rail's graphite: one panel per section (investors, fund managers, funds, performance, service providers split into fund and transaction services, companies & deals, tools), every page listed once, the quick search, and the sales CRM as one menu that a reader can put away (`nav:crm` in localStorage) until it moves to its own product. The section a page belongs to is decided by `INTEL_NAV`'s matchers in `components/intel/shell.tsx`; `IntelShell` no longer draws section tabs by default.
+- **The demo standard** — every list screen is held to one shape: a
+  `StatStrip` of 4–6 `Stat`s with a basis line, then one toolbar in one order
+  (search · facet dropdowns · sort · result count · columns/export on the
+  right), chips under it, a `.desk-table` whose rows are covered by one link,
+  and one "Show N more" button. Filters are dropdowns, never a wall of pills:
+  `FacetMenu` / `FacetChips` (`components/intel/facet-menu.tsx`) for client
+  pages, `UrlFacets` (`components/intel/url-facets.tsx`) for server-rendered
+  desks (search on Enter, a declarative facet spec, the URL written in a
+  transition with the ledger dimmed 150 ms), `ListToolbar`
+  (`components/list-toolbar.tsx`) on the sales CRM. Discover's rail is a
+  `FacetBar` plus a "More filters" dropdown for the long tail. Motion is one
+  system in `globals.css`: 160 ms fade-in (`.fade-in`, `.menu-in`), 120 ms
+  row hover, tab panels that keep a floor height so the tab bar never moves,
+  everything off under `prefers-reduced-motion`; `NavProgress` in the header
+  draws a 2 px brass bar while a navigation is in flight. Every route has a
+  `loading.tsx` that mirrors its real layout (`ListSkeleton`, `skeletons.tsx`);
+  every empty state says what fills it and offers the one action; a blank is
+  "—" or "Not on file", never a zero. Magnitude bars wear the walnut
+  (`BarList`); the seven hues stay on the series chart.
 - **Speed** — the API roles carry short statement timeouts (anon 3 s), so
   anything that aggregates a large table lives in SQL (`credit_book_summary`,
   `offering_stats`, `borrower_summary`), never in the app over paged rows.
@@ -211,8 +230,18 @@ boundaries and keeps comment text ASCII.
   that can pass 2 MB must use it too, or every request rebuilds it. Every
   desk route has a `loading.tsx` so a click answers at once. The Funds page
   ships its best-documented 3,000 rows and pulls the rest from
-  `/api/directory/funds` (edge-cached) after paint. Vercel functions run in
-  `dub1`, beside the Supabase project.
+  `/api/directory/funds` (edge-cached) after paint. Discover ships **without
+  the index**: the page renders the stand, the stat strip and the home from
+  `getDirectoryOverview()` (a few kilobytes, `unstable_cache`d per version)
+  and preloads `/api/directory/index?v=<version>&f=<WIRE_VERSION>`, which
+  the browser fetches once per version into a module-level cache
+  (`components/directory/use-directory.ts`, `useSyncExternalStore`, parsed
+  and BM25-indexed in idle slices) shared by Discover, the quick look and the
+  market map. The route serves the version asked (warm from the page's own
+  render), is edge-cached for a day, and the wire format in `records.ts`
+  (string table, flag bits, trailing defaults dropped) is versioned by
+  `WIRE_VERSION`; bump it and the `bigCache` key together whenever a record
+  slot changes. Vercel functions run in `dub1`, beside the Supabase project.
 
 The app degrades gracefully when Supabase env vars are absent (shows a
 "connect Supabase" state instead of crashing).

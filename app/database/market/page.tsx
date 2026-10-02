@@ -1,5 +1,6 @@
-import { getDirectoryIndex } from "@/lib/directory/index-server";
-import { packIndex } from "@/lib/directory/records";
+import { preload } from "react-dom";
+import { getDirectoryOverview } from "@/lib/directory/index-server";
+import { indexUrl } from "@/lib/directory/records";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { MarketMap } from "@/components/directory/market-map";
 import { IntelShell } from "@/components/intel/shell";
@@ -8,14 +9,14 @@ import { SetupNotice } from "@/components/setup-notice";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Market map — LPGP Connect" };
 
+// The map reads the same index Discover does, from the same browser-side
+// cache: a reader coming from Discover has it already, and one landing here
+// first fetches it once for both.
+
 export default async function MarketPage() {
-  const index = await getDirectoryIndex();
-  const managers = index.records.filter((r) => r.providers.length).length;
-  // The map needs structure, not prose: leave descriptions behind.
-  const packed = packIndex({
-    ...index,
-    records: index.records.map((r) => ({ ...r, description: null, lines: null })),
-  });
+  const overview = await getDirectoryOverview();
+  preload(indexUrl(overview.version), { as: "fetch", crossOrigin: "anonymous" });
+  const managers = overview.insights.filers;
   return (
     <IntelShell
       crumbs={[{ label: "Service providers" }]}
@@ -23,7 +24,7 @@ export default async function MarketPage() {
       description={`Who audits, administers, holds custody for, prime-brokers and raises capital for ${managers.toLocaleString("en-US")} managers — from their own Form ADV filings — and the landscape of every book by segment.`}
     >
       {!isSupabaseConfigured() ? <SetupNotice /> : null}
-      <MarketMap packed={packed} />
+      <MarketMap version={overview.version} />
     </IntelShell>
   );
 }

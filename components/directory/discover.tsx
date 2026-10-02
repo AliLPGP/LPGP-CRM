@@ -15,8 +15,7 @@ import {
   type DirectoryFilters,
   type SortKey,
 } from "@/lib/directory/filters";
-import { summarize } from "@/lib/directory/insights";
-import type { PackedIndex } from "@/lib/directory/records";
+import type { DirectoryOverview } from "@/lib/directory/overview";
 import type { WorldGeometry } from "@/lib/directory/world-map";
 import { interpret, readingToFilters } from "@/lib/directory/thesis";
 import type { SavedSearch } from "@/lib/directory/queries";
@@ -26,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/ui/modal";
 import { cn, formatUsd } from "@/lib/utils";
 import { BulkBar, downloadCsv, type ListOption } from "./bulk-bar";
+import { CardsSkeleton, FacetBones, LedgerSkeleton, StripSkeleton } from "./discover-skeleton";
 import { describeFilters, FilterChips } from "./filter-chips";
 import { FacetBar } from "./filter-rail";
 import { DiscoverOverview, type OverviewCommitment } from "./overview";
@@ -36,7 +36,7 @@ import { ResultInsights } from "./result-insights";
 import { ColumnsButton, ResultsTable } from "./results-table";
 import { ThesisBar } from "./thesis-bar";
 import { compact, Figure } from "./viz";
-import { useDirectory } from "./use-directory";
+import { EMPTY_DIRECTORY, reloadDirectory, useDirectoryIndex } from "./use-directory";
 import { useResults } from "./use-results";
 
 const SORTS: { key: SortKey; label: string }[] = [
@@ -160,8 +160,22 @@ function SavedMenu({ saved, onPick, userId, isAdmin }: { saved: SavedSearch[]; o
 
 type View = "table" | "cards";
 
+/** What the ledger says of itself while the index is on its way. */
+function loadingLabel(phase: string, total: number): string {
+  const firms = total ? `${n(total)} firms` : "the directory";
+  if (phase === "parsing" || phase === "indexing") return `Indexing ${firms} for search…`;
+  return `Loading ${firms}…`;
+}
+
+/**
+ * Discover. The page arrives with the server's overview (the stand's figures,
+ * the home's panels) and the version of the directory to fetch; the index
+ * itself is pulled from /api/directory/index into a browser-side cache
+ * (use-directory.ts) and every search, facet count, lookalike and quick look
+ * runs over it here. Until it lands, the results view shows its bones.
+ */
 export function Discover({
-  packed,
+  overview,
   lists,
   saved,
   userId,
@@ -172,7 +186,7 @@ export function Discover({
   geometry,
   commitments,
 }: {
-  packed: PackedIndex;
+  overview: DirectoryOverview;
   lists: ListOption[];
   saved: SavedSearch[];
   userId: string | null;
@@ -184,7 +198,11 @@ export function Discover({
   geometry: WorldGeometry | null;
   commitments: OverviewCommitment[];
 }) {
-  const dir = useDirectory(packed);
+  const load = useDirectoryIndex(overview.version);
+  // Everything downstream computes against the empty directory until the
+  // real one is in: the same code paths, no results, and no re-fetch later.
+  const ready = load.dir != null;
+  const dir = load.dir ?? EMPTY_DIRECTORY;
   const router = useRouter();
   const params = useSearchParams();
   const pathname = usePathname();
@@ -193,7 +211,7 @@ export function Discover({
   const viewParam = params.get("view");
   const view: View = viewParam === "cards" ? "cards" : "table";
   const results = useResults(dir, filters);
-  const everything = useMemo(() => summarize(dir.records), [dir]);
+  const everything = overview.insights;
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [notes, setNotes] = useState<{ q: string; notes: string[]; ai?: boolean }>({ q: "", notes: [] });
   const [aiPending, startAi] = useTransition();
@@ -230,6 +248,8 @@ export function Discover({
       navigate(EMPTY_FILTERS, { q: null, push: true, view: null });
       return;
     }
+    // Before the index lands the vocabulary has no brand, city or firm
+    // names, but every other rule (types, books, places, sizes) still reads.
     const { filters: next, notes: n } = interpret(trimmed, dir.vocab);
     setNotes({ q: trimmed, notes: n });
     navigate(next, { q: trimmed, push: true });
@@ -281,7 +301,9 @@ export function Discover({
 
   const peekRecord = peek ? (dir.byId.get(peek) ?? null) : null;
 
-  if (!dir.records.length) {
+  // The server counted the firms; an empty directory is known before the fetch.
+  const empty = ready ? dir.records.length === 0 : everything.total === 0;
+  if (empty) {
     return (
       <div className="stand rounded-[4px] px-6 py-14 text-center">
         <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
@@ -302,11 +324,12 @@ export function Discover({
   }
 
   const regulatory = everything.raum;
-  const advThrough = dir.advThrough ? new Date(dir.advThrough).toLocaleDateString("en-GB", { month: "short", year: "numeric" }) : null;
+  const advThrough = overview.advThrough ? new Date(overview.advThrough).toLocaleDateString("en-GB", { month: "short", year: "numeric" }) : null;
   const sorts = SORTS.filter((s) => (s.key !== "relevance" || results.mode === "keywords") && (s.key !== "similarity" || results.mode === "similar"));
+  const loading = loadingLabel(load.phase, everything.total);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" data-index-phase={load.phase}>
       {home ? (
         // The stand: the one black panel, for the home only — the search
         // first, the scale of the book right under it.
@@ -347,7 +370,7 @@ export function Discover({
         </section>
       ) : null}
 
-      {!dir.schemaReady ? (
+      {!overview.schemaReady ? (
         <div className="rounded-[4px] border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-3 py-2 text-[12.5px]">
           Some directory features are off until the directory SQL runs — see the setup steps above, then{" "}
           <Link href="/import/directory" className="font-medium underline underline-offset-2">
@@ -357,10 +380,18 @@ export function Discover({
         </div>
       ) : null}
 
+      {load.phase === "failed" ? (
+        <div className="rounded-[4px] border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-3 py-2 text-[12.5px]">
+          The directory index could not be loaded ({load.error}).{" "}
+          <button type="button" onClick={() => reloadDirectory(overview.version)} className="font-medium underline underline-offset-2">
+            Try again
+          </button>
+        </div>
+      ) : null}
+
       {home ? (
         <DiscoverOverview
-          dir={dir}
-          insights={everything}
+          overview={overview}
           geometry={geometry}
           commitments={commitments}
           lists={lists}
@@ -370,12 +401,12 @@ export function Discover({
         />
       ) : (
         <>
-          <ResultInsights rows={results.rows} />
+          {ready ? <ResultInsights rows={results.rows} /> : <StripSkeleton />}
 
           {/* The toolbar every list screen shares: search · facets · sort · count · layout, columns, saved, export. */}
           <div className="flex flex-wrap items-center gap-1.5">
             <ThesisBar key={q} compact initial={q} onSubmit={submitThesis} pending={aiPending} aiReady={aiReady} />
-            <FacetBar dir={dir} filters={filters} facets={results.facets} onChange={(f) => navigate(f)} />
+            {ready ? <FacetBar dir={dir} filters={filters} facets={results.facets} onChange={(f) => navigate(f)} /> : <FacetBones />}
             <select
               value={results.sort}
               onChange={(e) => navigate({ ...filters, sort: e.target.value as SortKey })}
@@ -389,7 +420,15 @@ export function Discover({
               ))}
             </select>
             <span className="px-1 text-[12.5px]">
-              <span className="figure">{n(results.rows.length)}</span> <span className="text-muted-foreground">firms</span>
+              {ready ? (
+                <>
+                  <span className="figure">{n(results.rows.length)}</span> <span className="text-muted-foreground">firms</span>
+                </>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 text-muted-foreground">
+                  <Loader2 className="h-3 w-3 animate-spin" /> {loading}
+                </span>
+              )}
             </span>
             <div className="ml-auto flex flex-wrap items-center gap-1.5">
               <div className="inline-flex h-8 overflow-hidden rounded-[4px] border bg-card" role="group" aria-label="Layout">
@@ -456,9 +495,15 @@ export function Discover({
             </p>
           ) : null}
 
-          {showLeaders ? <ProviderLeaders dir={dir} filters={filters} /> : null}
+          {ready && showLeaders ? <ProviderLeaders dir={dir} filters={filters} /> : null}
 
-          {results.rows.length === 0 ? (
+          {!ready ? (
+            view === "cards" ? (
+              <CardsSkeleton />
+            ) : (
+              <LedgerSkeleton label={loading} />
+            )
+          ) : results.rows.length === 0 ? (
             <div className="sheen rounded-[4px] border bg-card px-4 py-8 text-center">
               <p className="text-[13px]">
                 No firm in the directory matches all of that

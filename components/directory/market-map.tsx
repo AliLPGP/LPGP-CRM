@@ -9,11 +9,13 @@ import { AUM_PRESETS } from "@/lib/directory/format";
 import { ZONES, type Zone } from "@/lib/directory/geo";
 import { filers, leagueTable } from "@/lib/directory/market";
 import { PROVIDER_ROLES, ROLE_PLURAL, type ProviderRole } from "@/lib/directory/providers";
-import { unpackIndex, type DirectoryBrand, type DirectoryRecord, type PackedIndex } from "@/lib/directory/records";
+import type { DirectoryBrand, DirectoryRecord } from "@/lib/directory/records";
 import { CompanyLogo } from "@/components/company-logo";
 import { brandDomain } from "@/lib/directory/brand-domains";
 import { cn, formatUsd } from "@/lib/utils";
 import type { Category } from "@/lib/types";
+import { Bone } from "./discover-skeleton";
+import { reloadDirectory, useDirectoryIndex } from "./use-directory";
 
 function Pill({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
@@ -35,12 +37,49 @@ function list(v: string | null): string[] {
   return v ? v.split(",").filter(Boolean) : [];
 }
 
+/** The poster's frame while the index is on its way: five role panels of logo tiles. */
+function PosterSkeleton({ error, onRetry }: { error: string | null; onRetry: () => void }) {
+  return (
+    <div className="space-y-3">
+      {error ? (
+        <p className="text-[12.5px] text-muted-foreground">
+          {error}{" "}
+          <button type="button" onClick={onRetry} className="font-medium text-foreground underline-offset-2 hover:underline">
+            Try again
+          </button>
+        </p>
+      ) : null}
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5" aria-busy={!error} aria-label="Loading">
+        {Array.from({ length: 5 }, (_, i) => (
+          <section key={i} className="sheen flex flex-col overflow-hidden rounded-2xl border bg-card">
+            <header className="space-y-1.5 border-b px-4 py-3">
+              <Bone className="h-2.5 w-20" />
+              <Bone className="h-4 w-28" />
+            </header>
+            <ol className="grid flex-1 grid-cols-2 gap-px bg-border">
+              {Array.from({ length: 12 }, (_, j) => (
+                <li key={j} className="flex flex-col items-center gap-1.5 bg-card px-2 pb-2.5 pt-3">
+                  <Bone className="h-[38px] w-[38px]" />
+                  <Bone className="h-3 w-16" />
+                  <Bone className="h-1 w-full" />
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /**
  * Form ADV market structure. The URL holds the view (role, manager types,
- * region, size, tab) so a league table can be shared as a link.
+ * region, size, tab) so a league table can be shared as a link. The index
+ * comes from the browser-side cache Discover fills (use-directory.ts).
  */
-export function MarketMap({ packed }: { packed: PackedIndex }) {
-  const index = useMemo(() => unpackIndex(packed), [packed]);
+export function MarketMap({ version }: { version: string }) {
+  const load = useDirectoryIndex(version);
+  const index = load.dir;
   const params = useSearchParams();
   const pathname = usePathname();
   const tabParam = params.get("tab");
@@ -65,7 +104,9 @@ export function MarketMap({ packed }: { packed: PackedIndex }) {
     window.history.replaceState(null, "", `${pathname}${qs ? `?${qs}` : ""}`);
   }
 
-  const managers = useMemo(() => filers(index.records), [index]);
+  const records = useMemo(() => index?.records ?? [], [index]);
+  const brands = useMemo(() => index?.brands ?? [], [index]);
+  const managers = useMemo(() => filers(records), [records]);
   const typeCounts = useMemo(() => {
     const m = new Map<string, number>();
     for (const r of managers) if (r.subType) m.set(r.subType, (m.get(r.subType) ?? 0) + 1);
@@ -84,9 +125,9 @@ export function MarketMap({ packed }: { packed: PackedIndex }) {
       ),
     [managers, types, zones, preset],
   );
-  const league = useMemo(() => leagueTable(scope, index.brands, role, 200), [scope, index.brands, role]);
+  const league = useMemo(() => leagueTable(scope, brands, role, 200), [scope, brands, role]);
   const top3 = league.rows.slice(0, 3).reduce((a, r) => a + r.share, 0);
-  const byId = useMemo(() => new Map(index.records.map((r) => [r.id, r])), [index]);
+  const byId = index?.byId;
   const shown = showAll ? league.rows : league.rows.slice(0, 25);
   const max = league.rows[0]?.clients ?? 1;
 
@@ -114,10 +155,12 @@ export function MarketMap({ packed }: { packed: PackedIndex }) {
         ))}
       </div>
 
-      {tab === "map" ? (
+      {!index || !byId ? (
+        <PosterSkeleton error={load.error} onRetry={() => reloadDirectory(version)} />
+      ) : tab === "map" ? (
         <ProviderPoster
           managers={managers}
-          brands={index.brands}
+          brands={brands}
           domainOf={(companyId) => (companyId ? (byId.get(companyId)?.domain ?? null) : null)}
           onRole={(r) => set({ tab: "league", role: r })}
         />
@@ -271,7 +314,7 @@ export function MarketMap({ packed }: { packed: PackedIndex }) {
           </p>
         </>
       ) : (
-        <Landscape records={index.records} book={book} onBook={(b) => set({ book: b === "GP" ? null : b })} />
+        <Landscape records={records} book={book} onBook={(b) => set({ book: b === "GP" ? null : b })} />
       )}
     </div>
   );

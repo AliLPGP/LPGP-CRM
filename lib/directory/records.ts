@@ -1,7 +1,7 @@
 // The Discover index: one compact record per firm, plus the provider brands
 // GPs name on Form ADV. Built on the server (lib/directory/index-server.ts),
-// shipped to the browser once, and searched, filtered, compared and mapped
-// there — so every filter click is instant.
+// fetched by the browser once from /api/directory/index, and searched,
+// filtered, compared and mapped there — so every filter click is instant.
 //
 // Pure module: safe on the client.
 
@@ -44,7 +44,6 @@ export type DirectoryRecord = {
   industry: string | null;
   /** SP service lines and capabilities, flattened for search. */
   lines: string | null;
-  lifecycle: string[];
   /** LP publishes fund-level commitments (Yes / Selective / Partial). */
   discloses: boolean | null;
   portfolio: boolean;
@@ -141,81 +140,225 @@ export function providerPairs(record: DirectoryRecord): { brand: number; role: P
 }
 
 // --- Wire format ---------------------------------------------------------------
-// Positional tuples: a couple of thousand records with a key per field would
-// spend a third of the payload on repeated property names.
+// Nine thousand records travel to the browser on every first visit, so the
+// shape is tuned for bytes:
+//
+// - Positional tuples: a key per field would spend a third of the payload on
+//   repeated property names.
+// - A string table (`dict`) for the columns with a few dozen distinct values
+//   (type, country, city, zone, type code, the taxonomy keys…): each use is
+//   an index, not the words again.
+// - One integer of flags for the booleans and small enums.
+// - The fields most firms leave empty come last, and a tuple stops at its last
+//   non-default value: a roster GP with no LP profile is 20 slots, not 40.
+// - Ids are UUIDs, carried without their hyphens.
+//
+// Bump WIRE_VERSION whenever the tuple changes: it is part of the index URL,
+// so a page from one deploy never reads a cached payload from another.
+
+export const WIRE_VERSION = 2;
+
+/** The index route, keyed by the directory version so an import busts the edge cache. */
+export function indexUrl(version: string): string {
+  return `/api/directory/index?v=${encodeURIComponent(version)}&f=${WIRE_VERSION}`;
+}
+
+/** An index into `dict`, or null for no value. */
+type D = number | null;
 
 type Packed = [
-  string, string, Category, string | null, string | null, string | null,
-  string | null, string | null, string | null, Zone | null,
-  number | null, AumKind | null, number | null, number | null, "Registered" | "ERA" | null,
-  number | null, number, number, string | null, string | null, string | null,
-  string[], boolean | null, 0 | 1, 0 | 1, number[], number, number, number, number,
-  // 30..41, appended in this order; an older payload stops at 29 and unpacks with defaults.
-  string | null, AssetClassKey[], string[], string[], string[], number,
-  number | null, [string, number][], number | null, number | null, boolean | null, string[],
-  // 42..44: raised per class, created, updated.
-  [string, number, number][], number | null, number | null,
+  string, // 0 id, UUID without hyphens
+  string, // 1 name
+  Category, // 2
+  D, // 3 subType
+  string | null, // 4 domain
+  D, // 5 city
+  D, // 6 state
+  D, // 7 country
+  D, // 8 zone
+  number, // 9 flags (see FLAG_*)
+  number | null, // 10 aum
+  D, // 11 aumKind
+  number | null, // 12 employees
+  number | null, // 13 founded
+  number, // 14 contacts
+  number, // 15 connectable
+  string | null, // 16 description
+  number | null, // 17 created
+  number | null, // 18 updated
+  D, // 19 typeCode
+  number[], // 20 classes, as dict indices
+  number[], // 21 strategies, as dict indices
+  number[], // 22 sectors, as dict indices
+  number[], // 23 regions, as dict indices
+  number, // 24 knownFunds
+  D, // 25 vertical
+  D, // 26 industry
+  string | null, // 27 lines
+  number[], // 28 providers
+  number, // 29 clientCount
+  number, // 30 funds
+  number | null, // 31 privateFunds
+  number, // 32 operators
+  number, // 33 portcos
+  [string, number, number][], // 34 raised
+  number | null, // 35 altsPct
+  [string, number][], // 36 alloc
+  number | null, // 37 ticketMin
+  number | null, // 38 ticketMax
+  number[], // 39 plans, as dict indices
 ];
+
+/** A packed record as sent: id, name and book are always there; every slot after them is dropped once only defaults remain. */
+export type PackedRecord = [string, string, Category, ...unknown[]];
+
+const FLAG_PORTFOLIO = 1;
+const FLAG_DIRECTORY = 2;
+/** Bits 2–3: Form ADV status (0 none, 1 Registered, 2 ERA). */
+const ADV_SHIFT = 2;
+/** Bits 4–5: discloses (0 unknown, 1 yes, 2 no). */
+const DISCLOSES_SHIFT = 4;
+/** Bits 6–7: active in alternatives (0 unknown, 1 yes, 2 no). */
+const ACTIVE_SHIFT = 6;
+
+function tri(v: boolean | null): number {
+  return v == null ? 0 : v ? 1 : 2;
+}
+
+function untri(bits: number): boolean | null {
+  return bits === 1 ? true : bits === 2 ? false : null;
+}
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+const HEX32 = /^[0-9a-f]{32}$/;
+
+function packId(id: string): string {
+  return UUID.test(id) ? id.replace(/-/g, "") : id;
+}
+
+function unpackId(id: string): string {
+  return HEX32.test(id) ? `${id.slice(0, 8)}-${id.slice(8, 12)}-${id.slice(12, 16)}-${id.slice(16, 20)}-${id.slice(20)}` : id;
+}
 
 export type PackedIndex = {
   generatedAt: string;
   schemaReady: boolean;
   advThrough: string | null;
-  records: Packed[];
+  /** The table fingerprint this payload answers (lib/supabase/version.ts), when the route set it. */
+  version?: string;
+  /** The string table the records' `D` slots index into. */
+  dict: string[];
+  records: PackedRecord[];
   brands: [string, string, string | null, number][];
 };
 
+/** Is a slot's value the one `unpackIndex` fills in when the slot is missing? */
+function isDefault(v: unknown): boolean {
+  return v == null || v === 0 || v === "" || (Array.isArray(v) && v.length === 0);
+}
+
 export function packIndex(index: DirectoryIndex): PackedIndex {
+  const dict: string[] = [];
+  const at = new Map<string, number>();
+  const intern = (s: string | null | undefined): D => {
+    if (!s) return null;
+    let i = at.get(s);
+    if (i == null) {
+      i = dict.length;
+      at.set(s, i);
+      dict.push(s);
+    }
+    return i;
+  };
+  const keys = (list: string[]): number[] => list.map((k) => intern(k) as number);
+  const records = index.records.map((r): PackedRecord => {
+    const flags =
+      (r.portfolio ? FLAG_PORTFOLIO : 0) |
+      (r.directory ? FLAG_DIRECTORY : 0) |
+      ((r.adv === "Registered" ? 1 : r.adv === "ERA" ? 2 : 0) << ADV_SHIFT) |
+      (tri(r.discloses) << DISCLOSES_SHIFT) |
+      (tri(r.activeAlts) << ACTIVE_SHIFT);
+    const full: Packed = [
+      packId(r.id), r.name, r.category, intern(r.subType), r.domain, intern(r.city), intern(r.state), intern(r.country), intern(r.zone),
+      flags, r.aum, intern(r.aumKind), r.employees, r.founded, r.contacts, r.connectable, r.description, r.created, r.updated,
+      intern(r.typeCode), keys(r.classes), keys(r.strategies), keys(r.sectors), keys(r.regions), r.knownFunds, intern(r.vertical), intern(r.industry), r.lines,
+      r.providers, r.clientCount, r.funds, r.privateFunds, r.operators, r.portcos, r.raised,
+      r.altsPct, r.alloc, r.ticketMin, r.ticketMax, keys(r.plans),
+    ];
+    let end = full.length;
+    while (end > 3 && isDefault(full[end - 1])) end -= 1;
+    return full.slice(0, end) as PackedRecord;
+  });
   return {
     generatedAt: index.generatedAt,
     schemaReady: index.schemaReady,
     advThrough: index.advThrough,
-    records: index.records.map((r) => [
-      r.id, r.name, r.category, r.subType, r.vertical, r.domain,
-      r.city, r.state, r.country, r.zone,
-      r.aum, r.aumKind, r.employees, r.founded, r.adv,
-      r.privateFunds, r.contacts, r.connectable, r.description, r.industry, r.lines,
-      r.lifecycle, r.discloses, r.portfolio ? 1 : 0, r.directory ? 1 : 0, r.providers, r.clientCount, r.funds,
-      r.operators, r.portcos,
-      r.typeCode, r.classes, r.strategies, r.sectors, r.regions, r.knownFunds,
-      r.altsPct, r.alloc, r.ticketMin, r.ticketMax, r.activeAlts, r.plans,
-      r.raised, r.created, r.updated,
-    ]),
-    brands: index.brands.map((b) => [b.key, b.name, b.companyId, b.clients]),
+    dict,
+    records,
+    brands: index.brands.map((b) => [b.key, b.name, b.companyId ? packId(b.companyId) : null, b.clients]),
   };
 }
 
 export function unpackIndex(packed: PackedIndex): DirectoryIndex {
+  const dict = packed.dict ?? [];
+  const word = (i: D | undefined): string | null => (i == null ? null : (dict[i] ?? null));
+  const words = (list: number[] | undefined): string[] => (list ?? []).map((i) => dict[i]).filter((s): s is string => typeof s === "string");
   return {
     generatedAt: packed.generatedAt,
     schemaReady: packed.schemaReady,
     advThrough: packed.advThrough ?? null,
-    records: packed.records.map((p) => ({
-      id: p[0], name: p[1], category: p[2], subType: p[3], vertical: p[4], domain: p[5],
-      city: p[6], state: p[7], country: p[8], zone: p[9],
-      aum: p[10], aumKind: p[11], employees: p[12], founded: p[13], adv: p[14],
-      privateFunds: p[15], contacts: p[16], connectable: p[17], description: p[18], industry: p[19], lines: p[20],
-      lifecycle: p[21], discloses: p[22], portfolio: p[23] === 1, directory: p[24] === 1, providers: p[25], clientCount: p[26],
-      funds: p[27] ?? 0,
-      operators: p[28] ?? 0,
-      portcos: p[29] ?? 0,
-      typeCode: p[30] ?? null,
-      classes: p[31] ?? [],
-      strategies: p[32] ?? [],
-      sectors: p[33] ?? [],
-      regions: p[34] ?? [],
-      knownFunds: p[35] ?? 0,
-      altsPct: p[36] ?? null,
-      alloc: p[37] ?? [],
-      ticketMin: p[38] ?? null,
-      ticketMax: p[39] ?? null,
-      activeAlts: p[40] ?? null,
-      plans: p[41] ?? [],
-      raised: p[42] ?? [],
-      created: p[43] ?? null,
-      updated: p[44] ?? null,
-    })),
-    brands: packed.brands.map(([key, name, companyId, clients]) => ({ key, name, companyId, clients })),
+    records: packed.records.map((w) => {
+      const p = w as unknown as Partial<Packed>;
+      const flags = p[9] ?? 0;
+      const adv = (flags >> ADV_SHIFT) & 3;
+      return {
+        id: unpackId(p[0] as string),
+        name: p[1] as string,
+        category: p[2] as Category,
+        subType: word(p[3]),
+        vertical: word(p[25]),
+        domain: p[4] ?? null,
+        city: word(p[5]),
+        state: word(p[6]),
+        country: word(p[7]),
+        zone: word(p[8]) as Zone | null,
+        aum: p[10] ?? null,
+        aumKind: word(p[11]) as AumKind | null,
+        employees: p[12] ?? null,
+        founded: p[13] ?? null,
+        adv: adv === 1 ? "Registered" : adv === 2 ? "ERA" : null,
+        privateFunds: p[31] ?? null,
+        contacts: p[14] ?? 0,
+        connectable: p[15] ?? 0,
+        description: p[16] ?? null,
+        industry: word(p[26]),
+        lines: p[27] ?? null,
+        discloses: untri((flags >> DISCLOSES_SHIFT) & 3),
+        portfolio: (flags & FLAG_PORTFOLIO) !== 0,
+        directory: (flags & FLAG_DIRECTORY) !== 0,
+        providers: p[28] ?? [],
+        clientCount: p[29] ?? 0,
+        funds: p[30] ?? 0,
+        operators: p[32] ?? 0,
+        portcos: p[33] ?? 0,
+        typeCode: word(p[19]),
+        classes: words(p[20]) as AssetClassKey[],
+        strategies: words(p[21]),
+        sectors: words(p[22]),
+        regions: words(p[23]),
+        knownFunds: p[24] ?? 0,
+        altsPct: p[35] ?? null,
+        alloc: p[36] ?? [],
+        ticketMin: p[37] ?? null,
+        ticketMax: p[38] ?? null,
+        activeAlts: untri((flags >> ACTIVE_SHIFT) & 3),
+        plans: words(p[39]),
+        raised: p[34] ?? [],
+        created: p[17] ?? null,
+        updated: p[18] ?? null,
+      };
+    }),
+    brands: packed.brands.map(([key, name, companyId, clients]) => ({ key, name, companyId: companyId ? unpackId(companyId) : null, clients })),
   };
 }
 

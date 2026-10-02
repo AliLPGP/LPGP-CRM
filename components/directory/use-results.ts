@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import type { Category } from "@/lib/types";
+import type { AssetClassKey } from "@/lib/directory/asset-classes";
 import { matches, type DirectoryFilters, type SortKey } from "@/lib/directory/filters";
 import type { Zone } from "@/lib/directory/geo";
 import type { DirectoryRecord } from "@/lib/directory/records";
@@ -22,6 +23,12 @@ export type Facets = {
   zones: Map<Zone, number>;
   countries: Map<string, number>;
   adv: Map<string, number>;
+  classes: Map<AssetClassKey, number>;
+  strategies: Map<string, number>;
+  sectors: Map<string, number>;
+  /** Region codes (taxonomy.ts), from HQ and stated focus. */
+  prefRegions: Map<string, number>;
+  typeCodes: Map<string, number>;
 };
 
 export type Results = {
@@ -93,6 +100,11 @@ export function useResults(dir: Directory, filters: DirectoryFilters): Results {
       zones: new Map(),
       countries: new Map(),
       adv: new Map(),
+      classes: new Map(),
+      strategies: new Map(),
+      sectors: new Map(),
+      prefRegions: new Map(),
+      typeCodes: new Map(),
     };
     for (const row of candidates.list) {
       const r = row.record;
@@ -102,6 +114,13 @@ export function useResults(dir: Directory, filters: DirectoryFilters): Results {
       if (r.zone && matches(r, filters, ctx, "zones")) bump(facets.zones, r.zone);
       if (r.country && matches(r, filters, ctx, "countries")) bump(facets.countries, r.country);
       if (matches(r, filters, ctx, "adv")) bump(facets.adv, r.adv ?? "None");
+      // A record counts once per value it carries: a firm in two classes is
+      // one more under each.
+      if (r.classes.length && matches(r, filters, ctx, "classes")) for (const k of r.classes) bump(facets.classes, k);
+      if (r.strategies.length && matches(r, filters, ctx, "strategies")) for (const k of r.strategies) bump(facets.strategies, k);
+      if (r.sectors.length && matches(r, filters, ctx, "sectors")) for (const k of r.sectors) bump(facets.sectors, k);
+      if (r.regions.length && matches(r, filters, ctx, "prefRegions")) for (const k of r.regions) bump(facets.prefRegions, k);
+      if (r.typeCode && matches(r, filters, ctx, "typeCodes")) bump(facets.typeCodes, r.typeCode);
     }
 
     const sort: SortKey =

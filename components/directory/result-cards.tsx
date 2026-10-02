@@ -9,6 +9,8 @@ import { brandDomain } from "@/lib/directory/brand-domains";
 import { headcountLabel, sizeLabel, sizeTitle } from "@/lib/directory/format";
 import { locationLabel, providerPairs } from "@/lib/directory/records";
 import { highlight, snippet } from "@/lib/directory/search";
+import { STRATEGY_BY_KEY } from "@/lib/directory/strategies";
+import { typeNameOf } from "@/lib/directory/taxonomy";
 import { cn } from "@/lib/utils";
 import type { Directory } from "./use-directory";
 import type { ResultRow } from "./use-results";
@@ -47,6 +49,10 @@ export function ResultCards({
           const blurb = mode === "keywords" ? snippet(text, query, 220) : text?.slice(0, 220);
           const brands = [...new Set(providerPairs(r).map((p) => p.brand))].slice(0, 5).map((i) => dir.brands[i]);
           const place = locationLabel(r);
+          // The classified type, unless it only repeats the sub-type line above it.
+          const typeName = typeNameOf(r.category, r.typeCode);
+          const showType = typeName && typeName.toLowerCase() !== (r.subType ?? "").toLowerCase() ? typeName : null;
+          const strategy = r.strategies.length ? (STRATEGY_BY_KEY[r.strategies[0]]?.name ?? null) : null;
           return (
             <article
               key={r.id}
@@ -70,6 +76,12 @@ export function ResultCards({
                     <CategoryBadge category={r.category} />
                     {r.subType ? <span className="truncate">{r.subType}</span> : null}
                   </div>
+                  {showType || strategy ? (
+                    <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[11.5px] text-muted-foreground">
+                      {showType ? <span className="truncate">{showType}</span> : null}
+                      {strategy ? <span className="tag">{strategy}</span> : null}
+                    </div>
+                  ) : null}
                 </div>
                 <button
                   type="button"

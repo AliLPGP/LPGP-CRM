@@ -8,6 +8,7 @@
 import type { Category } from "../types";
 import { PROVIDER_ROLES, type ProviderRole } from "./providers";
 import type { Zone } from "./geo";
+import type { AssetClassKey } from "./asset-classes";
 
 /** Which figure `aum` holds, so the UI can say what it is. */
 export type AumKind = "brand" | "raum" | "gav" | "assets" | "manual";
@@ -59,6 +60,31 @@ export type DirectoryRecord = {
   operators: number;
   /** Portfolio companies on file. */
   portcos: number;
+  /** Taxonomy type code (taxonomy.ts) by book and sub-type; an LP's own
+   *  researched type wins when the profile states one. */
+  typeCode: string | null;
+  /** GP: the class its type places it in plus any a stated strategy names;
+   *  LP: the classes it allocates to or plans for; SP: none. */
+  classes: AssetClassKey[];
+  /** Strategy keys (strategies.ts) the firm's own words state, or an LP's stated preferences. */
+  strategies: string[];
+  /** Industry codes (taxonomy.ts) named in the overview, industry and vertical. */
+  sectors: string[];
+  /** Region codes: HQ first, then any stated geographic focus or preference. */
+  regions: string[];
+  /** LP: commitments on file; GP: funds on file; SP: distinct GP clients. */
+  knownFunds: number;
+  /** Stated allocation to alternatives, percent. */
+  altsPct: number | null;
+  /** [classKey, current %] for each allocation whose current figure is stated. */
+  alloc: [string, number][];
+  /** The commitment an LP writes per fund, USD, when its profile states it. */
+  ticketMin: number | null;
+  ticketMax: number | null;
+  /** False when the LP says it no longer invests in alternatives. */
+  activeAlts: boolean | null;
+  /** Classes the LP says it will invest in or is considering over the next twelve months. */
+  plans: string[];
 };
 
 export type DirectoryBrand = {
@@ -116,6 +142,9 @@ type Packed = [
   number | null, AumKind | null, number | null, number | null, "Registered" | "ERA" | null,
   number | null, number, number, string | null, string | null, string | null,
   string[], boolean | null, 0 | 1, 0 | 1, number[], number, number, number, number,
+  // 30..41, appended in this order; an older payload stops at 29 and unpacks with defaults.
+  string | null, AssetClassKey[], string[], string[], string[], number,
+  number | null, [string, number][], number | null, number | null, boolean | null, string[],
 ];
 
 export type PackedIndex = {
@@ -138,6 +167,8 @@ export function packIndex(index: DirectoryIndex): PackedIndex {
       r.privateFunds, r.contacts, r.connectable, r.description, r.industry, r.lines,
       r.lifecycle, r.discloses, r.portfolio ? 1 : 0, r.directory ? 1 : 0, r.providers, r.clientCount, r.funds,
       r.operators, r.portcos,
+      r.typeCode, r.classes, r.strategies, r.sectors, r.regions, r.knownFunds,
+      r.altsPct, r.alloc, r.ticketMin, r.ticketMax, r.activeAlts, r.plans,
     ]),
     brands: index.brands.map((b) => [b.key, b.name, b.companyId, b.clients]),
   };
@@ -157,6 +188,18 @@ export function unpackIndex(packed: PackedIndex): DirectoryIndex {
       funds: p[27] ?? 0,
       operators: p[28] ?? 0,
       portcos: p[29] ?? 0,
+      typeCode: p[30] ?? null,
+      classes: p[31] ?? [],
+      strategies: p[32] ?? [],
+      sectors: p[33] ?? [],
+      regions: p[34] ?? [],
+      knownFunds: p[35] ?? 0,
+      altsPct: p[36] ?? null,
+      alloc: p[37] ?? [],
+      ticketMin: p[38] ?? null,
+      ticketMax: p[39] ?? null,
+      activeAlts: p[40] ?? null,
+      plans: p[41] ?? [],
     })),
     brands: packed.brands.map(([key, name, companyId, clients]) => ({ key, name, companyId, clients })),
   };

@@ -9,6 +9,8 @@ import { deleteCompanies } from "@/lib/actions";
 import { CATEGORIES } from "@/lib/categories";
 import { toCsv } from "@/lib/csv";
 import { AUM_KIND_LABEL, type DirectoryRecord } from "@/lib/directory/records";
+import { STRATEGY_BY_KEY } from "@/lib/directory/strategies";
+import { REGION_BY_CODE, typeNameOf } from "@/lib/directory/taxonomy";
 import { Button } from "@/components/ui/button";
 import { ConfirmModal, Modal, ModalBody, ModalFooter, ModalHeader } from "@/components/ui/modal";
 import { Input } from "@/components/ui/input";
@@ -20,13 +22,15 @@ export type ListOption = { id: string; name: string; item_count: number };
 export function downloadCsv(records: DirectoryRecord[], filename: string) {
   const csv = toCsv(
     [
-      "Name", "Book", "Type", "City", "State", "Country", "Size (USD)", "Size basis", "Employees",
-      "Founded", "Form ADV", "Private funds", "Key contacts", "Website", "Description",
+      "Name", "Book", "Type", "Type (taxonomy)", "City", "State", "Country", "Size (USD)", "Size basis", "Employees",
+      "Founded", "Form ADV", "Private funds", "Known funds", "Alternatives %", "Strategies", "Regions",
+      "Key contacts", "Website", "Description",
     ],
     records.map((r) => [
       r.name,
       CATEGORIES[r.category].name,
       r.subType,
+      typeNameOf(r.category, r.typeCode),
       r.city,
       r.state,
       r.country,
@@ -36,6 +40,10 @@ export function downloadCsv(records: DirectoryRecord[], filename: string) {
       r.founded,
       r.adv,
       r.privateFunds,
+      r.knownFunds || null,
+      r.altsPct,
+      r.strategies.map((k) => STRATEGY_BY_KEY[k]?.name ?? k).join("; ") || null,
+      r.regions.map((k) => REGION_BY_CODE[k]?.name ?? k).join("; ") || null,
       r.contacts,
       r.domain ? `https://${r.domain}` : null,
       r.description,

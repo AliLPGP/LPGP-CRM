@@ -51,8 +51,8 @@ function paramsFor(f: Filters, offset: number): string {
 // on a newer click; while the next answer is in flight the last one stays up.
 type Shown = DealSearchResult & { key: string };
 
-export function DealLedger({ initial, initialClass }: { initial: DealSearchResult; initialClass?: AssetClassKey | null }) {
-  const [f, setF] = useState<Filters>({ cls: initialClass ?? null, kind: null, year: null, q: "", sort: "date" });
+export function DealLedger({ initial, initialClass, initialKind }: { initial: DealSearchResult; initialClass?: AssetClassKey | null; initialKind?: string | null }) {
+  const [f, setF] = useState<Filters>({ cls: initialClass ?? null, kind: initialKind ?? null, year: null, q: "", sort: "date" });
   const key = JSON.stringify(f);
   const [shown, setShown] = useState<Shown>(() => ({ ...initial, key }));
   const [more, setMore] = useState(false);

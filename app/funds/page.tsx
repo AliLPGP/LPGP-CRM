@@ -3,12 +3,14 @@ import { isSupabaseConfigured } from "@/lib/supabase/server";
 import { FundUniverseLoader } from "@/components/directory/fund-universe-loader";
 import { SetupNotice } from "@/components/setup-notice";
 import { IntelShell } from "@/components/intel/shell";
+import { ResearchQueueRunner } from "@/components/intel/research-buttons";
+import { getSessionUser } from "@/lib/auth";
 
 export const metadata = { title: "Funds — LPGP Connect" };
 export const dynamic = "force-dynamic";
 
 export default async function FundsPage() {
-  const data = await getFundUniverse();
+  const [data, user] = await Promise.all([getFundUniverse(), getSessionUser()]);
   // The first paint carries the best-documented slice (the universe is
   // sorted that way); the rest arrives from the API once the page is up.
   const FIRST = 3000;
@@ -19,6 +21,7 @@ export default async function FundsPage() {
       crumbs={[{ label: "Funds" }]}
       title="Funds"
       description="Every private fund on file — the vehicles managers name on Form ADV Schedule D, with the auditor, administrator and custodian each filing ties them to — plus any added by hand."
+      actions={user?.role === "admin" ? <ResearchQueueRunner kind="funds" aiReady={Boolean(process.env.ANTHROPIC_API_KEY)} /> : null}
     >
       {!isSupabaseConfigured() ? <SetupNotice /> : null}
       <FundUniverseLoader initial={initial} total={data.funds.length} />

@@ -212,3 +212,66 @@ export function EnrichPortcosButton({ ready }: { ready: boolean }) {
     </span>
   );
 }
+
+/**
+ * Admin: the next investors (or funds) with nothing on file, a few per call,
+ * call after call until done or stopped. Each call is one function run on the
+ * server; the message keeps a running total so a long session reads at a
+ * glance. Values the loader dropped for want of a source are counted, not hidden.
+ */
+export function ResearchQueueRunner({ kind, aiReady }: { kind: "investors" | "funds"; aiReady: boolean }) {
+  const router = useRouter();
+  const stop = useRef(false);
+  const [pending, start] = useTransition();
+  const [message, setMessage] = useState<string | null>(null);
+  if (!aiReady) return null;
+  const noun = kind === "investors" ? "investors" : "funds";
+  const url = kind === "investors" ? "/api/directory/investors/research" : "/api/directory/funds/research";
+  return (
+    <span className="inline-flex items-center gap-2">
+      {message ? <span className="max-w-[420px] text-[11px] text-muted-foreground">{message}</span> : null}
+      {pending ? (
+        <Button size="sm" variant="outline" onClick={() => { stop.current = true; setMessage((m) => `${m ?? ""} Stopping after this batch…`); }}>
+          <Square className="h-3.5 w-3.5" /> Stop
+        </Button>
+      ) : (
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() =>
+            start(async () => {
+              stop.current = false;
+              let done = 0;
+              let fields = 0;
+              let plans = 0;
+              let dropped = 0;
+              const failed: string[] = [];
+              for (let batch = 1; batch <= 60 && !stop.current; batch++) {
+                setMessage(`Batch ${batch}: reading the next ${noun}' own documents — a few minutes… (${done} done so far)`);
+                const r = await post(url, { limit: 4 });
+                if (!r.ok) {
+                  setMessage(r.message === "No investors left to research." || r.message === "No funds left to research." ? `${r.message} ${done} done this session.` : `${r.message} (${done} done before it).`);
+                  router.refresh();
+                  return;
+                }
+                done += Number(r.json.done ?? 0);
+                fields += Number(r.json.fields ?? 0);
+                plans += Number(r.json.plans ?? 0);
+                dropped += Number(r.json.dropped ?? 0);
+                failed.push(...(((r.json.failed as string[] | undefined) ?? []).slice(0, 3)));
+                router.refresh();
+                if (!Number(r.json.done ?? 0) && !((r.json.outOfTime as string[] | undefined)?.length)) break;
+              }
+              setMessage(
+                `${done} ${noun} researched: ${fields} values recorded with sources${kind === "investors" ? `, ${plans} plans` : ""}; ${dropped} value${dropped === 1 ? "" : "s"} dropped for want of a qualifying source.${failed.length ? ` Failed: ${failed.join(", ")}.` : ""}`,
+              );
+            })
+          }
+        >
+          <Search className="h-3.5 w-3.5" />
+          {kind === "investors" ? "Research investors" : "Research fund details"}
+        </Button>
+      )}
+    </span>
+  );
+}

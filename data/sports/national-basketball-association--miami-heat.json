@@ -1,0 +1,180 @@
+{
+ "city": "Miami",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "late 2024",
+   "evidence": "Kushner became a minority owner of the Miami Heat in late 2024.",
+   "headline": "Josh Kushner becomes a Heat minority owner",
+   "investor": "Josh Kushner",
+   "investor_type": "individual",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "Front Office Sports",
+   "source_url": "https://frontofficesports.com/who-is-new-lakers-owner-josh-kushner/",
+   "stake_pct": null,
+   "summary": "Kushner, founder of Thrive Capital, bought a minority stake in late 2024; ESPN (August 2026) reports he must sell it to clear his Lakers purchase.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "August 2026 (required, pending)",
+   "evidence": "He will have to sell his stake in the Heat to clear the way for the Lakers purchase.",
+   "headline": "Kushner must sell his Heat stake before buying the Lakers",
+   "investor": null,
+   "investor_type": "other",
+   "kind": "stake_sale",
+   "seller": "Josh Kushner",
+   "source_name": "ESPN",
+   "source_url": "https://www.espn.com/nba/story/_/id/49590362/josh-kushner-bob-iger-buy-lakers-12b",
+   "stake_pct": null,
+   "summary": "Buyer and terms not reported on the pages read.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "heat.com",
+ "facts": {
+  "chair": {
+   "evidence": "In 31 years leading the Miami HEAT, Chairman & Governor Micky Arison has guided the franchise",
+   "name": "Micky Arison",
+   "source_url": "https://www.nba.com/heat/bio/micky-arison",
+   "title": "Chairman & Governor"
+  },
+  "chief_executive": {
+   "evidence": "Nick Arison begins his 24th year as a full-time member of the HEAT organization and his 16th as Chief Executive Officer.",
+   "name": "Nick Arison",
+   "source_url": "https://www.nba.com/heat/bio/nick-arison",
+   "title": "Chief Executive Officer"
+  },
+  "honours": {
+   "competition": "NBA championships",
+   "evidence": "Championships 3",
+   "league_titles": 3,
+   "source_url": "https://www.forbes.com/teams/miami-heat/"
+  },
+  "operating_result": {
+   "amount": 110000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$110M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/miami-heat/"
+  },
+  "revenue_breakdown": {
+   "broadcast": null,
+   "commercial": null,
+   "currency": "USD",
+   "evidence": "$88M",
+   "matchday": 88000000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): gate receipts incl. club seats",
+   "source_url": "https://www.forbes.com/teams/miami-heat/"
+  },
+  "shirt_sponsor": {
+   "evidence": "Ahead of the 2024-25 season, the Heat announced financial services company Robinhood as their new jersey patch partner",
+   "name": "Robinhood",
+   "source_url": "https://www.forbes.com/teams/miami-heat/"
+  },
+  "stadium_owner": {
+   "detail": "Forbes lists Miami-Dade County as the Kaseya Center's owner.",
+   "evidence": "Venue Kaseya Center Owner(s) Miami-Dade County",
+   "source_url": "https://www.forbes.com/teams/miami-heat/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 183000000,
+   "currency": "USD",
+   "evidence": "$183M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/miami-heat/"
+  }
+ },
+ "founded_evidence": "brought the NBA franchise to South Florida in 1988",
+ "founded_source_url": "https://www.nba.com/heat/bio/micky-arison",
+ "founded_year": 1988,
+ "key": "national-basketball-association--miami-heat",
+ "league": "National Basketball Association",
+ "name": "Miami HEAT",
+ "notes": "Revenue, operating income, player expenses and gate receipts are Forbes estimates for 2024-25 (calculated October 2025). Founded: NBA.com gives 1988; the Heat's own bio says Ted Arison brought the franchise to South Florida in 1988. The club styles its name 'HEAT'. Arison's percentage and Kushner's stake size/price are not stated on any page read. Not found: legal entity, attendance, kit supplier, social counts, any private-equity/institutional holder.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "his father, Micky Arison, bought the controlling share of the franchise and was named Managing General Partner on February 13, 1995.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Micky Arison",
+   "since_year": 1995,
+   "source_url": "https://www.nba.com/heat/bio/nick-arison",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Kushner became a minority owner of the Miami Heat in late 2024.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Josh Kushner",
+   "since_year": 2024,
+   "source_url": "https://frontofficesports.com/who-is-new-lakers-owner-josh-kushner/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.nba.com/heat/bio/nick-arison",
+ "ownership_summary": "Controlled by the Arison family: Micky Arison (Carnival Corporation) bought the controlling share and became Managing General Partner on 13 February 1995; his son Nick Arison is CEO. Josh Kushner became a minority owner in late 2024 and must sell that stake before his pending Lakers purchase.",
+ "ownership_type": "individual_family",
+ "revenue": 417000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$417M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA Team Valuations, calculated October 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/miami-heat/",
+ "short_name": "Heat",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/miami-heat/",
+  "https://www.nba.com/team/1610612748",
+  "https://www.nba.com/heat/bio/nick-arison",
+  "https://www.nba.com/heat/bio/micky-arison",
+  "https://frontofficesports.com/who-is-new-lakers-owner-josh-kushner/",
+  "https://www.espn.com/nba/story/_/id/49590362/josh-kushner-bob-iger-buy-lakers-12b",
+  "https://www.foxsports.com/articles/nba/heat-owner-micky-arison-never-sought-the-spotlight-the-basketball-hall-of-fame-called-anyway"
+ ],
+ "sport": "basketball",
+ "stadium": "Kaseya Center",
+ "stadium_capacity": 19600,
+ "stadium_capacity_evidence": "Seating Capacity 19,600",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/miami-heat/",
+ "stadium_owner": {
+  "detail": "Forbes lists Miami-Dade County as the Kaseya Center's owner.",
+  "evidence": "Venue Kaseya Center Owner(s) Miami-Dade County",
+  "source_url": "https://www.forbes.com/teams/miami-heat/",
+  "value": "municipal"
+ },
+ "valuation": 5700000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$5.7B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/miami-heat/",
+ "valuation_year": 2025
+}

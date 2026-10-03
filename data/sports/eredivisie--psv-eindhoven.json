@@ -1,0 +1,204 @@
+{
+ "city": "Eindhoven",
+ "country": "Netherlands",
+ "deals": [
+  {
+   "amount": 30000000,
+   "currency": "EUR",
+   "date": "2016-07-08",
+   "date_text": "8 July 2016",
+   "evidence": "De vijf bedrijven stellen PSV samen dertig miljoen euro ter beschikking.",
+   "headline": "Five Brainport companies lend PSV EUR 30m through Partnerfonds I",
+   "investor": "PSV Partnerfonds I: Philips, ASML, De Mandemakers Groep, BrandLoyalty and VDL Groep",
+   "investor_type": "corporate",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "PSV",
+   "source_url": "https://www.psv.nl/media/artikel/psv-richt-partnerfonds-op",
+   "stake_pct": null,
+   "summary": "Philips, ASML, De Mandemakers Groep, BrandLoyalty and VDL Groep together made EUR 30m available on equal terms at 1.5% interest, partly new money and partly refinancing of old loans, for investment at De Herdgang and the stadium and to strengthen equity. The annual report shows the subordinated loans at EUR 30m, due by 2032.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 30000000,
+   "currency": "EUR",
+   "date": "2022-03-11",
+   "date_text": "11 March 2022",
+   "evidence": "De vijf partijen stellen PSV gezamenlijk direct een lening van dertig miljoen euro ter beschikking.",
+   "headline": "PSV raises a EUR 30m subordinated loan from five parties through Partnerfonds 2",
+   "investor": "PSV Partnerfonds 2: EDCO Eindhoven BV, Frank van Gool, Koninklijke Jumbo Foodgroep BV, Maarten Franken and Royal Swinkels Family Brewers",
+   "investor_type": "corporate",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "PSV",
+   "source_url": "https://www.psv.nl/media/artikel/psv-richt-partnerfonds-2-op",
+   "stake_pct": null,
+   "summary": "Three companies and two entrepreneurs lend PSV EUR 30m as a subordinated loan on the same terms as Partnerfonds I, for investment at the PSV campus and the Philips Stadion and for the football side. The 2024-25 annual report says 50% of the EUR 30m nominal was provided in 2021-22 (EUR 15m outstanding at 1.5%, repayments from 1 July 2032).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "psv.nl",
+ "facts": {
+  "chair": {
+   "evidence": "(Robert) van der Wallen - oprichter en voormalig CEO BrandLoyalty International (Voorzitter)",
+   "name": "Robert van der Wallen",
+   "source_url": "https://www.psv.nl/club/organisatie/structuur",
+   "title": "Chair, Raad van Commissarissen (supervisory board)"
+  },
+  "chief_executive": {
+   "evidence": "ligt bij de Algemeen Directeur, de heer M.W. (Marcel) Brands",
+   "name": "Marcel Brands",
+   "source_url": "https://www.psv.nl/club/organisatie/structuur",
+   "title": "Algemeen Directeur (general director)"
+  },
+  "honours": {
+   "competition": "Dutch national championship (Eredivisie), after 2025-26",
+   "evidence": "de 27e landstitel uit de clubhistorie",
+   "league_titles": 27,
+   "source_url": "https://www.psv.nl/media/artikel/landskampioen-psv-voor-27e-keer-kampioen-van-nederland"
+  },
+  "kit_supplier": {
+   "evidence": "PUMA levert de officiële sportkleding van PSV 1",
+   "name": "PUMA",
+   "source_url": "https://www.psv.nl/media/artikel/business-puma-en-psv-sluiten-nieuwe-deal-en-gaan-nog-jaren-samen-verder"
+  },
+  "legal_entity": {
+   "evidence": "KVK nummer 17104199",
+   "name": "PSV N.V.",
+   "registry": "Kamer van Koophandel (Handelsregister)",
+   "registry_id": "17104199",
+   "source_url": "https://www.psv.nl/media/artikel/psv-jaarverslag-2024-2025"
+  },
+  "operating_result": {
+   "amount": 11011000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "Bedrijfsresultaat 11.011",
+   "season": "2024-25",
+   "source_name": "PSV annual report 2024-2025 (Bedrijfsresultaat after a player-trading result of EUR -9.501m; operating result before player trading was EUR 20.512m)",
+   "source_url": "https://www.psv.nl/media/artikel/psv-jaarverslag-2024-2025"
+  },
+  "pretax_result": {
+   "amount": 10102000,
+   "currency": "EUR",
+   "evidence": "Resultaat uit gewone bedrijfsuitoefening voor belastingen 10.102",
+   "season": "2024-25",
+   "source_name": "PSV annual report 2024-2025 (consolidated)",
+   "source_url": "https://www.psv.nl/media/artikel/psv-jaarverslag-2024-2025"
+  },
+  "revenue_breakdown": {
+   "broadcast": 15039000,
+   "commercial": 41012000,
+   "currency": "EUR",
+   "evidence": "Subtotaal 93.131",
+   "matchday": 93131000,
+   "other": 5231000,
+   "season": "2024-25",
+   "source_name": "PSV annual report 2024-2025, note 20 (EUR thousands). Matchday = Wedstrijdopbrengsten subtotal, which includes UEFA prize money (Premies Europees voetbal) of EUR 65.085m; broadcast = Media; commercial = Partnerships only (merchandising EUR 11.274m and stadium operations EUR 5.155m are separate lines); other = Overige opbrengsten",
+   "source_url": "https://www.psv.nl/media/artikel/psv-jaarverslag-2024-2025"
+  },
+  "shirt_sponsor": {
+   "evidence": "shirtsponsor Metropoolregio Brainport Eindhoven",
+   "name": "Metropoolregio Brainport Eindhoven (consortium; Rabobank joined from 1 July 2025)",
+   "source_url": "https://www.psv.nl/media/artikel/psv-jaarverslag-2024-2025"
+  },
+  "stadium_owner": {
+   "detail": "The ground under the Philips Stadion belongs to the Municipality of Eindhoven, which bought it (with De Herdgang) from PSV in 2011 for EUR 48.4m and gave it back to PSV on a ground lease (erfpacht); PSV runs the stadium through its subsidiary PSV Stadionexploitatie BV and pays for its own works on it.",
+   "evidence": "Ze betalen daarvoor een vergoeding, maar de grond blijft eigendom van de gemeente.",
+   "source_url": "https://fandesk.psv.nl/support/solutions/articles/80001188223-heeft-de-uitbreiding-van-het-stadion-invloed-op-de-erfpachtovereenkomst-tussen-psv-en-de-gemeente-ein",
+   "value": "shared"
+  },
+  "wages": {
+   "amount": 84264000,
+   "currency": "EUR",
+   "evidence": "Lonen, salarissen en sociale lasten (21) 84.264",
+   "season": "2024-25",
+   "source_name": "PSV annual report 2024-2025 (wages, salaries and social charges, consolidated)",
+   "source_url": "https://www.psv.nl/media/artikel/psv-jaarverslag-2024-2025"
+  }
+ },
+ "founded_evidence": "De Eindhovense Voetbalvereniging PSV (Philips Sport Vereniging) werd opgericht op 31 augustus 1913",
+ "founded_source_url": "https://www.psv.nl/club/organisatie/structuur",
+ "founded_year": 1913,
+ "key": "eredivisie--psv-eindhoven",
+ "league": "Eredivisie",
+ "name": "PSV",
+ "notes": "Latest published accounts are 2024-2025 (year to 30 June 2025, signed 6 October 2025); the 2025-26 report was not yet on psv.nl on 2026-10-03. Figures are in EUR thousands in the report; net result EUR 7.548m. Stake percentages are not published: the foundation holds all shares but one special share. Capacity is the club's 'ruim 35.000' (more than 35,000). The club plans to expand the Philips Stadion to an expected 52,000-58,500 seats (works 2027-2030; intent agreement with the municipality signed 31 October 2025; financing still being worked out per psv.nl, March 2026). Social followers are the report's 2.2 million (another passage of the report gives 2.2 million for the Netherlands). No average attendance is given (more than 1 million spectators over 30 home matches). PSV's own 2022 release names Opportunity Partners rather than BrandLoyalty among the 2016 Partnerfonds I lenders. No valuation found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "De stichting PSV Voetbal beheert de aandelen van PSV N.V., met uitzondering van één bijzonder aandeel dat de Eindhovense Voetbalvereniging PSV heeft.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "other",
+   "name": "Stichting PSV Voetbal",
+   "since_year": 1999,
+   "source_url": "https://www.psv.nl/club/organisatie/structuur",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "met uitzondering van één bijzonder aandeel dat de Eindhovense Voetbalvereniging PSV heeft",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Eindhovense Voetbalvereniging PSV (one special share)",
+   "since_year": null,
+   "source_url": "https://www.psv.nl/club/organisatie/structuur",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.psv.nl/club/organisatie/structuur",
+ "ownership_summary": "PSV N.V. is held by Stichting PSV Voetbal, a foundation that has held the professional club since PSV N.V. was formed on 1 July 1999, except for one special share owned by the members' association Eindhovense Voetbalvereniging PSV (founded 1913 as Philips Sport Vereniging). Philips is the club's founder and a sponsor, not a shareholder. There are no private or institutional shareholders; outside money has come in as subordinated loans from regional companies (PSV Partnerfonds I in 2016, Partnerfonds 2 in 2022).",
+ "ownership_type": "other",
+ "revenue": 170842000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Netto-omzet (20) 170.842",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "PSV N.V. annual report 2024-2025 (consolidated, year to 30 June 2025; amounts in EUR thousands)",
+ "revenue_source_url": "https://www.psv.nl/media/artikel/psv-jaarverslag-2024-2025",
+ "short_name": "PSV",
+ "social_as_of": "2025-06",
+ "social_evidence": "Het aantal socialvolgers steeg met zestien procent, naar 2,2 miljoen.",
+ "social_followers": 2200000,
+ "social_platforms": [],
+ "social_source_url": "https://www.psv.nl/media/artikel/psv-jaarverslag-2024-2025",
+ "sources": [
+  "https://www.psv.nl/media/artikel/psv-jaarverslag-2024-2025",
+  "https://www.psv.nl/club/organisatie/jaarverslag",
+  "https://www.psv.nl/club/organisatie/structuur",
+  "https://www.psv.nl/media/artikel/nieuws-psv-presenteert-ambitieuze-plannen-forse-stadionuitbreiding-in-harmonie-met-stadsstructuur-en-philipsdorp",
+  "https://www.psv.nl/media/artikel/nieuws-psv-en-gemeente-eindhoven-ondertekenen-intentieovereenkomst-voor-uitbreiding-philips-stadion",
+  "https://fandesk.psv.nl/support/solutions/articles/80001188223-heeft-de-uitbreiding-van-het-stadion-invloed-op-de-erfpachtovereenkomst-tussen-psv-en-de-gemeente-ein",
+  "https://www.psv.nl/media/artikel/psv-richt-partnerfonds-op",
+  "https://www.psv.nl/media/artikel/psv-richt-partnerfonds-2-op",
+  "https://www.psv.nl/media/artikel/business-puma-en-psv-sluiten-nieuwe-deal-en-gaan-nog-jaren-samen-verder",
+  "https://www.psv.nl/media/artikel/landskampioen-psv-voor-27e-keer-kampioen-van-nederland",
+  "https://www.omroepbrabant.nl/nieuws/831232/psv-krijgt-48-miljoen-van-gemeente-voor-stadion-en-herdgang"
+ ],
+ "sport": "football",
+ "stadium": "Philips Stadion",
+ "stadium_capacity": 35000,
+ "stadium_capacity_evidence": "Momenteel biedt het Philips Stadion plaats aan ruim 35.000 toeschouwers.",
+ "stadium_capacity_source_url": "https://www.psv.nl/media/artikel/nieuws-psv-presenteert-ambitieuze-plannen-forse-stadionuitbreiding-in-harmonie-met-stadsstructuur-en-philipsdorp",
+ "stadium_owner": {
+  "detail": "The ground under the Philips Stadion belongs to the Municipality of Eindhoven, which bought it (with De Herdgang) from PSV in 2011 for EUR 48.4m and gave it back to PSV on a ground lease (erfpacht); PSV runs the stadium through its subsidiary PSV Stadionexploitatie BV and pays for its own works on it.",
+  "evidence": "Ze betalen daarvoor een vergoeding, maar de grond blijft eigendom van de gemeente.",
+  "source_url": "https://fandesk.psv.nl/support/solutions/articles/80001188223-heeft-de-uitbreiding-van-het-stadion-invloed-op-de-erfpachtovereenkomst-tussen-psv-en-de-gemeente-ein",
+  "value": "shared"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

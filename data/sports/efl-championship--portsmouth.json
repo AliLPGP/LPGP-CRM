@@ -1,0 +1,230 @@
+{
+ "city": "Portsmouth",
+ "country": "England",
+ "deals": [
+  {
+   "amount": 5670000,
+   "currency": "GBP",
+   "date": "2017-08-03",
+   "date_text": "3 August 2017",
+   "evidence": "Eisner, 75, and his Tornante investment group offered £5.67m to buy 100% of the club and will invest an extra £10m.",
+   "headline": "Michael Eisner's Tornante buys Portsmouth FC",
+   "investor": "The Tornante Company (Michael Eisner)",
+   "investor_type": "family_office",
+   "kind": "acquisition",
+   "seller": "Pompey Supporters' Trust and other shareholders",
+   "source_name": "BBC Sport",
+   "source_url": "https://www.bbc.co.uk/sport/football/40789323",
+   "stake_pct": 100,
+   "summary": "Eisner and his Tornante investment group offered £5.67m for 100% of the club and committed a further £10m; the Pompey Supporters Trust had owned 48.5%, with the rest held by 16 'presidents'. The Los Angeles Business Journal put the price at about $7.5 million with an estimated $13 million of further investment. Companies House shows Eisner as a person with significant control (75% or more) from 3 August 2017.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 8000000,
+   "currency": "GBP",
+   "date": null,
+   "date_text": "Year ended 30 June 2025",
+   "evidence": "During the year the owners, Tornante, provided £8.0m in loans adding to the £37m in equity share capital they have invested in the club to date",
+   "headline": "Owners lend Portsmouth £8.0m",
+   "investor": "The Tornante Company (owners)",
+   "investor_type": "family_office",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "Portsmouth Community FC Ltd accounts to 30 June 2025",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+   "stake_pct": null,
+   "summary": "Unsecured owner loans repayable on demand, interest at the US Applicable Federal Rate; on top of £37m of equity share capital invested to date. The club says it has no external debt.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 9000000,
+   "currency": "GBP",
+   "date": null,
+   "date_text": "July-December 2025",
+   "evidence": "Subsequent to the balance sheet date a further £9 million of funds has been provided by the Owners to the company during the period to December 2025, via the loan instrument",
+   "headline": "Owners provide a further £9m through the loan instrument",
+   "investor": "The Tornante Company (owners)",
+   "investor_type": "family_office",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "Portsmouth Community FC Ltd accounts to 30 June 2025",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+   "stake_pct": null,
+   "summary": "After the 30 June 2025 year end the owners provided a further £9 million through the same loan instrument to fund operations.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "portsmouthfc.co.uk",
+ "facts": {
+  "attendance": {
+   "average": 20263,
+   "evidence": "boost our average league attendance to 20,263",
+   "season": "2024-25",
+   "source_name": "Portsmouth Community FC Ltd strategic report, year ended 30 June 2025 (average league attendance)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1"
+  },
+  "chair": {
+   "evidence": "Club Chairman, Michael Eisner attended all four Heritage & Advisory Board meetings",
+   "name": "Michael Eisner",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+   "title": "Chairman"
+  },
+  "chief_executive": {
+   "evidence": "Chief Executive, Andrew Cullen",
+   "name": "Andrew Cullen",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+   "title": "Chief Executive"
+  },
+  "kit_supplier": {
+   "evidence": "Produced by Nike, the kit honors 100 years since Portsmouth was granted city status",
+   "name": "Nike",
+   "source_url": "https://www.footyheadlines.com/7929062680/portsmouth-26-27-home-kit-released.html"
+  },
+  "legal_entity": {
+   "evidence": "Company number 07940335",
+   "name": "Portsmouth Community Football Club Limited",
+   "registry": "Companies House",
+   "registry_id": "07940335",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335"
+  },
+  "operating_result": {
+   "amount": -1449000,
+   "basis": "EBITDA",
+   "currency": "GBP",
+   "evidence": "(1,449)",
+   "season": "2024-25",
+   "source_name": "Portsmouth Community FC Ltd accounts to 30 June 2025, statement of comprehensive income (£'000)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1"
+  },
+  "pretax_result": {
+   "amount": -4360000,
+   "currency": "GBP",
+   "evidence": "(4,360)",
+   "season": "2024-25",
+   "source_name": "Portsmouth Community FC Ltd accounts to 30 June 2025, statement of comprehensive income (£'000)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1"
+  },
+  "revenue_breakdown": {
+   "broadcast": 11564000,
+   "commercial": 2295000,
+   "currency": "GBP",
+   "evidence": "An analysis of the company's turnover is as follows",
+   "matchday": 8192000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Portsmouth Community FC Ltd accounts to 30 June 2025, note 3 (£'000): matchday 8,192; broadcasting 11,564; commercial and sponsorship 2,295; other football related income 827 and non-football income 1,690 are listed separately and not summed here",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1"
+  },
+  "stadium_owner": {
+   "detail": "Fratton Park is carried as the club's own tangible fixed asset (a 'Fratton Park stadium' class depreciated over 50 years) in Portsmouth Community Football Club Limited's accounts.",
+   "evidence": "Fratton Park stadium",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 15409000,
+   "currency": "GBP",
+   "evidence": "15,409",
+   "season": "2024-25",
+   "source_name": "Portsmouth Community FC Ltd accounts to 30 June 2025, staff costs note (wages and salaries, £'000; total staff costs 17,425)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1"
+  }
+ },
+ "founded_evidence": "the forerunners of Portsmouth FC prior to the club’s formation in 1898",
+ "founded_source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzQxNjMxODQ3NmFkaXF6a2N4/document?format=xhtml&download=1",
+ "founded_year": 1898,
+ "key": "efl-championship--portsmouth",
+ "league": "EFL Championship",
+ "name": "Portsmouth Football Club",
+ "notes": "The club's own site (portsmouthfc.co.uk) renders its content in the browser, so its history, board and partner pages could not be read or cited; facts come from the Companies House accounts instead. Revenue is turnover for the year to 30 June 2025 (accounts are in £'000; table figures are cited by the number alone because each sits in its own cell). Capacity: the 2023/24 accounts state 'increased capacity to 21,000'; the 2024/25 accounts say only 'over 20,000'. Stadium owner is inferred from Fratton Park being a fixed-asset class in the club's own balance sheet (cost £30,989k at 30 June 2025); no page reviewed says 'owns' in words. Tornante's economic interest in Portsmouth FC LLC is not stated (only 100% of voting rights); Companies House lists Eisner as PSC with 75% or more of shares and votes. Equity: £37m of share capital invested to date (allotments on Companies House in Nov 2021, June 2022, March 2023 and June 2024 raised issued capital to £37,005,673). Chair and CEO as named in the 2024/25 accounts (filed March 2026). Front-of-shirt sponsor (reported as the University of Portsmouth) not confirmed on a readable page. No valuation or social-follower count found on a citable page. The club stays in the Championship for 2026/27 (club site season data and kit release).",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Portsmouth Community Football Club Ltd (the Club) is wholly-owned by Portsmouth FC LLC",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "company",
+   "name": "Portsmouth FC LLC",
+   "since_year": null,
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "of which The Tornante Company LLC holds 100% of the voting rights",
+   "institutional": true,
+   "investor_type": "family_office",
+   "kind": "company",
+   "name": "The Tornante Company LLC",
+   "since_year": 2017,
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "The Tornante Company LLC is wholly-owned by Michael Eisner",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Michael Eisner",
+   "since_year": 2017,
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+ "ownership_summary": "Portsmouth Community Football Club Ltd is wholly owned by Portsmouth FC LLC, in which Michael Eisner's The Tornante Company LLC holds 100% of the voting rights; Tornante is wholly owned by Eisner, the only holder of a significant interest. Tornante bought the club in August 2017, including the Pompey Supporters' Trust's 48.5% stake, and has funded it with £37m of share capital plus owner loans.",
+ "ownership_type": "individual_family",
+ "revenue": 24568000,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "24,568",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Portsmouth Community Football Club Limited, full accounts for the year ended 30 June 2025 (Companies House; figures in £'000)",
+ "revenue_source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+ "short_name": "Portsmouth",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+  "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzQ0OTMzNzY2N2FkaXF6a2N4/document?format=xhtml&download=1",
+  "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzQxNjMxODQ3NmFkaXF6a2N4/document?format=xhtml&download=1",
+  "https://find-and-update.company-information.service.gov.uk/company/07940335",
+  "https://find-and-update.company-information.service.gov.uk/company/07940335/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history",
+  "https://labusinessjournal.com/media/sports-media/tornante-co-purchase-english-football-club-portsmo/",
+  "https://www.footyheadlines.com/7929062680/portsmouth-26-27-home-kit-released.html",
+  "https://www.bbc.co.uk/sport/football/40789323"
+ ],
+ "sport": "football",
+ "stadium": "Fratton Park",
+ "stadium_capacity": 21000,
+ "stadium_capacity_evidence": "the increased capacity to 21,000 enabled us to boost our average attendance to 18,952",
+ "stadium_capacity_source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzQ0OTMzNzY2N2FkaXF6a2N4/document?format=xhtml&download=1",
+ "stadium_owner": {
+  "detail": "Fratton Park is carried as the club's own tangible fixed asset (a 'Fratton Park stadium' class depreciated over 50 years) in Portsmouth Community Football Club Limited's accounts.",
+  "evidence": "Fratton Park stadium",
+  "source_url": "https://find-and-update.company-information.service.gov.uk/company/07940335/filing-history/MzUxMTI2MzA1NmFkaXF6a2N4/document?format=xhtml&download=1",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

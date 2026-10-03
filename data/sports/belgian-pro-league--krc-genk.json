@@ -1,0 +1,184 @@
+{
+ "city": "Genk",
+ "country": "Belgium",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2026-06-01",
+   "date_text": "1 June 2026 (general assembly)",
+   "evidence": "Dit engagement vormt een eerste stap binnen een breder kapitaalverhogingstraject dat de club de komende jaren verder moet versterken en tot 60 miljoen euro kan opleveren.",
+   "headline": "Thibaut Courtois's NXTPLAY takes a minority stake in KRC Genk",
+   "investor": "NXTPLAY (Thibaut Courtois, Gonzalo Vila)",
+   "investor_type": "other",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "KRC Genk",
+   "source_url": "https://www.krcgenk.be/nl/nieuws/6343/welkom-thuis-thibaut-courtois-investeert-via-nxtplay-in-krc-genk",
+   "stake_pct": null,
+   "summary": "NXTPLAY, the Madrid-based sports, media and technology investment platform co-founded by Thibaut Courtois, made a long-term minority investment in KRC Genk and took a board seat. The club's general assembly ratified it. It is the club's first external investor since football operations moved into a separate company, and the first step in a capital-raising programme that could bring in up to EUR 60m. The terms were not disclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2026-01-01",
+   "date_text": "1 January 2026",
+   "evidence": "Vanaf 1 januari 2026 zullen de voetbalactiviteiten van KRC Genk niet langer onder de vzw-structuur opereren.",
+   "headline": "KRC Genk moves its football business from the VZW into a limited company",
+   "investor": "K. Racing Club Genk 322 VZW",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": null,
+   "source_name": "VoetbalPrimeur",
+   "source_url": "https://www.voetbalprimeur.be/nieuws/1713030/peter-croonen-over-krc-genk-onder-nv-ipv-vzw.html",
+   "stake_pct": 100,
+   "summary": "The VZW sold its football activities to its subsidiary, the former Horeca & Events NV (renamed KRC Genk NV), so the club could take in outside capital. The VZW keeps the real estate and charges the NV a market rent for the stadium, youth academy and training centre. The VZW's claim on the NV was to be largely converted into capital.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "krcgenk.be",
+ "facts": {
+  "chair": {
+   "evidence": "In het kader van goed bestuur neemt voormalig ondervoorzitter Mathieu Cilissen voortaan de rol van voorzitter op.",
+   "name": "Mathieu Cilissen",
+   "source_url": "https://www.krcgenk.be/nl/nieuws/6343/welkom-thuis-thibaut-courtois-investeert-via-nxtplay-in-krc-genk",
+   "title": "Chairman (voorzitter)"
+  },
+  "chief_executive": {
+   "evidence": "Sinds het vertrek van Luc Hooybergs nam Peter Croonen de rol van CEO ad interim op.",
+   "name": "Peter Croonen",
+   "source_url": "https://www.krcgenk.be/nl/nieuws/6343/welkom-thuis-thibaut-courtois-investeert-via-nxtplay-in-krc-genk",
+   "title": "CEO"
+  },
+  "honours": {
+   "competition": "Belgian First Division / Pro League",
+   "evidence": "4 x Landskampioen van België:",
+   "league_titles": 4,
+   "source_url": "https://www.krcgenk.be/nl/club/algemene-info"
+  },
+  "legal_entity": {
+   "evidence": "0478.879.496",
+   "name": "KRC Genk NV",
+   "registry": "Crossroads Bank for Enterprises (KBO/BCE)",
+   "registry_id": "0478.879.496",
+   "source_url": "https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?lang=nl&ondernemingsnummer=0478879496"
+  },
+  "operating_result": {
+   "amount": 10807098,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "Bedrijfswinst (Bedrijfsverlies) (+)/(-) 9901 10.807.098",
+   "season": "2024-25",
+   "source_name": "K. Racing Club Genk 322 VZW annual accounts, year to 30 June 2025",
+   "source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/241b7d66-d5ba-11f0-9195-a940a632d958"
+  },
+  "pretax_result": {
+   "amount": 9367229,
+   "currency": "EUR",
+   "evidence": "Winst (Verlies) van het boekjaar vóór belasting (+)/(-) 9903 9.367.229",
+   "season": "2024-25",
+   "source_name": "K. Racing Club Genk 322 VZW annual accounts, year to 30 June 2025",
+   "source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/241b7d66-d5ba-11f0-9195-a940a632d958"
+  },
+  "stadium_owner": {
+   "detail": "The stadium, youth academy and training centre are owned by the club's non-profit association, K. Racing Club Genk 322 VZW. Since football operations moved into KRC Genk NV on 1 January 2026, the NV pays the VZW a market rent for the stadium.",
+   "evidence": "We gaan de voetbalactiviteiten verkopen aan deze nv, terwijl het vastgoed eigendom blijft van de vzw",
+   "source_url": "https://www.voetbalprimeur.be/nieuws/1713030/peter-croonen-over-krc-genk-onder-nv-ipv-vzw.html",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 53540132,
+   "currency": "EUR",
+   "evidence": "Bezoldigingen, sociale lasten en pensioenen (+)/(-) 6.9 62 53.540.132",
+   "season": "2024-25",
+   "source_name": "K. Racing Club Genk 322 VZW annual accounts, year to 30 June 2025 (staff costs, social charges and pensions)",
+   "source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/241b7d66-d5ba-11f0-9195-a940a632d958"
+  }
+ },
+ "founded_evidence": "Oprichting: 1988",
+ "founded_source_url": "https://www.krcgenk.be/nl/club/algemene-info",
+ "founded_year": 1988,
+ "key": "belgian-pro-league--krc-genk",
+ "league": "Belgian Pro League",
+ "name": "KRC Genk",
+ "notes": "The latest filed accounts are the VZW's for the year to 30 June 2025 (K. Racing Club Genk 322 VZW, KBO 0434.825.462); the new KRC Genk NV (KBO 0478.879.496, under this name since 30 Dec 2025) has not filed yet. Revenue is statutory net turnover (code 70) of EUR 33.5m. Total operating income was EUR 102,953,926, including EUR 55,955,475 of other operating income (transfers etc.) and EUR 13,483,361 of subsidies; this is the 'record turnover above EUR 100m' the press quotes. Net profit was EUR 9,167,383 and the result available for appropriation EUR 3,748,168. In 2023-24 the club made a net loss of EUR 15,199,217; Voetbalbelgie links the move to a limited company to a multi-million settlement with the tax authorities. NXTPLAY's stake and price were not disclosed. Croonen said in June 2026 that ideally three investors would bring in EUR 60m within two years. The stadium renovation is estimated at about EUR 60m, with work from 2027. Directors of the VZW and the NV include Peter Croonen, Mathieu Cilissen, Herman Nijs, Luc Lormans, Roland Reynders and Jan Truijen (KBO). Stadium capacity is the figure UEFA's match data gives for UEFA games (sponsor-neutral name 'KRC Genk Arena', 2025-26 Europa League). Domestic capacity, which includes standing areas, is higher but is not stated on the club site. Not found on a citable page: attendance, shirt sponsor, kit supplier, social counts and any valuation.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "De VZW zal honderd procent aandeelhouder van onze voetbal-NV zijn",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "K. Racing Club Genk 322 VZW",
+   "since_year": 2026,
+   "source_url": "https://www.voetbalbelgie.be/artikel/genk-investeerders-stadion",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Courtois en NXTPLAY doen een minderheidsinvestering op lange termijn in KRC Genk.",
+   "institutional": true,
+   "investor_type": "other",
+   "kind": "fund",
+   "name": "NXTPLAY (co-founded by Thibaut Courtois and Gonzalo Vila)",
+   "since_year": 2026,
+   "source_url": "https://www.krcgenk.be/nl/nieuws/6343/welkom-thuis-thibaut-courtois-investeert-via-nxtplay-in-krc-genk",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.krcgenk.be/nl/nieuws/6343/welkom-thuis-thibaut-courtois-investeert-via-nxtplay-in-krc-genk",
+ "ownership_summary": "KRC Genk was run for decades by a non-profit association, K. Racing Club Genk 322 VZW, with no shareholders. On 1 January 2026 the football business moved into KRC Genk NV, which the VZW was to own 100%. In June 2026 Thibaut Courtois's Madrid-based investment platform NXTPLAY made an undisclosed minority investment and took a board seat. It is the first step in a capital-raising programme the club says could bring in up to EUR 60m over the coming years.",
+ "ownership_type": "member_owned",
+ "revenue": 33515090,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Omzet 6.9 70 33.515.090",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "K. Racing Club Genk 322 VZW annual accounts, year to 30 June 2025 (National Bank of Belgium filing), net turnover (code 70)",
+ "revenue_source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/241b7d66-d5ba-11f0-9195-a940a632d958",
+ "short_name": "Genk",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.krcgenk.be/nl/club/algemene-info",
+  "https://www.krcgenk.be/nl/nieuws/6343/welkom-thuis-thibaut-courtois-investeert-via-nxtplay-in-krc-genk",
+  "https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?lang=nl&ondernemingsnummer=0478879496",
+  "https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?lang=nl&ondernemingsnummer=0434825462",
+  "https://consult.cbso.nbb.be/api/rs-consult/published-deposits?page=0&size=5&enterpriseNumber=0434825462&sort=periodEndDate,desc&sort=depositDate,desc",
+  "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/241b7d66-d5ba-11f0-9195-a940a632d958",
+  "https://www.voetbalprimeur.be/nieuws/1713030/peter-croonen-over-krc-genk-onder-nv-ipv-vzw.html",
+  "https://www.voetbalbelgie.be/artikel/genk-investeerders-stadion",
+  "https://www.voetbalkrant.com/nieuws/2025-11-18/krc-genk-zoekt-een---stevige---externe-investeerder-gaat-60-miljoen-kosten",
+  "https://www.voetbalbelgie.be/artikel/courtois-co-60-miljoen-in-krc-genk",
+  "https://www.insideworldfootball.com/2026/06/02/thibaut-courtois-racing-genk-nxtplay-investment/",
+  "https://match.uefa.com/v5/matches?matchId=2048121"
+ ],
+ "sport": "football",
+ "stadium": "Cegeka Arena",
+ "stadium_capacity": 19177,
+ "stadium_capacity_evidence": "\"capacity\":19177",
+ "stadium_capacity_source_url": "https://match.uefa.com/v5/matches?matchId=2048121",
+ "stadium_owner": {
+  "detail": "The stadium, youth academy and training centre are owned by the club's non-profit association, K. Racing Club Genk 322 VZW. Since football operations moved into KRC Genk NV on 1 January 2026, the NV pays the VZW a market rent for the stadium.",
+  "evidence": "We gaan de voetbalactiviteiten verkopen aan deze nv, terwijl het vastgoed eigendom blijft van de vzw",
+  "source_url": "https://www.voetbalprimeur.be/nieuws/1713030/peter-croonen-over-krc-genk-onder-nv-ipv-vzw.html",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

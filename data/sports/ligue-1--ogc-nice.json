@@ -1,0 +1,217 @@
+{
+ "city": "Nice",
+ "country": "France",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2016-06-10",
+   "date_text": "10 June 2016 (agreement announced)",
+   "evidence": "un accord a été conclu pour le rachat par des investisseurs chinois et américains de 80% du capital du club",
+   "headline": "Chinese and American investors agree to buy 80% of OGC Nice",
+   "investor": "Chien Lee (NewCity Capital), Alex Zheng (Plateno Group) and Paul Conway (Pacific Media Group)",
+   "investor_type": "consortium",
+   "kind": "acquisition",
+   "seller": "Gilbert Stellardo, Patrick Governatori, Jean Bessis and Louis Bacchialoni (49%) and Jean-Pierre Rivère (31% of his shares)",
+   "source_name": "OGC Nice official communiqué",
+   "source_url": "https://www.ogcnice.com/fr/article/23766/nouveaux-investisseurs-communique-officiel.html",
+   "stake_pct": 80,
+   "summary": "OGC Nice announced an agreement for Chinese and American investors to buy 80% of the club: the 49% held by Stellardo, Governatori, Bessis and Bacchialoni plus 31% from president Jean-Pierre Rivère, who kept 20%. The lead investors were Chien Lee (NewCity Capital) and Alex Zheng (Plateno Group), with Paul Conway (Pacific Media Group). No price was published.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 22000000,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "Late December 2018",
+   "evidence": "Ce dernier s’est engagé à prêter 22 millions d’euros au club niçois avec un taux d’intérêt de 9% remboursable sur quatre ans.",
+   "headline": "OGC Nice borrows EUR 22m at 9% from Luxembourg lender Thalos",
+   "investor": "Thalos Investment Platform (Luxembourg)",
+   "investor_type": "private_credit",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "Challenges",
+   "source_url": "https://www.challenges.fr/entreprise/sports/football-le-mysterieux-fonds-luxembourgeois-de-l-ogc-nice_654751",
+   "stake_pct": null,
+   "summary": "Challenges reported that OGC Nice signed a four-year loan with Luxembourg credit fund Thalos Investment Platform (a subsidiary of Swiss group Vicenda) in late December 2018: EUR 22m at 9% interest, matching the sums the Sino-American owners had put into the club and wanted repaid.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 100000000,
+   "currency": "EUR",
+   "date": "2019-08-26",
+   "date_text": "26 August 2019",
+   "evidence": "Ineos, which purchased 100 per cent of Nice for €100 million (US$113 million) in 2019",
+   "headline": "INEOS completes the acquisition of OGC Nice",
+   "investor": "INEOS",
+   "investor_type": "corporate",
+   "kind": "acquisition",
+   "seller": "Chien Lee, Alex Zheng, Paul Conway and Jean-Pierre Rivère",
+   "source_name": "SportsPro (price and stake; completion date from the INEOS press release of 26 August 2019)",
+   "source_url": "https://www.sportspro.com/news/nice-ineos-jim-ratcliffe-sale-ownership-manchester-united-may-2025/",
+   "stake_pct": 100,
+   "summary": "Jim Ratcliffe's INEOS completed the purchase of 100% of OGC Nice on 26 August 2019 after French competition clearance; the club joined INEOS Football (CEO Bob Ratcliffe). SportsPro, citing The Athletic, put the price at EUR 100m and INEOS's subsequent share capital injections at EUR 216m.",
+   "valuation": 100000000,
+   "valuation_currency": "EUR",
+   "verified": true
+  }
+ ],
+ "domain": "ogcnice.com",
+ "facts": {
+  "chair": {
+   "evidence": "\"nom\":\"ANDERSON\",\"prenoms\":\"GARETH\"",
+   "name": "Gareth Anderson",
+   "source_url": "https://recherche-entreprises.api.gouv.fr/search?q=404115198",
+   "title": "Chair of the supervisory board (Président du conseil de surveillance)"
+  },
+  "chief_executive": {
+   "evidence": "Maurice Cohen assurera la présidence de l'OGC Nice",
+   "name": "Maurice Cohen",
+   "source_url": "https://www.ogcnice.com/fr/article/130496/communique-officiel-de-logc-nice.html",
+   "title": "President (Président du directoire), appointed 17 June 2026"
+  },
+  "honours": {
+   "competition": "French top flight (Division 1)",
+   "evidence": "4 titres de champion, 2 Coupes de France",
+   "league_titles": 4,
+   "source_url": "https://www.ogcnice.com/fr/club/histoire/du-gcn-bleu-et-noir-a-logc-nice.html"
+  },
+  "kit_supplier": {
+   "evidence": "L’OGC Nice et Kappa sont fiers de présenter les nouvelles tenues domicile et extérieur",
+   "name": "Kappa",
+   "source_url": "https://www.ogcnice.com/fr/article/130573/les-nouveaux-maillots-2026-27-de-logc-nice.html"
+  },
+  "legal_entity": {
+   "evidence": "Immatriculée au Registre du commerce et des sociétés de Nice sous le numéro 404 115 198",
+   "name": "Olympique Gymnaste Club de Nice Côte d'Azur (SASP)",
+   "registry": "RCS Nice / SIRENE",
+   "registry_id": "404 115 198",
+   "source_url": "https://www.ogcnice.com/fr/club/mentions-legales.html"
+  },
+  "operating_result": {
+   "amount": -80800000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "(LOSS) -80 800",
+   "season": "2024-25",
+   "source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP OGC Nice + SARL Promofoot + Association; K€): operating result before player trading",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "pretax_result": {
+   "amount": -40504000,
+   "currency": "EUR",
+   "evidence": "PROFIT (LOSS) BEFORE TAX -40 504",
+   "season": "2024-25",
+   "source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP OGC Nice + SARL Promofoot + Association; K€)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 24817000,
+   "commercial": 47708000,
+   "currency": "EUR",
+   "evidence": "Broadcasting rights 24 817 Sponsors - Advertising 47 708 Gate receipts 6 586 Other income 14 283",
+   "matchday": 6586000,
+   "other": 14283000,
+   "season": "2024-25",
+   "source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP OGC Nice + SARL Promofoot + Association; K€): gate receipts, broadcasting rights, sponsors-advertising, other income",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "Sponsor maillot de l’OGC Nice, Robinhood attire l’attention de l’ANJ",
+   "name": "Robinhood",
+   "source_url": "https://www.sportbuzzbusiness.fr/pourquoi-robinhood-sponsor-maillot-de-logc-nice-est-dans-le-viseur-de-lautorite-nationale-des-jeux.html"
+  },
+  "stadium_owner": {
+   "detail": "The City of Nice owns the Allianz Riviera (opened 2013); it is run by the operating company Nice Eco Stadium under a public-private partnership, and OGC Nice is the resident club.",
+   "evidence": "La Ville de Nice possède l’",
+   "source_url": "https://lessentieldeleco.fr/8319-ligue-1-a-qui-appartient-le-stade-de-votre-club/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 89834000,
+   "currency": "EUR",
+   "evidence": "Total payroll 89 834",
+   "season": "2024-25",
+   "source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP OGC Nice + SARL Promofoot + Association; K€): total payroll",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  }
+ },
+ "founded_evidence": "Le Gymnaste Club de Nice naît le 9 Juillet 1904",
+ "founded_source_url": "https://www.ogcnice.com/fr/club/histoire/du-gcn-bleu-et-noir-a-logc-nice.html",
+ "founded_year": 1904,
+ "key": "ligue-1--ogc-nice",
+ "league": "Ligue 1",
+ "name": "OGC Nice",
+ "notes": "Revenue and P&L are the DNCG's published 2024/25 accounts (season to 30 June 2025, the latest the league has published; the 2025/26 accounts are due in spring 2027); the DNCG reports in thousands of euros, converted here to full units, and its perimeter is SASP OGC Nice + SARL Promofoot + Association. The same accounts show a EUR 48.05m profit on player transfers, a EUR 40.5m net loss, financial debts of EUR 5.98m and cash of EUR 62.2m at 30 June 2025 (no net-debt figure is stated, so none is recorded). No independent valuation (Forbes/Sportico) exists; the valuation field is the 2019 purchase price for 100%. INEOS put the club up for sale: SportsPro (May 2025, citing The Athletic) reported Lazard was hired and a EUR 250m asking price; Bloomberg (Jan 2026) reported a lower asking price; negotiations with a US investor failed on 12 June 2026 (Maxifoot, citing Nice-Matin) and INEOS kept the club. Sportune (30 Sep 2026) lists the 2019 purchase cost at EUR 100m. No attendance or social-follower figure with a date was found on a citable page.",
+ "owners": [
+  {
+   "amount": 100000000,
+   "currency": "EUR",
+   "evidence": "Ineos, which purchased 100 per cent of Nice for €100 million (US$113 million) in 2019",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "INEOS (INEOS Football; founder Jim Ratcliffe with co-owners Andy Currie and John Reece)",
+   "since_year": 2019,
+   "source_url": "https://www.sportspro.com/news/nice-ineos-jim-ratcliffe-sale-ownership-manchester-united-may-2025/",
+   "stake_pct": 100,
+   "valuation_at_entry": 100000000
+  }
+ ],
+ "ownership_source_url": "https://www.ogcnice.com/fr/club/organigramme.html",
+ "ownership_summary": "OGC Nice (SASP Olympique Gymnaste Club de Nice Côte d'Azur) has been 100% owned by INEOS, Jim Ratcliffe's chemicals group, through its INEOS Football arm since 26 August 2019; the club names Ratcliffe and co-owners Andy Currie and John Reece. INEOS ran a sale process (Lazard was reported as adviser in May 2025), but talks with a US investor collapsed in June 2026 and INEOS kept the club.",
+ "ownership_type": "corporate",
+ "revenue": 93394000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL NON-TRANSFER EARNINGS 93 394",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP OGC Nice + SARL Promofoot + Association; K€); total non-transfer earnings (revenue excluding player trading)",
+ "revenue_source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+ "short_name": "Nice",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.ogcnice.com/fr/club/histoire/du-gcn-bleu-et-noir-a-logc-nice.html",
+  "https://www.ogcnice.com/fr/club/histoire/une-nouvelle-ere.html",
+  "https://www.ogcnice.com/fr/club/organigramme.html",
+  "https://www.ogcnice.com/fr/stade/allianz-riviera.html",
+  "https://www.allianz-riviera.fr/fr/allianz-riviera/lallianz-riviera-en-bref",
+  "https://lessentieldeleco.fr/8319-ligue-1-a-qui-appartient-le-stade-de-votre-club/",
+  "https://www.ineos.com/news/ineos-group/ineos-completes-deal-to-acquire-french-ligue-1-football-club-ogc-nice/",
+  "https://www.sportspro.com/news/nice-ineos-jim-ratcliffe-sale-ownership-manchester-united-may-2025/",
+  "https://www.ogcnice.com/fr/article/23766/nouveaux-investisseurs-communique-officiel.html",
+  "https://www.challenges.fr/entreprise/sports/football-le-mysterieux-fonds-luxembourgeois-de-l-ogc-nice_654751",
+  "https://recherche-entreprises.api.gouv.fr/search?q=404115198",
+  "https://www.ogcnice.com/fr/club/mentions-legales.html",
+  "https://www.ogcnice.com/fr/article/130496/communique-officiel-de-logc-nice.html",
+  "https://www.ogcnice.com/fr/article/130573/les-nouveaux-maillots-2026-27-de-logc-nice.html",
+  "https://www.sportbuzzbusiness.fr/pourquoi-robinhood-sponsor-maillot-de-logc-nice-est-dans-le-viseur-de-lautorite-nationale-des-jeux.html",
+  "https://news.maxifoot.fr/nice/la-vente-du-club-a-echoue-foot-457621.htm",
+  "https://sportune.20minutes.fr/sport-business/football/om-psg-ol-losc-rc-lens-de-1-euro-a-100-millions-combien-ont-coute-les-clubs-de-ligue-1-a-leurs-proprietaires-412720",
+  "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+ ],
+ "sport": "football",
+ "stadium": "Allianz Riviera",
+ "stadium_capacity": 36178,
+ "stadium_capacity_evidence": "36.178 places (football)",
+ "stadium_capacity_source_url": "https://www.ogcnice.com/fr/stade/allianz-riviera.html",
+ "stadium_owner": {
+  "detail": "The City of Nice owns the Allianz Riviera (opened 2013); it is run by the operating company Nice Eco Stadium under a public-private partnership, and OGC Nice is the resident club.",
+  "evidence": "La Ville de Nice possède l’",
+  "source_url": "https://lessentieldeleco.fr/8319-ligue-1-a-qui-appartient-le-stade-de-votre-club/",
+  "value": "municipal"
+ },
+ "valuation": 100000000,
+ "valuation_currency": "EUR",
+ "valuation_evidence": "Ineos, which purchased 100 per cent of Nice for €100 million (US$113 million) in 2019",
+ "valuation_source_name": "SportsPro (price INEOS paid for 100% of the club in 2019; not a current valuation)",
+ "valuation_source_url": "https://www.sportspro.com/news/nice-ineos-jim-ratcliffe-sale-ownership-manchester-united-may-2025/",
+ "valuation_year": 2019
+}

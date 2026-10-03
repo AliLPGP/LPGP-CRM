@@ -1,0 +1,179 @@
+{
+ "city": "New York",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2026-10-26",
+   "date_text": "Spin-off approved 30 September 2026, expected to complete 26 October 2026",
+   "evidence": "The transaction is expected to be completed on Oct. 26, and the sports teams will trade on the New York Stock Exchange under the MSGK (Knicks) and MSGR (Rangers) symbols.",
+   "headline": "MSG Sports spins the Rangers off into a separately listed company (MSGR)",
+   "investor": "MSGS Spinco, Inc. (MSG Rangers) shareholders",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": "Madison Square Garden Sports Corp.",
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/finance/2026/msg-spinoff-new-york-knicks-rangers-1234946324/",
+   "stake_pct": 100,
+   "summary": "MSG Sports' board approved the tax-free spin-off of the Rangers business (with the AHL Hartford Wolf Pack and the MSG Training Center) from the Knicks; MSG Sports becomes MSG Knickerbockers (MSGK) and the Rangers trade as MSGR, with James Dolan as CEO and chairman of both.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 250000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": "Revolving facility outstanding as of 30 June 2026; expires November 2030",
+   "evidence": "provides for a senior secured revolving credit facility of $250 million",
+   "headline": "Rangers $250m senior secured revolving credit facility",
+   "investor": null,
+   "investor_type": "other",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "MSGS Spinco, Inc. Form 10 information statement",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm",
+   "stake_pct": null,
+   "summary": "The Rangers Credit Agreement provides a $250 million senior secured revolving credit facility, undrawn at 30 June 2026 and expiring November 2030; the NHL advance of $30 million (2020) had $16.5 million outstanding.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "nhl.com/rangers",
+ "facts": {
+  "chair": {
+   "evidence": "Executive Chairman and CEO James L. Dolan",
+   "name": "James L. Dolan",
+   "source_url": "https://www.nhl.com/rangers/team/front-office",
+   "title": "Executive Chairman and CEO, MSG Sports"
+  },
+  "chief_executive": {
+   "evidence": "President, Chief Operating Officer, and Alternate Governor, New York Rangers Quentin Dolan",
+   "name": "Quentin Dolan",
+   "source_url": "https://www.nhl.com/rangers/team/front-office",
+   "title": "President, Chief Operating Officer, and Alternate Governor, New York Rangers"
+  },
+  "honours": {
+   "competition": "Stanley Cup",
+   "evidence": "the Rangers have won four Stanley Cup Championships",
+   "league_titles": 4,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm"
+  },
+  "legal_entity": {
+   "evidence": "in 2020, New York Rangers, LLC received a $30 million advance from the NHL",
+   "name": "New York Rangers, LLC",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm"
+  },
+  "operating_result": {
+   "amount": -30474000,
+   "basis": "operating profit",
+   "currency": "USD",
+   "evidence": "Operating loss (30,474 ) (23,259 ) (7,215 ) (31)%",
+   "season": "2025-26",
+   "source_name": "MSGS Spinco, Inc. Form 10 information statement (fiscal year ended 30 June 2026, in thousands)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm"
+  },
+  "pretax_result": {
+   "amount": -34150000,
+   "currency": "USD",
+   "evidence": "Loss before income taxes (34,150 ) (27,846 )",
+   "season": "2025-26",
+   "source_name": "MSGS Spinco, Inc. Form 10 information statement (fiscal year ended 30 June 2026, in thousands)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm"
+  },
+  "stadium_owner": {
+   "detail": "The Garden is licensed from Madison Square Garden Entertainment Corp. under a long-term Arena License Agreement",
+   "evidence": "We license The Garden, which has a maximum capacity of approximately 18,000 seats for New York Rangers games, from MSG Entertainment",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm",
+   "value": "private_third_party"
+  },
+  "wages": {
+   "amount": 100000000,
+   "currency": "USD",
+   "evidence": "$100M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/new-york-rangers/"
+  }
+ },
+ "founded_evidence": "From the Rangers’ inception in 1926 through present day",
+ "founded_source_url": "https://www.nhl.com/rangers/team/history/",
+ "founded_year": 1926,
+ "key": "national-hockey-league--new-york-rangers",
+ "league": "National Hockey League",
+ "name": "New York Rangers",
+ "notes": "Revenue, operating and pre-tax results are the Rangers business's own audited combined figures (fiscal year to 30 June 2026, USD thousands in the filing) from the MSGS Spinco Form 10 (10-12B/A filed 30 Sep 2026); the filing also states revenue sharing expense of about $43.5m for FY2026. Forbes' Dec 2025 estimates for comparison: value $4B, revenue $322M, operating income $182M (EBITDA basis), player expenses $100M, gate receipts $121M. Sportico 2026 value $4.15bn supersedes its earlier $3.65bn. Ownership is described as at the spin-off; after 26 Oct 2026 the owner is MSG Rangers (MSGR) shareholders, with the Dolan Family Group controlling about 63.4% of votes. Debt at 30 June 2026 was $16.5m (NHL advance), cash not stated net, so net_debt left null. No attendance, sponsor or social counts found on citable pages.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "pro-rata distribution expected to be equivalent, in the aggregate, to 100% of the economic i",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Madison Square Garden Sports Corp.",
+   "since_year": null,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "approximately 63.4% of the total voting power of all our outstanding common stock",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Dolan Family Group",
+   "since_year": null,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm",
+ "ownership_summary": "Owned by NYSE-listed Madison Square Garden Sports Corp. (controlled by the Dolan family through Class B stock). MSG Sports' board approved a tax-free spin-off of the Rangers business into MSGS Spinco, Inc. (to trade as MSG Rangers, NYSE: MSGR), expected to complete on 26 October 2026; after the distribution the Dolan Family Group will hold about 63.4% of the new company's voting power.",
+ "ownership_type": "public_listed",
+ "revenue": 337270000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenues for Fiscal Year 2026 increased $5,253, or 2%, to $337,270 as compared to Fiscal Year 2025.",
+ "revenue_season": "2025-26",
+ "revenue_source_name": "MSGS Spinco, Inc. (MSG Rangers) Form 10 information statement, audited combined financials, fiscal year ended 30 June 2026",
+ "revenue_source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm",
+ "short_name": "Rangers",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm",
+  "https://www.sportico.com/valuations/teams/2026/nhl-team-values-2026-maple-leafs-rangers-canadiens-1234945937/",
+  "https://www.sportico.com/business/finance/2026/msg-spinoff-new-york-knicks-rangers-1234946324/",
+  "https://www.sportico.com/business/finance/2026/knicks-rangers-msg-sports-split-explainer-1234901440/",
+  "https://www.forbes.com/teams/new-york-rangers/",
+  "https://www.nhl.com/rangers/team/history/",
+  "https://www.nhl.com/rangers/team/front-office"
+ ],
+ "sport": "ice_hockey",
+ "stadium": "Madison Square Garden",
+ "stadium_capacity": 18000,
+ "stadium_capacity_evidence": "maximum capacity of approximately 18,000 seats for New York Rangers games",
+ "stadium_capacity_source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm",
+ "stadium_owner": {
+  "detail": "The Garden is licensed from Madison Square Garden Entertainment Corp. under a long-term Arena License Agreement",
+  "evidence": "We license The Garden, which has a maximum capacity of approximately 18,000 seats for New York Rangers games, from MSG Entertainment",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/2132873/000119312526409182/d127770dex991.htm",
+  "value": "private_third_party"
+ },
+ "valuation": 4150000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "followed by the New York Rangers ($4.15 billion)",
+ "valuation_source_name": "Sportico NHL team values 2026",
+ "valuation_source_url": "https://www.sportico.com/valuations/teams/2026/nhl-team-values-2026-maple-leafs-rangers-canadiens-1234945937/",
+ "valuation_year": 2026
+}

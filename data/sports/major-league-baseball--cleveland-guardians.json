@@ -1,0 +1,162 @@
+{
+ "city": "Cleveland",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2022-06-16",
+   "date_text": "June 2022",
+   "evidence": "MLB has approved David Blitzer's purchase of a 25 percent stake in the Guardians, with the option of becoming majority owner in six years.",
+   "headline": "MLB approves David Blitzer's 25% stake in the Guardians",
+   "investor": "David Blitzer",
+   "investor_type": "individual",
+   "kind": "minority_investment",
+   "seller": "Dolan family",
+   "source_name": "MLB.com",
+   "source_url": "https://www.mlb.com/news/david-blitzer-approved-as-guardians-minority-owner",
+   "stake_pct": 25,
+   "summary": "MLB approved Blitzer's purchase of a 25% stake with an option to become majority owner in six years. Blitzer is co-founder of Harris Blitzer Sports & Entertainment and a Blackstone executive; the stake is held personally.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 435000000,
+   "currency": "USD",
+   "date": "2022-01-27",
+   "date_text": "January 2022 (agreement announced August 2021)",
+   "evidence": "The deal includes $435 million for these upgrades, which will come from the state, city, county and team.",
+   "headline": "Progressive Field lease extended to 2036 with $435m for upgrades",
+   "investor": "City of Cleveland, Cuyahoga County, State of Ohio and the club",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "MLB.com",
+   "source_url": "https://www.mlb.com/news/progressive-field-lease-runs-until-2036",
+   "stake_pct": null,
+   "summary": "Lease extended by at least 15 years to 2036 with options for 10 more; the deal includes $435 million for upgrades from the state, city, county and team.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mlb.com/guardians",
+ "facts": {
+  "chair": {
+   "evidence": "Paul J. Dolan- Owner/Chairman/Chief Executive Officer",
+   "name": "Paul J. Dolan",
+   "source_url": "https://www.mlb.com/guardians/team/front-office",
+   "title": "Owner/Chairman/Chief Executive Officer"
+  },
+  "chief_executive": {
+   "evidence": "Paul J. Dolan- Owner/Chairman/Chief Executive Officer",
+   "name": "Paul J. Dolan",
+   "source_url": "https://www.mlb.com/guardians/team/front-office",
+   "title": "Chief Executive Officer"
+  },
+  "honours": {
+   "competition": "World Series",
+   "evidence": "Championships",
+   "league_titles": 2,
+   "source_url": "https://www.forbes.com/teams/cleveland-guardians/"
+  },
+  "operating_result": {
+   "amount": 53000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$53M",
+   "season": "2025",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/cleveland-guardians/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Gateway Economic Development Corp. (public development corporation; club leases the ballpark, lease extended to at least 2036)",
+   "evidence": "Gateway Economic Development Corp.",
+   "source_url": "https://www.forbes.com/teams/cleveland-guardians/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 127000000,
+   "currency": "USD",
+   "evidence": "$127M",
+   "season": "2025",
+   "source_name": "Forbes (estimate) — player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/cleveland-guardians/"
+  }
+ },
+ "founded_evidence": "The current iteration of the Guardians began in 1901 with the formation of the American League",
+ "founded_source_url": "https://www.forbes.com/teams/cleveland-guardians/",
+ "founded_year": 1901,
+ "key": "major-league-baseball--cleveland-guardians",
+ "league": "Major League Baseball",
+ "name": "Cleveland Guardians",
+ "notes": "Revenue, operating income and player expenses are Forbes estimates for the 2025 season (net of revenue sharing and stadium debt service). Forbes lists owners 'David Blitzer, Paul Dolan' and 'Price Paid $323M' (Dolan family's purchase); Dolan family stake percentage not stated on a citable page. The Athletic (25 Mar 2026) reported on a succession plan for Blitzer to take majority control but is paywalled and was not read, so no control change is recorded. Legal entity, socials, attendance not found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Paul J. Dolan- Owner/Chairman/Chief Executive Officer",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Paul J. Dolan (Dolan family)",
+   "since_year": null,
+   "source_url": "https://www.mlb.com/guardians/team/front-office",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "MLB has approved David Blitzer's purchase of a 25 percent stake in the Guardians, with the option of becoming majority owner in six years.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "David Blitzer",
+   "since_year": 2022,
+   "source_url": "https://www.mlb.com/news/david-blitzer-approved-as-guardians-minority-owner",
+   "stake_pct": 25,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.mlb.com/news/david-blitzer-approved-as-guardians-minority-owner",
+ "ownership_summary": "Controlled by the Dolan family, with Paul J. Dolan as owner, chairman and CEO. David Blitzer bought a 25% minority stake, approved by MLB in June 2022, with an option to become majority owner in six years; he is vice chairman.",
+ "ownership_type": "individual_family",
+ "revenue": 337000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$337M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB team valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/cleveland-guardians/",
+ "short_name": "Guardians",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/cleveland-guardians/",
+  "https://www.mlb.com/guardians/team/front-office",
+  "https://www.mlb.com/news/david-blitzer-approved-as-guardians-minority-owner",
+  "https://www.mlb.com/news/progressive-field-lease-runs-until-2036",
+  "https://www.espn.com/mlb/story/_/id/33161102/cleveland-guardians-sign-agreement-extend-lease-progressive-field-2036"
+ ],
+ "sport": "baseball",
+ "stadium": "Progressive Field",
+ "stadium_capacity": 34830,
+ "stadium_capacity_evidence": "34,830",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/cleveland-guardians/",
+ "stadium_owner": {
+  "detail": "Owned by Gateway Economic Development Corp. (public development corporation; club leases the ballpark, lease extended to at least 2036)",
+  "evidence": "Gateway Economic Development Corp.",
+  "source_url": "https://www.forbes.com/teams/cleveland-guardians/",
+  "value": "municipal"
+ },
+ "valuation": 1660000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1.66B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/cleveland-guardians/",
+ "valuation_year": 2026
+}

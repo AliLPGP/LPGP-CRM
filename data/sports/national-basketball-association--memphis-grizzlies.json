@@ -1,0 +1,134 @@
+{
+ "city": "Memphis",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "April 2018",
+   "evidence": "Pera decided he would buy Kaplan's 14-percent stake in the team and the 14-percent stake Straus owned instead of selling his 25-percent stake.",
+   "headline": "Pera buys out minority owners Kaplan and Straus under buy-sell clause",
+   "investor": "Robert Pera",
+   "investor_type": "individual",
+   "kind": "stake_sale",
+   "seller": "Steve Kaplan and Daniel Straus",
+   "source_name": "Sports Illustrated",
+   "source_url": "https://www.si.com/nba/2018/04/10/grizzlies-owner-robert-pera-will-keep-team-buy-sell",
+   "stake_pct": 28,
+   "summary": "Kaplan and Straus triggered the buy-sell agreement in fall 2017; Pera chose to buy their 14% stakes each rather than sell his 25%. The price was not disclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "grizzlies.com",
+ "facts": {
+  "chair": {
+   "evidence": "Governor(s) Robert Pera",
+   "name": "Robert Pera",
+   "source_url": "https://www.nba.com/team/1610612763",
+   "title": "Governor"
+  },
+  "operating_result": {
+   "amount": 28000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$28M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/memphis-grizzlies/"
+  },
+  "revenue_breakdown": {
+   "broadcast": null,
+   "commercial": null,
+   "currency": "USD",
+   "evidence": "$37M",
+   "matchday": 37000000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): gate receipts incl. club seats",
+   "source_url": "https://www.forbes.com/teams/memphis-grizzlies/"
+  },
+  "shirt_sponsor": {
+   "evidence": "Robinhood, which already pays for its logo to appear on the uniforms of the Memphis Grizzlies and the Washington Wizards",
+   "name": "Robinhood",
+   "source_url": "https://www.forbes.com/teams/miami-heat/"
+  },
+  "stadium_owner": {
+   "detail": "Forbes lists the City of Memphis and Shelby County as FedExForum's owners.",
+   "evidence": "Venue FedExForum Owner(s) City of Memphis and Shelby County",
+   "source_url": "https://www.forbes.com/teams/memphis-grizzlies/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 195000000,
+   "currency": "USD",
+   "evidence": "$195M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/memphis-grizzlies/"
+  }
+ },
+ "founded_evidence": "Founded 1995",
+ "founded_source_url": "https://www.nba.com/team/1610612763",
+ "founded_year": 1995,
+ "key": "national-basketball-association--memphis-grizzlies",
+ "league": "National Basketball Association",
+ "name": "Memphis Grizzlies",
+ "notes": "Revenue, operating income, player expenses and gate receipts are Forbes estimates for 2024-25 (calculated October 2025); Forbes' page gives no team owner or purchase price. Deal stake_pct 28 is Kaplan's 14% plus Straus's 14% as SI states each; SI gives Pera's own stake at the time as 25%. Pera's current percentage is not stated. Josh Kushner's former minority stake (ESPN: 'previously was a minority owner of the Memphis Grizzlies'; reported by Forbes in March 2019 at a $1.32bn valuation, but that Forbes page returned 403) has no readable date/stake, so it is not a deal row. Shirt sponsor Robinhood is from Forbes' Heat page (2024-25). NBA.com's feed gives FedExForum capacity 18,119; Forbes says 17,794. Not found: chief executive, legal entity, attendance, social counts, any institutional holder.",
+ "owners": [
+  {
+   "amount": 377000000,
+   "currency": "USD",
+   "evidence": "When Pera bought the team in 2012, his group paid $377 million, according to Tillery.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Robert Pera",
+   "since_year": 2012,
+   "source_url": "https://www.si.com/nba/2018/04/10/grizzlies-owner-robert-pera-will-keep-team-buy-sell",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.si.com/nba/2018/04/10/grizzlies-owner-robert-pera-will-keep-team-buy-sell",
+ "ownership_summary": "Controlled by Robert Pera (founder of Ubiquiti), whose group bought the team from Michael Heisley in 2012 for $377 million. In 2018 Pera kept control by buying out minority owners Steve Kaplan and Daniel Straus (14% each) under a buy-sell clause. Josh Kushner was previously a minority owner.",
+ "ownership_type": "individual_family",
+ "revenue": 306000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$306M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA Team Valuations, calculated October 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/memphis-grizzlies/",
+ "short_name": "Grizzlies",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/memphis-grizzlies/",
+  "https://www.nba.com/team/1610612763",
+  "https://www.si.com/nba/2018/04/10/grizzlies-owner-robert-pera-will-keep-team-buy-sell",
+  "https://www.forbes.com/teams/miami-heat/",
+  "https://www.espn.com/nba/story/_/id/49590362/josh-kushner-bob-iger-buy-lakers-12b"
+ ],
+ "sport": "basketball",
+ "stadium": "FedExForum",
+ "stadium_capacity": 17794,
+ "stadium_capacity_evidence": "Seating Capacity 17,794",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/memphis-grizzlies/",
+ "stadium_owner": {
+  "detail": "Forbes lists the City of Memphis and Shelby County as FedExForum's owners.",
+  "evidence": "Venue FedExForum Owner(s) City of Memphis and Shelby County",
+  "source_url": "https://www.forbes.com/teams/memphis-grizzlies/",
+  "value": "municipal"
+ },
+ "valuation": 3500000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$3.5B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/memphis-grizzlies/",
+ "valuation_year": 2025
+}

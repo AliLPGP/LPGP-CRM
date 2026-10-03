@@ -1,0 +1,140 @@
+{
+ "city": "São Paulo",
+ "country": "Brazil",
+ "deals": [],
+ "domain": "palmeiras.com.br",
+ "facts": {
+  "chief_executive": {
+   "evidence": "A empresária Leila Pereira foi reeleita presidente da Sociedade Esportiva Palmeiras",
+   "name": "Leila Pereira",
+   "source_url": "https://www.palmeiras.com.br/noticias/leila-pereira-e-reeleita-presidente-da-sociedade-esportiva-palmeiras/",
+   "title": "President"
+  },
+  "kit_supplier": {
+   "evidence": "Palmeiras e PUMA acertam renovação e estendem parceria até 2028",
+   "name": "Puma",
+   "source_url": "https://www.palmeiras.com.br/noticias/palmeiras-e-puma-acertam-renovacao-e-estendem-parceria-ate-2028/"
+  },
+  "legal_entity": {
+   "evidence": "Empregador: 61.750.345/0001-57",
+   "name": "Sociedade Esportiva Palmeiras",
+   "registry": "CNPJ (Receita Federal, Brazil)",
+   "registry_id": "61.750.345/0001-57",
+   "source_url": "https://www.palmeiras.com.br/wp-content/uploads/2025/09/RelatorioIgualdadeSalarialLote_2025_2_61750345000157.pdf"
+  },
+  "operating_result": {
+   "amount": 382109000,
+   "basis": "operating profit",
+   "currency": "BRL",
+   "evidence": "SUPERÁVIT (DÉFICIT) OPERACIONAL 414.543 (19.867) (62.588) 50.021 382.109",
+   "season": "2025",
+   "source_name": "Sociedade Esportiva Palmeiras — Relatório Integrado 2025 (audited statements, BDO) ('Superávit (déficit) operacional', total column; club-adjusted EBITDA R$681.298m)",
+   "source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf"
+  },
+  "pretax_result": {
+   "amount": 292395000,
+   "currency": "BRL",
+   "evidence": "SUPERÁVIT DO EXERCÍCIO 292.395 198.183",
+   "season": "2025",
+   "source_name": "Sociedade Esportiva Palmeiras — Relatório Integrado 2025 (audited statements, BDO) (surplus for the year; tax-exempt association)",
+   "source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 180084000,
+   "commercial": 203398000,
+   "currency": "BRL",
+   "evidence": "Publicidade e patrocínio 2.1.16 201.875 322 - 1.201 203.398",
+   "matchday": 67230000,
+   "other": null,
+   "season": "2025",
+   "source_name": "Sociedade Esportiva Palmeiras — Relatório Integrado 2025 (audited statements, BDO), demonstração do resultado ('Arrecadação de jogos', 'Direitos de transmissão', 'Publicidade e patrocínio' totals; prize money R$318.945m, Avanti membership R$73.614m and 'outras receitas' R$676.633m incl. player sales are separate lines)",
+   "source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "A Sportingbet, marca icônica no segmento de apostas esportivas no Brasil, ocupa o valioso espaço de patrocínio máster",
+   "name": "Sportingbet",
+   "source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf"
+  },
+  "stadium_owner": {
+   "detail": "Built on the club's Palestra Italia ground; under a public deed constituting a real surface right, Real Arenas Empreendimentos Imobiliários S.A. (WTorre group) exploits the stadium for 30 years from its first event in November 2014, and the club amortises the up-front consideration over that term. Renamed Nubank Parque in 2026.",
+   "evidence": "Real Arenas à exploração de superfície por 30 anos do primeiro evento realizado no estádio",
+   "source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf",
+   "value": "shared"
+  },
+  "wages": {
+   "amount": 525829000,
+   "currency": "BRL",
+   "evidence": "Pessoal e encargos sociais 2.1.23 (419.192) (15.624) (42.380) (48.633) (525.829)",
+   "season": "2025",
+   "source_name": "Sociedade Esportiva Palmeiras — Relatório Integrado 2025 (audited statements, BDO) ('Pessoal e encargos sociais', all departments; image rights R$113.843m separate)",
+   "source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf"
+  }
+ },
+ "founded_evidence": "Foi fundada em 26 de agosto de 1.914, sendo entidade civil sem fins econômicos",
+ "founded_source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf",
+ "founded_year": 1914,
+ "key": "brasileirao-serie-a--se-palmeiras",
+ "league": "Brasileirão Série A",
+ "name": "Sociedade Esportiva Palmeiras",
+ "notes": "Accounts are calendar-year 2025 (R$ thousands); the integrated report's statements match the separately posted 'Balanço e DRE 2025'. Revenue is 'receita operacional líquida' R$1.628bn, which includes player sales and prize money (financial income of R$154.573m is reported separately, below the operating result). Valuation corrected from an earlier record (4.3bn) to Sports Value's R$4.395bn as printed by CNN Brasil. No ownership transactions or major financings since 2015 were found; Palmeiras is a member of the Libra bloc (the Mubadala Capital exclusivity was not found as a closed league-stake sale). The stadium's operator Real Arenas (WTorre) holds the 30-year surface right; the 2026 change of naming rights from Allianz to Nubank was not documented on a citable page beyond the club site's use of the name, and any change in Real Arenas' own shareholders was not checked (web search budget exhausted). Honours: the club's titles gallery lists 12 Campeonato Brasileiro years (incl. 1967 Taça Brasil) but states no count, so honours is null. No dated social follower counts or exact average attendance found. The club site shows 168,568 Avanti members (undated live counter), not recorded. Betting sponsors: a provisional measure announced 25 Sep 2026 bans betting operators and their advertising in Brazil from 6 Oct 2026 (MKT Esportivo, 2 Oct 2026), which affects the Sportingbet shirt deal.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "sendo entidade civil sem fins econômicos",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Sociedade Esportiva Palmeiras members (entidade civil sem fins econômicos)",
+   "since_year": 1914,
+   "source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf",
+ "ownership_summary": "Sociedade Esportiva Palmeiras is a not-for-profit civil association owned by its members; it has no SAF and no outside shareholder. Leila Pereira has been president since December 2021 and was re-elected on 24 November 2024 for a second term.",
+ "ownership_type": "member_owned",
+ "revenue": 1628486000,
+ "revenue_currency": "BRL",
+ "revenue_evidence": "Receita operacional líquida 1.628.486 1.207.361",
+ "revenue_season": "2025",
+ "revenue_source_name": "Sociedade Esportiva Palmeiras — Relatório Integrado 2025 (audited statements, BDO)",
+ "revenue_source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf",
+ "short_name": "Palmeiras",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf",
+  "https://www.palmeiras.com.br/wp-content/uploads/2026/05/Balanco-e-DRE-2025.pdf",
+  "https://www.palmeiras.com.br/instituicao/",
+  "https://www.palmeiras.com.br/nubank-parque/",
+  "https://www.palmeiras.com.br/noticias/leila-pereira-e-reeleita-presidente-da-sociedade-esportiva-palmeiras/",
+  "https://www.palmeiras.com.br/noticias/palmeiras-e-puma-acertam-renovacao-e-estendem-parceria-ate-2028/",
+  "https://www.cnnbrasil.com.br/esportes/futebol/flamengo-lidera-lista-de-clubes-mais-valiosos-do-brasil-veja-ranking/",
+  "https://www.palmeiras.com.br/wp-content/uploads/2025/09/RelatorioIgualdadeSalarialLote_2025_2_61750345000157.pdf",
+  "https://www.palmeiras.com.br/galeria-de-titulos/",
+  "https://www.mktesportivo.com/2026/10/corinthians-avalia-patrocinios-pontuais-para-o-master-nas-10-rodadas-finais-do-brasileirao/",
+  "https://www.palmeiras.com.br/transparencia/"
+ ],
+ "sport": "football",
+ "stadium": "Nubank Parque (formerly Allianz Parque)",
+ "stadium_capacity": 43713,
+ "stadium_capacity_evidence": "Capacidade: 43.713 pessoas em jogos e 55 mil em shows",
+ "stadium_capacity_source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf",
+ "stadium_owner": {
+  "detail": "Built on the club's Palestra Italia ground; under a public deed constituting a real surface right, Real Arenas Empreendimentos Imobiliários S.A. (WTorre group) exploits the stadium for 30 years from its first event in November 2014, and the club amortises the up-front consideration over that term. Renamed Nubank Parque in 2026.",
+  "evidence": "Real Arenas à exploração de superfície por 30 anos do primeiro evento realizado no estádio",
+  "source_url": "https://www.palmeiras.com.br/wp-content/uploads/2026/06/Relatorio-Palmeiras-2025-v09.pdf",
+  "value": "shared"
+ },
+ "valuation": 4395000000,
+ "valuation_currency": "BRL",
+ "valuation_evidence": "Palmeiras – 4.395",
+ "valuation_source_name": "Sports Value (via CNN Brasil, 9 Dec 2025)",
+ "valuation_source_url": "https://www.cnnbrasil.com.br/esportes/futebol/flamengo-lidera-lista-de-clubes-mais-valiosos-do-brasil-veja-ranking/",
+ "valuation_year": 2025
+}

@@ -1,0 +1,109 @@
+{
+ "city": "Houston",
+ "country": "United States",
+ "deals": [],
+ "domain": "mlb.com/astros",
+ "facts": {
+  "chair": {
+   "evidence": "Jim Crane",
+   "name": "Jim Crane",
+   "source_url": "https://www.mlb.com/astros/team/front-office",
+   "title": "Owner and Chairman"
+  },
+  "honours": {
+   "competition": "World Series",
+   "evidence": "Championships",
+   "league_titles": 2,
+   "source_url": "https://www.forbes.com/teams/houston-astros/"
+  },
+  "legal_entity": {
+   "evidence": "is the defined term for Houston Astros, LLC",
+   "name": "Houston Astros, LLC",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.mlb.com/astros/tickets/terms-and-conditions"
+  },
+  "operating_result": {
+   "amount": -45000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "-$45M",
+   "season": "2025",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/houston-astros/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Harris County-Houston Sports Authority (public authority)",
+   "evidence": "Harris County-Houston Sports Authority",
+   "source_url": "https://www.forbes.com/teams/houston-astros/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 262000000,
+   "currency": "USD",
+   "evidence": "$262M",
+   "season": "2025",
+   "source_name": "Forbes (estimate) — player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/houston-astros/"
+  }
+ },
+ "founded_evidence": "Houston joined MLB's ranks as the Colt .45s in 1962",
+ "founded_source_url": "https://www.forbes.com/teams/houston-astros/",
+ "founded_year": 1962,
+ "key": "major-league-baseball--houston-astros",
+ "league": "Major League Baseball",
+ "name": "Houston Astros",
+ "notes": "Revenue, operating income (negative) and player expenses are Forbes estimates for the 2025 season. Forbes' 'Price Paid $465M' (2011) is used for the owner amount. Crane's partners and stake not stated on a citable page; no club president/CEO listed in the front-office directory. No ownership transaction or financing since 2015 found. Socials, attendance not found.",
+ "owners": [
+  {
+   "amount": 465000000,
+   "currency": "USD",
+   "evidence": "Jim Crane",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Jim Crane",
+   "since_year": 2011,
+   "source_url": "https://www.forbes.com/teams/houston-astros/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.mlb.com/astros/team/front-office",
+ "ownership_summary": "Controlled by Jim Crane, owner and chairman, whose group bought the club in 2011 (Forbes: price paid $465M). No institutional stake disclosed.",
+ "ownership_type": "individual_family",
+ "revenue": 464000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$464M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB team valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/houston-astros/",
+ "short_name": "Astros",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/houston-astros/",
+  "https://www.mlb.com/astros/team/front-office",
+  "https://www.mlb.com/astros/tickets/terms-and-conditions"
+ ],
+ "sport": "baseball",
+ "stadium": "Daikin Park",
+ "stadium_capacity": 41168,
+ "stadium_capacity_evidence": "41,168",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/houston-astros/",
+ "stadium_owner": {
+  "detail": "Owned by the Harris County-Houston Sports Authority (public authority)",
+  "evidence": "Harris County-Houston Sports Authority",
+  "source_url": "https://www.forbes.com/teams/houston-astros/",
+  "value": "municipal"
+ },
+ "valuation": 3200000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$3.2B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/houston-astros/",
+ "valuation_year": 2026
+}

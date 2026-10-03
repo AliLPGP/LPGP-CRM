@@ -1,0 +1,151 @@
+{
+ "city": "Washington, D.C.",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2024-02-19",
+   "date_text": "April 2022 - February 2024",
+   "evidence": "our family has determined, that we are not going to sell the team",
+   "headline": "Lerner family ends exploration of a Nationals sale",
+   "investor": null,
+   "investor_type": null,
+   "kind": "other",
+   "seller": "Lerner family",
+   "source_name": "MLB.com",
+   "source_url": "https://www.mlb.com/news/lerner-family-not-selling-nationals-at-this-time",
+   "stake_pct": null,
+   "summary": "The Lerner family began exploring a sale in 2022; on 19 February 2024 Mark Lerner said the family will not sell the team. No transaction.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mlb.com/nationals",
+ "facts": {
+  "attendance": {
+   "average": 23959,
+   "evidence": "Washington finished 22nd in average attendance (23,959).",
+   "season": "2025",
+   "source_name": "Sports Business Journal",
+   "source_url": "https://www.sportsbusinessjournal.com/Articles/2026/01/06/nationals-plan-to-hire-sinnarajah-as-president-of-business-operations/"
+  },
+  "chair": {
+   "evidence": "Nationals managing principal owner Mark D. Lerner said in a team statement",
+   "name": "Mark D. Lerner",
+   "source_url": "https://www.mlb.com/news/jason-sinnarajah-named-nationals-president-of-business-operations",
+   "title": "Managing principal owner"
+  },
+  "chief_executive": {
+   "evidence": "announcing Jason Sinnarajah as their president of business operations on Tuesday",
+   "name": "Jason Sinnarajah",
+   "source_url": "https://www.mlb.com/news/jason-sinnarajah-named-nationals-president-of-business-operations",
+   "title": "President of Business Operations (since January 2026)"
+  },
+  "honours": {
+   "competition": "World Series",
+   "evidence": "Championships 1",
+   "league_titles": 1,
+   "source_url": "https://www.forbes.com/teams/washington-nationals/"
+  },
+  "operating_result": {
+   "amount": -15000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "-$15M",
+   "season": "2025",
+   "source_name": "Forbes (estimate) - EBITDA",
+   "source_url": "https://www.forbes.com/teams/washington-nationals/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Events DC / the District of Columbia.",
+   "evidence": "Events DC, District of Columbia",
+   "source_url": "https://www.forbes.com/teams/washington-nationals/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 158000000,
+   "currency": "USD",
+   "evidence": "$158M",
+   "season": "2025",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/washington-nationals/"
+  }
+ },
+ "founded_evidence": null,
+ "founded_source_url": null,
+ "founded_year": null,
+ "key": "major-league-baseball--washington-nationals",
+ "league": "Major League Baseball",
+ "name": "Washington Nationals",
+ "notes": "Revenue, player expenses and operating income (EBITDA, net of revenue sharing and stadium debt service) are Forbes estimates for the 2025 season; Forbes puts debt/value at 26%. Founded left null: the franchise began as the Montreal Expos (Forbes: in Washington since 2005), and the only page read giving a year (MLB stats API firstYearOfPlay '1968') is the expansion award year, not a first season, so it was not used. Forbes lists the 2006 price paid as $450M; no page read gives individual family members' stakes (other principal owners include sons-in-law Robert Tanenbaum and Edward Cohen per AP, not verified on a fetched page). SBJ reports the team leaving MASN for MLB's local media; Forbes lists 'tv: MLB Local Media'; no media-rights deal recorded. Legal entity, kit/sponsor and social counts not found.",
+ "owners": [
+  {
+   "amount": 450000000,
+   "currency": "USD",
+   "evidence": "Lerner Family",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Lerner family",
+   "since_year": 2006,
+   "source_url": "https://www.forbes.com/teams/washington-nationals/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Mark has served as one of the principal owners of the Nationals since the Lerner family purchased the team in July 2006.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Mark D. Lerner",
+   "since_year": 2006,
+   "source_url": "https://www.mlb.com/press-release/mark-d-lerner-named-managing-principal-owner-281226488",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.mlb.com/press-release/mark-d-lerner-named-managing-principal-owner-281226488",
+ "ownership_summary": "Owned by the Lerner family, which bought the club from MLB in July 2006 (Forbes: price paid $450M). Mark D. Lerner has been managing principal owner and MLB control person since June 2018, succeeding his father Ted Lerner. The family explored a sale from April 2022 and ended the process in February 2024.",
+ "ownership_type": "individual_family",
+ "revenue": 300000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$300M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB team valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/washington-nationals/",
+ "short_name": "Nationals",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/washington-nationals/",
+  "https://www.mlb.com/press-release/mark-d-lerner-named-managing-principal-owner-281226488",
+  "https://www.mlb.com/news/lerner-family-not-selling-nationals-at-this-time",
+  "https://www.mlb.com/news/jason-sinnarajah-named-nationals-president-of-business-operations",
+  "https://www.sportsbusinessjournal.com/Articles/2026/01/06/nationals-plan-to-hire-sinnarajah-as-president-of-business-operations/",
+  "https://statsapi.mlb.com/api/v1/teams/120"
+ ],
+ "sport": "baseball",
+ "stadium": "Nationals Park",
+ "stadium_capacity": 41313,
+ "stadium_capacity_evidence": "41,313",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/washington-nationals/",
+ "stadium_owner": {
+  "detail": "Owned by Events DC / the District of Columbia.",
+  "evidence": "Events DC, District of Columbia",
+  "source_url": "https://www.forbes.com/teams/washington-nationals/",
+  "value": "municipal"
+ },
+ "valuation": 2150000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$2.15B Calculated March 2026",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/washington-nationals/",
+ "valuation_year": 2026
+}

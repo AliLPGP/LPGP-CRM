@@ -1,0 +1,253 @@
+{
+ "city": "Seville",
+ "country": "Spain",
+ "deals": [
+  {
+   "amount": 94283000,
+   "currency": "EUR",
+   "date": "2021-12-07",
+   "date_text": "7 December 2021 (adhesion)",
+   "evidence": "por un importe máximo individual de 94.283 miles de euros",
+   "headline": "Real Betis signs up for up to EUR 94.3m of LaLiga Impulso (CVC) money",
+   "investor": "CVC Capital Partners (via LaLiga Impulso)",
+   "investor_type": "private_equity",
+   "kind": "league_stake",
+   "seller": null,
+   "source_name": "Real Betis audited accounts 2024/25",
+   "source_url": "https://www.realbetisbalompie.es/media/files/rbetis/pdf/informeaudit+memoria+einf_24-25.cleaned.pdf",
+   "stake_pct": null,
+   "summary": "Betis adhered to LaLiga's participating-loan facility funded by CVC (Loarre Investments) under LaLiga Impulso: a 50-year loan at 0% fixed plus 1.52% of the club's net audiovisual income, for a maximum of EUR 94,283k. It drew EUR 10.2m in 2024/25 and EUR 23.4m in 2023/24; EUR 70.8m was outstanding at 30 June 2025.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 42900000,
+   "currency": "EUR",
+   "date": "2024-05-09",
+   "date_text": "CNMV approval 9 May 2024; registered 4 September 2024",
+   "evidence": "la culminación de la ampliación de capital de 42,9 millones",
+   "headline": "EUR 42.9m capital increase lifts Haro and López Catalán to 19.5% each",
+   "investor": "Existing shareholders, with Ángel Haro (Touzi Soccer SL) and José Miguel López Catalán (LC Balompié) committed to take up any unsubscribed shares",
+   "investor_type": "individual",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Real Betis (club statement, 23 Sep 2024)",
+   "source_url": "https://www.realbetisbalompie.es/noticias/actualidad/el-real-betis-mejora-su-pasivo-financiero-de-la-mano-de-goldman-sachs-30554",
+   "stake_pct": null,
+   "summary": "Betis raised EUR 7.06m of nominal capital plus EUR 35.88m of share premium (accounts). The controlling shareholders committed to buy any shares minorities did not take; after it, Haro and López Catalán each held 19.5% (from about 11.2% and 11.1%), paying EUR 365.44 per share and over EUR 25m between them (ABC).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 125000000,
+   "currency": "EUR",
+   "date": "2024-09-23",
+   "date_text": "23 September 2024",
+   "evidence": "ha alcanzado un acuerdo de financiación con el banco de inversión Goldman Sachs por valor de 125 millones",
+   "headline": "EUR 125m senior secured US private placement via Goldman Sachs refinances Betis's debt",
+   "investor": "US private placement investors (mainly insurers and pension funds), arranged by Goldman Sachs; Bibium Capital adviser",
+   "investor_type": "institutional",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "Real Betis (club statement)",
+   "source_url": "https://www.realbetisbalompie.es/noticias/actualidad/el-real-betis-mejora-su-pasivo-financiero-de-la-mano-de-goldman-sachs-30554",
+   "stake_pct": null,
+   "summary": "Senior secured, 10-year term, 3 years' grace, average life about 8 years, 50% bullet at maturity; placed in the US private placement market with professional investors (mainly insurance companies and pension funds). It refinanced all previous borrowing and added working capital.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "realbetisbalompie.es",
+ "facts": {
+  "chair": {
+   "evidence": "Presidente Ángel Haro García (Villaverde del Río, 1974) es ingeniero industrial.",
+   "name": "Ángel Haro García",
+   "source_url": "https://www.realbetisbalompie.es/club/consejo-de-administracion/",
+   "title": "Presidente (President)"
+  },
+  "chief_executive": {
+   "evidence": "Federico Martínez Feria, director general corporativo del Real Betis",
+   "name": "Federico Martínez Feria",
+   "source_url": "https://www.realbetisbalompie.es/noticias/actualidad/el-real-betis-mejora-su-pasivo-financiero-de-la-mano-de-goldman-sachs-30554",
+   "title": "Director general corporativo (as named in September 2024)"
+  },
+  "honours": {
+   "competition": "La Liga (Primera División), 1934-35",
+   "evidence": "se proclamó Campeón de Liga de Primera División",
+   "league_titles": 1,
+   "source_url": "https://www.realbetisbalompie.es/club/la-historia/"
+  },
+  "kit_supplier": {
+   "evidence": "El Real Betis y hummel presentan la primera equipación de la temporada 2026/27",
+   "name": "hummel",
+   "source_url": "https://www.realbetisbalompie.es/noticias/actualidad/el-real-betis-y-hummel-presentan-la-primera-equipacion-de-la-temporada-2026-27-32435"
+  },
+  "legal_entity": {
+   "evidence": "con C.I.F. A41034851",
+   "name": "Real Betis Balompié, S.A.D.",
+   "registry": "Registro Mercantil de Sevilla (Tomo 1.601, Folio 134, Hoja SE-9.570); id below is the CIF",
+   "registry_id": "A41034851",
+   "source_url": "https://www.realbetisbalompie.es/legal"
+  },
+  "operating_result": {
+   "amount": 15019983,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "15.019.983",
+   "season": "2024-25",
+   "source_name": "Real Betis audited accounts 2024/25 (resultado de explotación)",
+   "source_url": "https://www.realbetisbalompie.es/media/files/rbetis/pdf/informeaudit+memoria+einf_24-25.cleaned.pdf"
+  },
+  "pretax_result": {
+   "amount": 5577534,
+   "currency": "EUR",
+   "evidence": "5.577.534",
+   "season": "2024-25",
+   "source_name": "Real Betis audited accounts 2024/25 (resultado antes de impuestos)",
+   "source_url": "https://www.realbetisbalompie.es/media/files/rbetis/pdf/informeaudit+memoria+einf_24-25.cleaned.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 64957035,
+   "commercial": 37291523,
+   "currency": "EUR",
+   "evidence": "64.957.035",
+   "matchday": null,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Real Betis audited accounts 2024/25: ingresos por retransmisión 64,957,035; comercialización y publicidad 37,291,523 (also: abonados y socios 21,663,176; competiciones nacionales 5,986,473; competiciones europeas 20,730,690)",
+   "source_url": "https://www.realbetisbalompie.es/media/files/rbetis/pdf/informeaudit+memoria+einf_24-25.cleaned.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "GREE, nuevo patrocinador principal del Real Betis Balompié hasta 2027",
+   "name": "GREE",
+   "source_url": "https://www.realbetisbalompie.es/noticias/actualidad/gree-nuevo-patrocinador-principal-del-real-betis-balompie-hasta-2027-30351"
+  },
+  "stadium_owner": {
+   "detail": "The Benito Villamarín sits in Real Betis's own property, plant and equipment (sporting fixed assets: stadium and training ground). It is being rebuilt (works began summer 2025); since 2025-26 the team plays at Estadio La Cartuja, which the club describes as provisional, with 70,000 capacity.",
+   "evidence": "Con respecto al inmovilizado material de uso deportivo (estadio y ciudad deportiva)",
+   "source_url": "https://www.realbetisbalompie.es/media/files/rbetis/pdf/informeaudit+memoria+einf_24-25.cleaned.pdf",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 102729761,
+   "currency": "EUR",
+   "evidence": "102.729.761",
+   "season": "2024-25",
+   "source_name": "Real Betis audited accounts 2024/25 (gastos de personal)",
+   "source_url": "https://www.realbetisbalompie.es/media/files/rbetis/pdf/informeaudit+memoria+einf_24-25.cleaned.pdf"
+  }
+ },
+ "founded_evidence": "En 1907, un grupo de estudiantes de la Escuela Politécnica",
+ "founded_source_url": "https://www.realbetisbalompie.es/club/la-historia/",
+ "founded_year": 1907,
+ "key": "la-liga--real-betis-balompie",
+ "league": "La Liga",
+ "name": "Real Betis Balompié, S.A.D.",
+ "notes": "Latest audited accounts are 2024/25 (FY to 30 June 2025): revenue EUR 150.6m (2023/24: 138.6m), net profit EUR 4.57m, and 50,741 seated season-ticket members. The 2025/26 accounts are not yet published (the club's 2025/26 budget projected over EUR 200m). Stakes are ABC's reading of the share register after the 2024 capital increase; the audited accounts say no holder exceeds 10% (counting the 2017 settlement), so treat the 19.5% figures as press-reported. Stadium: the Villamarín is being rebuilt (cost reported at about EUR 262m, due May 2028); at the date of the 2024/25 accounts a long-term financing agreement with a financial institution existed but was pending formal signature, and as of late September 2026 press (El Cierre Digital, Crónica Global) still described Goldman Sachs as arranging that stadium loan rather than having closed it, so it is not listed as a deal. 60,721 is the old stadium's capacity on the club page; current home La Cartuja holds 70,000 per the club. No Forbes or other published valuation found; social total (Facebook, Instagram, X, TikTok, YouTube) is Estadio Deportivo's figure for the CIES Football Observatory Weekly Post 548 (May 2026), which ranks Betis 29th worldwide. Honours: one league title (1934-35) and Copa del Rey 1977, 2005, 2022.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "pasan a controlar cada uno el 19,5 por ciento del accionariado del Betis",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Ángel Haro García (via Touzi Soccer SL)",
+   "since_year": null,
+   "source_url": "https://www.abc.es/deportes/alfinaldelapalmera/noticias-betis/nuevo-mapa-accionarial-betis-haro-catalan-refuerzan-20241210184936-nts.html",
+   "stake_pct": 19.5,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "pasan a controlar cada uno el 19,5 por ciento del accionariado del Betis",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "José Miguel López Catalán (via LC Balompié)",
+   "since_year": null,
+   "source_url": "https://www.abc.es/deportes/alfinaldelapalmera/noticias-betis/nuevo-mapa-accionarial-betis-haro-catalan-refuerzan-20241210184936-nts.html",
+   "stake_pct": 19.5,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "que alcanza ya el 3,32 por ciento",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Joaquín Sánchez",
+   "since_year": null,
+   "source_url": "https://www.abc.es/deportes/alfinaldelapalmera/noticias-betis/nuevo-mapa-accionarial-betis-haro-catalan-refuerzan-20241210184936-nts.html",
+   "stake_pct": 3.32,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "irrumpe con un 2,5 por ciento",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Álvaro García de la Borbolla",
+   "since_year": 2024,
+   "source_url": "https://www.abc.es/deportes/alfinaldelapalmera/noticias-betis/nuevo-mapa-accionarial-betis-haro-catalan-refuerzan-20241210184936-nts.html",
+   "stake_pct": 2.5,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.abc.es/deportes/alfinaldelapalmera/noticias-betis/nuevo-mapa-accionarial-betis-haro-catalan-refuerzan-20241210184936-nts.html",
+ "ownership_summary": "Real Betis Balompié SAD is controlled by its president Ángel Haro and vice-president José Miguel López Catalán, whom the club calls its two main shareholders. After the EUR 42.9m capital increase of 2024 they each held 19.5% through their companies Touzi Soccer SL and LC Balompié (ABC, December 2024). Former player Joaquín Sánchez held 3.32% and Álvaro García de la Borbolla 2.5%; the rest is spread across thousands of small shareholders. The 2024/25 audited accounts nonetheless state that no shareholder holds more than 10%, taking into account the July 2017 settlement with the Lopera and Bitton camps. No institutional investor holds equity; institutional money is debt (the 2024 EUR 125m US private placement arranged by Goldman Sachs and CVC's LaLiga Impulso loan).",
+ "ownership_type": "individual_family",
+ "revenue": 150628896,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "150.628.896",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Real Betis Balompié SAD audited annual accounts 2024/25 (importe neto de la cifra de negocios)",
+ "revenue_source_url": "https://www.realbetisbalompie.es/media/files/rbetis/pdf/informeaudit+memoria+einf_24-25.cleaned.pdf",
+ "short_name": "Real Betis",
+ "social_as_of": "2026-05",
+ "social_evidence": "29.696.869 para ser exactos al cierre de esta edición",
+ "social_followers": 29696869,
+ "social_platforms": [],
+ "social_source_url": "https://www.estadiodeportivo.com/futbol/betis/crecimiento-social-del-betis-pasa-desapercibido-noveno-los-clubes-futbol-del-mundo-20260530-538729.html",
+ "sources": [
+  "https://www.realbetisbalompie.es/media/files/rbetis/pdf/informeaudit+memoria+einf_24-25.cleaned.pdf",
+  "https://www.realbetisbalompie.es/club/la-historia/",
+  "https://www.abc.es/deportes/alfinaldelapalmera/noticias-betis/nuevo-mapa-accionarial-betis-haro-catalan-refuerzan-20241210184936-nts.html",
+  "https://www.realbetisbalompie.es/club/consejo-de-administracion/",
+  "https://www.realbetisbalompie.es/noticias/actualidad/el-real-betis-mejora-su-pasivo-financiero-de-la-mano-de-goldman-sachs-30554",
+  "https://www.realbetisbalompie.es/club/ley-de-transparencia/",
+  "https://www.realbetisbalompie.es/club/estadio-benito-villamarin/",
+  "https://www.realbetisbalompie.es/club/la-cartuja",
+  "https://www.realbetisbalompie.es/legal",
+  "https://www.realbetisbalompie.es/noticias/actualidad/gree-nuevo-patrocinador-principal-del-real-betis-balompie-hasta-2027-30351",
+  "https://www.realbetisbalompie.es/noticias/actualidad/el-real-betis-y-hummel-presentan-la-primera-equipacion-de-la-temporada-2026-27-32435",
+  "https://www.laliga.com/clubes/real-betis",
+  "https://cronicaglobal.elespanol.com/culemania/palco/20260516/betis-barca-goldman-sachs-benito-villamarin-camp/1003742761778_0.html",
+  "https://elcierredigital.com/economia/banca-goldman-sachs-prestamista-del-futbol-espanol-pretende-financiar-sevilla-pero-tambien-ayuda-al-betis",
+  "https://www.estadiodeportivo.com/futbol/betis/crecimiento-social-del-betis-pasa-desapercibido-noveno-los-clubes-futbol-del-mundo-20260530-538729.html"
+ ],
+ "sport": "football",
+ "stadium": "Estadio Benito Villamarín",
+ "stadium_capacity": 60721,
+ "stadium_capacity_evidence": "tiene un aforo de 60.721 espectadores",
+ "stadium_capacity_source_url": "https://www.realbetisbalompie.es/club/estadio-benito-villamarin/",
+ "stadium_owner": {
+  "detail": "The Benito Villamarín sits in Real Betis's own property, plant and equipment (sporting fixed assets: stadium and training ground). It is being rebuilt (works began summer 2025); since 2025-26 the team plays at Estadio La Cartuja, which the club describes as provisional, with 70,000 capacity.",
+  "evidence": "Con respecto al inmovilizado material de uso deportivo (estadio y ciudad deportiva)",
+  "source_url": "https://www.realbetisbalompie.es/media/files/rbetis/pdf/informeaudit+memoria+einf_24-25.cleaned.pdf",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

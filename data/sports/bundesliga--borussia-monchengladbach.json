@@ -1,0 +1,123 @@
+{
+ "city": "Mönchengladbach",
+ "country": "Germany",
+ "deals": [],
+ "domain": "borussia.de",
+ "facts": {
+  "attendance": {
+   "average": 53101,
+   "evidence": "Der Besucherschnitt liegt mit 53.101 Zuschauern rund 700 über der bisherigen Bestmarke",
+   "season": "2024-25",
+   "source_name": "Borussia Mönchengladbach (club news, 28 May 2025)",
+   "source_url": "https://www.borussia.de/news/borussia-stellt-neuen-zuschauerrekord-auf"
+  },
+  "chair": {
+   "evidence": "Präsident: Rainer Bonhof",
+   "name": "Rainer Bonhof",
+   "source_url": "https://www.borussia.de/gremien-ueberblick",
+   "title": "President (Präsident) of Borussia VfL 1900 e.V."
+  },
+  "chief_executive": {
+   "evidence": "Dr. Stefan Stegemann (CEO), Markus Aretz",
+   "name": "Dr. Stefan Stegemann",
+   "source_url": "https://www.borussia.de/impressum",
+   "title": "Managing director (CEO), Borussia VfL 1900 Mönchengladbach GmbH"
+  },
+  "honours": {
+   "competition": "German top flight (Deutscher Meister)",
+   "evidence": "Neben dem fünffachen Gewinn der Deutschen Meisterschaft",
+   "league_titles": 5,
+   "source_url": "https://www.borussia.de/erfolge-und-fakten"
+  },
+  "kit_supplier": {
+   "evidence": "Borussia Mönchengladbach und Ausrüster PUMA haben ihre Partnerschaft vorzeitig langfristig verlängert.",
+   "name": "PUMA",
+   "source_url": "https://www.borussia.de/news/2022-05-27-borussia-und-puma-verlaengern-langfristig-ihre-partnerschaft"
+  },
+  "legal_entity": {
+   "evidence": "Amtsgericht Mönchengladbach, HRB 5742",
+   "name": "Borussia VfL 1900 Mönchengladbach GmbH",
+   "registry": "Handelsregister, Amtsgericht Mönchengladbach",
+   "registry_id": "HRB 5742",
+   "source_url": "https://www.borussia.de/impressum"
+  },
+  "revenue_breakdown": {
+   "broadcast": null,
+   "commercial": 44100000,
+   "currency": "EUR",
+   "evidence": "Auch die Werbeerträge entwickelten sich mit einem Plus von etwa zwei Millionen Euro auf rund 44,1 Millionen Euro weiter positiv.",
+   "matchday": null,
+   "other": null,
+   "season": "2025",
+   "source_name": "Borussia Mönchengladbach, financial year 2025 (advertising income only)",
+   "source_url": "https://www.borussia.de/news/borussia-steigert-umsatz-um-fast-fuenf-millionen-euro"
+  },
+  "shirt_sponsor": {
+   "evidence": "main sponsor since the 2024/25 season",
+   "name": "REUTER",
+   "source_url": "https://www.borussia.com/news/reuter-and-borussia-extend-partnership"
+  }
+ },
+ "founded_evidence": "Am 1. August 1900 gründeten 13 fußballverrückte, junge Gladbacher den Verein",
+ "founded_source_url": "https://www.borussia.de/erfolge-und-fakten",
+ "founded_year": 1900,
+ "key": "bundesliga--borussia-monchengladbach",
+ "league": "Bundesliga",
+ "name": "Borussia VfL 1900 Mönchengladbach GmbH",
+ "notes": "borussia.de renders page bodies in the browser from its own GraphQL API (https://www.borussia.de/graphql, Strapi pages and articles by slug); a plain HTML fetch of these URLs returns only the title and teaser, so evidence phrases are in the rendered page/API response, not the raw HTML. Fiscal year is the calendar year: 2025 revenue about EUR 189.3m (2024: EUR 184.8m); net loss after tax about EUR 3.9m (pre-tax not stated); equity EUR 44.94m at 31 Dec 2025. Wages, EBITDA and net debt not stated in the club's release. Not in the Deloitte Money League 2026 top 30 or Forbes' 2026 top 30, so no valuation. Owner of the stadium itself is not stated (the GmbH holds 39.4% of PPG Nordpark GmbH, the parking company). Stadium renamed ista-Borussia-Park from 1 July 2026 under a naming partnership with ista running at least to 30 June 2031 (commercial deal, no amount disclosed). REUTER main sponsor since 2024/25, extended to 2027; PUMA outfitter since 2018, extended in 2022. Supervisory board chaired by Michael Hollmann. No ownership or financing transactions since 2015 found (deals empty). Social follower counts not found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Der e.V. hält 100 Prozent an der Borussia VfL 1900 Mönchengladbach GmbH",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Borussia Verein für Leibesübungen 1900 e.V.",
+   "since_year": 2003,
+   "source_url": "https://www.borussia.de/gremien-ueberblick",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.borussia.de/gremien-ueberblick",
+ "ownership_summary": "Borussia VfL 1900 Mönchengladbach GmbH, founded on 1 January 2003 to run the men's professional and senior youth teams, is 100% owned by the members' association Borussia Verein für Leibesübungen 1900 e.V.; no outside investor holds a stake.",
+ "ownership_type": "member_owned",
+ "revenue": 189300000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Einnahmen in Höhe von rund 189,3 Millionen Euro erzielt",
+ "revenue_season": "2025",
+ "revenue_source_name": "Borussia Mönchengladbach, figures for financial year 2025 (1 Jan to 31 Dec) presented at the 2026 members' meeting",
+ "revenue_source_url": "https://www.borussia.de/news/borussia-steigert-umsatz-um-fast-fuenf-millionen-euro",
+ "short_name": "Borussia Mönchengladbach",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.borussia.de/erfolge-und-fakten",
+  "https://www.borussia.de/stadion-und-vereinsgelaende",
+  "https://www.borussia.de/gremien-ueberblick",
+  "https://www.borussia.de/impressum",
+  "https://www.borussia.de/news/borussia-steigert-umsatz-um-fast-fuenf-millionen-euro",
+  "https://www.borussia.de/news/borussia-stellt-neuen-zuschauerrekord-auf",
+  "https://www.borussia.com/news/reuter-and-borussia-extend-partnership",
+  "https://www.borussia.de/news/2022-05-27-borussia-und-puma-verlaengern-langfristig-ihre-partnerschaft",
+  "https://www.borussia.de/news/fohlen-spielen-ab-2026-27-im-ista-borussia-park",
+  "https://www.borussia.de/graphql",
+  "https://www.deloitte.com/uk/en/services/financial-advisory/analysis/deloitte-football-money-league.html"
+ ],
+ "sport": "football",
+ "stadium": "ista-Borussia-Park",
+ "stadium_capacity": 54909,
+ "stadium_capacity_evidence": "Der ista-Borussia-Park hat bei Bundesligaspielen eine Kapazität von 54.909 Zuschauern.",
+ "stadium_capacity_source_url": "https://www.borussia.de/stadion-und-vereinsgelaende",
+ "stadium_owner": null,
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

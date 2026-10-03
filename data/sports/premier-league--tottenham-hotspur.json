@@ -1,0 +1,201 @@
+{
+ "city": "London",
+ "country": "England",
+ "deals": [
+  {
+   "amount": 100000000,
+   "currency": "GBP",
+   "date": "2025-10-09",
+   "date_text": "October 2025",
+   "evidence": "injected £100 million of new capital into the Club",
+   "headline": "Lewis family trust injects £100m of new equity into Tottenham",
+   "investor": "ENIC Sports & Development Holdings Ltd (Lewis family trust)",
+   "investor_type": "individual",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Tottenham Hotspur",
+   "source_url": "https://www.tottenhamhotspur.com/news/984799/tottenham-hotspur-announces-initial-100m-capital-injection",
+   "stake_pct": null,
+   "summary": "The majority shareholder, the Lewis family trust, injected £100m of new capital through ENIC; the club called it an initial injection.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2025-09-07",
+   "date_text": "September 2025",
+   "evidence": "has received, and unequivocally rejected, separate preliminary expressions of interest",
+   "headline": "ENIC rejects preliminary approaches from PCP and a Firehawk-led consortium",
+   "investor": "PCP International Finance Limited; Firehawk Holdings Limited consortium (Roger Kennedy, Wing-Fai Ng)",
+   "investor_type": "consortium",
+   "kind": "other",
+   "seller": "ENIC Sports & Development Holdings Ltd",
+   "source_name": "Tottenham Hotspur",
+   "source_url": "https://www.tottenhamhotspur.com/news/983899/statement-regarding-media-speculation",
+   "stake_pct": null,
+   "summary": "Tottenham confirmed ENIC had received and unequivocally rejected separate preliminary expressions of interest to acquire ENIC; the statement opened a Takeover Code offer period. No transaction followed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "tottenhamhotspur.com",
+ "facts": {
+  "chair": {
+   "evidence": "A letter from Peter Charrington, Non-Executive Chairman",
+   "name": "Peter Charrington",
+   "source_url": "https://www.tottenhamhotspur.com/news/1070020/a-letter-from-peter-charrington-non-executive-chairman",
+   "title": "Non-Executive Chairman"
+  },
+  "chief_executive": {
+   "evidence": "Vinai Venkatesham was hired as Chief Executive Officer (CEO)",
+   "name": "Vinai Venkatesham",
+   "source_url": "https://www.tottenhamhotspur.com/news/984675/tottenham-hotspur-announces-departure-of-executive-chairman-daniel-levy",
+   "title": "Chief Executive Officer"
+  },
+  "honours": {
+   "competition": "English top flight (Football League Champions)",
+   "evidence": "Football League Champions: 1950/1951, 1960/1961",
+   "league_titles": 2,
+   "source_url": "https://www.tottenhamhotspur.com/the-club/history/club-honours"
+  },
+  "kit_supplier": {
+   "evidence": "Gallery: New Nike 2026/27 Home Kit up close",
+   "name": "Nike",
+   "source_url": "https://www.tottenhamhotspur.com/news/1074148/gallery-new-nike-202627-home-kit-up-close"
+  },
+  "legal_entity": {
+   "evidence": "TOTTENHAM HOTSPUR LIMITED",
+   "name": "Tottenham Hotspur Limited",
+   "registry": "Companies House",
+   "registry_id": "01706358",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01706358/persons-with-significant-control"
+  },
+  "net_debt": {
+   "amount": 831200000,
+   "as_of": "2025-06-30",
+   "currency": "GBP",
+   "evidence": "Our net debt as of 30 June 2025 was £831.2m (2024: £772.5m)",
+   "source_name": "Tottenham Hotspur financial results, year ended 30 June 2025",
+   "source_url": "https://www.tottenhamhotspur.com/news/1018039/financial-results-year-ended-30-june-2025"
+  },
+  "operating_result": {
+   "amount": 112300000,
+   "basis": "EBITDA",
+   "currency": "GBP",
+   "evidence": "Profit from Operations (EBITDA) decreased to £112.3m",
+   "season": "2024-25",
+   "source_name": "Tottenham Hotspur financial results, year ended 30 June 2025",
+   "source_url": "https://www.tottenhamhotspur.com/news/1018039/financial-results-year-ended-30-june-2025"
+  },
+  "revenue_breakdown": {
+   "broadcast": 127000000,
+   "commercial": 277100000,
+   "currency": "GBP",
+   "evidence": "Match receipts of £126.5m (2024: £105.8m)",
+   "matchday": 126500000,
+   "other": 34700000,
+   "season": "2024-25",
+   "source_name": "Tottenham Hotspur financial results, year ended 30 June 2025",
+   "source_url": "https://www.tottenhamhotspur.com/news/1018039/financial-results-year-ended-30-june-2025"
+  },
+  "shirt_sponsor": {
+   "evidence": "AIA remains the Club’s Global Principal Partner and front-of-shirt sponsor until the end of the 2026/2027 season.",
+   "name": "AIA",
+   "source_url": "https://www.tottenhamhotspur.com/news/1000421/club-and-aia-extend-partnership-through-to-2032"
+  },
+  "stadium_owner": {
+   "detail": "The club's own stadium, opened 2019 and financed by the club's long-dated borrowings",
+   "evidence": "The club's state-of-the-art stadium in North London has become a major asset",
+   "source_url": "https://www.forbes.com/teams/tottenham-hotspur/",
+   "value": "club"
+  }
+ },
+ "founded_evidence": "Club formed by boys from Hotspur cricket club and from the local grammar school. The name of 'Hotspur FC' was adopted.",
+ "founded_source_url": "https://www.tottenhamhotspur.com/the-club/history/year-by-year",
+ "founded_year": 1882,
+ "key": "premier-league--tottenham-hotspur",
+ "league": "Premier League",
+ "name": "Tottenham Hotspur Football Club",
+ "notes": "Revenue is the club's own release (total revenue £565.3m, the release also calls it 'revenue and other income'); revenue_breakdown 'other' is UEFA prize money (£34.7m) and 'commercial' is commercial revenues and other income. The release gives the loss after tax (£94.7m) but not the pre-tax figure, and no wages; the full annual report PDF on the club site and Companies House is a scanned image, so wages, pre-tax result and attendance are not machine-readable and are left null. ENIC's share count is stated (204,077,955 of 234,811,142 at 5 Sep 2025) but no page states a percentage, so stake_pct is null. Daniel Levy is listed by Forbes as an owner (through ENIC) with no stated stake; he stepped down as Executive Chairman on 4 Sep 2025. Forbes 2026 figures for the same season: revenue $733M (£565M), operating income $139M (£107M), debt/value 38%. Companies House shows further share allotments (7 Oct 2025, 12 Jun 2026); the June 2026 allotment has no club release found. The old record's Deloitte EUR revenue and SI/Yahoo sources were replaced.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "of which 204,077,955 ordinary shares are owned by ENIC",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "ENIC Sports & Development Holdings Ltd (Lewis family trust)",
+   "since_year": null,
+   "source_url": "https://www.tottenhamhotspur.com/news/983899/statement-regarding-media-speculation",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Joseph Lewis Family Trust, Daniel Levy",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Daniel Levy",
+   "since_year": null,
+   "source_url": "https://www.forbes.com/teams/tottenham-hotspur/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.tottenhamhotspur.com/news/983899/statement-regarding-media-speculation",
+ "ownership_summary": "Tottenham Hotspur Limited is majority-owned by ENIC Sports & Development Holdings Ltd, the vehicle of the Lewis family trust, which held 204,077,955 of 234,811,142 ordinary shares at 5 September 2025; the persons with significant control are the trustees' controllers Peter Charrington and Katie Booth. ENIC rejected approaches from PCP and a Firehawk-led consortium in September 2025 and injected £100m of new equity in October 2025; the club and the family say it is not for sale.",
+ "ownership_type": "individual_family",
+ "revenue": 565300000,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "Total Revenue for the year increased by 7% to £565.3m (2024: £528.2m)",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Tottenham Hotspur financial results, year ended 30 June 2025",
+ "revenue_source_url": "https://www.tottenhamhotspur.com/news/1018039/financial-results-year-ended-30-june-2025",
+ "short_name": "Tottenham Hotspur",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.tottenhamhotspur.com/news/1018039/financial-results-year-ended-30-june-2025",
+  "https://www.forbes.com/teams/tottenham-hotspur/",
+  "https://web.archive.org/web/20260529060046/https://www.forbes.com/sites/justinteitelbaum/2026/05/29/the-worlds-most-valuable-soccer-teams-2026/",
+  "https://www.tottenhamhotspur.com/news/984799/tottenham-hotspur-announces-initial-100m-capital-injection",
+  "https://www.tottenhamhotspur.com/news/983899/statement-regarding-media-speculation",
+  "https://www.tottenhamhotspur.com/news/984675/tottenham-hotspur-announces-departure-of-executive-chairman-daniel-levy",
+  "https://www.tottenhamhotspur.com/news/1070176/a-message-from-the-lewis-family",
+  "https://www.tottenhamhotspur.com/news/1070020/a-letter-from-peter-charrington-non-executive-chairman",
+  "https://www.tottenhamhotspur.com/the-club/history/year-by-year",
+  "https://www.tottenhamhotspur.com/the-stadium",
+  "https://www.tottenhamhotspur.com/the-club/history/club-honours",
+  "https://www.tottenhamhotspur.com/news/1000421/club-and-aia-extend-partnership-through-to-2032",
+  "https://www.tottenhamhotspur.com/news/1074148/gallery-new-nike-202627-home-kit-up-close",
+  "https://find-and-update.company-information.service.gov.uk/company/01706358/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/01706358/filing-history",
+  "https://www.tottenhamhotspur.com/the-club/investor-relations/annual-reports"
+ ],
+ "sport": "football",
+ "stadium": "Tottenham Hotspur Stadium",
+ "stadium_capacity": 62850,
+ "stadium_capacity_evidence": "the largest club stadium in London with a capacity of 62,850",
+ "stadium_capacity_source_url": "https://www.tottenhamhotspur.com/the-stadium",
+ "stadium_owner": {
+  "detail": "The club's own stadium, opened 2019 and financed by the club's long-dated borrowings",
+  "evidence": "The club's state-of-the-art stadium in North London has become a major asset",
+  "source_url": "https://www.forbes.com/teams/tottenham-hotspur/",
+  "value": "club"
+ },
+ "valuation": 3000000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "Calculated May 2026",
+ "valuation_source_name": "Forbes, The World's Most Valuable Soccer Teams 2026 (enterprise value)",
+ "valuation_source_url": "https://www.forbes.com/teams/tottenham-hotspur/",
+ "valuation_year": 2026
+}

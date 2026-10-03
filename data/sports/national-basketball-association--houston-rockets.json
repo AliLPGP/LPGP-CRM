@@ -1,0 +1,143 @@
+{
+ "city": "Houston",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 2200000000,
+   "currency": "USD",
+   "date": "2017-10-06",
+   "date_text": "October 2017",
+   "evidence": "Fertitta paid a record price for the team of $2.2 billion dollars to former Rockets owner Leslie Alexander",
+   "headline": "Tilman Fertitta closes $2.2bn purchase of the Rockets",
+   "investor": "Tilman Fertitta",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Leslie Alexander",
+   "source_name": "Houston Rockets (NBA.com)",
+   "source_url": "https://www.nba.com/rockets/news/tilman-j-fertitta-new-owner-houston-rockets",
+   "stake_pct": null,
+   "summary": "Fertitta closed his purchase of the Houston Rockets and Clutch City Sports and Entertainment after unanimous NBA Board of Governors approval, paying a record $2.2bn to Leslie Alexander. Stake not stated on the page (reported as the whole team).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": 180000000,
+   "currency": "USD",
+   "date": "2026-04-08",
+   "date_text": "April 2026",
+   "evidence": "the home of the Houston Rockets will receive $180 million in upgrades through fall 2027",
+   "headline": "$180m Toyota Center renovation approved",
+   "investor": "Clutch City Sports & Entertainment / state grants",
+   "investor_type": "corporate",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Community Impact",
+   "source_url": "https://communityimpact.com/heights-river-oaks-montrose/sports/toyota-center-to-see-major-upgrades-in-180m-renovation/",
+   "stake_pct": null,
+   "summary": "The Harris County-Houston Sports Authority board approved $180m of Toyota Center upgrades through fall 2027, funded by Clutch City Sports & Entertainment and state grants (split not stated).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "nba.com/rockets",
+ "facts": {
+  "chief_executive": {
+   "evidence": "Gretchen Sheirr (Sheer) has been promoted from Chief Operating Officer (COO) to President of Business Operations",
+   "name": "Gretchen Sheirr",
+   "source_url": "https://www.nba.com/rockets/news/rockets-promote-gretchen-sheirr-president-business-operations",
+   "title": "President of Business Operations"
+  },
+  "honours": {
+   "competition": "NBA championships",
+   "evidence": "Championships 2",
+   "league_titles": 2,
+   "source_url": "https://www.forbes.com/teams/houston-rockets/"
+  },
+  "legal_entity": {
+   "evidence": "his purchase of the NBA Houston Rockets and Clutch City Sports and Entertainment",
+   "name": "Clutch City Sports and Entertainment",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.nba.com/rockets/news/tilman-j-fertitta-new-owner-houston-rockets"
+  },
+  "operating_result": {
+   "amount": 191000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$191M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/houston-rockets/"
+  },
+  "wages": {
+   "amount": 156000000,
+   "currency": "USD",
+   "evidence": "$156M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/houston-rockets/"
+  }
+ },
+ "founded_evidence": "Founded 1967",
+ "founded_source_url": "https://www.nba.com/team/1610612745/rockets",
+ "founded_year": 1967,
+ "key": "national-basketball-association--houston-rockets",
+ "league": "National Basketball Association",
+ "name": "Houston Rockets",
+ "notes": "Toyota Center owner not stated on a page read: the Harris County-Houston Sports Authority lists it among its facilities and manages its debt service ('The debt service for Reliant Stadium, Toyota Center & Daikin Park is managed through HCHSA'), so stadium_owner left null. Capacity: HCHSA says 18,023; NBA.com team data says 18104. No minority/institutional investors found (FOS: Rockets have no private-equity connection). Any family transfer of control during Fertitta's ambassadorship not found. Jersey patch sponsor not confirmed on a citable page. Founded 1967 as San Diego Rockets (NBA.com 'Founded 1967'). No social counts found. Forbes 2026 list not yet published.",
+ "owners": [
+  {
+   "amount": 2200000000,
+   "currency": "USD",
+   "evidence": "Ambassador Fertitta is the sole owner of Fertitta Entertainment, which owns the restaurant giant Landry’s, the Golden Nugget Hotel and Casinos, and the NBA’s Houston Rockets",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Tilman Fertitta (via Fertitta Entertainment)",
+   "since_year": 2017,
+   "source_url": "https://it.usembassy.gov/ambassador-tilman-j-fertitta/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://it.usembassy.gov/ambassador-tilman-j-fertitta/",
+ "ownership_summary": "Owned by Tilman Fertitta through Fertitta Entertainment, of which he is sole owner; he closed the purchase of the Rockets and Clutch City Sports and Entertainment from Leslie Alexander in October 2017 for $2.2 billion. Fertitta has served as U.S. Ambassador to Italy. Front Office Sports (Oct 2025) lists the Rockets among teams with no private-equity connection.",
+ "ownership_type": "individual_family",
+ "revenue": 467000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$467M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA team valuations (Oct 2025); net of revenue sharing and arena debt service",
+ "revenue_source_url": "https://www.forbes.com/teams/houston-rockets/",
+ "short_name": "Rockets",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/houston-rockets/",
+  "https://www.nba.com/rockets/news/tilman-j-fertitta-new-owner-houston-rockets",
+  "https://it.usembassy.gov/ambassador-tilman-j-fertitta/",
+  "https://houstonsports.org/toyota-center/",
+  "https://communityimpact.com/heights-river-oaks-montrose/sports/toyota-center-to-see-major-upgrades-in-180m-renovation/",
+  "https://frontofficesports.com/the-nbas-expanding-private-equity-footprint/",
+  "https://www.nba.com/rockets/news/rockets-promote-gretchen-sheirr-president-business-operations",
+  "https://www.nba.com/team/1610612745/rockets",
+  "https://houstonsports.org/about-houston-sports/"
+ ],
+ "sport": "basketball",
+ "stadium": "Toyota Center",
+ "stadium_capacity": 18023,
+ "stadium_capacity_evidence": "Basketball Seating Capacity: 18,023",
+ "stadium_capacity_source_url": "https://houstonsports.org/toyota-center/",
+ "stadium_owner": null,
+ "valuation": 5900000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$5.9B",
+ "valuation_source_name": "Forbes (calculated October 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/houston-rockets/",
+ "valuation_year": 2025
+}

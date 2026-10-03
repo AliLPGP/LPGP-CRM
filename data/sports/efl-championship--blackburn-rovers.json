@@ -1,0 +1,181 @@
+{
+ "city": "Blackburn",
+ "country": "England",
+ "deals": [
+  {
+   "amount": 23000000,
+   "currency": "GBP",
+   "date": "2010-11-19",
+   "date_text": "19 November 2010",
+   "evidence": "Blackburn Rovers have confirmed that the club has been sold to Venky's London Limited for £23million.",
+   "headline": "Venky's buys 99.9% of Blackburn Rovers for £23m",
+   "investor": "Venky's London Limited (Rao family)",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Jack Walker 1987 Settlement (BRFC Investments Limited)",
+   "source_name": "Sky Sports",
+   "source_url": "https://www.skysports.com/football/news/6515661/rovers-takeover-completed",
+   "stake_pct": 99.9,
+   "summary": "BRFC Investments Limited, indirectly owned by the Jack Walker 1987 Settlement, sold its 99.9% shareholding to Venky's London Limited, a newly formed company owned by the Rao family, for £23m (17.17p per share), with an equivalent offer to minority holders. Outside the 2015+ window but it is the current ownership's origin.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "rovers.co.uk",
+ "facts": {
+  "attendance": {
+   "average": 16153,
+   "evidence": "Average league attendance 16,153",
+   "season": "2024-25",
+   "source_name": "Blackburn Rovers strategic report 2024/25 (KPI table)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00053482/filing-history/MzUxMjU3MjYyOWFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "legal_entity": {
+   "evidence": "THE BLACKBURN ROVERS FOOTBALL AND ATHLETIC LIMITED",
+   "name": "The Blackburn Rovers Football and Athletic Limited",
+   "registry": "Companies House",
+   "registry_id": "00053482",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00053482"
+  },
+  "operating_result": {
+   "amount": -21409735,
+   "basis": "operating profit",
+   "currency": "GBP",
+   "evidence": "OPERATING LOSS 5 (18,988,509) (2,421,226) (21,409,735) (19,496,450)",
+   "season": "2024-25",
+   "source_name": "Blackburn Rovers accounts to 30 June 2025, statement of comprehensive income (operating loss including player amortisation; before profit on player sales)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00053482/filing-history/MzUxMjU3MjYyOWFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "pretax_result": {
+   "amount": -10423188,
+   "currency": "GBP",
+   "evidence": "(LOSS)/PROFIT BEFORE TAXATION (10,423,188) 3,334,238",
+   "season": "2024-25",
+   "source_name": "Blackburn Rovers accounts to 30 June 2025",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00053482/filing-history/MzUxMjU3MjYyOWFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "revenue_breakdown": {
+   "broadcast": 11500850,
+   "commercial": 7187924,
+   "currency": "GBP",
+   "evidence": "Matchday 4,464,414 4,937,365 Media 11,500,850 9,481,450 Commercial 7,187,924 6,942,919 Other 544,010 33,763",
+   "matchday": 4464414,
+   "other": 544010,
+   "season": "2024-25",
+   "source_name": "Blackburn Rovers accounts to 30 June 2025, turnover note (Matchday / Media / Commercial / Other)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00053482/filing-history/MzUxMjU3MjYyOWFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "shirt_sponsor": {
+   "evidence": "Shirt Sponsors: Totally Wicked",
+   "name": "Totally Wicked",
+   "source_url": "https://footballgroundguide.com/leagues/england/championship/ewood-park-blackburn-rovers.html"
+  },
+  "wages": {
+   "amount": 28219719,
+   "currency": "GBP",
+   "evidence": "Wages and salaries 24,602,778 21,981,656 Social security costs 3,393,623 2,978,274 Other pension costs 223,318 483,441 28,219,719 25,443,371",
+   "season": "2024-25",
+   "source_name": "Blackburn Rovers accounts to 30 June 2025, staff costs note (wages, social security, pensions)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00053482/filing-history/MzUxMjU3MjYyOWFkaXF6a2N4/document?format=pdf&download=0"
+  }
+ },
+ "founded_evidence": "called that first meeting in the St Leger in 1875",
+ "founded_source_url": "https://www.lancashiretelegraph.co.uk/news/18991569.blackburn-rovers-pioneers-paid-heavy-price-pitch/",
+ "founded_year": 1875,
+ "key": "efl-championship--blackburn-rovers",
+ "league": "EFL Championship",
+ "name": "Blackburn Rovers Football Club",
+ "notes": "Revenue and the other 2024/25 figures come from the Companies House accounts PDF, which is a scanned image: evidence strings were transcribed from the page and a text search of the PDF will not find them. The operating loss shown (-£21.4m) includes player amortisation; the club's own KPI 'operating loss before trading of intangible/tangible assets' is -£19.0m. Creditors due within one year were £164.3m at 30 June 2025 (net liabilities £128.6m), largely owner funding, but the accounts read give no net-debt figure, so net_debt is null. Stadium: the accounts carry freehold land and buildings (revalued 1995) but no page read names Ewood Park as club-owned, so stadium_owner is null. No deal since 2015 found: Venky's funds the club by loans and share allotments (Companies House SH01 filings, e.g. capital GBP 201,842,484 after a 12 December 2025 allotment), with no stated amounts per injection. Steve Waggott left as chief executive in late 2025 (accounts list him as resigned); no successor or chair found on a citable page. rovers.co.uk is a client-rendered app, so club pages could not be read. Not found: valuation, kit supplier, social followers, honours, chair/CEO.",
+ "owners": [
+  {
+   "amount": 23000000,
+   "currency": "GBP",
+   "evidence": "A newly-established British subsidiary called Venky's London Limited paid £23m for a 99.9% stake in the club",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Venky's London Limited (Rao family)",
+   "since_year": 2010,
+   "source_url": "https://www.theguardian.com/football/2010/nov/19/venkys-completes-takeover-blackburn-rovers",
+   "stake_pct": 99.9,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Mrs Anuradha Desai",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Anuradha Desai",
+   "since_year": 2010,
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07406020/persons-with-significant-control",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Banda Venkatesh Rao",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Banda Venkatesh Rao",
+   "since_year": 2010,
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07406020/persons-with-significant-control",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Banda Balaji Rao",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Banda Balaji Rao",
+   "since_year": 2010,
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/07406020/persons-with-significant-control",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://find-and-update.company-information.service.gov.uk/company/00053482/persons-with-significant-control",
+ "ownership_summary": "Venky's London Limited, a UK company formed by India's Rao family (owners of the Venky's / Venkateshwara Hatcheries poultry group), has owned the club since November 2010, when it paid £23m for 99.9% from the Jack Walker 1987 Settlement. Companies House lists Venky's London as the club's only person with significant control (75% or more), and Venky's London's own controllers as Anuradha Desai, Banda Venkatesh Rao and Banda Balaji Rao, each holding more than 25% but not more than 50%. No institutional investor is recorded.",
+ "ownership_type": "individual_family",
+ "revenue": 23697198,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "TURNOVER 23,697,198 23,697,198 21,395,497",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "The Blackburn Rovers Football and Athletic Limited, full accounts for the year ended 30 June 2025 (Companies House)",
+ "revenue_source_url": "https://find-and-update.company-information.service.gov.uk/company/00053482/filing-history/MzUxMjU3MjYyOWFkaXF6a2N4/document?format=pdf&download=0",
+ "short_name": "Blackburn Rovers",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://find-and-update.company-information.service.gov.uk/company/00053482/filing-history/MzUxMjU3MjYyOWFkaXF6a2N4/document?format=pdf&download=0",
+  "https://find-and-update.company-information.service.gov.uk/company/00053482",
+  "https://find-and-update.company-information.service.gov.uk/company/00053482/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/07406020/persons-with-significant-control",
+  "https://www.skysports.com/football/news/6515661/rovers-takeover-completed",
+  "https://www.theguardian.com/football/2010/nov/19/venkys-completes-takeover-blackburn-rovers",
+  "https://www.lancashiretelegraph.co.uk/news/18991569.blackburn-rovers-pioneers-paid-heavy-price-pitch/",
+  "https://footballgroundguide.com/leagues/england/championship/ewood-park-blackburn-rovers.html"
+ ],
+ "sport": "football",
+ "stadium": "Ewood Park",
+ "stadium_capacity": 31367,
+ "stadium_capacity_evidence": "Capacity: 31,367 (all seated)",
+ "stadium_capacity_source_url": "https://footballgroundguide.com/leagues/england/championship/ewood-park-blackburn-rovers.html",
+ "stadium_owner": null,
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

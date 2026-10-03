@@ -1,0 +1,152 @@
+{
+ "city": "Los Angeles (Inglewood)",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 400000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": "March 2020",
+   "evidence": "The Clippers announced that the newly formed CAPSS LLC reached the agreement with The Madison Square Garden Company, which owned the Forum, to purchase the music venue for $400 million in cash.",
+   "headline": "Ballmer buys the Forum from MSG for $400m in cash",
+   "investor": "CAPSS LLC (Steve Ballmer)",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "The Madison Square Garden Company",
+   "source_name": "ESPN",
+   "source_url": "https://www.espn.com/nba/story/_/id/28949728/clippers-steve-ballmer-reaches-deal-buy-forum-400m",
+   "stake_pct": 100,
+   "summary": "Ballmer's newly formed CAPSS LLC bought the Forum in Inglewood from MSG, settling the litigation blocking the Clippers' new arena; resolution of the litigation was a condition of the sale.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": 500000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": null,
+   "evidence": "funded the arena with the help of a 23-year naming-rights deal with Intuit worth $500 million",
+   "headline": "Intuit's 23-year, $500m naming-rights deal helps fund the privately financed Intuit Dome",
+   "investor": "Intuit",
+   "investor_type": "corporate",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Front Office Sports",
+   "source_url": "https://frontofficesports.com/intuit-dome-finally-opens-as-clippers-hope-for-fresh-start/",
+   "stake_pct": null,
+   "summary": "The $2bn Intuit Dome opened in August 2024 with no state money; Ballmer funded it with the help of Intuit's naming-rights deal.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "clippers.com",
+ "facts": {
+  "chair": {
+   "evidence": "Governor(s) Steve Ballmer",
+   "name": "Steve Ballmer",
+   "source_url": "https://www.nba.com/team/1610612746",
+   "title": "Governor"
+  },
+  "operating_result": {
+   "amount": 154000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$154M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/los-angeles-clippers/"
+  },
+  "revenue_breakdown": {
+   "broadcast": null,
+   "commercial": null,
+   "currency": "USD",
+   "evidence": "$163M",
+   "matchday": 163000000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): gate receipts incl. club seats",
+   "source_url": "https://www.forbes.com/teams/los-angeles-clippers/"
+  },
+  "shirt_sponsor": {
+   "evidence": "In September 2025, the Clippers and Visit Rwanda announced a multi-year deal making the tourism organization the club's new jersey patch partner",
+   "name": "Visit Rwanda",
+   "source_url": "https://www.forbes.com/teams/los-angeles-clippers/"
+  },
+  "stadium_owner": {
+   "detail": "Forbes lists the team as the Intuit Dome's owner; privately funded by Steve Ballmer.",
+   "evidence": "Venue Intuit Dome Owner(s) team",
+   "source_url": "https://www.forbes.com/teams/los-angeles-clippers/",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 172000000,
+   "currency": "USD",
+   "evidence": "$172M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/los-angeles-clippers/"
+  }
+ },
+ "founded_evidence": "Founded 1970",
+ "founded_source_url": "https://www.nba.com/team/1610612746",
+ "founded_year": 1970,
+ "key": "national-basketball-association--la-clippers",
+ "league": "National Basketball Association",
+ "name": "LA Clippers",
+ "notes": "Revenue, operating income, player expenses and gate receipts are Forbes estimates for 2024-25 (calculated October 2025); the team publishes no accounts. Forbes gives Intuit Dome seating capacity 18,300 (NBA.com's data feed says 19,060). Not found: Ballmer's exact percentage or any minority/institutional holders, chief executive/president of business operations, legal entity, attendance, social follower counts. The 2014 purchase predates the brief's 2015 deal window, so it is recorded on the owner row only. The Forum deal date is from ESPN's March 2020 story (date_text only). Intuit Dome cost: Forbes 'Cost To Build $2,000M'.",
+ "owners": [
+  {
+   "amount": 2000000000,
+   "currency": "USD",
+   "evidence": "The new arena was part of Ballmer’s vision when he purchased the Clippers in 2014 for $2 billion.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Steve Ballmer",
+   "since_year": 2014,
+   "source_url": "https://frontofficesports.com/intuit-dome-finally-opens-as-clippers-hope-for-fresh-start/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.forbes.com/teams/los-angeles-clippers/",
+ "ownership_summary": "Owned by former Microsoft CEO Steve Ballmer, who bought the Clippers in 2014 for $2 billion. No institutional or minority investor is named on the pages read.",
+ "ownership_type": "individual_family",
+ "revenue": 569000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$569M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA Team Valuations, calculated October 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/los-angeles-clippers/",
+ "short_name": "Clippers",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/los-angeles-clippers/",
+  "https://www.nba.com/team/1610612746",
+  "https://frontofficesports.com/intuit-dome-finally-opens-as-clippers-hope-for-fresh-start/",
+  "https://www.espn.com/nba/story/_/id/28949728/clippers-steve-ballmer-reaches-deal-buy-forum-400m"
+ ],
+ "sport": "basketball",
+ "stadium": "Intuit Dome",
+ "stadium_capacity": 18300,
+ "stadium_capacity_evidence": "Seating Capacity 18,300",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/los-angeles-clippers/",
+ "stadium_owner": {
+  "detail": "Forbes lists the team as the Intuit Dome's owner; privately funded by Steve Ballmer.",
+  "evidence": "Venue Intuit Dome Owner(s) team",
+  "source_url": "https://www.forbes.com/teams/los-angeles-clippers/",
+  "value": "club"
+ },
+ "valuation": 7500000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$7.5B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/los-angeles-clippers/",
+ "valuation_year": 2025
+}

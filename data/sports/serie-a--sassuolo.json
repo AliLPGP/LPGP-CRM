@@ -1,0 +1,139 @@
+{
+ "city": "Sassuolo",
+ "country": "Italy",
+ "deals": [
+  {
+   "amount": 45000000,
+   "currency": "EUR",
+   "date": "2025-12-22",
+   "date_text": "22 December 2025",
+   "evidence": "fruttifero verso la Società in riserva di capitale per un importo pari ad Euro 45 milioni",
+   "headline": "Mapei converts EUR 45m of its cash-pool loan to Sassuolo into equity reserve",
+   "investor": "Mapei S.p.A.",
+   "investor_type": "corporate",
+   "kind": "other",
+   "seller": null,
+   "source_name": "U.S. Sassuolo Calcio bilancio al 31 dicembre 2025",
+   "source_url": "https://www.sassuolocalcio.it/wp-content/uploads/files/bilancio/Fascicolo-di-bilancio-31-dicembre-2025_U.S.-Sassuolo-Calcio_.pdf",
+   "stake_pct": null,
+   "summary": "The sole shareholder converted part of its interest-bearing cash-pooling loan to the club into a capital reserve of EUR 45m and committed to cover the club's losses and funding needs.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "sassuolocalcio.it",
+ "facts": {
+  "chair": {
+   "evidence": "Presidente CDA Carlo Rossi",
+   "name": "Carlo Rossi",
+   "source_url": "https://www.sassuolocalcio.it/club/organigramma/",
+   "title": "Presidente CDA"
+  },
+  "chief_executive": {
+   "evidence": "Amministratore Delegato e Direttore Generale Andrea Fabris",
+   "name": "Andrea Fabris",
+   "source_url": "https://www.sassuolocalcio.it/club/organigramma/",
+   "title": "Amministratore Delegato e Direttore Generale"
+  },
+  "legal_entity": {
+   "evidence": "P.IVA 01047110364 – C.F. 84008950366",
+   "name": "U.S. Sassuolo Calcio s.r.l.",
+   "registry": "Registro delle Imprese (P.IVA)",
+   "registry_id": "01047110364",
+   "source_url": "https://www.sassuolocalcio.it/club/documenti-societari/"
+  },
+  "operating_result": {
+   "amount": -21442000,
+   "basis": "EBITDA",
+   "currency": "EUR",
+   "evidence": "Margine operativo lordo –",
+   "season": "2025 (calendar year)",
+   "source_name": "Sassuolo bilancio 2025, reclassified P&L (Margine operativo lordo – EBITDA, EUR thousands)",
+   "source_url": "https://www.sassuolocalcio.it/wp-content/uploads/files/bilancio/Fascicolo-di-bilancio-31-dicembre-2025_U.S.-Sassuolo-Calcio_.pdf"
+  },
+  "pretax_result": {
+   "amount": -50615045,
+   "currency": "EUR",
+   "evidence": "(50.615.045)",
+   "season": "2025 (calendar year)",
+   "source_name": "Sassuolo bilancio 2025 (risultato prima delle imposte)",
+   "source_url": "https://www.sassuolocalcio.it/wp-content/uploads/files/bilancio/Fascicolo-di-bilancio-31-dicembre-2025_U.S.-Sassuolo-Calcio_.pdf"
+  },
+  "stadium_owner": {
+   "detail": "Stadium in Reggio Emilia, managed exclusively by Mapei (the club's parent) since December 2013; the club pays Mapei Stadium S.r.l. for its use (EUR 2.0m in 2025).",
+   "evidence": "Dal dicembre 2013 Mapei ha in gestione esclusiva il Mapei Stadium",
+   "source_url": "https://www.sassuolocalcio.it/strutture/mapei-stadium/",
+   "value": "private_third_party"
+  },
+  "wages": {
+   "amount": 59091000,
+   "currency": "EUR",
+   "evidence": "Costo del lavoro",
+   "season": "2025 (calendar year)",
+   "source_name": "Sassuolo bilancio 2025, reclassified P&L (Costo del lavoro, EUR thousands)",
+   "source_url": "https://www.sassuolocalcio.it/wp-content/uploads/files/bilancio/Fascicolo-di-bilancio-31-dicembre-2025_U.S.-Sassuolo-Calcio_.pdf"
+  }
+ },
+ "founded_evidence": "La storia del Sassuolo Calcio inizia il 17 Luglio 1920 con l’affiliazione alla F.I.G.C.",
+ "founded_source_url": "https://www.sassuolocalcio.it/club/la-nostra-storia/dalle-origini/",
+ "founded_year": 1920,
+ "key": "serie-a--sassuolo",
+ "league": "Serie A",
+ "name": "U.S. Sassuolo Calcio",
+ "notes": "Sassuolo reports on a calendar year: 2025 covers six months in Serie B (2024-25) and six in Serie A (2025-26). Revenue is total valore della produzione EUR 70,698,440 (includes EUR 15.4m contributions and EUR 2.4m player-sale gains); net loss EUR 38,772,733. Wages/EBITDA come from the reclassified P&L in EUR thousands; evidence quotes the row label. Stake 100% is the sole shareholder ('socio unico') Mapei S.p.A.; the page states sole shareholder, not a percentage. The stadium is in Reggio Emilia, not Sassuolo; its seat counts per stand are shown but the total renders by script, so capacity is left null (not summed). Mapei is controlled by the Squinzi family (Vice president Marco Squinzi, CEO Veronica Squinzi per organigramma) but no page read states the family's holding. No valuation, socials, kit/shirt sponsor roles found. No institutional investors beyond the corporate parent.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Direzione e coordinamento: Mapei SpA – Milano (ITALIA)",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Mapei S.p.A.",
+   "since_year": null,
+   "source_url": "https://www.sassuolocalcio.it/club/documenti-societari/",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.sassuolocalcio.it/club/documenti-societari/",
+ "ownership_summary": "U.S. Sassuolo Calcio S.r.l. has a sole shareholder, Mapei S.p.A. (Milan), which exercises direction and coordination over the club and funds it through the Mapei group cash pool.",
+ "ownership_type": "corporate",
+ "revenue": 70698440,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Totale valore della produzione",
+ "revenue_season": "2025 (calendar year to 31 Dec 2025)",
+ "revenue_source_name": "U.S. Sassuolo Calcio S.r.l. bilancio al 31 dicembre 2025 (valore della produzione)",
+ "revenue_source_url": "https://www.sassuolocalcio.it/wp-content/uploads/files/bilancio/Fascicolo-di-bilancio-31-dicembre-2025_U.S.-Sassuolo-Calcio_.pdf",
+ "short_name": "Sassuolo",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.sassuolocalcio.it/club/documenti-societari/",
+  "https://www.sassuolocalcio.it/club/organigramma/",
+  "https://www.sassuolocalcio.it/strutture/mapei-stadium/",
+  "https://www.sassuolocalcio.it/club/la-nostra-storia/dalle-origini/",
+  "https://www.sassuolocalcio.it/wp-content/uploads/files/bilancio/Fascicolo-di-bilancio-31-dicembre-2025_U.S.-Sassuolo-Calcio_.pdf"
+ ],
+ "sport": "football",
+ "stadium": "Mapei Stadium – Città del Tricolore",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "Stadium in Reggio Emilia, managed exclusively by Mapei (the club's parent) since December 2013; the club pays Mapei Stadium S.r.l. for its use (EUR 2.0m in 2025).",
+  "evidence": "Dal dicembre 2013 Mapei ha in gestione esclusiva il Mapei Stadium",
+  "source_url": "https://www.sassuolocalcio.it/strutture/mapei-stadium/",
+  "value": "private_third_party"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

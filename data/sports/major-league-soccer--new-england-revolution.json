@@ -1,0 +1,125 @@
+{
+ "city": "Foxborough",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2025-12-31",
+   "date_text": "December 31, 2025",
+   "evidence": "Under the terms of the 20-year agreement, the City of Everett will receive an estimated $91.7 million in total community value",
+   "headline": "Kraft Group and City of Everett reach community agreement for Revolution stadium",
+   "investor": "The Kraft Group",
+   "investor_type": "family_office",
+   "kind": "other",
+   "seller": null,
+   "source_name": "City of Everett",
+   "source_url": "https://cityofeverett.com/mayor-demaria-and-the-kraft-group-reach-community-agreement-valued-at-nearly-200-million-for-the-city-of-everett/",
+   "stake_pct": null,
+   "summary": "20-year community impact agreement for a privately funded ~25,000-seat Revolution stadium on the former Mystic Generating Station site in Everett, MA: an estimated $91.7m in community value to the city, separate from an estimated $100m Kraft Group commitment to environmental cleanup, plus $2.25 per ticket sold.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "revolutionsoccer.net",
+ "facts": {
+  "chair": {
+   "evidence": "Robert K. Kraft",
+   "name": "Robert K. Kraft",
+   "source_url": "https://www.revolutionsoccer.net/club/club-staff",
+   "title": "Investor / Operator"
+  },
+  "chief_executive": {
+   "evidence": "As President of the New England Revolution, Brian Bilello reports directly to the Kraft family and oversees all aspects of the club’s business and soccer operations.",
+   "name": "Brian Bilello",
+   "source_url": "https://www.revolutionsoccer.net/club/bios/brian-bilello",
+   "title": "President"
+  },
+  "honours": {
+   "competition": "MLS Supporters' Shield",
+   "evidence": "In 2021, Kraft saw the Revolution set an MLS record with 73 regular season points en route to the club’s first Supporters’ Shield title.",
+   "league_titles": 1,
+   "source_url": "https://www.revolutionsoccer.net/club/bios/robert-kraft"
+  },
+  "operating_result": {
+   "amount": 1000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "The estimates of teams’ revenue and operating income (earnings before interest, taxes, depreciation and amortization) reflect the 2025 season",
+   "season": "2025",
+   "source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026",
+   "source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/"
+  },
+  "stadium_owner": {
+   "detail": "Gillette Stadium is held by the Kraft family (Kraft Group), the club's owner, not by the club itself; it is shared with the NFL's New England Patriots. A club-specific, privately funded ~25,000-seat stadium is planned in Everett, MA.",
+   "evidence": "His holdings include the New England Revolution, New England Patriots, Gillette Stadium",
+   "source_url": "https://www.revolutionsoccer.net/club/bios/robert-kraft",
+   "value": "private_third_party"
+  }
+ },
+ "founded_evidence": "On June 6, 1995, the Kraft family became the founding Investor/Operator of the Revolution, joining Major League Soccer (MLS) as one of its 10 charter clubs for its inaugural season in 1996.",
+ "founded_source_url": "https://www.revolutionsoccer.net/club/bios/robert-kraft",
+ "founded_year": 1995,
+ "key": "major-league-soccer--new-england-revolution",
+ "league": "Major League Soccer",
+ "name": "New England Revolution",
+ "notes": "Founded: the Kraft family became Investor/Operator on 6 June 1995; first season 1996. Stadium capacity is Gillette Stadium's full (NFL) capacity; the Revolution play to a reduced soccer configuration no citable page stated. Forbes figures are estimates for the 2025 season; Forbes is paywalled/403 so the Internet Archive snapshot of the Forbes article is cited (original: https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/). Forbes lists Key Owner: Kraft family. No stake percentage, legal entity, socials, attendance or shirt sponsor found on a citable page; MLS is a single-entity league, so there are no club accounts. Everett stadium: privately funded per the club's FAQ, regulatory approvals pending (MEPA process 2026).",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "The Kraft family was one of the original founders of Major League Soccer (MLS) in 1996 and founded the New England Revolution as one of the league’s 10 charter clubs.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Kraft family (The Kraft Group)",
+   "since_year": 1995,
+   "source_url": "https://www.thekraftgroup.com/new-england-revolution/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.revolutionsoccer.net/club/club-staff",
+ "ownership_summary": "Owned by the Kraft family through the Kraft Group (Robert K. Kraft and Jonathan A. Kraft are the club's Investor/Operators), who founded the club as an MLS charter member in 1995. No institutional or minority investor is disclosed.",
+ "ownership_type": "individual_family",
+ "revenue": 60000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$60 million",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026",
+ "revenue_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "short_name": "Revolution",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.revolutionsoccer.net/club/bios/robert-kraft",
+  "https://www.revolutionsoccer.net/club/club-staff",
+  "https://www.revolutionsoccer.net/club/bios/brian-bilello",
+  "https://www.revolutionsoccer.net/everett-stadium",
+  "https://www.thekraftgroup.com/new-england-revolution/",
+  "https://www.gillettestadium.com/overview/",
+  "https://cityofeverett.com/mayor-demaria-and-the-kraft-group-reach-community-agreement-valued-at-nearly-200-million-for-the-city-of-everett/",
+  "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/"
+ ],
+ "sport": "football",
+ "stadium": "Gillette Stadium",
+ "stadium_capacity": 64628,
+ "stadium_capacity_evidence": "64,628",
+ "stadium_capacity_source_url": "https://www.gillettestadium.com/overview/",
+ "stadium_owner": {
+  "detail": "Gillette Stadium is held by the Kraft family (Kraft Group), the club's owner, not by the club itself; it is shared with the NFL's New England Patriots. A club-specific, privately funded ~25,000-seat stadium is planned in Everett, MA.",
+  "evidence": "His holdings include the New England Revolution, New England Patriots, Gillette Stadium",
+  "source_url": "https://www.revolutionsoccer.net/club/bios/robert-kraft",
+  "value": "private_third_party"
+ },
+ "valuation": 540000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "the New England Revolution (No. 25, $540 million)",
+ "valuation_source_name": "Forbes, The Most Valuable MLS Teams 2026",
+ "valuation_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "valuation_year": 2026
+}

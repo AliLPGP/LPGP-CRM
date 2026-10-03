@@ -1,0 +1,179 @@
+{
+ "city": "Getafe",
+ "country": "Spain",
+ "deals": [
+  {
+   "amount": 38000000,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "LaLiga-CVC agreement of late 2021; EUR 38m received by August 2025",
+   "evidence": "LaLiga Impulso ha informado que el Getafe de momento ha recibido 38 millones de euros para el proyecto del nuevo Coliseum",
+   "headline": "LaLiga Impulso (CVC) money funds Getafe's new Coliseum: EUR 38m so far, EUR 53m planned",
+   "investor": "CVC Capital Partners (via LaLiga Impulso)",
+   "investor_type": "private_equity",
+   "kind": "league_stake",
+   "seller": null,
+   "source_name": "MARCA",
+   "source_url": "https://www.marca.com/futbol/getafe/2025/08/14/descubriendo-nuevo-coliseum-10-500-18-500-69-palcos-vip-coste-estadio-cvc.html",
+   "stake_pct": null,
+   "summary": "The rebuilt Coliseum (about EUR 50m, finished December 2027) is financed with Getafe's share of the LaLiga Impulso funds from CVC; LaLiga Impulso said Getafe had received EUR 38m for the project, expected to rise to EUR 53m.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "October 2022",
+   "evidence": "firmaron un convenio en octubre de 2022 por un periodo de 40 años",
+   "headline": "40-year agreement with Getafe city council for the Coliseum and training ground",
+   "investor": "Ayuntamiento de Getafe (stadium owner)",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": null,
+   "source_name": "MARCA",
+   "source_url": "https://www.marca.com/futbol/getafe/2025/08/14/descubriendo-nuevo-coliseum-10-500-18-500-69-palcos-vip-coste-estadio-cvc.html",
+   "stake_pct": null,
+   "summary": "Signed by mayor Sara Hernández and Ángel Torres: 40 years plus a 10-year option; the club pays a EUR 150,000 annual fee and EUR 215,956.62 a year in stadium improvement works.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "getafecf.com",
+ "facts": {
+  "attendance": {
+   "average": 13200,
+   "evidence": "ASISTENCIA MEDIA APROXIMADA: 13.200 espectadores",
+   "season": null,
+   "source_name": "Getafe CF, Datos generales (approximate, undated)",
+   "source_url": "https://www.getafecf.com/datos-generales"
+  },
+  "chair": {
+   "evidence": "PRESIDENTE: D. Ángel Torres Sánchez",
+   "name": "Ángel Torres Sánchez",
+   "source_url": "https://www.getafecf.com/datos-generales",
+   "title": "Presidente"
+  },
+  "chief_executive": {
+   "evidence": "Gerente y Director del Área Legal D. Antonio Sánchez Mora",
+   "name": "Antonio Sánchez Mora",
+   "source_url": "https://www.getafecf.com/ley-de-transparencia-sad",
+   "title": "Gerente y Director del Área Legal (general manager and head of legal)"
+  },
+  "kit_supplier": {
+   "evidence": "en un acto celebrado junto a su patrocinador técnico, Joma",
+   "name": "Joma",
+   "source_url": "https://www.getafecf.com/en/news/presentacion-nuevas-equipaciones-del-getafe-cf"
+  },
+  "legal_entity": {
+   "evidence": "NIF: A78388667.",
+   "name": "Getafe Club de Fútbol, S.A.D.",
+   "registry": "Registro Mercantil de Madrid (Tomo 11.297, Hoja 177.534); Spanish tax ID (NIF)",
+   "registry_id": "A78388667",
+   "source_url": "https://www.getafecf.com/aviso-legal"
+  },
+  "operating_result": {
+   "amount": 4210000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "han derivado en un resultado de explotación de 4,21 millones de euros",
+   "season": "2024-25",
+   "source_name": "Palco23, from Getafe CF's 2024-25 financial statements (12 Nov 2025)",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/getafe-cf-recorta-un-80-sus-perdidas-en-24-25-tras-ajustar-el-gasto-deportivo"
+  },
+  "revenue_breakdown": {
+   "broadcast": 45950000,
+   "commercial": 4540000,
+   "currency": "EUR",
+   "evidence": "A través de la venta de los derechos audiovisuales, el club presidido por Ángel Torres ha generado 45,95 millones de euros",
+   "matchday": null,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Palco23, from Getafe CF's 2024-25 financial statements (12 Nov 2025)",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/getafe-cf-recorta-un-80-sus-perdidas-en-24-25-tras-ajustar-el-gasto-deportivo"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Ayuntamiento de Getafe; the club uses it (and the training ground) under a 40-year agreement signed in October 2022 with a 10-year extension option, paying a EUR 150,000 annual fee plus EUR 215,956.62 a year in improvement works. A EUR 50m remodel funded by LaLiga Impulso (CVC) money runs to December 2027.",
+   "evidence": "El estadio Coliseum es propiedad del Ayuntamiento de Getafe",
+   "source_url": "https://www.marca.com/futbol/getafe/2025/08/14/descubriendo-nuevo-coliseum-10-500-18-500-69-palcos-vip-coste-estadio-cvc.html",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 38550000,
+   "currency": "EUR",
+   "evidence": "cantidad que se ha quedado en 38,55 millones de euros en 2024-2025",
+   "season": "2024-25",
+   "source_name": "Palco23, from Getafe CF's 2024-25 financial statements (12 Nov 2025) (sporting squad costs only)",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/getafe-cf-recorta-un-80-sus-perdidas-en-24-25-tras-ajustar-el-gasto-deportivo"
+  }
+ },
+ "founded_evidence": "AÑO DE FUNDACIÓN: 1946",
+ "founded_source_url": "https://www.getafecf.com/datos-generales",
+ "founded_year": 1946,
+ "key": "la-liga--getafe-cf",
+ "league": "La Liga",
+ "name": "Getafe Club de Fútbol, S.A.D.",
+ "notes": "Getafe's own audited 2024-25 accounts are on its transparency page but are a scanned PDF with no text layer, so figures cite Palco23, which read the same statements; an OCR of the PDF agrees (net turnover EUR 57,965,459; broadcasting EUR 45,950,697; sporting squad costs EUR 38,553,123; operating profit EUR 4,217,851; pretax loss EUR 882,673; net loss EUR 1,690,715; participative loans of EUR 34.4m long-term and EUR 1.8m short-term). Wages are sporting-squad costs only (non-sporting staff cost EUR 4.46m more per the accounts). Revenue breakdown: matchday is not one stated figure (season tickets and members EUR 3.08m, competitions EUR 1.7m); advertising EUR 2.68m is separate from commercial. Founded: the club states 1946 (Getafe Deportivo); Palco23 dates the current club to 1983. Capacity 16,500 is the club's stated figure; during the rebuild MARCA reported 10,500 for 2025-26, rising to about 18,500 when complete in December 2027, and AS (July 2026) reported the new stadium will be named 'Visit Kurdistán' under a deal with the Kurdistan Regional Government. Stake: 99.3% is from a Palco23 article on the Legends deal (written around 2023); Torres has been president since 2002 (Onda Cero) and AS calls him 'propietario y presidente'. Sale talks: Fenway Sports Group (Palco23 headline: near a EUR 200m purchase) withdrew in November 2025; Qatar's JTA held advanced talks (MARCA, Nov 2025), which Torres then denied were a sale; no transaction followed. Legends has a 15-year agreement to sell premium seating and sponsorship at the Coliseum (commercial services, not an investment). Shirt sponsor for 2026-27, valuation, social followers and net debt not found on a citable page. The scanned accounts also record shareholder contributions of EUR 3.5m (28 Jul 2023) and EUR 3.0m (2 Aug 2023) from 'distintos accionistas, partes relacionadas o sociedades vinculadas' to offset losses; not entered as a deal because the PDF has no text layer to verify against.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "quien tiene el 99,3% de las acciones del Getafe",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Ángel Torres Sánchez",
+   "since_year": null,
+   "source_url": "https://palco23.mundodeportivo.com/clubes/getafe-fc-se-alia-con-legends-para-impulsar-su-negocio-durante-los-proximos-quince-anos",
+   "stake_pct": 99.3,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://palco23.mundodeportivo.com/clubes/getafe-fc-se-alia-con-legends-para-impulsar-su-negocio-durante-los-proximos-quince-anos",
+ "ownership_summary": "Getafe Club de Fútbol, S.A.D. is controlled by its president Ángel Torres Sánchez, who took charge in 2002 and holds 99.3% of the shares according to Palco23; he has said he will step down as president in 2028 once the Coliseum rebuild is finished. Fenway Sports Group and Qatar's JTA held purchase talks in autumn 2025 without a deal, so no institutional investor holds equity; the club's institutional money is LaLiga Impulso (CVC) funding for the stadium.",
+ "ownership_type": "individual_family",
+ "revenue": 57960000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Getafe CF ha contabilizado 57,96 millones de euros como importe neto de la cifra de negocio",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Palco23, from Getafe CF's 2024-25 financial statements (12 Nov 2025)",
+ "revenue_source_url": "https://palco23.mundodeportivo.com/clubes/getafe-cf-recorta-un-80-sus-perdidas-en-24-25-tras-ajustar-el-gasto-deportivo",
+ "short_name": "Getafe CF",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://palco23.mundodeportivo.com/clubes/getafe-cf-recorta-un-80-sus-perdidas-en-24-25-tras-ajustar-el-gasto-deportivo",
+  "https://palco23.mundodeportivo.com/clubes/getafe-fc-se-alia-con-legends-para-impulsar-su-negocio-durante-los-proximos-quince-anos",
+  "https://www.marca.com/futbol/getafe/2025/08/14/descubriendo-nuevo-coliseum-10-500-18-500-69-palcos-vip-coste-estadio-cvc.html",
+  "https://www.getafecf.com/datos-generales",
+  "https://www.getafecf.com/ley-de-transparencia-sad",
+  "https://statics-maker.llt-services.com/get/documents/2025/11/07/ff01fad4-a17d-4bed-b1f2-ca7f3f1f7a7d-37.pdf",
+  "https://www.ondacero.es/programas/radioestadio-noche/angel-torres-anuncia-adios-getafe-cuando-acabe-reforma-coliseum-2028-luego_2026030369a61f749243cc133c6d9d8f.html",
+  "https://as.com/futbol/primera/el-nuevo-coliseum-cambia-de-nombre-y-se-llamara-visit-kurdistan-f202607-n/",
+  "https://www.getafecf.com/estadio/estadio-coliseum",
+  "https://www.getafecf.com/aviso-legal",
+  "https://www.getafecf.com/en/news/presentacion-nuevas-equipaciones-del-getafe-cf"
+ ],
+ "sport": "football",
+ "stadium": "Coliseum (Coliseum Alfonso Pérez)",
+ "stadium_capacity": 16500,
+ "stadium_capacity_evidence": "Con capacidad para 16.500 espectadores",
+ "stadium_capacity_source_url": "https://www.getafecf.com/estadio/estadio-coliseum",
+ "stadium_owner": {
+  "detail": "Owned by the Ayuntamiento de Getafe; the club uses it (and the training ground) under a 40-year agreement signed in October 2022 with a 10-year extension option, paying a EUR 150,000 annual fee plus EUR 215,956.62 a year in improvement works. A EUR 50m remodel funded by LaLiga Impulso (CVC) money runs to December 2027.",
+  "evidence": "El estadio Coliseum es propiedad del Ayuntamiento de Getafe",
+  "source_url": "https://www.marca.com/futbol/getafe/2025/08/14/descubriendo-nuevo-coliseum-10-500-18-500-69-palcos-vip-coste-estadio-cvc.html",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

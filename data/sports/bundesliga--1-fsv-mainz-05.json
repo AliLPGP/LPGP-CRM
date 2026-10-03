@@ -1,0 +1,131 @@
+{
+ "city": "Mainz",
+ "country": "Germany",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "Approved by Mainz city council 26 Nov 2025; signed late January 2026 (announced 6 Feb 2026)",
+   "evidence": "beinhaltet eine notariell beurkundete Kaufoption für den Verein im Jahr 2036",
+   "headline": "Mainz 05 signs a new MEWA ARENA lease with an option to buy the stadium in 2036",
+   "investor": "1. FSV Mainz 05 e.V.",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": "Grundstücksverwaltungsgesellschaft der Stadt Mainz (GVG) / City of Mainz",
+   "source_name": "1. FSV Mainz 05",
+   "source_url": "https://www.mainz05.de/News/MEWA-ARENA-Neuer-Pachtvertrag-unterzeichnet",
+   "stake_pct": null,
+   "summary": "The new lease with the city's property company GVG, which built and owns the arena, cuts the club's lease payments (credited for what it has already paid towards the stadium's financing) and includes a notarised purchase option for 2036. No price is stated.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mainz05.de",
+ "facts": {
+  "chair": {
+   "evidence": "Durch die Veranstaltung führte der Vorsitzende des Aufsichtsrats, Dr. Volker Baas",
+   "name": "Dr. Volker Baas",
+   "source_url": "https://www.mainz05.de/News/Mitgliederversammlung-2025-zweithoechster-umsatz-der-vereinsgeschichte",
+   "title": "Chair of the supervisory board (Aufsichtsratsvorsitzender)"
+  },
+  "chief_executive": {
+   "evidence": "Der Vereins- und Vorstandsvorsitzende Stefan Hofmann",
+   "name": "Stefan Hofmann",
+   "source_url": "https://www.mainz05.de/News/Mitgliederversammlung-2025-zweithoechster-umsatz-der-vereinsgeschichte",
+   "title": "Chairman of the club and of the executive board (Vereins- und Vorstandsvorsitzender)"
+  },
+  "kit_supplier": {
+   "evidence": "Mainz 05 setzt gemeinsam mit Ausrüster JAKO auf nachhaltig produzierte Textilien.",
+   "name": "JAKO",
+   "source_url": "https://www.mainz05.de/News/JAKO-Heimtrikot-2026-27-Dezente-Mainzer-Elemente-pragen-neues-Jersey"
+  },
+  "legal_entity": {
+   "evidence": "des Amtsgerichts Mainz: VR 1008",
+   "name": "1. Fußball- und Sportverein Mainz 05 e.V.",
+   "registry": "Vereinsregister, Amtsgericht Mainz",
+   "registry_id": "VR 1008",
+   "source_url": "https://www.mainz05.de/impressum"
+  },
+  "shirt_sponsor": {
+   "evidence": "Auch Haupt- und Trikotsponsor KÖMMERLING sowie Ärmelsponsor iDM sind natürlich wieder mit ihren Logos auf dem Trikot vertreten.",
+   "name": "KÖMMERLING (profine GmbH)",
+   "source_url": "https://www.mainz05.de/News/JAKO-Heimtrikot-2026-27-Dezente-Mainzer-Elemente-pragen-neues-Jersey"
+  },
+  "stadium_owner": {
+   "detail": "Built and owned by the City of Mainz's property company, Grundstücksverwaltungsgesellschaft der Stadt Mainz (GVG); Mainz 05 is the sole tenant and finances the stadium through its lease payments. A new lease approved by the city council in November 2025 and signed in early 2026 lowers the rent and gives the club a notarised option to buy the stadium in 2036.",
+   "evidence": "Der neue Pachtvertrag ist zwischen dem Fußball-Bundesligisten als einzigem Mieter, der Grundstücksverwaltungsgesellschaft der Stadt Mainz (GVG) als Bauherrin und Besitzerin",
+   "source_url": "https://www.mainz05.de/News/Stadt-Mainz-ebnet-den-Weg-fur-die-Ubernahme-der-MEWA-ARENA",
+   "value": "municipal"
+  }
+ },
+ "founded_evidence": "hat sich der 16. März 1905, als Gründungsdatum durchgesetzt",
+ "founded_source_url": "https://www.mainz05.de/chronik",
+ "founded_year": 1905,
+ "key": "bundesliga--1-fsv-mainz-05",
+ "league": "Bundesliga",
+ "name": "1. Fußball- und Sportverein Mainz 05 e.V.",
+ "notes": "Revenue is the 2024/25 total (Gesamtumsatz €141.7m, net profit €833k, equity ratio 53.4%) from the November 2025 members' meeting; 2023/24 was €121.8m with a €4.5m loss. The 2025/26 figures were not yet published on the club site. No pre-tax result, wages, breakdown, net debt, attendance, valuation or dated social counts found on citable pages. Mainz has no national league title. The club's 30,000th member was honoured in April 2026. The club states it finances the stadium through its lease payments; no outside debt or investor deal since 2015 was found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Als eingetragener Verein übernimmt der 1. FSV Mainz 05 Verantwortung für eine langfristige und wirtschaftlich tragfähige Entwicklung des Clubs.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Members of 1. FSV Mainz 05 e.V.",
+   "since_year": null,
+   "source_url": "https://www.mainz05.de/unser-verstandnis-okonomische-verantwortung",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.mainz05.de/unser-verstandnis-okonomische-verantwortung",
+ "ownership_summary": "1. FSV Mainz 05 is a registered members' association (e.V.) that runs its professional team itself; the members shape the club through its organs and the annual members' meeting. Membership passed 30,000 in April 2026. There is no outside investor.",
+ "ownership_type": "member_owned",
+ "revenue": 141700000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Der Gesamtumsatz in Höhe von 141,7 Mio. Euro war der zweithöchste der Vereinsgeschichte",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "1. FSV Mainz 05 members' meeting 2025 (financial year 2024/25)",
+ "revenue_source_url": "https://www.mainz05.de/News/Mitgliederversammlung-2025-zweithoechster-umsatz-der-vereinsgeschichte",
+ "short_name": "Mainz 05",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.mainz05.de/News/Mitgliederversammlung-2025-zweithoechster-umsatz-der-vereinsgeschichte",
+  "https://www.mainz05.de/News/Kennzahlen-Hervorragende-wirtschaftliche-Situation",
+  "https://www.mainz05.de/chronik",
+  "https://www.mainz05.de/arena",
+  "https://www.mainz05.de/News/Stadt-Mainz-ebnet-den-Weg-fur-die-Ubernahme-der-MEWA-ARENA",
+  "https://www.mainz05.de/News/MEWA-ARENA-Neuer-Pachtvertrag-unterzeichnet",
+  "https://www.mainz05.de/News/Abschluss-des-Mitgliedermonats-Danke-an-uber-30-000-Mitglieder",
+  "https://www.mainz05.de/unser-verstandnis-okonomische-verantwortung",
+  "https://www.mainz05.de/impressum",
+  "https://www.mainz05.de/vorstand",
+  "https://www.mainz05.de/aufsichtsrat",
+  "https://www.mainz05.de/News/JAKO-Heimtrikot-2026-27-Dezente-Mainzer-Elemente-pragen-neues-Jersey"
+ ],
+ "sport": "football",
+ "stadium": "MEWA ARENA",
+ "stadium_capacity": 33305,
+ "stadium_capacity_evidence": "Seit 2011 ist die MEWA ARENA die sportliche Heimat des 1. FSV Mainz 05 und zweites Wohnzimmer für 33.305 Fans.",
+ "stadium_capacity_source_url": "https://www.mainz05.de/arena",
+ "stadium_owner": {
+  "detail": "Built and owned by the City of Mainz's property company, Grundstücksverwaltungsgesellschaft der Stadt Mainz (GVG); Mainz 05 is the sole tenant and finances the stadium through its lease payments. A new lease approved by the city council in November 2025 and signed in early 2026 lowers the rent and gives the club a notarised option to buy the stadium in 2036.",
+  "evidence": "Der neue Pachtvertrag ist zwischen dem Fußball-Bundesligisten als einzigem Mieter, der Grundstücksverwaltungsgesellschaft der Stadt Mainz (GVG) als Bauherrin und Besitzerin",
+  "source_url": "https://www.mainz05.de/News/Stadt-Mainz-ebnet-den-Weg-fur-die-Ubernahme-der-MEWA-ARENA",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

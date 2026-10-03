@@ -1,0 +1,150 @@
+{
+ "city": "Salt Lake City",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 1660000000,
+   "currency": "USD",
+   "date": "2020-10-28",
+   "date_text": "October 2020",
+   "evidence": "to sell the Utah Jazz and Vivint Smart Home Arena to Qualtrics founder Ryan Smith for $1.66 billion",
+   "headline": "Miller family agrees to sell Utah Jazz and arena to Ryan Smith for $1.66bn",
+   "investor": "Ryan Smith",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Miller family",
+   "source_name": "ESPN",
+   "source_url": "https://www.espn.com/nba/story/_/id/30210088/utah-jazz-sold-ryan-smith-ending-millers-three-decade-run-majority-owners",
+   "stake_pct": null,
+   "summary": "The Miller family agreed to sell the Jazz and Vivint Smart Home Arena to Qualtrics founder Ryan Smith for $1.66 billion, subject to NBA approval.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2022-08-22",
+   "date_text": "August 2022",
+   "evidence": "includes Arctos’ minority investment across multiple SEG properties, including the Jazz and Real Salt Lake",
+   "headline": "Arctos takes minority stake in Jazz parent Smith Entertainment Group",
+   "investor": "Arctos Sports Partners",
+   "investor_type": "private_equity",
+   "kind": "minority_investment",
+   "seller": "Smith Entertainment Group",
+   "source_name": "Sports Business Journal",
+   "source_url": "https://www.sportsbusinessjournal.com/Daily/Issues/2022/08/22/Franchises/Arctos-Sports-Partners/",
+   "stake_pct": null,
+   "summary": "Arctos made a minority investment across SEG properties including the Jazz and Real Salt Lake; size not disclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "nba.com/jazz",
+ "facts": {
+  "chair": {
+   "evidence": "Ryan [Smith, SEG chairman]",
+   "name": "Ryan Smith",
+   "source_url": "https://www.sportcal.com/news/arctos-secures-minority-stake-in-utah-jazz-parent-company-seg/",
+   "title": "Chairman, Smith Entertainment Group"
+  },
+  "operating_result": {
+   "amount": 103000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "Earnings before interest, taxes, depreciation and amortization. $103M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/utah-jazz/"
+  },
+  "stadium_owner": {
+   "detail": "Forbes lists the Delta Center's owner as the team",
+   "evidence": "Venue Delta Center Owner(s) Team",
+   "source_url": "https://www.forbes.com/teams/utah-jazz/",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 148000000,
+   "currency": "USD",
+   "evidence": "Player Expenses 5 Includes benefits and bonuses. $148M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), player expenses",
+   "source_url": "https://www.forbes.com/teams/utah-jazz/"
+  }
+ },
+ "founded_evidence": "from the team's founding in 1974 to the present day",
+ "founded_source_url": "https://www.nba.com/jazz/history",
+ "founded_year": 1974,
+ "key": "national-basketball-association--utah-jazz",
+ "league": "National Basketball Association",
+ "name": "Utah Jazz",
+ "notes": "Revenue, operating income, player expenses and valuation are Forbes estimates (Oct 2025 list, 2024-25 season). Arctos stake size undisclosed. Not found: legal entity, chief executive, socials, attendance, sponsors/kit, other minority holders (e.g. individual investors), Delta Center renovation financing. Research stopped early: web search budget exhausted and DuckDuckGo throttled. Delta Center capacity is Forbes' figure.",
+ "owners": [
+  {
+   "amount": 1660000000,
+   "currency": "USD",
+   "evidence": "to sell the Utah Jazz and Vivint Smart Home Arena to Qualtrics founder Ryan Smith for $1.66 billion",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Ryan Smith / Smith Entertainment Group",
+   "since_year": 2020,
+   "source_url": "https://www.espn.com/nba/story/_/id/30210088/utah-jazz-sold-ryan-smith-ending-millers-three-decade-run-majority-owners",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "includes Arctos’ minority investment across multiple SEG properties, including the Jazz and Real Salt Lake",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "fund",
+   "name": "Arctos Sports Partners",
+   "since_year": 2022,
+   "source_url": "https://www.sportsbusinessjournal.com/Daily/Issues/2022/08/22/Franchises/Arctos-Sports-Partners/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.sportcal.com/news/arctos-secures-minority-stake-in-utah-jazz-parent-company-seg/",
+ "ownership_summary": "Owned by Ryan Smith's Smith Entertainment Group (SEG), which agreed in October 2020 to buy the Jazz and the arena from the Miller family for $1.66 billion. Arctos Sports Partners made a minority investment across SEG properties including the Jazz in August 2022 (stake not disclosed).",
+ "ownership_type": "individual_family",
+ "revenue": 340000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenue and operating income are for 2024-25 season and net of revenue sharing and arena debt service.",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate)",
+ "revenue_source_url": "https://www.forbes.com/teams/utah-jazz/",
+ "short_name": "Jazz",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/utah-jazz/",
+  "https://www.espn.com/nba/story/_/id/30210088/utah-jazz-sold-ryan-smith-ending-millers-three-decade-run-majority-owners",
+  "https://www.sportcal.com/news/arctos-secures-minority-stake-in-utah-jazz-parent-company-seg/",
+  "https://www.sportsbusinessjournal.com/Daily/Issues/2022/08/22/Franchises/Arctos-Sports-Partners/",
+  "https://www.nba.com/jazz/history"
+ ],
+ "sport": "basketball",
+ "stadium": "Delta Center",
+ "stadium_capacity": 16200,
+ "stadium_capacity_evidence": "Seating Capacity 16,200",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/utah-jazz/",
+ "stadium_owner": {
+  "detail": "Forbes lists the Delta Center's owner as the team",
+  "evidence": "Venue Delta Center Owner(s) Team",
+  "source_url": "https://www.forbes.com/teams/utah-jazz/",
+  "value": "club"
+ },
+ "valuation": 4100000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$4.1B Calculated October 2025",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/utah-jazz/",
+ "valuation_year": 2025
+}

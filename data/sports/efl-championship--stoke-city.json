@@ -1,0 +1,150 @@
+{
+ "city": "Stoke-on-Trent",
+ "country": "England",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2024-07-08",
+   "date_text": "8 July 2024 (announced 2 August 2024)",
+   "evidence": "Now, Stoke City Holdings Limited, which holds a 98.1% stake in the club and owns Stoke City (Property) Limited in its entirety, has been demerged from bet365.",
+   "headline": "bet365 demerges Stoke City to John Coates and waives £90.5m of loans",
+   "investor": "John Coates",
+   "investor_type": "individual",
+   "kind": "other",
+   "seller": "bet365 Group Limited",
+   "source_name": "BBC Sport",
+   "source_url": "https://www.bbc.co.uk/sport/football/articles/cq5x5e2573qo",
+   "stake_pct": 98.1,
+   "summary": "bet365 demerged Stoke City Holdings Limited (98.1% of the club, plus Stoke City (Property) Limited) to chairman John Coates. Loans of £90.5m owed to bet365 were waived, leaving the club debt free, and the bet365 Stadium and Clayton Wood training ground passed to the club group.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "stokecityfc.com",
+ "facts": {
+  "attendance": {
+   "average": 22805,
+   "evidence": "Average league attendance 22,805 22,517",
+   "season": "2024-25",
+   "source_name": "Stoke City Football Club Limited accounts to 31 May 2025 (Companies House, scanned PDF)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00099885/filing-history/MzUwNzU0NDQ1MGFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "chair": {
+   "evidence": "Stoke City chairman John Coates has become the \"outright\" owner of the Championship club",
+   "name": "John Coates",
+   "source_url": "https://www.bbc.co.uk/sport/football/articles/cq5x5e2573qo",
+   "title": "Chairman"
+  },
+  "legal_entity": {
+   "evidence": "Company Overview for STOKE CITY FOOTBALL CLUB LIMITED (00099885)",
+   "name": "Stoke City Football Club Limited",
+   "registry": "Companies House",
+   "registry_id": "00099885",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00099885"
+  },
+  "operating_result": {
+   "amount": -30900000,
+   "basis": "operating profit",
+   "currency": "GBP",
+   "evidence": "the club still recorded an operating loss of £30.9 million, up from £26.3 million",
+   "season": "2024-25",
+   "source_name": "BBC Sport, on Stoke City's results to 31 May 2025",
+   "source_url": "https://www.bbc.co.uk/sport/football/articles/cn8z2pp84v4o"
+  },
+  "pretax_result": {
+   "amount": 60800000,
+   "currency": "GBP",
+   "evidence": "Stoke City have announced a profit before tax of £60.8m for the year to 31 May 2025.",
+   "season": "2024-25",
+   "source_name": "BBC Sport, on Stoke City's results to 31 May 2025 (includes the £90.5m of waived loans)",
+   "source_url": "https://www.bbc.co.uk/sport/football/articles/cn8z2pp84v4o"
+  },
+  "stadium_owner": {
+   "detail": "Owned within the club group: the 2024 demerger from bet365 transferred the bet365 Stadium and the Clayton Wood training ground to Stoke City Holdings Limited (the club's parent).",
+   "evidence": "ownership of their home ground - the bet365 Stadium - and training complex transferring to the club",
+   "source_url": "https://www.bbc.co.uk/sport/football/articles/cn8z2pp84v4o",
+   "value": "club"
+  }
+ },
+ "founded_evidence": "Stoke City were founded in 1863",
+ "founded_source_url": "https://www.bbc.co.uk/sport/football/articles/cq5x5e2573qo",
+ "founded_year": 1863,
+ "key": "efl-championship--stoke-city",
+ "league": "EFL Championship",
+ "name": "Stoke City Football Club",
+ "notes": "Revenue uses the BBC's report of the 2024-25 results (£35.4m); the club company's accounts at Companies House give turnover £35,438k, operating loss £29,537k and average league attendance 22,805, but that PDF is a scanned image (attendance evidence was read off the page image, so a text match on that URL will fail). The BBC's £30.9m operating loss and £60.8m pre-tax profit appear to be the announced figures including the £90.5m loan waiver; the club company's own operating loss is £29,537k. John Coates' holding in Stoke City Holdings is stated only as the band '75% or more'. No outside or institutional investor found; the Coates family has funded the club through bet365 and, since 2024, directly. Capacity is the Premier League's 2017/18 figure. Chief executive, shirt sponsor, kit supplier, wages and social counts not found on citable pages (stokecityfc.com renders client-side). No valuation published.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Stoke City chairman John Coates has become the \"outright\" owner of the Championship club following a demerger implemented by bet365.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "John Fitzgerald Coates",
+   "since_year": 2024,
+   "source_url": "https://www.bbc.co.uk/sport/football/articles/cq5x5e2573qo",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Now, Stoke City Holdings Limited, which holds a 98.1% stake in the club and owns Stoke City (Property) Limited in its entirety, has been demerged from bet365.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "company",
+   "name": "Stoke City Holdings Limited",
+   "since_year": 2006,
+   "source_url": "https://www.bbc.co.uk/sport/football/articles/cq5x5e2573qo",
+   "stake_pct": 98.1,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.bbc.co.uk/sport/football/articles/cq5x5e2573qo",
+ "ownership_summary": "Owned outright by chairman John Coates (co-founder of bet365) since a demerger from bet365 Group on 8 July 2024. Coates holds 75% or more of Stoke City Holdings Limited, which holds 98.1% of the club; the rest is held by a long list of small historic shareholders. The Coates family first became majority shareholders in the 1980s and again in 2006 through bet365.",
+ "ownership_type": "individual_family",
+ "revenue": 35400000,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "push revenue to £35.4 million from £32.2 million the previous year",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Stoke City results for the year to 31 May 2025, as reported by BBC Sport (club accounts: turnover £35,438k)",
+ "revenue_source_url": "https://www.bbc.co.uk/sport/football/articles/cn8z2pp84v4o",
+ "short_name": "Stoke City",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.bbc.co.uk/sport/football/articles/cq5x5e2573qo",
+  "https://www.bbc.co.uk/sport/football/articles/cn8z2pp84v4o",
+  "https://www.premierleague.com/en/news/61638",
+  "https://www.premierleague.com/en/clubs/110/stoke-city/stadium",
+  "https://find-and-update.company-information.service.gov.uk/company/05807776/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/00099885/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/00099885",
+  "https://find-and-update.company-information.service.gov.uk/company/00099885/filing-history/MzU0MjEzMjYzMGFkaXF6a2N4/document?format=pdf&download=0",
+  "https://find-and-update.company-information.service.gov.uk/company/00099885/filing-history/MzUwNzU0NDQ1MGFkaXF6a2N4/document?format=pdf&download=0",
+  "https://find-and-update.company-information.service.gov.uk/company/05807776/filing-history/MzUwNzU0NDQ1MmFkaXF6a2N4/document?format=pdf&download=0"
+ ],
+ "sport": "football",
+ "stadium": "bet365 Stadium",
+ "stadium_capacity": 30089,
+ "stadium_capacity_evidence": "bet365 Stadium capacity 2017/18: 30,089",
+ "stadium_capacity_source_url": "https://www.premierleague.com/en/news/61638",
+ "stadium_owner": {
+  "detail": "Owned within the club group: the 2024 demerger from bet365 transferred the bet365 Stadium and the Clayton Wood training ground to Stoke City Holdings Limited (the club's parent).",
+  "evidence": "ownership of their home ground - the bet365 Stadium - and training complex transferring to the club",
+  "source_url": "https://www.bbc.co.uk/sport/football/articles/cn8z2pp84v4o",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

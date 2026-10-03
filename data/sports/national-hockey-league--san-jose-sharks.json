@@ -1,0 +1,124 @@
+{
+ "city": "San Jose",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2025-08-26",
+   "date_text": "August 26, 2025",
+   "evidence": "the City of San Jose and SSE will jointly invest more than a half billion dollars into the 32-year-old sports and entertainment venue",
+   "headline": "Sharks extend SAP Center lease through 2050-51 with joint renovation",
+   "investor": "City of San Jose and Sharks Sports & Entertainment",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "San Jose Sharks / City of San Jose press release",
+   "source_url": "https://www.nhl.com/sharks/news/sharks-sports-entertainment-and-city-of-san-jose-extend-sap-center-lease-agreement",
+   "stake_pct": null,
+   "summary": "SSE and the City of San Jose extend the SAP Center lease through the 2050-51 season and jointly invest more than half a billion dollars in the city-owned arena over multiple years. Forbes reports the city contributes up to $350 million of a $425 million renovation.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "nhl.com/sharks",
+ "facts": {
+  "chief_executive": {
+   "evidence": "said Jonathan Becher, President of Sharks Sports & Entertainment",
+   "name": "Jonathan Becher",
+   "source_url": "https://www.nhl.com/sharks/news/sharks-sports-entertainment-and-city-of-san-jose-extend-sap-center-lease-agreement",
+   "title": "President of Sharks Sports & Entertainment"
+  },
+  "legal_entity": {
+   "evidence": "registered trademarks of San Jose Sharks, LLC",
+   "name": "San Jose Sharks, LLC",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.nhl.com/sharks/team/front-office"
+  },
+  "operating_result": {
+   "amount": 28000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$28M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - EBITDA, net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/san-jose-sharks/"
+  },
+  "stadium_owner": {
+   "detail": "City-owned; Sharks Sports & Entertainment manages and operates it for the City of San Jose under a lease running through the 2050-51 season",
+   "evidence": "SSE will continue to manage and operate SAP Center on behalf of the City of San Jose throughout the term of the agreement.",
+   "source_url": "https://www.nhl.com/sharks/news/sharks-sports-entertainment-and-city-of-san-jose-extend-sap-center-lease-agreement",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 82000000,
+   "currency": "USD",
+   "evidence": "$82M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/san-jose-sharks/"
+  }
+ },
+ "founded_evidence": "From their first face-off in 1991 to the roar of the Tank today",
+ "founded_source_url": "https://www.nhl.com/sharks/news/sharks-sports-entertainment-and-city-of-san-jose-extend-sap-center-lease-agreement",
+ "founded_year": 1991,
+ "key": "national-hockey-league--san-jose-sharks",
+ "league": "National Hockey League",
+ "name": "San Jose Sharks",
+ "notes": "US team: no published accounts; revenue, operating income (EBITDA) and player expenses are Forbes estimates for 2024-25; valuation is Forbes enterprise value calculated December 2025. Forbes lists year purchased 2002, price paid $147M. Plattner's 100% is from 'sole owner' on the team's ownership page. Founded: first season 1991-92 (franchise granted 1990, not sourced here). Missing: arena capacity (no official page read stated it), social, attendance, sponsors, net debt, honours (no Stanley Cup), chair.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Hasso Plattner serves as the sole owner of Sharks Sports & Entertainment (SSE).",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Hasso Plattner",
+   "since_year": 2002,
+   "source_url": "https://www.nhl.com/sharks/team/ownership",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.nhl.com/sharks/team/ownership",
+ "ownership_summary": "Hasso Plattner, co-founder of SAP, is the sole owner of Sharks Sports & Entertainment; he was part of the local group that bought the team from George Gund III in 2002 and became majority owner in 2010. No institutional holders are stated.",
+ "ownership_type": "individual_family",
+ "revenue": 182000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$182M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), The Business of Hockey, December 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/san-jose-sharks/",
+ "short_name": "Sharks",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/san-jose-sharks/",
+  "https://www.nhl.com/sharks/team/ownership",
+  "https://www.nhl.com/sharks/team/front-office",
+  "https://www.nhl.com/sharks/news/sharks-sports-entertainment-and-city-of-san-jose-extend-sap-center-lease-agreement"
+ ],
+ "sport": "ice_hockey",
+ "stadium": "SAP Center at San Jose",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "City-owned; Sharks Sports & Entertainment manages and operates it for the City of San Jose under a lease running through the 2050-51 season",
+  "evidence": "SSE will continue to manage and operate SAP Center on behalf of the City of San Jose throughout the term of the agreement.",
+  "source_url": "https://www.nhl.com/sharks/news/sharks-sports-entertainment-and-city-of-san-jose-extend-sap-center-lease-agreement",
+  "value": "municipal"
+ },
+ "valuation": 1500000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1.5B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/san-jose-sharks/",
+ "valuation_year": 2025
+}

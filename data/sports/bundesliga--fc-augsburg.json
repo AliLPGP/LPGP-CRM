@@ -1,0 +1,205 @@
+{
+ "city": "Augsburg",
+ "country": "Germany",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "February 2021",
+   "evidence": "den Erwerb von 45 Prozent der Anteile für den Nennwert von 5,5 Millionen Euro",
+   "headline": "David Blitzer's Bolt Football Holdings buys 45% of Hofmann Investoren GmbH, FC Augsburg's 99.4% owner",
+   "investor": "Bolt Football Holdings (David Blitzer)",
+   "investor_type": "individual",
+   "kind": "minority_investment",
+   "seller": "Two previous shareholders of Hofmann Investoren GmbH (with partial transfers by Project Green GmbH and Thilo Sautter)",
+   "source_name": "SPOX",
+   "source_url": "https://www.spox.com/de/sport/fussball/bundesliga/2201/Artikel/ricardo-pepi-fc-augsburg-investor-david-blitzer-hobby-minderheitsbeteiligungen-durchschnittliche-sportklubs-erwerben-ftr.html",
+   "stake_pct": 45,
+   "summary": "Blitzer's Bolt Football Holdings acquired 45% of Hofmann Investoren GmbH, the holding that owns 99.4% of FC Augsburg's KGaA, replacing two departing shareholders; the stake's nominal value was EUR 5.5m (purchase price not disclosed). Hofmann said Blitzer invested from private wealth and that Hofmann remains sole managing director of the holding. The 45% is of the holding, not of the club directly.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "fcaugsburg.de",
+ "facts": {
+  "chair": {
+   "evidence": "Markus Krapf Präsident",
+   "name": "Markus Krapf",
+   "source_url": "https://www.fcaugsburg.de/page/gremien-61",
+   "title": "President, Fußball-Club Augsburg 1907 e. V."
+  },
+  "chief_executive": {
+   "evidence": "Michael Ströll Geschäftsführer",
+   "name": "Michael Ströll",
+   "source_url": "https://www.fcaugsburg.de/page/gremien-kgaa-532",
+   "title": "Managing director (Geschäftsführer), FC Augsburg 1907 GmbH & Co. KGaA"
+  },
+  "kit_supplier": {
+   "evidence": "Ein besonderer Dank richtet sich an den FCA-Ausrüster Mizuno",
+   "name": "Mizuno",
+   "source_url": "https://www.fcaugsburg.de/article/unser-heimtrikot-der-saison-2025-26-22042"
+  },
+  "legal_entity": {
+   "evidence": "Handelsregister: HRB 21812",
+   "name": "FC Augsburg 1907 GmbH & Co. KGaA",
+   "registry": "Handelsregister, Amtsgericht Augsburg",
+   "registry_id": "HRB 21812",
+   "source_url": "https://www.fcaugsburg.de/page/impressum-179"
+  },
+  "shirt_sponsor": {
+   "evidence": "Die WWK hat ihre Verträge als Namensgeber des Stadions und als Hauptsponsor vorzeitig und langfristig bis zum Jahr 2030 verlängert.",
+   "name": "WWK Versicherungen",
+   "source_url": "https://www.fcaugsburg.de/article/wwk-verlaengert-um-10-jahre-7320"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the club: the arena, training pitches and academy are the club's property and the stadium is fully paid off (club built it as Bauherr FC Augsburg 1907 e.V., 2007-2009, EUR 45m).",
+   "evidence": "Die gesamte Infrastruktur, von der Arena über die Trainingsplätze bis zum Nachwuchsleistungszentrum, befindet sich im Eigentum des Clubs.",
+   "source_url": "https://www.augsburg-journal.de/sport-auto/der-fc-augsburg-praesentiert-auf-der-mitgliederversammlung-rekordzahlen-und-plant-mit-einem-minus/",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 61528000,
+   "currency": "EUR",
+   "evidence": "die in der vergangenen Saison bei 61,528 Millionen Euro lagen",
+   "season": "2024-25",
+   "source_name": "Augsburg Journal (members' meeting, Nov 2025)",
+   "source_url": "https://www.augsburg-journal.de/sport-auto/der-fc-augsburg-praesentiert-auf-der-mitgliederversammlung-rekordzahlen-und-plant-mit-einem-minus/"
+  }
+ },
+ "founded_evidence": "08.08.1907",
+ "founded_source_url": "https://www.fcaugsburg.de/page/der-fca-in-kuerze-59",
+ "founded_year": 1907,
+ "key": "bundesliga--fc-augsburg",
+ "league": "Bundesliga",
+ "name": "Fußball-Club Augsburg 1907 e. V.",
+ "notes": "Revenue is the 2024/25 'Gesamterträge' (total income, including record transfer income from Demirović, Engels and Uduokhai) of the KGaA as reported by Augsburg Journal from the Nov 2025 members' meeting; the club's own release only says 'knapp 150 Millionen Euro'. The same report gives profit after tax of EUR 18.142m (not pretax, so pretax_result left null), equity of EUR 60.261m, and says the KGaA carries no debt and the stadium is fully paid off (no net-debt figure stated). The ownership article (Augsburg Journal, 4 June 2024) is no longer live and is cited via its Wayback Machine copy. Bolt's 45%, Hofmann's ~30%, Project Green's ~20% and Sautter's ~4% are shares of Hofmann Investoren GmbH, not of the club, so stake_pct is left null on those rows. Bloomberg (3 June 2024) reported Blitzer hired Lazard to sound out a sale that could value the club at more than EUR 150m; no completed sale found as of Oct 2026 (Bloomberg page not readable, so not used as a source). No Forbes/Deloitte valuation, no attendance or social-follower figures with a citable page were found. Capacity 30,660 is confirmed by the club's stadium page (bundesliga.com gives the same figure); the earlier record's Wikipedia source was replaced. FCA finished 9th in the 2025/26 Bundesliga and plays there in 2026/27.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "hält seit 2014 die Hofmann Investoren GmbH 99,4 Prozent der Anteile",
+   "institutional": false,
+   "investor_type": "other",
+   "kind": "company",
+   "name": "Hofmann Investoren GmbH",
+   "since_year": 2014,
+   "source_url": "https://web.archive.org/web/20260314131153/https://www.augsburg-journal.de/news/fuer-mehr-als-150-millionen-steht-der-fc-augsburg-zum-verkauf/",
+   "stake_pct": 99.4,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Bolt Football Holding seit Anfang des vergangenen Jahres 45 Prozent der Anteile der Hofmann Investoren GmbH",
+   "institutional": false,
+   "investor_type": "other",
+   "kind": "company",
+   "name": "Bolt Football Holdings (David Blitzer), via 45% of Hofmann Investoren GmbH",
+   "since_year": 2021,
+   "source_url": "https://www.spox.com/de/sport/fussball/bundesliga/2201/Artikel/ricardo-pepi-fc-augsburg-investor-david-blitzer-hobby-minderheitsbeteiligungen-durchschnittliche-sportklubs-erwerben-ftr.html",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Neben der Bolt Football Holding halten Klaus Hofmann rund 30 Prozent",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Klaus Hofmann, via Hofmann Investoren GmbH",
+   "since_year": 2014,
+   "source_url": "https://web.archive.org/web/20260314131153/https://www.augsburg-journal.de/news/fuer-mehr-als-150-millionen-steht-der-fc-augsburg-zum-verkauf/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "die die Project Green GmbH rund 20 Prozent",
+   "institutional": false,
+   "investor_type": "other",
+   "kind": "company",
+   "name": "Project Green GmbH, via Hofmann Investoren GmbH",
+   "since_year": null,
+   "source_url": "https://web.archive.org/web/20260314131153/https://www.augsburg-journal.de/news/fuer-mehr-als-150-millionen-steht-der-fc-augsburg-zum-verkauf/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Thilo Sautter, Partner beim US-Finanzinvestor Cinven, rund 4 Prozent der Anteile",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Thilo Sautter, via Hofmann Investoren GmbH",
+   "since_year": null,
+   "source_url": "https://web.archive.org/web/20260314131153/https://www.augsburg-journal.de/news/fuer-mehr-als-150-millionen-steht-der-fc-augsburg-zum-verkauf/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "setzt die Geschäftsführung der FC Augsburg 1907 GmbH & Co. KGaA ein",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Fußball-Club Augsburg 1907 e. V. (members)",
+   "since_year": null,
+   "source_url": "https://www.fcaugsburg.de/page/gremien-61",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://web.archive.org/web/20260314131153/https://www.augsburg-journal.de/news/fuer-mehr-als-150-millionen-steht-der-fc-augsburg-zum-verkauf/",
+ "ownership_summary": "The professional side, FC Augsburg 1907 GmbH & Co. KGaA, is 99.4% held by Hofmann Investoren GmbH (since 2014), an investor holding in which David Blitzer's Bolt Football Holdings has held 45% since February 2021 alongside Klaus Hofmann (about 30%), Project Green GmbH (about 20%) and Thilo Sautter (about 4%). Under 50+1 the members' club, Fußball-Club Augsburg 1907 e. V., appoints the KGaA's management. In June 2024 Bloomberg reported Blitzer had hired Lazard to sound out a sale; no completed sale was found.",
+ "ownership_type": "consortium",
+ "revenue": 149668000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Mit Gesamterträgen von 149,668 Millionen Euro verzeichnete der FCA im Geschäftsjahr 2024/25 den höchsten Umsatz seiner Geschichte.",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Augsburg Journal on FC Augsburg's 2024/25 accounts presented at the 2025 members' meeting",
+ "revenue_source_url": "https://www.augsburg-journal.de/sport-auto/der-fc-augsburg-praesentiert-auf-der-mitgliederversammlung-rekordzahlen-und-plant-mit-einem-minus/",
+ "short_name": "FC Augsburg",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.fcaugsburg.de/page/der-fca-in-kuerze-59",
+  "https://www.fcaugsburg.de/page/stadion-zahlen-und-fakten-73",
+  "https://www.fcaugsburg.de/page/gremien-61",
+  "https://www.fcaugsburg.de/page/gremien-kgaa-532",
+  "https://www.fcaugsburg.de/page/impressum-179",
+  "https://www.fcaugsburg.de/article/fca-verkuendet-rekordumsatz-und-bricht-mitgliedermarke-22610",
+  "https://www.fcaugsburg.de/article/brief-von-prasident-klaus-hofmann-an-die-mitglieder-und-fans-des-fca-13589",
+  "https://www.fcaugsburg.de/article/wwk-verlaengert-um-10-jahre-7320",
+  "https://www.fcaugsburg.de/article/unser-heimtrikot-der-saison-2025-26-22042",
+  "https://www.augsburg-journal.de/sport-auto/der-fc-augsburg-praesentiert-auf-der-mitgliederversammlung-rekordzahlen-und-plant-mit-einem-minus/",
+  "https://web.archive.org/web/20260314131153/https://www.augsburg-journal.de/news/fuer-mehr-als-150-millionen-steht-der-fc-augsburg-zum-verkauf/",
+  "https://www.spox.com/de/sport/fussball/bundesliga/2201/Artikel/ricardo-pepi-fc-augsburg-investor-david-blitzer-hobby-minderheitsbeteiligungen-durchschnittliche-sportklubs-erwerben-ftr.html",
+  "https://www.bundesliga.com/en/bundesliga/news/stadiums-germany-2026-27-munich-dortmund-37962"
+ ],
+ "sport": "football",
+ "stadium": "WWK Arena",
+ "stadium_capacity": 30660,
+ "stadium_capacity_evidence": "Fassungsvermögen gesamt: 30.660 Zuschauer",
+ "stadium_capacity_source_url": "https://www.fcaugsburg.de/page/stadion-zahlen-und-fakten-73",
+ "stadium_owner": {
+  "detail": "Owned by the club: the arena, training pitches and academy are the club's property and the stadium is fully paid off (club built it as Bauherr FC Augsburg 1907 e.V., 2007-2009, EUR 45m).",
+  "evidence": "Die gesamte Infrastruktur, von der Arena über die Trainingsplätze bis zum Nachwuchsleistungszentrum, befindet sich im Eigentum des Clubs.",
+  "source_url": "https://www.augsburg-journal.de/sport-auto/der-fc-augsburg-praesentiert-auf-der-mitgliederversammlung-rekordzahlen-und-plant-mit-einem-minus/",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

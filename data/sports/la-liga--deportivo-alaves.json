@@ -1,0 +1,151 @@
+{
+ "city": "Vitoria-Gasteiz",
+ "country": "Spain",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "2016",
+   "evidence": "pasó a tener el control total con una participación del 83%, que se mantiene hasta hoy",
+   "headline": "Querejeta's Baskonia group takes full control of Alavés with 83%",
+   "investor": "Josean Querejeta's group (Lazkaokoa / Kiroletako Bazkideak, Baskonia)",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": null,
+   "source_name": "elDiario.es",
+   "source_url": "https://www.eldiario.es/euskadi/baloncesto-futbol-conglomerado-empresas-querejeta-detras-baskonia-alaves_1_12867839.html",
+   "stake_pct": 83,
+   "summary": "Five years after entering the shareholder register in 2011 to rescue the club, Josean Querejeta's group moved to full control in 2016 with an 83% holding, which it still holds (elDiario.es; the same article puts his two companies' combined stake at 78%). Price not disclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "deportivoalaves.com",
+ "facts": {
+  "chair": {
+   "evidence": "Alfonso Fernández de Trocóniz como presidente del Deportivo Alavés",
+   "name": "Alfonso Fernández de Trocóniz",
+   "source_url": "https://www.eldiario.es/euskadi/baloncesto-futbol-conglomerado-empresas-querejeta-detras-baskonia-alaves_1_12867839.html",
+   "title": "President"
+  },
+  "kit_supplier": {
+   "evidence": "Osasuna y Deportivo Alavés (dejó Puma después de cuatro años) en la categoría de oro",
+   "name": "Macron",
+   "source_url": "https://www.marca.com/futbol/primera-division/2026/08/14/marcas-equipaciones-laliga-hummel-macron-lideran-nike-cabeza-primera.html"
+  },
+  "legal_entity": {
+   "evidence": "Deportivo Alavés SAD",
+   "name": "Deportivo Alavés, S.A.D.",
+   "registry": "Sociedad anónima deportiva (Spanish companies register)",
+   "registry_id": null,
+   "source_url": "https://www.laliga.com/clubes/d-alaves"
+  },
+  "revenue_breakdown": {
+   "broadcast": 43460000,
+   "commercial": null,
+   "currency": "EUR",
+   "evidence": "El Alavés ingresa 43,46 millones del reparto televisivo de la campaña 2024-25",
+   "matchday": null,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Noticias de Álava on LaLiga's published 2024-25 audiovisual distribution (EUR 43.46m to Alavés); matchday and commercial not found",
+   "source_url": "https://www.noticiasdealava.eus/alaves/2025/12/22/43-46-millones-alaves-ingresos-10504278.html"
+  },
+  "shirt_sponsor": {
+   "evidence": "MK TIYU News en el Deportivo Alavés",
+   "name": "MK TIYU News",
+   "source_url": "https://forbes.es/sports/997561/patrocinadores-laliga-2026-2027-camisetas/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Vitoria-Gasteiz city council; the club plays there under an agreement with the council that runs to 31 July 2029, with a EUR 120,000 annual fee treated as offset by the club's works on the stadium. Opened 1924.",
+   "evidence": "Y Mendizorroza es del Ayuntamiento de Vitoria.",
+   "source_url": "https://www.eldiario.es/euskadi/baloncesto-futbol-conglomerado-empresas-querejeta-detras-baskonia-alaves_1_12867839.html",
+   "value": "municipal"
+  }
+ },
+ "founded_evidence": "para salvar a la entidad nacida en 1921",
+ "founded_source_url": "https://www.eldiario.es/euskadi/baloncesto-futbol-conglomerado-empresas-querejeta-detras-baskonia-alaves_1_12867839.html",
+ "founded_year": 1921,
+ "key": "la-liga--deportivo-alaves",
+ "league": "La Liga",
+ "name": "Deportivo Alavés, S.A.D.",
+ "notes": "Revenue is the EUR 84.8m of income the club reported for 2024-25 (Palco23: EUR 84.8m against a EUR 77.36m budget; Crónica Vasca gives EUR 84,810,772); it is total income as the club states it, and the club received EUR 20.5m from player sales that season (El Correo), so it is not comparable with net turnover. 2024-25 net result after tax: EUR 212,159 profit (Naiz, Noticias de Álava); pre-tax not stated. Debt was put at about EUR 106m, up almost EUR 30m, at the December 2025 shareholders' meeting (Noticias de Álava) - a gross figure, so net_debt is left blank. 2025-26 budget: EUR 90,061,913. Stake figures for the Querejeta group differ within the same source (78% for his two companies, 83% for the group); no current shareholder register was found. Minority shareholders dispute the official 19,840 capacity (they estimate about 19,494) and the club reports 17,800 season-ticket members. Alavés voted with the majority on the 2021 LaLiga-CVC deal (the clubs against were Real Madrid, Barcelona, Athletic and Ibiza; Heraldo), but its allocation was not found. The club website (deportivoalaves.com) renders in the browser and its accounts PDFs could not be located. Not found: wages, operating result, pre-tax result, valuation, attendance, social follower counts, chief executive, tax ID.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "ambas mercantiles suman el 78% del capital social",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "company",
+   "name": "Josean Querejeta, via Lazkaokoa S.L.U. and Kiroletako Bazkideak (Baskonia-Alavés group)",
+   "since_year": 2011,
+   "source_url": "https://www.eldiario.es/euskadi/baloncesto-futbol-conglomerado-empresas-querejeta-detras-baskonia-alaves_1_12867839.html",
+   "stake_pct": 78,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "accionistas minoritarios del Deportivo Alavés",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "other",
+   "name": "Minority shareholders (including the Gurea DA - Accionistas Albiazules association)",
+   "since_year": null,
+   "source_url": "http://www.gasteizhoy.com/aforo-real-mendizorrotza-gureada/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.eldiario.es/euskadi/baloncesto-futbol-conglomerado-empresas-querejeta-detras-baskonia-alaves_1_12867839.html",
+ "ownership_summary": "Controlled by Josean Querejeta, president of the basketball club Saski Baskonia, through his companies Lazkaokoa and Kiroletako Bazkideak, which together hold 78% of the share capital; his group entered in 2011 to rescue the club and took full control in 2016 (elDiario.es also gives the group's holding as 83%). The rest belongs to minority shareholders, some of them organised as Gurea DA - Accionistas Albiazules. The football and basketball clubs operate together as the Baskonia-Alavés group, which also controls 85% of Croatia's NK Istra 1961 through Circle of Life (since 2018). No fund or institutional shareholder was found.",
+ "ownership_type": "individual_family",
+ "revenue": 84800000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "tras aumentar su facturación un 27%, hasta 84,8 millones de euros",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Deportivo Alavés 2024-25 accounts as reported by 2Playbook from the club's statement (total income as the club states it, up 27%; budgets include player-sale income)",
+ "revenue_source_url": "https://www.2playbook.com/clubes/deportivo-alaves-beneficios-2024-2025-facturacion-record-85-millones_20656_102.html",
+ "short_name": "Alavés",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.eldiario.es/euskadi/baloncesto-futbol-conglomerado-empresas-querejeta-detras-baskonia-alaves_1_12867839.html",
+  "http://www.gasteizhoy.com/aforo-real-mendizorrotza-gureada/",
+  "https://www.sport.es/es/noticias/alaves/mendizorroza-sold-out-deportivo-alaves-125281819",
+  "https://www.relevo.com/futbol/liga-primera/caseros-laliga-alquilan-estadios-equipos-20241101230306-nt.html",
+  "https://www.2playbook.com/clubes/deportivo-alaves-beneficios-2024-2025-facturacion-record-85-millones_20656_102.html",
+  "https://palco23.mundodeportivo.com/clubes/deportivo-alaves-mantiene-la-rentabilidad-a-cierre-de-la-temporada-2024-2025",
+  "https://www.naiz.eus/es/info/noticia/20251216/el-99-4-aprueba-las-cuentas-del-alaves-y-un-presupuesto-de-90-millones-de-euros",
+  "https://www.noticiasdealava.eus/alaves/2025/12/16/alaves-aprueba-cuentas-mero-tramite-accionariado-10480386.html",
+  "https://www.noticiasdealava.eus/alaves/2025/12/22/43-46-millones-alaves-ingresos-10504278.html",
+  "https://forbes.es/sports/997561/patrocinadores-laliga-2026-2027-camisetas/",
+  "https://www.marca.com/futbol/primera-division/2026/08/14/marcas-equipaciones-laliga-hummel-macron-lideran-nike-cabeza-primera.html",
+  "https://www.laliga.com/clubes/d-alaves",
+  "https://www.elcorreo.com/alaves/cifras-ventas-alaves-millones-javi-lopez-maroan-20251114140209-nt.html",
+  "https://www.heraldo.es/noticias/deportes/2021/12/10/asamblea-liga-futbol-aprueba-acuerdo-tebas-fondo-britanico-cvc-1539601.html"
+ ],
+ "sport": "football",
+ "stadium": "Mendizorroza (Mendizorrotza)",
+ "stadium_capacity": 19840,
+ "stadium_capacity_evidence": "el Deportivo Alavés mantiene que Mendizorrotza tiene un aforo de 19.840 espectadores",
+ "stadium_capacity_source_url": "http://www.gasteizhoy.com/aforo-real-mendizorrotza-gureada/",
+ "stadium_owner": {
+  "detail": "Owned by Vitoria-Gasteiz city council; the club plays there under an agreement with the council that runs to 31 July 2029, with a EUR 120,000 annual fee treated as offset by the club's works on the stadium. Opened 1924.",
+  "evidence": "Y Mendizorroza es del Ayuntamiento de Vitoria.",
+  "source_url": "https://www.eldiario.es/euskadi/baloncesto-futbol-conglomerado-empresas-querejeta-detras-baskonia-alaves_1_12867839.html",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

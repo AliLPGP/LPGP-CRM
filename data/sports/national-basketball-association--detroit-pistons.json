@@ -1,0 +1,113 @@
+{
+ "city": "Detroit",
+ "country": "United States",
+ "deals": [],
+ "domain": "nba.com/pistons",
+ "facts": {
+  "chair": {
+   "evidence": "Pistons Vice Chairman Arn Tellem",
+   "name": "Arn Tellem",
+   "source_url": "https://www.nba.com/pistons/news/detroit-pistons-and-stockx-announce-jersey-partnership",
+   "title": "Vice Chairman"
+  },
+  "chief_executive": {
+   "evidence": "Gores hired Melanie Harris, a former Nike executive, as President of Business Operations",
+   "name": "Melanie Harris",
+   "source_url": "https://www.nba.com/pistons/history/ownership-tom-gores",
+   "title": "President of Business Operations"
+  },
+  "honours": {
+   "competition": "NBA championships",
+   "evidence": "Championships 3",
+   "league_titles": 3,
+   "source_url": "https://www.forbes.com/teams/detroit-pistons/"
+  },
+  "legal_entity": {
+   "evidence": "Detroit Pistons Basketball Company (DPBC)",
+   "name": "Detroit Pistons Basketball Company",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.nba.com/pistons/news/gores_110408.html"
+  },
+  "operating_result": {
+   "amount": 106000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$106M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/detroit-pistons/"
+  },
+  "shirt_sponsor": {
+   "evidence": "a multi-year corporate partnership that brands StockX as the franchise’s new jersey partner",
+   "name": "StockX",
+   "source_url": "https://www.nba.com/pistons/news/detroit-pistons-and-stockx-announce-jersey-partnership"
+  },
+  "wages": {
+   "amount": 134000000,
+   "currency": "USD",
+   "evidence": "$134M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/detroit-pistons/"
+  }
+ },
+ "founded_evidence": "He gave the name to his basketball team its first season in 1941.",
+ "founded_source_url": "https://www.nba.com/pistons/news/ftwayne_071016.html",
+ "founded_year": 1941,
+ "key": "national-basketball-association--detroit-pistons",
+ "league": "National Basketball Association",
+ "name": "Detroit Pistons",
+ "notes": "No institutional/PE stake found; Front Office Sports ties the team to PE only through Gores' Platinum Equity ('The Pistons are majority owned by Tom Gores, founder of Platinum Equity'). Gores' Sept 2015 purchase of Platinum Equity's 49% (to become sole owner) is reported by MLive/Detroit News/Free Press but those pages were unreachable here, so it is not recorded as a deal and stake_pct stays null. The 2011 acquisition (pre-2015) is in the summary only; price ($325m per Crain's) not read. Arena capacity and owner (Detroit Downtown Development Authority per secondary sources) not confirmed on a citable page. Founded 1941 as Fort Wayne Zollner Pistons (NBA.com lists 'Founded 1948', the NBA/BAA entry). Forbes valuation header $3.65B (historical table rounds to $3.7B); Forbes 2026 NBA list not yet published. No social counts found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Tom Gores is owner of the Detroit Pistons and Chairman and CEO of global investment firm Platinum Equity",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Tom Gores",
+   "since_year": 2011,
+   "source_url": "https://www.nba.com/pistons/history/ownership-tom-gores",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.nba.com/pistons/history/ownership-tom-gores",
+ "ownership_summary": "Owned by Tom Gores, founder, chairman and CEO of Platinum Equity. Gores and Platinum Equity agreed to buy Palace Sports & Entertainment and the Detroit Pistons Basketball Company from Karen Davidson in April 2011 (financed by Comerica Bank); Gores has been the sole/majority owner since. Front Office Sports (Oct 2025) lists the Pistons as majority owned by Gores with no institutional fund stake named.",
+ "ownership_type": "individual_family",
+ "revenue": 321000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$321M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA team valuations (Oct 2025); net of revenue sharing and arena debt service",
+ "revenue_source_url": "https://www.forbes.com/teams/detroit-pistons/",
+ "short_name": "Pistons",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/detroit-pistons/",
+  "https://www.nba.com/pistons/history/ownership-tom-gores",
+  "https://www.nba.com/pistons/news/gores_110408.html",
+  "https://www.nba.com/pistons/news/ftwayne_071016.html",
+  "https://www.nba.com/pistons/news/detroit-pistons-and-stockx-announce-jersey-partnership",
+  "https://frontofficesports.com/the-nbas-expanding-private-equity-footprint/",
+  "https://www.nba.com/team/1610612765/pistons"
+ ],
+ "sport": "basketball",
+ "stadium": "Little Caesars Arena",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": null,
+ "valuation": 3650000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$3.65B",
+ "valuation_source_name": "Forbes (calculated October 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/detroit-pistons/",
+ "valuation_year": 2025
+}

@@ -1,0 +1,148 @@
+{
+ "city": "Leipzig",
+ "country": "Germany",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "December 2016",
+   "evidence": "Red Bull und Prof. Dr. Michael Kölmel erzielen Einigung über den Kauf des Zentralstadions",
+   "headline": "Red Bull agrees to buy Leipzig's Zentralstadion (Red Bull Arena) from Michael Kölmel",
+   "investor": "Red Bull",
+   "investor_type": "corporate",
+   "kind": "other",
+   "seller": "Michael Kölmel",
+   "source_name": "RB Leipzig (club stadium chronicle)",
+   "source_url": "https://rbleipzig.com/de/stadion/red-bull-arena/kurzchronik",
+   "stake_pct": null,
+   "summary": "The club's stadium chronicle records that in December 2016 Red Bull and Michael Kölmel agreed the purchase of the Zentralstadion, the ground RB Leipzig has played in as the Red Bull Arena since 2010. No price is stated.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": 100000000,
+   "currency": "EUR",
+   "date": "2020-06-06",
+   "date_text": "Reported 6 June 2020 (financial year 2018/19)",
+   "evidence": "Es hat eine Umwandlung von Gesellschafterdarlehen in Höhe von 100 Millionen Euro in die Kapitalrücklage stattgefunden",
+   "headline": "Red Bull converts EUR 100m of shareholder loans to RB Leipzig into equity",
+   "investor": "Red Bull GmbH",
+   "investor_type": "corporate",
+   "kind": "other",
+   "seller": null,
+   "source_name": "SPORT1",
+   "source_url": "https://www.sport1.de/news/fussball/bundesliga/2020/06/rb-leipzig-red-bull-erlaesst-100-millionen-euro-schulden",
+   "stake_pct": null,
+   "summary": "RasenBallsport Leipzig GmbH's 2018/19 accounts, published in the Bundesanzeiger, show EUR 100m of shareholder loans from Red Bull converted into the capital reserve (a debt-to-equity swap), strengthening the club's equity.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "rbleipzig.com",
+ "facts": {
+  "chief_executive": {
+   "evidence": "Geschäftsführung: Tatjana Haenni (Vorsitzende)",
+   "name": "Tatjana Haenni",
+   "source_url": "https://policies.redbull.com/r/Rasenballsportleipzig/imprint/de_DE",
+   "title": "Chair of the management board (Vorsitzende der Geschäftsführung), CEO"
+  },
+  "kit_supplier": {
+   "evidence": "PUMA are set to be the new kit supplier for RB Leipzig",
+   "name": "PUMA",
+   "source_url": "https://rbleipzig.com/en/news/partnership-rb-leipzig-puma-kit-supplier"
+  },
+  "legal_entity": {
+   "evidence": "HRB 30621",
+   "name": "RasenBallsport Leipzig GmbH",
+   "registry": "Handelsregister, Amtsgericht Leipzig",
+   "registry_id": "HRB 30621",
+   "source_url": "https://policies.redbull.com/r/Rasenballsportleipzig/imprint/de_DE"
+  },
+  "shirt_sponsor": {
+   "evidence": "Hauptsponsor: Red Bull",
+   "name": "Red Bull",
+   "source_url": "https://ran.joyn.de/sports/fussball/bundesliga/bundesliga-was-die-hauptsponsoren-den18-klubs-in-der-saison202627-bezahlen-160665"
+  },
+  "stadium_owner": {
+   "detail": "The former Zentralstadion was bought by Red Bull, the club's 99% shareholder, from Michael Kölmel (agreement December 2016); the club's chronicle names Red Bull, not the club company, as the buyer.",
+   "evidence": "Red Bull und Prof. Dr. Michael Kölmel erzielen Einigung über den Kauf des Zentralstadions",
+   "source_url": "https://rbleipzig.com/de/stadion/red-bull-arena/kurzchronik",
+   "value": "private_third_party"
+  }
+ },
+ "founded_evidence": "RB Leipzig were officially founded as an independent club on Tuesday 19 May 2009",
+ "founded_source_url": "https://rbleipzig.com/en/news/rb-leipzig-15th-birthday-highlights",
+ "founded_year": 2009,
+ "key": "bundesliga--rb-leipzig",
+ "league": "Bundesliga",
+ "name": "RasenBallsport Leipzig",
+ "notes": "Revenue is the GmbH's reported turnover for 2024/25 ('knapp 455 Millionen', i.e. just under EUR 455m) and includes roughly EUR 74m from transfers and loans per the same article; Deloitte's Money League 2026 does not list RB Leipzig (no club data in time). No valuation: RB Leipzig is not in Forbes' 2026 top 30 (forbes.com blocked our fetch, so not cited) and not in Football Benchmark's European Elite 2026. The DFL report (via RBlive, 2 June 2026) puts liabilities at about EUR 453m, mostly owed to Red Bull; that is total liabilities, not net debt, so net_debt is left null. Wages are the DFL's published personnel expense for 2024/25 (group accounts, EUR 208,943.1k); the DFL file gives a net result of EUR 2,683.7k after tax and liabilities of EUR 453,652k, and no revenue line (only Rohergebnis, EUR 462,461.5k). The remaining ~1% of the GmbH is reportedly held by RasenBallsport Leipzig e.V., which keeps the voting majority under 50+1, but no citable page stating it was read. The club site gives the stadium as 47,800 total capacity since 2024/25 (47,069 before). Supervisory-board chair not found on a citable page. No league titles (DFB-Pokal winners 2022 and 2023 per bundesliga.com).",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "So ist der Umsatz der Fußballfirma RB Leipzig GmbH, an der Red Bull 99 Prozent der Anteile hält",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Red Bull GmbH",
+   "since_year": null,
+   "source_url": "https://www.trend.at/unternehmen/flugellahme-beteiligungen",
+   "stake_pct": 99,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.trend.at/unternehmen/flugellahme-beteiligungen",
+ "ownership_summary": "The professional team is run by RasenBallsport Leipzig GmbH (Amtsgericht Leipzig HRB 30621), 99% of whose shares are held by the energy-drink company Red Bull GmbH; the club itself was founded on Red Bull's initiative in May 2009. Red Bull also funds the club through shareholder loans, and in the 2018/19 accounts converted EUR 100m of them into capital reserves.",
+ "ownership_type": "corporate",
+ "revenue": 455000000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Die RasenBallsport Leipzig GmbH weist für 2024/25 knapp 455 Millionen Euro Umsatz aus.",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "RBlive (reporting RasenBallsport Leipzig GmbH annual accounts 2024/25)",
+ "revenue_source_url": "https://rblive.de/news/umsatz-ranking-der-topklubs-warum-rb-seit-jahren-fehlt-4307254",
+ "short_name": "RB Leipzig",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://rbleipzig.com/en/news/rb-leipzig-15th-birthday-highlights",
+  "https://www.bundesliga.com/en/bundesliga/news/stadiums-germany-2025-26-allianz-arena-signal-iduna-park-32656",
+  "https://www.bundesliga.com/en/bundesliga/news/rb-leipzig-club-by-club-historical-guide-red-bull-24199",
+  "https://rbleipzig.com/de/stadion/red-bull-arena/zahlen-und-fakten",
+  "https://rbleipzig.com/de/stadion/red-bull-arena/kurzchronik",
+  "https://www.trend.at/unternehmen/flugellahme-beteiligungen",
+  "https://rblive.de/news/umsatz-ranking-der-topklubs-warum-rb-seit-jahren-fehlt-4307254",
+  "https://rblive.de/news/leichter-umsatzrueckgang-bei-rb-leipzig-stagniert-wirtschaftlich-4259713",
+  "https://policies.redbull.com/r/Rasenballsportleipzig/imprint/de_DE",
+  "https://rbleipzig.com/de/club/teamwork/management",
+  "https://rbleipzig.com/en/news/partnership-rb-leipzig-puma-kit-supplier",
+  "https://www.sport1.de/news/fussball/bundesliga/2020/06/rb-leipzig-red-bull-erlaesst-100-millionen-euro-schulden",
+  "https://footballbenchmark.com/documents/d/guest/football-benchmark-footbal-clubs-valuation-the-european-elite-2026_digital-version",
+  "https://report.dfl.de/2425/de/_assets/downloads/Clubs-der-Bundesliga-2026-27-Geschaeftsjahresende-2025.xlsx",
+  "https://www.bundesliga-gruppe.de/aktuelles/dfl-veroeffentlicht-finanzkennzahlen-der-proficlubs-5/",
+  "https://ran.joyn.de/sports/fussball/bundesliga/bundesliga-was-die-hauptsponsoren-den18-klubs-in-der-saison202627-bezahlen-160665"
+ ],
+ "sport": "football",
+ "stadium": "Red Bull Arena",
+ "stadium_capacity": 47800,
+ "stadium_capacity_evidence": "Capacity: 47,800",
+ "stadium_capacity_source_url": "https://www.bundesliga.com/en/bundesliga/news/stadiums-germany-2025-26-allianz-arena-signal-iduna-park-32656",
+ "stadium_owner": {
+  "detail": "The former Zentralstadion was bought by Red Bull, the club's 99% shareholder, from Michael Kölmel (agreement December 2016); the club's chronicle names Red Bull, not the club company, as the buyer.",
+  "evidence": "Red Bull und Prof. Dr. Michael Kölmel erzielen Einigung über den Kauf des Zentralstadions",
+  "source_url": "https://rbleipzig.com/de/stadion/red-bull-arena/kurzchronik",
+  "value": "private_third_party"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

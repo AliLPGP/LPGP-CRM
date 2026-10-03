@@ -1,0 +1,200 @@
+{
+ "city": "San Sebastián",
+ "country": "Spain",
+ "deals": [
+  {
+   "amount": 107000000,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "2021 (club allocation as reported in November 2021; LaLiga Impulso signed December 2021)",
+   "evidence": "la Real Sociedad, prevé recibir unos 107 millones",
+   "headline": "Real Sociedad expects about EUR 107m from LaLiga's CVC deal",
+   "investor": "CVC Capital Partners",
+   "investor_type": "private_equity",
+   "kind": "league_stake",
+   "seller": "LaLiga clubs (LaLiga Impulso)",
+   "source_name": "RTVE / EFE",
+   "source_url": "https://www.rtve.es/deportes/20211105/liga-inversion-clubes-dinero-fondo-cvc/2216222.shtml",
+   "stake_pct": null,
+   "summary": "Under LaLiga Impulso, CVC funded LaLiga's clubs in exchange for a share of the league's audiovisual revenue for 50 years through a new LaLiga company. Real Sociedad, then league leader, expected about EUR 107m, mostly for infrastructure (a 4,000-seat mini-stadium at Zubieta, a women's team building, an innovation lab). CVC holds no stake in the club itself.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 78600000,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "2016 (concession extended); works 2018-2020",
+   "evidence": "El coste aproximado de las obras se sitúo en 78,6 millones",
+   "headline": "Anoeta remodel (about EUR 78.6m), mostly club-funded, in return for a longer concession",
+   "investor": "Real Sociedad de Fútbol, S.A.D.",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": "Anoeta Kiroldegia (San Sebastián city council)",
+   "source_name": "Palco23",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/real-sociedad-amplia-los-derechos-de-explotacion-de-anoeta-hasta-2074",
+   "stake_pct": null,
+   "summary": "Real Sociedad rebuilt the municipal Anoeta stadium between 2018 and 2020 at an approximate cost of EUR 78.6m, of which the public administrations committed only EUR 14m; in 2016, in exchange for covering the EUR 12m the city council was due to contribute, the club's concession was extended from 2033 to 2067.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "October 2025",
+   "evidence": "El club txuri-urdin ha ampliado su derecho de explotación de Anoeta hasta 2074",
+   "headline": "Real Sociedad's Anoeta operating rights extended to 2074",
+   "investor": "Real Sociedad de Fútbol, S.A.D.",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": "Anoeta Kiroldegia (San Sebastián city council)",
+   "source_name": "Palco23",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/real-sociedad-amplia-los-derechos-de-explotacion-de-anoeta-hasta-2074",
+   "stake_pct": null,
+   "summary": "The board of Anoeta Kiroldegia, the public company that owns the stadium, approved an agreement extending Real Sociedad's right to use and operate Anoeta until 2074, ahead of a planned stadium expansion.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "realsociedad.eus",
+ "facts": {
+  "chair": {
+   "evidence": "Presidente del Consejo de Administración de la Real Sociedad de Fútbol, S.A.D. desde el 20 de diciembre de 2008 hasta la actualidad.",
+   "name": "Jokin Aperribay Bedialauneta",
+   "source_url": "https://www.realsociedad.eus/es/club/institucional",
+   "title": "President (chairman of the board of directors)"
+  },
+  "honours": {
+   "competition": "Spanish top flight (LaLiga), 1980-81 and 1981-82",
+   "evidence": "el entrenador que consiguió los dos títulos de Liga",
+   "league_titles": 2,
+   "source_url": "https://www.realsociedad.eus/es/club/historia"
+  },
+  "kit_supplier": {
+   "evidence": "JOMA SPORT, PATROCINADOR TÉCNICO DE LA REAL DESDE JULIO",
+   "name": "Joma",
+   "source_url": "https://www.realsociedad.eus/es/noticias/detalle/nos-vemos-pronto-joma"
+  },
+  "legal_entity": {
+   "evidence": "CIF: A20424511",
+   "name": "Real Sociedad de Fútbol, S.A.D.",
+   "registry": "Registro Mercantil de Gipuzkoa (CIF)",
+   "registry_id": "A20424511",
+   "source_url": "https://www.realsociedad.eus/es/i/aviso-legal"
+  },
+  "operating_result": {
+   "amount": 45200000,
+   "basis": "EBITDA",
+   "currency": "EUR",
+   "evidence": "un EBITDA de 45,2 millones de euros",
+   "season": "2024-25",
+   "source_name": "Real Sociedad, 'Las cifras de la Junta General de Accionistas 2025' (club statement on the 2024-25 accounts)",
+   "source_url": "https://www.realsociedad.eus/es/noticias/detalle/las-cifras-de-la-junta-general-de-accionistas-2025"
+  },
+  "revenue_breakdown": {
+   "broadcast": 68950000,
+   "commercial": null,
+   "currency": "EUR",
+   "evidence": "Los ingresos por la retransmisión de los partidos también disminuyeron de 78,27 en la 2023-24 a 68,95 en la 2024-25",
+   "matchday": null,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Real Sociedad 2024-25 annual accounts as reported by Noticias de Gipuzkoa (broadcast only; competition income was EUR 23.29m)",
+   "source_url": "https://www.noticiasdegipuzkoa.eus/reala/2025/12/10/junta-evalua-hoy-cuentas-record-10444634.html"
+  },
+  "shirt_sponsor": {
+   "evidence": "Baghdadi Capital en la Real Sociedad",
+   "name": "Baghdadi Capital",
+   "source_url": "https://forbes.es/sports/997561/patrocinadores-laliga-2026-2027-camisetas/"
+  },
+  "stadium_owner": {
+   "detail": "Anoeta is owned by Anoeta Kiroldegia, the San Sebastián city council's public company; the club holds the concession to use and operate it, extended in 2016 to 2067 and in 2025 to 2074. The club paid most of the 2018-2020 remodel (about EUR 78.6m).",
+   "evidence": "la empresa pública titular de la instalación",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/real-sociedad-amplia-los-derechos-de-explotacion-de-anoeta-hasta-2074",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 81360000,
+   "currency": "EUR",
+   "evidence": "En la 2023-24 fueron de 89,51 millones de euros; la pasada campaña, de 81,36",
+   "season": "2024-25",
+   "source_name": "Real Sociedad 2024-25 annual accounts as reported by Noticias de Gipuzkoa (first-team squad salaries only)",
+   "source_url": "https://www.noticiasdegipuzkoa.eus/reala/2025/12/10/junta-evalua-hoy-cuentas-record-10444634.html"
+  }
+ },
+ "founded_evidence": "La nueva entidad nace oficialmente el 7 de septiembre de 1909",
+ "founded_source_url": "https://www.realsociedad.eus/es/club/historia",
+ "founded_year": 1909,
+ "key": "la-liga--real-sociedad",
+ "league": "La Liga",
+ "name": "Real Sociedad de Fútbol, S.A.D.",
+ "notes": "Revenue is net turnover ('cifra de negocios') for the year to 30 June 2025; total income including player sales was a record EUR 204.89m (EUR 63.15m of player-trading gains, e.g. Merino and Le Normand), and the net result was a profit of EUR 16.9m (EUR 16.99m), with equity of EUR 92.7m. The 2024-25 accounts PDF on the club's transparency page is a scanned image with no text layer, so the figures are cited from the club's AGM statement and Noticias de Gipuzkoa. Wages cover the first-team squad only. Pre-tax result, net debt, valuation (no Forbes/Deloitte/KPMG figure or transaction-implied value found), attendance and social-media counts were not found on a citable page. No shareholder may exceed 2% under the statutes, so there is no controlling or institutional owner; the 2025-26 accounts had not been published as of 3 October 2026. Main sponsor Baghdadi Capital (a Spanish family office) signed a three-season shirt deal in August 2025; it is a sponsor, not an investor.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Ningún accionista podrá ser titular de acciones en una cantidad superior al dos por ciento (2%) del capital social.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "other",
+   "name": "Dispersed shareholders (statutory cap of 2% of capital per holder)",
+   "since_year": null,
+   "source_url": "https://cdn.realsociedad.eus//Uploads/CntDetalles/336/1/cab12b93-9e86-4422-8be6-38a0d5aa9769.pdf",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://cdn.realsociedad.eus//Uploads/CntDetalles/336/1/cab12b93-9e86-4422-8be6-38a0d5aa9769.pdf",
+ "ownership_summary": "Real Sociedad de Fútbol, S.A.D. is a widely held sports company: its statutes (consolidated text approved by the shareholders on 14 December 2021) bar any shareholder from holding more than 2% of the 131,551 shares and cap any holder's votes at 5% of capital. Jokin Aperribay has chaired the board since 20 December 2008. No fund, family office or other institutional investor holds equity in the club.",
+ "ownership_type": "other",
+ "revenue": 126490000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "La cifra de negocios bajó de 160,54 millones en la 2023-24 a los 126,49 del pasado ejercicio",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Real Sociedad 2024-25 annual accounts (net turnover, 'cifra de negocios'), as reported by Noticias de Gipuzkoa before the December 2025 AGM",
+ "revenue_source_url": "https://www.noticiasdegipuzkoa.eus/reala/2025/12/10/junta-evalua-hoy-cuentas-record-10444634.html",
+ "short_name": "Real Sociedad",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.realsociedad.eus/es/club/historia",
+  "https://www.realsociedad.eus/es/club/instalaciones",
+  "https://www.realsociedad.eus/es/club/institucional",
+  "https://www.realsociedad.eus/es/i/aviso-legal",
+  "https://cdn.realsociedad.eus//Uploads/CntDetalles/336/1/cab12b93-9e86-4422-8be6-38a0d5aa9769.pdf",
+  "https://www.realsociedad.eus/es/noticias/detalle/las-cifras-de-la-junta-general-de-accionistas-2025",
+  "https://www.noticiasdegipuzkoa.eus/reala/2025/12/10/junta-evalua-hoy-cuentas-record-10444634.html",
+  "https://palco23.mundodeportivo.com/clubes/real-sociedad-amplia-los-derechos-de-explotacion-de-anoeta-hasta-2074",
+  "https://www.democrata.es/deportes/bernabeu-vallecas-quien-es-dueno-cada-estadio-primera-division/",
+  "https://www.rtve.es/deportes/20211105/liga-inversion-clubes-dinero-fondo-cvc/2216222.shtml",
+  "https://forbes.es/sports/997561/patrocinadores-laliga-2026-2027-camisetas/",
+  "https://www.realsociedad.eus/es/noticias/detalle/nos-vemos-pronto-joma",
+  "https://www.realsociedad.eus/es/noticias/detalle/baghdadi-capital-nuevo-main-sponsor",
+  "https://www.realsociedad.eus/es/i/transparencia-cuentas-anuales",
+  "https://cdn.realsociedad.eus//Uploads/CntDetalles/258/1/a8671ce1-2323-4bca-b31c-480e72633122.pdf"
+ ],
+ "sport": "football",
+ "stadium": "Reale Arena (Anoeta)",
+ "stadium_capacity": 40000,
+ "stadium_capacity_evidence": "Con capacidad para 40.000 espectadores",
+ "stadium_capacity_source_url": "https://www.realsociedad.eus/es/club/instalaciones",
+ "stadium_owner": {
+  "detail": "Anoeta is owned by Anoeta Kiroldegia, the San Sebastián city council's public company; the club holds the concession to use and operate it, extended in 2016 to 2067 and in 2025 to 2074. The club paid most of the 2018-2020 remodel (about EUR 78.6m).",
+  "evidence": "la empresa pública titular de la instalación",
+  "source_url": "https://palco23.mundodeportivo.com/clubes/real-sociedad-amplia-los-derechos-de-explotacion-de-anoeta-hasta-2074",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

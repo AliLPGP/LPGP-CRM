@@ -1,0 +1,174 @@
+{
+ "city": "Nantes",
+ "country": "France",
+ "deals": [
+  {
+   "amount": 45600000,
+   "currency": "EUR",
+   "date": "2025-06-30",
+   "date_text": "30 June 2025",
+   "evidence": "La SAS Flava Groupe a consenti à un abandon à caractère financier d’un montant de 45 600 000 euros en date du 30 juin 2025",
+   "headline": "Kita's holding company waives €45.6m of loans to FC Nantes",
+   "investor": "Flava Groupe SAS (Waldemar Kita's holding company)",
+   "investor_type": "individual",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Mediacités (quoting FC Nantes's filed 2025 social report)",
+   "source_url": "https://www.mediacites.fr/decryptage/nantes/2026/04/09/waldermar-kita-a-injecte-45-millions-deuros-dans-le-fc-nantes-en-2025/",
+   "stake_pct": null,
+   "summary": "According to the 2025 filing quoted by Mediacités, Flava Groupe granted a financial debt waiver of €45.6m on 30 June 2025, with a return-to-better-fortune clause (repayable if the club's finances recover). Mediacités puts the total lent to the club by Kita's holding since 2007 at about €130m. The DNCG 2024/25 accounts show an exceptional result of 45,681 k€.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 100000000,
+   "currency": "EUR",
+   "date": "2026-09-29",
+   "date_text": "29 September 2026 (agreement in principle; not completed)",
+   "evidence": "Le montant du rachat est annoncé à 100 millions d'euros (plus 25 millions de part variable)",
+   "headline": "Kita signs agreement in principle to sell FC Nantes to Paulo Tavares-led investors",
+   "investor": "Phenix Sports Invest (Paulo Tavares) with French, Portuguese and Luxembourg investors",
+   "investor_type": "consortium",
+   "kind": "acquisition",
+   "seller": "Waldemar Kita / Kita family",
+   "source_name": "RMC Sport",
+   "source_url": "https://rmcsport.bfmtv.com/football/ligue-2/un-accord-signe-pour-la-vente-du-fc-nantes-bientot-le-clap-de-fin-pour-la-famille-kita_AV-202609290956.html",
+   "stake_pct": null,
+   "summary": "An agreement in principle signed on 29 September 2026 opens exclusive negotiations with Phenix Sports Invest, Paulo Tavares's company, backed by French, Portuguese and Luxembourg investors. RMC Sport reported the price at €100m plus €25m of variable payments; AFP reported about €30m placed in an escrow account. The deal needs works-council consultation and DNCG approval and had not completed as of 3 October 2026. A 2019 sale to LFE Football Group was blocked by the DNCG, and an August 2026 report of a protocol with British-backed investors was denied by Kita's camp.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "fcnantes.com",
+ "facts": {
+  "chair": {
+   "evidence": "Le Directeur de la publication du Site est Monsieur Waldemar KITA en sa qualité de Président du conseil d'administration du FC Nantes",
+   "name": "Waldemar Kita",
+   "source_url": "https://www.fcnantes.com/articles/article2809.php?num=11406",
+   "title": "Président du conseil d'administration (chair since July 2007)"
+  },
+  "chief_executive": {
+   "evidence": "Le directeur général délégué du FC Nantes, Franck Kita.",
+   "name": "Franck Kita",
+   "source_url": "https://www.ici.fr/pays-de-la-loire/loire-atlantique-44/nantes/fc-nantes-je-prends-l-entiere-responsabilite-de-cette-descente-affirme-franck-kita-le-directeur-general-delegue-8621333",
+   "title": "Directeur général délégué (deputy chief executive)"
+  },
+  "honours": {
+   "competition": "French champion (top flight): 1965, 1966, 1973, 1977, 1980, 1983, 1995, 2001",
+   "evidence": "8 titres de champion de France : 1965, 1966, 1973, 1977, 1980, 1983, 1995, 2001",
+   "league_titles": 8,
+   "source_url": "https://www.fcnantes.com/articles/article2809.php?num=10252"
+  },
+  "legal_entity": {
+   "evidence": "société FC NANTES, société anonyme sportive professionnelle, au capital de 2.450.000 euros, immatriculée au Registre du Commerce et des Sociétés de Nantes sous le numéro 388 113 276 00017",
+   "name": "FC Nantes (société anonyme sportive professionnelle)",
+   "registry": "French trade and companies register (RCS Nantes)",
+   "registry_id": "388113276",
+   "source_url": "https://www.fcnantes.com/articles/article2809.php?num=11406"
+  },
+  "operating_result": {
+   "amount": -52807000,
+   "basis": "operating result before player trading (DNCG résultat des opérations hors mutation)",
+   "currency": "EUR",
+   "evidence": "RÉSULTAT DES OPÉRATIONS HORS MUTATION -52 807",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Comptes individuels des clubs, saison 2024/2025 (FC Nantes, SASP + association; figures in k€)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "pretax_result": {
+   "amount": 120000,
+   "currency": "EUR",
+   "evidence": "RÉSULTAT AVANT IMPÔT 120 Impôt Société 0 RÉSULTAT NET 120",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Comptes individuels des clubs, saison 2024/2025 (FC Nantes, SASP + association; figures in k€): résultat avant impôt, after an exceptional result of 45,681 k€",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "stadium_owner": {
+   "detail": "The club does not own La Beaujoire (opened May 1984) or its training ground; it uses the stadium under a convention with Nantes Métropole (the convention in force since December 2000 ran to 30 June 2021 and was renegotiated).",
+   "evidence": "Nantes n'est propriétaire ni de son stade, ni de son centre d'entraînement",
+   "source_url": "https://www.lessentiel.lu/fr/story/football-des-investisseurs-luxembourgeois-derriere-le-rachat-du-fc-nantes-103641871",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 55611000,
+   "currency": "EUR",
+   "evidence": "Rémunération du personnel chargée 55 611",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Comptes individuels des clubs, saison 2024/2025 (FC Nantes, SASP + association; figures in k€): rémunération du personnel chargée (all staff pay including social charges)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  }
+ },
+ "founded_evidence": "De cette fusion naît le FC Nantes le 21 avril 1943.",
+ "founded_source_url": "https://www.fcnantes.com/articles/article2809.php?num=10252",
+ "founded_year": 1943,
+ "key": "ligue-1--fc-nantes",
+ "league": "Ligue 1",
+ "name": "Football Club de Nantes",
+ "notes": "The earlier record had no sourced facts. League: the key says Ligue 1, but FC Nantes was relegated in spring 2026 and plays Ligue 2 in 2026-27; the 2024/25 financials are from a Ligue 1 season. Financials come from the LFP/DNCG individual club accounts for 2024/25 (k€, SASP plus association). The 120 k€ pre-tax profit depends on a 45,681 k€ exceptional item, which matches the €45.6m loan waiver by Kita's holding company on 30 June 2025. Before it, the result before player trading was -52,807 k€ and player trading added 7,990 k€. The DNCG balance sheet shows financial debts of 2,666 k€, cash of 6,012 k€ and shareholder current accounts of 2,082 k€; net debt is not stated, so it is left null. The 2007 purchase price (€10m, AFP via L'essentiel) is in the summary only, not in the owner row, because the row cites Sportune for the 99.98% stake. No page read states La Beaujoire's capacity, so it is null. The pending sale to Phenix Sports Invest is an agreement in principle, not a closed deal; the price is as RMC Sport reported it. No valuation, attendance, shirt sponsor, kit supplier or social count was read on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Waldemar Kita y apparaît comme bénéficiaire direct, avec 99,98 % des parts et des droits de vote du club",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Waldemar Kita (through his holding company Flava Groupe SAS)",
+   "since_year": 2007,
+   "source_url": "https://sportune.20minutes.fr/sport-business/football/fc-nantes-quelle-est-la-part-de-waldemar-kita-dans-le-capital-du-club-et-combien-vaut-elle-411188",
+   "stake_pct": 99.98,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://sportune.20minutes.fr/sport-business/football/fc-nantes-quelle-est-la-part-de-waldemar-kita-dans-le-capital-du-club-et-combien-vaut-elle-411188",
+ "ownership_summary": "Waldemar Kita, a Franco-Polish businessman, has controlled FC Nantes since August 2007, when he bought it from Socpresse (then owned by Serge Dassault), reportedly for €10m. Sportune reports he holds 99.98% of the shares and voting rights as beneficial owner; Mediacités reports the club is held through his Belgian holding company, Flava Groupe SAS, which waived €45.6m of loans to the club on 30 June 2025. His son Franck Kita is deputy chief executive. On 29 September 2026 Kita signed an agreement in principle opening exclusive talks to sell to investors led by Paulo Tavares's Phenix Sports Invest (reported at €100m plus €25m variable). The sale still needs DNCG approval and had not completed by 3 October 2026.",
+ "ownership_type": "individual_family",
+ "revenue": 41446000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL PRODUITS HORS MUTATION 41 446",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "LFP / DNCG, Comptes individuels des clubs, saison 2024/2025 (FC Nantes, SASP + association; figures in k€): total produits hors mutation (revenue excluding player trading)",
+ "revenue_source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf",
+ "short_name": "FC Nantes",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.fcnantes.com/articles/article2809.php?num=10252",
+  "https://www.fcnantes.com/articles/article2809.php?num=20057",
+  "https://www.fcnantes.com/articles/article2809.php?num=11406",
+  "https://www.fcnantes.com/musee/",
+  "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf",
+  "https://sportune.20minutes.fr/sport-business/football/fc-nantes-quelle-est-la-part-de-waldemar-kita-dans-le-capital-du-club-et-combien-vaut-elle-411188",
+  "https://www.mediacites.fr/decryptage/nantes/2026/04/09/waldermar-kita-a-injecte-45-millions-deuros-dans-le-fc-nantes-en-2025/",
+  "https://www.lessentiel.lu/fr/story/football-des-investisseurs-luxembourgeois-derriere-le-rachat-du-fc-nantes-103641871",
+  "https://www.lanouvellerepublique.fr/sports/vers-la-fin-de-l-ere-kita-un-accord-de-principe-signe-pour-la-vente-du-fc-nantes-1790763687",
+  "https://rmcsport.bfmtv.com/football/ligue-2/un-accord-signe-pour-la-vente-du-fc-nantes-bientot-le-clap-de-fin-pour-la-famille-kita_AV-202609290956.html",
+  "https://www.ici.fr/pays-de-la-loire/loire-atlantique-44/nantes/fc-nantes-je-prends-l-entiere-responsabilite-de-cette-descente-affirme-franck-kita-le-directeur-general-delegue-8621333",
+  "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+  "https://actu.fr/pays-de-la-loire/nantes_44109/fc-nantes-le-loyer-du-stade-de-la-beaujoire-renegocie-voici-ce-que-versent-les-autres-clubs_39161790.html",
+  "https://sportune.20minutes.fr/fc-nantes-un-protocole-daccord-de-vente-avec-un-fonds-britannique-407786",
+  "https://recherche-entreprises.api.gouv.fr/search?q=FC%20NANTES&activite_principale=93.12Z"
+ ],
+ "sport": "football",
+ "stadium": "Stade de la Beaujoire",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "The club does not own La Beaujoire (opened May 1984) or its training ground; it uses the stadium under a convention with Nantes Métropole (the convention in force since December 2000 ran to 30 June 2021 and was renegotiated).",
+  "evidence": "Nantes n'est propriétaire ni de son stade, ni de son centre d'entraînement",
+  "source_url": "https://www.lessentiel.lu/fr/story/football-des-investisseurs-luxembourgeois-derriere-le-rachat-du-fc-nantes-103641871",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

@@ -1,0 +1,157 @@
+{
+ "city": "Groningen",
+ "country": "Netherlands",
+ "deals": [
+  {
+   "amount": 3400000,
+   "currency": "EUR",
+   "date": "2015-06-05",
+   "date_text": "5 June 2015",
+   "evidence": "van € 3,4 miljoen met een looptijd van 22 jaar, ingaande 5 juni 2015 tot en met 5 juni 2037 verstrekt door",
+   "headline": "Euroborg N.V. lends FC Groningen EUR 3.4m to refinance its capital position",
+   "investor": "Euroborg N.V. (municipal stadium company)",
+   "investor_type": "other",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "FC Groningen financieel jaarverslag 2024/2025",
+   "source_url": "https://www.fcgroningen.nl/wp-content/uploads/sites/7/2025/11/20251016-FinancieelVerslag-DEFINITIEF-2-1.pdf",
+   "stake_pct": null,
+   "summary": "A 22-year annuity loan at 8.735% from the stadium owner, running 5 June 2015 to 5 June 2037, secured on the club's commercial receivables; 2020/21 payments deferred to 15 November 2037. EUR 2.69m long-term portion outstanding at 30 June 2025.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "fcgroningen.nl",
+ "facts": {
+  "attendance": {
+   "average": 21751,
+   "evidence": "2024/2025 14.614 21.751 96,6%",
+   "season": "2024-25",
+   "source_name": "FC Groningen financieel jaarverslag 2024/2025",
+   "source_url": "https://www.fcgroningen.nl/wp-content/uploads/sites/7/2025/11/20251016-FinancieelVerslag-DEFINITIEF-2-1.pdf"
+  },
+  "chair": {
+   "evidence": "Jakob Klompien (voorzitter)",
+   "name": "Jakob Klompien",
+   "source_url": "https://www.fcgroningen.nl/club-info/organisatie/",
+   "title": "Chair of the Supervisory Board (Raad van Commissarissen)"
+  },
+  "chief_executive": {
+   "evidence": "Frank van Mosselveld Algemeen directeur, sinds 2024",
+   "name": "Frank van Mosselveld",
+   "source_url": "https://www.fcgroningen.nl/club-info/organisatie/",
+   "title": "Algemeen directeur (CEO)"
+  },
+  "legal_entity": {
+   "evidence": "De Raad van Commissarissen biedt hierbij de aandeelhouder het door de directie van FC Groningen Beheer",
+   "name": "FC Groningen Beheer B.V.",
+   "registry": "Kamer van Koophandel (KvK)",
+   "registry_id": null,
+   "source_url": "https://www.fcgroningen.nl/wp-content/uploads/sites/7/2025/11/20251016-FinancieelVerslag-DEFINITIEF-2-1.pdf"
+  },
+  "operating_result": {
+   "amount": -330082,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "EN RESULTAAT VAN VERGOEDINGSSOMMEN -330.082",
+   "season": "2024-25",
+   "source_name": "FC Groningen financieel jaarverslag 2024/2025 (bedrijfsresultaat vóór afschrijvingen en resultaat van vergoedingssommen)",
+   "source_url": "https://www.fcgroningen.nl/wp-content/uploads/sites/7/2025/11/20251016-FinancieelVerslag-DEFINITIEF-2-1.pdf"
+  },
+  "pretax_result": {
+   "amount": 1701682,
+   "currency": "EUR",
+   "evidence": "RESULTAAT UIT GEWONE BEDRIJFSUITOEFENING 1.701.682",
+   "season": "2024-25",
+   "source_name": "FC Groningen financieel jaarverslag 2024/2025 (resultaat uit gewone bedrijfsuitoefening, before tax)",
+   "source_url": "https://www.fcgroningen.nl/wp-content/uploads/sites/7/2025/11/20251016-FinancieelVerslag-DEFINITIEF-2-1.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "april 2025 met Autokan als nieuwe hoofdsponsor voor de komende twee seizoenen",
+   "name": "Autokan",
+   "source_url": "https://www.fcgroningen.nl/wp-content/uploads/sites/7/2025/11/20251016-FinancieelVerslag-DEFINITIEF-2-1.pdf"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Euroborg N.V., the municipality of Groningen's stadium company; the club rents it under a lease running to 30 June 2048.",
+   "evidence": "De Euroborg, eigendom van de gemeente",
+   "source_url": "https://www.rtvnoord.nl/politiek/1164433/wethouder-gemeente-heeft-komst-van-investeerder-bij-fc-groningen-niet-geblokkeerd-update",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 14759125,
+   "currency": "EUR",
+   "evidence": "Personeelskosten (9.4) 14.759.125",
+   "season": "2024-25",
+   "source_name": "FC Groningen financieel jaarverslag 2024/2025 (Personeelskosten)",
+   "source_url": "https://www.fcgroningen.nl/wp-content/uploads/sites/7/2025/11/20251016-FinancieelVerslag-DEFINITIEF-2-1.pdf"
+  }
+ },
+ "founded_evidence": "Opgericht: 16 juni 1971",
+ "founded_source_url": "https://www.fcgroningen.nl/club-info/over-ons/",
+ "founded_year": 1971,
+ "key": "eredivisie--fc-groningen",
+ "league": "Eredivisie",
+ "name": "FC Groningen (FC Groningen Beheer B.V.)",
+ "notes": "The 2025/26 accounts were not yet on fcgroningen.nl on 3 Oct 2026 (2024/25's came out in Oct/Nov 2025), so figures are 2024/25 (year to 30 June 2025): revenue recorded as the club release's rounded EUR 27.5m; the accounts give netto-omzet EUR 27,458,927 ('Netto-omzet (9.1) 27.458.927') and total income incl. EUR 81k other operating income of EUR 27,539,995, net profit EUR 1,643,346, equity c. EUR 10.5m. Revenue by the club's categories (x EUR 1,000): matchday 4,697; sponsorship & advertising 9,892; media rights 4,357; merchandise 1,962; catering 4,201; other 2,350 - left unmapped. Operating result is before player amortisation and transfer result (after them: EUR 1,974,764). Evidence for table figures is the row as a text-layout PDF reader renders it. The holding foundation's exact legal name was not confirmed on a citable page (press calls it the 'Houdstermaatschappij'); a 2018 club page says the shares sit in a foundation above FC Groningen Beheer B.V. and that a sale needs the municipality's consent. In 2022 an unnamed American investor proposed EUR 12.5m rising to EUR 25m for 49% of the shares; it did not proceed (RTV Noord, 15 May 2024) - not recorded as a deal. Kit supplier not confirmed (the report mentions Robey Sportswear only for the 2024 '050' shirt). No league titles; honours left null. Capacity: the club's facts page says 22,525, its stadium and history pages say about 22,550. No valuation or social counts found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "de Raad van Commissarissen en de Houdstermaatschappij, de stichting die alle aandelen beheert",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "other",
+   "name": "Houdstermaatschappij (foundation holding all FC Groningen shares)",
+   "since_year": null,
+   "source_url": "https://www.rtvnoord.nl/sport/1411047/supporters-aan-de-macht-fc-groningen-wil-naar-een-nieuw-model",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.rtvnoord.nl/sport/1411047/supporters-aan-de-macht-fc-groningen-wil-naar-een-nieuw-model",
+ "ownership_summary": "All shares of FC Groningen Beheer B.V. are held by a foundation (the 'Houdstermaatschappij') that appoints the supervisory board; any sale of shares also needs the consent of the municipality of Groningen, which nominates two supervisory board members. In 2026 the club and municipality were discussing a 50+1 supporter model and a minority investor to help buy (part of) the stadium.",
+ "ownership_type": "other",
+ "revenue": 27500000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "De netto opbrengst van FC Groningen lag met € 27,5 miljoen",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "FC Groningen boekt binnen en buiten het veld winst (club release on the 2024/2025 accounts)",
+ "revenue_source_url": "https://www.fcgroningen.nl/nieuws/fc-groningen-boekt-binnen-en-buiten-het-veld-winst/",
+ "short_name": "FC Groningen",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.fcgroningen.nl/wp-content/uploads/sites/7/2025/11/20251016-FinancieelVerslag-DEFINITIEF-2-1.pdf",
+  "https://www.fcgroningen.nl/nieuws/fc-groningen-boekt-binnen-en-buiten-het-veld-winst/",
+  "https://www.fcgroningen.nl/club-info/over-ons/",
+  "https://www.fcgroningen.nl/club-info/organisatie/",
+  "https://www.fcgroningen.nl/club-info/over-ons/historie/",
+  "https://www.fcgroningen.nl/club-info/over-ons/euroborg/",
+  "https://www.rtvnoord.nl/sport/1411047/supporters-aan-de-macht-fc-groningen-wil-naar-een-nieuw-model",
+  "https://www.rtvnoord.nl/politiek/1164433/wethouder-gemeente-heeft-komst-van-investeerder-bij-fc-groningen-niet-geblokkeerd-update",
+  "https://www.fcgroningen.nl/nieuws/levendige-discussie-over-mogelijke-investeerders-bij-de-club/",
+  "https://eredivisie.nl/competitie/clubs/fc-groningen/",
+  "https://www.fcgroningen.nl/club-info/over-ons/publicaties/"
+ ],
+ "sport": "football",
+ "stadium": "Euroborg",
+ "stadium_capacity": 22525,
+ "stadium_capacity_evidence": "Capaciteit: 22.525",
+ "stadium_capacity_source_url": "https://www.fcgroningen.nl/club-info/over-ons/",
+ "stadium_owner": {
+  "detail": "Owned by Euroborg N.V., the municipality of Groningen's stadium company; the club rents it under a lease running to 30 June 2048.",
+  "evidence": "De Euroborg, eigendom van de gemeente",
+  "source_url": "https://www.rtvnoord.nl/politiek/1164433/wethouder-gemeente-heeft-komst-van-investeerder-bij-fc-groningen-niet-geblokkeerd-update",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

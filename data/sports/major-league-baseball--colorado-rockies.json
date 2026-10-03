@@ -1,0 +1,201 @@
+{
+ "city": "Denver",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 672000000,
+   "currency": "USD",
+   "date": "2026-04-10",
+   "date_text": "April 2026",
+   "evidence": "The Penners’ investment equals about $672 million, and MLB has formally approved the deal.",
+   "headline": "Broncos owners' Penner Sports Group buys reported 40% of the Rockies",
+   "investor": "Penner Sports Group (Greg & Carrie Penner)",
+   "investor_type": "family_office",
+   "kind": "minority_investment",
+   "seller": "Existing partners (incl. The Denver Post, which sold its entire stake) and new equity",
+   "source_name": "The Denver Post",
+   "source_url": "https://www.denverpost.com/2026/04/10/broncos-owners-buy-rockies-stake-penner-sports-group/",
+   "stake_pct": 40,
+   "summary": "MLB-approved investment makes Penner Sports Group the Rockies' largest minority owner. The Denver Post reports a 40% stake from existing partners and new equity, about $672m (the Post's figure against Forbes' $1.68bn value); the club says it lets the franchise retire all outstanding debt.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mlb.com/rockies",
+ "facts": {
+  "chair": {
+   "evidence": "Dick Monfort continues in his role as Owner/Chairman and Chief Executive Officer for the club.",
+   "name": "Richard L. Monfort",
+   "source_url": "https://www.mlb.com/rockies/team/front-office",
+   "title": "Owner/Chairman & Chief Executive Officer"
+  },
+  "chief_executive": {
+   "evidence": "Dick Monfort continues in his role as Owner/Chairman and Chief Executive Officer for the club.",
+   "name": "Richard L. Monfort",
+   "source_url": "https://www.mlb.com/rockies/team/front-office",
+   "title": "Owner/Chairman & Chief Executive Officer (Walker Monfort is President)"
+  },
+  "operating_result": {
+   "amount": 20000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$20M",
+   "season": "2025",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/colorado-rockies/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Denver Metropolitan MLB Stadium District (public stadium district)",
+   "evidence": "Denver Metropolitan MLB Stadium District",
+   "source_url": "https://www.forbes.com/teams/colorado-rockies/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 159000000,
+   "currency": "USD",
+   "evidence": "$159M",
+   "season": "2025",
+   "source_name": "Forbes (estimate) — player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/colorado-rockies/"
+  }
+ },
+ "founded_evidence": "since joining MLB as an expansion franchise in 1993 alongside the then-Florida Marlins",
+ "founded_source_url": "https://www.forbes.com/teams/colorado-rockies/",
+ "founded_year": 1993,
+ "key": "major-league-baseball--colorado-rockies",
+ "league": "Major League Baseball",
+ "name": "Colorado Rockies",
+ "notes": "Revenue, operating income and player expenses are Forbes estimates for the 2025 season. The 40% stake is sourced to unnamed sources by The Denver Post; the $672m appears to be the Post's arithmetic on Forbes' $1.68bn value, not a disclosed price, and MLB.com's announcement gives neither. Monfort stakes not stated. No World Series titles (honours left null). Legal entity, socials, attendance not found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Owner/Chairman & Chief Executive Officer",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Richard L. (Dick) Monfort",
+   "since_year": 1992,
+   "source_url": "https://www.mlb.com/rockies/team/front-office",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Charlie Monfort, Owner/General Partner, is a club founder and has been one of the Rockies' managing general partners since 1992.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Charles K. (Charlie) Monfort",
+   "since_year": 1992,
+   "source_url": "https://www.mlb.com/rockies/team/front-office",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": 672000000,
+   "currency": "USD",
+   "evidence": "Sources told The Denver Post that the Penners are purchasing a 40% share of the Rockies.",
+   "institutional": true,
+   "investor_type": "family_office",
+   "kind": "family",
+   "name": "Penner Sports Group, LLC (Greg & Carrie Penner)",
+   "since_year": 2026,
+   "source_url": "https://www.denverpost.com/2026/04/10/broncos-owners-buy-rockies-stake-penner-sports-group/",
+   "stake_pct": 40,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "TSAM Sports LLC (Jay Stein)",
+   "institutional": false,
+   "investor_type": "other",
+   "kind": "company",
+   "name": "TSAM Sports LLC (Jay Stein)",
+   "since_year": null,
+   "source_url": "https://www.mlb.com/rockies/team/front-office",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Fourseam Holdings LLC (Ben Wright)",
+   "institutional": false,
+   "investor_type": "other",
+   "kind": "company",
+   "name": "Fourseam Holdings LLC (Ben Wright)",
+   "since_year": null,
+   "source_url": "https://www.mlb.com/rockies/team/front-office",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "BDH Successor I, LLC (Marne Obernauer Jr.)",
+   "institutional": false,
+   "investor_type": "other",
+   "kind": "company",
+   "name": "BDH Successor I, LLC (Marne Obernauer Jr.)",
+   "since_year": null,
+   "source_url": "https://www.mlb.com/rockies/team/front-office",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Alvarado Grand Slam Family Partnership (Linda Alvarado)",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Alvarado Grand Slam Family Partnership (Linda Alvarado)",
+   "since_year": null,
+   "source_url": "https://www.mlb.com/rockies/team/front-office",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.mlb.com/rockies/team/front-office",
+ "ownership_summary": "Controlled by brothers Dick and Charlie Monfort (owners since 1992; Dick is owner/chairman and CEO). In April 2026 Penner Sports Group, the Broncos-owning family entity of Greg and Carrie Penner, became the largest minority owner with a reported 40% stake (about $672m), funding retirement of all club debt; other limited partners include TSAM Sports, Fourseam Holdings, BDH Successor I and the Alvarado family partnership.",
+ "ownership_type": "individual_family",
+ "revenue": 319000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$319M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB team valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/colorado-rockies/",
+ "short_name": "Rockies",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/colorado-rockies/",
+  "https://www.mlb.com/rockies/team/front-office",
+  "https://www.mlb.com/news/broncos-owners-rockies-minority-partnership",
+  "https://www.denverpost.com/2026/04/10/broncos-owners-buy-rockies-stake-penner-sports-group/"
+ ],
+ "sport": "baseball",
+ "stadium": "Coors Field",
+ "stadium_capacity": 50144,
+ "stadium_capacity_evidence": "50,144",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/colorado-rockies/",
+ "stadium_owner": {
+  "detail": "Owned by the Denver Metropolitan MLB Stadium District (public stadium district)",
+  "evidence": "Denver Metropolitan MLB Stadium District",
+  "source_url": "https://www.forbes.com/teams/colorado-rockies/",
+  "value": "municipal"
+ },
+ "valuation": 1680000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1.68B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/colorado-rockies/",
+ "valuation_year": 2026
+}

@@ -1,0 +1,155 @@
+{
+ "city": "Toronto",
+ "country": "Canada",
+ "deals": [
+  {
+   "amount": 4700000000,
+   "currency": "CAD",
+   "date": "2025-07-01",
+   "date_text": "July 2025",
+   "evidence": "Davies acted for Rogers Communications Inc. in its acquisition of BCE Inc.’s 37.5% ownership stake in Maple Leaf Sports and Entertainment for C$4.7 billion.",
+   "headline": "Rogers completes C$4.7bn purchase of BCE's 37.5% of MLSE",
+   "investor": "Rogers Communications Inc.",
+   "investor_type": "corporate",
+   "kind": "stake_sale",
+   "seller": "BCE Inc.",
+   "source_name": "Davies Ward Phillips & Vineberg (Rogers' counsel)",
+   "source_url": "https://www.dwpv.com/en/insights/2025/rogers-completes-acquisition-mlse",
+   "stake_pct": 37.5,
+   "summary": "Gave Rogers a 75% interest in MLSE, parent of the Raptors, Maple Leafs, Toronto FC and Argonauts.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 4350000000,
+   "currency": "CAD",
+   "date": "2026-10-01",
+   "date_text": "Agreed 6 July 2026; completed 1 October 2026",
+   "evidence": "Rogers acquired the remaining 25% ownership stake in MLSE from Kilmer Sports Inc. for C$4.35 billion.",
+   "headline": "Rogers becomes 100% owner of MLSE",
+   "investor": "Rogers Communications Inc.",
+   "investor_type": "corporate",
+   "kind": "stake_sale",
+   "seller": "Kilmer Sports Inc. (Larry Tanenbaum)",
+   "source_name": "Rogers Communications press release",
+   "source_url": "https://about.rogers.com/news/rogers-completes-acquisition-of-maple-leaf-sports-entertainment/",
+   "stake_pct": 25,
+   "summary": "Rogers acquired the remaining 25% from Kilmer Sports for C$4.35bn; MLSE to sit in a new Rogers Sports unit. Sportico reports Rogers plans to sell a minority stake in its consolidated sports assets.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "raptors.com",
+ "facts": {
+  "chief_executive": {
+   "evidence": "Keith Pelley will remain President and CEO of MLSE",
+   "name": "Keith Pelley",
+   "source_url": "https://about.rogers.com/news/rogers-completes-acquisition-of-maple-leaf-sports-entertainment/",
+   "title": "President and CEO, MLSE"
+  },
+  "honours": {
+   "competition": "NBA championships",
+   "evidence": "Championships 1",
+   "league_titles": 1,
+   "source_url": "https://www.forbes.com/teams/toronto-raptors/"
+  },
+  "operating_result": {
+   "amount": 136000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$136M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/toronto-raptors/"
+  },
+  "revenue_breakdown": {
+   "broadcast": null,
+   "commercial": null,
+   "currency": "USD",
+   "evidence": "$74M",
+   "matchday": 74000000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): gate receipts incl. club seats",
+   "source_url": "https://www.forbes.com/teams/toronto-raptors/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Maple Leaf Sports & Entertainment, the Raptors' parent, and shared with the NHL's Maple Leafs.",
+   "evidence": "Owner(s) Maple Leaf Sports & Entertainment",
+   "source_url": "https://www.forbes.com/teams/toronto-raptors/",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 166000000,
+   "currency": "USD",
+   "evidence": "$166M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/toronto-raptors/"
+  }
+ },
+ "founded_evidence": "Founded 1995",
+ "founded_source_url": "https://www.nba.com/team/1610612761",
+ "founded_year": 1995,
+ "key": "national-basketball-association--toronto-raptors",
+ "league": "National Basketball Association",
+ "name": "Toronto Raptors",
+ "notes": "Revenue, operating income, player expenses and gate receipts are Forbes estimates for 2024-25 in USD (calculated October 2025). Stake and deal figures are for MLSE as a whole, not the Raptors alone; no Raptors-only valuation in either transaction. NBA.com still lists Larry Tanenbaum as governor (pre-closing); chair left null. Not found: social follower counts, attendance, jersey patch sponsor, legal entity.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "increasing its ownership of MLSE to 100%",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Rogers Communications Inc. (via Maple Leaf Sports & Entertainment)",
+   "since_year": 2026,
+   "source_url": "https://about.rogers.com/news/rogers-completes-acquisition-of-maple-leaf-sports-entertainment/",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://about.rogers.com/news/rogers-completes-acquisition-of-maple-leaf-sports-entertainment/",
+ "ownership_summary": "Owned by Maple Leaf Sports & Entertainment (MLSE), which is 100% owned by Rogers Communications (TSX/NYSE: RCI) since 1 October 2026: Rogers bought BCE's 37.5% for C$4.7bn in July 2025 (to 75%) and Kilmer Sports' (Larry Tanenbaum) 25% for C$4.35bn. Rogers has said it plans to sell a minority stake in its combined sports assets.",
+ "ownership_type": "corporate",
+ "revenue": 380000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$380M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA Team Valuations 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/toronto-raptors/",
+ "short_name": "Raptors",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://about.rogers.com/news/rogers-completes-acquisition-of-maple-leaf-sports-entertainment/",
+  "https://www.kilmergroup.com/rogers-to-become-100-owner-of-maple-leaf-sports-entertainment/",
+  "https://www.dwpv.com/en/insights/2025/rogers-completes-acquisition-mlse",
+  "https://www.sportico.com/business/finance/2026/rogers-buys-mlse-toronto-maple-leafs-raptors-1234938017/",
+  "https://www.forbes.com/teams/toronto-raptors/",
+  "https://www.nba.com/team/1610612761"
+ ],
+ "sport": "basketball",
+ "stadium": "Scotiabank Arena",
+ "stadium_capacity": 19800,
+ "stadium_capacity_evidence": "Seating Capacity 19,800",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/toronto-raptors/",
+ "stadium_owner": {
+  "detail": "Owned by Maple Leaf Sports & Entertainment, the Raptors' parent, and shared with the NHL's Maple Leafs.",
+  "evidence": "Owner(s) Maple Leaf Sports & Entertainment",
+  "source_url": "https://www.forbes.com/teams/toronto-raptors/",
+  "value": "club"
+ },
+ "valuation": 5400000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$5.4B",
+ "valuation_source_name": "Forbes, NBA Team Valuations (calculated October 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/toronto-raptors/",
+ "valuation_year": 2025
+}

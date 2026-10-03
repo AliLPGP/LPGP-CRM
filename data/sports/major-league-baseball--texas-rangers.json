@@ -1,0 +1,166 @@
+{
+ "city": "Arlington",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2026-02-09",
+   "date_text": "February 2026",
+   "evidence": "Financial terms and sellers were not announced for the deal, which closed Monday.",
+   "headline": "Sportsology Capital Partners buys a minority stake in the Rangers",
+   "investor": "Sportsology Capital Partners",
+   "investor_type": "private_equity",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/finance/2026/sportsology-buys-texas-rangers-stake-fund-1234884349/",
+   "stake_pct": null,
+   "summary": "Sportsology's second deal and first in a major U.S. league, made from its debut fund (targeting about $500 million). Financial terms, sellers and the valuation were not announced; Cade Cunningham is among its athlete investors.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 500000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": "November 2016 (referendum); bonds 2018",
+   "evidence": "to finance $500 million in debt on Globe Life Field",
+   "headline": "Arlington finances $500m of Globe Life Field",
+   "investor": "City of Arlington",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Ballpark Digest",
+   "source_url": "https://ballparkdigest.com/2017/09/20/att-stadium-refinanced-to-help-pay-for-globe-life-field/",
+   "stake_pct": null,
+   "summary": "Arlington voters approved extending the half-cent sales tax, 2% hotel tax and 5% car rental tax for 30 more years to back $500 million of debt on Globe Life Field.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mlb.com/rangers",
+ "facts": {
+  "chair": {
+   "evidence": "Mr. Davis is Managing Partner and Majority Owner of the Texas Rangers",
+   "name": "Ray C. Davis",
+   "source_url": "https://www.mlb.com/rangers/team/front-office/ray-davis",
+   "title": "Managing Partner and Majority Owner; Chairman of the Board"
+  },
+  "honours": {
+   "competition": "World Series",
+   "evidence": "captured the first World Series Championship in the 63-year history of the franchise in 2023",
+   "league_titles": 1,
+   "source_url": "https://www.mlb.com/rangers/team/front-office/ray-davis"
+  },
+  "legal_entity": {
+   "evidence": "Rangers Baseball Express",
+   "name": "Rangers Baseball Express",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.mlb.com/rangers/history/owners"
+  },
+  "operating_result": {
+   "amount": -44000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "-$44M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and stadium debt service",
+   "source_url": "https://www.forbes.com/teams/texas-rangers/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the City of Arlington; opened in 2020, part-financed by $500 million of city debt approved by referendum in November 2016.",
+   "evidence": "City of Arlington",
+   "source_url": "https://www.forbes.com/teams/texas-rangers/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 260000000,
+   "currency": "USD",
+   "evidence": "$260M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/texas-rangers/"
+  }
+ },
+ "founded_evidence": "The Rangers, founded in 1961 as the second iteration of the Washington Senators",
+ "founded_source_url": "https://www.forbes.com/teams/texas-rangers/",
+ "founded_year": 1961,
+ "key": "major-league-baseball--texas-rangers",
+ "league": "Major League Baseball",
+ "name": "Texas Rangers",
+ "notes": "Revenue, operating income and player expenses are Forbes estimates for the 2025 season; valuation is Forbes March 2026. The 2010 purchase by Rangers Baseball Express (Forbes: 'reported $593 million') predates 2015 and is not a deal row. Sportsology's stake size and the valuation were not disclosed. Ballpark Digest reports the Rangers secured $600 million of financing for the ballpark, but that article was not read, so it is not recorded. Not found: a named CEO (no CEO title on the front-office directory), registry entry for Rangers Baseball Express, attendance, kit supplier, jersey patch sponsor, socials.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Mr. Davis is Managing Partner and Majority Owner of the Texas Rangers",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Ray Davis",
+   "since_year": 2010,
+   "source_url": "https://www.mlb.com/rangers/team/front-office/ray-davis",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Financial terms and sellers were not announced for the deal, which closed Monday.",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "fund",
+   "name": "Sportsology Capital Partners",
+   "since_year": 2026,
+   "source_url": "https://www.sportico.com/business/finance/2026/sportsology-buys-texas-rangers-stake-fund-1234884349/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.espn.com/mlb/story/_/id/47979684/who-current-mlb-team-owners",
+ "ownership_summary": "Owned by Rangers Baseball Express, the group that bought the club in August 2010 (reported $593 million), with Ray Davis as managing partner and majority owner. Sportsology Capital Partners, a sports private equity firm, bought a minority stake in February 2026 (terms undisclosed); NBA player Cade Cunningham invested through it.",
+ "ownership_type": "individual_family",
+ "revenue": 398000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$398M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB team valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/texas-rangers/",
+ "short_name": "Rangers",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/texas-rangers/",
+  "https://www.espn.com/mlb/story/_/id/47979684/who-current-mlb-team-owners",
+  "https://www.mlb.com/rangers/team/front-office/ray-davis",
+  "https://www.mlb.com/rangers/history/owners",
+  "https://www.mlb.com/news/featured/globe-life-field-guide-capacity-seating-chart-parking-and-more",
+  "https://www.sportico.com/business/finance/2026/sportsology-buys-texas-rangers-stake-fund-1234884349/",
+  "https://www.espn.com/nba/story/_/id/47911531/pistons-cade-cunningham-buys-ownership-stake-mlb-rangers",
+  "https://ballparkdigest.com/2017/09/20/att-stadium-refinanced-to-help-pay-for-globe-life-field/"
+ ],
+ "sport": "baseball",
+ "stadium": "Globe Life Field",
+ "stadium_capacity": 40300,
+ "stadium_capacity_evidence": "40,300 (approx.)",
+ "stadium_capacity_source_url": "https://www.mlb.com/news/featured/globe-life-field-guide-capacity-seating-chart-parking-and-more",
+ "stadium_owner": {
+  "detail": "Owned by the City of Arlington; opened in 2020, part-financed by $500 million of city debt approved by referendum in November 2016.",
+  "evidence": "City of Arlington",
+  "source_url": "https://www.forbes.com/teams/texas-rangers/",
+  "value": "municipal"
+ },
+ "valuation": 2700000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$2.7B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/texas-rangers/",
+ "valuation_year": 2026
+}

@@ -1,0 +1,118 @@
+{
+ "city": "Cincinnati",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 470000000,
+   "currency": "USD",
+   "date": "2025-08-01",
+   "date_text": "August 2025",
+   "evidence": "The $470 million renovation project will maintain a best-in-class NFL stadium",
+   "headline": "Bengals and Hamilton County finalise Paycor Stadium lease and $470m renovation",
+   "investor": "Hamilton County",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Bengals.com",
+   "source_url": "https://www.bengals.com/news/bengals-hamilton-county-finalize-new-lease-paycor-stadium-2025",
+   "stake_pct": null,
+   "summary": "New lease keeps the Bengals at Paycor Stadium through June 2036 with options to 2046; a $470m renovation, of which the Bengals invest $120m. Forbes states the county contributes $350m and Ohio committed $600m of infrastructure funding.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "bengals.com",
+ "facts": {
+  "chief_executive": {
+   "evidence": "Mike Brown President",
+   "name": "Mike Brown",
+   "source_url": "https://www.bengals.com/team/front-office-roster/",
+   "title": "President"
+  },
+  "operating_result": {
+   "amount": 71000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$71M",
+   "season": "2025",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/cincinnati-bengals/"
+  },
+  "stadium_owner": {
+   "detail": "Leased from Hamilton County (lease through June 2036, options to 2046)",
+   "evidence": "The Cincinnati Bengals and Hamilton County finalized a new lease that keeps the team in Cincinnati playing home games at Paycor Stadium through June 2036",
+   "source_url": "https://www.bengals.com/news/bengals-hamilton-county-finalize-new-lease-paycor-stadium-2025",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 367000000,
+   "currency": "USD",
+   "evidence": "$367M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/cincinnati-bengals/"
+  }
+ },
+ "founded_evidence": "Planning for the Cincinnati Bengals franchise began three full years before the team began playing in the American Football League in 1968.",
+ "founded_source_url": "https://www.profootballhof.com/teams/cincinnati-bengals/team-history/",
+ "founded_year": 1968,
+ "key": "national-football-league--cincinnati-bengals",
+ "league": "National Football League",
+ "name": "Cincinnati Bengals",
+ "notes": "Revenue, operating income, player costs and value are Forbes estimates (2025 season; value calculated September 2026). Founded year is the first AFL season (1968); Forbes gives 1967 as the year purchased. Family stake percentages not stated on any page read. Paycor Stadium capacity, attendance, legal entity, social counts not found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Michael Brown",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Mike Brown and family",
+   "since_year": 1967,
+   "source_url": "https://www.forbes.com/teams/cincinnati-bengals/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.forbes.com/teams/cincinnati-bengals/",
+ "ownership_summary": "Owned and run by the Brown family: Mike Brown, son of founder Paul Brown, is president; his daughter Katie Blackburn is executive vice president. Forbes lists Michael Brown as owner, with the team purchased in 1967 for $7.5m. No institutional minority stake is reported.",
+ "ownership_type": "individual_family",
+ "revenue": 613000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$613M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), NFL Team Valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/cincinnati-bengals/",
+ "short_name": "Bengals",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/cincinnati-bengals/",
+  "https://www.profootballhof.com/teams/cincinnati-bengals/team-history/",
+  "https://www.bengals.com/team/front-office-roster/",
+  "https://www.bengals.com/news/bengals-hamilton-county-finalize-new-lease-paycor-stadium-2025",
+  "https://www.bengals.com/news/new-paycor-stadium-lease-deal-downtown-cincinnati-hamilton-county-2025"
+ ],
+ "sport": "american_football",
+ "stadium": "Paycor Stadium",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "Leased from Hamilton County (lease through June 2036, options to 2046)",
+  "evidence": "The Cincinnati Bengals and Hamilton County finalized a new lease that keeps the team in Cincinnati playing home games at Paycor Stadium through June 2036",
+  "source_url": "https://www.bengals.com/news/bengals-hamilton-county-finalize-new-lease-paycor-stadium-2025",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": "$8B",
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

@@ -1,0 +1,221 @@
+{
+ "city": "São Paulo",
+ "country": "Brazil",
+ "deals": [
+  {
+   "amount": 1,
+   "currency": "BRL",
+   "date": "2022-07-25",
+   "date_text": "July 2022 (completed October 2022)",
+   "evidence": "vendeu ao FIP todos os ativos que compõem a",
+   "headline": "Corinthians' FIP buys Novonor's stadium interests (UPI Arena) for a symbolic R$1",
+   "investor": "SCCP Fundo de Investimento em Participações Multiestratégia (FIP Corinthians, 100% owned by the club)",
+   "investor_type": "other",
+   "kind": "acquisition",
+   "seller": "Novonor (ex-Odebrecht)",
+   "source_name": "Sport Club Corinthians Paulista — Relatório de Demonstrações Financeiras 2025, nota 1.2",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+   "stake_pct": null,
+   "summary": "In Novonor's judicial recovery, the club's FIP bought the 'UPI Arena' (SPE UPI Arena S.A. shares, the 2nd-issue Arena Itaquera debentures and Novonor's other rights as shareholder and creditor) for R$1.00, backed by an Apsis valuation, then capitalised the debt into 774,454,779 new Arena Itaquera shares; the club now controls the whole stadium structure.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": null,
+   "currency": "BRL",
+   "date": "2022-07-25",
+   "date_text": "July 2022 (4th amendment; restructuring concluded October 2022)",
+   "evidence": "A estrutura vigente prevê prazo de 19 anos (até dezembro de 2041)",
+   "headline": "Neo Química Arena loan with Caixa restructured to December 2041 at CDI + 2%",
+   "investor": "Caixa Econômica Federal (BNDES Pró-Copa Arenas funds)",
+   "investor_type": "institutional",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Sport Club Corinthians Paulista — Relatório de Demonstrações Financeiras 2025, nota 1.2(c)",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+   "stake_pct": null,
+   "summary": "The 2013 Caixa/BNDES stadium loan was renegotiated: 19-year term to December 2041, rising amortisation from 2025, interest at CDI + 2% a year, secured on Parque São Jorge property, all Arena Itaquera shares and FII quotas, 100% of naming rights and part of ticketing, player-sale, prize and Brasileirão TV receivables. In September 2026 the club formally proposed to Caixa to settle the debt, then about R$630m (Lance).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": 41100000,
+   "currency": "BRL",
+   "date": "2024-11-27",
+   "date_text": "27 Nov 2024 – 26 Nov 2025",
+   "evidence": "A vaquinha durou um ano, foi arrecadado cerca de R$ 41,1 milhões para a quitação do estádio.",
+   "headline": "Fan crowdfunding for the stadium debt raises about R$41.1m of a R$700m target",
+   "investor": "Gaviões da Fiel supporters' crowdfunding ('vaquinha')",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "CNN Brasil",
+   "source_url": "https://www.cnnbrasil.com.br/esportes/futebol/corinthians/corinthians-vaquinha-da-arena-arrecada-apenas-5-da-meta/",
+   "stake_pct": null,
+   "summary": "The Gaviões da Fiel supporters' group ran a one-year donation campaign to pay down the Caixa stadium loan; it closed on 26 Nov 2025 having raised about R$41.1m, around 5.8% of the R$700m goal.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 678929000,
+   "currency": "BRL",
+   "date": null,
+   "date_text": "December 2025",
+   "evidence": "dívida tributária consolidada em R$ 1.272.228 mil pelo valor final de R$ 678.929 mil",
+   "headline": "Corinthians settles R$1.27bn federal tax debt for R$679m over up to 120 months",
+   "investor": "Procuradoria-Geral da Fazenda Nacional (PGFN)",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Sport Club Corinthians Paulista — Relatório de Demonstrações Financeiras 2025",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+   "stake_pct": null,
+   "summary": "Individual transaction with the PGFN: tax debt consolidated at R$1.272bn settled for R$678.929m in up to 120 monthly instalments, guaranteed by the whole Parque São Jorge property (valued at R$602.2m).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "corinthians.com.br",
+ "facts": {
+  "attendance": {
+   "average": 41840,
+   "evidence": "pelo público médio de 41.840 torcedores por jogo na Neo Química Arena",
+   "season": "2025",
+   "source_name": "Sport Club Corinthians Paulista — Relatório de Demonstrações Financeiras 2025, nota 19.2",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf"
+  },
+  "chief_executive": {
+   "evidence": "A Administração do Clube é exercida pelo Sr. Osmar Stábile, na qualidade de Presidente",
+   "name": "Osmar Stábile",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+   "title": "President"
+  },
+  "kit_supplier": {
+   "evidence": "o Corinthians renovou com a Nike até 2035",
+   "name": "Nike",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf"
+  },
+  "legal_entity": {
+   "evidence": "O Sport Club Corinthians Paulista (\"Corinthians\" ou \"Clube\") é uma associação civil sem fins lucrativos",
+   "name": "Sport Club Corinthians Paulista",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf"
+  },
+  "operating_result": {
+   "amount": -85334000,
+   "basis": "operating profit",
+   "currency": "BRL",
+   "evidence": "Resultado Operacional (85.334) 97.752",
+   "season": "2025",
+   "source_name": "Sport Club Corinthians Paulista — Relatório de Demonstrações Financeiras 2025 ('Resultado Operacional', after player trading, before financial result)",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf"
+  },
+  "pretax_result": {
+   "amount": -143441000,
+   "currency": "BRL",
+   "evidence": "Prejuízo do exercício (143.441) (181.766)",
+   "season": "2025",
+   "source_name": "Sport Club Corinthians Paulista — Relatório de Demonstrações Financeiras 2025 (deficit for the year; tax-exempt association)",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 233855000,
+   "commercial": 252163000,
+   "currency": "BRL",
+   "evidence": "Comerciais 19.4 252.163 277.626",
+   "matchday": 118597000,
+   "other": null,
+   "season": "2025",
+   "source_name": "Sport Club Corinthians Paulista — Relatório de Demonstrações Financeiras 2025, nota 19 (gross: 'Direitos de TV', 'Matchday', 'Comerciais'; prize money R$128.825m, Fiel Torcedor R$61.740m, licensing R$25.545m and others are separate lines)",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "o clube concluiu a renovação e ampliação do contrato com a Esportes da Sorte até 2029",
+   "name": "Esportes da Sorte",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf"
+  },
+  "stadium_owner": {
+   "detail": "Formally owned by Arena Fundo de Investimento Imobiliário (Arena FII); the club holds 100% of SCCP FIP Multiestratégia, which owns all of Arena Itaquera S.A. (89% directly, 11% via SPE UPI Arena S.A.), and the junior subordinated quotas of the FII, so it controls the whole structure. Built with a Caixa/BNDES Pró-Copa loan restructured in 2022 to run to December 2041.",
+   "evidence": "o Clube exerce controle integral sobre a totalidade da estrutura e sobre a Neo Química Arena",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 571179000,
+   "currency": "BRL",
+   "evidence": "Despesas com pessoal 20 (571.179) (428.937)",
+   "season": "2025",
+   "source_name": "Sport Club Corinthians Paulista — Relatório de Demonstrações Financeiras 2025",
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf"
+  }
+ },
+ "founded_evidence": "é uma associação civil sem fins lucrativos, fundada em 1º de setembro de 1910",
+ "founded_source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+ "founded_year": 1910,
+ "key": "brasileirao-serie-a--sc-corinthians-paulista",
+ "league": "Brasileirão Série A",
+ "name": "Sport Club Corinthians Paulista",
+ "notes": "Accounts are calendar-year 2025 (R$ thousands in the PDF). Revenue is net operating revenue (gross R$863.685m); player trading (R$107.405m of income) is reported separately below 'Resultado Operacional recorrente'. The stadium debt sits in Arena Itaquera S.A./Arena FII, outside the club's balance sheet; Lance (29 Sep 2026) puts the arena debt with Caixa at about R$630m — no stated net debt, so net_debt is null. The static.corinthians.com.br PDF sits behind an AWS WAF challenge for some user agents (fetch with a browser UA and the transparency page as referer). Honours: the club's titles page lists seven Campeonato Brasileiro titles (1990, 1998, 1999, 2005, 2011, 2015, 2017) but states no count, so honours is left null. No dated follower counts found. Corinthians joined the Liga Forte União (LFU) for collective media rights in July 2024 (2025–2029 contract); whether the LFU's sale of commercial rights to investors binds Corinthians was not verified, so no league-stake deal is recorded. Registry CNPJ not found on a citable page. Betting sponsors: a provisional measure (MP) announced 25 Sep 2026 bans betting operators and their advertising in Brazil from 6 Oct 2026 (Máquina/MKT Esportivo, 2 Oct 2026), so a betting-house shirt sponsor may not survive the season. Corinthians is weighing short one-off master-sponsor deals for the last ten rounds; Esportes da Sorte's continuation is undecided.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "é uma associação civil sem fins lucrativos",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Sport Club Corinthians Paulista members (associação civil sem fins lucrativos)",
+   "since_year": 1910,
+   "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+ "ownership_summary": "Sport Club Corinthians Paulista is a not-for-profit civil association owned by its members; there is no SAF and no outside shareholder. Osmar Stábile has been president since 28 May 2025 (interim, sworn in 25 Aug 2025) with a mandate to 31 Dec 2026.",
+ "ownership_type": "member_owned",
+ "revenue": 810126000,
+ "revenue_currency": "BRL",
+ "revenue_evidence": "Receita Operacional, líquida 810.126 704.915",
+ "revenue_season": "2025",
+ "revenue_source_name": "Sport Club Corinthians Paulista — Relatório de Demonstrações Financeiras 2025",
+ "revenue_source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+ "short_name": "Corinthians",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+  "https://www.corinthians.com.br/clube/historia",
+  "https://www.corinthians.com.br/clube/titulos",
+  "https://www.cnnbrasil.com.br/esportes/futebol/flamengo-lidera-lista-de-clubes-mais-valiosos-do-brasil-veja-ranking/",
+  "https://www.cnnbrasil.com.br/esportes/futebol/corinthians/corinthians-vaquinha-da-arena-arrecada-apenas-5-da-meta/",
+  "https://www.lance.com.br/corinthians/corinthians-faz-proposta-a-caixa-por-divida-da-neo-quimica-arena.html",
+  "https://www.corinthians.com.br/clube/transparencia/demonstracoes-financeiras-e-balancetes-patrimoniais",
+  "https://www.mktesportivo.com/2026/10/corinthians-avalia-patrocinios-pontuais-para-o-master-nas-10-rodadas-finais-do-brasileirao/"
+ ],
+ "sport": "football",
+ "stadium": "Neo Química Arena",
+ "stadium_capacity": 49083,
+ "stadium_capacity_evidence": "O estádio passou a contar com 49.083 lugares",
+ "stadium_capacity_source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+ "stadium_owner": {
+  "detail": "Formally owned by Arena Fundo de Investimento Imobiliário (Arena FII); the club holds 100% of SCCP FIP Multiestratégia, which owns all of Arena Itaquera S.A. (89% directly, 11% via SPE UPI Arena S.A.), and the junior subordinated quotas of the FII, so it controls the whole structure. Built with a Caixa/BNDES Pró-Copa loan restructured in 2022 to run to December 2041.",
+  "evidence": "o Clube exerce controle integral sobre a totalidade da estrutura e sobre a Neo Química Arena",
+  "source_url": "https://static.corinthians.com.br/content/Relatorio-de-Demonstracoes-Financeiras-2025.pdf",
+  "value": "club"
+ },
+ "valuation": 3971000000,
+ "valuation_currency": "BRL",
+ "valuation_evidence": "Corinthians – 3.971",
+ "valuation_source_name": "Sports Value (via CNN Brasil, 9 Dec 2025)",
+ "valuation_source_url": "https://www.cnnbrasil.com.br/esportes/futebol/flamengo-lidera-lista-de-clubes-mais-valiosos-do-brasil-veja-ranking/",
+ "valuation_year": 2025
+}

@@ -1,0 +1,130 @@
+{
+ "city": "Freiburg im Breisgau",
+ "country": "Germany",
+ "deals": [
+  {
+   "amount": 76500000,
+   "currency": "EUR",
+   "date": "2016-04-01",
+   "date_text": "SFG formed 1 April 2016; stadium opened October 2021",
+   "evidence": "über 26,45 Millionen Euro sowie aus Mitteln des vom",
+   "headline": "Europa-Park Stadion financed through a city-owned stadium company: EUR 76.5m budget",
+   "investor": "Stadion Freiburg Objektträger GmbH & Co. KG (City of Freiburg), with SC Freiburg as atypical silent partner",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "City of Freiburg, stadium brochure",
+   "source_url": "https://www.freiburg.de/pb/site/Freiburg/get/params_E1271019827/1802685/Broschuere_Stadion.pdf",
+   "stake_pct": null,
+   "summary": "The city-owned SFG built and owns the stadium on a total budget of EUR 76.5m: SC Freiburg's cash contribution of EUR 26.45m, a EUR 9.5m state infrastructure grant and about EUR 40m of capital-market loans (80% guaranteed by the city), repaid from the club's rent.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "scfreiburg.com",
+ "facts": {
+  "chief_executive": {
+   "evidence": "Oliver Leki kam im Jahr 2013 als Geschäftsführer zum SC Freiburg und fungiert seit Oktober 2014 als Vorstand Finanzen, Organisation und Marketing des Vereins.",
+   "name": "Oliver Leki",
+   "source_url": "https://www.scfreiburg.com/verein/gremien/vorstand/",
+   "title": "Executive board member for finance, organisation and marketing (Vorstand Finanzen, Organisation und Marketing); shares the two-person board with Jochen Saier (Vorstand Sport)"
+  },
+  "kit_supplier": {
+   "evidence": "Das Heimtrikot des Herstellers Nike",
+   "name": "Nike",
+   "source_url": "https://www.schwarzwaelder-bote.de/sport/sc-freiburg/mit-zwei-neuen-sponsoren-das-ist-das-trikot-des-sc-freiburg-fuer-die-neue-saison-79267655.html"
+  },
+  "legal_entity": {
+   "evidence": "Amtsgericht Freiburg VR-Nr. 273",
+   "name": "Sport-Club Freiburg e.V.",
+   "registry": "Vereinsregister, Amtsgericht Freiburg",
+   "registry_id": "VR 273",
+   "source_url": "https://www.scfreiburg.com/impressum"
+  },
+  "shirt_sponsor": {
+   "evidence": "Ab der Saison 2026/27 steht der Name Lexware auf den Trikots des SC Freiburg.",
+   "name": "Lexware (from 2026/27; JobRad before)",
+   "source_url": "https://www.lexware.de/presse/pressemitteilung/lexware-wird-neuer-hauptsponsor-des-sc-freiburg/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Stadion Freiburg Objektträger GmbH & Co. KG (SFG), whose sole limited partner is the City of Freiburg; SC Freiburg holds an atypical silent participation (cash contribution of EUR 26.45m), operates the stadium and pays rent that services SFG's loans.",
+   "evidence": "Alleinige Kommanditistin der SFG ist die Stadt Freiburg",
+   "source_url": "https://www.freiburg.de/pb/site/Freiburg/get/params_E1271019827/1802685/Broschuere_Stadion.pdf",
+   "value": "municipal"
+  }
+ },
+ "founded_evidence": "Der SC Freiburg geht auf zwei im Jahr 1904 gegründete Vorgängervereine zurück.",
+ "founded_source_url": "https://www.scfreiburg.com/verein/historie/sc-geschichte/1904-1912/",
+ "founded_year": 1904,
+ "key": "bundesliga--sc-freiburg",
+ "league": "Bundesliga",
+ "name": "Sport-Club Freiburg e.V.",
+ "notes": "Founded year is the 1904 founding of the two predecessor clubs, as the club's own history gives it; the clubs merged as SC Freiburg on 3 March 1912. Revenue is for 2024/25 (year to 30 June 2025), the latest the club has published; 2025/26 figures are due at the October 2026 members' meeting. The same statement gives net profit of EUR 11.8m (Jahresüberschuss, after tax, so not recorded as pretax_result), equity of EUR 163.7m and a balance-sheet total of EUR 197.9m at 30 June 2025, and no bank liabilities. Wages are the DFL's published personnel expense for 2024/25 (single-entity accounts, EUR 83,116k); a revenue split is not published. No valuation: SC Freiburg is not in Forbes' 2026 list or Football Benchmark's European Elite 2026. Capacity: club and bundesliga.com both give 34,700 (the city's page says about 34,800). The supervisory board's members are listed on the club site but its chair is not named there. No owner percentage is stated: the e.V. is member-owned with no shares.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Amtsgericht Freiburg VR-Nr. 273",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Members of Sport-Club Freiburg e.V.",
+   "since_year": null,
+   "source_url": "https://www.scfreiburg.com/impressum",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.scfreiburg.com/impressum",
+ "ownership_summary": "SC Freiburg is a registered members' association (Sport-Club Freiburg e.V., Amtsgericht Freiburg VR 273) that runs its professional team itself, with no spun-off company and no outside investor; it is led by a two-person executive board (Oliver Leki, Jochen Saier) under a supervisory board. The club reports no bank liabilities.",
+ "ownership_type": "member_owned",
+ "revenue": 162800000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Der Sport-Club setzte im abgelaufenen Geschäftsjahr (2024/25) 162,8 Millionen Euro um.",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "SC Freiburg (club statement on the 2024/25 financial year, members' meeting October 2025)",
+ "revenue_source_url": "https://www.scfreiburg.com/aktuell/nachrichten/verein/2025/26/erfolgreiches-geschaeftsjahr-24/25-fuer-den-sport-club/",
+ "short_name": "SC Freiburg",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.scfreiburg.com/impressum",
+  "https://www.scfreiburg.com/verein/gremien/vorstand/",
+  "https://www.scfreiburg.com/verein/gremien/aufsichtsrat/",
+  "https://www.scfreiburg.com/verein/historie/sc-geschichte/1904-1912/",
+  "https://www.scfreiburg.com/stadion/europa-park-stadion/",
+  "https://www.scfreiburg.com/stadion/europa-park-stadion/rund-ums-neue-stadion/",
+  "https://www.scfreiburg.com/aktuell/nachrichten/verein/2025/26/erfolgreiches-geschaeftsjahr-24/25-fuer-den-sport-club/",
+  "https://www.scfreiburg.com/en/latest/news/club/2025-26/successful-financial-year-for-sc",
+  "https://www.freiburg.de/pb/site/Freiburg/get/params_E1271019827/1802685/Broschuere_Stadion.pdf",
+  "https://www.freiburg.de/pb/,Lde/343793.html",
+  "https://www.netzwerk-suedbaden.de/stadion-freiburg-objekttraeger-sfg-steht-vor-der-gruendung/",
+  "https://www.bundesliga.com/en/bundesliga/news/stadiums-germany-2025-26-allianz-arena-signal-iduna-park-32656",
+  "https://www.lexware.de/presse/pressemitteilung/lexware-wird-neuer-hauptsponsor-des-sc-freiburg/",
+  "https://www.schwarzwaelder-bote.de/sport/sc-freiburg/mit-zwei-neuen-sponsoren-das-ist-das-trikot-des-sc-freiburg-fuer-die-neue-saison-79267655.html",
+  "https://www.scfreiburg.com/business/sponsoring/unsere-partner/",
+  "https://report.dfl.de/2425/de/_assets/downloads/Clubs-der-Bundesliga-2026-27-Geschaeftsjahresende-2025.xlsx",
+  "https://www.bundesliga-gruppe.de/aktuelles/dfl-veroeffentlicht-finanzkennzahlen-der-proficlubs-5/"
+ ],
+ "sport": "football",
+ "stadium": "Europa-Park Stadion",
+ "stadium_capacity": 34700,
+ "stadium_capacity_evidence": "Mit einer Kapazität für 34.700 Zuschauerinnen und Zuschauer",
+ "stadium_capacity_source_url": "https://www.scfreiburg.com/stadion/europa-park-stadion/",
+ "stadium_owner": {
+  "detail": "Owned by Stadion Freiburg Objektträger GmbH & Co. KG (SFG), whose sole limited partner is the City of Freiburg; SC Freiburg holds an atypical silent participation (cash contribution of EUR 26.45m), operates the stadium and pays rent that services SFG's loans.",
+  "evidence": "Alleinige Kommanditistin der SFG ist die Stadt Freiburg",
+  "source_url": "https://www.freiburg.de/pb/site/Freiburg/get/params_E1271019827/1802685/Broschuere_Stadion.pdf",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

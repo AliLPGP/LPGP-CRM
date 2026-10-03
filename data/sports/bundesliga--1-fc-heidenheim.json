@@ -1,0 +1,139 @@
+{
+ "city": "Heidenheim an der Brenz",
+ "country": "Germany",
+ "deals": [
+  {
+   "amount": 2000000,
+   "currency": "EUR",
+   "date": "2019-04-04",
+   "date_text": "4 April 2019 (council approval July 2018)",
+   "evidence": "Die Finanzierung der zwei Millionen Euro bringt der FCH über ein sogenanntes Schuldscheindarlehen, gegeben von institutionellen Anlegern, ein.",
+   "headline": "Heidenheim buys the Voith-Arena from the city for €2m, financed by a Schuldschein loan from institutional investors",
+   "investor": "Institutional investors (Schuldscheindarlehen)",
+   "investor_type": "institutional",
+   "kind": "stadium_financing",
+   "seller": "Stadt Heidenheim",
+   "source_name": "Stadionwelt",
+   "source_url": "https://www.stadionwelt.de/news/18628/vertrag-unterzeichnet-1-fc-heidenheim-kauft-stadion",
+   "stake_pct": null,
+   "summary": "The club bought the stadium with its five training pitches and car parks from the city for €2m, ending a lease that ran to 2039; the purchase was financed through a Schuldscheindarlehen (promissory-note loan) from unnamed institutional investors.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "fc-heidenheim.de",
+ "facts": {
+  "chair": {
+   "evidence": "Bernhard Ilg (FCH Aufsichtsratsvorsitzender)",
+   "name": "Bernhard Ilg",
+   "source_url": "https://www.fc-heidenheim.de/news/detail/mit-starkem-zusammenhalt-und-viel-optimismus-zuruck-zur-fch-dna?cHash=8229927daed87208132895fd61d7ee5f",
+   "title": "Chair of the supervisory board (Aufsichtsratsvorsitzender)"
+  },
+  "chief_executive": {
+   "evidence": "Holger Sanwald, FCH Vorstandsvorsitzender",
+   "name": "Holger Sanwald",
+   "source_url": "https://www.fc-heidenheim.de/news/detail/mit-starkem-zusammenhalt-und-viel-optimismus-zuruck-zur-fch-dna?cHash=8229927daed87208132895fd61d7ee5f",
+   "title": "Chairman of the executive board (Vorstandsvorsitzender)"
+  },
+  "kit_supplier": {
+   "evidence": "Ab sofort ist das neue FCH Heimtrikot der Saison 2026/27 von PUMA erhältlich!",
+   "name": "PUMA",
+   "source_url": "https://www.fc-heidenheim.de/news/detail/das-neue-fch-heimtrikot-der-saison-202627-ab-sofort-erhaltlich?cHash=b659878b35648e2b13b4672cc7e3340c"
+  },
+  "legal_entity": {
+   "evidence": "Amtsgericht Ulm Vereinsnummer VR 661011",
+   "name": "1. Fussballclub Heidenheim 1846 e. V.",
+   "registry": "Vereinsregister, Amtsgericht Ulm",
+   "registry_id": "VR 661011",
+   "source_url": "https://www.fc-heidenheim.de/rechtliches/impressum"
+  },
+  "revenue_breakdown": {
+   "broadcast": null,
+   "commercial": 20360000,
+   "currency": "EUR",
+   "evidence": "So stiegen die Vermarktungserlöse in der Saison 2024/25 auf insgesamt rund 20,36 Millionen Euro.",
+   "matchday": null,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "1. FC Heidenheim members' meeting report (marketing revenue, Vermarktungserlöse)",
+   "source_url": "https://www.fc-heidenheim.de/news/detail/mit-starkem-zusammenhalt-und-viel-optimismus-zuruck-zur-fch-dna?cHash=8229927daed87208132895fd61d7ee5f"
+  },
+  "shirt_sponsor": {
+   "evidence": "Bereits seit Juli 2021 ist die Management- und IT-Beratung MHP, Tochtergesellschaft der Porsche AG mit Sitz in Ludwigsburg, Haupt- und Trikotsponsor des 1. FC Heidenheim 1846.",
+   "name": "MHP (Management- und IT-Beratung, Porsche AG subsidiary)",
+   "source_url": "https://www.fc-heidenheim.de/news/detail/fortsetzung-einer-erfolgsgeschichte-vorzeitige-verlangerung-mit-mhp-bis-2027?cHash=c4c6a9088cd3844e03809988d4ec7bb9"
+  },
+  "stadium_owner": {
+   "detail": "Bought by the club from the city of Heidenheim for €2m (contract signed 4 April 2019); the club had previously leased it.",
+   "evidence": "Der 1. FC Heidenheim 1846 erwirbt die Voith-Arena von der Stadt Heidenheim für zwei Millionen Euro und wird somit Eigentümer des Stadions.",
+   "source_url": "https://www.fc-heidenheim.de/voith-arena",
+   "value": "club"
+  }
+ },
+ "founded_evidence": "kann jedoch auf eine Vereinsgeschichte zurückblicken, die bis in das Gründungsjahr 1846 reicht",
+ "founded_source_url": "https://www.fc-heidenheim.de/unser-fch",
+ "founded_year": 1846,
+ "key": "bundesliga--1-fc-heidenheim",
+ "league": "Bundesliga",
+ "name": "1. FC Heidenheim 1846 e. V.",
+ "notes": "Heidenheim plays in the 2. Bundesliga in 2026/27 (the club's matchcenter lists '2. Bundesliga - 6. Spieltag' on 20.09.26), i.e. it was relegated from the Bundesliga after 2025/26; the league field is left as given. Revenue is the e.V.'s calendar-year 2024 Ertrag (€89.6m; net result €1.7m after tax); the club then moved its financial year to the season and reported a short year Jan–Jun 2025 (Ertrag €41.7m, net −€271k) and a 2024/25 season net result of €956k after tax, but stated no 2024/25 season revenue on its own page (press reports of €92.46m could not be opened). Calendar 2023: Ertrag €57,775,130 (2024 members' meeting page). No pre-tax result, wages, net debt, attendance, valuation or social counts found on citable pages; no outside investor exists (member-owned e.V.). The Schuldschein lenders are not named.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Er entstand 2007 durch die Abspaltung der Fußballabteilung aus dem Heidenheimer Sportbund 1846",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Members of 1. FC Heidenheim 1846 e. V.",
+   "since_year": 2007,
+   "source_url": "https://www.fc-heidenheim.de/unser-fch",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.fc-heidenheim.de/unser-fch",
+ "ownership_summary": "1. FC Heidenheim 1846 is a registered members' association (e.V.), formed in 2007 when the football department split from Heidenheimer Sportbund 1846; the professional team is run by the e.V. itself, whose board reports the accounts to the members' meeting. There is no outside investor; the club honoured its 13,000th member in November 2025.",
+ "ownership_type": "member_owned",
+ "revenue": 89600000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "für das Kalenderjahr 2024 (01-12/2024) einen Ertrag von 89,6 Millionen Euro und ein Jahresergebnis von 1,7 Millionen Euro nach Steuern",
+ "revenue_season": "2024",
+ "revenue_source_name": "1. FC Heidenheim 1846 e.V. members' meeting financial report (12 Nov 2025), calendar year 2024",
+ "revenue_source_url": "https://www.fc-heidenheim.de/news/detail/mit-starkem-zusammenhalt-und-viel-optimismus-zuruck-zur-fch-dna?cHash=8229927daed87208132895fd61d7ee5f",
+ "short_name": "Heidenheim",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.fc-heidenheim.de/unser-fch",
+  "https://www.fc-heidenheim.de/voith-arena",
+  "https://www.fc-heidenheim.de/news/detail/mit-starkem-zusammenhalt-und-viel-optimismus-zuruck-zur-fch-dna?cHash=8229927daed87208132895fd61d7ee5f",
+  "https://www.fc-heidenheim.de/news/detail/wachstum-in-allen-bereichen-dank-groem-zusammenhalt?cHash=d21584d66a1d41d51f5fbc74671df300",
+  "https://www.fc-heidenheim.de/rechtliches/impressum",
+  "https://www.fc-heidenheim.de/news/detail/fortsetzung-einer-erfolgsgeschichte-vorzeitige-verlangerung-mit-mhp-bis-2027?cHash=c4c6a9088cd3844e03809988d4ec7bb9",
+  "https://www.fc-heidenheim.de/news/detail/das-neue-fch-heimtrikot-der-saison-202627-ab-sofort-erhaltlich?cHash=b659878b35648e2b13b4672cc7e3340c",
+  "https://www.stadionwelt.de/news/18628/vertrag-unterzeichnet-1-fc-heidenheim-kauft-stadion",
+  "https://www.fc-heidenheim.de/matchcenter"
+ ],
+ "sport": "football",
+ "stadium": "Voith-Arena",
+ "stadium_capacity": 15000,
+ "stadium_capacity_evidence": "Der finale Ausbau der letzten beiden offenen Ecken im Frühjahr 2015 führte schließlich zur heutigen Kapazität von 15.000 Plätzen.",
+ "stadium_capacity_source_url": "https://www.fc-heidenheim.de/voith-arena",
+ "stadium_owner": {
+  "detail": "Bought by the club from the city of Heidenheim for €2m (contract signed 4 April 2019); the club had previously leased it.",
+  "evidence": "Der 1. FC Heidenheim 1846 erwirbt die Voith-Arena von der Stadt Heidenheim für zwei Millionen Euro und wird somit Eigentümer des Stadions.",
+  "source_url": "https://www.fc-heidenheim.de/voith-arena",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

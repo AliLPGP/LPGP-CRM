@@ -1,0 +1,199 @@
+{
+ "city": "Rome",
+ "country": "Italy",
+ "deals": [
+  {
+   "amount": 199000000,
+   "currency": "EUR",
+   "date": "2020-08-17",
+   "date_text": "17 August 2020",
+   "evidence": "impegnato a vendere le Attività all’Offerente per un corrispettivo complessivo pari ad Euro",
+   "headline": "Friedkin Group completes purchase of 86.6% of AS Roma from AS Roma SPV LLC",
+   "investor": "The Friedkin Group (Romulus and Remus Investments LLC)",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "AS Roma SPV LLC",
+   "source_name": "AS Roma — Documento di Offerta (OPA obbligatoria 2020)",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-12051da3-47bb-4f21-926a-9f4a24c05b07-documento-di-offerta-relativo-allofferta-pubblica-di-acquisto-obbligatoria-totalitaria-promossa-da-r.pdf",
+   "stake_pct": 86.6,
+   "summary": "Total consideration of EUR 199m covered the 86.6% shareholding (EUR 63.4m), other group holdings (EUR 8.5m) and shareholder loans (EUR 127.1m); closed 17 August 2020 and triggered a mandatory tender offer.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 10962388.35,
+   "currency": "EUR",
+   "date": "2022-09-14",
+   "date_text": "14 September 2022",
+   "evidence": "DELISTING DELLE AZIONI ORDINARIE A.S. ROMA S.P.A.",
+   "headline": "Friedkin squeeze-out completes; AS Roma shares delisted",
+   "investor": "Romulus and Remus Investments LLC",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Minority shareholders",
+   "source_name": "AS Roma / Romulus and Remus Investments press release",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-fefb330a-806b-46e7-bb2e-29b67fd1553f-comunicatostampadelisting1492022.pdf",
+   "stake_pct": 3.874,
+   "summary": "After the 2022 voluntary tender offer at EUR 0.45 per share, the offeror settled the joint procedure for the remaining 3.874% and AS Roma shares were delisted.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 175000000,
+   "currency": "EUR",
+   "date": "2022-10-26",
+   "date_text": "26 October 2022",
+   "evidence": "per un valore complessivo di euro 175 milioni, sottoscritti integralmente da investitori",
+   "headline": "ASR Media and Sponsorship issues EUR 175m notes to refinance group debt",
+   "investor": "Qualified investors (MediaCo notes)",
+   "investor_type": "institutional",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "AS Roma Bilancio 2024-25",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf",
+   "stake_pct": null,
+   "summary": "Bond issued by subsidiary MediaCo on 26 October 2022 as part of the group's debt refinancing, fully subscribed by qualified investors, repayable in full on 30 October 2027 at a fixed rate.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "asroma.com",
+ "facts": {
+  "chair": {
+   "evidence": "confermando nella carica i signori Thomas Dan Friedkin, Ryan Patrick Friedkin",
+   "name": "Thomas Dan Friedkin",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf",
+   "title": "Presidente"
+  },
+  "honours": {
+   "competition": "Serie A (Scudetto)",
+   "evidence": "SCUDETTO 3",
+   "league_titles": 3,
+   "source_url": "https://www.asroma.com/it/club/storia/palmares"
+  },
+  "legal_entity": {
+   "evidence": "A.S.Roma S.r.l. – P.IVA 01180281006",
+   "name": "A.S. Roma S.r.l.",
+   "registry": "Registro delle Imprese di Roma (P.IVA)",
+   "registry_id": "01180281006",
+   "source_url": "https://www.asroma.com/it/club/corporate"
+  },
+  "net_debt": {
+   "amount": 382800000,
+   "as_of": "2025-06-30",
+   "currency": "EUR",
+   "evidence": "L’Indebitamento finanziario netto adjusted consolidato al 30 giugno 2025 è pari a 382,8 milioni di euro (431,8 milioni",
+   "source_name": "AS Roma Bilancio 2024-25 (net financial debt adjusted, group)",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf"
+  },
+  "operating_result": {
+   "amount": 24248000,
+   "basis": "EBITDA",
+   "currency": "EUR",
+   "evidence": "EBITDA incluso Risultato gestione calciatori",
+   "season": "2024-25",
+   "source_name": "AS Roma Bilancio 2024-25 (EBITDA incl. player trading)",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf"
+  },
+  "pretax_result": {
+   "amount": -48899000,
+   "currency": "EUR",
+   "evidence": "Risultato Prima delle Imposte",
+   "season": "2024-25",
+   "source_name": "AS Roma Bilancio 2024-25",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 90400000,
+   "commercial": 71700000,
+   "currency": "EUR",
+   "evidence": "I ricavi commerciali sono complessivamente pari a 71,7 milioni di euro (70 milioni di euro al 30 giugno 2024)",
+   "matchday": 44500000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "AS Roma Bilancio 2024-25",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Sport e Salute S.p.A. (Italian state sports company); Roma uses it under an agreement signed 23 August 2025 for 2025/26-2027/28 with an option to 2028/29.",
+   "evidence": "La Società non è proprietaria dello Stadio Olimpico di Roma",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf",
+   "value": "state"
+  },
+  "wages": {
+   "amount": 152734000,
+   "currency": "EUR",
+   "evidence": "Pari a 152.734 migliaia di euro (202.126 migliaia di euro al 30 giugno 2024), sono composti di:",
+   "season": "2024-25",
+   "source_name": "AS Roma Bilancio 2024-25 (total personnel costs, group)",
+   "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf"
+  }
+ },
+ "founded_evidence": "l’accordo fu raggiunto nel tardo pomeriggio del 7 giugno 1927",
+ "founded_source_url": "https://www.asroma.com/it/club/storia/la-storia-di-as-roma",
+ "founded_year": 1927,
+ "key": "serie-a--roma",
+ "league": "Serie A",
+ "name": "Associazione Sportiva Roma",
+ "notes": "Financials are group consolidated for FY to 30 June 2025, in EUR. Revenue (EUR 270.2m) includes player-trading income (EUR 48.7m); excluding it, matchday 44.5m + commercial 71.7m + broadcast 90.4m + other 15.1m. Wages figure is total personnel cost. EBITDA and pretax are from the consolidated reclassified table (EUR thousands: 24,248 and -48,899); the evidence quotes the row label. The FY25 report records conversion of EUR 145m of shareholder loans into equity reserves. Stadium capacity not found on a citable page (Wikipedia figure dropped); no Forbes/Deloitte valuation located (Forbes blocks fetches and web search budget was exhausted). Shirt sponsor and kit supplier are images only on the partners page. CEO post: Evangelia Souloukou resigned 22 September 2024; successor not confirmed on a cited page. No institutional/PE investors found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Il Capitale Sociale di AS Roma è detenuto per il 100% da NEEP Roma Holding S.r.l.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Thomas Dan Friedkin (via Romulus and Remus Investments LLC / NEEP Roma Holding S.r.l.)",
+   "since_year": 2020,
+   "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf",
+ "ownership_summary": "A.S. Roma S.r.l. is 100% owned by NEEP Roma Holding, itself 100% owned by Romulus and Remus Investments LLC, which Thomas Dan Friedkin ultimately owns through Pursuit Sports LLC. The Friedkin Group bought 86.6% from Pallotta's AS Roma SPV LLC in August 2020 and delisted the club in September 2022.",
+ "ownership_type": "individual_family",
+ "revenue": 270200000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "i ricavi sono pari a 270,2 milioni di euro (299,9 milioni di euro al 30 giugno 2024)",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "AS Roma Bilancio di esercizio e consolidato al 30 giugno 2025 (consolidated operating revenue incl. player trading)",
+ "revenue_source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf",
+ "short_name": "Roma",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.asroma.com/it/club/corporate",
+  "https://www.asroma.com/it/club/corporate/bilanci-e-relazioni",
+  "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf",
+  "https://www.asroma.com/it/club/storia/la-storia-di-as-roma",
+  "https://www.asroma.com/it/club/storia/palmares",
+  "https://media.asroma.com/prod/files/file/gm-12051da3-47bb-4f21-926a-9f4a24c05b07-documento-di-offerta-relativo-allofferta-pubblica-di-acquisto-obbligatoria-totalitaria-promossa-da-r.pdf",
+  "https://media.asroma.com/prod/files/file/gm-348014fa-4f71-4b99-9841-c71ebf6ddabd-risultati-definitivi-dellofferta-pubblica-di-acquisto-obbligatoria-totalitaria-promossa-da-romulus-a.pdf",
+  "https://media.asroma.com/prod/files/file/gm-fefb330a-806b-46e7-bb2e-29b67fd1553f-comunicatostampadelisting1492022.pdf"
+ ],
+ "sport": "football",
+ "stadium": "Stadio Olimpico",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "Owned by Sport e Salute S.p.A. (Italian state sports company); Roma uses it under an agreement signed 23 August 2025 for 2025/26-2027/28 with an option to 2028/29.",
+  "evidence": "La Società non è proprietaria dello Stadio Olimpico di Roma",
+  "source_url": "https://media.asroma.com/prod/files/file/gm-af5a5d7a-4129-48ec-ba0f-e27c9e2c327c-bilancio-di-esercizio-e-consolidato-al-30-giugno-2025.pdf",
+  "value": "state"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

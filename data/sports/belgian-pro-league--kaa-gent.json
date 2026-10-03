@@ -1,0 +1,167 @@
+{
+ "city": "Ghent",
+ "country": "Belgium",
+ "deals": [
+  {
+   "amount": 21000000,
+   "currency": "EUR",
+   "date": "2023-07-20",
+   "date_text": "20 July 2023",
+   "evidence": "In totaal een kapitaalsinjectie van 21 miljoen euro.",
+   "headline": "Sam Baro takes over KAA Gent with a EUR 21m capital injection",
+   "investor": "Sam Baro",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Shareholders of the former cooperative structure (about fifty, including Ivan De Witte and Michel Louwagie)",
+   "source_name": "VoetbalPrimeur (citing the Belgian Official Gazette)",
+   "source_url": "https://www.voetbalprimeur.be/nieuws/1144401/baro-pompt-miljoenen-in-kaa-gent-tweede-kapitaalsinjectie-binnen-het-jaar.html",
+   "stake_pct": 95,
+   "summary": "The takeover published in the Belgian Official Gazette: Baro had invested EUR 11m, with a further EUR 10m due by 30 June 2024, a total capital injection of EUR 21m. He bought out the existing shareholders for about EUR 7m, of which EUR 2.5m went to Ivan De Witte and EUR 1.5m to Michel Louwagie. Baro took 95%; sponsors VDK Bank and the City of Ghent kept small holdings. The club announced on 20 July 2023 that an extraordinary general meeting had ratified the deal.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "kaagent.be",
+ "facts": {
+  "chair": {
+   "evidence": "Onze club wordt voortaan aangestuurd door een directiecomité dat rechtstreeks onder voorzitter-eigenaar Sam Baro zal functioneren.",
+   "name": "Sam Baro",
+   "source_url": "https://www.kaagent.be/nl/nieuws/21-08-2025/nieuwe-organisatiestructuur-kaa-gent",
+   "title": "Chairman-owner (voorzitter-eigenaar)"
+  },
+  "legal_entity": {
+   "evidence": "0407.885.394",
+   "name": "Koninklijke Athletiek Associatie Gent - Voetbalafdeling NV (K.A.A. Gent)",
+   "registry": "Crossroads Bank for Enterprises (KBO/BCE)",
+   "registry_id": "0407.885.394",
+   "source_url": "https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?lang=nl&ondernemingsnummer=0407885394"
+  },
+  "operating_result": {
+   "amount": 2638000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "geconsolideerde bedrijfswinst van €2.638k",
+   "season": "2024-25",
+   "source_name": "KAA Gent NV annual accounts 2024-25, board report (consolidated)",
+   "source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/4baee9bf-a418-11f0-a15a-6b4aa817b935"
+  },
+  "pretax_result": {
+   "amount": 2014218,
+   "currency": "EUR",
+   "evidence": "2.014.218",
+   "season": "2024-25",
+   "source_name": "KAA Gent NV statutory accounts, year to 30 June 2025 (profit before tax, code 9903; company only)",
+   "source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/4baee9bf-a418-11f0-a15a-6b4aa817b935"
+  },
+  "stadium_owner": {
+   "detail": "The stadium (formerly Ghelamco Arena, renamed Planet Group Arena in April 2024) opened in July 2013 under a December 2010 financing agreement between the City of Ghent, KAA Gent and Ghelamco. KAA Gent holds a right of superficies (opstalrecht) over it, which makes up most of the club's long-term debt. Who owns the land and the building is not stated on a citable page.",
+   "evidence": "het opstalrecht maakt hiervan het grootste deel uit",
+   "source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/4baee9bf-a418-11f0-a15a-6b4aa817b935",
+   "value": "shared"
+  },
+  "wages": {
+   "amount": 34923563,
+   "currency": "EUR",
+   "evidence": "34.923.563",
+   "season": "2024-25",
+   "source_name": "KAA Gent NV statutory accounts, year to 30 June 2025 (staff costs, social charges and pensions, code 62)",
+   "source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/4baee9bf-a418-11f0-a15a-6b4aa817b935"
+  }
+ },
+ "founded_evidence": "KAA Gent werd opgericht als voetbalafdeling van de Association Athlétique La Gantoise (AAG) op 31 oktober 1900.",
+ "founded_source_url": "https://www.kaagent.be/nl/onze-club/geschiedenis",
+ "founded_year": 1900,
+ "key": "belgian-pro-league--kaa-gent",
+ "league": "Belgian Pro League",
+ "name": "KAA Gent",
+ "notes": "Financials are from KAA Gent NV's filing at the National Bank of Belgium (KBO 0407.885.394, year to 30 June 2025; the 2025-26 accounts were not filed by 3 Oct 2026). Revenue is consolidated turnover of EUR 44.798m. Consolidated operating income was EUR 88.8m including EUR 44.0m of other operating income, mainly outgoing transfers. Company-only turnover was EUR 37,503,463 and company-only operating income EUR 81,159,667. Consolidated group profit was EUR 1.832m; company net profit was EUR 1,895,863. The filing's pages are laid out cell by cell, so wages and pretax evidence is the bare figure. The club converted from a VZW to an NV on 20 July 2023 (KBO legal form date). Baro's stake: the club said 'ruim 95%' in July 2023 and '97 procent' in April 2024; the 97% is used. Voetbalbelgie (May 2025) puts Baro's total investment at EUR 30m. Before the sale (Feb 2023, Voetbalbelgie citing Bloomberg) Ivan De Witte held a quarter, Michel Louwagie 15%, the other directors 40% and old VZW members plus the City of Ghent 20%; Tifosy ran the sale. Since April 2024 Baro's own Planet Group has paid EUR 1m a year for the stadium naming rights (a related-party sponsorship, not recorded as a deal). In 2024-25 the club took further bank financing; the amount is not stated. Stadium capacity is the figure UEFA's match data gives for UEFA games (sponsor-neutral name 'KAA Gent Arena', 2026-27 Conference League); the club does not state a domestic capacity. Not found on a citable page: net debt, attendance, shirt sponsor, kit supplier, social counts and any valuation. Honours are left null; the club history records the first and only title in 2015 but has no current count.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Sam Baro nam in juli vorig jaar 97 procent van de aandelen van KAA Gent over.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Sam Baro",
+   "since_year": 2023,
+   "source_url": "https://www.kaagent.be/nl/nieuws/02-04-2024/kaa-gent-speelt-voortaan-in-de-planet-group-arena",
+   "stake_pct": 97,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Sponsors VDK Bank en Stad Gent zullen een klein aandelenpakket behouden.",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "VDK Bank",
+   "since_year": null,
+   "source_url": "https://www.voetbalprimeur.be/nieuws/1144401/baro-pompt-miljoenen-in-kaa-gent-tweede-kapitaalsinjectie-binnen-het-jaar.html",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Sponsors VDK Bank en Stad Gent zullen een klein aandelenpakket behouden.",
+   "institutional": false,
+   "investor_type": "other",
+   "kind": "state",
+   "name": "City of Ghent (Stad Gent)",
+   "since_year": null,
+   "source_url": "https://www.voetbalprimeur.be/nieuws/1144401/baro-pompt-miljoenen-in-kaa-gent-tweede-kapitaalsinjectie-binnen-het-jaar.html",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.kaagent.be/nl/nieuws/02-04-2024/kaa-gent-speelt-voortaan-in-de-planet-group-arena",
+ "ownership_summary": "Sam Baro, founder of HR group Planet Group, took over KAA Gent on 20 July 2023 after the former non-profit converted into a limited company (KAA Gent NV). He took about 95% of the shares at the takeover; the club put his holding at 97% in April 2024. Sponsor VDK Bank and the City of Ghent kept small holdings. Baro is chairman-owner, and since August 2025 a management committee reporting to him runs the club.",
+ "ownership_type": "individual_family",
+ "revenue": 44798000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "€44.798k omzet",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "KAA Gent NV annual accounts, year to 30 June 2025, board report on the consolidated accounts (National Bank of Belgium filing)",
+ "revenue_source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/4baee9bf-a418-11f0-a15a-6b4aa817b935",
+ "short_name": "Gent",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?lang=nl&ondernemingsnummer=0407885394",
+  "https://consult.cbso.nbb.be/api/rs-consult/published-deposits?page=0&size=6&enterpriseNumber=0407885394&sort=periodEndDate,desc&sort=depositDate,desc",
+  "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/4baee9bf-a418-11f0-a15a-6b4aa817b935",
+  "https://www.kaagent.be/nl/onze-club/geschiedenis",
+  "https://www.kaagent.be/nl/nieuws/20-07-2023/sam-baro-is-de-nieuwe-eigenaar-van-kaa-gent",
+  "https://www.kaagent.be/nl/nieuws/02-04-2024/kaa-gent-speelt-voortaan-in-de-planet-group-arena",
+  "https://www.kaagent.be/nl/nieuws/21-08-2025/nieuwe-organisatiestructuur-kaa-gent",
+  "https://www.voetbalprimeur.be/nieuws/1144401/baro-pompt-miljoenen-in-kaa-gent-tweede-kapitaalsinjectie-binnen-het-jaar.html",
+  "https://www.voetbalprimeur.be/nieuws/1144405/nieuwe-raad-van-bestuur-kaa-gent-bekend-de-witte-en-louwagie-blijven.html",
+  "https://www.voetbalbelgie.be/artikel/officieel-aa-gent-staat-te-koop",
+  "https://www.voetbalbelgie.be/artikel/gezichtsverlies-voor-sam-baro",
+  "https://sporza.be/nl/2024/04/02/aa-gent-heeft-nieuwe-stadionnaam-sam-baro-koopt-met-eigen-bedrijf-rechten-voor-1-miljoen-per-jaar~1712066293621/",
+  "https://match.uefa.com/v5/matches?matchId=2049258"
+ ],
+ "sport": "football",
+ "stadium": "Planet Group Arena",
+ "stadium_capacity": 20185,
+ "stadium_capacity_evidence": "\"capacity\":20185",
+ "stadium_capacity_source_url": "https://match.uefa.com/v5/matches?matchId=2049258",
+ "stadium_owner": {
+  "detail": "The stadium (formerly Ghelamco Arena, renamed Planet Group Arena in April 2024) opened in July 2013 under a December 2010 financing agreement between the City of Ghent, KAA Gent and Ghelamco. KAA Gent holds a right of superficies (opstalrecht) over it, which makes up most of the club's long-term debt. Who owns the land and the building is not stated on a citable page.",
+  "evidence": "het opstalrecht maakt hiervan het grootste deel uit",
+  "source_url": "https://consult.cbso.nbb.be/api/external/broker/public/deposits/pdf/4baee9bf-a418-11f0-a15a-6b4aa817b935",
+  "value": "shared"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

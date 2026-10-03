@@ -1,0 +1,186 @@
+{
+ "city": "Sacramento",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2021-09-24",
+   "date_text": "September 2021",
+   "evidence": "Arctos Sports Partners has reached an agreement to buy a 17% stake in the Sacramento Kings in a deal that values the NBA franchise at $1.8 billion",
+   "headline": "Arctos buys 17% of the Kings at a $1.8bn valuation",
+   "investor": "Arctos Sports Partners",
+   "investor_type": "private_equity",
+   "kind": "minority_investment",
+   "seller": "Mark Friedman, Brad Jenkins, Mark Mastrov, Andy Miller, Kevin Nagle (exiting LPs)",
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/sales/2021/arctos-partners-kings-sale-1234638986/",
+   "stake_pct": 17,
+   "summary": "Arctos and Ranadivé bought out exiting limited partners; Arctos received three board seats. The Kings confirmed the sale on 24 September 2021 (KCRA).",
+   "valuation": 1800000000,
+   "valuation_currency": "USD",
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2021-07-11",
+   "date_text": "July 2021 (reported)",
+   "evidence": "would give the investment firm a nearly 5% stake in the team at a valuation of $1.5 billion",
+   "headline": "Dyal nears deal for nearly 5% of the Kings",
+   "investor": "Dyal Capital (Blue Owl), Dyal HomeCourt fund",
+   "investor_type": "private_equity",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "Reuters (via Yahoo)",
+   "source_url": "https://ca.sports.yahoo.com/news/dyal-capital-nears-deal-minority-192539570.html",
+   "stake_pct": null,
+   "summary": "Reuters, citing the WSJ, reported a nearly 5% stake at a $1.5bn valuation; Sportico (2026) confirms the Blue Owl sports fund holds a Kings stake.",
+   "valuation": 1500000000,
+   "valuation_currency": "USD",
+   "verified": true
+  }
+ ],
+ "domain": "kings.com",
+ "facts": {
+  "chair": {
+   "evidence": "Kings owner and chairman Vivek Ranadivé",
+   "name": "Vivek Ranadivé",
+   "source_url": "https://www.kcra.com/article/sacramento-kings-sell-ownership-stake-to-arctos-sports-partners/37724218",
+   "title": "Owner and Chairman"
+  },
+  "honours": {
+   "competition": "NBA championships",
+   "evidence": "Championships 1",
+   "league_titles": 1,
+   "source_url": "https://www.forbes.com/teams/sacramento-kings/"
+  },
+  "operating_result": {
+   "amount": 75000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$75M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/sacramento-kings/"
+  },
+  "revenue_breakdown": {
+   "broadcast": null,
+   "commercial": null,
+   "currency": "USD",
+   "evidence": "$61M",
+   "matchday": 61000000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): gate receipts incl. club seats",
+   "source_url": "https://www.forbes.com/teams/sacramento-kings/"
+  },
+  "shirt_sponsor": {
+   "evidence": "the Kings announced Phoong Law, a personal injury practice based in Sacramento, as the team's new jersey patch sponsor",
+   "name": "Phoong Law",
+   "source_url": "https://www.forbes.com/teams/sacramento-kings/"
+  },
+  "stadium_owner": {
+   "detail": "Forbes lists the City of Sacramento as the arena's owner; the Kings operate it.",
+   "evidence": "Owner(s) City of Sacramento",
+   "source_url": "https://www.forbes.com/teams/sacramento-kings/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 171000000,
+   "currency": "USD",
+   "evidence": "$171M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/sacramento-kings/"
+  }
+ },
+ "founded_evidence": "Founded 1948",
+ "founded_source_url": "https://www.nba.com/team/1610612758",
+ "founded_year": 1948,
+ "key": "national-basketball-association--sacramento-kings",
+ "league": "National Basketball Association",
+ "name": "Sacramento Kings",
+ "notes": "Revenue, operating income, player expenses and gate receipts are Forbes estimates for 2024-25 (calculated October 2025). NBA.com gives the franchise 'Founded 1948'. Ranadivé's own percentage is not published; Dyal/Blue Owl stake reported as 'nearly 5%' (left null). Not found: social follower counts, attendance, chief executive/president, legal entity, any stake sale after 2021.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Ranadive’s group purchased the Kings in 2013 at a $535 million valuation",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Vivek Ranadivé",
+   "since_year": 2013,
+   "source_url": "https://www.sportico.com/business/sales/2021/arctos-partners-kings-sale-1234638986/",
+   "stake_pct": null,
+   "valuation_at_entry": 535000000
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Arctos Sports Partners has reached an agreement to buy a 17% stake in the Sacramento Kings in a deal that values the NBA franchise at $1.8 billion",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "fund",
+   "name": "Arctos Sports Partners",
+   "since_year": 2021,
+   "source_url": "https://www.sportico.com/business/sales/2021/arctos-partners-kings-sale-1234638986/",
+   "stake_pct": 17,
+   "valuation_at_entry": 1800000000
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "The fund already has stakes in the Atlanta Hawks, Charlotte Hornets, Minnesota Timberwolves and Sacramento Kings",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "fund",
+   "name": "Blue Owl Capital (sports fund, originally Dyal HomeCourt)",
+   "since_year": 2021,
+   "source_url": "https://www.sportico.com/business/team-sales/2026/cleveland-cavaliers-blue-owl-stake-sale-1234937061/",
+   "stake_pct": null,
+   "valuation_at_entry": 1500000000
+  }
+ ],
+ "ownership_source_url": "https://www.sportico.com/business/sales/2021/arctos-partners-kings-sale-1234638986/",
+ "ownership_summary": "Controlled by chairman Vivek Ranadivé, whose group bought the Kings in 2013 at a $535m valuation. Institutional minority holders: Arctos Sports Partners (17%, 2021, $1.8bn valuation, three board seats) and Blue Owl's sports fund (originally Dyal HomeCourt), which reported a nearly 5% stake at $1.5bn in 2021.",
+ "ownership_type": "individual_family",
+ "revenue": 354000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$354M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA Team Valuations 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/sacramento-kings/",
+ "short_name": "Kings",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.sportico.com/business/sales/2021/arctos-partners-kings-sale-1234638986/",
+  "https://www.kcra.com/article/sacramento-kings-sell-ownership-stake-to-arctos-sports-partners/37724218",
+  "https://ca.sports.yahoo.com/news/dyal-capital-nears-deal-minority-192539570.html",
+  "https://www.sportico.com/business/team-sales/2026/cleveland-cavaliers-blue-owl-stake-sale-1234937061/",
+  "https://www.forbes.com/teams/sacramento-kings/",
+  "https://www.nba.com/team/1610612758"
+ ],
+ "sport": "basketball",
+ "stadium": "Golden 1 Center",
+ "stadium_capacity": 17650,
+ "stadium_capacity_evidence": "Seating Capacity 17,650",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/sacramento-kings/",
+ "stadium_owner": {
+  "detail": "Forbes lists the City of Sacramento as the arena's owner; the Kings operate it.",
+  "evidence": "Owner(s) City of Sacramento",
+  "source_url": "https://www.forbes.com/teams/sacramento-kings/",
+  "value": "municipal"
+ },
+ "valuation": 4450000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$4.45B",
+ "valuation_source_name": "Forbes, NBA Team Valuations (calculated October 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/sacramento-kings/",
+ "valuation_year": 2025
+}

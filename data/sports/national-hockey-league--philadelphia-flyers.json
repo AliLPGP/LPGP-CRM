@@ -1,0 +1,158 @@
+{
+ "city": "Philadelphia",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2025-01-13",
+   "date_text": "January 13, 2025",
+   "evidence": "have entered into a binding agreement to form a 50-50 joint venture to build a world-class, state-of-the-art arena",
+   "headline": "Comcast Spectacor and HBSE form 50-50 joint venture to build new South Philadelphia arena",
+   "investor": "Comcast Spectacor and Harris Blitzer Sports & Entertainment",
+   "investor_type": "corporate",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Comcast press release",
+   "source_url": "https://corporate.comcast.com/press/releases/harris-blitzer-sports-entertainment-comcast-spectacor-joint-venture-world-class-arena-south-philadelphia-revitalize-market-east",
+   "stake_pct": 50,
+   "summary": "Binding agreement for a 50-50 joint venture between Comcast Spectacor (Flyers) and HBSE (76ers) to build a new arena in the South Philadelphia Sports Complex, originally slated for 2031; Comcast holds the naming rights. Cost not disclosed in the release.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "Announced 2025, effective September 1, 2025",
+   "evidence": "will be renamed Xfinity Mobile Arena, effective September 1, 2025, through the 2030-2031 season",
+   "headline": "Arena renamed Xfinity Mobile Arena",
+   "investor": "Comcast (Xfinity Mobile)",
+   "investor_type": "corporate",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Comcast press release",
+   "source_url": "https://corporate.comcast.com/press/releases/home-of-the-flyers-76ers-new-name-xfinity-mobile-arena",
+   "stake_pct": null,
+   "summary": "Naming rights for the Flyers' arena move to Xfinity Mobile through the 2030-31 season; terms not disclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "nhl.com/flyers",
+ "facts": {
+  "chair": {
+   "evidence": "Chairman & CEO of Comcast Spectacor, Governor",
+   "name": "Dan Hilferty",
+   "source_url": "https://www.nhl.com/flyers/team/staff/leadership",
+   "title": "Chairman & CEO of Comcast Spectacor, Governor"
+  },
+  "chief_executive": {
+   "evidence": "said Dan Hilferty, Chairman and CEO of Comcast Spectacor",
+   "name": "Dan Hilferty",
+   "source_url": "https://corporate.comcast.com/press/releases/harris-blitzer-sports-entertainment-comcast-spectacor-joint-venture-world-class-arena-south-philadelphia-revitalize-market-east",
+   "title": "Chairman and CEO of Comcast Spectacor"
+  },
+  "honours": {
+   "competition": "Stanley Cup",
+   "evidence": "the Flyers became the first of the newcomers to capture the Cup when they defeated the Bruins in the 1974 Final. They repeated as champions in 1975",
+   "league_titles": 2,
+   "source_url": "https://www.nhl.com/news/second-six-expansion-changed-nhl-50-years-ago-289774952"
+  },
+  "legal_entity": {
+   "evidence": "trademarks of Philadelphia Flyers, L.P.",
+   "name": "Philadelphia Flyers, L.P.",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.nhl.com/flyers/team/staff/leadership"
+  },
+  "operating_result": {
+   "amount": 124000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$124M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - EBITDA, net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/philadelphia-flyers/"
+  },
+  "stadium_owner": {
+   "detail": "Owned and operated by Comcast Spectacor, the Flyers' owner (renamed from Wells Fargo Center effective September 1, 2025); a new arena is being built by a 50-50 Comcast Spectacor/HBSE joint venture",
+   "evidence": "Comcast Spectacor owns and operates Wells Fargo Center",
+   "source_url": "https://corporate.comcast.com/press/releases/harris-blitzer-sports-entertainment-comcast-spectacor-joint-venture-world-class-arena-south-philadelphia-revitalize-market-east",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 105000000,
+   "currency": "USD",
+   "evidence": "$105M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/philadelphia-flyers/"
+  }
+ },
+ "founded_evidence": "Penguins, Blues, Kings, North Stars, Seals, Flyers joined League on June 5, 1967",
+ "founded_source_url": "https://www.nhl.com/news/second-six-expansion-changed-nhl-50-years-ago-289774952",
+ "founded_year": 1967,
+ "key": "national-hockey-league--philadelphia-flyers",
+ "league": "National Hockey League",
+ "name": "Philadelphia Flyers",
+ "notes": "US team: no published accounts; revenue (net of revenue sharing and arena debt service), operating income (EBITDA) and player expenses are Forbes estimates for 2024-25, valuation is Forbes enterprise value calculated December 2025 (Forbes page; figures render as separate HTML elements). Forbes lists price paid $150M in 1996 (Comcast's acquisition of Spectacor, pre-2015). Comcast Spectacor's percentage is not stated on any page read. Arena capacity is from the arena's own history page, which blocks plain curl (WebFetch read it). Founded: franchise awarded conditionally Feb 1966, joined the league June 5, 1967. Missing: social followers, attendance, shirt/kit sponsor, net debt; Forbes gate receipts $89M not mapped to a breakdown.",
+ "owners": [
+  {
+   "amount": 150000000,
+   "currency": "USD",
+   "evidence": "Comcast Spectacor",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Comcast Spectacor (Comcast Corporation)",
+   "since_year": 1996,
+   "source_url": "https://www.forbes.com/teams/philadelphia-flyers/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://corporate.comcast.com/press/releases/home-of-the-flyers-76ers-new-name-xfinity-mobile-arena",
+ "ownership_summary": "Owned by Comcast Spectacor, the sports and entertainment arm of Comcast Corporation (Nasdaq: CMCSA); Forbes gives 1996 as the year purchased. No institutional minority holders are stated.",
+ "ownership_type": "corporate",
+ "revenue": 315000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$315M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), The Business of Hockey, December 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/philadelphia-flyers/",
+ "short_name": "Flyers",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/philadelphia-flyers/",
+  "https://www.nhl.com/flyers/team/staff/leadership",
+  "https://corporate.comcast.com/press/releases/harris-blitzer-sports-entertainment-comcast-spectacor-joint-venture-world-class-arena-south-philadelphia-revitalize-market-east",
+  "https://corporate.comcast.com/press/releases/home-of-the-flyers-76ers-new-name-xfinity-mobile-arena",
+  "https://www.xfinitymobilearena.com/connect-with-us/arena-history",
+  "https://www.nhl.com/news/second-six-expansion-changed-nhl-50-years-ago-289774952",
+  "https://www.nhl.com/flyers/news/throwback-flyers-ace-1967-expansion-draft-philadelphia-flyers-336836430"
+ ],
+ "sport": "ice_hockey",
+ "stadium": "Xfinity Mobile Arena",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": "19,600 for Flyers' hockey games",
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "Owned and operated by Comcast Spectacor, the Flyers' owner (renamed from Wells Fargo Center effective September 1, 2025); a new arena is being built by a 50-50 Comcast Spectacor/HBSE joint venture",
+  "evidence": "Comcast Spectacor owns and operates Wells Fargo Center",
+  "source_url": "https://corporate.comcast.com/press/releases/harris-blitzer-sports-entertainment-comcast-spectacor-joint-venture-world-class-arena-south-philadelphia-revitalize-market-east",
+  "value": "club"
+ },
+ "valuation": 2700000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$2.7B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/philadelphia-flyers/",
+ "valuation_year": 2025
+}

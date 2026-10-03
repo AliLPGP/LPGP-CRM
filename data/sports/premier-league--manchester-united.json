@@ -1,0 +1,251 @@
+{
+ "city": "Manchester",
+ "country": "England",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2024-02-20",
+   "date_text": "20 February 2024",
+   "evidence": "On 20 February 2024, Trawlers accepted for payment the full number of Class A ordinary shares subject to the Offer and completed the purchase of the Seller Shares and the Closing Subscription Shares.",
+   "headline": "Ratcliffe's Trawlers buys 25% of Class B shares and tenders for Class A at $33",
+   "investor": "Trawlers Limited (Sir Jim Ratcliffe)",
+   "investor_type": "individual",
+   "kind": "minority_investment",
+   "seller": "Glazer family Class B holders and Class A tender offer participants",
+   "source_name": "Manchester United plc Form 20-F (fiscal 2026)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+   "stake_pct": null,
+   "summary": "Trawlers bought 25.0% of the issued Class B shares from the Glazer sellers and up to 13,237,834 Class A shares by tender offer, both at $33.00 per share, and subscribed $200m of new shares at closing plus a further $100m by 31 December 2024 (£80.0m received in fiscal 2025). INEOS now reports 28.95% of total voting power.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": 200000000,
+   "currency": "USD",
+   "date": "2024-02-20",
+   "date_text": "February 2024",
+   "evidence": "for an aggregate subscription price of $200 million, on the business day immediately following the expiration time of the Offer",
+   "headline": "$200m primary equity subscription at closing, $100m more by end-2024",
+   "investor": "Trawlers Limited (Sir Jim Ratcliffe)",
+   "investor_type": "individual",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "Manchester United plc Form 20-F (fiscal 2026)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+   "stake_pct": null,
+   "summary": "As part of the Trawlers transaction, new Class A and Class B shares were subscribed at $33.00 for $200m at closing and a further $100m on or before 31 December 2024.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": 414406000,
+   "currency": "GBP",
+   "date": null,
+   "date_text": "Fiscal 2026 (year to 30 June 2026)",
+   "evidence": "Proceeds from refinanced senior secured notes 414,406",
+   "headline": "Manchester United refinances its senior secured notes",
+   "investor": "Senior secured noteholders",
+   "investor_type": "institutional",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "Manchester United plc fiscal 2026 results (6-K Ex. 99.1), cash flow statement (£'000)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm",
+   "stake_pct": null,
+   "summary": "Proceeds of £414.4m from refinanced senior secured notes against £320.2m repaid; non-current USD borrowings rose from $650.0m to $775.0m.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2026-06-23",
+   "date_text": "June 2026",
+   "evidence": "This Schedule 13D is being filed solely to reflect the addition of INEOS as a Reporting Person.",
+   "headline": "INEOS reorganisation interposes INEOS Limited above the stake",
+   "investor": "INEOS Limited",
+   "investor_type": "corporate",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Schedule 13D (SEC)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000095015726000772/primary_doc.xml",
+   "stake_pct": null,
+   "summary": "INEOS Limited became the new holding company of INEOS Services Limited, which remains the direct owner of the 49,880,646 Manchester United shares; no shares were transferred and the indirect interests of Ratcliffe, Andrew Currie and John Reece did not change.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "manutd.com",
+ "facts": {
+  "chair": {
+   "evidence": "Avram Glazer , aged 65, is Executive Co-Chairman and a Director of the Company.",
+   "name": "Avram Glazer and Joel Glazer",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+   "title": "Executive Co-Chairmen"
+  },
+  "chief_executive": {
+   "evidence": "Omar Berrada, Chief Executive Officer, commented",
+   "name": "Omar Berrada",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm",
+   "title": "Chief Executive Officer"
+  },
+  "honours": {
+   "competition": "English top flight",
+   "evidence": "including a record 20 English league titles",
+   "league_titles": 20,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm"
+  },
+  "kit_supplier": {
+   "evidence": "alongside our kit supplier, adidas and front of shirt partner, Snapdragon",
+   "name": "adidas",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm"
+  },
+  "legal_entity": {
+   "evidence": "MANCHESTER UNITED FOOTBALL CLUB LIMITED",
+   "name": "Manchester United Football Club Limited (listed parent: Manchester United plc, Cayman Islands, NYSE: MANU)",
+   "registry": "Companies House",
+   "registry_id": "00095489",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00095489"
+  },
+  "operating_result": {
+   "amount": 22600000,
+   "basis": "operating profit",
+   "currency": "GBP",
+   "evidence": "Generated operating profit for the full year of £22.6 million, compared to an operating loss of £18.4 million in the prior year",
+   "season": "2025-26",
+   "source_name": "Manchester United plc fiscal 2026 results (6-K Ex. 99.1)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm"
+  },
+  "pretax_result": {
+   "amount": -46985000,
+   "currency": "GBP",
+   "evidence": "Loss before tax (46,985 )",
+   "season": "2025-26",
+   "source_name": "Manchester United plc fiscal 2026 results (6-K Ex. 99.1), consolidated statement of profit or loss (£'000)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm"
+  },
+  "revenue_breakdown": {
+   "broadcast": 206800000,
+   "commercial": 317300000,
+   "currency": "GBP",
+   "evidence": "Commercial revenue 317.3 333.3",
+   "matchday": 153500000,
+   "other": null,
+   "season": "2025-26",
+   "source_name": "Manchester United plc fiscal 2026 results (6-K Ex. 99.1)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm"
+  },
+  "shirt_sponsor": {
+   "evidence": "alongside our kit supplier, adidas and front of shirt partner, Snapdragon",
+   "name": "Snapdragon",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm"
+  },
+  "stadium_owner": {
+   "detail": "Old Trafford is described by Manchester United plc as its own stadium; the club has secured land for a proposed new 100,000-seat stadium.",
+   "evidence": "Our Old Trafford stadium was originally opened on 19 February 1910",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 302000000,
+   "currency": "GBP",
+   "evidence": "Employee benefit expenses for the year were £302.0 million, a decrease of £11.3 million, or 3.6%, over the prior year.",
+   "season": "2025-26",
+   "source_name": "Manchester United plc fiscal 2026 results (6-K Ex. 99.1)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm"
+  }
+ },
+ "founded_evidence": "Our men’s team was founded in 1878 as Newton Heath L&YR Football Club",
+ "founded_source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+ "founded_year": 1878,
+ "key": "premier-league--manchester-united",
+ "league": "Premier League",
+ "name": "Manchester United Football Club",
+ "notes": "Revenue is fiscal 2025-26 (year to 30 June 2026, unaudited results release of 23 Sept 2026; the 20-F filed 24 Sept 2026 carries the same year); prior year £666.5m. The previous record's Deloitte EUR figure via goal.com and Yahoo capacity were replaced. Capacity: the 20-F states 74,500; the Premier League's stadium guide says 74,158. Stakes are % of total voting power from the 20-F table; the Glazer family total is not stated as one figure (individual trusts hold 8.54%-14.29% of voting power each), so stake_pct is null. The 2005 Glazer takeover predates the 2015 deals window. Ratcliffe's tender/purchase price per share ($33.00) is stated, but total consideration is not stated as a single figure, so amount is null on that row. Net debt and average attendance not captured; social follower counts not found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "INEOS Services Limited (6) 16,188,183 28.83 % 33,692,463 28.96 % 28.95 %",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "INEOS Services Limited (Sir Jim Ratcliffe, INEOS)",
+   "since_year": 2024,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+   "stake_pct": 28.95,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Joel M. Glazer (8) 1,260,093 2.24 % 17,307,383 14.88 % 14.29 %",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Glazer family (trusts of Avram, Joel, Kevin, Bryan, Darcie and Edward Glazer)",
+   "since_year": 2005,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Ariel Investments, LLC (2) 9,024,434 16.07 % — — 0.74 %",
+   "institutional": true,
+   "investor_type": "institutional",
+   "kind": "fund",
+   "name": "Ariel Investments, LLC",
+   "since_year": null,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+   "stake_pct": 0.74,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+ "ownership_summary": "Manchester United plc (Cayman Islands) is listed on the NYSE (MANU) with a dual-class structure: Class B shares carry 10 votes. The Glazer family's trusts hold most of the Class B shares and the Executive Co-Chairmen roles; Sir Jim Ratcliffe's INEOS (via INEOS Services Limited, under INEOS Limited since a June 2026 reorganisation) holds 49,880,646 shares, 28.95% of total voting power, after the February 2024 Trawlers transaction. Manchester United Football Club Limited is held by Manchester United Limited.",
+ "ownership_type": "public_listed",
+ "revenue": 677600000,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "Achieved record full year revenue of £677.6 million, despite not participating in UEFA competition, up from previous record of £666.5 million in the prior year",
+ "revenue_season": "2025-26",
+ "revenue_source_name": "Manchester United plc fiscal 2026 results (Form 6-K, Exhibit 99.1, 23 September 2026)",
+ "revenue_source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm",
+ "short_name": "Man United",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.sec.gov/Archives/edgar/data/1549107/000110465926109806/tm2625945d1_ex99-1.htm",
+  "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+  "https://www.sec.gov/Archives/edgar/data/1549107/000095015726000772/primary_doc.xml",
+  "https://find-and-update.company-information.service.gov.uk/company/00095489",
+  "https://find-and-update.company-information.service.gov.uk/company/00095489/persons-with-significant-control",
+  "https://www.forbes.com/teams/manchester-united/",
+  "https://www.premierleague.com/en/news/4725666/all-you-need-to-know-about-the-20-premier-league-stadiums"
+ ],
+ "sport": "football",
+ "stadium": "Old Trafford",
+ "stadium_capacity": 74500,
+ "stadium_capacity_evidence": "The current capacity of Old Trafford is 74,500.",
+ "stadium_capacity_source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+ "stadium_owner": {
+  "detail": "Old Trafford is described by Manchester United plc as its own stadium; the club has secured land for a proposed new 100,000-seat stadium.",
+  "evidence": "Our Old Trafford stadium was originally opened on 19 February 1910",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1549107/000110465926110384/manu-20260630x20f.htm",
+  "value": "club"
+ },
+ "valuation": 7200000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$7.2B (£5.3B) Calculated May 2026",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/manchester-united/",
+ "valuation_year": 2026
+}

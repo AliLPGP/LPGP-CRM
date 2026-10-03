@@ -1,0 +1,149 @@
+{
+ "city": "Frisco",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 182000000,
+   "currency": "USD",
+   "date": "2024-09-17",
+   "date_text": "17 September 2024",
+   "evidence": "The FCDC will issue sales tax revenue bonds to fund $182 million and contribute $40 million for its share.",
+   "headline": "Frisco approves $182m public-private renovation of Toyota Stadium and extends FC Dallas lease",
+   "investor": "Frisco Community Development Corporation (sales tax revenue bonds), TIRZ (City of Frisco, Frisco ISD) and the Hunt family",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "City of Frisco",
+   "source_url": "https://www.friscotexas.gov/m/newsflash/Home/Detail/2176",
+   "stake_pct": null,
+   "summary": "Frisco City Council approved up to $182 million of improvements: the FCDC issues sales tax revenue bonds; shares are $77m TIRZ (City of Frisco, Frisco ISD), $40m FCDC and up to $65m from the Hunt family, which also covers overruns (its 36% share is paid as rent). The lease runs to 31 December 2057. A further $9.26m was approved on 21 April 2026 (Community Impact), and Dan Hunt has put the cost above $215m (Dallas Sports Journal).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "fcdallas.com",
+ "facts": {
+  "chair": {
+   "evidence": "Clark Hunt, Chairman and CEO, FC Dallas",
+   "name": "Clark Hunt",
+   "source_url": "https://www.fcdallas.com/club/front-office",
+   "title": "Chairman and CEO"
+  },
+  "chief_executive": {
+   "evidence": "Dan Hunt, President, FC Dallas",
+   "name": "Dan Hunt",
+   "source_url": "https://www.fcdallas.com/club/front-office",
+   "title": "President"
+  },
+  "honours": {
+   "competition": "MLS Supporters' Shield (regular season, 2016); no MLS Cup",
+   "evidence": "earn FCD’s first and only MLS Supporters’ Shield",
+   "league_titles": 1,
+   "source_url": "https://www.fcdallas.com/news/fc-dallas-30th-anniversary-top-5-landmark-moments"
+  },
+  "kit_supplier": {
+   "evidence": "white adidas branding and three stripes",
+   "name": "adidas",
+   "source_url": "https://www.fcdallas.com/news/fc-dallas-unveils-new-dna-kit-ahead-of-2026-season"
+  },
+  "legal_entity": {
+   "evidence": "the written consent of FC Dallas Soccer, LLC and its affiliates",
+   "name": "FC Dallas Soccer, LLC",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.fcdallas.com/stadium/policies"
+  },
+  "operating_result": {
+   "amount": -17000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "One-Year Change: 5% | Revenue: $59 million | Operating Income: -$17 million",
+   "season": "2025",
+   "source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (archived copy)",
+   "source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/"
+  },
+  "shirt_sponsor": {
+   "evidence": "Children’s Health is the front-of-jersey partner",
+   "name": "Children's Health (DNA kit); UT Southwestern Medical Center (Inferno kit)",
+   "source_url": "https://www.fcdallas.com/news/fc-dallas-unveils-new-dna-kit-ahead-of-2026-season"
+  },
+  "stadium_owner": {
+   "detail": "Publicly owned in Frisco (the City of Frisco calls it a prime, public asset); Hunt Sports Group operates it and FC Dallas is the tenant, its lease extended to 31 December 2057 in the September 2024 agreements.",
+   "evidence": "reinvestment of a prime, public asset",
+   "source_url": "https://www.friscotexas.gov/m/newsflash/Home/Detail/2176",
+   "value": "municipal"
+  }
+ },
+ "founded_evidence": "The first game in franchise history in 1996",
+ "founded_source_url": "https://www.fcdallas.com/news/fc-dallas-30th-anniversary-top-5-landmark-moments",
+ "founded_year": 1996,
+ "key": "major-league-soccer--fc-dallas",
+ "league": "Major League Soccer",
+ "name": "FC Dallas",
+ "notes": "Revenue, operating income (Forbes' EBITDA-style measure) and value are Forbes estimates for the 2025 season from the list of 13 Feb 2026, cited via the Wayback Machine copy because forbes.com refuses scripted fetches. MLS clubs publish no accounts, so wages, pre-tax result and net debt are blank. Capacity 20,500 is the pre-renovation figure: with the east stand closed the stadium has held near 11,000 during works, and it is due to hold 23,900 when fully reopened in early 2028 (Dallas Sports Journal, Sept 2026); SBJ reported FC Dallas' 2025 attendance fell 42%, the league's biggest drop, but no average is given on a citable page. The club played its first game in 1996 as the Dallas Burn and rebranded as FC Dallas in 2005. Honours beyond the 2016 Supporters' Shield: U.S. Open Cup 1997 and 2016 (same club page). No ownership transaction since 2015 and no institutional investor was found; the stadium developer entity in the 2024 agreements is Frisco Stadium, LLC. Social follower counts not found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Having taken over the operations of Dallas in 2003",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Hunt family (Hunt Sports Group; Clark Hunt and Dan Hunt)",
+   "since_year": 2003,
+   "source_url": "https://www.fcdallas.com/club/legacy",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.fcdallas.com/club/front-office",
+ "ownership_summary": "Owned by the Hunt family through Hunt Sports Group, which took over the club in 2003; Clark Hunt is Chairman and CEO and Dan Hunt is President. No minority or institutional investor is disclosed.",
+ "ownership_type": "individual_family",
+ "revenue": 59000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "One-Year Change: 5% | Revenue: $59 million | Operating Income: -$17 million",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (archived copy)",
+ "revenue_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "short_name": "FC Dallas",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.fcdallas.com/club/front-office",
+  "https://www.fcdallas.com/club/legacy",
+  "https://www.fcdallas.com/news/fc-dallas-30th-anniversary-top-5-landmark-moments",
+  "https://www.sportsbusinessjournal.com/Articles/2024/09/18/fc-dallas-toyota-stadium-renovation-approval/",
+  "https://www.friscotexas.gov/m/newsflash/Home/Detail/2176",
+  "https://www.friscotexas.gov/DocumentCenter/View/33532",
+  "https://www.fcdallas.com/news/toyota-stadium-to-undergo-multi-million-dollar-renovation",
+  "https://dallassportsjournal.com/fc-dallas-toyota-stadium-east-side-renovation-frisco/",
+  "https://communityimpact.com/frisco/government/toyota-stadium-set-for-926m-in-additional-renovations/",
+  "https://www.fcdallas.com/news/fc-dallas-unveils-new-dna-kit-ahead-of-2026-season",
+  "https://www.fcdallas.com/stadium/policies",
+  "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+  "https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+  "https://www.sportico.com/valuations/teams/2025/mls-team-values-2025-lafc-inter-miami-1234825738/",
+  "https://www.sportsbusinessjournal.com/Articles/2025/10/23/mls-average-attendance-down-5-in-2025-ahead-of-world-cup/"
+ ],
+ "sport": "football",
+ "stadium": "Toyota Stadium",
+ "stadium_capacity": 20500,
+ "stadium_capacity_evidence": "the 20,500-capacity stadium",
+ "stadium_capacity_source_url": "https://www.sportsbusinessjournal.com/Articles/2024/09/18/fc-dallas-toyota-stadium-renovation-approval/",
+ "stadium_owner": {
+  "detail": "Publicly owned in Frisco (the City of Frisco calls it a prime, public asset); Hunt Sports Group operates it and FC Dallas is the tenant, its lease extended to 31 December 2057 in the September 2024 agreements.",
+  "evidence": "reinvestment of a prime, public asset",
+  "source_url": "https://www.friscotexas.gov/m/newsflash/Home/Detail/2176",
+  "value": "municipal"
+ },
+ "valuation": 570000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "FC Dallas (No. 22, $570 million)",
+ "valuation_source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (archived copy)",
+ "valuation_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "valuation_year": 2026
+}

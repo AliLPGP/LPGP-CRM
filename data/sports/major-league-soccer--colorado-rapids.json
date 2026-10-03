@@ -1,0 +1,118 @@
+{
+ "city": "Commerce City",
+ "country": "United States",
+ "deals": [],
+ "domain": "coloradorapids.com",
+ "facts": {
+  "chair": {
+   "evidence": "Owner/Chairman, Kroenke Sports & Entertainment",
+   "name": "E. Stanley Kroenke",
+   "source_url": "https://www.coloradorapids.com/club/front-office",
+   "title": "Owner/Chairman, Kroenke Sports & Entertainment"
+  },
+  "chief_executive": {
+   "evidence": "said Colorado Rapids President Pádraig Smith",
+   "name": "Pádraig Smith",
+   "source_url": "https://www.coloradorapids.com/news/colorado-rapids-transfer-18-year-old-defender-lucas-herrington-to-hull-city",
+   "title": "President"
+  },
+  "honours": {
+   "competition": "MLS Cup",
+   "evidence": "won MLS Cup for the first time in 2010",
+   "league_titles": 1,
+   "source_url": "https://www.coloradorapids.com/club/about"
+  },
+  "kit_supplier": {
+   "evidence": "the Colorful Colorado Kit by adidas",
+   "name": "adidas",
+   "source_url": "https://www.mlssoccer.com/news/colorado-rapids-unveil-the-colorful-colorado-kit"
+  },
+  "operating_result": {
+   "amount": -8000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "Revenue: $50 million | Operating Income: -$8 million",
+   "season": "2025",
+   "source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (archived copy)",
+   "source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/"
+  },
+  "shirt_sponsor": {
+   "evidence": "signed a seven-year partnership with UCHealth",
+   "name": "UCHealth",
+   "source_url": "https://www.sportspro.com/news/colorado-rapids-uchealth-main-shirt-jersey-sponsor-mls/"
+  },
+  "stadium_owner": {
+   "detail": "Commerce City leases the land to Kroenke Sports & Entertainment for $1 a year for 25 years; KSE financed, built and manages the stadium and fields (opened 2007). When the lease ends in 2032 KSE has the option to buy the stadium land for $1, per The Denver Post.",
+   "evidence": "Under the agreement, the city would lease the land to Kroenke Sports for $1 a year for 25 years while Kroenke took responsibility for financing, construction and management of the stadium",
+   "source_url": "https://www.denverpost.com/2023/10/15/commerce-city-dicks-sporting-goods-park-kroenke-rapids-stadium-victory-crossing-development/",
+   "value": "municipal"
+  }
+ },
+ "founded_evidence": "Colorado Rapids Soccer Club was established on Oct. 17, 1995, as one of Major League Soccer",
+ "founded_source_url": "https://www.coloradorapids.com/club/about",
+ "founded_year": 1995,
+ "key": "major-league-soccer--colorado-rapids",
+ "league": "Major League Soccer",
+ "name": "Colorado Rapids Soccer Club",
+ "notes": "US clubs publish no accounts: revenue and operating income are Forbes estimates for the 2025 season (operating income is EBITDA as Forbes defines it), cited from the Wayback Machine copy because forbes.com refuses automated fetches. Kroenke Sports & Entertainment's percentage is not stated on any page read, so stake_pct is null (Forbes lists the 'Kroenke family' as key owner). No ownership transaction, minority or institutional investment, or stadium financing since 2015 was found; the stadium deal dates from 2004 (a $183 million public-private partnership with a $64 million Commerce City bond issue, per The Denver Post). UCHealth's front-of-kit deal runs to 2029 per SportsPro (November 2022). Not found: legal entity, average attendance, wages, social follower counts with a stated date.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Kroenke purchased the Colorado Rapids from Phil Anschutz in 2004.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "company",
+   "name": "Kroenke Sports & Entertainment (Kroenke family)",
+   "since_year": 2004,
+   "source_url": "https://www.sportingnews.com/us/soccer/news/stan-kroenke-sports-teams-championships-arsenal/acd4cf293f181a28f5e8814a",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.denverpost.com/2025/01/05/colorado-rapids-dicks-sporting-goods-park-development/",
+ "ownership_summary": "Owned by Kroenke Sports & Entertainment, the company of billionaire Stan Kroenke (owner/chairman; son Josh Kroenke is vice chairman and the club's alternate governor), which bought the Rapids from Phil Anschutz in 2004. KSE also owns the Rams, Nuggets, Avalanche, Mammoth and Arsenal. No minority or institutional investor in the Rapids is named.",
+ "ownership_type": "individual_family",
+ "revenue": 50000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenue: $50 million | Operating Income: -$8 million",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (archived copy)",
+ "revenue_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "short_name": "Colorado Rapids",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.coloradorapids.com/club/about",
+  "https://www.coloradorapids.com/club/front-office",
+  "https://www.coloradorapids.com/news/colorado-rapids-transfer-18-year-old-defender-lucas-herrington-to-hull-city",
+  "https://www.denverpost.com/2023/10/15/commerce-city-dicks-sporting-goods-park-kroenke-rapids-stadium-victory-crossing-development/",
+  "https://www.denverpost.com/2025/01/05/colorado-rapids-dicks-sporting-goods-park-development/",
+  "https://www.sportingnews.com/us/soccer/news/stan-kroenke-sports-teams-championships-arsenal/acd4cf293f181a28f5e8814a",
+  "https://www.sportico.com/business/team-sales/2026/stan-kroenke-sports-teams-calendar-schedule-club-sportico-1234944070/",
+  "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+  "https://www.sportspro.com/news/colorado-rapids-uchealth-main-shirt-jersey-sponsor-mls/",
+  "https://www.mlssoccer.com/news/colorado-rapids-unveil-the-colorful-colorado-kit",
+  "https://www.coloradorapids.com/news/colorado-rapids-unveil-colorful-colorado-kit-ahead-of-2026-mls-season"
+ ],
+ "sport": "football",
+ "stadium": "Dick's Sporting Goods Park",
+ "stadium_capacity": 18000,
+ "stadium_capacity_evidence": "a world-class sports complex with an 18,000-seat soccer specific stadium and 23 surrounding fields",
+ "stadium_capacity_source_url": "https://www.coloradorapids.com/club/about",
+ "stadium_owner": {
+  "detail": "Commerce City leases the land to Kroenke Sports & Entertainment for $1 a year for 25 years; KSE financed, built and manages the stadium and fields (opened 2007). When the lease ends in 2032 KSE has the option to buy the stadium land for $1, per The Denver Post.",
+  "evidence": "Under the agreement, the city would lease the land to Kroenke Sports for $1 a year for 25 years while Kroenke took responsibility for financing, construction and management of the stadium",
+  "source_url": "https://www.denverpost.com/2023/10/15/commerce-city-dicks-sporting-goods-park-kroenke-rapids-stadium-victory-crossing-development/",
+  "value": "municipal"
+ },
+ "valuation": 450000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "#28. $450 million",
+ "valuation_source_name": "Forbes, The Most Valuable MLS Teams 2026 (13 Feb 2026, archived copy)",
+ "valuation_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "valuation_year": 2026
+}

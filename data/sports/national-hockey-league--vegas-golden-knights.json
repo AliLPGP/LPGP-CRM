@@ -1,0 +1,160 @@
+{
+ "city": "Las Vegas",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 500000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": "2016 (Forbes: year purchased 2016; Sportico says Foley won the rights in 2015)",
+   "evidence": "paying a $500 million entrance fee",
+   "headline": "Foley pays $500M NHL expansion fee for Las Vegas team",
+   "investor": "Bill Foley (with the Maloof family)",
+   "investor_type": "individual",
+   "kind": "expansion_fee",
+   "seller": "National Hockey League",
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/team-sales/2024/maloof-family-sells-vegas-golden-knights-stake-1234762643/",
+   "stake_pct": 100,
+   "summary": "Bill Foley's group, including the Maloof family from the start, paid a $500 million entrance fee for the Vegas NHL expansion franchise.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2024-01-11",
+   "date_text": "January 11, 2024",
+   "evidence": "divested themselves of a 15% minority stake",
+   "headline": "Maloof brothers sell 15% Golden Knights stake back to Foley family",
+   "investor": "Foley family",
+   "investor_type": "individual",
+   "kind": "stake_sale",
+   "seller": "George, Gavin, Joe and Phil Maloof",
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/team-sales/2024/maloof-family-sells-vegas-golden-knights-stake-1234762643/",
+   "stake_pct": 15,
+   "summary": "George, Gavin, Joe and Phil Maloof sold their remaining indirect ownership interests to the Foley family; Sportico puts the stake at 15%. Adrienne Maloof remains as a limited partner. Price not disclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "vegasgoldenknights.com",
+ "facts": {
+  "chair": {
+   "evidence": "Chairman, CEO and Governor - Bill Foley",
+   "name": "Bill Foley",
+   "source_url": "https://www.nhl.com/goldenknights/team/front-office",
+   "title": "Chairman, CEO and Governor"
+  },
+  "chief_executive": {
+   "evidence": "Chairman, CEO and Governor - Bill Foley",
+   "name": "Bill Foley",
+   "source_url": "https://www.nhl.com/goldenknights/team/front-office",
+   "title": "Chairman, CEO and Governor"
+  },
+  "honours": {
+   "competition": "Stanley Cup",
+   "evidence": "won the Stanley Cup in 2022-23",
+   "league_titles": 1,
+   "source_url": "https://www.nhl.com/goldenknights/news/vegas-golden-knights-ownership-update-x0170"
+  },
+  "legal_entity": {
+   "evidence": "owned and operated by Black Knight Sports and Entertainment LLC",
+   "name": "Black Knight Sports and Entertainment LLC",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.nhl.com/goldenknights/news/vegas-golden-knights-ownership-update-x0170"
+  },
+  "operating_result": {
+   "amount": 77000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$77M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - EBITDA, net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/vegas-golden-knights/"
+  },
+  "wages": {
+   "amount": 114000000,
+   "currency": "USD",
+   "evidence": "$114M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/vegas-golden-knights/"
+  }
+ },
+ "founded_evidence": "\"firstSeasonId\":20172018,\"fullName\":\"Vegas Golden Knights\"",
+ "founded_source_url": "https://records.nhl.com/site/api/franchise",
+ "founded_year": 2017,
+ "key": "national-hockey-league--vegas-golden-knights",
+ "league": "National Hockey League",
+ "name": "Vegas Golden Knights",
+ "notes": "Revenue, operating income (EBITDA) and player expenses are Forbes estimates for 2024-25 (USD, net of revenue sharing and arena debt service); valuation is Forbes enterprise value calculated December 2025. Forbes lists owners 'Maloof family, Bill Foley', year purchased 2016, price $500M — its Maloof listing predates the January 2024 sale. Founded: NHL records give first season 2017-18 (the expansion was awarded in 2016; Forbes year purchased 2016). Foley's percentage is not stated on any page read. Stadium T-Mobile Arena per the team's arena page; capacity and arena owner (MGM/AEG) not read on a citable page (t-mobilearena.com blocked automated reads). The sale's NHL release names four Maloof brothers (George, Gavin, Joe, Phil); Sportico names three and the 15% figure. Missing: capacity, stadium owner, social, attendance, sponsors.",
+ "owners": [
+  {
+   "amount": 500000000,
+   "currency": "USD",
+   "evidence": "The Vegas Golden Knights were established by founding partners Bill Foley and his family and the Maloof family.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Bill Foley and family (Black Knight Sports and Entertainment LLC)",
+   "since_year": 2016,
+   "source_url": "https://www.nhl.com/goldenknights/news/vegas-golden-knights-ownership-update-x0170",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Adrienne Maloof will continue to be an indirect owner of the Vegas Golden Knights as a new limited partner.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Adrienne Maloof",
+   "since_year": null,
+   "source_url": "https://www.nhl.com/goldenknights/news/vegas-golden-knights-ownership-update-x0170",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.nhl.com/goldenknights/news/vegas-golden-knights-ownership-update-x0170",
+ "ownership_summary": "Owned and operated by Black Knight Sports and Entertainment LLC, controlled by Bill Foley and his family, who founded the expansion team with the Maloof family. In January 2024 George, Gavin, Joe and Phil Maloof sold their remaining indirect interests (a 15% minority stake per Sportico) back to the Foley family; Adrienne Maloof stays as an indirect owner and limited partner. No institutional fund stake is reported.",
+ "ownership_type": "individual_family",
+ "revenue": 250000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$250M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NHL team valuations, calculated December 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/vegas-golden-knights/",
+ "short_name": "Golden Knights",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/vegas-golden-knights/",
+  "https://www.nhl.com/goldenknights/news/vegas-golden-knights-ownership-update-x0170",
+  "https://www.sportico.com/business/team-sales/2024/maloof-family-sells-vegas-golden-knights-stake-1234762643/",
+  "https://www.nhl.com/goldenknights/team/front-office",
+  "https://www.nhl.com/goldenknights/team/our-team",
+  "https://www.nhl.com/goldenknights/arena/",
+  "https://records.nhl.com/site/api/franchise"
+ ],
+ "sport": "ice_hockey",
+ "stadium": "T-Mobile Arena",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": null,
+ "valuation": 2200000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$2.2B",
+ "valuation_source_name": "Forbes (enterprise value, calculated December 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/vegas-golden-knights/",
+ "valuation_year": 2025
+}

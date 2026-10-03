@@ -1,0 +1,163 @@
+{
+ "city": "Heerenveen",
+ "country": "Netherlands",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "Between 30 June 2025 and the October 2025 accounts",
+   "evidence": "Er is na balansdatum een lening afgesloten waarbij pandrecht is afgegeven op toekomstige inkomsten uit televisierechten",
+   "headline": "sc Heerenveen takes a loan secured on future TV-rights income",
+   "investor": "Undisclosed market lender",
+   "investor_type": "other",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "sc Heerenveen annual report 2024-2025",
+   "source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf",
+   "stake_pct": null,
+   "summary": "After the 2024-25 balance-sheet date the club took out a loan from the market, pledging future television-rights income up to the amount drawn, as one of its measures to keep a positive cash position at 30 June 2026. Lender and amount were not disclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "sc-heerenveen.nl",
+ "facts": {
+  "chair": {
+   "evidence": "Dennis Gijsman (voorzitter)",
+   "name": "Dennis Gijsman",
+   "source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf",
+   "title": "Chair, Raad van Commissarissen (supervisory board)"
+  },
+  "chief_executive": {
+   "evidence": "Ferry de Haan is ook de komende jaren algemeen directeur bij sc Heerenveen.",
+   "name": "Ferry de Haan",
+   "source_url": "https://www.omropfryslan.nl/nl/nieuws/17607546/algemeen-directeur-ferry-de-haan-langer-bij-sc-heerenveen",
+   "title": "Algemeen directeur (general director), contract to mid-2028"
+  },
+  "kit_supplier": {
+   "evidence": "Met trots presenteren sc Heerenveen en Macron het Thússhirt voor seizoen 2026/2027.",
+   "name": "Macron",
+   "source_url": "https://www.sc-heerenveen.nl/nieuws/sc-heerenveen-presenteert-thusshirt-20262027-traditie-en-innovatie-hand-in-hand"
+  },
+  "legal_entity": {
+   "evidence": "ingeschreven in het handelsregister onder nummer: 01058956",
+   "name": "S.C. Heerenveen B.V. (licence holder; parent S.C. Heerenveen Holding B.V.)",
+   "registry": "Kamer van Koophandel (Handelsregister)",
+   "registry_id": "01058956",
+   "source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf"
+  },
+  "operating_result": {
+   "amount": 1210459,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "Bedrijfsresultaat 1.210.459",
+   "season": "2024-25",
+   "source_name": "sc Heerenveen annual report 2024-2025 (Bedrijfsresultaat; operating income includes net player-trading proceeds of EUR 7,555,866, and the club's operating result before transfers was EUR -2.705m)",
+   "source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf"
+  },
+  "pretax_result": {
+   "amount": 1175205,
+   "currency": "EUR",
+   "evidence": "Resultaat uit gewone bedrijfsuitoefening voor belastingen 1.175.205",
+   "season": "2024-25",
+   "source_name": "sc Heerenveen annual report 2024-2025 (consolidated)",
+   "source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 6469374,
+   "commercial": 9101753,
+   "currency": "EUR",
+   "evidence": "Wedstrijdbaten 4.867.279",
+   "matchday": 4867279,
+   "other": 2513826,
+   "season": "2024-25",
+   "source_name": "sc Heerenveen annual report 2024-2025, note X (matchday = Wedstrijdbaten; broadcast = Mediagelden; commercial = Sponsoring only, with food & beverage EUR 531,163 and merchandise EUR 776,585 as separate lines; other = Overige opbrengsten)",
+   "source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "sc Heerenveen verwelkomt Effektief als nieuwe hoofdsponsor.",
+   "name": "Effektief (from 2026-27, succeeding WOLKOM)",
+   "source_url": "https://www.sc-heerenveen.nl/business/zakelijk-nieuws/effektief-vanaf-komend-seizoen-nieuwe-hoofdsponsor-sc-heerenveen"
+  },
+  "stadium_owner": {
+   "detail": "The stadium is owned by Sportstad Heerenveen B.V., whose shares are split 55.9% Municipality of Heerenveen and 44.1% sc Heerenveen (De Friesland Zorgverzekeraar left in 2017). S.C. Heerenveen B.V. rents the stadium from Sportstad under a lease running to 31 December 2032 (rent EUR 2,748,775 for calendar 2025).",
+   "evidence": "Op dit moment is de aandelenverdeling 55,9% gemeente Heerenveen en 44,1% SC Heerenveen.",
+   "source_url": "https://api1.ibabs.eu/publicdownload.aspx?site=heerenveen&id=100285263",
+   "value": "shared"
+  },
+  "wages": {
+   "amount": 14594048,
+   "currency": "EUR",
+   "evidence": "Personeelskosten XI 14.594.048",
+   "season": "2024-25",
+   "source_name": "sc Heerenveen annual report 2024-2025 (personnel costs, consolidated)",
+   "source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf"
+  }
+ },
+ "founded_evidence": "De geschiedenis van sc Heerenveen begint op 20 juli 1920.",
+ "founded_source_url": "https://www.sc-heerenveen.nl/club/historie",
+ "founded_year": 1920,
+ "key": "eredivisie--sc-heerenveen",
+ "league": "Eredivisie",
+ "name": "Sportclub Heerenveen",
+ "notes": "Latest published accounts are 2024-2025 (year to 30 June 2025, published 11 November 2025); the 2025-26 accounts were not yet published on 2026-10-03. Net result EUR 1,045,993; equity EUR 21.5m, of which EUR 11.06m is the 44.1% stake in Sportstad Heerenveen. The club gives occupancy (89% average in 2024-25, about 15,000 season tickets) rather than an average attendance. The municipality has discussed buying the club's Sportstad shares (FeanOnline, 2022); no transaction found. Chair is from the 2024-25 report (October 2025). No league titles (KNVB Cup winner 2009 per the club's history page). No valuation or social-follower count found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Als aandeelhouder beheert zij het enige aandeel van S.C. Heerenveen Holding B.V.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "other",
+   "name": "Stichting Sportclub Heerenveen",
+   "since_year": null,
+   "source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf",
+ "ownership_summary": "sc Heerenveen is owned by Stichting Sportclub Heerenveen, a foundation whose board includes representatives of supporters' groups, the business club and volunteers. It holds the only share of S.C. Heerenveen Holding B.V., which owns 100% of S.C. Heerenveen B.V. (the KNVB licence holder) and S.C. Heerenveen Vastgoed B.V. No private or institutional investor holds shares; the club itself owns 44.1% of Sportstad Heerenveen B.V., the company that owns its stadium.",
+ "ownership_type": "other",
+ "revenue": 24259980,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Netto-omzet X 24.259.980",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "S.C. Heerenveen Holding B.V. annual report 2024-2025 (consolidated, year to 30 June 2025)",
+ "revenue_source_url": "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf",
+ "short_name": "Heerenveen",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.sc-heerenveen.nl/media/4rwbf4wa/publicatiejaarrekening-sc-heerenveen-holding-bv-2024-2025-final-10-11-2025.pdf",
+  "https://www.sc-heerenveen.nl/nieuws/sc-heerenveen-sluit-boekjaar-af-met-winst-van-1-miljoen-euro",
+  "https://www.sc-heerenveen.nl/club/historie",
+  "https://api1.ibabs.eu/publicdownload.aspx?site=heerenveen&id=100285263",
+  "https://www.sc-heerenveen.nl/business/zakelijk-nieuws/effektief-vanaf-komend-seizoen-nieuwe-hoofdsponsor-sc-heerenveen",
+  "https://www.sc-heerenveen.nl/nieuws/sc-heerenveen-presenteert-thusshirt-20262027-traditie-en-innovatie-hand-in-hand",
+  "https://www.omropfryslan.nl/nl/nieuws/17607546/algemeen-directeur-ferry-de-haan-langer-bij-sc-heerenveen",
+  "https://www.feanonline.nl/gemeente-koopt-mogelijk-sportstad-aandelen-van-sc-heerenveen/"
+ ],
+ "sport": "football",
+ "stadium": "Abe Lenstra Stadion",
+ "stadium_capacity": 26100,
+ "stadium_capacity_evidence": "met een huidige capaciteit van 26.100 zit- en staplaatsen",
+ "stadium_capacity_source_url": "https://www.sc-heerenveen.nl/club/historie",
+ "stadium_owner": {
+  "detail": "The stadium is owned by Sportstad Heerenveen B.V., whose shares are split 55.9% Municipality of Heerenveen and 44.1% sc Heerenveen (De Friesland Zorgverzekeraar left in 2017). S.C. Heerenveen B.V. rents the stadium from Sportstad under a lease running to 31 December 2032 (rent EUR 2,748,775 for calendar 2025).",
+  "evidence": "Op dit moment is de aandelenverdeling 55,9% gemeente Heerenveen en 44,1% SC Heerenveen.",
+  "source_url": "https://api1.ibabs.eu/publicdownload.aspx?site=heerenveen&id=100285263",
+  "value": "shared"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

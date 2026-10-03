@@ -1,0 +1,189 @@
+{
+ "city": "São Paulo",
+ "country": "Brazil",
+ "deals": [
+  {
+   "amount": 240000000,
+   "currency": "BRL",
+   "date": "2024-10-02",
+   "date_text": "October 2024",
+   "evidence": "o objetivo do fundo é captar R$ 240 milhões para pagar dívidas antigas",
+   "headline": "São Paulo FC sets up a receivables fund (FIDC) with Galapagos Capital and OutField to refinance bank debt",
+   "investor": "FIDC São Paulo Futebol Clube (structured by Galapagos Capital and OutField)",
+   "investor_type": "private_credit",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "InfoMoney",
+   "source_url": "https://www.infomoney.com.br/business/sao-paulo-fc-anuncia-fidc-para-reestruturar-divida-superior-a-r-200-mi-com-bancos/",
+   "stake_pct": null,
+   "summary": "A credit-rights fund backed by broadcast, naming-rights and sponsorship receivables, aiming to raise R$240m (target, per ge via InfoMoney) to repay bank debt. The 2025 accounts say it began operating in November 2024, with R$81.691m of subordinated quotas paid in by the club and up to R$117.373m of senior quotas subscribed by third parties at 31 Dec 2024; it is administered by Vórtx and not consolidated.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 110000000,
+   "currency": "BRL",
+   "date": "2026-09-30",
+   "date_text": "30 September 2026",
+   "evidence": "R$ 110 milhões serão antecipados pela Ticketmaster e ressarcidos pelo São Paulo, com juros, ao longo de cinco anos",
+   "headline": "Deliberative Council approves five-year Ticketmaster deal with a R$110m repayable advance",
+   "investor": "Ticketmaster",
+   "investor_type": "corporate",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "CNN Brasil",
+   "source_url": "https://www.cnnbrasil.com.br/esportes/futebol/sao-paulo/sao-paulo-conselho-deliberativo-aprova-contrato-com-a-ticketmaster/",
+   "stake_pct": null,
+   "summary": "Ticketmaster takes over ticketing and the sócio-torcedor programme for five years; the deal gives R$140m up front, of which R$110m is an advance on future ticketing and membership receipts repaid with interest over five years, plus R$30m paid in cash for a stadium box and a R$6m loan for museum works. Approved 184–44.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "saopaulofc.net",
+ "facts": {
+  "chief_executive": {
+   "evidence": "o Vice-Presidente, Sr. Harry Massis Junior assume, a partir desta data, a Presidência interina",
+   "name": "Harry Massis Junior",
+   "source_url": "https://cdn.saopaulofc.net/2026/01/comunicado-nomeacao-massis.pdf",
+   "title": "President (interim from 16 Jan 2026 after Julio Casares' removal)"
+  },
+  "honours": {
+   "competition": "Campeonato Brasileiro",
+   "evidence": "o primeiro a conquistá-lo por seis vezes. Tri-Hexacampeão Brasileiro.",
+   "league_titles": 6,
+   "source_url": "https://www.saopaulofc.net/institucional/sobre-o-sao-paulo-fc/"
+  },
+  "kit_supplier": {
+   "evidence": "lançamento dos novos uniformes do Tricolor para a temporada 2024, produzidos pela New Balance",
+   "name": "New Balance",
+   "source_url": "https://www.saopaulofc.net/sao-paulo-anuncia-superbet-como-novo-patrocinador-master/"
+  },
+  "legal_entity": {
+   "evidence": "Empregador: 60.517.984/0001-04",
+   "name": "São Paulo Futebol Clube",
+   "registry": "CNPJ (Receita Federal, Brazil)",
+   "registry_id": "60.517.984/0001-04",
+   "source_url": "https://cdn.saopaulofc.net/2026/03/relatorioigualdadesalariallote_2026_1_60517984000104.pdf"
+  },
+  "operating_result": {
+   "amount": 246137000,
+   "basis": "EBITDA",
+   "currency": "BRL",
+   "evidence": "EBITDA 246.137",
+   "season": "2025",
+   "source_name": "São Paulo Futebol Clube demonstrações financeiras 2025 (RSM, qualified opinion), as published by the club, relatório da administração (club-adjusted EBITDA)",
+   "source_url": "https://futebolpaulista.com.br/Repositorio/Institucional/2025/420-2026-7%20SPFC%20DF%2031%2012%202025%20RAI%20PDF%20ass%20(1).pdf"
+  },
+  "pretax_result": {
+   "amount": 56981000,
+   "currency": "BRL",
+   "evidence": "SUPERÁVIT/DÉFICIT DO EXERCÍCIO 56.981",
+   "season": "2025",
+   "source_name": "São Paulo Futebol Clube demonstrações financeiras 2025 (RSM, qualified opinion), as published by the club (surplus for the year; tax-exempt association)",
+   "source_url": "https://futebolpaulista.com.br/Repositorio/Institucional/2025/420-2026-7%20SPFC%20DF%2031%2012%202025%20RAI%20PDF%20ass%20(1).pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 245095000,
+   "commercial": 121386000,
+   "currency": "BRL",
+   "evidence": "Publicidade e patrocínio 121.386 72.269",
+   "matchday": 64176000,
+   "other": null,
+   "season": "2025",
+   "source_name": "São Paulo Futebol Clube demonstrações financeiras 2025 (RSM, qualified opinion), as published by the club (professional football lines: 'Arrecadação de jogos', 'Direitos de transmissão de TV/Premiações', 'Publicidade e patrocínio'; sócio-torcedor R$56.243m, licensing R$32.743m, stadium R$118.942m and player sales R$283.756m are separate lines)",
+   "source_url": "https://futebolpaulista.com.br/Repositorio/Institucional/2025/420-2026-7%20SPFC%20DF%2031%2012%202025%20RAI%20PDF%20ass%20(1).pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "a renovação de contrato com a Superbet, patrocinadora máster do clube. O patrocínio foi ampliado até 2030",
+   "name": "Superbet",
+   "source_url": "https://www.gazetaesportiva.com/times/sao-paulo/sao-paulo-oficializa-renovacao-de-patrocinio-com-a-superbet-ate-2030/"
+  },
+  "stadium_owner": {
+   "detail": "The club's own stadium, run as the club's 'Estádio do Morumbis' business unit (its own revenue line in the accounts); naming rights sold as MorumBIS.",
+   "evidence": "A unidade de negócio “Estádio do Morumbis” apresentou superávit econômico da ordem",
+   "source_url": "https://futebolpaulista.com.br/Repositorio/Institucional/2025/420-2026-7%20SPFC%20DF%2031%2012%202025%20RAI%20PDF%20ass%20(1).pdf",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 340986000,
+   "currency": "BRL",
+   "evidence": "DESPESA COM PESSOAL 340.986 332.478",
+   "season": "2025",
+   "source_name": "São Paulo Futebol Clube demonstrações financeiras 2025 (RSM, qualified opinion), as published by the club, demonstração do valor adicionado (despesa com pessoal: salários, prêmios, benefícios; image rights of R$102.509m are separate)",
+   "source_url": "https://futebolpaulista.com.br/Repositorio/Institucional/2025/420-2026-7%20SPFC%20DF%2031%2012%202025%20RAI%20PDF%20ass%20(1).pdf"
+  }
+ },
+ "founded_evidence": "Fundado em 25 de janeiro de 1930",
+ "founded_source_url": "https://www.saopaulofc.net/institucional/sobre-o-sao-paulo-fc/",
+ "founded_year": 1930,
+ "key": "brasileirao-serie-a--sao-paulo-fc",
+ "league": "Brasileirão Série A",
+ "name": "São Paulo Futebol Clube",
+ "notes": "Accounts are calendar-year 2025 (R$ thousands in the PDF). Revenue is 'total das receitas operacionais', net of direito de arena and including R$283.756m of player sales. The auditor (RSM) gave a qualified opinion over undocumented bank withdrawals (nota 26). Net debt is stated only as a R$110m reduction, with the level in a chart; not recorded. No exact average attendance or dated social follower counts found on a citable page. Operating result recorded is the club's own adjusted EBITDA. Leadership: Harry Massis Junior was interim president from 16 Jan 2026 and is listed as Presidente on the club site (presidency page) as of Oct 2026; whether a General Assembly has since ratified the removal was not checked. SAF talks in 2026 (study presented by businessman Diego Fernandes to Harry Massis, MKT Esportivo 28 May 2026) are exploratory and not recorded as a deal. Superbet master sponsorship runs to 2030; New Balance is cited from the 2024 kit launch. Betting sponsors: a provisional measure (MP) announced 25 Sep 2026 bans betting operators and their advertising in Brazil from 6 Oct 2026 (Máquina/MKT Esportivo, 2 Oct 2026), so a betting-house shirt sponsor may not survive the season.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "constituída na forma de associação civil sem finalidade econômica",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "São Paulo Futebol Clube members (associação civil sem finalidade econômica)",
+   "since_year": 1930,
+   "source_url": "https://cdn.saopaulofc.net/2026/04/30-04-2026_sao-paulo-futebol-clube_publicado.pdf",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://cdn.saopaulofc.net/2026/04/30-04-2026_sao-paulo-futebol-clube_publicado.pdf",
+ "ownership_summary": "São Paulo Futebol Clube is a not-for-profit civil association owned by its members (associados); it has not converted its football into a SAF. President Julio Casares was removed by the Deliberative Council on 16 January 2026 and vice-president Harry Massis Junior took over; in 2026 the club has heard SAF proposals but none is agreed.",
+ "ownership_type": "member_owned",
+ "revenue": 1073921000,
+ "revenue_currency": "BRL",
+ "revenue_evidence": "TOTAL DAS RECEITAS OPERACIONAIS 1.073.921 727.572",
+ "revenue_season": "2025",
+ "revenue_source_name": "São Paulo Futebol Clube demonstrações financeiras 2025 (RSM, qualified opinion), as published by the club",
+ "revenue_source_url": "https://cdn.saopaulofc.net/2026/04/30-04-2026_sao-paulo-futebol-clube_publicado.pdf",
+ "short_name": "São Paulo",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://cdn.saopaulofc.net/2026/04/30-04-2026_sao-paulo-futebol-clube_publicado.pdf",
+  "https://futebolpaulista.com.br/Repositorio/Institucional/2025/420-2026-7%20SPFC%20DF%2031%2012%202025%20RAI%20PDF%20ass%20(1).pdf",
+  "https://www.saopaulofc.net/institucional/sobre-o-sao-paulo-fc/",
+  "https://www.saopaulofc.net/estrutura/morumbis/",
+  "https://www.saopaulofc.net/institucional/presidencia/",
+  "https://www.cnnbrasil.com.br/esportes/futebol/flamengo-lidera-lista-de-clubes-mais-valiosos-do-brasil-veja-ranking/",
+  "https://www.saopaulofc.net/sao-paulo-anuncia-superbet-como-novo-patrocinador-master/",
+  "https://www.gazetaesportiva.com/times/sao-paulo/sao-paulo-oficializa-renovacao-de-patrocinio-com-a-superbet-ate-2030/",
+  "https://www.infomoney.com.br/business/sao-paulo-fc-anuncia-fidc-para-reestruturar-divida-superior-a-r-200-mi-com-bancos/",
+  "https://www.cnnbrasil.com.br/esportes/futebol/sao-paulo/sao-paulo-conselho-deliberativo-aprova-contrato-com-a-ticketmaster/",
+  "https://cdn.saopaulofc.net/2026/01/comunicado-nomeacao-massis.pdf",
+  "https://cdn.saopaulofc.net/2026/03/relatorioigualdadesalariallote_2026_1_60517984000104.pdf",
+  "https://www.saopaulofc.net/institucional/transparencia/",
+  "https://www.mktesportivo.com/2026/10/corinthians-avalia-patrocinios-pontuais-para-o-master-nas-10-rodadas-finais-do-brasileirao/",
+  "https://www.mktesportivo.com/2026/05/sao-paulo-avalia-projeto-de-saf-apos-reuniao-entre-harry-massis-e-diego-fernandes/"
+ ],
+ "sport": "football",
+ "stadium": "MorumBIS (Estádio Cícero Pompeu de Toledo)",
+ "stadium_capacity": 66795,
+ "stadium_capacity_evidence": "Capacidade de público total: 66.795",
+ "stadium_capacity_source_url": "https://www.saopaulofc.net/estrutura/morumbis/",
+ "stadium_owner": {
+  "detail": "The club's own stadium, run as the club's 'Estádio do Morumbis' business unit (its own revenue line in the accounts); naming rights sold as MorumBIS.",
+  "evidence": "A unidade de negócio “Estádio do Morumbis” apresentou superávit econômico da ordem",
+  "source_url": "https://futebolpaulista.com.br/Repositorio/Institucional/2025/420-2026-7%20SPFC%20DF%2031%2012%202025%20RAI%20PDF%20ass%20(1).pdf",
+  "value": "club"
+ },
+ "valuation": 3244000000,
+ "valuation_currency": "BRL",
+ "valuation_evidence": "São Paulo – 3.244",
+ "valuation_source_name": "Sports Value (via CNN Brasil, 9 Dec 2025)",
+ "valuation_source_url": "https://www.cnnbrasil.com.br/esportes/futebol/flamengo-lidera-lista-de-clubes-mais-valiosos-do-brasil-veja-ranking/",
+ "valuation_year": 2025
+}

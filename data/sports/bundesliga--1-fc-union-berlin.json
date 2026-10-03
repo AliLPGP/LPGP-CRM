@@ -1,0 +1,149 @@
+{
+ "city": "Berlin",
+ "country": "Germany",
+ "deals": [
+  {
+   "amount": 24680000,
+   "currency": "EUR",
+   "date": "2025-04-30",
+   "date_text": "Subscription 26 Nov 2024 – 5 Feb 2025; registered by 30 April 2025",
+   "evidence": "wurde die Kapitalerhöhung in Höhe von 24,68 Mio. Euro vom Amtsgericht Charlottenburg nun eingetragen",
+   "headline": "Union's stadium company raises €24.68m in a share issue to members and fans",
+   "investor": "1. FC Union Berlin e.V. (40,000 new shares) and over 6,800 existing and new fan/member shareholders",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "An der Alten Försterei Stadionbetriebs AG",
+   "source_url": "https://www.stadion-an-der-alten-foersterei.de/stadionbetriebs-ag-kapitalerhoehung-eingetragen-aktien-in-produktion/",
+   "stake_pct": null,
+   "summary": "'An der Alten Försterei' Stadionbetriebs AG raised €24.68m of new equity (share capital now €30.9m) to fund the stadium expansion and refinance debt; the e.V. subscribed 40,000 shares and now holds 75.75%, the free float of over 10,000 shareholders 24.25%.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 2760000,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "Calendar year 2023",
+   "evidence": "Von diesem Recht hat die AG Gebrauch gemacht und das Stadion im Kalenderjahr 2023 für einen Betrag in Höhe von EUR 2.760.000,00 erworben.",
+   "headline": "Union's stadium company buys the Alte Försterei out of its Berlin leasehold for €2.76m",
+   "investor": "An der Alten Försterei Stadionbetriebs AG",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": "City of Berlin",
+   "source_name": "Stadionbetriebs AG securities prospectus (2024)",
+   "source_url": "https://www.stadion-an-der-alten-foersterei.de/wp-content/uploads/sites/2/2024/11/Wertpapierprospekt.pdf",
+   "stake_pct": null,
+   "summary": "The stadium company exercised the purchase right in its 2008 hereditary building lease (running to 2073) and bought the stadium in 2023 for €2.76m.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "fc-union-berlin.de",
+ "facts": {
+  "chair": {
+   "evidence": "erklärte Union-Präsident Dirk Zingler",
+   "name": "Dirk Zingler",
+   "source_url": "https://www.fc-union-berlin.de/de/meldungen/doppelter-klassenerhalt-zuschauerrekord-und-gestiegenes-eigenkapital-nWqpTN",
+   "title": "President (Präsident)"
+  },
+  "chief_executive": {
+   "evidence": "Oskar Kosche, Präsidiumsmitglied und Geschäftsführer Finanzen",
+   "name": "Oskar Kosche",
+   "source_url": "https://www.fc-union-berlin.de/de/meldungen/doppelter-klassenerhalt-zuschauerrekord-und-gestiegenes-eigenkapital-nWqpTN",
+   "title": "Member of the presidium and managing director, finance (Geschäftsführer Finanzen)"
+  },
+  "kit_supplier": {
+   "evidence": "Das Logo und die berühmten drei Streifen von Ausrüster adidas erscheinen in kontrastreichem Weiß.",
+   "name": "adidas",
+   "source_url": "https://www.fc-union-berlin.de/de/meldungen/adidas-und-union-praesentieren-das-heimtrikot-2627-86RbSu"
+  },
+  "legal_entity": {
+   "evidence": "Registernummer: VR 10579 B Registergericht: Amtsgericht Charlottenburg",
+   "name": "1. FC Union Berlin e.V.",
+   "registry": "Vereinsregister, Amtsgericht Charlottenburg",
+   "registry_id": "VR 10579 B",
+   "source_url": "https://www.fc-union-berlin.de/de/impressum-Sm1I"
+  },
+  "shirt_sponsor": {
+   "evidence": "Ebenfalls in Weiß: das Logo von Hauptsponsor Raisin, der den erfolgreichen gemeinsamen Weg auch in der neuen Spielzeit fortsetzt.",
+   "name": "Raisin",
+   "source_url": "https://www.fc-union-berlin.de/de/meldungen/adidas-und-union-praesentieren-das-heimtrikot-2627-86RbSu"
+  },
+  "stadium_owner": {
+   "detail": "Owned by 'An der Alten Försterei' Stadionbetriebs AG, which held a leasehold from Berlin to 2073 and bought the stadium outright in 2023 for €2.76m; after the 2024/25 capital increase 1. FC Union Berlin e.V. holds 75.75% and a free float of over 10,000 members, fans and sponsors 24.25%. The club rents it from the AG. Expansion to 34,500 is planned, with the team moving temporarily to the Olympiastadion.",
+   "evidence": "Von diesem Recht hat die AG Gebrauch gemacht und das Stadion im Kalenderjahr 2023 für einen Betrag in Höhe von EUR 2.760.000,00 erworben.",
+   "source_url": "https://www.stadion-an-der-alten-foersterei.de/wp-content/uploads/sites/2/2024/11/Wertpapierprospekt.pdf",
+   "value": "club"
+  }
+ },
+ "founded_evidence": "nach der Gründung des 1. FC Union Berlin im Januar 1966",
+ "founded_source_url": "https://www.stadion-an-der-alten-foersterei.de/geschichte/",
+ "founded_year": 1966,
+ "key": "bundesliga--1-fc-union-berlin",
+ "league": "Bundesliga",
+ "name": "1. FC Union Berlin e.V.",
+ "notes": "Revenue 2025/26 (€197.6m, surplus €411k, equity €8.5m, liabilities €119m) is from Tagesspiegel's report of the 3 September 2026 members' meeting; the club's own site still carries only the 2024/25 figures (Einnahmen €191.66m, profit €0.45m, equity €8.07m; members' meeting 19 May 2026). No pre-tax result, wages, breakdown, net debt, attendance, valuation or dated social counts found. Stadium expansion: €190m next phase including club house and car park, €61m from own funds (Tagesspiegel); capacity at reopening 34,500. The 2011 fan share issue (€2.723m) predates 2015 and is not listed as a deal. Press reports a €2.5m KfW loan to the stadium AG in 2020 and DKB/Land Berlin funding of the 2012-13 main stand, but those pages (kicker) could not be opened.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Mitgliederzahl 71.958 (Stand 30.09.2026)",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Members of 1. FC Union Berlin e.V.",
+   "since_year": 1966,
+   "source_url": "https://www.fc-union-berlin.de/de/verein/mitglieder-iNvD?tab=10-36",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.fc-union-berlin.de/de/verein/mitglieder-iNvD?tab=10-36",
+ "ownership_summary": "1. FC Union Berlin e.V. is a registered members' association that runs the professional teams itself and reports consolidated accounts for the e.V. and its subsidiaries; it had 71,958 members on 30 September 2026. Its stadium company is 75.75% owned by the e.V. and 24.25% by fans and sponsors; there is no outside investor in the club.",
+ "ownership_type": "member_owned",
+ "revenue": 197600000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "In der Saison 2025/26 hat Union insgesamt 197,6 Millionen Euro eingenommen und einen Überschuss von 411.000 Euro erwirtschaftet.",
+ "revenue_season": "2025-26",
+ "revenue_source_name": "Der Tagesspiegel, reporting the club's 2025/26 figures from the members' meeting of 3 September 2026",
+ "revenue_source_url": "https://www.tagesspiegel.de/sport/alte-forsterei-neue-nistplatze-stadionausbau-des-1-fc-union-beginnt-spater-und-dauert-langer-16014712.html",
+ "short_name": "Union Berlin",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.fc-union-berlin.de/de/meldungen/doppelter-klassenerhalt-zuschauerrekord-und-gestiegenes-eigenkapital-nWqpTN",
+  "https://www.tagesspiegel.de/sport/alte-forsterei-neue-nistplatze-stadionausbau-des-1-fc-union-beginnt-spater-und-dauert-langer-16014712.html",
+  "https://www.stadion-an-der-alten-foersterei.de/geschichte/",
+  "https://www.stadion-an-der-alten-foersterei.de/wp-content/uploads/sites/2/2024/11/Wertpapierprospekt.pdf",
+  "https://www.stadion-an-der-alten-foersterei.de/10-000-eigentuemer-und-30-mio-euro-stammkapital-stadionbetriebs-ag-fuer-die-zukunft-geruestet/",
+  "https://www.stadion-an-der-alten-foersterei.de/stadionbetriebs-ag-kapitalerhoehung-eingetragen-aktien-in-produktion/",
+  "https://www.stadion-an-der-alten-foersterei.de/entscheidung-ueber-stadionkapazitaet-getroffen/",
+  "https://www.fc-union-berlin.de/de/verein/mitglieder-iNvD?tab=10-36",
+  "https://www.fc-union-berlin.de/de/impressum-Sm1I",
+  "https://www.fc-union-berlin.de/de/meldungen/adidas-und-union-praesentieren-das-heimtrikot-2627-86RbSu",
+  "https://www.fc-union-berlin.de/de/meldungen/union-startet-mit-raisin-in-die-neue-saison-KA5zfC"
+ ],
+ "sport": "football",
+ "stadium": "Stadion An der Alten Försterei",
+ "stadium_capacity": 22012,
+ "stadium_capacity_evidence": "Das Stadion mit seinem nun einheitlichen Erscheinungsbild bietet mit dem Beginn der Spielzeit 2015/16 Platz für 22.012 Zuschauer.",
+ "stadium_capacity_source_url": "https://www.stadion-an-der-alten-foersterei.de/geschichte/",
+ "stadium_owner": {
+  "detail": "Owned by 'An der Alten Försterei' Stadionbetriebs AG, which held a leasehold from Berlin to 2073 and bought the stadium outright in 2023 for €2.76m; after the 2024/25 capital increase 1. FC Union Berlin e.V. holds 75.75% and a free float of over 10,000 members, fans and sponsors 24.25%. The club rents it from the AG. Expansion to 34,500 is planned, with the team moving temporarily to the Olympiastadion.",
+  "evidence": "Von diesem Recht hat die AG Gebrauch gemacht und das Stadion im Kalenderjahr 2023 für einen Betrag in Höhe von EUR 2.760.000,00 erworben.",
+  "source_url": "https://www.stadion-an-der-alten-foersterei.de/wp-content/uploads/sites/2/2024/11/Wertpapierprospekt.pdf",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

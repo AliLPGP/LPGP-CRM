@@ -1,0 +1,133 @@
+{
+ "city": "Charlotte",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 2275000000,
+   "currency": "USD",
+   "date": "2018-05-22",
+   "date_text": "May 2018 (approved); closed 9 July 2018",
+   "evidence": "is buying the team for $2.275 billion -- the most ever paid for a North American sports franchise",
+   "headline": "NFL approves David Tepper's $2.275bn purchase of the Panthers",
+   "investor": "David Tepper",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Jerry Richardson",
+   "source_name": "NFL.com",
+   "source_url": "https://www.nfl.com/news/nfl-approves-david-tepper-as-new-panthers-owner-0ap3000000933768",
+   "stake_pct": null,
+   "summary": "Hedge-fund founder David Tepper bought the Panthers from founder and majority owner Jerry Richardson for $2.275bn, then the most paid for a North American sports franchise; Tepper had to sell his 5% stake in the Pittsburgh Steelers. The sale closed on 9 July 2018.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 650000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": "June 2024",
+   "evidence": "the city will pay $650 million toward the renovation of Bank of America Stadium in return for Panthers owner David Tepper keeping the team in Charlotte through 2045",
+   "headline": "Charlotte approves $800m Bank of America Stadium renovation, city paying $650m",
+   "investor": "City of Charlotte",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "NFL.com (Associated Press)",
+   "source_url": "https://www.nfl.com/news/charlotte-city-council-approves-800-million-renovation-panthers-bank-of-america-stadium",
+   "stake_pct": null,
+   "summary": "Charlotte City Council voted 7-3 to approve an $800m joint renovation of Bank of America Stadium: the city pays $650m in return for Tepper keeping the team in Charlotte through 2045; Tepper pays the remaining $150m up front and agreed an estimated $421m in potential overages.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "panthers.com",
+ "facts": {
+  "chair": {
+   "evidence": "David A. Tepper Chairman",
+   "name": "David A. Tepper",
+   "source_url": "https://www.panthers.com/team/ownership_business/",
+   "title": "Chairman"
+  },
+  "chief_executive": {
+   "evidence": "Kristi Coleman Chief Executive Officer, Tepper Sports & Entertainment and President, Carolina Panthers",
+   "name": "Kristi Coleman",
+   "source_url": "https://www.panthers.com/team/ownership_business/",
+   "title": "Chief Executive Officer, Tepper Sports & Entertainment and President, Carolina Panthers"
+  },
+  "operating_result": {
+   "amount": 88000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$88M",
+   "season": "2025",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/carolina-panthers/"
+  },
+  "wages": {
+   "amount": 366000000,
+   "currency": "USD",
+   "evidence": "$366M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/carolina-panthers/"
+  }
+ },
+ "founded_evidence": "On October 26, 1993, after six years of hopeful anticipation, the Carolina Panthers were awarded an NFL expansion franchise.",
+ "founded_source_url": "https://www.profootballhof.com/teams/carolina-panthers/team-history/",
+ "founded_year": 1993,
+ "key": "national-football-league--carolina-panthers",
+ "league": "National Football League",
+ "name": "Carolina Panthers",
+ "notes": "Revenue, operating income, player costs and value are Forbes estimates (2025 season; value calculated September 2026, enterprise value incl. net debt). Forbes lists the price paid as $2.28B. Tepper's percentage holding is not stated on any page read, so stake_pct is null. No PE / sovereign / fund minority stake found. Stadium ownership, legal entity, attendance, kit supplier and social counts not found on a citable page (ESPN attendance page did not render).",
+ "owners": [
+  {
+   "amount": 2275000000,
+   "currency": "USD",
+   "evidence": "is buying the team for $2.275 billion -- the most ever paid for a North American sports franchise",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "David Tepper",
+   "since_year": 2018,
+   "source_url": "https://www.nfl.com/news/nfl-approves-david-tepper-as-new-panthers-owner-0ap3000000933768",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.panthers.com/news/sale-of-panthers-to-david-tepper-closes",
+ "ownership_summary": "Owned by hedge-fund founder David Tepper (Appaloosa Management), who bought the franchise from founder Jerry Richardson for $2.275bn; the NFL approved the sale on 22 May 2018 and it closed on 9 July 2018. The team sits in Tepper Sports & Entertainment alongside Charlotte FC and Bank of America Stadium. No institutional (fund) minority holder is reported.",
+ "ownership_type": "individual_family",
+ "revenue": 646000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$646M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), NFL Team Valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/carolina-panthers/",
+ "short_name": "Panthers",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/carolina-panthers/",
+  "https://www.profootballhof.com/teams/carolina-panthers/team-history/",
+  "https://www.panthers.com/team/ownership_business/",
+  "https://www.nfl.com/news/nfl-approves-david-tepper-as-new-panthers-owner-0ap3000000933768",
+  "https://www.panthers.com/news/sale-of-panthers-to-david-tepper-closes",
+  "https://www.nfl.com/news/charlotte-city-council-approves-800-million-renovation-panthers-bank-of-america-stadium"
+ ],
+ "sport": "american_football",
+ "stadium": "Bank of America Stadium",
+ "stadium_capacity": 75000,
+ "stadium_capacity_evidence": "Bank of America Stadium, a 75,000-seat venue in Charlotte",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/carolina-panthers/",
+ "stadium_owner": null,
+ "valuation": 8100000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$8.1B",
+ "valuation_source_name": "Forbes (enterprise value, calculated September 2026)",
+ "valuation_source_url": "https://www.forbes.com/teams/carolina-panthers/",
+ "valuation_year": 2026
+}

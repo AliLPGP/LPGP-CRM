@@ -1,0 +1,149 @@
+{
+ "city": "Toronto",
+ "country": "Canada",
+ "deals": [
+  {
+   "amount": 300000000,
+   "currency": null,
+   "date": "2022-07-28",
+   "date_text": "July 2022",
+   "evidence": "multi-year $300 million privately funded renovation",
+   "headline": "Blue Jays unveil $300 million privately funded Rogers Centre renovation",
+   "investor": "Toronto Blue Jays / Rogers Communications",
+   "investor_type": "corporate",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "MLB.com (Blue Jays press release)",
+   "source_url": "https://www.mlb.com/press-release/press-release-blue-jays-unveil-details-of-300-million-multi-year-rogers-centre-r",
+   "stake_pct": null,
+   "summary": "Multi-year, privately funded renovation to turn Rogers Centre from a multipurpose stadium into a ballpark. The release does not state the currency.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "Announced 2026; targeted by first half of 2027",
+   "evidence": "saying it will sell minority stakes in the portfolio to other investors by the first half of 2027",
+   "headline": "Rogers plans minority stake sales in Rogers Sports (Blue Jays, MLSE, media)",
+   "investor": null,
+   "investor_type": null,
+   "kind": "other",
+   "seller": "Rogers Communications",
+   "source_name": "CBC News",
+   "source_url": "https://www.cbc.ca/news/canada/toronto/rogers-mlse-9.7365964",
+   "stake_pct": null,
+   "summary": "After completing its purchase of the remaining 25% of MLSE from Kilmer Sports for $4.35 billion, Rogers said it will create Rogers Sports (MLSE properties plus the Blue Jays and other assets) and sell minority stakes in the portfolio, which it values at more than $25 billion, by the first half of 2027. Planned, not completed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mlb.com/bluejays",
+ "facts": {
+  "chair": {
+   "evidence": "Edward Rogers: Chairman, Toronto Blue Jays",
+   "name": "Edward Rogers",
+   "source_url": "https://www.mlb.com/bluejays/team/front-office-directory",
+   "title": "Chairman, Toronto Blue Jays"
+  },
+  "chief_executive": {
+   "evidence": "Mark A. Shapiro: President & CEO",
+   "name": "Mark A. Shapiro",
+   "source_url": "https://www.mlb.com/bluejays/team/front-office-directory",
+   "title": "President & CEO"
+  },
+  "honours": {
+   "competition": "World Series",
+   "evidence": "Championships 2",
+   "league_titles": 2,
+   "source_url": "https://www.forbes.com/teams/toronto-blue-jays/"
+  },
+  "operating_result": {
+   "amount": -71000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "-$71M",
+   "season": "2025",
+   "source_name": "Forbes (estimate) - EBITDA",
+   "source_url": "https://www.forbes.com/teams/toronto-blue-jays/"
+  },
+  "stadium_owner": {
+   "detail": "Forbes lists the venue's owner as the team (Rogers bought the former SkyDome in 2004 for $25 million).",
+   "evidence": "Venue Rogers Centre Owner(s) team",
+   "source_url": "https://www.forbes.com/teams/toronto-blue-jays/",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 299000000,
+   "currency": "USD",
+   "evidence": "$299M",
+   "season": "2025",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/toronto-blue-jays/"
+  }
+ },
+ "founded_evidence": "The Blue Jays were founded in 1977 as part of MLB's fourth round of expansion",
+ "founded_source_url": "https://www.forbes.com/teams/toronto-blue-jays/",
+ "founded_year": 1977,
+ "key": "major-league-baseball--toronto-blue-jays",
+ "league": "Major League Baseball",
+ "name": "Toronto Blue Jays",
+ "notes": "US/Canadian teams publish no accounts: revenue, player expenses and operating income (EBITDA, net of revenue sharing and stadium debt service) are Forbes estimates for the 2025 season. Forbes states Rogers paid $137M in 2000; no page read states Rogers' percentage (taken to be whole ownership but stake_pct left null). Rogers Centre purchase (2004, $25 million) predates the 2015 deal window. Legal entity, attendance, kit/sponsor and social counts not found on a citable page. The $300M renovation release gives no currency.",
+ "owners": [
+  {
+   "amount": 137000000,
+   "currency": "USD",
+   "evidence": "Rogers Communications",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Rogers Communications",
+   "since_year": 2000,
+   "source_url": "https://www.forbes.com/teams/toronto-blue-jays/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.forbes.com/teams/toronto-blue-jays/",
+ "ownership_summary": "Owned by Rogers Communications, which bought the club in 2000 (Forbes: price paid $137M). In October 2026 Rogers completed its buyout of MLSE and said it will fold the Blue Jays, MLSE and its media assets into a new Rogers Sports unit, planning to sell minority stakes in that portfolio to outside investors by the first half of 2027.",
+ "ownership_type": "corporate",
+ "revenue": 445000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$445M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB team valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/toronto-blue-jays/",
+ "short_name": "Blue Jays",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/toronto-blue-jays/",
+  "https://www.mlb.com/bluejays/team/front-office-directory",
+  "https://www.mlb.com/press-release/press-release-blue-jays-unveil-details-of-300-million-multi-year-rogers-centre-r",
+  "https://www.cbc.ca/news/canada/toronto/rogers-mlse-9.7365964",
+  "https://statsapi.mlb.com/api/v1/teams/141"
+ ],
+ "sport": "baseball",
+ "stadium": "Rogers Centre",
+ "stadium_capacity": 41500,
+ "stadium_capacity_evidence": "41,500",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/toronto-blue-jays/",
+ "stadium_owner": {
+  "detail": "Forbes lists the venue's owner as the team (Rogers bought the former SkyDome in 2004 for $25 million).",
+  "evidence": "Venue Rogers Centre Owner(s) team",
+  "source_url": "https://www.forbes.com/teams/toronto-blue-jays/",
+  "value": "club"
+ },
+ "valuation": 2500000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$2.5B Calculated March 2026",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/toronto-blue-jays/",
+ "valuation_year": 2026
+}

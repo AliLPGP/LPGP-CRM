@@ -59,7 +59,7 @@ function redirectToLogin(req: NextRequest, path: string) {
 
 function redirectHome(req: NextRequest) {
   const to = req.nextUrl.clone();
-  to.pathname = "/";
+  to.pathname = "/database";
   to.search = "";
   return NextResponse.redirect(to);
 }

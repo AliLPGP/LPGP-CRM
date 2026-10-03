@@ -47,7 +47,7 @@ type Command = {
 };
 
 const COMMANDS: Command[] = [
-  { id: "home", label: "Command centre", href: "/", icon: Gauge, keywords: "dashboard home overview today" },
+  { id: "home", label: "Command centre", href: "/crm", icon: Gauge, keywords: "dashboard home overview today" },
   { id: "pipeline", label: "Pipeline", href: "/pipeline", icon: Kanban, keywords: "board stages deals kanban" },
   { id: "leads", label: "Leads", href: "/leads", icon: List, keywords: "list prospects" },
   {

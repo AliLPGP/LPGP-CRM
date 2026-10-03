@@ -25,7 +25,7 @@ export default async function AdminPage() {
           <code className="font-mono text-xs">ADMIN_EMAILS</code> or{" "}
           <code className="font-mono text-xs">profiles.role = &apos;admin&apos;</code>).
         </p>
-        <Link href="/" className="mt-4 inline-block text-sm text-primary hover:underline">
+        <Link href="/database" className="mt-4 inline-block text-sm text-primary hover:underline">
           Back to the command centre
         </Link>
       </div>

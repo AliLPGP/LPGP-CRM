@@ -12,7 +12,7 @@ import { UrlFacets } from "@/components/intel/url-facets";
 import { formatUsd } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Borrowers — LPGP Connect" };
+export const metadata = { title: "Borrowers — LPGP Intelligence" };
 
 // The companies behind the loan books, folded from every parsed lender's
 // latest schedule of investments. The URL is the state: one flag at a time

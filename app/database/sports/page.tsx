@@ -12,7 +12,7 @@ import { getDirectorySetup } from "@/lib/directory/setup";
 import { getSessionUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Sports — LPGP Connect" };
+export const metadata = { title: "Sports — LPGP Intelligence" };
 
 const TABS = ["clubs", "investors", "deals", "leagues", "signals"] as const;
 type Tab = (typeof TABS)[number];

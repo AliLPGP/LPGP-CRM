@@ -29,7 +29,7 @@ const ACTION = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-car
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const contact = await getContact(id);
-  return { title: contact?.full_name ? `${contact.full_name} — LPGP Connect` : "Contact — LPGP Connect" };
+  return { title: contact?.full_name ? `${contact.full_name} — LPGP Intelligence` : "Contact — LPGP Intelligence" };
 }
 
 /** A text value in a stat's figure slot: smaller than a number, and honest about a blank. */

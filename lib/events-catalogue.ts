@@ -1,5 +1,5 @@
 /**
- * The LPGP Connect 2027 programme — 5 series, 25 events.
+ * The LPGP Intelligence 2027 programme — 5 series, 25 events.
  *
  * Transcribed from the confirmed producer allocation ("Events by Producer",
  * 28 September 2026), the same list the tracker holds in `programme-2027.js`.

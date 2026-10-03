@@ -46,7 +46,7 @@ const TAB_PANEL = `min-h-[320px] ${fadeIn.className}`;
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const account = await getAccount(id);
-  return { title: account ? `${account.name} — LPGP Connect` : "Account — LPGP Connect" };
+  return { title: account ? `${account.name} — LPGP Intelligence` : "Account — LPGP Intelligence" };
 }
 
 export default async function AccountPage({ params }: { params: Promise<{ id: string }> }) {

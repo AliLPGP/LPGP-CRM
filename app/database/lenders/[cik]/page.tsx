@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ cik: string }> }) {
   const { cik } = await params;
   const lender = await getCreditLender(cik);
-  return { title: lender ? `${lender.name} — loan book — LPGP Connect` : "Loan book — LPGP Connect" };
+  return { title: lender ? `${lender.name} — loan book — LPGP Intelligence` : "Loan book — LPGP Intelligence" };
 }
 
 export default async function LenderPage({ params, searchParams }: { params: Promise<{ cik: string }>; searchParams: Promise<{ as_of?: string; group?: string; q?: string }> }) {

@@ -5,7 +5,7 @@ import { WorkflowIcon } from "@/components/intel/workflow-icon";
 import { WORKFLOWS } from "@/lib/directory/workflows";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Workflows — LPGP Connect" };
+export const metadata = { title: "Workflows — LPGP Intelligence" };
 
 export default function WorkflowsPage() {
   return (

@@ -10,7 +10,7 @@ import { EmptyState } from "@/components/empty-state";
 import { StatCard, StatRow } from "@/components/stat-card";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "My deals — LPGP Connect" };
+export const metadata = { title: "My deals — LPGP Intelligence" };
 
 export default async function MyDealsPage() {
   const user = await getSessionUser();

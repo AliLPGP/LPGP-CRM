@@ -6,7 +6,7 @@ import { IntelShell } from "@/components/intel/shell";
 import { ResearchQueueRunner } from "@/components/intel/research-buttons";
 import { getSessionUser } from "@/lib/auth";
 
-export const metadata = { title: "Funds — LPGP Connect" };
+export const metadata = { title: "Funds — LPGP Intelligence" };
 export const dynamic = "force-dynamic";
 
 export default async function FundsPage() {

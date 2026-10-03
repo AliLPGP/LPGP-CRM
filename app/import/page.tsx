@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { timeAgo } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Import — LPGP Connect" };
+export const metadata = { title: "Import — LPGP Intelligence" };
 
 export default async function ImportPage() {
   const [user, last] = await Promise.all([getSessionUser(), getLastDirectoryImport()]);

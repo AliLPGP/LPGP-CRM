@@ -725,7 +725,7 @@ function Brand({ onClick }: { onClick?: () => void }) {
       {/* The mark and the name are white on the black bar; the blue is only the eyebrow line beneath. */}
       <LpgpMark className="h-7 w-7 shrink-0 text-white" />
       <span className="leading-none">
-        <span className="block text-[14px] font-bold tracking-tight text-white">LPGP Connect</span>
+        <span className="block text-[14px] font-bold tracking-tight text-white">LPGP Intelligence</span>
         <span className="wordmark mt-0.5 hidden whitespace-nowrap text-[7.5px] tracking-[0.12em] text-[var(--brass)] xl:block">Private markets intelligence</span>
       </span>
     </Link>

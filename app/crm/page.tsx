@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { formatUsd } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Command centre — LPGP Connect" };
+export const metadata = { title: "Command centre — LPGP Intelligence" };
 
 function greeting(now: Date): string {
   const h = now.getHours();

@@ -39,7 +39,7 @@ type Tab = (typeof TABS)[number];
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const cls = assetClassBySlug(slug);
-  return { title: cls ? `${cls.name} — LPGP Connect` : "Asset class — LPGP Connect" };
+  return { title: cls ? `${cls.name} — LPGP Intelligence` : "Asset class — LPGP Intelligence" };
 }
 
 export default async function AssetClassPage({

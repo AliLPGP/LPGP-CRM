@@ -80,7 +80,7 @@ async function fundInvestors(fundId: string): Promise<NamedCommitment[]> {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const fund = await getFund(id);
-  return { title: fund ? `${fund.name} — LPGP Connect` : "Fund — LPGP Connect" };
+  return { title: fund ? `${fund.name} — LPGP Intelligence` : "Fund — LPGP Intelligence" };
 }
 
 function Amount({ c }: { c: NamedCommitment }) {

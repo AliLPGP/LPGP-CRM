@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
   const k = decodeURIComponent(key);
   const [intel, borrower, holders, deals] = await Promise.all([getPortcoIntel([k]), getBorrower(k), portcoHolders(k), getPortcoDeals(k)]);
   const name = holders[0]?.name ?? intel.get(k)?.name ?? borrower?.borrower ?? deals[0]?.target;
-  return { title: name ? `${name} — LPGP Connect` : "Company — LPGP Connect" };
+  return { title: name ? `${name} — LPGP Intelligence` : "Company — LPGP Intelligence" };
 }
 
 function Money({ v, ccy }: { v: number | null; ccy: string | null }) {

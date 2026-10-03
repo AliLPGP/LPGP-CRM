@@ -19,9 +19,9 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LPGP Connect — Sales CRM",
+  title: "LPGP Intelligence",
   description:
-    "Sales CRM for LPGP Connect — pipeline, call workspace, sponsor accounts and a private-markets intelligence database, wired to the ops panel.",
+    "LPGP Intelligence — private markets intelligence: investors, fund managers, funds, performance, service providers and deals, with a sales CRM, wired to the ops panel.",
   // Installable on a phone: the manifest (app/manifest.ts), the home-screen
   // icon and the iOS web-app tags. The status bar is translucent over the
   // black rail, so the app reads edge to edge under the notch.

@@ -15,7 +15,7 @@ import { SetupNotice } from "@/components/setup-notice";
 import { IntelShell } from "@/components/intel/shell";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Discover — LPGP Connect" };
+export const metadata = { title: "Discover — LPGP Intelligence" };
 
 // The page ships without the index: the stand's figures come from the cached
 // overview, and the browser fetches the packed index from /api/directory/index

@@ -26,7 +26,7 @@ import { STRATEGY_BY_KEY } from "@/lib/directory/strategies";
 import { FUND_SIZE_BANDS } from "@/lib/directory/taxonomy";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Performance — LPGP Connect" };
+export const metadata = { title: "Performance — LPGP Intelligence" };
 
 // What limited partners report about the funds they hold. Every figure here
 // is LP-reported: the net IRR and multiple an LP's own performance review

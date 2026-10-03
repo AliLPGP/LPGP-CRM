@@ -55,7 +55,7 @@ const Reading = z.object({
 });
 
 function systemPrompt(brands: string[]): string {
-  return `You turn a sales team's plain-English search into filters for LPGP Connect's private-markets directory. The directory holds four books of firms:
+  return `You turn a sales team's plain-English search into filters for LPGP Intelligence's private-markets directory. The directory holds four books of firms:
 - LP: limited partners / institutional investors (pensions, sovereign wealth funds, insurers, endowments, foundations, family offices, consultants, DFIs).
 - GP: general partners / fund managers (private equity, venture, growth, private credit, real estate, infrastructure, hedge funds, secondaries).
 - SP: solution providers to the industry (fund administrators, auditors, law firms, banks, placement agents, technology vendors, consultants).

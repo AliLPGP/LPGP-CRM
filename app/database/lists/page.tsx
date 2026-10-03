@@ -8,7 +8,7 @@ import { SetupNotice } from "@/components/setup-notice";
 import { timeAgo } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Lists — LPGP Connect" };
+export const metadata = { title: "Lists — LPGP Intelligence" };
 
 // The team's target lists, as a ledger: one row per list, newest change
 // first, the row opening the list.

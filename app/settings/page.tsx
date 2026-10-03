@@ -6,7 +6,7 @@ import { isOpsConfigured, isOpsWriteEnabled, opsPanelUrl, pingOps } from "@/lib/
 import { ThemeToggle } from "@/components/theme-toggle";
 import { PageHeader } from "@/components/page-header";
 
-export const metadata = { title: "Settings — LPGP Connect" };
+export const metadata = { title: "Settings — LPGP Intelligence" };
 
 function StatusRow({
   label,

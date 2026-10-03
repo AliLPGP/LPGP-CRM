@@ -22,7 +22,7 @@ const CLASS_NAME = (key: string) => ASSET_CLASS_BY_KEY[key as AssetClassKey]?.na
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const w = WORKFLOW_BY_SLUG[slug];
-  return { title: w ? `${w.name} — LPGP Connect` : "Workflow — LPGP Connect" };
+  return { title: w ? `${w.name} — LPGP Intelligence` : "Workflow — LPGP Intelligence" };
 }
 
 function classTag(key: string) {

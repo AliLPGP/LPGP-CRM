@@ -1,13 +1,17 @@
 import "server-only";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
+import { unstable_cache } from "next/cache";
 import { getReadClient, isSupabaseConfigured } from "../supabase/server";
+import { DIRECTORY_TAG } from "./index-server";
 
 // What the directory still needs before it can show anything: the SQL that
 // adds its columns, and one import of the Master Directory workbook. Discover
-// and the import page both ask, fresh on every request, and walk an admin
-// through whichever step is missing — with the exact SQL to paste and a link
-// straight to this project's Supabase SQL editor.
+// and the import page both ask, and walk an admin through whichever step is
+// missing — with the exact SQL to paste and a link straight to this project's
+// Supabase SQL editor. A complete database is remembered for ten minutes (an
+// import refreshes the directory tag); anything less is asked fresh, so a
+// paste shows up on the next load.
 
 export type SqlPart = { name: string; sql: string };
 
@@ -42,7 +46,30 @@ export function supabaseSqlEditorUrl(): string | null {
   }
 }
 
+const isComplete = (s: DirectorySetup) => s.configured && s.directory && s.funds && s.portfolio && s.intelligence && s.filings && s.datasetLoaded && s.lastImport != null;
+
+// Twelve probes per page view were a quarter of Discover's server time; a
+// complete answer is cached, an incomplete one throws so it never is.
+const cachedSetup = unstable_cache(
+  async () => {
+    const s = await probeDirectorySetup();
+    if (!isComplete(s)) throw new Error("setup incomplete");
+    return s;
+  },
+  ["directory-setup-v1"],
+  { tags: [DIRECTORY_TAG], revalidate: 600 },
+);
+
 export async function getDirectorySetup(): Promise<DirectorySetup> {
+  if (!getReadClient() || !isSupabaseConfigured()) return probeDirectorySetup();
+  try {
+    return await cachedSetup();
+  } catch {
+    return probeDirectorySetup();
+  }
+}
+
+async function probeDirectorySetup(): Promise<DirectorySetup> {
   const supabase = getReadClient();
   const sqlEditorUrl = supabaseSqlEditorUrl();
   if (!supabase || !isSupabaseConfigured()) {
@@ -57,8 +84,8 @@ export async function getDirectorySetup(): Promise<DirectorySetup> {
     supabase.from("companies").select("external_id").limit(1),
     supabase.from("funds").select("service_providers").limit(1),
     supabase.from("portfolio_companies").select("id").limit(1),
-    supabase.from("fund_offerings_latest").select("id").limit(1),
-    supabase.from("credit_book").select("id").limit(1),
+    supabase.from("fund_offerings").select("id").limit(1),
+    supabase.from("credit_positions").select("id").limit(1),
     supabase.from("sports_teams").select("id").limit(1),
     supabase.from("sports_team_owners").select("id").limit(1),
     supabase.from("deals").select("id").limit(1),

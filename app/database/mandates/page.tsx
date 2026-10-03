@@ -12,7 +12,7 @@ import { STRATEGY_BY_KEY } from "@/lib/directory/strategies";
 import { INVESTOR_TYPES, INVESTOR_TYPE_BY_CODE, PLAN_STATUSES, PLAN_STATUS_LABEL, REGIONS, REGION_BY_CODE, typeNameOf, type PlanStatus } from "@/lib/directory/taxonomy";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Mandates & RFPs — LPGP Connect" };
+export const metadata = { title: "Mandates & RFPs — LPGP Intelligence" };
 
 // What investors say they will do over the next twelve months, as they say
 // it: a pacing plan in a board paper, an investment policy statement, an RFP

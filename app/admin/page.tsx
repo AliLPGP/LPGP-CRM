@@ -11,7 +11,7 @@ import { InitialsField } from "@/components/admin-initials";
 import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Admin — LPGP Connect" };
+export const metadata = { title: "Admin — LPGP Intelligence" };
 
 export default async function AdminPage() {
   const user = await getSessionUser();

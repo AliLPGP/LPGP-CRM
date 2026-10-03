@@ -300,65 +300,76 @@ export function packIndex(index: DirectoryIndex): PackedIndex {
 }
 
 export function unpackIndex(packed: PackedIndex): DirectoryIndex {
-  const dict = packed.dict ?? [];
-  const word = (i: D | undefined): string | null => (i == null ? null : (dict[i] ?? null));
-  const words = (list: number[] | undefined): string[] => (list ?? []).map((i) => dict[i]).filter((s): s is string => typeof s === "string");
+  const unpack = recordUnpacker(packed);
+  return { ...unpackShell(packed), records: packed.records.map(unpack) };
+}
+
+/** Everything of the index but its records: cheap, done in one go. */
+export function unpackShell(packed: PackedIndex): Omit<DirectoryIndex, "records"> {
   return {
     generatedAt: packed.generatedAt,
     schemaReady: packed.schemaReady,
     advThrough: packed.advThrough ?? null,
-    records: packed.records.map((w) => {
-      const p = w as unknown as Partial<Packed>;
-      const flags = p[9] ?? 0;
-      const adv = (flags >> ADV_SHIFT) & 3;
-      return {
-        id: unpackId(p[0] as string),
-        name: p[1] as string,
-        category: p[2] as Category,
-        subType: word(p[3]),
-        vertical: word(p[25]),
-        domain: p[4] ?? null,
-        city: word(p[5]),
-        state: word(p[6]),
-        country: word(p[7]),
-        zone: word(p[8]) as Zone | null,
-        aum: p[10] ?? null,
-        aumKind: word(p[11]) as AumKind | null,
-        employees: p[12] ?? null,
-        founded: p[13] ?? null,
-        adv: adv === 1 ? "Registered" : adv === 2 ? "ERA" : null,
-        privateFunds: p[31] ?? null,
-        contacts: p[14] ?? 0,
-        connectable: p[15] ?? 0,
-        description: p[16] ?? null,
-        industry: word(p[26]),
-        lines: p[27] ?? null,
-        discloses: untri((flags >> DISCLOSES_SHIFT) & 3),
-        portfolio: (flags & FLAG_PORTFOLIO) !== 0,
-        directory: (flags & FLAG_DIRECTORY) !== 0,
-        providers: p[28] ?? [],
-        clientCount: p[29] ?? 0,
-        funds: p[30] ?? 0,
-        operators: p[32] ?? 0,
-        portcos: p[33] ?? 0,
-        typeCode: word(p[19]),
-        classes: words(p[20]) as AssetClassKey[],
-        strategies: words(p[21]),
-        sectors: words(p[22]),
-        regions: words(p[23]),
-        knownFunds: p[24] ?? 0,
-        altsPct: p[35] ?? null,
-        alloc: p[36] ?? [],
-        ticketMin: p[37] ?? null,
-        ticketMax: p[38] ?? null,
-        activeAlts: untri((flags >> ACTIVE_SHIFT) & 3),
-        plans: words(p[39]),
-        raised: p[34] ?? [],
-        created: p[17] ?? null,
-        updated: p[18] ?? null,
-      };
-    }),
     brands: packed.brands.map(([key, name, companyId, clients]) => ({ key, name, companyId: companyId ? unpackId(companyId) : null, clients })),
+  };
+}
+
+/** One record off the wire. The browser unpacks the index a run at a time
+ *  with this, so a phone never spends one long task on twenty thousand. */
+export function recordUnpacker(packed: PackedIndex): (w: PackedIndex["records"][number]) => DirectoryRecord {
+  const dict = packed.dict ?? [];
+  const word = (i: D | undefined): string | null => (i == null ? null : (dict[i] ?? null));
+  const words = (list: number[] | undefined): string[] => (list ?? []).map((i) => dict[i]).filter((s): s is string => typeof s === "string");
+  return (w) => {
+    const p = w as unknown as Partial<Packed>;
+    const flags = p[9] ?? 0;
+    const adv = (flags >> ADV_SHIFT) & 3;
+    return {
+      id: unpackId(p[0] as string),
+      name: p[1] as string,
+      category: p[2] as Category,
+      subType: word(p[3]),
+      vertical: word(p[25]),
+      domain: p[4] ?? null,
+      city: word(p[5]),
+      state: word(p[6]),
+      country: word(p[7]),
+      zone: word(p[8]) as Zone | null,
+      aum: p[10] ?? null,
+      aumKind: word(p[11]) as AumKind | null,
+      employees: p[12] ?? null,
+      founded: p[13] ?? null,
+      adv: adv === 1 ? "Registered" : adv === 2 ? "ERA" : null,
+      privateFunds: p[31] ?? null,
+      contacts: p[14] ?? 0,
+      connectable: p[15] ?? 0,
+      description: p[16] ?? null,
+      industry: word(p[26]),
+      lines: p[27] ?? null,
+      discloses: untri((flags >> DISCLOSES_SHIFT) & 3),
+      portfolio: (flags & FLAG_PORTFOLIO) !== 0,
+      directory: (flags & FLAG_DIRECTORY) !== 0,
+      providers: p[28] ?? [],
+      clientCount: p[29] ?? 0,
+      funds: p[30] ?? 0,
+      operators: p[32] ?? 0,
+      portcos: p[33] ?? 0,
+      typeCode: word(p[19]),
+      classes: words(p[20]) as AssetClassKey[],
+      strategies: words(p[21]),
+      sectors: words(p[22]),
+      regions: words(p[23]),
+      knownFunds: p[24] ?? 0,
+      altsPct: p[35] ?? null,
+      alloc: p[36] ?? [],
+      ticketMin: p[37] ?? null,
+      ticketMax: p[38] ?? null,
+      activeAlts: untri((flags >> ACTIVE_SHIFT) & 3),
+      plans: words(p[39]),
+      raised: p[34] ?? [],
+      created: p[17] ?? null,
+      updated: p[18] ?? null,
+    };
   };
 }
 

@@ -6,7 +6,7 @@ import { CallWorkspace } from "@/components/workspace/call-workspace";
 import { SetupNotice } from "@/components/setup-notice";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Call workspace — LPGP Connect" };
+export const metadata = { title: "Call workspace — LPGP Intelligence" };
 
 export default async function WorkspacePage() {
   const [user, leads, ops] = await Promise.all([

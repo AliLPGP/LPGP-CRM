@@ -8,7 +8,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "LPGP Connect",
+    name: "LPGP Intelligence",
     short_name: "LPGP",
     description: "Private markets intelligence: investors, fund managers, funds, performance, service providers, deals.",
     start_url: "/database",

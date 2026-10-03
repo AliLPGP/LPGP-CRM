@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const inv = await getSportsInvestor(id);
-  return { title: inv ? `${inv.name} — sports investor — LPGP Connect` : "Investor — LPGP Connect" };
+  return { title: inv ? `${inv.name} — sports investor — LPGP Intelligence` : "Investor — LPGP Intelligence" };
 }
 
 export default async function SportsInvestorPage({ params }: { params: Promise<{ id: string }> }) {

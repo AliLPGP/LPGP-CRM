@@ -17,7 +17,7 @@ import { SetupNotice } from "@/components/setup-notice";
 import { timeAgo } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Import the Master Directory — LPGP Connect" };
+export const metadata = { title: "Import the Master Directory — LPGP Intelligence" };
 
 export default async function DirectoryImportPage() {
   const [user, samples, setup, index, shipped] = await Promise.all([

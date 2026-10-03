@@ -5,7 +5,7 @@ import { IntelShell } from "@/components/intel/shell";
 import { Stat, StatStrip } from "@/components/intel/ui";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Deals — LPGP Connect" };
+export const metadata = { title: "Deals — LPGP Intelligence" };
 
 export default async function DealsPage({ searchParams }: { searchParams: Promise<{ class?: string; kind?: string }> }) {
   const { class: cls, kind } = await searchParams;

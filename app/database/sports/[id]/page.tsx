@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const team = await getSportsTeam(id);
-  return { title: team ? `${team.short_name ?? team.name} — LPGP Connect` : "Club — LPGP Connect" };
+  return { title: team ? `${team.short_name ?? team.name} — LPGP Intelligence` : "Club — LPGP Intelligence" };
 }
 
 const VERDICT: Record<string, string> = { confirmed: "Confirmed", refuted: "Refuted", unverifiable: "Unverified" };

@@ -6,7 +6,7 @@ import { SetupNotice } from "@/components/setup-notice";
 import { IntelShell } from "@/components/intel/shell";
 import { Button } from "@/components/ui/button";
 
-export const metadata = { title: "Contacts — LPGP Connect" };
+export const metadata = { title: "Contacts — LPGP Intelligence" };
 export const dynamic = "force-dynamic";
 
 export default async function ContactsPage() {

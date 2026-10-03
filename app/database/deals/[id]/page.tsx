@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const deal = await getDeal(id);
-  return { title: deal ? `${deal.headline} — LPGP Connect` : "Deal — LPGP Connect" };
+  return { title: deal ? `${deal.headline} — LPGP Intelligence` : "Deal — LPGP Intelligence" };
 }
 
 const TARGET_KIND: Record<string, string> = { club: "Club", team: "Team", league: "League", competition: "Competition", company: "Company", fund: "Fund", asset: "Asset", other: "Other" };

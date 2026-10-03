@@ -1422,3 +1422,37 @@ main > * {
     width: 100% !important;
   }
 }
+
+/* -- Sports wears green ------------------------------------------------------ */
+/* The sports desk (clubs, investors in sport, club pages) swaps the one blue
+   for a pitch green, everywhere the blue is a token: buttons, focus, the
+   selected tint, magnitude bars, the eyebrow, the header's underline and the
+   navigation bar. AppShell sets data-accent on the frame (server-rendered, so
+   the first paint is already green) and on <html> for portalled popovers.
+   Contrast: white on #15803d 5.0:1; #22c55e on black 9.2:1; #15803d on white
+   4.8:1. The green is never a series hue: no sports screen draws a series. */
+[data-accent="sports"] {
+  --primary: #15803d;
+  --primary-foreground: #ffffff;
+  --primary-hover: #166534;
+  --primary-soft: rgba(21, 128, 61, 0.12);
+  --ring: #15803d;
+  --brand-2: #15803d;
+  --brass: #15803d;
+  --gold: #15803d;
+  --chart-bar: #16a34a;
+}
+.dark[data-accent="sports"],
+.dark [data-accent="sports"],
+[data-accent="sports"] .rail,
+[data-accent="sports"] .stand {
+  --primary: #15803d;
+  --primary-foreground: #ffffff;
+  --primary-hover: #16a34a;
+  --primary-soft: rgba(34, 197, 94, 0.16);
+  --ring: #22c55e;
+  --brand-2: #15803d;
+  --brass: #22c55e;
+  --gold: #22c55e;
+  --chart-bar: #16a34a;
+}

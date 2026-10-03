@@ -11,7 +11,7 @@ import { UrlFacets } from "@/components/intel/url-facets";
 import { CompanyLogo } from "@/components/company-logo";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Signals — LPGP Connect" };
+export const metadata = { title: "Signals — LPGP Intelligence" };
 
 // Dated market news per asset class, each item with its page. The class is
 // a tab (the header's sections key off it); the kind is a facet. The URL is

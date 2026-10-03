@@ -13,7 +13,7 @@ import { dealCountsFor, getPortcoSummary, searchPortcos } from "@/lib/directory/
 import { DEAL_BASIS_LABEL } from "@/lib/directory/portfolio";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Portfolio companies — LPGP Connect" };
+export const metadata = { title: "Portfolio companies — LPGP Intelligence" };
 
 // The companies sponsors hold, and the money announced around them. Every
 // company carries the page that names it as the sponsor's investment; every

@@ -6,14 +6,14 @@ import { IntelShell } from "@/components/intel/shell";
 import { ResearchQueueRunner } from "@/components/intel/research-buttons";
 import { getSessionUser } from "@/lib/auth";
 
-export const metadata = { title: "Funds — LPGP Connect" };
+export const metadata = { title: "Funds — LPGP Intelligence" };
 export const dynamic = "force-dynamic";
 
 export default async function FundsPage() {
   const [data, user] = await Promise.all([getFundUniverse(), getSessionUser()]);
   // The first paint carries the best-documented slice (the universe is
   // sorted that way); the rest arrives from the API once the page is up.
-  const FIRST = 3000;
+  const FIRST = 600;
   const initial = data.funds.length > FIRST ? { ...data, funds: data.funds.slice(0, FIRST) } : data;
 
   return (

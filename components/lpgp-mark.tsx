@@ -1,32 +1,26 @@
 /**
- * The LPGP hexagon mark, drawn as inline SVG so it inherits `currentColor` and
- * works on the dark rail, the light content area and the favicon alike.
+ * The LPGP mark: a rounded hexagon with a cube-face window on its left and a
+ * diagonal cut that separates the right slab, drawn as inline SVG so it takes
+ * `currentColor` (white on the black rail, black on a light surface).
  *
- * To use the exact brand asset instead, drop it at `public/lpgp-logo.svg` and
- * swap this component's body for an <img src="/lpgp-logo.svg" />.
+ * The geometry is traced from the brand's own asset (the site redesign's
+ * header); `public/icons/icon.svg` carries the same drawing on black for the
+ * favicon and the installable app's icons.
  */
 export function LpgpMark({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 48 48"
-      className={className}
-      fill="none"
-      role="img"
-      aria-label="LPGP"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Outer hexagon — flat top and bottom, angled shoulders */}
-      <path
-        d="M24 3.4 41.2 13.3a2.2 2.2 0 0 1 1.1 1.9v17.6a2.2 2.2 0 0 1-1.1 1.9L24 44.6a2.2 2.2 0 0 1-2.2 0L4.6 34.7a2.2 2.2 0 0 1-1.1-1.9V15.2a2.2 2.2 0 0 1 1.1-1.9L21.8 3.4a2.2 2.2 0 0 1 2.2 0Z"
-        stroke="currentColor"
-        strokeWidth="3.4"
-        strokeLinejoin="round"
-      />
-      {/* Inner angular band */}
-      <path
-        d="M17.6 31.7V19.4a1.6 1.6 0 0 1 .8-1.4l6.4-3.7a1.6 1.6 0 0 1 2.4 1.4v12.3a1.6 1.6 0 0 1-.8 1.4l-6.4 3.7a1.6 1.6 0 0 1-2.4-1.4Z"
-        fill="currentColor"
-      />
+    <svg viewBox="0 0 100 100" className={className} role="img" aria-label="LPGP" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <mask id="lpgp-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+          {/* the hexagon, corners rounded by the stroke */}
+          <path d="M50 8 88 29V71L50 92 12 71V29Z" fill="#fff" stroke="#fff" strokeWidth="9" strokeLinejoin="round" />
+          {/* the cube-face window */}
+          <path d="M35 33 59 46V65L35 78Z" fill="#000" stroke="#000" strokeWidth="4" strokeLinejoin="round" />
+          {/* the diagonal cut */}
+          <path d="M53 7 88 76" stroke="#000" strokeWidth="7" strokeLinecap="round" />
+        </mask>
+      </defs>
+      <rect width="100" height="100" fill="currentColor" mask="url(#lpgp-cut)" />
     </svg>
   );
 }

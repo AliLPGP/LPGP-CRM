@@ -1,6 +1,10 @@
 import "server-only";
+import { cache } from "react";
 import { getReadClient } from "@/lib/supabase/server";
 import { chunk, fetchAll } from "@/lib/supabase/paged";
+import { bigCache } from "@/lib/supabase/big-cache";
+import { cachedOrDirect } from "@/lib/supabase/safe";
+import { tableVersion } from "@/lib/supabase/version";
 import type { SourceRef } from "@/lib/fund-details";
 import { fundClass, isAssetClassKey, type AssetClassKey } from "./asset-classes";
 import { strategiesInFundName } from "./strategies";
@@ -444,13 +448,28 @@ function median(values: number[]): number | null {
   return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
 }
 
-/** The whole performance sample: every fund an LP disclosure gives a figure for, placed in its class and ranked within its class and vintage. */
-async function loadPerformance(): Promise<FundPerformanceRow[]> {
+/** The whole performance sample: every fund an LP disclosure gives a figure for, placed in its class and ranked within its class and vintage.
+ *  Cached per version of the tables behind fund_performance_mv (refreshed by
+ *  the database every half hour), and read once per request: the page and its
+ *  manager tab used to page the sample and look up its managers twice, every visit. */
+const loadPerformance = cache(async (): Promise<FundPerformanceRow[]> => {
+  const version = await tableVersion("commitments", "funds", "companies");
+  return cachedOrDirect(() => cachedPerformance(version), () => buildPerformance(), []);
+});
+
+const cachedPerformance = bigCache("fund-performance-v1", async () => {
+  const rows = await buildPerformance();
+  // Thrown, not returned empty: a failed read must never be cached.
+  if (!rows.length) throw new Error("performance sample unavailable");
+  return rows;
+}, { tags: ["intelligence"], revalidate: 1800 });
+
+async function buildPerformance(): Promise<FundPerformanceRow[]> {
   const supabase = getReadClient();
   if (!supabase) return [];
   const raw = await fetchAll<Record<string, unknown>>((from, to, first) =>
     supabase
-      .from("fund_performance")
+      .from("fund_performance_mv")
       .select(PERFORMANCE_COLUMNS, first ? { count: "exact" } : undefined)
       .order("lps", { ascending: false })
       .order("fund_id")

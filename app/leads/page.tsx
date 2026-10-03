@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/page-header";
 import { SetupNotice } from "@/components/setup-notice";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Leads — LPGP Connect" };
+export const metadata = { title: "Leads — LPGP Intelligence" };
 
 export default async function LeadsPage() {
   const [user, leads, profiles] = await Promise.all([

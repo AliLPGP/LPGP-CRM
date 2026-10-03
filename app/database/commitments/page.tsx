@@ -11,7 +11,7 @@ import { formatMoney } from "@/lib/directory/intelligence-types";
 import { getAllDisclosedCommitments, type NamedCommitment } from "@/lib/directory/queries";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "LP commitments — LPGP Connect" };
+export const metadata = { title: "LP commitments — LPGP Intelligence" };
 
 // Every commitment a limited partner has disclosed to a fund, from the LPs'
 // own reports and minutes and the public registers. A commitment keeps the

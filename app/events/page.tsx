@@ -10,7 +10,7 @@ import { EmptyState } from "@/components/empty-state";
 import { StatCard, StatRow } from "@/components/stat-card";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Event performance — LPGP Connect" };
+export const metadata = { title: "Event performance — LPGP Intelligence" };
 
 // Targets can be set per currency, but the roll-up has to pick one to add in.
 // GBP is the reporting currency; per-event figures keep their own.

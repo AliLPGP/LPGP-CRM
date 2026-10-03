@@ -53,7 +53,7 @@ const EAGER: ReadonlySet<Tab> = new Set<Tab>(["overview", "manager", "people", "
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const company = await profileCompany(id);
-  return { title: company ? `${company.name} — LPGP Connect` : "Company — LPGP Connect" };
+  return { title: company ? `${company.name} — LPGP Intelligence` : "Company — LPGP Intelligence" };
 }
 
 export default async function CompanyProfile({

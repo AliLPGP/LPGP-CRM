@@ -7,7 +7,7 @@ import { IntelShell } from "@/components/intel/shell";
 import { SetupNotice } from "@/components/setup-notice";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Market map — LPGP Connect" };
+export const metadata = { title: "Market map — LPGP Intelligence" };
 
 // The map reads the same index Discover does, from the same browser-side
 // cache: a reader coming from Discover has it already, and one landing here

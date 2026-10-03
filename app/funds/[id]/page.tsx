@@ -40,7 +40,7 @@ const PERF_COLUMNS = "lps, net_irr_median, net_irr_min, net_irr_max, multiple_me
 async function fundPerformance(fundId: string): Promise<Perf | null> {
   const supabase = getReadClient();
   if (!supabase) return null;
-  const { data, error } = await supabase.from("fund_performance").select(PERF_COLUMNS).eq("fund_id", fundId).limit(1);
+  const { data, error } = await supabase.from("fund_performance_mv").select(PERF_COLUMNS).eq("fund_id", fundId).limit(1);
   const r = (data as Record<string, unknown>[] | null)?.[0];
   if (error || !r) return null;
   return {
@@ -80,7 +80,7 @@ async function fundInvestors(fundId: string): Promise<NamedCommitment[]> {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const fund = await getFund(id);
-  return { title: fund ? `${fund.name} — LPGP Connect` : "Fund — LPGP Connect" };
+  return { title: fund ? `${fund.name} — LPGP Intelligence` : "Fund — LPGP Intelligence" };
 }
 
 function Amount({ c }: { c: NamedCommitment }) {

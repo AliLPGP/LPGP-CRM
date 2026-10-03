@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ key: stri
   const { key } = await params;
   const index = await getDirectoryIndex();
   const brand = index.brands.find((b) => b.key === key);
-  return { title: brand ? `${brand.name} — providers — LPGP Connect` : "Provider — LPGP Connect" };
+  return { title: brand ? `${brand.name} — providers — LPGP Intelligence` : "Provider — LPGP Intelligence" };
 }
 
 /** Distinct values with counts; spellings that differ only in case or

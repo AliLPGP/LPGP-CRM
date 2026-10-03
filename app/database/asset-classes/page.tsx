@@ -6,7 +6,7 @@ import { LogoStack } from "@/components/directory/viz";
 import { formatUsd } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Asset classes — LPGP Connect" };
+export const metadata = { title: "Asset classes — LPGP Intelligence" };
 
 export default async function AssetClassesPage() {
   const classes = await getClassSummaries();

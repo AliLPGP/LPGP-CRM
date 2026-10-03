@@ -14,7 +14,7 @@ import { SetupNotice } from "@/components/setup-notice";
 import { StatCard, StatRow } from "@/components/stat-card";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Accounts — LPGP Connect" };
+export const metadata = { title: "Accounts — LPGP Intelligence" };
 
 export default async function AccountsPage() {
   let [accounts, ops] = await Promise.all([listAccounts(), opsSummaries("account")]);

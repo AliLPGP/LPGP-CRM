@@ -9,7 +9,7 @@ import { UrlFacets } from "@/components/intel/url-facets";
 import { formatUsd } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Loan books — LPGP Connect" };
+export const metadata = { title: "Loan books — LPGP Intelligence" };
 
 // Every parsed BDC loan book, largest first, and a borrower search across all
 // of them. The URL is the state: `q` is the borrower looked for.

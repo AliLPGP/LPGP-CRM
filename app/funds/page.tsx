@@ -13,7 +13,7 @@ export default async function FundsPage() {
   const [data, user] = await Promise.all([getFundUniverse(), getSessionUser()]);
   // The first paint carries the best-documented slice (the universe is
   // sorted that way); the rest arrives from the API once the page is up.
-  const FIRST = 3000;
+  const FIRST = 600;
   const initial = data.funds.length > FIRST ? { ...data, funds: data.funds.slice(0, FIRST) } : data;
 
   return (

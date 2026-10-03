@@ -15,10 +15,10 @@ import { getPackedIndexJson } from "@/lib/directory/index-server";
 
 export const dynamic = "force-dynamic";
 
-// The URL carries the version, so the browser may keep a versioned answer for
-// an hour too: a preload hint replayed on a client-side navigation then comes
-// from the HTTP cache, not the network.
-const VERSIONED = "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800";
+// The URL carries the version, so the answer to it never changes: the browser
+// keeps it for a week and a phone that comes back the next morning reads two
+// megabytes from disk instead of the network. A new version is a new URL.
+const VERSIONED = "public, max-age=604800, s-maxage=86400, stale-while-revalidate=604800";
 /** No version in the URL: nothing to key the cache by, so only briefly. */
 const UNVERSIONED = "public, max-age=60, s-maxage=60, stale-while-revalidate=300";
 

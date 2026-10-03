@@ -40,7 +40,7 @@ const PERF_COLUMNS = "lps, net_irr_median, net_irr_min, net_irr_max, multiple_me
 async function fundPerformance(fundId: string): Promise<Perf | null> {
   const supabase = getReadClient();
   if (!supabase) return null;
-  const { data, error } = await supabase.from("fund_performance").select(PERF_COLUMNS).eq("fund_id", fundId).limit(1);
+  const { data, error } = await supabase.from("fund_performance_mv").select(PERF_COLUMNS).eq("fund_id", fundId).limit(1);
   const r = (data as Record<string, unknown>[] | null)?.[0];
   if (error || !r) return null;
   return {

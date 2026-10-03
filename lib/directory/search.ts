@@ -123,69 +123,93 @@ function add(map: Map<string, number>, terms: string[], weight: number) {
 }
 
 export function buildSearchIndex(records: DirectoryRecord[]): SearchIndex {
+  const b = searchIndexBuilder();
+  b.add(records);
+  b.normalize(0, records.length);
+  return b.result();
+}
+
+/**
+ * The same index, built a run of records at a time. A phone spends seconds
+ * tokenising twenty thousand firms; in one task that freezes every tap, so
+ * the browser builds it in slices (`add` a run, yield, `add` the next, then
+ * `normalize` in runs, then `result`). buildSearchIndex is the one-shot form.
+ */
+export function searchIndexBuilder() {
   const docs: Doc[] = [];
+  const ids: string[] = [];
   const df = new Map<string, number>();
   const profileDf = new Map<string, number>();
   const surfaces = new Map<string, string>();
   let total = 0;
 
-  for (const r of records) {
-    const tf = new Map<string, number>();
-    const profile = new Map<string, number>();
-    const fields: [string | null, number, boolean][] = [
-      [r.name, 3, false],
-      [r.subType, 2.5, true],
-      [r.vertical, 2, true],
-      [r.industry, 0.5, true],
-      [r.lines, 1.5, true],
-      [r.description, 1, true],
-      [[r.city, r.state, r.country].filter(Boolean).join(" "), 1, false],
-    ];
-    let len = 0;
-    for (const [text, weight, isProfile] of fields) {
-      const toks = tokenize(text);
-      if (!toks.length) continue;
-      len += toks.length;
-      add(tf, toks, weight);
-      add(tf, clauseBigrams(text, tokenize), weight * 1.5);
-      if (isProfile) {
-        add(profile, profileTerms(text, surfaces), weight);
-        // Phrases from the full word sequence, so dropping a stop word can't
-        // glue its neighbours into a phrase nobody wrote.
-        add(
-          profile,
-          clauseBigrams(text, tokenize).filter((b) => !b.split("_").some((t) => PROFILE_STOP.has(t) || /^\d+$/.test(t))),
-          weight,
-        );
-      }
-    }
-    total += len;
-    for (const t of tf.keys()) df.set(t, (df.get(t) ?? 0) + 1);
-    for (const t of profile.keys()) profileDf.set(t, (profileDf.get(t) ?? 0) + 1);
-    docs.push({ tf, len, profile, profileNorm: 0 });
-  }
-
-  const n = records.length;
-  // Profile vectors are TF-IDF weighted and normalised once, here.
-  for (const d of docs) {
-    let norm = 0;
-    for (const [t, w] of d.profile) {
-      const idf = Math.log(1 + n / (profileDf.get(t) ?? 1));
-      const v = (1 + Math.log(w)) * idf;
-      d.profile.set(t, v);
-      norm += v * v;
-    }
-    d.profileNorm = Math.sqrt(norm);
-  }
-
   return {
-    docs,
-    df,
-    profileDf,
-    avgLen: n ? total / n : 1,
-    n,
-    pos: new Map(records.map((r, i) => [r.id, i])),
-    surfaces,
+    add(records: DirectoryRecord[]) {
+      for (const r of records) {
+        const tf = new Map<string, number>();
+        const profile = new Map<string, number>();
+        const fields: [string | null, number, boolean][] = [
+          [r.name, 3, false],
+          [r.subType, 2.5, true],
+          [r.vertical, 2, true],
+          [r.industry, 0.5, true],
+          [r.lines, 1.5, true],
+          [r.description, 1, true],
+          [[r.city, r.state, r.country].filter(Boolean).join(" "), 1, false],
+        ];
+        let len = 0;
+        for (const [text, weight, isProfile] of fields) {
+          const toks = tokenize(text);
+          if (!toks.length) continue;
+          len += toks.length;
+          add(tf, toks, weight);
+          add(tf, clauseBigrams(text, tokenize), weight * 1.5);
+          if (isProfile) {
+            add(profile, profileTerms(text, surfaces), weight);
+            // Phrases from the full word sequence, so dropping a stop word can't
+            // glue its neighbours into a phrase nobody wrote.
+            add(
+              profile,
+              clauseBigrams(text, tokenize).filter((b) => !b.split("_").some((t) => PROFILE_STOP.has(t) || /^\d+$/.test(t))),
+              weight,
+            );
+          }
+        }
+        total += len;
+        for (const t of tf.keys()) df.set(t, (df.get(t) ?? 0) + 1);
+        for (const t of profile.keys()) profileDf.set(t, (profileDf.get(t) ?? 0) + 1);
+        docs.push({ tf, len, profile, profileNorm: 0 });
+        ids.push(r.id);
+      }
+    },
+    /** Profile vectors are TF-IDF weighted and normalised once every record is in. */
+    normalize(from: number, to: number) {
+      const n = docs.length;
+      for (let i = from; i < Math.min(to, n); i++) {
+        const d = docs[i];
+        let norm = 0;
+        for (const [t, w] of d.profile) {
+          const idf = Math.log(1 + n / (profileDf.get(t) ?? 1));
+          const v = (1 + Math.log(w)) * idf;
+          d.profile.set(t, v);
+          norm += v * v;
+        }
+        d.profileNorm = Math.sqrt(norm);
+      }
+    },
+    size: () => docs.length,
+    result(): SearchIndex {
+      const n = docs.length;
+      return {
+        docs,
+        df,
+        profileDf,
+        avgLen: n ? total / n : 1,
+        n,
+        pos: new Map(ids.map((id, i) => [id, i])),
+        surfaces,
+      };
+    },
   };
 }
 

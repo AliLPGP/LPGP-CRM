@@ -49,7 +49,8 @@ export function QuickLook({
     return () => document.removeEventListener("keydown", onKey);
   }, [record, onClose]);
 
-  const similar = useMemo(() => (record ? findSimilar([record], dir.records, dir.brands, dir.search, 5) : []), [record, dir]);
+  // Lookalikes read the keyword index; until it is built the panel shows none.
+  const similar = useMemo(() => (record && dir.searchReady ? findSimilar([record], dir.records, dir.brands, dir.search, 5) : []), [record, dir]);
 
   const byRole = useMemo(() => {
     if (!record) return [];

@@ -13,11 +13,13 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
-    // Client router cache: reuse a just-visited dynamic page for 30s instead
-    // of refetching — makes hopping between Pipeline/Leads/Database instant.
+    // Client router cache: reuse a just-visited dynamic page for three
+    // minutes instead of refetching, so going back and forth between desks is
+    // instant. A write still refreshes at once: server actions revalidate the
+    // paths they touch, which clears these entries.
     staleTimes: {
-      dynamic: 30,
-      static: 180,
+      dynamic: 180,
+      static: 600,
     },
   },
 };

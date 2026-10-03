@@ -6,7 +6,7 @@ import { IntelShell } from "@/components/intel/shell";
 import { DealTable, SignalList } from "@/components/intel/tables";
 import { Box, Empty, Stat, StatStrip, SubTabs, Tag } from "@/components/intel/ui";
 import { INVESTOR_TYPE_LABEL } from "@/lib/directory/asset-classes";
-import { getAllDeals, getSignals, getTeamOwners, listSportsInvestors, listSportsTeams } from "@/lib/directory/intelligence-queries";
+import { getDeals, getSignals, getTeamOwners, listSportsInvestors, listSportsTeams } from "@/lib/directory/intelligence-queries";
 import { CLUB_ROW_FIELDS, formatMoney, SPORT_LABEL, type ClubRow } from "@/lib/directory/intelligence-types";
 import { getDirectorySetup } from "@/lib/directory/setup";
 import { getSessionUser } from "@/lib/auth";
@@ -23,7 +23,7 @@ export default async function SportsPage({ searchParams }: { searchParams: Promi
   const [teams, investors, deals, signals, setup, user] = await Promise.all([
     listSportsTeams(),
     listSportsInvestors(),
-    getAllDeals("sports"),
+    getDeals({ assetClass: "sports", limit: 500 }),
     getSignals({ assetClass: "sports", limit: 100 }),
     getDirectorySetup(),
     getSessionUser(),

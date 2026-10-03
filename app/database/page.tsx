@@ -18,10 +18,14 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Discover — LPGP Intelligence" };
 
 // The page ships without the index: the stand's figures come from the cached
-// overview, and the browser fetches the packed index from /api/directory/index
-// (preloaded from the head, so the request is in flight before hydration).
+// overview, and the browser fetches the packed index from /api/directory/index.
+// A results view (any filter, search or view in the URL) needs it at once, so
+// the request is preloaded from the head; the home draws from the overview
+// alone, so there the index waits for the page's own load and never competes
+// with the scripts a phone needs to become usable.
 
-export default async function DatabasePage() {
+export default async function DatabasePage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const asked = Object.keys(await searchParams).length > 0;
   const [overview, user, lists, saved, setup, recent] = await Promise.all([
     getDirectoryOverview(),
     getSessionUser(),
@@ -34,7 +38,7 @@ export default async function DatabasePage() {
   const parts = isAdmin ? await missingSql(setup) : [];
   const needsSetup = setup.configured && (parts.length > 0 || !setup.lastImport || !setup.datasetLoaded);
 
-  preload(indexUrl(overview.version), { as: "fetch", crossOrigin: "anonymous" });
+  if (asked) preload(indexUrl(overview.version), { as: "fetch", crossOrigin: "anonymous" });
 
   let geometry = null;
   try {

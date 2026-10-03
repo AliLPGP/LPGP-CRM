@@ -200,14 +200,17 @@ export function Discover({
   commitments: OverviewCommitment[];
 }) {
   const load = useDirectoryIndex(overview.version);
-  // Everything downstream computes against the empty directory until the
-  // real one is in: the same code paths, no results, and no re-fetch later.
-  const ready = load.dir != null;
   const dir = load.dir ?? EMPTY_DIRECTORY;
   const router = useRouter();
   const params = useSearchParams();
   const pathname = usePathname();
   const filters = useMemo(() => filtersFromParams(params), [params]);
+  // Everything downstream computes against the empty directory until the
+  // real one is in: the same code paths, no results, and no re-fetch later.
+  // Facets and the ledger are ready once the firms are unpacked; a keyword
+  // or lookalike search also waits for the keyword index behind them.
+  const wantsSearch = filters.keywords.trim() !== "" || filters.like.length > 0;
+  const ready = load.dir != null && (dir.searchReady || !wantsSearch);
   const q = params.get("q") ?? "";
   const viewParam = params.get("view");
   // The URL's view wins; with none asked for, a phone reads cards and
@@ -330,7 +333,7 @@ export function Discover({
   const regulatory = everything.raum;
   const advThrough = overview.advThrough ? new Date(overview.advThrough).toLocaleDateString("en-GB", { month: "short", year: "numeric" }) : null;
   const sorts = SORTS.filter((s) => (s.key !== "relevance" || results.mode === "keywords") && (s.key !== "similarity" || results.mode === "similar"));
-  const loading = loadingLabel(load.phase, everything.total);
+  const loading = loadingLabel(load.dir && !ready ? "indexing" : load.phase, everything.total);
 
   return (
     <div className="space-y-4" data-index-phase={load.phase}>

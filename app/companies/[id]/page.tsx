@@ -61,9 +61,9 @@ export default async function CompanyProfile({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ tab?: string }>;
+  searchParams: Promise<{ tab?: string; class?: string }>;
 }) {
-  const [{ id }, { tab: tabParam }] = await Promise.all([params, searchParams]);
+  const [{ id }, { tab: tabParam, class: classParam }] = await Promise.all([params, searchParams]);
   const [company, counts, index, lists, onLists] = await Promise.all([
     profileCompany(id),
     getProfileCounts(id),
@@ -130,7 +130,7 @@ export default async function CompanyProfile({
 
   // The tab fetched on request, when that is the one asked for.
   const current =
-    tab === "investor" && company.category === "LP" ? <InvestorTab company={company} />
+    tab === "investor" && company.category === "LP" ? <InvestorTab company={company} cls={classParam ?? null} base={base} />
     : tab === "deals" ? <DealsTab company={company} />
     : tab === "funds" && tabs.some((t) => t.key === "funds") ? <FundsTab company={company} />
     : tab === "portfolio" && ownsCompanies ? <PortfolioTab company={company} />

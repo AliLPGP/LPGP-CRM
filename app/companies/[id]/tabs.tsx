@@ -27,6 +27,8 @@ import { Commitments, DealLedger } from "@/components/directory/profile-ledgers"
 import { AdvPanel, ConnectableBadge, FiledProviders, Overview, ProviderClients, SimilarFirms, type RoleRank } from "@/components/directory/profile-sections";
 import { FundLineup } from "@/components/directory/fund-lineup";
 import { InvestorProfile, ManagerProfile } from "@/components/directory/investor-profile";
+import { LpClassView, LpOverview } from "@/components/directory/lp-overview";
+import { getLpBook } from "@/lib/directory/lp-profile";
 import { OperatingPartners, PortfolioCompanies } from "@/components/directory/operators-portfolio";
 import { PeerBenchmark } from "@/components/directory/peer-benchmark";
 import { DealTable, SignalList } from "@/components/intel/tables";
@@ -64,17 +66,20 @@ const more = "text-[11.5px] text-muted-foreground hover:text-foreground";
 
 export async function OverviewTab({ company, dealCount, base }: { company: Company; dealCount: number; base: string }) {
   const id = company.id;
-  const [contacts, deals, providers, signals, similar, user] = await Promise.all([
+  const [contacts, deals, providers, signals, similar, user, book] = await Promise.all([
     profileContacts(id),
     profileDeals(id),
     profileProviders(id),
     profileSignals(id),
     similarFirms(id),
     getSessionUser(),
+    company.category === "LP" ? getLpBook(id) : Promise.resolve(null),
   ]);
   const meta = CATEGORIES[company.category];
   const isAdmin = user?.role === "admin";
   return (
+    <div className="space-y-4">
+    {book ? <LpOverview book={book} contacts={contacts.length} connectable={contacts.filter((c) => c.connectable).length} base={base} /> : null}
     <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
       <div className="space-y-4">
         <Overview company={company} />
@@ -132,10 +137,16 @@ export async function OverviewTab({ company, dealCount, base }: { company: Compa
         ) : null}
       </div>
     </div>
+    </div>
   );
 }
 
-export async function InvestorTab({ company }: { company: Company }) {
+export async function InvestorTab({ company, cls, base }: { company: Company; cls?: string | null; base: string }) {
+  // One asset class asked for: that class's funds, managers and figures.
+  if (cls) {
+    const book = await getLpBook(company.id);
+    return <LpClassView book={book} cls={cls} base={base} />;
+  }
   // The researched investor profile and plans (migration 0033); null and
   // empty until the research job has been by, or on an older database.
   const [profile, plans, commitments] = await Promise.all([getInvestorProfile(company.id), getInvestorPlans(company.id), getProfileCommitments(company.id)]);

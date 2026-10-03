@@ -242,6 +242,18 @@ boundaries and keeps comment text ASCII.
   and the investors in sport they name. `components/intel/club-file.tsx`
   draws the facts on the club page. The sports desk wears green
   (`data-accent="sports"` on the frame, tokens in `globals.css`).
+- **The LP book** (`lib/directory/lp-profile.ts`, `components/directory/
+  lp-overview.tsx`) — an LP's page opens on what it has disclosed: a card per
+  asset class (funds, managers, stated amounts per currency, the median of
+  the net IRRs the LP itself reports) that opens `?tab=investor&class=<key>`,
+  the class's funds with manager, year, amount, the LP's own net IRR,
+  multiple and called share, the sample median across every LP holding the
+  fund (`fund_performance_mv`), the page that states it, and the managers
+  behind them. A commitment is placed by the LP's own programme, else the
+  fund's name, else the manager's type (`commitmentClass`); nothing is
+  estimated, amounts never cross currencies, and a fund with no reported
+  figure has none. The researched investor profile (0033) still fills the
+  type, AUM, allocations, preferences and plans once the research has run.
 - **Taxonomy** (`lib/directory/taxonomy.ts`, with `asset-classes.ts` and `strategies.ts`) — the vocabulary a private-markets data product searches by, at its level of detail: nine asset classes (natural resources is its own class since 0033-era code), strategies on a **strategy** axis (buyout, growth, co-investment, direct lending, core / core-plus / value-add / opportunistic, seed / early stage, …) and a **sector** axis (property types, infrastructure sectors, the industries a PE fund names), investor types (public and private pensions, superannuation, insurers, endowments, foundations, sovereign wealth, DFIs, banks, asset and wealth managers, single and multi family offices, fund of funds, consultants…), manager and provider types, core industries with industry focus, target regions above `geo.ts`'s HQ subregions, AUM / ticket / fund-size bands, and the mandate vocabulary. Every classifier reads words the record carries — a sub-type, a fund's legal name, a firm's own overview, a stated focus — and places nothing those words do not say. The Discover index carries the result per firm (`typeCode`, `classes`, `strategies`, `sectors`, `regions`, `knownFunds`, allocation and ticket figures, `plans`, and per-class `raised` from stated fund sizes in the last ten years), the rail filters by it, the results table has a column registry with a chooser (`discover.columns` in localStorage, per-viewer), and the funds page facets by strategy, sector, region, size band and status. No dry powder: nobody states it and we do not estimate.
 - **Header** (`components/top-nav.tsx`) — the product's navigation is the black top bar: one panel per section (investors, fund managers, funds, performance, service providers split into fund and transaction services, companies & deals, tools), every page listed once, the quick search, and the sales CRM as one menu that a reader can put away (`nav:crm` in localStorage) until it moves to its own product. The section a page belongs to is decided by `INTEL_NAV`'s matchers in `components/intel/shell.tsx`; `IntelShell` no longer draws section tabs by default.
 - **The demo standard** — every list screen is held to one shape: a

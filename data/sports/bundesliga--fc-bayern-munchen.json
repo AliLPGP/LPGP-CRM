@@ -1,0 +1,191 @@
+{
+ "city": "Munich",
+ "country": "Germany",
+ "deals": [],
+ "domain": "fcbayern.com",
+ "facts": {
+  "attendance": {
+   "average": 75000,
+   "evidence": "sell-out crowds of 81,365 and 75,000 respectively",
+   "season": "2025-26",
+   "source_name": "bundesliga.com",
+   "source_url": "https://www.bundesliga.com/en/bundesliga/news/stadiums-germany-2026-27-munich-dortmund-37962"
+  },
+  "chair": {
+   "evidence": "Herbert Hainer - FC Bayern München e.V. president",
+   "name": "Herbert Hainer",
+   "source_url": "https://web.archive.org/web/20251116064249/https://fcbayern.com/en/club/company/supervisory-board-members",
+   "title": "President, FC Bayern München e.V. (sits on the FC Bayern München AG supervisory board)"
+  },
+  "chief_executive": {
+   "evidence": "Chief Executive Officer Jan-Christian Dreesen",
+   "name": "Jan-Christian Dreesen",
+   "source_url": "https://web.archive.org/web/20260314163732/https://fcbayern.com/en/club/company",
+   "title": "Chief Executive Officer, FC Bayern München AG"
+  },
+  "kit_supplier": {
+   "evidence": "its players are now locked in to wear Adidas jerseys through 2030, according to the company",
+   "name": "adidas",
+   "source_url": "https://sgbonline.com/adidas-extends-partnership-with-fc-bayern-munich/"
+  },
+  "legal_entity": {
+   "evidence": "HRB 140475 Amtsgericht München",
+   "name": "FC Bayern München AG",
+   "registry": "Handelsregister, Amtsgericht München",
+   "registry_id": "HRB 140475",
+   "source_url": "https://web.archive.org/web/20251115131148/https://fcbayern.com/de/impressum"
+  },
+  "operating_result": {
+   "amount": 187800000,
+   "basis": "EBITDA",
+   "currency": "EUR",
+   "evidence": "Das operative Ergebnis (EBITDA) stieg um 11,3 Prozent auf 187,8 Millionen Euro.",
+   "season": "2024-25",
+   "source_name": "FC Bayern München AG, Jahresabschluss 2024/25 (group)",
+   "source_url": "https://web.archive.org/web/20251102233314/https://fcbayern.com/binaries/content/assets/downloads/homepage/jhv/2025/jahresabschluss-24-25.pdf"
+  },
+  "pretax_result": {
+   "amount": 42500000,
+   "currency": "EUR",
+   "evidence": "Ergebnis vor Steuern belief sich auf 42,5 Millionen Euro",
+   "season": "2024-25",
+   "source_name": "FC Bayern München AG, Jahresabschluss 2024/25 (group)",
+   "source_url": "https://web.archive.org/web/20251102233314/https://fcbayern.com/binaries/content/assets/downloads/homepage/jhv/2025/jahresabschluss-24-25.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 105300000,
+   "commercial": 240400000,
+   "currency": "EUR",
+   "evidence": "Einnahmen aus dem Spielbetrieb 260,7 Mio. Euro",
+   "matchday": 260700000,
+   "other": 51900000,
+   "season": "2024-25",
+   "source_name": "FC Bayern München AG, Jahresabschluss 2024/25 (single-entity income lines)",
+   "source_url": "https://web.archive.org/web/20251102233314/https://fcbayern.com/binaries/content/assets/downloads/homepage/jhv/2025/jahresabschluss-24-25.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "Die Telekom bleibt bis 2032 Hauptsponsor des FC Bayern",
+   "name": "Deutsche Telekom",
+   "source_url": "https://www.abendzeitung-muenchen.de/sport/fcbayern/fix-fc-bayern-verlaengert-mit-hauptsponsor-telekom-bis-2032-art-1076362"
+  },
+  "stadium_owner": {
+   "detail": "Owned through Allianz Arena München Stadion GmbH, a subsidiary consolidated in the FC Bayern München AG group accounts (2024/25 net profit EUR 16.3m).",
+   "evidence": "der Allianz Arena München Stadion GmbH sowie allen weiteren Tochterunternehmen",
+   "source_url": "https://web.archive.org/web/20251102233314/https://fcbayern.com/binaries/content/assets/downloads/homepage/jhv/2025/jahresabschluss-24-25.pdf",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 408300000,
+   "currency": "EUR",
+   "evidence": "Gesamtpersonalaufwand 408,3 Mio. Euro",
+   "season": "2024-25",
+   "source_name": "FC Bayern München AG, Jahresabschluss 2024/25 (single entity)",
+   "source_url": "https://web.archive.org/web/20251102233314/https://fcbayern.com/binaries/content/assets/downloads/homepage/jhv/2025/jahresabschluss-24-25.pdf"
+  }
+ },
+ "founded_evidence": "The document establishing the club was signed by 17 members at Munich city centre restaurant ‘Gisela’ in February 1900.",
+ "founded_source_url": "https://web.archive.org/web/20250421201452/https://fcbayern.com/en/club/history/mile-stones/1900-to-1932-success-from-the-start",
+ "founded_year": 1900,
+ "key": "bundesliga--fc-bayern-munchen",
+ "league": "Bundesliga",
+ "name": "FC Bayern München",
+ "notes": "fcbayern.com (and the Forbes page) return HTTP 403 to scripted requests from this environment, so club pages and the 2024/25 accounts PDF are cited via their Wayback Machine copies of the official URLs (original PDF: https://fcbayern.com/binaries/content/assets/downloads/homepage/jhv/2025/jahresabschluss-24-25.pdf). Revenue (EUR 978.3m), EBITDA (EUR 187.8m) and pretax profit (EUR 42.5m) are GROUP figures for 1 Jul 2024-30 Jun 2025; group net profit after tax EUR 27.1m; group equity EUR 585.5m at 30.6.2025. The revenue breakdown and wages are from the FC Bayern München AG SINGLE-ENTITY accounts: matchday EUR 260.7m, media EUR 105.3m, 'commercial' here is sponsoring and marketing only (EUR 240.4m); merchandising (EUR 150.5m) and transfer income (EUR 117.7m) are separate lines not added in, 'other' is the 'Sonstiges' line (EUR 51.9m). Capacity: bundesliga.com gives 75,000 for league matches (the earlier record's 75,024 was not found on a citable page). The club page lists the e.V. at '75 %' (often described elsewhere as 75.01%). Years and prices of the adidas, Audi and Allianz stakes (all before 2015) were not found on a page I could read, so since_year/amount are null; no ownership, debt or stadium-financing transaction since 2015 was found. Chair is the e.V. president per a Nov 2025 snapshot. Bayern won the 2025/26 Bundesliga (club honours page), but no page read gives the total title count, so honours is null. Deloitte Money League figure from the earlier record (via goal.com) was dropped in favour of the club's own accounts.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "FC Bayern München eV 75 %",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "FC Bayern München eV",
+   "since_year": null,
+   "source_url": "https://web.archive.org/web/20260314163732/https://fcbayern.com/en/club/company",
+   "stake_pct": 75,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "adidas AG 8.33 %",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "adidas AG",
+   "since_year": null,
+   "source_url": "https://web.archive.org/web/20260314163732/https://fcbayern.com/en/club/company",
+   "stake_pct": 8.33,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "AUDI AG 8.33 %",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "AUDI AG",
+   "since_year": null,
+   "source_url": "https://web.archive.org/web/20260314163732/https://fcbayern.com/en/club/company",
+   "stake_pct": 8.33,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Allianz SE 8.33 %",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Allianz SE",
+   "since_year": null,
+   "source_url": "https://web.archive.org/web/20260314163732/https://fcbayern.com/en/club/company",
+   "stake_pct": 8.33,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://web.archive.org/web/20260314163732/https://fcbayern.com/en/club/company",
+ "ownership_summary": "FC Bayern München AG, the club's football company, is 75% owned by the members' club FC Bayern München eV, with adidas AG, AUDI AG and Allianz SE holding 8.33% each as corporate minority shareholders; there is no private-equity or fund holder.",
+ "ownership_type": "member_owned",
+ "revenue": 978300000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Der FC Bayern hat das Geschäftsjahr 2024/25 mit einem Gesamtumsatz im Konzern von 978,3",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "FC Bayern München AG, Jahresabschluss Saison 2024/25 (group accounts press release, 2 Nov 2025)",
+ "revenue_source_url": "https://web.archive.org/web/20251102233314/https://fcbayern.com/binaries/content/assets/downloads/homepage/jhv/2025/jahresabschluss-24-25.pdf",
+ "short_name": "Bayern Munich",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://web.archive.org/web/20260314163732/https://fcbayern.com/en/club/company",
+  "https://web.archive.org/web/20251102233314/https://fcbayern.com/binaries/content/assets/downloads/homepage/jhv/2025/jahresabschluss-24-25.pdf",
+  "https://web.archive.org/web/20250421201452/https://fcbayern.com/en/club/history/mile-stones/1900-to-1932-success-from-the-start",
+  "https://web.archive.org/web/20251116064249/https://fcbayern.com/en/club/company/supervisory-board-members",
+  "https://web.archive.org/web/20251115131148/https://fcbayern.com/de/impressum",
+  "https://web.archive.org/web/20260607194157/https://fcbayern.com/en/club/honours/german-championship/2025-2026-season",
+  "https://www.bundesliga.com/en/bundesliga/news/stadiums-germany-2026-27-munich-dortmund-37962",
+  "https://web.archive.org/web/20260529060046/https://www.forbes.com/sites/justinteitelbaum/2026/05/29/the-worlds-most-valuable-soccer-teams-2026/",
+  "https://www.abendzeitung-muenchen.de/sport/fcbayern/fix-fc-bayern-verlaengert-mit-hauptsponsor-telekom-bis-2032-art-1076362",
+  "https://sgbonline.com/adidas-extends-partnership-with-fc-bayern-munich/"
+ ],
+ "sport": "football",
+ "stadium": "Allianz Arena",
+ "stadium_capacity": 75000,
+ "stadium_capacity_evidence": "Capacity: 75,000 Home since: 2005",
+ "stadium_capacity_source_url": "https://www.bundesliga.com/en/bundesliga/news/stadiums-germany-2026-27-munich-dortmund-37962",
+ "stadium_owner": {
+  "detail": "Owned through Allianz Arena München Stadion GmbH, a subsidiary consolidated in the FC Bayern München AG group accounts (2024/25 net profit EUR 16.3m).",
+  "evidence": "der Allianz Arena München Stadion GmbH sowie allen weiteren Tochterunternehmen",
+  "source_url": "https://web.archive.org/web/20251102233314/https://fcbayern.com/binaries/content/assets/downloads/homepage/jhv/2025/jahresabschluss-24-25.pdf",
+  "value": "club"
+ },
+ "valuation": 5700000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "#6. $5.7 billion Bayern Munich League: German Bundesliga",
+ "valuation_source_name": "Forbes, The World's Most Valuable Soccer Teams 2026 (29 May 2026)",
+ "valuation_source_url": "https://web.archive.org/web/20260529060046/https://www.forbes.com/sites/justinteitelbaum/2026/05/29/the-worlds-most-valuable-soccer-teams-2026/",
+ "valuation_year": 2026
+}

@@ -1,0 +1,156 @@
+{
+ "city": "Bilbao",
+ "country": "Spain",
+ "deals": [],
+ "domain": "athletic-club.eus",
+ "facts": {
+  "attendance": {
+   "average": 47575,
+   "evidence": "aparece el Athletic Club, con 47.575 espectadores en cada partido en San Mamés",
+   "season": "2025-26",
+   "source_name": "Marca / 2Playbook (Intelligence 2P analysis of LaLiga data); down 1.7% on 2024-25",
+   "source_url": "https://www.marca.com/sport-business/2playbook/2026/05/28/cartuja-nuevos-impulsan-laliga-ea-sports-nuevo-record-asistencia-11-8-millones.html"
+  },
+  "chair": {
+   "evidence": "Jon Uriarte continuará como presidente del Athletic Club hasta 2030",
+   "name": "Jon Uriarte Uranga",
+   "source_url": "https://www.2playbook.com/clubes/jon-uriarte-continuara-como-presidente-athletic-club-hasta-2030_22078_102.html",
+   "title": "President (re-elected unopposed in April 2026 until 2030)"
+  },
+  "honours": {
+   "competition": "Spanish top flight (La Liga)",
+   "evidence": "ocho ligas, tres Supercopas, una Copa Eva Duarte y, ahora, 25 Copas del Rey",
+   "league_titles": 8,
+   "source_url": "https://cronicavasca.elespanol.com/sociedad/20240411/athletic-club-repite-historia-despues-bilbao-arropa/846915418_0.html"
+  },
+  "kit_supplier": {
+   "evidence": "tenemos al Athletic Club con Castore (cumplirá su cuarta campaña)",
+   "name": "Castore",
+   "source_url": "https://www.marca.com/futbol/primera-division/2026/08/14/marcas-equipaciones-laliga-hummel-macron-lideran-nike-cabeza-primera.html"
+  },
+  "legal_entity": {
+   "evidence": "con CIF G48 074 264, es una Asociación de carácter privado",
+   "name": "Athletic Club",
+   "registry": "Spanish tax identification number (CIF); private non-profit sports association under Basque sports law",
+   "registry_id": "G48074264",
+   "source_url": "https://cdn.athletic-club.eus/txoko-utils/obn2025-cuentasanuales2425-pdf"
+  },
+  "operating_result": {
+   "amount": 38100000,
+   "basis": "EBITDA",
+   "currency": "EUR",
+   "evidence": "El EBITDA se ha situado en 38,1 millones, el doble que la campaña anterior",
+   "season": "2025-26",
+   "source_name": "Athletic Club 2025-26 year-end figures, as reported by Marca",
+   "source_url": "https://www.marca.com/futbol/athletic/2026/09/27/athletic-bate-records-193-millones-ingresos.html"
+  },
+  "pretax_result": {
+   "amount": 7692386,
+   "currency": "EUR",
+   "evidence": "A.3) RESULTADO ANTES DE IMPUESTOS 7.692.386,44",
+   "season": "2024-25",
+   "source_name": "Athletic Club annual accounts to 30 June 2025 (net result EUR 6,980,736); for 2025-26 the club reported a EUR 20.6m net profit, pre-tax not stated",
+   "source_url": "https://cdn.athletic-club.eus/txoko-utils/obn2025-cuentasanuales2425-pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 81900000,
+   "commercial": 12000000,
+   "currency": "EUR",
+   "evidence": "los derechos de retransmisión han aportado 81,9 millones",
+   "matchday": null,
+   "other": null,
+   "season": "2025-26",
+   "source_name": "Marca on Athletic Club's 2025-26 year-end figures: broadcasting EUR 81.9m, advertising and sponsorship EUR 12m; competition income EUR 59.7m (gate receipts and competition revenue) and member fees are not split out as matchday",
+   "source_url": "https://www.marca.com/futbol/athletic/2026/09/27/athletic-bate-records-193-millones-ingresos.html"
+  },
+  "shirt_sponsor": {
+   "evidence": "Kutxabank en el Athletic Club",
+   "name": "Kutxabank",
+   "source_url": "https://forbes.es/sports/997561/patrocinadores-laliga-2026-2027-camisetas/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by San Mames Barria S.L., in which Athletic Club holds 30.09% (no control: decisions need a 90% majority) alongside Kutxabank, the Basque Government, the Diputación Foral de Bizkaia and Bilbao city council. Athletic paid about EUR 50m of the EUR 189m cost and uses the stadium under a 50-year concession with an annual fee indexed to inflation (EUR 574,836.63 in 2022-23), with a EUR 66m purchase option in 2063 (Relevo).",
+   "evidence": "San Mamés es propiedad de la sociedad San Mames Barria S. L., participada por el club, Kutxabank, el Gobierno Vasco, la Diputación de Bizkaia y el Ayuntamiento de Bilbao",
+   "source_url": "https://www.relevo.com/futbol/liga-primera/caseros-laliga-alquilan-estadios-equipos-20241101230306-nt.html",
+   "value": "shared"
+  },
+  "wages": {
+   "amount": 122072538,
+   "currency": "EUR",
+   "evidence": "6. Gastos de personal -122.072.537,53",
+   "season": "2024-25",
+   "source_name": "Athletic Club annual accounts to 30 June 2025 (staff costs; 2025-26 figure not yet published)",
+   "source_url": "https://cdn.athletic-club.eus/txoko-utils/obn2025-cuentasanuales2425-pdf"
+  }
+ },
+ "founded_evidence": "que fue constituida legalmente en el año 1898",
+ "founded_source_url": "https://cdn.athletic-club.eus/txoko-utils/obn2025-cuentasanuales2425-pdf",
+ "founded_year": 1898,
+ "key": "la-liga--athletic-club",
+ "league": "La Liga",
+ "name": "Athletic Club",
+ "notes": "Member-owned: no ownership transactions, minority investments or debt financings since 2015 were found; the club has no financial debt (Marca, Sep 2026: 'sin endeudamiento', liquidity EUR 94m including an undrawn credit line, equity EUR 112.8m), so net_debt is left blank rather than given as a figure no page states. Athletic, with Real Madrid, Barcelona and Ibiza, voted against the LaLiga-CVC 'Impulso' deal on 10 Dec 2021 (Heraldo) and took no CVC money. Revenue is the club's 2025-26 total excluding player sales (EUR 192.9m, up EUR 20.4m); the audited 2024-25 accounts show net turnover (importe neto de la cifra de negocios) of EUR 166,399,358 and a net profit of EUR 6,980,736. 2025-26 net profit: EUR 20.6m. The club's own website (athletic-club.eus) sits behind a bot challenge, so club figures are cited from its CDN-hosted accounts PDF or from Marca. Not in Forbes' 2026 top 30, and no other published valuation found. No named corporate chief executive found (Mikel González is director general of football, renewed to 2030). Not found: valuation, social follower counts.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "La soberanía y gobierno del Club corresponde a los socios y socias a través de la Asamblea General",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Club members (socias y socios) of Athletic Club, 43,834 at 30 June 2025",
+   "since_year": null,
+   "source_url": "https://cdn.athletic-club.eus/txoko-utils/obn2025-cuentasanuales2425-pdf",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://cdn.athletic-club.eus/txoko-utils/obn2025-cuentasanuales2425-pdf",
+ "ownership_summary": "Athletic Club is a private non-profit sports association (not a sociedad anónima deportiva) owned and governed by its members, who exercise sovereignty through the General Assembly; it had 43,834 members at 30 June 2025. There is no private, fund or institutional shareholder, and the club voted against and stayed out of the 2021 LaLiga-CVC deal. Its only equity holding of note is 30.09% of San Mames Barria S.L., the stadium company.",
+ "ownership_type": "member_owned",
+ "revenue": 192900000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "El club ha alcanzado los 192,9 millones de euros, 20,4 millones más que el ejercicio anterior",
+ "revenue_season": "2025-26",
+ "revenue_source_name": "Athletic Club 2025-26 year-end figures (club statement of 27 Sep 2026, to be approved at the 28 Oct 2026 assembly), as reported by Marca; excludes player sales",
+ "revenue_source_url": "https://www.marca.com/futbol/athletic/2026/09/27/athletic-bate-records-193-millones-ingresos.html",
+ "short_name": "Athletic Bilbao",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://cdn.athletic-club.eus/txoko-utils/obn2025-cuentasanuales2425-pdf",
+  "https://www.laliga.com/clubes/athletic-club",
+  "https://www.elcorreo.com/athletic/ampliacion-san-mames-ingenioso-plan-athletic-ganar-20260424191444-nt.html",
+  "https://www.relevo.com/futbol/liga-primera/caseros-laliga-alquilan-estadios-equipos-20241101230306-nt.html",
+  "https://www.marca.com/futbol/athletic/2026/09/27/athletic-bate-records-193-millones-ingresos.html",
+  "https://www.2playbook.com/patrocinio/guerra-marcas-en-laliga-se-reparte-publicidad-en-camisetas-2025-2026_19785_102.html",
+  "https://forbes.es/sports/997561/patrocinadores-laliga-2026-2027-camisetas/",
+  "https://www.marca.com/sport-business/2playbook/2026/05/28/cartuja-nuevos-impulsan-laliga-ea-sports-nuevo-record-asistencia-11-8-millones.html",
+  "https://www.marca.com/futbol/primera-division/2026/08/14/marcas-equipaciones-laliga-hummel-macron-lideran-nike-cabeza-primera.html",
+  "https://www.2playbook.com/clubes/jon-uriarte-continuara-como-presidente-athletic-club-hasta-2030_22078_102.html",
+  "https://cronicavasca.elespanol.com/sociedad/20240411/athletic-club-repite-historia-despues-bilbao-arropa/846915418_0.html",
+  "https://www.heraldo.es/noticias/deportes/2021/12/10/asamblea-liga-futbol-aprueba-acuerdo-tebas-fondo-britanico-cvc-1539601.html",
+  "https://web.archive.org/web/20260529060046/https://www.forbes.com/sites/justinteitelbaum/2026/05/29/the-worlds-most-valuable-soccer-teams-2026/",
+  "https://www.athletic-club.eus/noticias/2026/09/27/el-athletic-cierra-la-temporada-2025-26-con-un-record-de-ingresos-de-193-millones-y-21-millones-de-beneficio-neto/"
+ ],
+ "sport": "football",
+ "stadium": "San Mamés",
+ "stadium_capacity": 53331,
+ "stadium_capacity_evidence": "aumentar el aforo de San Mamés, actualmente fijado en 53.331 espectadores",
+ "stadium_capacity_source_url": "https://www.elcorreo.com/athletic/ampliacion-san-mames-ingenioso-plan-athletic-ganar-20260424191444-nt.html",
+ "stadium_owner": {
+  "detail": "Owned by San Mames Barria S.L., in which Athletic Club holds 30.09% (no control: decisions need a 90% majority) alongside Kutxabank, the Basque Government, the Diputación Foral de Bizkaia and Bilbao city council. Athletic paid about EUR 50m of the EUR 189m cost and uses the stadium under a 50-year concession with an annual fee indexed to inflation (EUR 574,836.63 in 2022-23), with a EUR 66m purchase option in 2063 (Relevo).",
+  "evidence": "San Mamés es propiedad de la sociedad San Mames Barria S. L., participada por el club, Kutxabank, el Gobierno Vasco, la Diputación de Bizkaia y el Ayuntamiento de Bilbao",
+  "source_url": "https://www.relevo.com/futbol/liga-primera/caseros-laliga-alquilan-estadios-equipos-20241101230306-nt.html",
+  "value": "shared"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

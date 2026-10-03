@@ -1,0 +1,68 @@
+{
+ "city": "Udine",
+ "country": "Italy",
+ "deals": [],
+ "domain": "udinese.it",
+ "facts": {
+  "chair": {
+   "evidence": "Presidente: Franco Soldati",
+   "name": "Franco Soldati",
+   "source_url": "https://www.udinese.it/club/organigramma",
+   "title": "Presidente"
+  },
+  "chief_executive": {
+   "evidence": "Consigliere e Direttore Generale: Franco Collavino",
+   "name": "Franco Collavino",
+   "source_url": "https://www.udinese.it/club/organigramma",
+   "title": "Consigliere e Direttore Generale"
+  },
+  "legal_entity": {
+   "evidence": "Iscritta al registro delle imprese di Udine al n. 00442660304",
+   "name": "Udinese Calcio S.p.A. Unipersonale",
+   "registry": "Registro delle Imprese di Udine",
+   "registry_id": "00442660304",
+   "source_url": "https://www.udinese.it/Apps/WebObjects/Udinese.woa/wa/viewFile?id=89735&lang=ita"
+  }
+ },
+ "founded_evidence": "Dal 1896",
+ "founded_source_url": "https://www.udinese.it/club/storia/dal-1896/1896-1930",
+ "founded_year": 1896,
+ "key": "serie-a--udinese",
+ "league": "Serie A",
+ "name": "Udinese Calcio",
+ "notes": "The FY2024-25 accounts PDF is a scan with no text layer except the cover; figures were read by OCR and visually from the scan, so automated phrase matching on that URL may fail even though the figures are printed there. Net profit FY25 EUR 2,923,802 (FY24 loss EUR 11,463,389). Revenue includes EUR 72,321,288 of player-sale gains. EBITDA is the club's Margine Operativo Lordo (EUR 62.83m). The report states only that bank debt fell sharply; no net-debt figure. Pozzo family control of Gesapar is not stated in the documents read (it rests on Gino Pozzo's board seat and common knowledge), so treat ownership_type as unverified. Stadium capacity not found on a citable page (Wikipedia figure dropped). No valuation, socials, attendance or honours count. No ownership transactions, institutional investors or major financings since 2015 found.",
+ "owners": [],
+ "ownership_source_url": "https://www.udinese.it/Apps/WebObjects/Udinese.woa/wa/viewFile?id=89735&lang=ita",
+ "ownership_summary": "Udinese Calcio S.p.A. is 100% owned by Gesapar S.A. (5 Boulevard Royal, Luxembourg), which exercises direction and coordination over the club. Gesapar is the Pozzo family's holding company (Gino Pozzo sits on the board).",
+ "ownership_type": "individual_family",
+ "revenue": null,
+ "revenue_currency": null,
+ "revenue_evidence": "il valore della produzione è salito a Euro 141,7 milioni (+17% rispetto al 2023/24)",
+ "revenue_season": null,
+ "revenue_source_name": null,
+ "revenue_source_url": null,
+ "short_name": "Udinese",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.udinese.it/club/compliance",
+  "https://www.udinese.it/Apps/WebObjects/Udinese.woa/wa/viewFile?id=89735&lang=ita",
+  "https://www.udinese.it/club/organigramma",
+  "https://www.udinese.it/club/storia/dal-1896/1896-1930"
+ ],
+ "sport": "football",
+ "stadium": "Bluenergy Stadium (Stadio Friuli)",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": null,
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

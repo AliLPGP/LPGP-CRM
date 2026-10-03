@@ -8,6 +8,7 @@ import { Box, Empty, Src, Stat, StatStrip, Tag } from "@/components/intel/ui";
 import { INVESTOR_TYPE_LABEL, OWNERSHIP_TYPE_LABEL } from "@/lib/directory/asset-classes";
 import { getDeals, getSportsTeam, getTeamOwners, leaguePeers } from "@/lib/directory/intelligence-queries";
 import { ResearchClubButton } from "@/components/intel/research-buttons";
+import { ClubFile } from "@/components/intel/club-file";
 import { formatCount, formatMoney } from "@/lib/directory/intelligence-types";
 
 export const dynamic = "force-dynamic";
@@ -62,7 +63,7 @@ export default async function ClubPage({ params }: { params: Promise<{ id: strin
         <Stat label="Valuation" value={formatMoney(team.valuation, team.valuation_currency)} basis={<Src url={team.valuation_source_url} name={team.valuation_source_name} asOf={team.valuation_year ? String(team.valuation_year) : null} />} />
         <Stat label="Following" value={formatCount(team.social_followers)} basis={<Src url={team.social_source_url} name="all platforms" asOf={team.social_as_of} />} defn="Followers across social platforms, as one source counted them on the date shown." />
         <Stat label="Stadium" value={team.stadium_capacity != null ? team.stadium_capacity.toLocaleString("en-US") : "—"} basis={<Src url={team.stadium_capacity_source_url} name={team.stadium} />} />
-        <Stat label="Founded" value={team.founded_year ?? "—"} basis={team.city ?? undefined} />
+        <Stat label="Founded" value={team.founded_year ?? "—"} basis={team.founded_source_url ? <Src url={team.founded_source_url} name={team.city ?? "source"} /> : team.city ?? undefined} />
         <Stat label="Ownership" value={<span className="text-[15px]">{OWNERSHIP_TYPE_LABEL[team.ownership_type ?? "unknown"]}</span>} basis={<Src url={team.ownership_source_url} name="source" />} />
       </StatStrip>
 
@@ -119,6 +120,8 @@ export default async function ClubPage({ params }: { params: Promise<{ id: strin
           <Box title="Deals" count={deals.length} flush>
             <DealTable deals={deals} showClass={false} compact />
           </Box>
+
+          <ClubFile facts={team.facts} />
 
           <Box title="Owners" count={founders.length} flush>
             {founders.length ? (

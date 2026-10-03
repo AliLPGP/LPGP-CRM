@@ -1,0 +1,162 @@
+{
+ "city": "Detroit",
+ "country": "United States",
+ "deals": [],
+ "domain": "detroitlions.com",
+ "facts": {
+  "chair": {
+   "evidence": "Sheila Ford Hamp Principal Owner & Chair",
+   "name": "Sheila Ford Hamp",
+   "source_url": "https://www.detroitlions.com/team/front-office-roster/",
+   "title": "Principal Owner & Chair"
+  },
+  "chief_executive": {
+   "evidence": "Rich Haddad President and CEO",
+   "name": "Rich Haddad",
+   "source_url": "https://www.detroitlions.com/team/front-office-roster/",
+   "title": "President and CEO"
+  },
+  "honours": {
+   "competition": "NFL championships, as Forbes counts them",
+   "evidence": "Owner(s) William Clay Ford Family Championships 4",
+   "league_titles": 4,
+   "source_url": "https://web.archive.org/web/20260721002750/https://www.forbes.com/teams/detroit-lions/"
+  },
+  "operating_result": {
+   "amount": 53000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "Revenue: $617 million | Operating Income: $53 million",
+   "season": "2025",
+   "source_name": "Forbes (estimate), The NFL's Most Valuable Teams 2026",
+   "source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Detroit/Wayne County Stadium Authority",
+   "evidence": "Venue Ford Field Owner(s) Detroit/Wayne County Stadium Authority",
+   "source_url": "https://web.archive.org/web/20260721002750/https://www.forbes.com/teams/detroit-lions/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 384000000,
+   "currency": "USD",
+   "evidence": "Player Expenses 5 Includes benefits and bonuses. $384M",
+   "season": "2024",
+   "source_name": "Forbes (estimate), team profile (2025 edition): player expenses incl. benefits and bonuses",
+   "source_url": "https://web.archive.org/web/20260721002750/https://www.forbes.com/teams/detroit-lions/"
+  }
+ },
+ "founded_evidence": "The Spartans had joined the NFL in 1930",
+ "founded_source_url": "https://www.profootballhof.com/teams/detroit-lions/team-history/",
+ "founded_year": 1930,
+ "key": "national-football-league--detroit-lions",
+ "league": "National Football League",
+ "name": "Detroit Lions",
+ "notes": "Revenue, operating income and value are Forbes estimates for the 2025 season (list of 9 Sep 2026, via Wayback). The only archived Forbes team profile is the 2025 edition (value $5.4B, 2024 season): stadium owner, capacity, player expenses ($384M, 2024 season) and championships come from it; it also gives Year Purchased 1964, Price Paid $4.5M. Founded: the Portsmouth Spartans joined the NFL in 1930 and moved to Detroit in 1934 (Hall of Fame). The front office lists Rich Haddad as President and CEO with Rod Wood as outgoing. Family members' stakes are not stated. No ownership transaction or institutional stake since 2015 found. Legal entity, attendance, social counts not found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Sheila Ford Hamp Principal Owner & Chair",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Sheila Ford Hamp",
+   "since_year": 2020,
+   "source_url": "https://www.detroitlions.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Martha Ford Morse Owner/Vice Chair",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Martha Ford Morse",
+   "since_year": null,
+   "source_url": "https://www.detroitlions.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "William Clay Ford, Jr. Owner/Vice Chair",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "William Clay Ford, Jr.",
+   "since_year": null,
+   "source_url": "https://www.detroitlions.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Elizabeth Ford Kontulis Owner/Vice Chair",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Elizabeth Ford Kontulis",
+   "since_year": null,
+   "source_url": "https://www.detroitlions.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Martha Firestone Ford Owner/Chair Emeritus",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Martha Firestone Ford",
+   "since_year": null,
+   "source_url": "https://www.detroitlions.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.detroitlions.com/team/front-office-roster/",
+ "ownership_summary": "Owned by the Ford family (William Clay Ford family, owners since 1964 per Forbes). Sheila Ford Hamp succeeded her mother Martha Firestone Ford as principal owner and chair in June 2020; Martha Ford Morse, William Clay Ford Jr. and Elizabeth Ford Kontulis are owners/vice chairs. No institutional holder found.",
+ "ownership_type": "individual_family",
+ "revenue": 617000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenue: $617 million | Operating Income: $53 million | Owner: Ford family",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The NFL's Most Valuable Teams 2026",
+ "revenue_source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+ "short_name": "Lions",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+  "https://web.archive.org/web/20260721002750/https://www.forbes.com/teams/detroit-lions/",
+  "https://www.profootballhof.com/teams/detroit-lions/team-history/",
+  "https://www.detroitlions.com/team/front-office-roster/",
+  "https://www.detroitlions.com/news/martha-firestone-ford-to-step-down-sheila-ford-hamp-to-succeed-mother"
+ ],
+ "sport": "american_football",
+ "stadium": "Ford Field",
+ "stadium_capacity": 65000,
+ "stadium_capacity_evidence": "Seating Capacity 65,000",
+ "stadium_capacity_source_url": "https://web.archive.org/web/20260721002750/https://www.forbes.com/teams/detroit-lions/",
+ "stadium_owner": {
+  "detail": "Owned by the Detroit/Wayne County Stadium Authority",
+  "evidence": "Venue Ford Field Owner(s) Detroit/Wayne County Stadium Authority",
+  "source_url": "https://web.archive.org/web/20260721002750/https://www.forbes.com/teams/detroit-lions/",
+  "value": "municipal"
+ },
+ "valuation": 8040000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$8.04 billion Detroit Lions One-Year Change: 49%",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+ "valuation_year": 2026
+}

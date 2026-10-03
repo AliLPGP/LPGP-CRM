@@ -1,0 +1,201 @@
+{
+ "city": "Strasbourg",
+ "country": "France",
+ "deals": [
+  {
+   "amount": 44986500,
+   "currency": "EUR",
+   "date": "2023-06-22",
+   "date_text": "22 June 2023",
+   "evidence": "BlueCo en ayant acheté 99,7%, le coût final de la cession du RC Strasbourg au bénéfice du consortium américain équivaut donc à la somme de 44 986 500 euros",
+   "headline": "Chelsea owners BlueCo buy 99.7% of RC Strasbourg Alsace",
+   "investor": "BlueCo (BlueCo Alsace SAS)",
+   "investor_type": "private_equity",
+   "kind": "acquisition",
+   "seller": "Marc Keller and the club's local shareholders",
+   "source_name": "Sportune (20 Minutes)",
+   "source_url": "https://sportune.20minutes.fr/paye-blueco-rachat-rcsa",
+   "stake_pct": 99.7,
+   "summary": "The club's shareholders agreed to sell to BlueCo, the Chelsea consortium; Marc Keller stayed on as president. Sportune, from the legal filings, puts the price at EUR 4,497.75 per share, i.e. EUR 45m for 100% of the pre-deal capital and EUR 44,986,500 for the 99.7% bought; British press had reported about EUR 75m. BlueCo then lent the club money later converted into equity.",
+   "valuation": 45000000,
+   "valuation_currency": "EUR",
+   "verified": true
+  },
+  {
+   "amount": 160000000,
+   "currency": "EUR",
+   "date": "2023-05-02",
+   "date_text": "Budget announced 2 May 2023; works June 2023 to summer 2026",
+   "evidence": "Le coût des travaux explose et atteint 160 millions d'euros",
+   "headline": "EUR 160m public-led renovation and extension of the Stade de la Meinau",
+   "investor": "Eurométropole de Strasbourg with the Ville de Strasbourg, the Collectivité européenne d'Alsace and the Région",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "France 3 Grand Est, 2 May 2023",
+   "source_url": "https://france3-regions.franceinfo.fr/grand-est/bas-rhin/strasbourg-0/160-millions-d-euros-pour-renover-le-stade-de-la-meinau-c-est-un-passage-obligatoire-2764942.html",
+   "stake_pct": null,
+   "summary": "The renovation of the Meinau (target capacity 32,000) was budgeted at EUR 160m, split between the city, the Eurométropole (half of the budget), the Collectivité européenne d'Alsace and the Région; the club contributes EUR 9m and pays a higher rent to the Eurométropole. A 35-year occupation agreement was voted on 28 June 2024 and signed on 7 July 2025.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "rcstrasbourgalsace.fr",
+ "facts": {
+  "attendance": {
+   "average": 28202,
+   "evidence": "Affluence moyenne (en 2025-26) : 28 202",
+   "season": "2025-26",
+   "source_name": "Sportune (20 Minutes), club data sheet",
+   "source_url": "https://sportune.20minutes.fr/football/equipe/rc-strasbourg-rcsa"
+  },
+  "chair": {
+   "evidence": "Président : Marc KELLER",
+   "name": "Marc Keller",
+   "source_url": "https://www.rcstrasbourgalsace.fr/le-club/organigramme-du-racing-club-de-strasbourg-alsace/",
+   "title": "Président"
+  },
+  "honours": {
+   "competition": "French top flight (Division 1)",
+   "evidence": "Champion de France en 1979, le Racing a remporté son premier trophée en 1951.",
+   "league_titles": 1,
+   "source_url": "https://www.rcstrasbourgalsace.fr/le-club/palmares/"
+  },
+  "kit_supplier": {
+   "evidence": "le club et adidas dévoilent un nouveau maillot domicile",
+   "name": "adidas",
+   "source_url": "https://www.rcstrasbourgalsace.fr/maillot-domicile-2026-2027-le-racing-et-adidas-celebrent-les-origines-du-club/"
+  },
+  "legal_entity": {
+   "evidence": "\"siren\":\"751303967\",\"siren_conserve\":null,\"nom_complet\":\"RACING CLUB DE STRASBOURG ALSACE\"",
+   "name": "RACING CLUB DE STRASBOURG ALSACE (SAS)",
+   "registry": "French company register (SIRENE / RNE, via recherche-entreprises.api.gouv.fr)",
+   "registry_id": "751303967",
+   "source_url": "https://recherche-entreprises.api.gouv.fr/search?q=751303967"
+  },
+  "operating_result": {
+   "amount": -103249000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "(LOSS) -103 249",
+   "season": "2024-25",
+   "source_name": "DNCG/LFP, Individual club accounts 2024/2025 (operating result before player trading)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "pretax_result": {
+   "amount": -78265000,
+   "currency": "EUR",
+   "evidence": "PROFIT (LOSS) BEFORE TAX -78 265",
+   "season": "2024-25",
+   "source_name": "DNCG/LFP, Individual club accounts 2024/2025",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 13748000,
+   "commercial": 16273000,
+   "currency": "EUR",
+   "evidence": "Broadcasting rights 13 748 Sponsors - Advertising 16 273 Gate receipts 5 349 Other income 3 391",
+   "matchday": 5349000,
+   "other": 3391000,
+   "season": "2024-25",
+   "source_name": "DNCG/LFP, Individual club accounts 2024/2025 (gate receipts / broadcasting rights / sponsors-advertising / other income)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "la présence du sponsor Winamax en face avant",
+   "name": "Winamax",
+   "source_url": "https://www.rcstrasbourgalsace.fr/maillot-domicile-2026-2027-le-racing-et-adidas-celebrent-les-origines-du-club/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Eurométropole de Strasbourg, which leads the 2023-2026 renovation; the club occupies it under a 35-year occupation agreement (convention d'occupation) voted by the Eurométropole council on 28 June 2024 and signed on 7 July 2025.",
+   "evidence": "Cette signature vient officialiser un nouveau partenariat entre la collectivité propriétaire du stade, meneuse des travaux de rénovation et le Racing",
+   "source_url": "https://www.rcstrasbourgalsace.fr/eurometropole-de-strasbourg-et-le-racing-club-de-strasbourg-alsace-une-signature-pour-un-partenariat-de-confiance-renouvele/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 66910000,
+   "currency": "EUR",
+   "evidence": "Total payroll 66 910",
+   "season": "2024-25",
+   "source_name": "DNCG/LFP, Individual club accounts 2024/2025",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  }
+ },
+ "founded_evidence": "Nous sommes en 1906 et les rencontres ont lieu au Polygone",
+ "founded_source_url": "https://www.rcstrasbourgalsace.fr/le-club/histoire/",
+ "founded_year": 1906,
+ "key": "ligue-1--rc-strasbourg-alsace",
+ "league": "Ligue 1",
+ "name": "Racing Club de Strasbourg Alsace",
+ "notes": "Revenue is DNCG's total non-transfer earnings for 2024-25 (EUR 38,761k; season played during the Meinau works); net loss EUR -78,305k; DNCG shows net equity of EUR 160,582k at the year end. The SAS files no public accounts beyond the DNCG figures. 2025-26 accounts not yet published. Breakdown uses DNCG categories. Valuation is the 2023 transaction price, not a current market value (Strasbourg is not on the Forbes list). Clearlake's stake in the BlueCo group is shown on Companies House only as a band (more than 50% but less than 75%, 22 Holdco Limited, company 14075518); BlueCo Alsace SAS (SIREN 952912491, president Marc Keller) is registered as Président of the club's SAS. Press reported in August 2026 that Todd Boehly and Mark Walter were negotiating the sale of their BlueCo stakes to Clearlake; not completed in the sources read. Group-level debt (reported Ares facility at 22 Holdco) not verified here and not recorded. No chief executive title: the organigramme lists President Marc Keller and three deputy managing directors (Alain Plet, operations; Matthieu Deroussent, administration & finance; Nicolas Arndt, revenues). Stadium capacity 32,000 is the official project's 2026 target; the club says 2026-27 is the first season after the works. LFP reported Strasbourg's average attendance up 46% in 2025-26, helped by the end of the Meinau works. Social: 3.6m followers across networks at the end of 2025-26 per club data reported by Sportune (27 July 2026), up from 2.018m at the start of the season.",
+ "owners": [
+  {
+   "amount": 44986500,
+   "currency": "EUR",
+   "evidence": "BlueCo en ayant acheté 99,7%, le coût final de la cession du RC Strasbourg au bénéfice du consortium américain équivaut donc à la somme de 44 986 500 euros",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "fund",
+   "name": "BlueCo (BlueCo Alsace SAS; group controlled by Clearlake Capital, with Todd Boehly)",
+   "since_year": 2023,
+   "source_url": "https://sportune.20minutes.fr/paye-blueco-rachat-rcsa",
+   "stake_pct": 99.7,
+   "valuation_at_entry": 45000000
+  }
+ ],
+ "ownership_source_url": "https://sportune.20minutes.fr/paye-blueco-rachat-rcsa",
+ "ownership_summary": "Since June 2023 the club has belonged to BlueCo, the consortium that bought Chelsea in 2022: its French holding BlueCo Alsace SAS bought 99.7% from Marc Keller and the local shareholders who had owned the club since 2012, at a price equivalent to EUR 45m for 100% of the pre-deal capital (Sportune). BlueCo's UK parent 22 Holdco Limited lists Clearlake Capital's Behdad Eghbali and José E. Feliciano as holding more than 50% but less than 75% of its shares as members of a firm, and Todd Boehly as having significant influence. Marc Keller remains president.",
+ "ownership_type": "private_equity",
+ "revenue": 38761000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL NON-TRANSFER EARNINGS 38 761",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "DNCG/LFP, Individual club accounts 2024/2025 (RC Strasbourg Alsace: SAS + association), total non-transfer earnings",
+ "revenue_source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+ "short_name": "RC Strasbourg",
+ "social_as_of": "2026-07",
+ "social_evidence": "Le Racing totalise désormais 3,6 millions de followers",
+ "social_followers": 3600000,
+ "social_platforms": [],
+ "social_source_url": "https://sportune.20minutes.fr/le-rc-strasbourg-2e-club-europeen-qui-gagne-le-plus-de-followers-407394",
+ "sources": [
+  "https://www.rcstrasbourgalsace.fr/le-club/histoire/",
+  "https://destination-meinau.eu/la-transformation-du-stade/",
+  "https://www.rcstrasbourgalsace.fr/eurometropole-de-strasbourg-et-le-racing-club-de-strasbourg-alsace-une-signature-pour-un-partenariat-de-confiance-renouvele/",
+  "https://france3-regions.franceinfo.fr/grand-est/bas-rhin/strasbourg-0/blueco-devient-le-nouvel-actionnaire-du-racing-club-de-strasbourg-marc-keller-reste-president-2801213.html",
+  "https://www.rcstrasbourgalsace.fr/en/official-statement-blueco-signs-agreement-to-become-the-new-shareholders-of-racing-club-de-strasbourg-alsace/",
+  "https://sportune.20minutes.fr/paye-blueco-rachat-rcsa",
+  "https://find-and-update.company-information.service.gov.uk/company/14075518/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/13949552/persons-with-significant-control",
+  "https://recherche-entreprises.api.gouv.fr/search?q=751303967",
+  "https://recherche-entreprises.api.gouv.fr/search?q=952912491",
+  "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+  "https://www.rcstrasbourgalsace.fr/le-club/organigramme-du-racing-club-de-strasbourg-alsace/",
+  "https://www.rcstrasbourgalsace.fr/le-club/palmares/",
+  "https://www.rcstrasbourgalsace.fr/maillot-domicile-2026-2027-le-racing-et-adidas-celebrent-les-origines-du-club/",
+  "https://france3-regions.franceinfo.fr/grand-est/bas-rhin/strasbourg-0/160-millions-d-euros-pour-renover-le-stade-de-la-meinau-c-est-un-passage-obligatoire-2764942.html",
+  "https://www.sportbusiness.club/prolongation-du-sponsor-principal-et-maillot-anniversaire-le-rcsa-lance-sa-saison-2026-2027/",
+  "https://www.lfp.fr/article/affluences-2025-2026-record-historique-pour-le-football-francais",
+  "https://sportune.20minutes.fr/football/equipe/rc-strasbourg-rcsa",
+  "https://sportune.20minutes.fr/le-rc-strasbourg-2e-club-europeen-qui-gagne-le-plus-de-followers-407394",
+  "https://sportune.20minutes.fr/rc-strasbourg-78-me-de-pertes-un-record-pour-le-club-alsacien-399901"
+ ],
+ "sport": "football",
+ "stadium": "Stade de la Meinau",
+ "stadium_capacity": 32000,
+ "stadium_capacity_evidence": "avec une capacité cible de 32 000 places en 2026",
+ "stadium_capacity_source_url": "https://destination-meinau.eu/la-transformation-du-stade/",
+ "stadium_owner": {
+  "detail": "Owned by the Eurométropole de Strasbourg, which leads the 2023-2026 renovation; the club occupies it under a 35-year occupation agreement (convention d'occupation) voted by the Eurométropole council on 28 June 2024 and signed on 7 July 2025.",
+  "evidence": "Cette signature vient officialiser un nouveau partenariat entre la collectivité propriétaire du stade, meneuse des travaux de rénovation et le Racing",
+  "source_url": "https://www.rcstrasbourgalsace.fr/eurometropole-de-strasbourg-et-le-racing-club-de-strasbourg-alsace-une-signature-pour-un-partenariat-de-confiance-renouvele/",
+  "value": "municipal"
+ },
+ "valuation": 45000000,
+ "valuation_currency": "EUR",
+ "valuation_evidence": "soit pour les 10 005 actions qui formaient 100% du capital avant son augmentation, l’équivalent de 45 millions d’euros",
+ "valuation_source_name": "Sportune: price per share in BlueCo's June 2023 purchase, applied to 100% of the pre-deal capital",
+ "valuation_source_url": "https://sportune.20minutes.fr/paye-blueco-rachat-rcsa",
+ "valuation_year": 2023
+}

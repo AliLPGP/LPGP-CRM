@@ -1,0 +1,119 @@
+{
+ "city": "Cincinnati",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "February 2026",
+   "evidence": "Major League Baseball’s owners have approved the transfer of control of the Reds from Bob Castellini to his son, Phil Castellini.",
+   "headline": "MLB approves transfer of Reds control from Bob to Phil Castellini",
+   "investor": "Phil Castellini",
+   "investor_type": "individual",
+   "kind": "other",
+   "seller": "Bob Castellini",
+   "source_name": "WKRC Local 12",
+   "source_url": "https://local12.com/sports/reds/phil-castellini-takes-over-as-reds-principal-owner-in-place-of-his-father-bob-controlling-cincinnati-mlb-ownership",
+   "stake_pct": null,
+   "summary": "Intra-family transfer of control-person status; no stake or price disclosed. Phil Castellini said in October 2026 there are no plans to sell.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mlb.com/reds",
+ "facts": {
+  "chief_executive": {
+   "evidence": "president and CEO Phil Castellini",
+   "name": "Phil Castellini",
+   "source_url": "https://www.mlb.com/news/reds-ceo-phil-castellini-talks-reds-future",
+   "title": "Control person, president and CEO"
+  },
+  "operating_result": {
+   "amount": 26000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$26M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), MLB Team Valuations 2026",
+   "source_url": "https://www.forbes.com/teams/cincinnati-reds/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Hamilton County, Ohio; Reds lease runs through 2037",
+   "evidence": "Hamilton County, which owns the 23-year-old ballpark",
+   "source_url": "https://www.wlwt.com/article/hamilton-county-commissioners-scan-great-american-ball-park/70260540",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 144000000,
+   "currency": "USD",
+   "evidence": "$144M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/cincinnati-reds/"
+  }
+ },
+ "founded_evidence": "the team reformed as the Red Stockings in the newly formed American Association in 1882",
+ "founded_source_url": "https://www.forbes.com/teams/cincinnati-reds/",
+ "founded_year": 1882,
+ "key": "major-league-baseball--cincinnati-reds",
+ "league": "Major League Baseball",
+ "name": "Cincinnati Reds",
+ "notes": "Founded is disputed by source: MLB.com's ballpark guide says the Red Stockings were founded in 1869 and returned as an NL charter franchise in 1876; Forbes says the team was expelled in 1880 and reformed in 1882 (recorded). Capacity: MLB.com's guide states 45,814; the Reds' own ballparks history page says 'room for more than 42,000 fans'. Forbes: purchase c.$270M in 2006; 2025 revenue/operating income net of revenue sharing and stadium debt service; debt/value 9%. Limited partners (e.g. the Williams family) and their stakes not found on a citable page. No institutional investors found. No social counts, legal entity, honours count or attendance recorded.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "The Bob Castellini-led ownership group assumed control of the Reds before the 2006 season.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Castellini-led ownership group (Bob and Phil Castellini)",
+   "since_year": 2006,
+   "source_url": "https://www.mlb.com/news/reds-ceo-phil-castellini-talks-reds-future",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://local12.com/sports/reds/phil-castellini-takes-over-as-reds-principal-owner-in-place-of-his-father-bob-controlling-cincinnati-mlb-ownership",
+ "ownership_summary": "Owned by the Bob Castellini-led ownership group that took control before the 2006 season. In February 2026 MLB owners approved the transfer of control from Bob Castellini to his son Phil Castellini, now control person, president and CEO.",
+ "ownership_type": "individual_family",
+ "revenue": 336000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$336M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB Team Valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/cincinnati-reds/",
+ "short_name": "Reds",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/cincinnati-reds/",
+  "https://www.mlb.com/news/featured/great-american-ball-park-guide-capacity-seating-chart-parking-and-more",
+  "https://local12.com/sports/reds/phil-castellini-takes-over-as-reds-principal-owner-in-place-of-his-father-bob-controlling-cincinnati-mlb-ownership",
+  "https://www.mlb.com/news/reds-ceo-phil-castellini-talks-reds-future",
+  "https://www.wlwt.com/article/hamilton-county-commissioners-scan-great-american-ball-park/70260540",
+  "https://www.mlb.com/reds/history/ballparks"
+ ],
+ "sport": "baseball",
+ "stadium": "Great American Ball Park",
+ "stadium_capacity": 45814,
+ "stadium_capacity_evidence": ": 45,814 (originally 42,271)",
+ "stadium_capacity_source_url": "https://www.mlb.com/news/featured/great-american-ball-park-guide-capacity-seating-chart-parking-and-more",
+ "stadium_owner": {
+  "detail": "Owned by Hamilton County, Ohio; Reds lease runs through 2037",
+  "evidence": "Hamilton County, which owns the 23-year-old ballpark",
+  "source_url": "https://www.wlwt.com/article/hamilton-county-commissioners-scan-great-american-ball-park/70260540",
+  "value": "municipal"
+ },
+ "valuation": 1600000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1.6B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/cincinnati-reds/",
+ "valuation_year": 2026
+}

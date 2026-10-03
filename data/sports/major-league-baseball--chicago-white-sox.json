@@ -1,0 +1,158 @@
+{
+ "city": "Chicago",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2025-06-05",
+   "date_text": "June 5, 2025",
+   "evidence": "The Chicago White Sox today announced that Jerry Reinsdorf and Justin Ishbia have reached a long-term investment agreement",
+   "headline": "Reinsdorf and Justin Ishbia agree long-term investment and path to control",
+   "investor": "Justin Ishbia (with Mat and Jeff Ishbia)",
+   "investor_type": "individual",
+   "kind": "minority_investment",
+   "seller": "Reinsdorf family / limited partners",
+   "source_name": "Chicago White Sox press release (MLB.com)",
+   "source_url": "https://www.mlb.com/press-release/press-release-white-sox-announce-long-term-ownership-investment-agreement",
+   "stake_pct": null,
+   "summary": "Ishbia makes capital infusions as a limited partner in 2025 and 2026 to pay down debt and fund operations; Reinsdorf may sell control to Ishbia 2029-2033, and Ishbia may acquire it after the 2034 season. Sportico reports the Ishbias first bought a mid-single-digit percentage. BDT & MSD Partners advised the club.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "mlb.com/whitesox",
+ "facts": {
+  "chair": {
+   "evidence": "Jerry Reinsdorf",
+   "name": "Jerry Reinsdorf",
+   "source_url": "https://www.mlb.com/whitesox/team/front-office",
+   "title": "Chairman"
+  },
+  "operating_result": {
+   "amount": -40000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "-$40M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), MLB Team Valuations 2026",
+   "source_url": "https://www.forbes.com/teams/chicago-white-sox/"
+  },
+  "stadium_owner": {
+   "detail": "Owned and operated by the Illinois Sports Facilities Authority, a state agency",
+   "evidence": "The authority, which owns and operates Rate Field and its surrounding parking lots",
+   "source_url": "https://blockclubchicago.org/2026/09/16/rate-fields-owners-blindsided-by-plans-to-build-amtrak-facility-nearby-dont-want-sox-to-move/",
+   "value": "state"
+  },
+  "wages": {
+   "amount": 110000000,
+   "currency": "USD",
+   "evidence": "$110M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/chicago-white-sox/"
+  }
+ },
+ "founded_evidence": "relocating to Chicago—and the American League—as the White Stockings in 1901",
+ "founded_source_url": "https://www.forbes.com/teams/chicago-white-sox/",
+ "founded_year": 1901,
+ "key": "major-league-baseball--chicago-white-sox",
+ "league": "Major League Baseball",
+ "name": "Chicago White Sox",
+ "notes": "Forbes: Reinsdorf group paid $20M (1981); 2025 operating income -$40M; debt/value 8%. Forbes' page also says the franchise was founded in 1894 as the Sioux City Cornhuskers before moving to Chicago in 1901. Ishbia's stake: Sportico says 'mid-single-digit percentage' with no exact figure, so stake_pct is null. Justin Ishbia is founder of private equity firm Shore Capital Partners but invests personally, so not flagged institutional. No social counts, legal entity, CEO (the club lists no CEO), honours count or attendance found on citable pages.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Until such time, the Reinsdorf family will continue to own the controlling interest in the White Sox.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Jerry Reinsdorf / Reinsdorf family (controlling interest)",
+   "since_year": 1981,
+   "source_url": "https://www.mlb.com/press-release/press-release-white-sox-announce-long-term-ownership-investment-agreement",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Ishbia will make capital infusions into the White Sox as a limited partner in 2025 and 2026",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Justin Ishbia",
+   "since_year": 2025,
+   "source_url": "https://www.mlb.com/press-release/press-release-white-sox-announce-long-term-ownership-investment-agreement",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "his brother Mat Ishbia, and father Jeff Ishbia will also be significant investors",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Mat Ishbia",
+   "since_year": 2025,
+   "source_url": "https://www.mlb.com/press-release/press-release-white-sox-announce-long-term-ownership-investment-agreement",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "his brother Mat Ishbia, and father Jeff Ishbia will also be significant investors",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Jeff Ishbia",
+   "since_year": 2025,
+   "source_url": "https://www.mlb.com/press-release/press-release-white-sox-announce-long-term-ownership-investment-agreement",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.mlb.com/press-release/press-release-white-sox-announce-long-term-ownership-investment-agreement",
+ "ownership_summary": "A limited partnership headed by chairman Jerry Reinsdorf, which bought the club in January 1981; the Reinsdorf family holds the controlling interest. Under a June 2025 agreement Justin Ishbia (with brother Mat and father Jeff) invests as a limited partner in 2025-26 and gains options to acquire control from 2029.",
+ "ownership_type": "consortium",
+ "revenue": 239000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$239M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB Team Valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/chicago-white-sox/",
+ "short_name": "White Sox",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/chicago-white-sox/",
+  "https://www.mlb.com/press-release/press-release-white-sox-announce-long-term-ownership-investment-agreement",
+  "https://www.sportico.com/business/team-sales/2025/chicago-white-sox-sale-ishbia-to-gain-control-over-time-1234855243/",
+  "https://www.mlb.com/news/featured/rate-field-guide-capacity-seating-chart-parking-and-more",
+  "https://blockclubchicago.org/2026/09/16/rate-fields-owners-blindsided-by-plans-to-build-amtrak-facility-nearby-dont-want-sox-to-move/",
+  "https://www.mlb.com/whitesox/team/front-office"
+ ],
+ "sport": "baseball",
+ "stadium": "Rate Field",
+ "stadium_capacity": 40615,
+ "stadium_capacity_evidence": ": 40,615",
+ "stadium_capacity_source_url": "https://www.mlb.com/news/featured/rate-field-guide-capacity-seating-chart-parking-and-more",
+ "stadium_owner": {
+  "detail": "Owned and operated by the Illinois Sports Facilities Authority, a state agency",
+  "evidence": "The authority, which owns and operates Rate Field and its surrounding parking lots",
+  "source_url": "https://blockclubchicago.org/2026/09/16/rate-fields-owners-blindsided-by-plans-to-build-amtrak-facility-nearby-dont-want-sox-to-move/",
+  "value": "state"
+ },
+ "valuation": 1940000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1.94B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/chicago-white-sox/",
+ "valuation_year": 2026
+}

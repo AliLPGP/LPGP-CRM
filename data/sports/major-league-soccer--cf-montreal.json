@@ -1,0 +1,179 @@
+{
+ "city": "Montreal",
+ "country": "Canada",
+ "deals": [
+  {
+   "amount": 7500000,
+   "currency": "CAD",
+   "date": "2012-02-03",
+   "date_text": "3 February 2012",
+   "evidence": "L’investissement du Fonds de 7,5 millions $ permettra d’acquérir une participation minoritaire dans la société en commandite Free-2-Play",
+   "headline": "Fonds de solidarité FTQ invests CAD 7.5m for a minority stake in the Impact",
+   "investor": "Fonds de solidarité FTQ",
+   "investor_type": "institutional",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "CF Montréal (club release, 3 Feb 2012)",
+   "source_url": "https://www.cfmontreal.com/nouvelles/le-fonds-de-solidarite-ftq-investit-dans-limpact-de-montreal",
+   "stake_pct": null,
+   "summary": "On the eve of the club's first MLS season, the Quebec labour-sponsored development-capital fund Fonds de solidarité FTQ invested CAD 7.5 million for a minority interest in Société en commandite Free-2-Play, the limited partnership that runs the club, including a sponsorship. The stake percentage was never disclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 23000000,
+   "currency": "CAD",
+   "date": null,
+   "date_text": "2012 (expansion for the club's first MLS season)",
+   "evidence": "Grâce à un apport financier de 23 millions de dollars du Gouvernement du Québec",
+   "headline": "Quebec government puts CAD 23m into the Stade Saputo expansion",
+   "investor": "Gouvernement du Québec",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "CF Montréal (club history)",
+   "source_url": "https://www.cfmontreal.com/club/histoire",
+   "stake_pct": null,
+   "summary": "The club's history records a CAD 23 million financial contribution from the Government of Quebec to expand Stade Saputo for the 2012 MLS season, raising seating by almost 60% and suites and mezzanines from 16 to more than 40.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 9500000,
+   "currency": "CAD",
+   "date": null,
+   "date_text": "Summer 2019 (reported 20 January 2021)",
+   "evidence": "Le Fonds FTQ a ainsi converti ses actions, achetées au coût de 7,5 millions en 2012, en un prêt de 9,5 millions au CF Montréal",
+   "headline": "Fonds FTQ converts its CF Montréal shares into a CAD 9.5m loan, leaving the Saputos sole owners",
+   "investor": "Fonds de solidarité FTQ",
+   "investor_type": "institutional",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "La Presse",
+   "source_url": "https://www.lapresse.ca/affaires/2021-01-20/investissement/le-fonds-ftq-vend-a-profit-ses-actions-du-cf-montreal.php",
+   "stake_pct": null,
+   "summary": "La Presse reports that in summer 2019 the Fonds de solidarité FTQ converted the minority stake it bought for CAD 7.5 million in 2012 into a CAD 9.5 million loan to the club, at a profit, ending its shareholding; the Saputo family became sole shareholder. Loan terms were not disclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "cfmontreal.com",
+ "facts": {
+  "chair": {
+   "evidence": "Joey Saputo Président du Conseil",
+   "name": "Joey Saputo",
+   "source_url": "https://www.cfmontreal.com/club/administration",
+   "title": "Président du Conseil (Chairman)"
+  },
+  "chief_executive": {
+   "evidence": "Gabriel Gervais Président et chef de la direction",
+   "name": "Gabriel Gervais",
+   "source_url": "https://www.cfmontreal.com/club/administration",
+   "title": "Président et chef de la direction (President and CEO)"
+  },
+  "kit_supplier": {
+   "evidence": "créé en partenariat avec adidas",
+   "name": "adidas",
+   "source_url": "https://www.cfmontreal.com/nouvelles/le-cf-montreal-devoile-son-maillot-archives"
+  },
+  "legal_entity": {
+   "evidence": "Société en commandite Free 2 Play est l'exploitant du club de soccer professionnel CF Montréal",
+   "name": "Société en commandite Free 2 Play (general partner Gestion Free 2 Play inc.)",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.cfmontreal.com/legal/rapport_esclavage_moderne"
+  },
+  "operating_result": {
+   "amount": -7000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "One-Year Change: 1% | Revenue: $48 million | Operating Income: -$7 million",
+   "season": "2025",
+   "source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (EBITDA basis; Wayback Machine copy)",
+   "source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/"
+  },
+  "shirt_sponsor": {
+   "evidence": "BMO Groupe Financier, le partenaire présentateur du CF Montréal, est à nouveau en évidence au centre du maillot",
+   "name": "BMO Groupe Financier (BMO Financial Group)",
+   "source_url": "https://www.cfmontreal.com/nouvelles/le-cf-montreal-devoile-son-nouveau-maillot-secondaire"
+  },
+  "stadium_owner": {
+   "detail": "The stadium itself belongs to the Saputo family, the club's owners; the land belongs to the Olympic Park (Parc olympique, Quebec), which granted it under a 40-year emphyteutic lease running to 2047, and the Park has a say over major renovations.",
+   "evidence": "Le stade Saputo proprement dit est la propriété de la famille Saputo",
+   "source_url": "https://www.lapresse.ca/sports/soccer/2024-11-06/cf-montreal/qui-gere-quoi-au-stade-saputo.php",
+   "value": "club"
+  }
+ },
+ "founded_evidence": "le 10 décembre 1992, que l'Impact de Montréal voit officiellement le jour",
+ "founded_source_url": "https://www.cfmontreal.com/club/histoire",
+ "founded_year": 1992,
+ "key": "major-league-soccer--cf-montreal",
+ "league": "Major League Soccer",
+ "name": "CF Montréal",
+ "notes": "Country corrected to Canada. The club publishes no accounts (financial year ends 31 December per its 2025 modern-slavery report): revenue ($48m) and operating income (-$7m, EBITDA) are Forbes estimates in USD for the 2025 MLS season, from the Feb 2026 MLS list (Wayback Machine copy; forbes.com/sites blocks scripts), where Montréal ranks last of 30 and the key owner is the Saputo family. Stake 100% rests on La Presse's January 2021 statement that the Saputo family is the sole shareholder; no later change was found. The club history says other owners ran the club in 2001 before Joey Saputo took it back, so no continuous 'since' year is given. The pre-2015 deals (2012 FTQ stake, 2012 Quebec stadium grant) are kept because they show the only outside equity and the public money in the stadium; the club history also says the stadium was built in 2008 for CAD 17m of private funds, CAD 7.5m of it from the Saputo family. In June 2026 MLS commissioner Don Garber urged a move to a renovated Olympic Stadium (Le Devoir); no financing has been committed. Attendance fell 18% in 2025 (Sports Business Journal) but no average was found. No MLS Cup; honours left blank (the club's titles are Canadian Championships and pre-MLS second-tier leagues). Registry number (NEQ) of the Free 2 Play partnership and social follower counts not found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "la famille Saputo est donc seule actionnaire de l’équipe de soccer montréalaise",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Saputo family (Joey Saputo, chairman)",
+   "since_year": null,
+   "source_url": "https://www.lapresse.ca/affaires/2021-01-20/investissement/le-fonds-ftq-vend-a-profit-ses-actions-du-cf-montreal.php",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.lapresse.ca/affaires/2021-01-20/investissement/le-fonds-ftq-vend-a-profit-ses-actions-du-cf-montreal.php",
+ "ownership_summary": "CF Montréal (the Impact de Montréal until January 2021) was founded by the Saputo group in December 1992; after financial trouble under other owners in 2001, Joey Saputo, now chairman, took the club back in hand. It is operated by the limited partnership Société en commandite Free 2 Play. Its only outside shareholder in the MLS era, the Fonds de solidarité FTQ (a CAD 7.5m minority stake bought in 2012), converted its shares into a CAD 9.5m loan in summer 2019, leaving the Saputo family as sole shareholder; Forbes' 2026 list still names the Saputo family as key owner.",
+ "ownership_type": "individual_family",
+ "revenue": 48000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "One-Year Change: 1% | Revenue: $48 million | Operating Income: -$7 million",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (13 Feb 2026; Wayback Machine copy)",
+ "revenue_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "short_name": "CF Montréal",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.cfmontreal.com/club/histoire",
+  "https://www.cfmontreal.com/club/administration",
+  "https://www.cfmontreal.com/club/partenaires-corporatifs",
+  "https://www.cfmontreal.com/legal/rapport_esclavage_moderne",
+  "https://www.cfmontreal.com/nouvelles/le-fonds-de-solidarite-ftq-investit-dans-limpact-de-montreal",
+  "https://www.cfmontreal.com/nouvelles/le-cf-montreal-devoile-son-nouveau-maillot-secondaire",
+  "https://www.cfmontreal.com/nouvelles/le-cf-montreal-devoile-son-maillot-archives",
+  "https://www.lapresse.ca/affaires/2021-01-20/investissement/le-fonds-ftq-vend-a-profit-ses-actions-du-cf-montreal.php",
+  "https://www.lapresse.ca/sports/soccer/2024-11-06/cf-montreal/qui-gere-quoi-au-stade-saputo.php",
+  "https://www.ledevoir.com/sports/985583/stade-olympique-devra-faire-peau-neuve-assurer-avenir-cf-montreal-mls",
+  "https://www.sportsbusinessjournal.com/Articles/2025/10/23/mls-average-attendance-down-5-in-2025-ahead-of-world-cup/",
+  "https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+  "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/"
+ ],
+ "sport": "football",
+ "stadium": "Stade Saputo",
+ "stadium_capacity": 19619,
+ "stadium_capacity_evidence": "la capacité du stade à 19 619 places",
+ "stadium_capacity_source_url": "https://www.cfmontreal.com/club/histoire",
+ "stadium_owner": {
+  "detail": "The stadium itself belongs to the Saputo family, the club's owners; the land belongs to the Olympic Park (Parc olympique, Quebec), which granted it under a 40-year emphyteutic lease running to 2047, and the Park has a say over major renovations.",
+  "evidence": "Le stade Saputo proprement dit est la propriété de la famille Saputo",
+  "source_url": "https://www.lapresse.ca/sports/soccer/2024-11-06/cf-montreal/qui-gere-quoi-au-stade-saputo.php",
+  "value": "club"
+ },
+ "valuation": 440000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "last-place CF Montréal valued at an estimated $440 million",
+ "valuation_source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (13 Feb 2026; Wayback Machine copy)",
+ "valuation_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "valuation_year": 2026
+}

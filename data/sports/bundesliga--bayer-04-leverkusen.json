@@ -1,0 +1,104 @@
+{
+ "city": "Leverkusen",
+ "country": "Germany",
+ "deals": [],
+ "domain": "bayer04.de",
+ "facts": {
+  "chair": {
+   "evidence": "Als Vorsitzender des sechsköpfigen Gesellschafterausschusses von Bayer 04 ist Werner Wenning tätig.",
+   "name": "Werner Wenning",
+   "source_url": "https://www.bayer04.de/de-de/page/organisation",
+   "title": "Chair of the shareholders' committee (Gesellschafterausschuss)"
+  },
+  "chief_executive": {
+   "evidence": "Geschäftsführer: Fernando Carro (Vorsitzender), Simon Rolfes",
+   "name": "Fernando Carro",
+   "source_url": "https://www.bayer04.de/de-de/page/impressum",
+   "title": "Chairman of the management (Vorsitzender der Geschäftsführung)"
+  },
+  "honours": {
+   "competition": "German top flight (Deutscher Meister 2023/24)",
+   "evidence": "Erstmals in seiner Geschichte wurde der Werksklub Deutscher Meister",
+   "league_titles": 1,
+   "source_url": "https://www.bayer04.de/de-de/page/historie"
+  },
+  "kit_supplier": {
+   "evidence": "New Balance becomes Bayer 04 Leverkusen's new kit supplier",
+   "name": "New Balance",
+   "source_url": "https://www.bayer04.de/en-us/news/bayer04/long-term-partnership-under-the-cross-new-balance-becomes-bayer-04-leverkusens-new-kit-supplier"
+  },
+  "legal_entity": {
+   "evidence": "Registereintrag: Amtsgericht Köln, HRB 49493",
+   "name": "Bayer 04 Leverkusen Fußball GmbH",
+   "registry": "Handelsregister, Amtsgericht Köln",
+   "registry_id": "HRB 49493",
+   "source_url": "https://www.bayer04.de/de-de/page/impressum"
+  },
+  "shirt_sponsor": {
+   "evidence": "the main sponsor BarmeniaGothaer is represented in white on the chest",
+   "name": "BarmeniaGothaer",
+   "source_url": "https://www.bayer04.de/en-us/news/bayer04/new-chapter-same-fire-bayer-04-and-new-balance-present-202526-home-jersey"
+  }
+ },
+ "founded_evidence": "or TuS 04 for short was born on 1 July 1904.",
+ "founded_source_url": "https://www.bayer04.de/en-us/page/history/founding-years-to-the-new-millennium/early-years",
+ "founded_year": 1904,
+ "key": "bundesliga--bayer-04-leverkusen",
+ "league": "Bundesliga",
+ "name": "Bayer 04 Leverkusen Fußball GmbH",
+ "notes": "Revenue not found on a citable page: Bayer 04 Leverkusen Fußball GmbH does not publish its accounts on its site, Bayer AG does not break the club out on any page we could read (bayer.com returned 403 to our fetcher), and the Deloitte Football Money League 2026 top 30 (lowest entry EUR 206.0m) does not list Leverkusen. Not on Forbes' 2026 list of the 30 most valuable soccer teams, so no valuation. Stadium ownership of the BayArena not stated on a page we could read. No ownership transactions since 2015: Bayer AG has held 100% throughout (no deal rows). Simon Rolfes is managing director for sport. Barmenia (now BarmeniaGothaer) has been main sponsor since 2016 per club news; contract to 30 June 2028. Average attendance and social follower counts not found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Bayer 04 Leverkusen Fußball GmbH is a wholly-owned subsidiary of Bayer AG.",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Bayer AG",
+   "since_year": null,
+   "source_url": "https://www.bayer04.de/en-us/page/business",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.bayer04.de/en-us/page/business",
+ "ownership_summary": "Bayer 04 Leverkusen Fußball GmbH, which runs the professional team, is a wholly-owned subsidiary of the chemicals and pharmaceuticals group Bayer AG; the club is one of the long-standing exceptions to the Bundesliga's 50+1 rule. A six-member shareholders' committee chaired by Werner Wenning oversees the GmbH.",
+ "ownership_type": "corporate",
+ "revenue": null,
+ "revenue_currency": null,
+ "revenue_evidence": null,
+ "revenue_season": null,
+ "revenue_source_name": null,
+ "revenue_source_url": null,
+ "short_name": "Bayer 04 Leverkusen",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.bayer04.de/en-us/page/business",
+  "https://www.bayer04.de/en-us/page/history/founding-years-to-the-new-millennium/early-years",
+  "https://www.bayer04.de/en-us/page/bayarena",
+  "https://www.bayer04.de/de-de/page/impressum",
+  "https://www.bayer04.de/de-de/page/organisation",
+  "https://www.bayer04.de/de-de/page/historie",
+  "https://www.bayer04.de/en-us/news/bayer04/new-chapter-same-fire-bayer-04-and-new-balance-present-202526-home-jersey",
+  "https://www.bayer04.de/en-us/news/bayer04/long-term-partnership-under-the-cross-new-balance-becomes-bayer-04-leverkusens-new-kit-supplier",
+  "https://www.bayer04.de/en-us/page/sustainability/club-management",
+  "https://www.deloitte.com/uk/en/services/financial-advisory/analysis/deloitte-football-money-league.html"
+ ],
+ "sport": "football",
+ "stadium": "BayArena",
+ "stadium_capacity": 30210,
+ "stadium_capacity_evidence": "and that with a total capacity of 30,210",
+ "stadium_capacity_source_url": "https://www.bayer04.de/en-us/page/bayarena",
+ "stadium_owner": null,
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

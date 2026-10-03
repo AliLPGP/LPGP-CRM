@@ -1,0 +1,186 @@
+{
+ "city": "Madrid",
+ "country": "Spain",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2019-07-05",
+   "date_text": "5 July 2019",
+   "evidence": "Convenio con la Comunidad de Madrid para la concesión de uso sobre el Campo de Fútbol de",
+   "headline": "Comunidad de Madrid grants Rayo a use concession on the Estadio de Vallecas",
+   "investor": "Comunidad de Madrid",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Rayo Vallecano de Madrid SAD 2024-25 audit report",
+   "source_url": "https://statics-maker.llt-services.com/ray/documents/2026/03/02/d03fa5ff-459d-4acc-9cde-4213d9255f3e-336.pdf",
+   "stake_pct": null,
+   "summary": "The club's auditor notes the 5 July 2019 agreement with the Comunidad de Madrid granting the company a use concession over the Campo de Fútbol de Vallecas, which it qualifies because no independent valuation of the right was provided. In October 2026 the regional government said it was pressing on with a procedure to terminate the concession and was considering a public-private arrangement for the stadium.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "2022-23 to 2024-25 (provision)",
+   "evidence": "lo que ha obligado a incrementar la provisión a 13,26 millones de euros a cierre de 2024-2025",
+   "headline": "Rayo treats its LaLiga-CVC participating loan as never executed and provisions EUR 13.26m",
+   "investor": "LaLiga / CVC Capital Partners (LaLiga Impulso)",
+   "investor_type": "private_equity",
+   "kind": "league_stake",
+   "seller": null,
+   "source_name": "Palco23",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/rayo-vallecano-tira-de-milagros-para-mantener-la-rentabilidad-en-2024-2025",
+   "stake_pct": null,
+   "summary": "Rayo says it received nothing under the participating-financing contract tied to LaLiga's deal with CVC and considers it not entered into; it impaired EUR 11.9m of receivables retained by LaLiga in 2022-23 and raised the provision to EUR 13.26m at the end of 2024-25 as unpaid amounts grew by EUR 1.31m.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "rayovallecano.es",
+ "facts": {
+  "chair": {
+   "evidence": "el club presidido por Raúl Martín Presa",
+   "name": "Raúl Martín Presa",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/rayo-vallecano-tira-de-milagros-para-mantener-la-rentabilidad-en-2024-2025",
+   "title": "President"
+  },
+  "chief_executive": {
+   "evidence": "el presidente del club, Raúl Martín Presa, ocupa, también, el cargo de director general del club",
+   "name": "Raúl Martín Presa",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/el-presidente-de-rayo-vallecano-raul-martin-presa-ocupara-tambien-la-direccion-general",
+   "title": "President and director general (general manager)"
+  },
+  "kit_supplier": {
+   "evidence": "Umbro, la marca que viste al Rayo",
+   "name": "Umbro",
+   "source_url": "https://www.sport.es/es/noticias/rayo-vallecano/polemica-rayo-presenta-nueva-equipacion-133183099"
+  },
+  "legal_entity": {
+   "evidence": "con C.I.F A-28402592, y domicilio social en CALLE DEL PAYASO FOFO",
+   "name": "Rayo Vallecano de Madrid, S.A.D.",
+   "registry": "Registro Mercantil de Madrid (CIF)",
+   "registry_id": "A-28402592",
+   "source_url": "https://www.rayovallecano.es/aviso-legal"
+  },
+  "revenue_breakdown": {
+   "broadcast": 43200000,
+   "commercial": null,
+   "currency": "EUR",
+   "evidence": "La venta de derechos audiovisuales se ha mantenido como la mayor fuente generadora de dinero, con 43,2 millones de euros",
+   "matchday": null,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Palco23 (2024-25 financial statements)",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/rayo-vallecano-tira-de-milagros-para-mantener-la-rentabilidad-en-2024-2025"
+  },
+  "shirt_sponsor": {
+   "evidence": "con la publicidad DIGI y un rayo atravesando la camiseta",
+   "name": "DIGI",
+   "source_url": "https://www.marca.com/futbol/rayo/2026/08/07/rayo-vallecano-anuncia-primera-equipacion-26-27-franja.html"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Comunidad de Madrid (regional government); the club uses it under a use concession signed on 5 July 2019. In October 2026 the regional government said it was keeping open a procedure to terminate the club's concession while the stadium stays public.",
+   "evidence": "Asimismo utiliza las instalaciones del Estadio de Vallecas por cesión de uso de las instalaciones realizada por el Comunidad de Madrid.",
+   "source_url": "https://www.rayovallecano.es/datos-del-club",
+   "value": "state"
+  },
+  "wages": {
+   "amount": 35310000,
+   "currency": "EUR",
+   "evidence": "desembolsando 35,31 millones de euros para el área de personal",
+   "season": "2024-25",
+   "source_name": "Palco23 (2024-25 financial statements, personnel expenses)",
+   "source_url": "https://palco23.mundodeportivo.com/clubes/rayo-vallecano-tira-de-milagros-para-mantener-la-rentabilidad-en-2024-2025"
+  }
+ },
+ "founded_evidence": "Rayo Vallecano de Madrid fue fundado en 1924 en Vallecas (Madrid).",
+ "founded_source_url": "https://palco23.mundodeportivo.com/clubes/rayo-vallecano-tira-de-milagros-para-mantener-la-rentabilidad-en-2024-2025",
+ "founded_year": 1924,
+ "key": "la-liga--rayo-vallecano",
+ "league": "La Liga",
+ "name": "Rayo Vallecano de Madrid, S.A.D.",
+ "notes": "The club's 2024-25 accounts PDF (transparency page) has a text audit report but the statements themselves are scanned images, so revenue, wages and the broadcast line are taken from Palco23's report on those statements (other 2024-25 lines it gives: advertising EUR 7.1m, season tickets and members EUR 3.15m, competitions about EUR 2m, commercial EUR 557,798; net profit EUR 1.5m). Pre-tax and operating results are not stated on a readable page. The club page gives both 14,708 and 14,505 as capacity; 14,708 is the figure it explains (after the 2011 removal of the perimeter fences). Presa's 98.6% (El País, May 2011) is now reported at 97.82% (EFE/Iusport, July 2025). In February 2026 headlines in AS and El Confidencial reported Presa had turned down offers and that an opportunistic fund was circling the club; those pages could not be read, so no bidder or price is recorded. Rayo reached the 2025-26 UEFA Conference League final (lost to Crystal Palace). Agents' fees paid in 2024-25: EUR 2,874,180 (UEFA art. 77bis disclosure). No valuation, attendance or social-media counts found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "El Rayo Vallecano es propiedad del empresario español Raúl Martín Presa, poseedor del 97,82% de las acciones del club",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Raúl Martín Presa",
+   "since_year": 2011,
+   "source_url": "https://iusport.com/art/140473/eeuu-mexico-singapur-asi-es-el-paisaje-inversor-de-los-clubes-espanoles",
+   "stake_pct": 97.82,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Así, el 2,18% restante de la propiedad se reparte entre accionistas minoritarios.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "other",
+   "name": "Minority shareholders",
+   "since_year": null,
+   "source_url": "https://iusport.com/art/140473/eeuu-mexico-singapur-asi-es-el-paisaje-inversor-de-los-clubes-espanoles",
+   "stake_pct": 2.18,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://iusport.com/art/140473/eeuu-mexico-singapur-asi-es-el-paisaje-inversor-de-los-clubes-espanoles",
+ "ownership_summary": "Rayo Vallecano de Madrid, S.A.D. is owned by Madrid businessman Raúl Martín Presa, who bought 98.6% of the shares from the Ruiz-Mateos family in May 2011, taking on about EUR 30m of club debt; a July 2025 report put his holding at 97.82%, with the remaining 2.18% spread among minority shareholders. Presa is also president and, since 2022, general manager. No private equity, sovereign or other institutional shareholder was found.",
+ "ownership_type": "individual_family",
+ "revenue": 56000000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "con un importe neto de la cifra de negocio de 56 millones de euros",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Palco23, on Rayo Vallecano de Madrid SAD's 2024-25 financial statements (importe neto de la cifra de negocio)",
+ "revenue_source_url": "https://palco23.mundodeportivo.com/clubes/rayo-vallecano-tira-de-milagros-para-mantener-la-rentabilidad-en-2024-2025",
+ "short_name": "Rayo Vallecano",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://palco23.mundodeportivo.com/clubes/rayo-vallecano-tira-de-milagros-para-mantener-la-rentabilidad-en-2024-2025",
+  "https://palco23.mundodeportivo.com/clubes/rayo-vallecano-un-contrato-no-ejecutado-con-laliga-y-cvc-recorta-su-beneficio-un-93",
+  "https://palco23.mundodeportivo.com/clubes/el-presidente-de-rayo-vallecano-raul-martin-presa-ocupara-tambien-la-direccion-general",
+  "https://iusport.com/art/140473/eeuu-mexico-singapur-asi-es-el-paisaje-inversor-de-los-clubes-espanoles",
+  "https://elpais.com/deportes/2011/05/06/actualidad/1304666536_850215.html",
+  "https://www.rayovallecano.es/estadio",
+  "https://www.rayovallecano.es/datos-del-club",
+  "https://www.rayovallecano.es/aviso-legal",
+  "https://www.rayovallecano.es/ley-de-transparencia",
+  "https://statics-maker.llt-services.com/ray/documents/2026/03/02/d03fa5ff-459d-4acc-9cde-4213d9255f3e-336.pdf",
+  "https://statics-maker.llt-services.com/ray/documents/2026/03/24/8de990a7-2eab-4d76-af6a-99239baa6e3a-748.pdf",
+  "https://www.marca.com/futbol/rayo/2026/08/07/rayo-vallecano-anuncia-primera-equipacion-26-27-franja.html",
+  "https://www.sport.es/es/noticias/rayo-vallecano/polemica-rayo-presenta-nueva-equipacion-133183099",
+  "https://www.mundodeportivo.com/futbol/rayo-vallecano/20261002/1004233619/comunidad-madrid-baraja-extinguir-concesion-rayo-vallecas.html",
+  "https://www.laliga.com/clubes/rayo-vallecano",
+  "https://www.elespanol.com/deportes/futbol/20260527/crystal-palace-rayo-vallecano-futbol-final-conference-league-resultado-derrota-equipo-madrileno/1003744262279_10.html"
+ ],
+ "sport": "football",
+ "stadium": "Estadio de Vallecas (Campo de Fútbol de Vallecas)",
+ "stadium_capacity": 14708,
+ "stadium_capacity_evidence": "tiene capacidad para 14.708 espectadores sentados",
+ "stadium_capacity_source_url": "https://www.rayovallecano.es/estadio",
+ "stadium_owner": {
+  "detail": "Owned by the Comunidad de Madrid (regional government); the club uses it under a use concession signed on 5 July 2019. In October 2026 the regional government said it was keeping open a procedure to terminate the club's concession while the stadium stays public.",
+  "evidence": "Asimismo utiliza las instalaciones del Estadio de Vallecas por cesión de uso de las instalaciones realizada por el Comunidad de Madrid.",
+  "source_url": "https://www.rayovallecano.es/datos-del-club",
+  "value": "state"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

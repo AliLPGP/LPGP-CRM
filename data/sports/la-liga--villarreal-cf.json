@@ -1,0 +1,186 @@
+{
+ "city": "Villarreal",
+ "country": "Spain",
+ "deals": [
+  {
+   "amount": 108000000,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "2021 (club estimate reported in November 2021; LaLiga Impulso signed December 2021)",
+   "evidence": "El Villarreal recibirá unos 108 millones.",
+   "headline": "Villarreal to receive about EUR 108m from LaLiga's CVC deal",
+   "investor": "CVC Capital Partners",
+   "investor_type": "private_equity",
+   "kind": "league_stake",
+   "seller": "LaLiga clubs (LaLiga Impulso)",
+   "source_name": "RTVE / EFE",
+   "source_url": "https://www.rtve.es/deportes/20211105/liga-inversion-clubes-dinero-fondo-cvc/2216222.shtml",
+   "stake_pct": null,
+   "summary": "Under LaLiga Impulso, CVC funded LaLiga's clubs in exchange for 10.95% of the net revenue LaLiga manages. Villarreal's share came as participative loans from the league, repayable over 50 years (to 2072) with 1.52% of its TV income; EUR 108,599,966.90 was outstanding at 30 June 2025 (club accounts, note 9). The club used it to rebuild the Estadio de la Cerámica. CVC holds no stake in the club itself.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 70000000,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "2022-2023",
+   "evidence": "el Villarreal gastó unos 70 millones de euros en su reciente reforma",
+   "headline": "Villarreal spends about EUR 70m rebuilding the municipal Estadio de la Cerámica",
+   "investor": "Villarreal C.F., S.A.D. (funded with its LaLiga Impulso participative loan)",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": "Ajuntament de Vila-real (stadium owner)",
+   "source_name": "Relevo",
+   "source_url": "https://www.relevo.com/futbol/liga-primera/caseros-laliga-alquilan-estadios-equipos-20241101230306-nt.html",
+   "stake_pct": null,
+   "summary": "The club paid for the rebuild of the municipally owned stadium (new corner stand, full roof, façade, seating and screens), finished in 2023. Its accounts say the work is financed with the participative loan signed with LaLiga.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "villarrealcf.es",
+ "facts": {
+  "attendance": {
+   "average": 18266,
+   "evidence": "El Submarino reunió a una media de 18.266 espectadores en cada partido",
+   "season": "2024-25",
+   "source_name": "El Periódico Mediterráneo, citing 2Playbook data",
+   "source_url": "https://www.elperiodicomediterraneo.com/villarreal-cf/2025/05/31/informe-estadio-ceramica-crece-espectadores-118045922.html"
+  },
+  "chair": {
+   "evidence": "Presidente del Villarreal CF desde la temporada 1997-1998.",
+   "name": "Fernando Roig Alfonso",
+   "source_url": "https://villarrealcf.es/es/consejo-administracion/",
+   "title": "President"
+  },
+  "chief_executive": {
+   "evidence": "FERNANDO ROIG NEGUEROLES – Consejero Delegado",
+   "name": "Fernando Roig Negueroles",
+   "source_url": "https://villarrealcf.es/es/consejo-administracion/",
+   "title": "Consejero Delegado (managing director)"
+  },
+  "kit_supplier": {
+   "evidence": "El Villarreal CF ha presentado este jueves la segunda equipación oficial JOMA de juego para la presente campaña 2026/27.",
+   "name": "Joma",
+   "source_url": "https://villarrealcf.es/a-la-venta-la-segunda-equipacion-26-27/"
+  },
+  "legal_entity": {
+   "evidence": "Inscrita en el Registro Mercantil de Castellón, en el Tomo 712, Folio 135, Sección G, Libro 279, Hoja CS-7677",
+   "name": "Villarreal C.F., S.A.D.",
+   "registry": "Registro Mercantil de Castellón",
+   "registry_id": "CS-7677",
+   "source_url": "https://villarrealcf.es/es/aviso-legal/"
+  },
+  "operating_result": {
+   "amount": 19280530,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "19.280.529,96",
+   "season": "2024-25",
+   "source_name": "Villarreal 2024-25 audited accounts, income statement result A.1 (operating result, including EUR 94.7m of gains on player sales) (scanned PDF)",
+   "source_url": "https://panel.villarrealcf.es/wp-content/uploads/2026/02/3.a.v-CCAA-Villarreal-24-25-firmado.pdf"
+  },
+  "pretax_result": {
+   "amount": 18986553,
+   "currency": "EUR",
+   "evidence": "18.986.552,68",
+   "season": "2024-25",
+   "source_name": "Villarreal 2024-25 audited accounts, income statement 'A.3) Resultado antes de impuesto' (scanned PDF)",
+   "source_url": "https://panel.villarrealcf.es/wp-content/uploads/2026/02/3.a.v-CCAA-Villarreal-24-25-firmado.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "Pamesa Cerámica en el Villarreal CF",
+   "name": "Pamesa Cerámica",
+   "source_url": "https://forbes.es/sports/997561/patrocinadores-laliga-2026-2027-camisetas/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Ajuntament de Vila-real. Under an agreement signed on 17 March 2008 the club has the use of it for 25 years, extendable to 50 (club's 2024-25 accounts, note 7.3). The club paid for the 2022-2023 rebuild, funded with its LaLiga Impulso participative loan.",
+   "evidence": "Diez pertenecen a los municipios en los que están situados (Barcelona, Getafe, Girona, Leganés, Palma, San Sebastián, Vigo, Valladolid, Vila-real y Vitoria)",
+   "source_url": "https://www.relevo.com/futbol/liga-primera/caseros-laliga-alquilan-estadios-equipos-20241101230306-nt.html",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 114067142,
+   "currency": "EUR",
+   "evidence": "114.067.142,53",
+   "season": "2024-25",
+   "source_name": "Villarreal 2024-25 audited accounts, income statement line 6 'Gastos de personal' (total staff costs; wages and salaries alone EUR 109,905,656.52) (scanned PDF)",
+   "source_url": "https://panel.villarrealcf.es/wp-content/uploads/2026/02/3.a.v-CCAA-Villarreal-24-25-firmado.pdf"
+  }
+ },
+ "founded_evidence": "Fundación: 1923",
+ "founded_source_url": "https://villarrealcf.es/es/datos-del-club/",
+ "founded_year": 1923,
+ "key": "la-liga--villarreal-cf",
+ "league": "La Liga",
+ "name": "Villarreal C.F., S.A.D.",
+ "notes": "Revenue, staff costs, operating and pre-tax results come from the club's audited 2024-25 accounts, a scanned PDF with no text layer, so each evidence string is the figure exactly as printed in the income statement (net turnover EUR 95,437,900.05, down from EUR 119,721,562.42). The year's EUR 13.7m net profit came mainly from EUR 94.7m of gains on player sales. The net profit (EUR 13,711,248.56) is also in the club's AGM release, and the 2025-26 budget is EUR 215.2m. Nomar Patrimonial's 98.79% is likewise read from the scanned accounts (note 9.d); Economía Digital confirms Nomar is Roig's holding that owns the club. Demócrata (August 2026) says the Cerámica belongs to Villarreal, but the club's own accounts and Relevo say the Ajuntament de Vila-real owns it. No valuation, net-debt figure, social-media counts or league titles (none won) were recorded; the 2024-25 attendance is a press figure based on 2Playbook data.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "La sociedad Nomar Patrimonial, S.L. es el mayor accionista de la sociedad, al cierre del ejercicio posee el 98,79% del capital social.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "company",
+   "name": "Nomar Patrimonial, S.L.U. (Fernando Roig Alfonso)",
+   "since_year": null,
+   "source_url": "https://panel.villarrealcf.es/wp-content/uploads/2026/02/3.a.v-CCAA-Villarreal-24-25-firmado.pdf",
+   "stake_pct": 98.79,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.economiadigital.es/valencia/empresas/patrimonial-fernando-roig-beneficios-68-70-millones-activos-1-544-millones.html",
+ "ownership_summary": "Villarreal C.F., S.A.D. is controlled by Fernando Roig Alfonso, president since the 1997-98 season, through Nomar Patrimonial, S.L.U. (Almazora, Castellón), the holding company that also owns his Pamesa ceramics group. The club's audited accounts say Nomar held 98.79% of the share capital at 30 June 2025, and Nomar heads the group the club belongs to. Fernando Roig Negueroles is managing director (consejero delegado).",
+ "ownership_type": "individual_family",
+ "revenue": 95437900,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "95.437.900,05",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Villarreal C.F., S.A.D. audited annual accounts, year to 30 June 2025: income statement, 'Importe neto de la cifra de negocios' (scanned PDF)",
+ "revenue_source_url": "https://panel.villarrealcf.es/wp-content/uploads/2026/02/3.a.v-CCAA-Villarreal-24-25-firmado.pdf",
+ "short_name": "Villarreal",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://villarrealcf.es/es/datos-del-club/",
+  "https://villarrealcf.es/es/estadio-de-la-ceramica/nuestro-hogar/",
+  "https://villarrealcf.es/es/consejo-administracion/",
+  "https://villarrealcf.es/es/aviso-legal/",
+  "https://villarrealcf.es/es/transparencia-economico-financiera/",
+  "https://panel.villarrealcf.es/wp-content/uploads/2026/02/3.a.v-CCAA-Villarreal-24-25-firmado.pdf",
+  "https://villarrealcf.es/junta-general-de-accionistas-del-villarreal-cf-2526/",
+  "https://villarrealcf.es/a-la-venta-la-segunda-equipacion-26-27/",
+  "https://villarrealcf.es/es/patrocinadores/",
+  "https://www.economiadigital.es/valencia/empresas/patrimonial-fernando-roig-beneficios-68-70-millones-activos-1-544-millones.html",
+  "https://www.relevo.com/futbol/liga-primera/caseros-laliga-alquilan-estadios-equipos-20241101230306-nt.html",
+  "https://www.rtve.es/deportes/20211105/liga-inversion-clubes-dinero-fondo-cvc/2216222.shtml",
+  "https://forbes.es/sports/997561/patrocinadores-laliga-2026-2027-camisetas/",
+  "https://www.elperiodicomediterraneo.com/villarreal-cf/2025/05/31/informe-estadio-ceramica-crece-espectadores-118045922.html",
+  "https://palco23.mundodeportivo.com/clubes/villarreal-cf-cierra-la-temporada-2024-2025-con-un-beneficio-de-14-millones-y-proyecta-un-presupuesto-de-215-millones",
+  "https://www.laliga.com/clubes/villarreal-cf"
+ ],
+ "sport": "football",
+ "stadium": "Estadio de la Cerámica",
+ "stadium_capacity": 23173,
+ "stadium_capacity_evidence": "El renovado estadio amarillo tiene un aforo de 23.173 espectadores",
+ "stadium_capacity_source_url": "https://villarrealcf.es/es/estadio-de-la-ceramica/nuestro-hogar/",
+ "stadium_owner": {
+  "detail": "Owned by the Ajuntament de Vila-real. Under an agreement signed on 17 March 2008 the club has the use of it for 25 years, extendable to 50 (club's 2024-25 accounts, note 7.3). The club paid for the 2022-2023 rebuild, funded with its LaLiga Impulso participative loan.",
+  "evidence": "Diez pertenecen a los municipios en los que están situados (Barcelona, Getafe, Girona, Leganés, Palma, San Sebastián, Vigo, Valladolid, Vila-real y Vitoria)",
+  "source_url": "https://www.relevo.com/futbol/liga-primera/caseros-laliga-alquilan-estadios-equipos-20241101230306-nt.html",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

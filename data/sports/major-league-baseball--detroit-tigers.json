@@ -1,0 +1,107 @@
+{
+ "city": "Detroit",
+ "country": "United States",
+ "deals": [],
+ "domain": "mlb.com/tigers",
+ "facts": {
+  "chair": {
+   "evidence": "CEO, Ilitch Companies - Chairman and CEO, Detroit Tigers - Christopher Ilitch",
+   "name": "Christopher Ilitch",
+   "source_url": "https://www.mlb.com/tigers/team/front-office",
+   "title": "Chairman and CEO, Detroit Tigers"
+  },
+  "chief_executive": {
+   "evidence": "CEO, Ilitch Companies - Chairman and CEO, Detroit Tigers - Christopher Ilitch",
+   "name": "Christopher Ilitch",
+   "source_url": "https://www.mlb.com/tigers/team/front-office",
+   "title": "Chairman and CEO"
+  },
+  "honours": {
+   "competition": "World Series",
+   "evidence": "Championships",
+   "league_titles": 4,
+   "source_url": "https://www.forbes.com/teams/detroit-tigers/"
+  },
+  "operating_result": {
+   "amount": 27000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$27M",
+   "season": "2025",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/detroit-tigers/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Detroit-Wayne County Stadium Authority (public authority)",
+   "evidence": "Detroit-Wayne County Stadium Authority",
+   "source_url": "https://www.forbes.com/teams/detroit-tigers/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 187000000,
+   "currency": "USD",
+   "evidence": "$187M",
+   "season": "2025",
+   "source_name": "Forbes (estimate) — player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/detroit-tigers/"
+  }
+ },
+ "founded_evidence": "The Tigers, founded in Detroit as a member of the Western League in 1894",
+ "founded_source_url": "https://www.forbes.com/teams/detroit-tigers/",
+ "founded_year": 1894,
+ "key": "major-league-baseball--detroit-tigers",
+ "league": "Major League Baseball",
+ "name": "Detroit Tigers",
+ "notes": "Revenue, operating income and player expenses are Forbes estimates for the 2025 season. Owner amount is Forbes' 'Price Paid $82M' for the 1992 purchase. No ownership transaction, minority investment or financing since 2015 found on a citable page. Legal entity, socials, attendance not found.",
+ "owners": [
+  {
+   "amount": 82000000,
+   "currency": "USD",
+   "evidence": "Ilitch Family",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Ilitch family (Christopher Ilitch)",
+   "since_year": 1992,
+   "source_url": "https://www.forbes.com/teams/detroit-tigers/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.forbes.com/teams/detroit-tigers/",
+ "ownership_summary": "Owned by the Ilitch family since 1992 (Forbes: purchased 1992 for $82M); Christopher Ilitch, CEO of Ilitch Companies, is chairman and CEO of the club.",
+ "ownership_type": "individual_family",
+ "revenue": 363000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$363M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB team valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/detroit-tigers/",
+ "short_name": "Tigers",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/detroit-tigers/",
+  "https://www.mlb.com/tigers/team/front-office"
+ ],
+ "sport": "baseball",
+ "stadium": "Comerica Park",
+ "stadium_capacity": 41083,
+ "stadium_capacity_evidence": "41,083",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/detroit-tigers/",
+ "stadium_owner": {
+  "detail": "Owned by the Detroit-Wayne County Stadium Authority (public authority)",
+  "evidence": "Detroit-Wayne County Stadium Authority",
+  "source_url": "https://www.forbes.com/teams/detroit-tigers/",
+  "value": "municipal"
+ },
+ "valuation": 1800000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1.8B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/detroit-tigers/",
+ "valuation_year": 2026
+}

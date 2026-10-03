@@ -1,0 +1,141 @@
+{
+ "city": "Green Bay, Wisconsin",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 65400000,
+   "currency": "USD",
+   "date": "2022-02-25",
+   "date_text": "November 2021 – February 2022",
+   "evidence": "Approximately 197,200 shares have been sold thus far in 178,402 transactions, raising more than $65,400,000",
+   "headline": "Packers' sixth stock sale raises more than $65.4 million for Lambeau Field",
+   "investor": "Packers fans (public stock offering)",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": null,
+   "source_name": "packers.com",
+   "source_url": "https://www.packers.com/news/packers-sixth-stock-sale-ends-today",
+   "stake_pct": null,
+   "summary": "The sixth public stock sale, at $300 a share (no dividends, no repayment), opened 16 Nov 2021 and ran to 25 Feb 2022; on its last day about 197,200 shares had been sold in 178,402 transactions, raising more than $65.4 million for Lambeau Field projects (new video boards, concourse upgrades). The final total is not on the page.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "packers.com",
+ "facts": {
+  "chair": {
+   "evidence": "Chairman of the Board, President and CEO Ed Policy said",
+   "name": "Ed Policy",
+   "source_url": "https://www.packers.com/news/packers-finances-remain-strong-amidst-changing-nfl-landscape-2026",
+   "title": "Chairman of the Board, President and CEO"
+  },
+  "chief_executive": {
+   "evidence": "Chairman of the Board, President and CEO Ed Policy said",
+   "name": "Ed Policy",
+   "source_url": "https://www.packers.com/news/packers-finances-remain-strong-amidst-changing-nfl-landscape-2026",
+   "title": "Chairman of the Board, President and CEO"
+  },
+  "honours": {
+   "competition": "NFL championships (incl. Super Bowls), as Forbes counts them",
+   "evidence": "Calculated September 2026 Championships 13",
+   "league_titles": 13,
+   "source_url": "https://web.archive.org/web/20260911102737/https://www.forbes.com/teams/green-bay-packers/"
+  },
+  "legal_entity": {
+   "evidence": "reorganized in 1935 as Green Bay Packers, Inc.",
+   "name": "Green Bay Packers, Inc.",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.packers.com/community/shareholders"
+  },
+  "operating_result": {
+   "amount": -1100000,
+   "basis": "operating profit",
+   "currency": "USD",
+   "evidence": "different within the annual financial picture is an operating loss of $1.1 million",
+   "season": "FY ended 2026-03-31",
+   "source_name": "Green Bay Packers annual financial report 2025-26 (packers.com)",
+   "source_url": "https://www.packers.com/news/packers-finances-remain-strong-amidst-changing-nfl-landscape-2026"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the City of Green Bay and the Green Bay/Brown County Professional Football Stadium District",
+   "evidence": "Venue Lambeau Field Owner(s) City of Green Bay, Green Bay/Brown County Professional Football Stadium District",
+   "source_url": "https://web.archive.org/web/20260911102737/https://www.forbes.com/teams/green-bay-packers/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 377000000,
+   "currency": "USD",
+   "evidence": "Player Expenses 5 Includes benefits and bonuses. $377M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), team profile: player expenses incl. benefits and bonuses",
+   "source_url": "https://web.archive.org/web/20260911102737/https://www.forbes.com/teams/green-bay-packers/"
+  }
+ },
+ "founded_evidence": "The incredible saga of the Green Bay Packers began in August 1919",
+ "founded_source_url": "https://www.profootballhof.com/teams/green-bay-packers/team-history/",
+ "founded_year": 1919,
+ "key": "national-football-league--green-bay-packers",
+ "league": "National Football League",
+ "name": "Green Bay Packers",
+ "notes": "The Packers publish an annual financial report (fiscal year to 31 March) but the 2026 release (24 Jul 2026) gives no total revenue: it states an operating loss of $1.1m, $133.6m non-operating income, $132.5m net income, record national revenue of $453.2m and a $701m corporate reserve fund. Total revenue and value are therefore Forbes estimates for the 2025 season (list of 9 Sep 2026, via Wayback). FY2024-25 operating profit was $83.7m (packers.com, 23 Jul 2025). The stock-sale amount is the figure stated on the closing day ('more than $65,400,000'), not a final total. Ed Policy succeeded Mark Murphy as chairman, president and CEO in July 2025 (NFL.com). Attendance and social counts not found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "There are approximately 5,204,625 shares owned by 538,967 stockholders",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Shareholders of Green Bay Packers, Inc. (538,967 stockholders)",
+   "since_year": null,
+   "source_url": "https://www.packers.com/community/shareholders",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.packers.com/community/shareholders",
+ "ownership_summary": "Publicly owned nonprofit corporation (Green Bay Packers, Inc.) since 1923: about 5.2 million shares held by 538,967 stockholders, none receiving dividends; governed by a board of directors and a seven-member executive committee. The NFL's only community-owned club, so no private-equity or institutional stake is possible.",
+ "ownership_type": "member_owned",
+ "revenue": 753000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenue: $753 million | Operating Income: $73 million | Owner: shareholders",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The NFL's Most Valuable Teams 2026",
+ "revenue_source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+ "short_name": "Packers",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+  "https://web.archive.org/web/20260911102737/https://www.forbes.com/teams/green-bay-packers/",
+  "https://www.profootballhof.com/teams/green-bay-packers/team-history/",
+  "https://www.packers.com/community/shareholders",
+  "https://www.packers.com/news/packers-finances-remain-strong-amidst-changing-nfl-landscape-2026",
+  "https://www.packers.com/news/packers-finances-staying-in-good-shape-2025",
+  "https://www.packers.com/news/packers-sixth-stock-sale-ends-today",
+  "https://www.packers.com/news/nfl-approves-potential-green-bay-packers-stock-sale-2021",
+  "https://www.nfl.com/news/ed-policy-named-packers-next-chairman-president-ceo-mark-murphy-2025"
+ ],
+ "sport": "american_football",
+ "stadium": "Lambeau Field",
+ "stadium_capacity": 81441,
+ "stadium_capacity_evidence": "Seating Capacity 81,441",
+ "stadium_capacity_source_url": "https://web.archive.org/web/20260911102737/https://www.forbes.com/teams/green-bay-packers/",
+ "stadium_owner": {
+  "detail": "Owned by the City of Green Bay and the Green Bay/Brown County Professional Football Stadium District",
+  "evidence": "Venue Lambeau Field Owner(s) City of Green Bay, Green Bay/Brown County Professional Football Stadium District",
+  "source_url": "https://web.archive.org/web/20260911102737/https://www.forbes.com/teams/green-bay-packers/",
+  "value": "municipal"
+ },
+ "valuation": 8600000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$8.6 billion Green Bay Packers One-Year Change: 29%",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+ "valuation_year": 2026
+}

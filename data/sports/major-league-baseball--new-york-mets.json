@@ -1,0 +1,148 @@
+{
+ "city": "New York",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 2400000000,
+   "currency": "USD",
+   "date": "2020-11-06",
+   "date_text": "November 2020 (closed Friday before Nov 8, 2020)",
+   "evidence": "Steve Cohen closed his record $2.4 billion deal to purchase the team from Sterling Equities",
+   "headline": "Steve Cohen closes record $2.4bn purchase of the Mets",
+   "investor": "Steve Cohen",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Sterling Equities (Wilpon and Katz families)",
+   "source_name": "MLB.com",
+   "source_url": "https://www.mlb.com/news/steve-cohen-finalizes-purchase-of-mets",
+   "stake_pct": null,
+   "summary": "Cohen, who already owned 8%, bought control from Sterling Equities in a deal described as $2.4bn-plus (per sources), then a North American team record; Sterling kept 5% of the club and SNY. MLB owners and NYC approved on October 30, 2020.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mlb.com/mets",
+ "facts": {
+  "attendance": {
+   "average": 39775,
+   "evidence": "They finished the 2025 season at No. 5 with 39,775 fans on average.",
+   "season": "2025",
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/leagues/baseball/2026/new-york-mets-revenue-citi-field-1234940000/"
+  },
+  "chair": {
+   "evidence": "Steven A. Cohen: Owner, Chairman and CEO",
+   "name": "Steven A. Cohen",
+   "source_url": "https://www.mlb.com/mets/team/front-office",
+   "title": "Owner, Chairman and CEO"
+  },
+  "chief_executive": {
+   "evidence": "Steven A. Cohen: Owner, Chairman and CEO",
+   "name": "Steven A. Cohen",
+   "source_url": "https://www.mlb.com/mets/team/front-office",
+   "title": "Owner, Chairman and CEO"
+  },
+  "operating_result": {
+   "amount": -213000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "-$213M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), MLB Team Valuations 2026",
+   "source_url": "https://www.forbes.com/teams/new-york-mets/"
+  },
+  "wages": {
+   "amount": 409000000,
+   "currency": "USD",
+   "evidence": "$409M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/new-york-mets/"
+  }
+ },
+ "founded_evidence": "1962",
+ "founded_source_url": "https://www.mlb.com/news/featured/citi-field-guide-capacity-seating-chart-parking-and-more",
+ "founded_year": 1962,
+ "key": "major-league-baseball--new-york-mets",
+ "league": "Major League Baseball",
+ "name": "New York Mets",
+ "notes": "Revenue, operating income and player expenses are Forbes estimates for the 2025 season (Forbes Debt/Value 15%, price paid $2.42B). The 2020 price is reported 'according to sources'. Cohen's exact stake is not stated on a citable page (8% before, Sterling kept 5%); whether Sterling's 5% has since been bought out was not confirmed. Queens Ballpark Company (Citi Field financing disclosure) reported $149m first-half 2026 ballpark revenue (Sportico). Stadium owner, honours count, legal-entity registry and social counts not found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Steven A. Cohen: Owner, Chairman and CEO",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Steven A. Cohen",
+   "since_year": 2020,
+   "source_url": "https://www.mlb.com/mets/team/front-office",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Alexandra M. Cohen: Owner & President, Amazin' Mets Foundation",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Alexandra M. Cohen",
+   "since_year": 2020,
+   "source_url": "https://www.mlb.com/mets/team/front-office",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Sterling Equities will retain a 5 percent ownership stake in the Mets",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Sterling Equities (Wilpon and Katz families)",
+   "since_year": null,
+   "source_url": "https://www.mlb.com/news/mets-sale-to-steve-cohen-approved-by-mlb",
+   "stake_pct": 5,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.mlb.com/news/steve-cohen-finalizes-purchase-of-mets",
+ "ownership_summary": "Steve Cohen (founder of Point72 Asset Management), who already held 8%, bought control of the Mets from the Wilpon and Katz families' Sterling Equities in a deal closed in November 2020 for a record $2.4bn-plus; Sterling retained a 5% stake and SNY. Steve and Alexandra Cohen are listed as owners.",
+ "ownership_type": "individual_family",
+ "revenue": 553000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$553M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB Team Valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/new-york-mets/",
+ "short_name": "Mets",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/new-york-mets/",
+  "https://www.mlb.com/news/featured/citi-field-guide-capacity-seating-chart-parking-and-more",
+  "https://www.mlb.com/mets/team/front-office",
+  "https://www.mlb.com/news/mets-sale-agreement-steve-cohen",
+  "https://www.mlb.com/news/mets-sale-to-steve-cohen-approved-by-mlb",
+  "https://www.mlb.com/news/steve-cohen-finalizes-purchase-of-mets",
+  "https://www.sportico.com/leagues/baseball/2026/new-york-mets-revenue-citi-field-1234940000/"
+ ],
+ "sport": "baseball",
+ "stadium": "Citi Field",
+ "stadium_capacity": 41922,
+ "stadium_capacity_evidence": ": 41,922 plus additional standing room",
+ "stadium_capacity_source_url": "https://www.mlb.com/news/featured/citi-field-guide-capacity-seating-chart-parking-and-more",
+ "stadium_owner": null,
+ "valuation": 3500000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$3.5B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/new-york-mets/",
+ "valuation_year": 2026
+}

@@ -1,0 +1,182 @@
+{
+ "city": "Marseille",
+ "country": "France",
+ "deals": [
+  {
+   "amount": 45000000,
+   "currency": "EUR",
+   "date": "2016-10-17",
+   "date_text": "17 October 2016 (completion)",
+   "evidence": "American businessman Frank McCourt has bought French Ligue 1 club Marseille for 45m euros (£40.6m).",
+   "headline": "Frank McCourt buys Olympique de Marseille for EUR 45m",
+   "investor": "Frank McCourt (McCourt Global)",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Margarita Louis-Dreyfus",
+   "source_name": "BBC Sport",
+   "source_url": "https://www.bbc.com/sport/football/37685865",
+   "stake_pct": null,
+   "summary": "Former Los Angeles Dodgers owner Frank McCourt completed the purchase of Olympique de Marseille from Margarita Louis-Dreyfus; the BBC put the price at EUR 45m (GBP 40.6m) and reported McCourt's pledge to invest EUR 200m over four years. Le Figaro also described the sale as estimated at EUR 45m. No stake percentage is stated on these pages.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "om.fr",
+ "facts": {
+  "chair": {
+   "evidence": "\"nom\":\"INGRAM\",\"prenoms\":\"JEFFREY JAMES\"",
+   "name": "Jeffrey James Ingram",
+   "source_url": "https://recherche-entreprises.api.gouv.fr/search?q=401887401",
+   "title": "Chair of the supervisory board (Président du conseil de surveillance)"
+  },
+  "chief_executive": {
+   "evidence": "Stéphane Richard entrera en fonction début juillet.",
+   "name": "Stéphane Richard",
+   "source_url": "https://www.franceinfo.fr/sports/foot/om/le-nouveau-president-de-l-olympique-de-marseille-nomme-vendredi-l-ex-pdg-d-orange-stephane-richard-pressenti_7928345.html",
+   "title": "President (Président du directoire); named 10 April 2026, in office from July 2026"
+  },
+  "honours": {
+   "competition": "French top flight (Division 1 / Ligue 1)",
+   "evidence": "Nine-time Ligue 1 winners Marseille",
+   "league_titles": 9,
+   "source_url": "https://www.bbc.com/sport/football/37685865"
+  },
+  "kit_supplier": {
+   "evidence": "le maillot third 2026-2027 de l’Olympique de Marseille, PUMA referme un triptyque",
+   "name": "PUMA",
+   "source_url": "https://www.sportsmarketing.fr/maillot-third-om-2026-2027-puma-provence-lavande/"
+  },
+  "legal_entity": {
+   "evidence": "RCS Marseille n° 401887401",
+   "name": "Olympique de Marseille SASP",
+   "registry": "RCS Marseille / SIRENE",
+   "registry_id": "401 887 401",
+   "source_url": "https://www.om.fr/mentions-legales"
+  },
+  "operating_result": {
+   "amount": -125969000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "(LOSS) -125 969",
+   "season": "2024-25",
+   "source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP + OM Association + OM Développement + OM Médias; K€): operating result before player trading",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "pretax_result": {
+   "amount": -103363000,
+   "currency": "EUR",
+   "evidence": "PROFIT (LOSS) BEFORE TAX -103 363",
+   "season": "2024-25",
+   "source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP + OM Association + OM Développement + OM Médias; K€)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 31901000,
+   "commercial": 71712000,
+   "currency": "EUR",
+   "evidence": "Broadcasting rights 31 901 Sponsors - Advertising 71 712 Gate receipts 30 327 Other income 54 783",
+   "matchday": 30327000,
+   "other": 54783000,
+   "season": "2024-25",
+   "source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP + OM Association + OM Développement + OM Médias; K€): gate receipts, broadcasting rights, sponsors-advertising, other income",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "le renforcement de son partenariat avec le groupe CMA CGM - son principal sponsor maillot",
+   "name": "CMA CGM",
+   "source_url": "https://rmcsport.bfmtv.com/football/clubs/olympique-marseille/une-nouvelle-etape-importante-pour-l-avenir-l-om-consolide-son-partenariat-avec-cma-cgm-jusqu-en-2028_AV-202511240937.html"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the City of Marseille. On 18 December 2025 OM signed a 15-year occupancy agreement (to 2040) giving it exclusive management of the stadium for roughly EUR 10m a year in rent, without any transfer of ownership. Naming rights passed from Orange to the Caisse d'Epargne CEPAC on 2 July 2026 for seven years.",
+   "evidence": "La Ville de Marseille demeure propriétaire du stade dont l’enseigne a changé.",
+   "source_url": "https://lessentieldeleco.fr/8319-ligue-1-a-qui-appartient-le-stade-de-votre-club/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 153653000,
+   "currency": "EUR",
+   "evidence": "Total payroll 153 653",
+   "season": "2024-25",
+   "source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP + OM Association + OM Développement + OM Médias; K€): total payroll",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  }
+ },
+ "founded_evidence": "Olympique de Marseille fondé le 31 août 1899",
+ "founded_source_url": "https://www.sportbuzzbusiness.fr/puma-devoile-un-nouveau-maillot-blanc-pour-les-125-ans-de-lolympique-de-marseille.html",
+ "founded_year": 1899,
+ "key": "ligue-1--olympique-de-marseille",
+ "league": "Ligue 1",
+ "name": "Olympique de Marseille",
+ "notes": "Revenue and P&L are the DNCG's published 2024/25 accounts (season to 30 June 2025, the latest the league has published), in thousands of euros converted to full units; perimeter SASP + OM Association + OM Développement + OM Médias. The same accounts show a EUR 27.15m profit on player transfers, a EUR 104.8m net loss, negative equity of EUR 37.4m, financial debts of EUR 71.9m and cash of EUR 114.2m at 30 June 2025 (no net-debt figure is stated, so none is recorded). The valuation is Football Benchmark's 2026 enterprise value (+12% on the year). No page found states McCourt's exact percentage, so stake_pct is null; the McCourt Global site says MG acquired the club in 2016. L'Essentiel de l'Éco (March-June 2026) reports McCourt has put about USD 750m into the club since 2016, values it at about USD/EUR 1.2bn, and tried to sell 30% for about EUR 400m without a signature; UEFA fined OM EUR 10m on 11 June 2026. The stadium capacity is the City of Marseille's figure (67,354). Pablo Longoria left as president in March 2026. On 5 August 2026 the club announced adidas will replace PUMA as kit supplier from 2028-29 (L'Équipe and Ouest-France headlines). Social followers are the CIES Football Observatory's cumulative count across Facebook, Instagram, TikTok, YouTube and X (published 27 May 2026, via Sportune), not per platform. No dated attendance figure for the club was found on a citable page (the LFP says only that OM averaged over 35,000 and filled over 90% in 2025/26).",
+ "owners": [
+  {
+   "amount": 45000000,
+   "currency": "EUR",
+   "evidence": "American businessman Frank McCourt has bought French Ligue 1 club Marseille for 45m euros (£40.6m).",
+   "institutional": true,
+   "investor_type": "family_office",
+   "kind": "family",
+   "name": "Frank McCourt (McCourt Global)",
+   "since_year": 2016,
+   "source_url": "https://www.bbc.com/sport/football/37685865",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.mccourt.com/sports",
+ "ownership_summary": "Olympique de Marseille SASP has been controlled since October 2016 by Frank McCourt through McCourt Global, his family company, which bought the club from Margarita Louis-Dreyfus for a reported EUR 45m. In March 2026 McCourt said he wanted a strategic partner; L'Essentiel de l'Éco reports his entourage has sounded out buyers for a minority or full sale, with no deal signed by summer 2026.",
+ "ownership_type": "individual_family",
+ "revenue": 188723000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL NON-TRANSFER EARNINGS 188 723",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "LFP DNCG, Individual club accounts 2024/2025 season (SASP + OM Association + OM Développement + OM Médias; K€); total non-transfer earnings (revenue excluding player trading)",
+ "revenue_source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+ "short_name": "Marseille",
+ "social_as_of": "2026-05",
+ "social_evidence": "Olympique de Marseille (23,8 millions)",
+ "social_followers": 23800000,
+ "social_platforms": [],
+ "social_source_url": "https://sportune.20minutes.fr/classement-des-clubs-francais-les-plus-suivis-sur-les-reseaux-sociaux-403354",
+ "sources": [
+  "https://sportune.20minutes.fr/classement-des-clubs-francais-les-plus-suivis-sur-les-reseaux-sociaux-403354",
+  "https://www.sportbuzzbusiness.fr/puma-devoile-un-nouveau-maillot-blanc-pour-les-125-ans-de-lolympique-de-marseille.html",
+  "https://www.marseille.fr/sports-loisirs/equipements-sportifs/stade-velodrome",
+  "https://lessentieldeleco.fr/8319-ligue-1-a-qui-appartient-le-stade-de-votre-club/",
+  "https://www.ici.fr/provence-alpes-cote-d-azur/bouches-du-rhone-13/marseille/le-stade-velodrome-va-desormais-s-appeler-cepac-velodrome-5524661",
+  "https://www.leparisien.fr/sports/football/ligue-1/ligue-1-le-stade-velodrome-renomme-le-cepac-velodrome-pour-une-duree-de-sept-ans-25-06-2026-XLC56PBEXVBCJPEJIILDC4NARQ.php",
+  "https://www.mccourt.com/sports",
+  "https://www.mccourt.com/about/",
+  "https://www.bbc.com/sport/football/37685865",
+  "https://www.lefigaro.fr/sports/football/ligue-1/actualites/c-est-officiel-l-om-a-ete-rachete-par-frank-mccourt-828970",
+  "https://sportune.20minutes.fr/om-psg-et-losc-au-top-32-des-clubs-les-plus-valorises-en-2026-403433",
+  "https://rmcsport.bfmtv.com/football/clubs/olympique-marseille/une-nouvelle-etape-importante-pour-l-avenir-l-om-consolide-son-partenariat-avec-cma-cgm-jusqu-en-2028_AV-202511240937.html",
+  "https://www.sportsmarketing.fr/maillot-third-om-2026-2027-puma-provence-lavande/",
+  "https://www.franceinfo.fr/sports/foot/om/le-nouveau-president-de-l-olympique-de-marseille-nomme-vendredi-l-ex-pdg-d-orange-stephane-richard-pressenti_7928345.html",
+  "https://www.om.fr/mentions-legales",
+  "https://recherche-entreprises.api.gouv.fr/search?q=401887401",
+  "https://lessentieldeleco.fr/7499-om-franck-mccourt-nen-peut-plus/",
+  "https://lessentieldeleco.fr/6954-football-franck-mccourt-pret-a-brader-lolympique-de-marseille/",
+  "https://sportune.20minutes.fr/sport-business/football/om-psg-ol-losc-rc-lens-de-1-euro-a-100-millions-combien-ont-coute-les-clubs-de-ligue-1-a-leurs-proprietaires-412720/2",
+  "https://www.lfp.fr/article/affluences-2025-2026-record-historique-pour-le-football-francais",
+  "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+ ],
+ "sport": "football",
+ "stadium": "CEPAC Vélodrome (Stade Vélodrome)",
+ "stadium_capacity": 67354,
+ "stadium_capacity_evidence": "Les 67 354 places sont toutes assises",
+ "stadium_capacity_source_url": "https://www.marseille.fr/sports-loisirs/equipements-sportifs/stade-velodrome",
+ "stadium_owner": {
+  "detail": "Owned by the City of Marseille. On 18 December 2025 OM signed a 15-year occupancy agreement (to 2040) giving it exclusive management of the stadium for roughly EUR 10m a year in rent, without any transfer of ownership. Naming rights passed from Orange to the Caisse d'Epargne CEPAC on 2 July 2026 for seven years.",
+  "evidence": "La Ville de Marseille demeure propriétaire du stade dont l’enseigne a changé.",
+  "source_url": "https://lessentieldeleco.fr/8319-ligue-1-a-qui-appartient-le-stade-de-votre-club/",
+  "value": "municipal"
+ },
+ "valuation": 667000000,
+ "valuation_currency": "EUR",
+ "valuation_evidence": "pointe au 24e rang avec 667 millions d’euros",
+ "valuation_source_name": "Football Benchmark, Football Clubs' Valuation: The European Elite 2026 (enterprise value, 24th of 32), as reported by Sportune",
+ "valuation_source_url": "https://sportune.20minutes.fr/om-psg-et-losc-au-top-32-des-clubs-les-plus-valorises-en-2026-403433",
+ "valuation_year": 2026
+}

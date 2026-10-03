@@ -223,6 +223,25 @@ boundaries and keeps comment text ASCII.
   in tens of milliseconds; `fund_performance_mv` is the performance view,
   stored, and what the app reads. `desk_cache_refresh()` rebuilds all of it;
   pg_cron runs it at :07 and :37.
+- **The club file** (0039) — `sports_teams.facts`: the rest of a club's
+  file, one key per category (revenue split, wages, operating and pre-tax
+  result, net debt, attendance, stadium owner, shirt sponsor, kit supplier,
+  chair, chief executive, legal entity, honours), each with the page that
+  states it and the phrase it uses; `founded_source_url`; `researched_at`.
+  `sports_team_owners.current` keeps replaced owner rows as history (readers
+  ask for current), `evidence` is the phrase on the page. `data/sports/
+  <key>.json` holds each club's checked file: 220 clubs across football's
+  main leagues and the four North American majors, researched from the
+  club's own site and accounts, the registry, the league, Deloitte, Forbes
+  and the press (never Wikipedia or aggregators), every figure re-fetched
+  and matched on its page by `scratchpad`'s `check.py` before loading; a
+  figure whose page does not carry it is dropped. Load: insert the files
+  into `public.sports_stage` (anon insert granted for the session, revoked
+  after) and run `ingest.load_sports_stage()`, which upserts the club, retires
+  and rewrites its owners, upserts its deals (`deal:<club>:<investor>:<date>`)
+  and the investors in sport they name. `components/intel/club-file.tsx`
+  draws the facts on the club page. The sports desk wears green
+  (`data-accent="sports"` on the frame, tokens in `globals.css`).
 - **Taxonomy** (`lib/directory/taxonomy.ts`, with `asset-classes.ts` and `strategies.ts`) — the vocabulary a private-markets data product searches by, at its level of detail: nine asset classes (natural resources is its own class since 0033-era code), strategies on a **strategy** axis (buyout, growth, co-investment, direct lending, core / core-plus / value-add / opportunistic, seed / early stage, …) and a **sector** axis (property types, infrastructure sectors, the industries a PE fund names), investor types (public and private pensions, superannuation, insurers, endowments, foundations, sovereign wealth, DFIs, banks, asset and wealth managers, single and multi family offices, fund of funds, consultants…), manager and provider types, core industries with industry focus, target regions above `geo.ts`'s HQ subregions, AUM / ticket / fund-size bands, and the mandate vocabulary. Every classifier reads words the record carries — a sub-type, a fund's legal name, a firm's own overview, a stated focus — and places nothing those words do not say. The Discover index carries the result per firm (`typeCode`, `classes`, `strategies`, `sectors`, `regions`, `knownFunds`, allocation and ticket figures, `plans`, and per-class `raised` from stated fund sizes in the last ten years), the rail filters by it, the results table has a column registry with a chooser (`discover.columns` in localStorage, per-viewer), and the funds page facets by strategy, sector, region, size band and status. No dry powder: nobody states it and we do not estimate.
 - **Header** (`components/top-nav.tsx`) — the product's navigation is the black top bar: one panel per section (investors, fund managers, funds, performance, service providers split into fund and transaction services, companies & deals, tools), every page listed once, the quick search, and the sales CRM as one menu that a reader can put away (`nav:crm` in localStorage) until it moves to its own product. The section a page belongs to is decided by `INTEL_NAV`'s matchers in `components/intel/shell.tsx`; `IntelShell` no longer draws section tabs by default.
 - **The demo standard** — every list screen is held to one shape: a

@@ -1,0 +1,100 @@
+{
+ "city": "Vancouver",
+ "country": "Canada",
+ "deals": [],
+ "domain": "canucks.com",
+ "facts": {
+  "chair": {
+   "evidence": "Chairman & Governor, NHL",
+   "name": "Francesco Aquilini",
+   "source_url": "https://www.nhl.com/canucks/team/front-office",
+   "title": "Chairman & Governor, NHL"
+  },
+  "chief_executive": {
+   "evidence": "President, Business Operations & Alternate Governor",
+   "name": "Michael Doyle",
+   "source_url": "https://www.nhl.com/canucks/team/front-office",
+   "title": "President, Business Operations & Alternate Governor"
+  },
+  "legal_entity": {
+   "evidence": "Vancouver Canucks is a trademark of Vancouver Canucks Limited Partnership",
+   "name": "Vancouver Canucks Limited Partnership",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.nhl.com/canucks/team/front-office"
+  },
+  "operating_result": {
+   "amount": 55000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$55M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - EBITDA, net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/vancouver-canucks/"
+  },
+  "wages": {
+   "amount": 110000000,
+   "currency": "USD",
+   "evidence": "$110M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/vancouver-canucks/"
+  }
+ },
+ "founded_evidence": "\"firstSeasonId\":19701971,\"fullName\":\"Vancouver Canucks\"",
+ "founded_source_url": "https://records.nhl.com/site/api/franchise",
+ "founded_year": 1970,
+ "key": "national-hockey-league--vancouver-canucks",
+ "league": "National Hockey League",
+ "name": "Vancouver Canucks",
+ "notes": "US-style Forbes figures: revenue, operating income (EBITDA) and player expenses are Forbes estimates for 2024-25 in USD, net of revenue sharing and arena debt service; valuation is Forbes enterprise value calculated December 2025. Forbes owner row: Aquilini Investment Group, year purchased 2005, price paid $207M (the price is on the Forbes team page as '$207M'). aquilini.com states 'proud owners of the NHL Vancouver Canucks'; family members' individual stakes are not stated anywhere read. Founded: NHL records franchise data gives first season 1970-71 (franchise awarded 1970). Stadium: Rogers Arena (naming per Rogers' 2010 release 'Rogers Arena: New name for home of the Vancouver Canucks'); rogersarena.com blocked automated reads, so capacity and arena ownership are not recorded (aquilini.com lists Rogers Arena among the group's sports and entertainment businesses but does not state ownership in words). No ownership transaction, minority investment or financing since 2015 was found. Web search budget was exhausted during this pass, so deals and socials were not fully searched. Missing: capacity, stadium owner, attendance, social, sponsors, honours.",
+ "owners": [
+  {
+   "amount": 207000000,
+   "currency": "USD",
+   "evidence": "Aquilini Investment Group",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Aquilini Investment Group (Aquilini family)",
+   "since_year": 2005,
+   "source_url": "https://www.forbes.com/teams/vancouver-canucks/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.aquilini.com/sports/",
+ "ownership_summary": "Owned by the Aquilini family's Aquilini Investment Group through Canucks Sports & Entertainment; Forbes lists the Aquilini Investment Group as owner since 2005 (price paid $207M). No institutional or minority fund stake is reported.",
+ "ownership_type": "individual_family",
+ "revenue": 235000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$235M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NHL team valuations, calculated December 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/vancouver-canucks/",
+ "short_name": "Canucks",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/vancouver-canucks/",
+  "https://www.aquilini.com/sports/",
+  "https://www.nhl.com/canucks/team/front-office",
+  "https://records.nhl.com/site/api/franchise",
+  "https://about.rogers.com/news-ideas/rogers-arena-new-name-for-home-of-the-vancouver-canucks/"
+ ],
+ "sport": "ice_hockey",
+ "stadium": "Rogers Arena",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": null,
+ "valuation": 2150000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$2.15B",
+ "valuation_source_name": "Forbes (enterprise value, calculated December 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/vancouver-canucks/",
+ "valuation_year": 2025
+}

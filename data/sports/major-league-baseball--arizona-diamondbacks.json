@@ -1,0 +1,156 @@
+{
+ "city": "Phoenix",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "2024 (reported March 2026)",
+   "evidence": "Walton bought a 10% piece of the MLB franchise at a $2 billion valuation",
+   "headline": "Rob Walton bought 10% of the Diamondbacks at a $2bn valuation",
+   "investor": "Rob Walton",
+   "investor_type": "individual",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/team-sales/2026/rob-walton-arizona-diamondbacks-stake-sale-1234886015/",
+   "stake_pct": 10,
+   "summary": "Broncos owner Rob Walton bought a 10% stake in 2024 at a $2 billion valuation; the transaction was never announced. Sportico reports the team used the bulk of the proceeds for Chase Field improvements.",
+   "valuation": 2000000000,
+   "valuation_currency": "USD",
+   "verified": true
+  },
+  {
+   "amount": 500000000,
+   "currency": "USD",
+   "date": "2025-09-03",
+   "date_text": "September 2025",
+   "evidence": "The diversions of these taxes over the next 30 years will raise up to $500 million for renovations to Chase Field.",
+   "headline": "Arizona diverts stadium taxes for up to $500m of Chase Field renovations",
+   "investor": "State of Arizona (HB 2704)",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Cronkite News",
+   "source_url": "https://cronkitenews.azpbs.org/2025/09/03/chase-field-remain-diamondbacks-home-kate-hobbs-signs-hb-2704/",
+   "stake_pct": null,
+   "summary": "Gov. Katie Hobbs signed HB 2704, diverting taxes generated at Chase Field and district buildings to a renovation fund for 30 years, raising up to $500 million (inflation-adjusted); the Diamondbacks contribute $250 million of their own.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mlb.com/dbacks",
+ "facts": {
+  "chair": {
+   "evidence": "managing general partner Ken Kendrick and team president/CEO Derrick Hall",
+   "name": "Ken Kendrick",
+   "source_url": "https://www.mlb.com/news/ken-kendrick-derrick-hall-discuss-state-of-d-backs-in-2026",
+   "title": "Managing general partner"
+  },
+  "chief_executive": {
+   "evidence": "managing general partner Ken Kendrick and team president/CEO Derrick Hall",
+   "name": "Derrick Hall",
+   "source_url": "https://www.mlb.com/news/ken-kendrick-derrick-hall-discuss-state-of-d-backs-in-2026",
+   "title": "President and CEO"
+  },
+  "operating_result": {
+   "amount": -31000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "-$31M",
+   "season": "2025",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/arizona-diamondbacks/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Maricopa County Stadium District; the team is the tenant.",
+   "evidence": "which was built in 1998 and is owned by the Maricopa County Stadium District",
+   "source_url": "https://www.mlb.com/news/chase-field-renovations-for-d-backs-arizona-governor-katie-hobbs-signs-bill",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 213000000,
+   "currency": "USD",
+   "evidence": "$213M",
+   "season": "2025",
+   "source_name": "Forbes (estimate) — player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/arizona-diamondbacks/"
+  }
+ },
+ "founded_evidence": "Kendrick was part of the initial group that brought the expansion franchise to Arizona in 1995",
+ "founded_source_url": "https://www.sportico.com/business/team-sales/2026/rob-walton-arizona-diamondbacks-stake-sale-1234886015/",
+ "founded_year": 1995,
+ "key": "major-league-baseball--arizona-diamondbacks",
+ "league": "Major League Baseball",
+ "name": "Arizona Diamondbacks",
+ "notes": "US teams publish no accounts: revenue (net of revenue sharing and stadium debt service), operating income (EBITDA) and player expenses are Forbes estimates for the 2025 season, published March 2026; Forbes ranks the team #19. Forbes lists Chase Field at 48,618 seats; MLB.com gives 48,633 (used). Founded: 1995 is when the expansion franchise was awarded; first season 1998. Kendrick's own percentage is not published. The Walton deal is press-reported (anonymous sources), not club-confirmed. Domain is the club section of mlb.com (dbacks.com redirects there). No legal entity, attendance, socials or honours sourced on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "nine years later, bought control of the Diamondbacks in a transaction that valued the club at $238 million",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Ken Kendrick",
+   "since_year": 2004,
+   "source_url": "https://www.sportico.com/business/team-sales/2026/rob-walton-arizona-diamondbacks-stake-sale-1234886015/",
+   "stake_pct": null,
+   "valuation_at_entry": 238000000
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Walton bought a 10% piece of the MLB franchise at a $2 billion valuation",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Rob Walton",
+   "since_year": 2024,
+   "source_url": "https://www.sportico.com/business/team-sales/2026/rob-walton-arizona-diamondbacks-stake-sale-1234886015/",
+   "stake_pct": 10,
+   "valuation_at_entry": 2000000000
+  }
+ ],
+ "ownership_source_url": "https://www.sportico.com/business/team-sales/2026/rob-walton-arizona-diamondbacks-stake-sale-1234886015/",
+ "ownership_summary": "Controlled by managing general partner Ken Kendrick, who was part of the 1995 expansion group and bought control in 2004 at a $238 million valuation. Broncos owner Rob Walton bought a 10% minority stake in 2024 at a $2 billion valuation (reported by Sportico in March 2026; never announced by the club). No institutional fund holder is on record.",
+ "ownership_type": "individual_family",
+ "revenue": 324000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$324M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB team valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/arizona-diamondbacks/",
+ "short_name": "D-backs",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/arizona-diamondbacks/",
+  "https://www.sportico.com/business/team-sales/2026/rob-walton-arizona-diamondbacks-stake-sale-1234886015/",
+  "https://www.mlb.com/news/chase-field-renovations-for-d-backs-arizona-governor-katie-hobbs-signs-bill",
+  "https://www.mlb.com/news/ken-kendrick-derrick-hall-discuss-state-of-d-backs-in-2026",
+  "https://cronkitenews.azpbs.org/2025/09/03/chase-field-remain-diamondbacks-home-kate-hobbs-signs-hb-2704/"
+ ],
+ "sport": "baseball",
+ "stadium": "Chase Field",
+ "stadium_capacity": 48633,
+ "stadium_capacity_evidence": "which at 48,633 is one of the larger MLB venues",
+ "stadium_capacity_source_url": "https://www.mlb.com/news/chase-field-renovations-for-d-backs-arizona-governor-katie-hobbs-signs-bill",
+ "stadium_owner": {
+  "detail": "Owned by the Maricopa County Stadium District; the team is the tenant.",
+  "evidence": "which was built in 1998 and is owned by the Maricopa County Stadium District",
+  "source_url": "https://www.mlb.com/news/chase-field-renovations-for-d-backs-arizona-governor-katie-hobbs-signs-bill",
+  "value": "municipal"
+ },
+ "valuation": 1960000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1.96B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/arizona-diamondbacks/",
+ "valuation_year": 2026
+}

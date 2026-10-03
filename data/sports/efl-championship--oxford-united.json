@@ -1,0 +1,222 @@
+{
+ "city": "Oxford",
+ "country": "England",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2018-02-22",
+   "date_text": "22 February 2018",
+   "evidence": "Sumrith “Tiger” Thanakarnjanasuth has become the majority shareholder and chairman of the club",
+   "headline": "Thai businessman Tiger Thanakarnjanasuth becomes majority shareholder and chairman",
+   "investor": "Sumrith \"Tiger\" Thanakarnjanasuth",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Darryl Eales",
+   "source_name": "Oxford United FC",
+   "source_url": "https://www.oufc.co.uk/news/2018/february/oxford-united-announce-new-chairman",
+   "stake_pct": null,
+   "summary": "Sumrith Thanakarnjanasuth became majority shareholder and chairman; outgoing chairman Darryl Eales kept a shareholding. The club said the capital structure was strengthened and debt reduced as part of the transaction.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2022-09-19",
+   "date_text": "Effective 19 September 2022 (announced 27 September 2022)",
+   "evidence": "Indonesian shareholding group of Erick Thohir and Anindya N. Bakrie holding a 51% stake in the club",
+   "headline": "Thohir and Bakrie's Indonesian group takes 51% of Oxford United",
+   "investor": "Erick Thohir and Anindya N. Bakrie",
+   "investor_type": "individual",
+   "kind": "stake_sale",
+   "seller": null,
+   "source_name": "Oxford United FC",
+   "source_url": "https://www.oufc.co.uk/news/2022/september/club-statement-board-changes",
+   "stake_pct": 51,
+   "summary": "A series of share sales and purchases left the Indonesian shareholding group of Erick Thohir and Anindya Bakrie with 51%; Horst Geicke, Sumrith Thanakarnjanasuth and Pairoj Piempongsant stayed invested. Grant Ferguson became chairman.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2025-11-14",
+   "date_text": "Announced 14 November 2025",
+   "evidence": "following the acquisition of all Oxford Investment Holdings Pte. Ltd shares previously held by Oxford United Investors Pte. Ltd.",
+   "headline": "Erick Thohir increases controlling interest in Oxford United",
+   "investor": "Erick Thohir",
+   "investor_type": "individual",
+   "kind": "stake_sale",
+   "seller": "Oxford United Investors Pte. Ltd.",
+   "source_name": "Oxford United FC",
+   "source_url": "https://www.oufc.co.uk/news/erick-thohir-increases-controlling-interest-oxford-united",
+   "stake_pct": null,
+   "summary": "Thohir acquired all Oxford Investment Holdings Pte. Ltd shares previously held by Oxford United Investors Pte. Ltd.; Horst Geicke stepped down as a director. The club's 2025 accounts say Thohir became ultimate controlling party after the year end.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "oufc.co.uk",
+ "facts": {
+  "chair": {
+   "evidence": "Dusan Bogdanovic has been appointed as the Club’s new Chair, succeeding Grant Ferguson",
+   "name": "Dusan Bogdanovic",
+   "source_url": "https://www.oufc.co.uk/news/oxford-united-confirms-board-and-chair-update",
+   "title": "Chair"
+  },
+  "chief_executive": {
+   "evidence": "A Club Update From CEO Tim Williams",
+   "name": "Tim Williams",
+   "source_url": "https://www.oufc.co.uk/news/club-update-ceo-tim-williams",
+   "title": "CEO"
+  },
+  "kit_supplier": {
+   "evidence": "Macron | Technical Kit Partner",
+   "name": "Macron",
+   "source_url": "https://www.oufc.co.uk/club-partners"
+  },
+  "legal_entity": {
+   "evidence": "Company number 00470509",
+   "name": "Oxford United Football Club Limited",
+   "registry": "Companies House",
+   "registry_id": "00470509",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00470509"
+  },
+  "operating_result": {
+   "amount": -17460556,
+   "basis": "operating profit",
+   "currency": "GBP",
+   "evidence": "(17,460,556)",
+   "season": "2024-25",
+   "source_name": "Oxford United FC Ltd accounts to 30 June 2025, profit and loss account",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00470509/filing-history/MzUxMTY3OTg4N2FkaXF6a2N4/document?format=xhtml&download=1"
+  },
+  "pretax_result": {
+   "amount": -17479972,
+   "currency": "GBP",
+   "evidence": "the club has reported a loss after tax of £17,479,972 for the year ended 30 June 2025",
+   "season": "2024-25",
+   "source_name": "Oxford United FC Ltd accounts to 30 June 2025 (tax nil, so loss before and after tax are equal)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00470509/filing-history/MzUxMTY3OTg4N2FkaXF6a2N4/document?format=xhtml&download=1"
+  },
+  "revenue_breakdown": {
+   "broadcast": 685000,
+   "commercial": 1989771,
+   "currency": "GBP",
+   "evidence": "Gate receipt income increased from £2,524,806 in 2024 to £3,627,886 in 2025",
+   "matchday": 3627886,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Oxford United FC Ltd accounts to 30 June 2025, note 3 (gate receipts; broadcasting rights; commercial income). Not shown here: Football League contributions 10,769,624; sponsorship and advertising 1,290,484; youth academy grants 543,309; other income 93,797",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00470509/filing-history/MzUxMTY3OTg4N2FkaXF6a2N4/document?format=xhtml&download=1"
+  },
+  "shirt_sponsor": {
+   "evidence": "Baxi branding will feature across the front of Oxford United’s men’s and women’s first team kits",
+   "name": "Baxi",
+   "source_url": "https://www.oufc.co.uk/news/oxford-united-announce-baxi-principal-partner"
+  },
+  "stadium_owner": {
+   "detail": "The club plays at the Kassam Stadium under a licence agreement with Firoka Group (Firoz Kassam); the licence, due to expire in June 2026, was extended for at least one more year with a conditional option on a second. The club plans to build and own a 16,000-capacity stadium on the Triangle site at Kidlington, on land leased from Oxfordshire County Council.",
+   "evidence": "Oxford United and Firoka Group can confirm that they have signed a short-term extension of their license agreement",
+   "source_url": "https://oufcstadium.co.uk/oxford-united-and-firoka-group-sign-short-term-kassam-stadium-extension/",
+   "value": "private_third_party"
+  },
+  "wages": {
+   "amount": 19033235,
+   "currency": "GBP",
+   "evidence": "19,033,235",
+   "season": "2024-25",
+   "source_name": "Oxford United FC Ltd accounts to 30 June 2025, note 6 (wages and salaries; total staff costs incl. social security and pensions 21,657,779)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00470509/filing-history/MzUxMTY3OTg4N2FkaXF6a2N4/document?format=xhtml&download=1"
+  }
+ },
+ "founded_evidence": "Oxford United started in 1893 as an amateur club called Headington",
+ "founded_source_url": "https://www.oufc.co.uk/club-history/uniteds-history",
+ "founded_year": 1893,
+ "key": "efl-championship--oxford-united",
+ "league": "EFL League One",
+ "name": "Oxford United Football Club",
+ "notes": "League corrected: the club's own 2026/27 matchday guide and fixture list put the men's team in EFL League One for 2026/27 (the key says Championship, where it played 2024/25 and 2025/26). Revenue is turnover from the latest filed accounts (year to 30 June 2025); the revenue_breakdown maps gate receipts to matchday, broadcasting rights to broadcast and 'commercial income' to commercial, and leaves out Football League contributions (£10.77m, the largest line), sponsorship and advertising, academy grants and other income. Table figures in the iXBRL accounts are cited by the number alone because each sits in its own cell. No exact ownership percentage is published after 2022: Companies House lists Thohir as the only active PSC with 'more than 25% but not more than 50%' of shares in the club, while the accounts name Oxford Investment Holding PTE Ltd (Singapore) as parent and Thohir as ultimate controlling party after June 2025. Anindya Bakrie remains a director but ceased to be a PSC on 17 February 2025; his current stake is not stated. Net liabilities were £59,488,154 at 30 June 2025, with £58,040,616 owed to group undertakings (shareholder funding), no net-debt figure is stated. New stadium: the club says it expects to invest over £100 million (oufcstadium.co.uk FAQ) on the Triangle site; planning approved by Cherwell DC on 14 August 2025, then referred to the Secretary of State. No valuation, attendance or social-follower count found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Erick Thohir has increased his controlling interest in the Club",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Erick Thohir",
+   "since_year": 2022,
+   "source_url": "https://www.oufc.co.uk/news/erick-thohir-increases-controlling-interest-oxford-united",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "The parent company is Oxford Investment Holding PTE Ltd, a company registered in Singapore",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "company",
+   "name": "Oxford Investment Holding PTE Ltd",
+   "since_year": null,
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00470509/filing-history/MzUxMTY3OTg4N2FkaXF6a2N4/document?format=xhtml&download=1",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.oufc.co.uk/news/erick-thohir-increases-controlling-interest-oxford-united",
+ "ownership_summary": "Controlled by Indonesian businessman Erick Thohir. The club's parent is Oxford Investment Holding PTE Ltd (Singapore); an Indonesian group of Thohir and Anindya Bakrie took a 51% stake effective 19 September 2022, and in November 2025 Thohir increased his controlling interest by acquiring all Oxford Investment Holdings shares previously held by Oxford United Investors Pte. Ltd. No institutional investor is disclosed.",
+ "ownership_type": "individual_family",
+ "revenue": 18999871,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "18,999,871",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Oxford United Football Club Limited, full accounts for the year ended 30 June 2025 (Companies House)",
+ "revenue_source_url": "https://find-and-update.company-information.service.gov.uk/company/00470509/filing-history/MzUxMTY3OTg4N2FkaXF6a2N4/document?format=xhtml&download=1",
+ "short_name": "Oxford United",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://find-and-update.company-information.service.gov.uk/company/00470509/filing-history/MzUxMTY3OTg4N2FkaXF6a2N4/document?format=xhtml&download=1",
+  "https://find-and-update.company-information.service.gov.uk/company/00470509",
+  "https://find-and-update.company-information.service.gov.uk/company/00470509/persons-with-significant-control",
+  "https://www.oufc.co.uk/news/erick-thohir-increases-controlling-interest-oxford-united",
+  "https://www.oufc.co.uk/news/2022/september/club-statement-board-changes",
+  "https://www.oufc.co.uk/news/2018/february/oxford-united-announce-new-chairman",
+  "https://www.oufc.co.uk/club-history/uniteds-history",
+  "https://cdn.oufc.co.uk/sites/default/files/2026-09/OUFC_Matchday_Guide_28AUG2027_compressed.pdf",
+  "https://oufcstadium.co.uk/oxford-united-and-firoka-group-sign-short-term-kassam-stadium-extension/",
+  "https://oufcstadium.co.uk/faq/",
+  "https://www.oufc.co.uk/news/oxford-united-confirms-board-and-chair-update",
+  "https://www.oufc.co.uk/news/club-update-ceo-tim-williams",
+  "https://www.oufc.co.uk/contact-us",
+  "https://www.oufc.co.uk/news/oxford-united-announce-baxi-principal-partner",
+  "https://www.oufc.co.uk/club-partners",
+  "https://www.thejakartapost.com/business/2022/09/29/football-tycoons-erick-thohir-anindya-bakrie-acquire-majority-of-oxford-united-fc-shares.html"
+ ],
+ "sport": "football",
+ "stadium": "Kassam Stadium",
+ "stadium_capacity": 12500,
+ "stadium_capacity_evidence": "plays its home matches at the Kassam Stadium, a 12,500-capacity venue in OX4",
+ "stadium_capacity_source_url": "https://cdn.oufc.co.uk/sites/default/files/2026-09/OUFC_Matchday_Guide_28AUG2027_compressed.pdf",
+ "stadium_owner": {
+  "detail": "The club plays at the Kassam Stadium under a licence agreement with Firoka Group (Firoz Kassam); the licence, due to expire in June 2026, was extended for at least one more year with a conditional option on a second. The club plans to build and own a 16,000-capacity stadium on the Triangle site at Kidlington, on land leased from Oxfordshire County Council.",
+  "evidence": "Oxford United and Firoka Group can confirm that they have signed a short-term extension of their license agreement",
+  "source_url": "https://oufcstadium.co.uk/oxford-united-and-firoka-group-sign-short-term-kassam-stadium-extension/",
+  "value": "private_third_party"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

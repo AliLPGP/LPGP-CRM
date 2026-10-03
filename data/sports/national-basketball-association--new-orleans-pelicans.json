@@ -1,0 +1,127 @@
+{
+ "city": "New Orleans",
+ "country": "United States",
+ "deals": [],
+ "domain": "nba.com/pelicans",
+ "facts": {
+  "chair": {
+   "evidence": "Gayle Benson",
+   "name": "Gayle Benson",
+   "source_url": "https://cdn.nba.com/teams/uploads/sites/1610612740/2025/10/2025-26-Pelicans-Media-Guide-v2.pdf",
+   "title": "Governor"
+  },
+  "chief_executive": {
+   "evidence": "Dennis Lauscha",
+   "name": "Dennis Lauscha",
+   "source_url": "https://cdn.nba.com/teams/uploads/sites/1610612740/2025/10/2025-26-Pelicans-Media-Guide-v2.pdf",
+   "title": "President"
+  },
+  "honours": {
+   "competition": "NBA championship",
+   "evidence": "Championship Wins",
+   "league_titles": 0,
+   "source_url": "https://www.nba.com/team/1610612740/pelicans"
+  },
+  "operating_result": {
+   "amount": 77000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$77M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/new-orleans-pelicans/"
+  },
+  "revenue_breakdown": {
+   "broadcast": null,
+   "commercial": null,
+   "currency": "USD",
+   "evidence": "$40M",
+   "matchday": 40000000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): gate receipts incl. club seats",
+   "source_url": "https://www.forbes.com/teams/new-orleans-pelicans/"
+  },
+  "shirt_sponsor": {
+   "evidence": "New Orleans Pelicans forge exclusive jersey patch and community partnership with NewAge Products Inc.",
+   "name": "NewAge Products",
+   "source_url": "https://www.nba.com/pelicans/news/new-orleans-pelicans-newage-products-inc-exclusive-jersey-patch-community-partnership"
+  },
+  "stadium_owner": {
+   "detail": "Forbes lists the Louisiana Superdome & Expo Authority (a State of Louisiana body) as owner; the arena is managed by ASM Global and was renovated under agreements with the State of Louisiana after the 2012 purchase.",
+   "evidence": "Louisiana Superdome & Expo Authority",
+   "source_url": "https://www.forbes.com/teams/new-orleans-pelicans/",
+   "value": "state"
+  },
+  "wages": {
+   "amount": 167000000,
+   "currency": "USD",
+   "evidence": "$167M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/new-orleans-pelicans/"
+  }
+ },
+ "founded_evidence": "\"YEARFOUNDED\":2002",
+ "founded_source_url": "https://www.nba.com/team/1610612740/pelicans",
+ "founded_year": 2002,
+ "key": "national-basketball-association--new-orleans-pelicans",
+ "league": "National Basketball Association",
+ "name": "New Orleans Pelicans",
+ "notes": "Founded: NBA.com gives 2002 (the Hornets' move from Charlotte; renamed Pelicans in 2013). The 2012 purchase by Tom Benson ($338M, per Front Office Sports) predates the 2015 deal window so it is not listed as a deal. Forbes shows no Owner(s) line for the Pelicans; ownership is from FOS and the team's 2025-26 media guide (Gayle Benson, Governor; Dennis Lauscha, President). Front Office Sports notes Benson founded Benson Capital Partners, but no fund holds a stake in the team on any page read. Capacity: media guide 16,867 for Pelicans games (18,500 max); Forbes 17,188. Press in 2026 reports a planned Smoothie King Center renovation and a new long-term state lease expected in autumn 2026; not recorded (no figures read). Revenue etc. are Forbes 2024-25 estimates. Jersey patch release dates from September 2024. Legal entity, attendance and social counts not found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Tom Benson died in 2018, and his wife, Gayle Benson, now controls the Saints and Pelicans",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Gayle Benson",
+   "since_year": 2018,
+   "source_url": "https://frontofficesports.com/article/raj-sports-kings-stake-nba-new-orleans-benson-david-stern/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://frontofficesports.com/article/raj-sports-kings-stake-nba-new-orleans-benson-david-stern/",
+ "ownership_summary": "Gayle Benson owns and governs the Pelicans (and the NFL's New Orleans Saints). Her late husband Tom Benson bought the then-Hornets from the NBA in 2012 for $338 million; she took control on his death in March 2018. No institutional or minority stake sale has been reported on the pages read.",
+ "ownership_type": "individual_family",
+ "revenue": 302000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$302M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA Team Valuations 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/new-orleans-pelicans/",
+ "short_name": "Pelicans",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/new-orleans-pelicans/",
+  "https://www.nba.com/team/1610612740/pelicans",
+  "https://cdn.nba.com/teams/uploads/sites/1610612740/2025/10/2025-26-Pelicans-Media-Guide-v2.pdf",
+  "https://frontofficesports.com/article/raj-sports-kings-stake-nba-new-orleans-benson-david-stern/",
+  "https://frontofficesports.com/article/the-nbas-expanding-private-equity-footprint/",
+  "https://www.nba.com/pelicans/news/new-orleans-pelicans-newage-products-inc-exclusive-jersey-patch-community-partnership"
+ ],
+ "sport": "basketball",
+ "stadium": "Smoothie King Center",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": "With a seating capacity of 18,500 (16,867 for Pelicans games)",
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "Forbes lists the Louisiana Superdome & Expo Authority (a State of Louisiana body) as owner; the arena is managed by ASM Global and was renovated under agreements with the State of Louisiana after the 2012 purchase.",
+  "evidence": "Louisiana Superdome & Expo Authority",
+  "source_url": "https://www.forbes.com/teams/new-orleans-pelicans/",
+  "value": "state"
+ },
+ "valuation": 3550000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$3.55B",
+ "valuation_source_name": "Forbes, NBA Team Valuations (calculated October 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/new-orleans-pelicans/",
+ "valuation_year": 2025
+}

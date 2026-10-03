@@ -1,0 +1,150 @@
+{
+ "city": "Rio de Janeiro",
+ "country": "Brazil",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2024-09-27",
+   "date_text": "27 September 2024",
+   "evidence": "Fluminense, Flamengo e o Governo do Estado do Rio de Janeiro assinaram nesta sexta-feira (27/09) o contrato de concessão do Complexo Maracanã.",
+   "headline": "Flamengo and Fluminense sign 20-year Maracanã concession",
+   "investor": "Consórcio Fla-Flu (Flamengo and Fluminense), via Fla-Flu Serviços S.A.",
+   "investor_type": "consortium",
+   "kind": "other",
+   "seller": "Governo do Estado do Rio de Janeiro",
+   "source_name": "Fluminense FC (official site)",
+   "source_url": "https://www.fluminense.com.br/noticia/maracana-contrato-de-concessao-e-assinado",
+   "stake_pct": null,
+   "summary": "The Fla-Flu consortium won the state tender and signed a 20-year concession to run Maracanã and Maracanãzinho through an SPE, Fla-Flu Serviços S.A.; the tender requires about R$186m of investment by the end of the concession.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 138100000,
+   "currency": "BRL",
+   "date": null,
+   "date_text": "July 2024",
+   "evidence": "o valor de R$ 138,1 milhões pagos à vista no leilão do terreno, em julho de 2024, aumentou",
+   "headline": "Flamengo buys Gasômetro site for its own stadium",
+   "investor": "Clube de Regatas do Flamengo",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": "Caixa Econômica Federal (FGTS) / Prefeitura do Rio de Janeiro expropriation auction",
+   "source_name": "ge (Globo)",
+   "source_url": "https://ge.globo.com/futebol/times/flamengo/noticia/2025/12/20/valor-do-terreno-do-gasometro-sofre-reajuste-e-flamengo-avanca-para-construcao-do-novo-estadio.ghtml",
+   "stake_pct": null,
+   "summary": "Flamengo paid R$138.1m in cash at the July 2024 auction of the expropriated Gasômetro land (São Cristóvão / Porto Maravilha); a December 2025 conciliation with the FGTS added R$23.6m in five annual instalments. The club targets a ~R$2.2bn stadium opening 2034-2036.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "flamengo.com.br",
+ "facts": {
+  "chair": {
+   "evidence": "apresentada pelo presidente Luiz Eduardo Baptista, Bap",
+   "name": "Luiz Eduardo Baptista (Bap)",
+   "source_url": "https://flamengo.com.br/noticias/institucional/conselho-deliberativo-do-flamengo-aprova-reforma-estatutaria-que-institucionaliza-gestao-profissional",
+   "title": "President"
+  },
+  "net_debt": {
+   "amount": 174000000,
+   "as_of": "2025-12-31",
+   "currency": "BRL",
+   "evidence": "A dívida operacional líquida caiu para R$ 174 milhões em 2025",
+   "source_name": "Lance! on Flamengo's 2025 financial statements (net operating debt)",
+   "source_url": "https://www.lance.com.br/flamengo/receita-recorde-e-divida-em-queda-os-numeros-do-balanco-do-flamengo-em-2025.html"
+  },
+  "operating_result": {
+   "amount": 616000000,
+   "basis": "EBITDA",
+   "currency": "BRL",
+   "evidence": "Já o Ebitda (lucro antes de juros, impostos, depreciação e amortização) alcançou R$ 616 milhões",
+   "season": "2025",
+   "source_name": "Lance! on Flamengo's 2025 financial statements",
+   "source_url": "https://www.lance.com.br/flamengo/receita-recorde-e-divida-em-queda-os-numeros-do-balanco-do-flamengo-em-2025.html"
+  },
+  "pretax_result": {
+   "amount": 336000000,
+   "currency": "BRL",
+   "evidence": "registrou superávit de R$ 336 milhões",
+   "season": "2025",
+   "source_name": "Lance! on Flamengo's 2025 financial statements (superávit, the association's net surplus)",
+   "source_url": "https://www.lance.com.br/flamengo/receita-recorde-e-divida-em-queda-os-numeros-do-balanco-do-flamengo-em-2025.html"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the State of Rio de Janeiro; run since 27 September 2024 under a 20-year concession by the Consórcio Fla-Flu (Flamengo and Fluminense) through the SPE Fla-Flu Serviços S.A.",
+   "evidence": "Fluminense, Flamengo e o Governo do Estado do Rio de Janeiro assinaram nesta sexta-feira (27/09) o contrato de concessão do Complexo Maracanã.",
+   "source_url": "https://www.fluminense.com.br/noticia/maracana-contrato-de-concessao-e-assinado",
+   "value": "state"
+  }
+ },
+ "founded_evidence": "O Clube de Regatas do Flamengo é uma instituição poliesportiva fundada em 1895",
+ "founded_source_url": "https://visite.museus.gov.br/instituicoes/clube-de-regatas-do-flamengo/",
+ "founded_year": 1895,
+ "key": "brasileirao-serie-a--cr-flamengo",
+ "league": "Brasileirão Série A",
+ "name": "Clube de Regatas do Flamengo",
+ "notes": "Flamengo's 2025 annual report PDF (https://images.flamengo.com.br/public/arquivos/transparencia/24/1774966356070.pdf) is behind a GoCache block and over 10 MB, so revenue, EBITDA, surplus and net debt are taken from Lance!'s report of the published statements (CNN Brasil gives the same R$2.089bn revenue and R$336m surplus); recurring revenue was R$1.571bn and player sales R$519m. Not found on a citable page: wages, revenue breakdown, legal entity/CNPJ, social follower totals, attendance, title count, CEO. Shirt sponsor not recorded: the club's master-partner notice could not be read, and a Lance! headline (Sept 2026) has the football director discussing the impact of the end of betting sponsorships, so the current sponsor is unclear. Kit supplier (adidas) not confirmed on a page read. A November 2024 agreement with the city lets Flamengo sell the Gávea building potential (about R$500m expected, Agência Brasil) to fund the stadium; not recorded as a deal because the figure is a projection. The earlier record's ESPN/Sports Value BRL valuation was replaced with Sports Value's own page (US$). flamengo.com.br blocks scripted fetches (GoCache 403); the owners and chair evidence were read on the club's 15 Sept 2026 news page through a browser-style fetch, so an automated re-check may fail there.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "O Conselho Deliberativo do Flamengo aprovou, nesta terça-feira (15), o Texto Substitutivo da reforma estatutária",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Members of Clube de Regatas do Flamengo (associação)",
+   "since_year": 1895,
+   "source_url": "https://flamengo.com.br/noticias/institucional/conselho-deliberativo-do-flamengo-aprova-reforma-estatutaria-que-institucionaliza-gestao-profissional",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://flamengo.com.br/noticias/institucional/conselho-deliberativo-do-flamengo-aprova-reforma-estatutaria-que-institucionaliza-gestao-profissional",
+ "ownership_summary": "Clube de Regatas do Flamengo is a members' association and has not converted its football into an SAF; it is governed by its elected president (Luiz Eduardo Baptista, 'Bap') and Conselho Deliberativo, which in September 2026 approved a statute reform making a paid professional executive board permanent. No outside investor holds equity in the football club.",
+ "ownership_type": "member_owned",
+ "revenue": 2089000000,
+ "revenue_currency": "BRL",
+ "revenue_evidence": "apontou receita operacional bruta de R$ 2,089 bilhões, superando pela primeira vez a marca de R$ 2 bilhões",
+ "revenue_season": "2025",
+ "revenue_source_name": "Lance! on Flamengo's 2025 audited financial statements (gross operating revenue incl. R$519m player sales)",
+ "revenue_source_url": "https://www.lance.com.br/flamengo/receita-recorde-e-divida-em-queda-os-numeros-do-balanco-do-flamengo-em-2025.html",
+ "short_name": "Flamengo",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://visite.museus.gov.br/instituicoes/clube-de-regatas-do-flamengo/",
+  "https://www.tourmaracana.com.br/estadio",
+  "https://www.fluminense.com.br/noticia/maracana-contrato-de-concessao-e-assinado",
+  "https://flamengo.com.br/noticias/institucional/conselho-deliberativo-do-flamengo-aprova-reforma-estatutaria-que-institucionaliza-gestao-profissional",
+  "https://www.lance.com.br/flamengo/receita-recorde-e-divida-em-queda-os-numeros-do-balanco-do-flamengo-em-2025.html",
+  "https://www.cnnbrasil.com.br/esportes/futebol/flamengo/flamengo-divulga-balanco-de-2025-com-receita-recorde-de-r-2-bilhoes-veja/",
+  "https://www.sportsvalue.com.br/en/case-studies/valuation-top-30-clubs-in-brazil-6th-edition/",
+  "https://ge.globo.com/futebol/times/flamengo/noticia/2025/12/20/valor-do-terreno-do-gasometro-sofre-reajuste-e-flamengo-avanca-para-construcao-do-novo-estadio.ghtml",
+  "https://agenciabrasil.ebc.com.br/esportes/noticia/2024-11/rio-e-flamengo-assinam-compromissos-para-construcao-de-estadio",
+  "https://www.flamengo.com.br/noticias/institucional/flamengo-publica-relatorio-anual-com-as-demonstracoes-financeiras-2025"
+ ],
+ "sport": "football",
+ "stadium": "Maracanã (Estádio Jornalista Mário Filho)",
+ "stadium_capacity": 78838,
+ "stadium_capacity_evidence": "atualmente tem capacidade para 78.838 torcedores",
+ "stadium_capacity_source_url": "https://www.tourmaracana.com.br/estadio",
+ "stadium_owner": {
+  "detail": "Owned by the State of Rio de Janeiro; run since 27 September 2024 under a 20-year concession by the Consórcio Fla-Flu (Flamengo and Fluminense) through the SPE Fla-Flu Serviços S.A.",
+  "evidence": "Fluminense, Flamengo e o Governo do Estado do Rio de Janeiro assinaram nesta sexta-feira (27/09) o contrato de concessão do Complexo Maracanã.",
+  "source_url": "https://www.fluminense.com.br/noticia/maracana-contrato-de-concessao-e-assinado",
+  "value": "state"
+ },
+ "valuation": 962000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "only Flamengo (US$ 962 million)",
+ "valuation_source_name": "Sports Value, Valuation TOP 30 Brazilian Clubs 2025 (6th edition)",
+ "valuation_source_url": "https://www.sportsvalue.com.br/en/case-studies/valuation-top-30-clubs-in-brazil-6th-edition/",
+ "valuation_year": 2025
+}

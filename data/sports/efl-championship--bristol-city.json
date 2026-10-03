@@ -1,0 +1,189 @@
+{
+ "city": "Bristol",
+ "country": "England",
+ "deals": [
+  {
+   "amount": 7500000,
+   "currency": "GBP",
+   "date": "2025-06-30",
+   "date_text": "Year ended 30 June 2025",
+   "evidence": "During the year, the company allotted 7,500,000 ordinary shares, for an aggregate consideration of £7,500,000 by way of a debt-to-equity swap.",
+   "headline": "Lansdowns convert £7.5m of club debt into Bristol City Holdings shares",
+   "investor": "Pula Sport Limited (Lansdown family)",
+   "investor_type": "individual",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Bristol City Holdings group accounts 2024/25",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0",
+   "stake_pct": null,
+   "summary": "Bristol City Holdings allotted 7,500,000 ordinary shares for £7.5m by way of a debt-to-equity swap with its parent Pula Sport Limited, funding the club's £7.5m cash requirement for the year; Ashton Gate's £1.0m need was met by an interest-free loan from Pula Sport. Companies House SH01 filings show similar annual allotments (e.g. capital GBP 197,706,262 after 30 June 2025).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": 4400000,
+   "currency": "GBP",
+   "date": "2025-09-18",
+   "date_text": "Announced 18 September 2025; WPLL ratification 28 November 2025",
+   "evidence": "Mercury13, the multi-club ownership group dedicated to the advancement of women’s football, has acquired a majority stake in Bristol City Women.",
+   "headline": "Mercury13 buys majority stake in Bristol City Women",
+   "investor": "Mercury13",
+   "investor_type": "institutional",
+   "kind": "stake_sale",
+   "seller": "Lansdown family / Bristol City Football Club Limited",
+   "source_name": "Bristol City FC; Bristol City Holdings group accounts 2024/25 (proceeds)",
+   "source_url": "https://www.bcfc.co.uk/news/mercury13-acquire-majority-stake-in-bristol-city-women/",
+   "stake_pct": null,
+   "summary": "Multi-club women's football group Mercury13 (founded by Victoire Cogevina Reynal and Mario Malavé) acquired a majority stake in Bristol City Women; the Lansdown family kept a minority. The club's accounts give sale proceeds of £4.4m, with contracts exchanged on 17 September 2025.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "bcfc.co.uk",
+ "facts": {
+  "attendance": {
+   "average": 22283,
+   "evidence": "Average football league attendance No. 22,283 22,554",
+   "season": "2024-25",
+   "source_name": "Bristol City Holdings group accounts to 30 June 2025, KPI table",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "chair": {
+   "evidence": "J S Lansdown - Chairman",
+   "name": "Jon Lansdown",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0",
+   "title": "Chairman, Bristol City Holdings Limited"
+  },
+  "chief_executive": {
+   "evidence": "Bristol City chief executive Charlie Boss has said he will not comment on potential new investment in the club",
+   "name": "Charlie Boss",
+   "source_url": "https://www.bbc.com/sport/football/articles/cwyz73187vno",
+   "title": "Chief executive"
+  },
+  "kit_supplier": {
+   "evidence": "Bristol City have entered a new partnership with O’Neills to become the club’s Official Kit supplier.",
+   "name": "O'Neills",
+   "source_url": "https://www.bcfc.co.uk/our-club-partners/oneills/"
+  },
+  "legal_entity": {
+   "evidence": "BRISTOL CITY FOOTBALL CLUB LIMITED",
+   "name": "Bristol City Football Club Limited",
+   "registry": "Companies House",
+   "registry_id": "03230871",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/03230871"
+  },
+  "net_debt": {
+   "amount": 91538000,
+   "as_of": "2025-06-30",
+   "currency": "GBP",
+   "evidence": "Net debt £'000 (91,538) (93,101)",
+   "source_name": "Bristol City Holdings group accounts to 30 June 2025, KPI table (£000)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "operating_result": {
+   "amount": -14160000,
+   "basis": "EBITDA",
+   "currency": "GBP",
+   "evidence": "EBITDA (earnings before interest, tax, depreciation, amortisation and profit on disposal of players contracts) £'000 (14,160) (15,772)",
+   "season": "2024-25",
+   "source_name": "Bristol City Holdings group accounts to 30 June 2025, KPI table (EBITDA before profit on player disposals, £000; operating loss on the P&L is -£22,294,539)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "pretax_result": {
+   "amount": -18595076,
+   "currency": "GBP",
+   "evidence": "Loss before tax (18,595,076) (3,285,076)",
+   "season": "2024-25",
+   "source_name": "Bristol City Holdings group accounts to 30 June 2025",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "shirt_sponsor": {
+   "evidence": "Victorian Plumbing's logo will adorn the front of Bristol City's shirts for the 2026/27 and 2027/28 season",
+   "name": "Victorian Plumbing",
+   "source_url": "https://www.bristolpost.co.uk/sport/football/football-news/bristol-city-announce-front-shirt-10743671"
+  },
+  "stadium_owner": {
+   "detail": "Part of Steve Lansdown's Bristol Sport group; operated by Ashton Gate Limited, a subsidiary of Bristol City Holdings Limited (the club's parent), and shared with Bristol Bears rugby under a 125-year groundshare agreement.",
+   "evidence": "and includes Bristol City, Bristol Bears, Bristol Flyers basketball, the clubs’ respective charitable foundations and Ashton Gate Stadium",
+   "source_url": "https://www.bcfc.co.uk/news/mercury13-acquire-majority-stake-in-bristol-city-women/",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 35915560,
+   "currency": "GBP",
+   "evidence": "Staff costs (35,915,560) (34,929,074)",
+   "season": "2024-25",
+   "source_name": "Bristol City Holdings group accounts to 30 June 2025, consolidated profit and loss (staff costs)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0"
+  }
+ },
+ "founded_evidence": "1894: Bristol South End Football Club are formed and play their games at St. John’s Lane, Bedminster.",
+ "founded_source_url": "https://www.bcfc.co.uk/club-history/",
+ "founded_year": 1894,
+ "key": "efl-championship--bristol-city",
+ "league": "EFL Championship",
+ "name": "Bristol City Football Club",
+ "notes": "Financial figures come from the Bristol City Holdings Limited group accounts, a scanned Companies House PDF: evidence strings were transcribed from the page and a text search of the PDF will not find them. The group consolidates the club, Bristol City Women and Ashton Gate Limited (the stadium business), so revenue is group turnover, not the football company alone. Revenue by class (not summed here, because the accounts' classes do not map one-to-one onto matchday/broadcast/commercial): matchday £3,437,862; season tickets £3,968,343; broadcasting £825,300; Football League pool £7,198,107; solidarity payment £5,340,000; other football income £1,933,787; other commercial and retail £17,634,418. The £4.4m Bristol City Women proceeds are from the strategic report ('The sales proceeds amounted to £4.4m'). Companies House: Bristol City Holdings has filed a statement since 13 May 2025 that it has no registrable person (its parent Pula Sport is in Guernsey). August 2026 reports (Sky News, BBC) of talks with George Daskalakis, co-founder of Betano owner Kaizen Gaming, over a stake: unconfirmed, so not recorded as a deal. Stadium capacity uses the club's own figure (26,389); Football Ground Guide gives 27,000. Not found: valuation, social follower counts, honours.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "The ultimate controlling parties are Mr and Mrs S Lansdown.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Steve and Maggie Lansdown (via Pula Sport Limited, Guernsey)",
+   "since_year": null,
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0",
+ "ownership_summary": "Steve Lansdown (co-founder of Hargreaves Lansdown) and his wife are the ultimate controlling parties: Bristol City Holdings Limited, which owns Bristol City Football Club Limited and Ashton Gate Limited, sits under Pula Sport Limited and ultimately Pula Limited, both in Guernsey, within the wider 'Bristol Sport' group. Lansdown has put almost £300m into the club and funds it by converting intercompany debt to equity. In August 2026 Greek gaming entrepreneur George Daskalakis was reported to be in talks to buy a stake; no deal had been announced.",
+ "ownership_type": "individual_family",
+ "revenue": 40337817,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "Turnover 3 40,337,817 42,848,236",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Bristol City Holdings Limited, group accounts for the year ended 30 June 2025 (Companies House; consolidates the club and Ashton Gate Limited)",
+ "revenue_source_url": "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0",
+ "short_name": "Bristol City",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://find-and-update.company-information.service.gov.uk/company/01501663/filing-history/MzQ5NzM2OTEzOWFkaXF6a2N4/document?format=pdf&download=0",
+  "https://find-and-update.company-information.service.gov.uk/company/03230871",
+  "https://find-and-update.company-information.service.gov.uk/company/03230871/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/01501663/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/05450440/persons-with-significant-control",
+  "https://www.bcfc.co.uk/club-history/",
+  "https://www.bcfc.co.uk/stadium/",
+  "https://www.bcfc.co.uk/news/mercury13-acquire-majority-stake-in-bristol-city-women/",
+  "https://www.bbc.com/sport/football/articles/cwyz73187vno",
+  "https://www.bcfc.co.uk/our-club-partners/oneills/",
+  "https://www.bristolpost.co.uk/sport/football/football-news/bristol-city-announce-front-shirt-10743671"
+ ],
+ "sport": "football",
+ "stadium": "Ashton Gate",
+ "stadium_capacity": 26389,
+ "stadium_capacity_evidence": "to become a 26,389-seater stadium fit for the top-flight",
+ "stadium_capacity_source_url": "https://www.bcfc.co.uk/stadium/",
+ "stadium_owner": {
+  "detail": "Part of Steve Lansdown's Bristol Sport group; operated by Ashton Gate Limited, a subsidiary of Bristol City Holdings Limited (the club's parent), and shared with Bristol Bears rugby under a 125-year groundshare agreement.",
+  "evidence": "and includes Bristol City, Bristol Bears, Bristol Flyers basketball, the clubs’ respective charitable foundations and Ashton Gate Stadium",
+  "source_url": "https://www.bcfc.co.uk/news/mercury13-acquire-majority-stake-in-bristol-city-women/",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

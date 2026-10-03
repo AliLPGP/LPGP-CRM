@@ -1,0 +1,174 @@
+{
+ "city": "Atlanta",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2014-04-16",
+   "date_text": "16 April 2014",
+   "evidence": "Major League Soccer awards an expansion team to the city of Atlanta",
+   "headline": "MLS awards Atlanta expansion team to Arthur M. Blank",
+   "investor": "Arthur M. Blank",
+   "investor_type": "individual",
+   "kind": "expansion_fee",
+   "seller": "Major League Soccer",
+   "source_name": "Atlanta United FC (club history 2014-2016)",
+   "source_url": "https://www.atlutd.com/club/history/2014-2016",
+   "stake_pct": null,
+   "summary": "The club's history records that on 16 April 2014 Major League Soccer awarded an expansion team to Atlanta with Arthur M. Blank as owner; the team began play in 2017. No fee is stated on the page.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 200000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": "2015 (Georgia Supreme Court dismissed the challenge to the bonds)",
+   "evidence": "the issuance of $200 million in bonds to help finance the $1.4 billion stadium",
+   "headline": "$200m of public bonds help finance the $1.4bn Mercedes-Benz Stadium",
+   "investor": null,
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Georgia Public Broadcasting",
+   "source_url": "https://www.gpb.org/news/2021/06/01/georgia-supreme-court-upholds-tax-exemption-for-mercedes-benz-stadium",
+   "stake_pct": null,
+   "summary": "GPB reports that in 2015 the Georgia Supreme Court dismissed a suit challenging the issuance of $200 million in bonds to help finance the $1.4 billion Mercedes-Benz Stadium, which Atlanta United shares with the Falcons and which is owned by the state's Georgia World Congress Center Authority. The page does not name the issuer.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "atlutd.com",
+ "facts": {
+  "attendance": {
+   "average": 43992,
+   "evidence": "Atlanta United once again topped the league in attendance with an average of 43,992 fans per match",
+   "season": "2025",
+   "source_name": "Sports Business Journal (23 Oct 2025, regular season)",
+   "source_url": "https://www.sportsbusinessjournal.com/Articles/2025/10/23/mls-average-attendance-down-5-in-2025-ahead-of-world-cup/"
+  },
+  "chair": {
+   "evidence": "Owner and Chairman, Blank Family of Businesses",
+   "name": "Arthur Blank",
+   "source_url": "https://www.atlutd.com/club/front-office/",
+   "title": "Owner and Chairman, Blank Family of Businesses"
+  },
+  "chief_executive": {
+   "evidence": "Culebro will oversee all aspects of Atlanta United and NWSL Atlanta 2028 and will report directly to AMBSE CEO Rich McKay.",
+   "name": "Mauricio Culebro",
+   "source_url": "https://www.atlutd.com/news/mauricio-culebro-named-president-of-soccer-amb-sports-and-entertainment",
+   "title": "President of Soccer, AMB Sports and Entertainment (oversees all of Atlanta United; reports to AMBSE CEO Rich McKay)"
+  },
+  "honours": {
+   "competition": "MLS Cup",
+   "evidence": "MLS Cup 2018 | Atlanta United 2-0 Portland Timbers",
+   "league_titles": 1,
+   "source_url": "https://www.atlutd.com/club/history/honors"
+  },
+  "kit_supplier": {
+   "evidence": "primary jersey for the 2025 and 2026 MLS seasons, The Connector Kit by adidas",
+   "name": "adidas",
+   "source_url": "https://www.mlssoccer.com/news/atlanta-united-unveil-2025-the-connector-kit"
+  },
+  "legal_entity": {
+   "evidence": "Atlanta United Football Club, LLC",
+   "name": "Atlanta United Football Club, LLC",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.atlutd.com/tickets/ticket-terms-and-spectator-waivers"
+  },
+  "operating_result": {
+   "amount": 10000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "One-Year Change: 3% | Revenue: $105 million | Operating Income: $10 million",
+   "season": "2025",
+   "source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (EBITDA basis; Wayback Machine copy)",
+   "source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/"
+  },
+  "shirt_sponsor": {
+   "evidence": "American Family Insurance is announced as Atlanta United's first kit sponsor",
+   "name": "American Family Insurance",
+   "source_url": "https://www.atlutd.com/club/history/2014-2016"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Georgia World Congress Center Authority, a public (state) entity, as the Georgia Dome was before it; Atlanta United and the NFL's Atlanta Falcons, both run by Arthur M. Blank's AMB Sports and Entertainment, play there.",
+   "evidence": "is owned by the Georgia World Congress Center Authority, a public entity",
+   "source_url": "https://www.gpb.org/news/2021/06/01/georgia-supreme-court-upholds-tax-exemption-for-mercedes-benz-stadium",
+   "value": "state"
+  }
+ },
+ "founded_evidence": "Major League Soccer awards an expansion team to the city of Atlanta",
+ "founded_source_url": "https://www.atlutd.com/club/history/2014-2016",
+ "founded_year": 2014,
+ "key": "major-league-soccer--atlanta-united-fc",
+ "league": "Major League Soccer",
+ "name": "Atlanta United FC",
+ "notes": "US clubs publish no accounts: revenue ($105m) and operating income ($10m, EBITDA) are Forbes estimates for the 2025 MLS season from the Feb 2026 MLS list, cited through its Wayback Machine copy because forbes.com/sites answers scripts with a bot challenge; Forbes' May 2026 soccer list team page repeats the $1B value and $105M revenue but labels the season 2024-2025 and shows Debt/Value 0%. Capacity is the stadium operator's figure for the venue (72,000 seats scalable to 83,000); the smaller configuration Atlanta United normally uses for MLS matches is not stated on a page read here (Forbes lists 75,000). The shirt-sponsor source is the club's record of the 2016 American Family Insurance deal; a Feb 2025 fan-site report on The Connector kit (Scarves and Spikes, in sources) says AFI is the main jersey sponsor for a ninth straight year, and AFI is still in the club's 2026 partner footer. AMBSE CEO Rich McKay sits above Culebro. In August 2026 CNBC (via Yahoo/Falcons Wire) reported Arctos agreeing to buy 10% of the Atlanta Falcons at a $10.6bn valuation; the reports concern the NFL team and do not mention Atlanta United, so no institutional owner is recorded here. LLC registry number and social follower counts not found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "with Arthur M. Blank as the Club owner",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Arthur M. Blank",
+   "since_year": 2014,
+   "source_url": "https://www.atlutd.com/club/history/2014-2016",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.atlutd.com/club/history/2014-2016",
+ "ownership_summary": "Arthur M. Blank has owned Atlanta United since Major League Soccer awarded him the Atlanta expansion team on 16 April 2014; the club (Atlanta United Football Club, LLC) is run by his AMB Sports and Entertainment (AMBSE), which also runs the NFL's Atlanta Falcons. No minority or institutional investor in the club is reported, and Forbes' 2026 MLS valuation list names Blank as the key owner.",
+ "ownership_type": "individual_family",
+ "revenue": 105000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "One-Year Change: 3% | Revenue: $105 million | Operating Income: $10 million",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026 (13 Feb 2026; Wayback Machine copy)",
+ "revenue_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "short_name": "Atlanta United",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.atlutd.com/club/history/2014-2016",
+  "https://www.atlutd.com/club/history/honors",
+  "https://www.atlutd.com/club/front-office/",
+  "https://www.atlutd.com/news/mauricio-culebro-named-president-of-soccer-amb-sports-and-entertainment",
+  "https://www.atlutd.com/tickets/ticket-terms-and-spectator-waivers",
+  "https://www.mercedesbenzstadium.com/media-hub",
+  "https://www.gpb.org/news/2021/06/01/georgia-supreme-court-upholds-tax-exemption-for-mercedes-benz-stadium",
+  "https://www.forbes.com/teams/atlanta-united-fc/",
+  "https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+  "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+  "https://www.sportsbusinessjournal.com/Articles/2025/10/23/mls-average-attendance-down-5-in-2025-ahead-of-world-cup/",
+  "https://sports.yahoo.com/articles/private-equity-firm-buy-10-220138163.html",
+  "https://www.mlssoccer.com/news/atlanta-united-unveil-2025-the-connector-kit",
+  "https://scarvesandspikes.com/2025/02/14/atlanta-united-unveils-new-2025-26-primary-kit-the-connector/"
+ ],
+ "sport": "football",
+ "stadium": "Mercedes-Benz Stadium",
+ "stadium_capacity": 72000,
+ "stadium_capacity_evidence": "With 72,000 seats scalable to 83,000",
+ "stadium_capacity_source_url": "https://www.mercedesbenzstadium.com/media-hub",
+ "stadium_owner": {
+  "detail": "Owned by the Georgia World Congress Center Authority, a public (state) entity, as the Georgia Dome was before it; Atlanta United and the NFL's Atlanta Falcons, both run by Arthur M. Blank's AMB Sports and Entertainment, play there.",
+  "evidence": "is owned by the Georgia World Congress Center Authority, a public entity",
+  "source_url": "https://www.gpb.org/news/2021/06/01/georgia-supreme-court-upholds-tax-exemption-for-mercedes-benz-stadium",
+  "value": "state"
+ },
+ "valuation": 1000000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1B (€860M)",
+ "valuation_source_name": "Forbes (estimate), Soccer Team Valuations 2026, Atlanta United FC team page (calculated May 2026)",
+ "valuation_source_url": "https://www.forbes.com/teams/atlanta-united-fc/",
+ "valuation_year": 2026
+}

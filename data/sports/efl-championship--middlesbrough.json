@@ -1,0 +1,183 @@
+{
+ "city": "Middlesbrough",
+ "country": "England",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2023-06-26",
+   "date_text": "26 June 2023 and 12 September 2023",
+   "evidence": "Macquarie Bank Limited, London Branch",
+   "headline": "Macquarie takes two charges over Middlesbrough",
+   "investor": "Macquarie Bank Limited, London Branch",
+   "investor_type": "institutional",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "Companies House charges register",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01947851/charges",
+   "stake_pct": null,
+   "summary": "The club company's only outstanding charges (two of 28 registered) were created on 26 June 2023 and 12 September 2023 in favour of Macquarie Bank Limited, London Branch, each containing a fixed charge; the amounts secured are not stated on the register. Macquarie and Shawbrook Bank held earlier charges (2019, satisfied 2020).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "mfc.co.uk",
+ "facts": {
+  "chair": {
+   "evidence": "Middlesbrough chairman Steve Gibson took ownership of his hometown club in 1994",
+   "name": "Steve Gibson",
+   "source_url": "https://inews.co.uk/sport/football/middlesbrough-story-one-man-undying-devotion-3404944",
+   "title": "Chairman"
+  },
+  "chief_executive": {
+   "evidence": "Middlesbrough chief executive Neil Bausor is expected to be part of a big decision this week",
+   "name": "Neil Bausor",
+   "source_url": "https://www.gazettelive.co.uk/sport/football/football-news/middlesbrough-officials-major-role-big-32543160",
+   "title": "Chief executive"
+  },
+  "kit_supplier": {
+   "evidence": "It’s the second season their kits are manufactured by Castore.",
+   "name": "Castore",
+   "source_url": "https://www.gazettelive.co.uk/sport/football/football-news/middlesbrough-unveil-new-kits-anniversary-34244248"
+  },
+  "legal_entity": {
+   "evidence": "MIDDLESBROUGH FOOTBALL & ATHLETIC COMPANY (1986) LIMITED",
+   "name": "Middlesbrough Football & Athletic Company (1986) Limited",
+   "registry": "Companies House",
+   "registry_id": "01947851",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01947851"
+  },
+  "operating_result": {
+   "amount": -10343000,
+   "basis": "operating profit",
+   "currency": "GBP",
+   "evidence": "Operating loss (10,343) (11,922)",
+   "season": "2024-25",
+   "source_name": "Middlesbrough Football & Athletic Company (1986) Limited annual report and financial statements, year ended 30 June 2025 (Companies House, scanned PDF)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01947851/filing-history/MzUwNzEzMDUxNGFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "pretax_result": {
+   "amount": -11400000,
+   "currency": "GBP",
+   "evidence": "but they still ended up £11.4 million down",
+   "season": "2024-25",
+   "source_name": "Teesside Live on the 2024/25 accounts",
+   "source_url": "https://www.gazettelive.co.uk/sport/football/football-news/key-figures-middlesbrough-post-latest-33500541"
+  },
+  "revenue_breakdown": {
+   "broadcast": 12200000,
+   "commercial": 8400000,
+   "currency": "GBP",
+   "evidence": "Money from gate receipts fell slightly from £8.7m to £8.6m, while commercial and sponsorship money fell by £1m to £8.4m.",
+   "matchday": 8600000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Teesside Live on the 2024/25 accounts",
+   "source_url": "https://www.gazettelive.co.uk/sport/football/football-news/key-figures-middlesbrough-post-latest-33500541"
+  },
+  "shirt_sponsor": {
+   "evidence": "They also feature the new front-of-shirt sponsor logo of Midnite, after a deal announced last week.",
+   "name": "Midnite",
+   "source_url": "https://www.gazettelive.co.uk/sport/football/football-news/middlesbrough-unveil-new-kits-anniversary-34244248"
+  },
+  "stadium_owner": {
+   "detail": "The Riverside Stadium and the training ground headquarters sit in the club company's own land and buildings (revalued by Montagu Evans at 30 June 2024 on a depreciated replacement cost basis); the note also records long leasehold property of £11.5m, so part of the estate may be leasehold.",
+   "evidence": "The Riverside Stadium and the training ground headquarters were valued on a depreciated replacement cost basis due to the specialist nature of the assets.",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/01947851/filing-history/MzUwNzEzMDUxNGFkaXF6a2N4/document?format=pdf&download=0",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 36400000,
+   "currency": "GBP",
+   "evidence": "In total last season, Boro spent £36.4m on wages",
+   "season": "2024-25",
+   "source_name": "Teesside Live on the 2024/25 accounts",
+   "source_url": "https://www.gazettelive.co.uk/sport/football/football-news/key-figures-middlesbrough-post-latest-33500541"
+  }
+ },
+ "founded_evidence": "The club was formed on February 18, 1876",
+ "founded_source_url": "https://www.gazettelive.co.uk/news/local-news/battling-boro-125-years-3842065",
+ "founded_year": 1876,
+ "key": "efl-championship--middlesbrough",
+ "league": "EFL Championship",
+ "name": "Middlesbrough Football Club",
+ "notes": "Club site (mfc.co.uk) renders client-side, so nothing on it could be read or cited; founded, capacity and leadership come from Teesside Live and the i Paper. The 2024/25 accounts at Companies House are a scanned PDF: turnover £32,476k, operating loss £10,343k and loss before tax £11,419k were read by OCR and match Teesside Live's £32.5m / £11.4m; the operating-loss and stadium-owner evidence sit in that scanned PDF and may not be machine-findable. Broadcast £12.2m is from the same Teesside Live article ('That was the club’s largest source of guaranteed revenue at £12.2m'). Ownership chain from the PSC register: Middlesbrough Football & Athletic Company (1986) Limited <- Middlesbrough Football and Athletic Company Limited (05324467, dormant) <- Middlesbrough Football & Athletic Company Holdings Limited (03912084) <- The Gibson O'Neill Company Limited (02991817; Gibson 75% or more, Crossco (1438) Limited 25-50% and itself Gibson-controlled; Michael O'Neill has significant influence). No stake percentage at club level is stated. Lost the 2026 Championship play-off final 1-0 to Hull City, so still in the Championship for 2026/27. No valuation, attendance, net debt or social counts found on a citable page; no top-flight title.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Middlesbrough chairman Steve Gibson took ownership of his hometown club in 1994",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Steve Gibson",
+   "since_year": 1994,
+   "source_url": "https://inews.co.uk/sport/football/middlesbrough-story-one-man-undying-devotion-3404944",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "depends on the continuing support from The Gibson O'Neill Company Limited, the ultimate parent undertaking",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "company",
+   "name": "The Gibson O'Neill Company Limited",
+   "since_year": null,
+   "source_url": "https://www.gazettelive.co.uk/sport/football/football-news/key-figures-middlesbrough-post-latest-33500541",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://find-and-update.company-information.service.gov.uk/company/03912084/persons-with-significant-control",
+ "ownership_summary": "Controlled by chairman Steve Gibson, who took ownership in 1994. The club company is held through Middlesbrough Football & Athletic Club Holdings Limited (75% or more) by The Gibson O'Neill Company Limited, the ultimate parent (also owner of Bulkhaul and Rockliffe Hall), in which Gibson holds 75% or more. No institutional or minority investor is on record.",
+ "ownership_type": "individual_family",
+ "revenue": 32500000,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "It rose just 1% to £32.5m, boosted by the new EFL broadcast deal with Sky Sports",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Teesside Live on Middlesbrough Football & Athletic Company (1986) Limited accounts, year ended 30 June 2025",
+ "revenue_source_url": "https://www.gazettelive.co.uk/sport/football/football-news/key-figures-middlesbrough-post-latest-33500541",
+ "short_name": "Middlesbrough",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://find-and-update.company-information.service.gov.uk/company/01947851",
+  "https://find-and-update.company-information.service.gov.uk/company/01947851/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/01947851/charges",
+  "https://find-and-update.company-information.service.gov.uk/company/01947851/filing-history/MzUwNzEzMDUxNGFkaXF6a2N4/document?format=pdf&download=0",
+  "https://find-and-update.company-information.service.gov.uk/company/05324467/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/03912084/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/02991817/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/11465292/persons-with-significant-control",
+  "https://www.gazettelive.co.uk/sport/football/football-news/key-figures-middlesbrough-post-latest-33500541",
+  "https://www.gazettelive.co.uk/news/local-news/battling-boro-125-years-3842065",
+  "https://www.gazettelive.co.uk/all-about/riverside-stadium",
+  "https://www.gazettelive.co.uk/sport/football/football-news/middlesbrough-unveil-new-kits-anniversary-34244248",
+  "https://www.gazettelive.co.uk/sport/football/football-news/middlesbrough-officials-major-role-big-32543160",
+  "https://inews.co.uk/sport/football/middlesbrough-story-one-man-undying-devotion-3404944",
+  "https://www.skysports.com/football/live-blog/13545479/hull-city-vs-middlesbrough-live-championship-play-off-final-updates-score-stream-and-highlights"
+ ],
+ "sport": "football",
+ "stadium": "Riverside Stadium",
+ "stadium_capacity": 34988,
+ "stadium_capacity_evidence": "Its current capacity is 34,988 all seated",
+ "stadium_capacity_source_url": "https://www.gazettelive.co.uk/all-about/riverside-stadium",
+ "stadium_owner": {
+  "detail": "The Riverside Stadium and the training ground headquarters sit in the club company's own land and buildings (revalued by Montagu Evans at 30 June 2024 on a depreciated replacement cost basis); the note also records long leasehold property of £11.5m, so part of the estate may be leasehold.",
+  "evidence": "The Riverside Stadium and the training ground headquarters were valued on a depreciated replacement cost basis due to the specialist nature of the assets.",
+  "source_url": "https://find-and-update.company-information.service.gov.uk/company/01947851/filing-history/MzUwNzEzMDUxNGFkaXF6a2N4/document?format=pdf&download=0",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

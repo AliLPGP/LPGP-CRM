@@ -1,0 +1,260 @@
+{
+ "city": "Leicester",
+ "country": "England",
+ "deals": [
+  {
+   "amount": 35000000,
+   "currency": "GBP",
+   "date": null,
+   "date_text": "2010",
+   "evidence": "King Power, run by the Srivaddhanaprabha family, bought Leicester for £35m from Milan Mandaric in 2010.",
+   "headline": "King Power buys Leicester City from Milan Mandaric",
+   "investor": "King Power (Srivaddhanaprabha family), as Asian Football Investments",
+   "investor_type": "consortium",
+   "kind": "acquisition",
+   "seller": "Milan Mandaric",
+   "source_name": "Sky Sports",
+   "source_url": "https://www.skysports.com/football/news/11712/13572696/leicester-city-for-sale-thai-owners-king-power-put-club-on-market-for-more-than-lb200m",
+   "stake_pct": null,
+   "summary": "A Thai-led consortium, Asian Football Investments, fronted by King Power's Vichai Srivaddhanaprabha, took over the club in 2010; Sky Sports reports the price as £35m. Before the brief's 2015 window but the transaction behind the current ownership.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 50000000,
+   "currency": "GBP",
+   "date": null,
+   "date_text": "Year ended 30 June 2025",
+   "evidence": "e) Macquarie Bank Limited: £50,000,000 secured on Premier League receivables of",
+   "headline": "Macquarie lends Leicester £50m against Premier League receivables",
+   "investor": "Macquarie Bank Limited",
+   "investor_type": "institutional",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "Leicester City FC annual report 2024/25, note 12",
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf",
+   "stake_pct": null,
+   "summary": "A £50m Macquarie Bank loan secured on Premier League receivables, at 8.30%, repayable in instalments to March 2027 (£49.7m unpaid at 30 June 2025). Macquarie also provides transfer-fee receivable discounting facilities (four further loans of £7.4m-£20.8m at 6.80%-9.02%) and a £10m facility secured on future receivables.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": 124000000,
+   "currency": "GBP",
+   "date": null,
+   "date_text": "Year ended 30 June 2025",
+   "evidence": "following the conversion of £124.0m of group loans converted to equity",
+   "headline": "Owner converts £124m of loans into equity",
+   "investor": "King Power International Limited",
+   "investor_type": "corporate",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Leicester City FC annual report 2024/25",
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf",
+   "stake_pct": null,
+   "summary": "Loans of £124.0m from the group were converted into equity in 2024/25, lowering interest owed to group undertakings; the parent also lent £14.3m of new working-capital loans in the year and, after year end, five-year facilities totalling £28m.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2026-08-13",
+   "date_text": "August 2026",
+   "evidence": "The project is titled \"Project Lineup\" and values the physical assets at £224m with no specific sum placed on the sale of King Power's football teams.",
+   "headline": "King Power puts Leicester City up for sale through Citi",
+   "investor": null,
+   "investor_type": null,
+   "kind": "other",
+   "seller": "King Power (Srivaddhanaprabha family)",
+   "source_name": "Sky Sports",
+   "source_url": "https://www.skysports.com/football/news/11712/13572696/leicester-city-for-sale-thai-owners-king-power-put-club-on-market-for-more-than-lb200m",
+   "stake_pct": null,
+   "summary": "Sky Sports saw a Citi sales brochure ('Project Lineup') offering the men's and women's teams, King Power Stadium, both training facilities and sister club OH Leuven; it values the physical assets at £224m with no specific sum placed on the teams. Citi forecasts 2026 financial-year revenue of £97m. Not a completed transaction.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "lcfc.com",
+ "facts": {
+  "attendance": {
+   "average": 31448,
+   "evidence": "Average league attendance 31,448",
+   "season": "2024-25",
+   "source_name": "Leicester City FC annual report 2024/25 (KPIs)",
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf"
+  },
+  "chair": {
+   "evidence": "made up of Chairman Aiyawatt Srivaddhanaprabha and Vice-Chairmen Apichet Srivaddhanaprabha and Liu Shilai",
+   "name": "Aiyawatt Srivaddhanaprabha",
+   "source_url": "https://www.lcfc.com/media-article/leicester-city-lcfc-leadership-structure-kevin-davies-jon-rudkin-james-mccarron-kamonthip-netthanomsak-russell-jones",
+   "title": "Chairman"
+  },
+  "chief_executive": {
+   "evidence": "Kevin Davies appointed Chief Executive Officer, leading the Club’s business functions",
+   "name": "Kevin Davies",
+   "source_url": "https://www.lcfc.com/media-article/leicester-city-lcfc-leadership-structure-kevin-davies-jon-rudkin-james-mccarron-kamonthip-netthanomsak-russell-jones",
+   "title": "Chief Executive Officer"
+  },
+  "honours": {
+   "competition": "English top flight (Premier League 2015/16)",
+   "evidence": "The following campaign, Leicester City became Premier League champions.",
+   "league_titles": 1,
+   "source_url": "https://www.lcfc.com/history-potted-men"
+  },
+  "kit_supplier": {
+   "evidence": "We are pleased to unveil our new adidas home kit for the 2026/27 season",
+   "name": "adidas",
+   "source_url": "https://www.lcfc.com/media-article/leicester-city-lcfc-adidas-home-kit-shirt-2026-2027-sale-buy-shop"
+  },
+  "legal_entity": {
+   "evidence": "LEICESTER CITY FOOTBALL CLUB LIMITED",
+   "name": "Leicester City Football Club Limited",
+   "registry": "Companies House",
+   "registry_id": "04593477",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/04593477"
+  },
+  "net_debt": {
+   "amount": 139517000,
+   "as_of": "2025-06-30",
+   "currency": "GBP",
+   "evidence": "Closing net debt (139,517)",
+   "source_name": "Leicester City FC annual report 2024/25, note 21 (debt defined as bank loans and intercompany loans; includes stadium hire purchase)",
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf"
+  },
+  "operating_result": {
+   "amount": -61300000,
+   "basis": "operating profit",
+   "currency": "GBP",
+   "evidence": "Operating loss (2025: £61.3m, 2024: £9.0m) excluding player amortisation",
+   "season": "2024-25",
+   "source_name": "Leicester City FC annual report 2024/25",
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf"
+  },
+  "pretax_result": {
+   "amount": -71100000,
+   "currency": "GBP",
+   "evidence": "The Club made a loss before taxation of £71.1m (2024: £19.4m loss).",
+   "season": "2024-25",
+   "source_name": "Leicester City FC annual report 2024/25",
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 117400000,
+   "commercial": null,
+   "currency": "GBP",
+   "evidence": "to £117.4m (2024: £54.2m) and sponsorship revenues increased by £15.8m to £37.3m",
+   "matchday": 20300000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Leicester City FC annual report 2024/25 (strategic report)",
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "BC.GAME will continue as the Club’s Official Principal Partner for the 2026/27 season, with its branding appearing on Men’s First Team match shirts.",
+   "name": "BC.GAME",
+   "source_url": "https://www.lcfc.com/media-article/leicester-city-lcfc-adidas-home-kit-shirt-2026-2027-sale-buy-shop"
+  },
+  "stadium_owner": {
+   "detail": "Freehold owned by K Power Holdings Company Limited, a company related to the owning family; the club holds the stadium under a hire purchase contract (term extended on 1 September 2025 to 30 June 2036).",
+   "evidence": "The freehold interest in the Stadium is owned by K Power Holdings Company Limited.",
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf",
+   "value": "private_third_party"
+  },
+  "wages": {
+   "amount": 152900000,
+   "currency": "GBP",
+   "evidence": "Staff costs increased by £45.7m to £152.9m in the year",
+   "season": "2024-25",
+   "source_name": "Leicester City FC annual report 2024/25",
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf"
+  }
+ },
+ "founded_evidence": "Formed in 1884, Leicester City Football Club, formerly known as Leicester Fosse until 1919",
+ "founded_source_url": "https://www.lcfc.com/club",
+ "founded_year": 1884,
+ "key": "efl-championship--leicester-city",
+ "league": "EFL Championship",
+ "name": "Leicester City Football Club",
+ "notes": "League: relegated from the Championship at the end of 2025/26 (six-point PSR deduction) and plays in EFL League One in 2026/27 (NBC Connecticut, 21 Apr 2026; the club's kit release speaks of 'an immediate return to the EFL Championship'); league field kept as given for the key. Accounts are to 30 June 2025 (2024/25, a Premier League season); 2025/26 accounts not yet filed. Revenue split as the club gives it: broadcasting £117.4m, sponsorship and advertising £37.3m, gate receipts £20.3m, commercial £9.3m, other £2.2m - commercial left null because the club reports sponsorship separately and nothing may be summed. Ownership stake: PSC register says 75% or more; the club says the family are sole owners - no exact percentage stated, so stake_pct is null. No valuation published (Citi's brochure values physical assets only, at £224m). Liu Shilai is a vice-chairman and director since 2012; no page states him as a shareholder. No social follower counts found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "The Company's immediate parent undertaking is King Power International Limited, a",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "company",
+   "name": "King Power International Limited",
+   "since_year": 2010,
+   "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "The Srivaddhanaprabha family are now sole owners of the Club.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Srivaddhanaprabha family (Aiyawatt Srivaddhanaprabha, via V&A Holdings Company Limited)",
+   "since_year": 2010,
+   "source_url": "https://www.lcfc.com/history-potted-men",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://find-and-update.company-information.service.gov.uk/company/04593477/persons-with-significant-control",
+ "ownership_summary": "Owned by the Srivaddhanaprabha family's King Power group: the immediate parent is King Power International Limited (Thailand), whose ultimate parent is V&A Holdings Company Limited, beneficially owned by the family; chairman Aiyawatt Srivaddhanaprabha is the registered person with significant control (75% or more). King Power took over in 2010 (as the Asian Football Investments consortium) and in August 2026 put the club up for sale through Citi.",
+ "ownership_type": "individual_family",
+ "revenue": 186500000,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "The turnover of the Club has increased to £186.5m from £105.3m in 2024",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Leicester City Football Club Limited annual report and consolidated financial statements, year ended 30 June 2025",
+ "revenue_source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf",
+ "short_name": "Leicester City",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://find-and-update.company-information.service.gov.uk/company/04593477",
+  "https://find-and-update.company-information.service.gov.uk/company/04593477/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/04593477/officers",
+  "https://find-and-update.company-information.service.gov.uk/company/04593477/filing-history",
+  "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf",
+  "https://www.lcfc.com/media-article/leicester-city-financial-statements-for-the-year-ended-30-june-2025",
+  "https://www.lcfc.com/club",
+  "https://www.lcfc.com/history-potted-men",
+  "https://www.lcfc.com/stadiumconsultation-stadium-expansion",
+  "https://www.lcfc.com/media-article/leicester-city-lcfc-leadership-structure-kevin-davies-jon-rudkin-james-mccarron-kamonthip-netthanomsak-russell-jones",
+  "https://www.lcfc.com/pages/en/senior-management",
+  "https://www.lcfc.com/media-article/leicester-city-lcfc-adidas-home-kit-shirt-2026-2027-sale-buy-shop",
+  "https://www.skysports.com/football/news/11712/13572696/leicester-city-for-sale-thai-owners-king-power-put-club-on-market-for-more-than-lb200m",
+  "https://www.nbcconnecticut.com/news/sports/soccer/leicester-city-relegated-league-one/3727941/"
+ ],
+ "sport": "football",
+ "stadium": "King Power Stadium",
+ "stadium_capacity": 32261,
+ "stadium_capacity_evidence": "King Power Stadium currently holds 32,261 seated fans",
+ "stadium_capacity_source_url": "https://www.lcfc.com/stadiumconsultation-stadium-expansion",
+ "stadium_owner": {
+  "detail": "Freehold owned by K Power Holdings Company Limited, a company related to the owning family; the club holds the stadium under a hire purchase contract (term extended on 1 September 2025 to 30 June 2036).",
+  "evidence": "The freehold interest in the Stadium is owned by K Power Holdings Company Limited.",
+  "source_url": "https://downloads.ctfassets.net/0wcpt07qzvlh/4qxAe2QWQRSvsvnjeD5fpJ/7fe13c11806de9ec9c42da9613f1e95b/LCFC_Financial_Statements_30_June_2025_Signed.pdf",
+  "value": "private_third_party"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

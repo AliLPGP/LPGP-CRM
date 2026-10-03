@@ -1,0 +1,173 @@
+{
+ "city": "Manchester",
+ "country": "England",
+ "deals": [
+  {
+   "amount": 400000000,
+   "currency": "USD",
+   "date": "2015-12-01",
+   "date_text": "1 December 2015",
+   "evidence": "CMC Holdings led consortium acquires 13% CFG minority shareholding",
+   "headline": "CMC-led Chinese consortium buys 13% of City Football Group",
+   "investor": "Consortium led by CMC (China Media Capital) Holdings with CITIC Capital",
+   "investor_type": "consortium",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "City Football Group",
+   "source_url": "https://www.cityfootballgroup.com/post/cmc-holdings-led-consortium-acquires-city-football-group-minority-shareholding",
+   "stake_pct": 13,
+   "summary": "A consortium of CMC Holdings and CITIC Capital invested US$400m for a 13% minority shareholding in City Football Group (owner of Manchester City), valuing CFG at US$3bn.",
+   "valuation": 3000000000,
+   "valuation_currency": "USD",
+   "verified": true
+  },
+  {
+   "amount": 500000000,
+   "currency": "USD",
+   "date": "2019-11-26",
+   "date_text": "26 November 2019",
+   "evidence": "Silver Lake has signed a definitive agreement to make a US$500 million equity investment, equivalent to just over 10% of the company’s post-investment value.",
+   "headline": "Silver Lake invests US$500m in City Football Group",
+   "investor": "Silver Lake",
+   "investor_type": "private_equity",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "City Football Group",
+   "source_url": "https://www.cityfootballgroup.com/post/cfg-announces-us-500-million-strategic-investment-by-silver-lake",
+   "stake_pct": 10,
+   "summary": "Silver Lake agreed a US$500m equity investment, equivalent to just over 10% of CFG's post-investment value, valuing the group at US$4.8bn. CFG now states Silver Lake has progressively increased its stake to nearly 17% (later increments not dated or priced on the page).",
+   "valuation": 4800000000,
+   "valuation_currency": "USD",
+   "verified": true
+  }
+ ],
+ "domain": "mancity.com",
+ "facts": {
+  "attendance": {
+   "average": 52517,
+   "evidence": "Average league home attendance 52,517",
+   "season": "2024-25",
+   "source_name": "Manchester City Football Club Limited Annual Report 2024-25 (KPI table)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00040946/filing-history/MzUwODQ0MDY0MmFkaXF6a2N4/document?format=pdf&download=0"
+  },
+  "chair": {
+   "evidence": "Khaldoon Al Mubarak is the Founding Chairman of CFG.",
+   "name": "Khaldoon Al Mubarak",
+   "source_url": "https://www.cityfootballgroup.com/company",
+   "title": "Chairman"
+  },
+  "chief_executive": {
+   "evidence": "Chief Executive Officer Ferran Soriano",
+   "name": "Ferran Soriano",
+   "source_url": "https://www.cityfootballgroup.com/clubs/manchester-city",
+   "title": "Chief Executive Officer"
+  },
+  "honours": {
+   "competition": "English top flight",
+   "evidence": "Domestic League Championships 10",
+   "league_titles": 10,
+   "source_url": "https://www.forbes.com/teams/manchester-city/"
+  },
+  "legal_entity": {
+   "evidence": "MANCHESTER CITY FOOTBALL CLUB LIMITED",
+   "name": "Manchester City Football Club Limited",
+   "registry": "Companies House",
+   "registry_id": "00040946",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00040946"
+  },
+  "operating_result": {
+   "amount": 89000000,
+   "basis": "EBITDA",
+   "currency": "GBP",
+   "evidence": "$115M (£89M)",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate; EBITDA excluding player trading)",
+   "source_url": "https://www.forbes.com/teams/manchester-city/"
+  },
+  "revenue_breakdown": {
+   "broadcast": 278600000,
+   "commercial": 340400000,
+   "currency": "GBP",
+   "evidence": "Broadcasting revenue for the year ended 30 June 2025 was £278.6m, a decrease of £16.1m.",
+   "matchday": 75100000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Manchester City Football Club Limited Annual Report 2024-25 (Companies House)",
+   "source_url": "https://find-and-update.company-information.service.gov.uk/company/00040946/filing-history/MzUwODQ0MDY0MmFkaXF6a2N4/document?format=pdf&download=0"
+  }
+ },
+ "founded_evidence": "Year Founded 1894",
+ "founded_source_url": "https://www.cityfootballgroup.com/clubs/manchester-city",
+ "founded_year": 1894,
+ "key": "premier-league--manchester-city",
+ "league": "Premier League",
+ "name": "Manchester City Football Club",
+ "notes": "mancity.com blocks automated fetches, so the club's own annual-report pages could not be cited; revenue, its breakdown (matchday £75.1m, broadcasting £278.6m, other commercial £340.4m) and attendance were read from the scanned FY2024-25 accounts at Companies House (no text layer, so a phrase check on that URL will fail; Forbes' text page has '$900M (£694M)' as a cross-check). The accounts state a loss for the financial year of £9.9m (2024: £73.8m profit) but this is after tax, so pretax_result is left null; employee costs are given only as 59% of revenue. Founded: CFG's club page gives 'Year Founded 1894' and says the club's roots trace back to 1880 as St Mark's West Gorton. Silver Lake's stake is stated as 'nearly 17%' (recorded as 17); Sheikh Mansour's precise percentage is not stated. The CMC consortium's later holding (~12% in 2019) is not current on CFG's ownership page. Stadium owner (Etihad Stadium leased from Manchester City Council) not confirmed on a citable page; shirt sponsor and kit supplier not captured; Premier League charges case outcome not checked. Previous record's Yahoo/goal.com sources replaced.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "CFG is majority owned by Newton Investment and Development LLC, fully owned by His Highness Sheikh Mansour bin Zayed Al Nahyan",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Newton Investment and Development LLC (Sheikh Mansour bin Zayed Al Nahyan)",
+   "since_year": 2008,
+   "source_url": "https://www.cityfootballgroup.com/company",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": 500000000,
+   "currency": "USD",
+   "evidence": "with a significant minority shareholding of nearly 17% held by US-based global technology investment firm, Silver Lake",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "fund",
+   "name": "Silver Lake",
+   "since_year": 2019,
+   "source_url": "https://www.cityfootballgroup.com/company",
+   "stake_pct": 17,
+   "valuation_at_entry": 4800000000
+  }
+ ],
+ "ownership_source_url": "https://www.cityfootballgroup.com/company",
+ "ownership_summary": "Manchester City Football Club Limited is wholly held (75%+) by Manchester City Limited, itself held by City Football Group (Midco) Limited within City Football Group (CFG). CFG is majority owned by Newton Investment and Development LLC, fully owned by Sheikh Mansour bin Zayed Al Nahyan (who acquired the club in 2008), with US technology investor Silver Lake holding nearly 17% since investing in 2019.",
+ "ownership_type": "sovereign_state",
+ "revenue": 694100000,
+ "revenue_currency": "GBP",
+ "revenue_evidence": "Total revenue for the year ended 30 June 2025 reached £694.1m, a decrease of £20.9m compared to the prior year.",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Manchester City Football Club Limited Annual Report and Financial Statements for the year ended 30 June 2025 (Companies House)",
+ "revenue_source_url": "https://find-and-update.company-information.service.gov.uk/company/00040946/filing-history/MzUwODQ0MDY0MmFkaXF6a2N4/document?format=pdf&download=0",
+ "short_name": "Man City",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.cityfootballgroup.com/company",
+  "https://www.cityfootballgroup.com/clubs/manchester-city",
+  "https://www.cityfootballgroup.com/post/cfg-announces-us-500-million-strategic-investment-by-silver-lake",
+  "https://www.cityfootballgroup.com/post/cmc-holdings-led-consortium-acquires-city-football-group-minority-shareholding",
+  "https://www.premierleague.com/en/news/4725666/all-you-need-to-know-about-the-20-premier-league-stadiums",
+  "https://find-and-update.company-information.service.gov.uk/company/00040946",
+  "https://find-and-update.company-information.service.gov.uk/company/00040946/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/02989498/persons-with-significant-control",
+  "https://find-and-update.company-information.service.gov.uk/company/00040946/filing-history/MzUwODQ0MDY0MmFkaXF6a2N4/document?format=pdf&download=0",
+  "https://www.forbes.com/teams/manchester-city/"
+ ],
+ "sport": "football",
+ "stadium": "Etihad Stadium",
+ "stadium_capacity": 61038,
+ "stadium_capacity_evidence": "The stadium has a capacity of 61,038 following recent expansions.",
+ "stadium_capacity_source_url": "https://www.premierleague.com/en/news/4725666/all-you-need-to-know-about-the-20-premier-league-stadiums",
+ "stadium_owner": null,
+ "valuation": 5500000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$5.5B (£4.1B) Calculated May 2026",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/manchester-city/",
+ "valuation_year": 2026
+}

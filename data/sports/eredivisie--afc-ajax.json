@@ -1,0 +1,178 @@
+{
+ "city": "Amsterdam",
+ "country": "Netherlands",
+ "deals": [],
+ "domain": "ajax.nl",
+ "facts": {
+  "chair": {
+   "evidence": "Lesley Bamberger (voorzitter)",
+   "name": "Lesley Bamberger",
+   "source_url": "https://www.ajax.nl/club/organisatie/",
+   "title": "Chair of the Supervisory Board (Raad van Commissarissen)"
+  },
+  "chief_executive": {
+   "evidence": "Per 1 juli 2025 is hij officieel de algemeen directeur van Ajax.",
+   "name": "Menno Geelen",
+   "source_url": "https://www.ajax.nl/club/organisatie/",
+   "title": "Algemeen directeur (CEO)"
+  },
+  "honours": {
+   "competition": "Dutch national championship (Eredivisie)",
+   "evidence": "Kampioen van Nederland (36)",
+   "league_titles": 36,
+   "source_url": "https://www.ajax.nl/club/historie/"
+  },
+  "kit_supplier": {
+   "evidence": "Ajax en adidas presenteerden voor het seizoen 2025/2026 vier",
+   "name": "adidas",
+   "source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf"
+  },
+  "legal_entity": {
+   "evidence": "met KvK-nummer 33302453",
+   "name": "AFC Ajax N.V.",
+   "registry": "Kamer van Koophandel (KvK)",
+   "registry_id": "33302453",
+   "source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf"
+  },
+  "operating_result": {
+   "amount": -18200000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "Het operationeel resultaat kwam uit op € 18,2 miljoen negatief",
+   "season": "2025-26",
+   "source_name": "AFC Ajax NV annual figures 2025/2026 (press release)",
+   "source_url": "https://www.ajax.nl/club/pers/persberichten/jaarcijfers-afc-ajax-nv-20252026/"
+  },
+  "pretax_result": {
+   "amount": 3138000,
+   "currency": "EUR",
+   "evidence": "Resultaat uit bedrijfsuitoefening vóór belastingen 3.138",
+   "season": "2025-26",
+   "source_name": "AFC Ajax NV jaarverslag 2025/2026 (winst-en-verliesrekening, x EUR 1.000)",
+   "source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "van Ziggo om het per 1 juli 2027 aflopende hoofdsponsorcontract",
+   "name": "Ziggo",
+   "source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Stadion Amsterdam NV, whose sole shareholder is Stichting Administratiekantoor Stadion Amsterdam; Ajax's annual report says Ajax owns 13.2% of the ArenA and the stadium's own report names the City of Amsterdam, Ajax and certificate holders as its partners.",
+   "evidence": "Stadion Amsterdam NV is eigenaar van de Johan Cruijff ArenA.",
+   "source_url": "https://www.johancruijffarena.nl/ontdek-de-arena/onze-organisatie/",
+   "value": "shared"
+  },
+  "wages": {
+   "amount": 120600000,
+   "currency": "EUR",
+   "evidence": "Deze post is toegenomen met € 11,5 miljoen naar € 120,6 miljoen",
+   "season": "2025-26",
+   "source_name": "AFC Ajax NV jaarverslag 2025/2026",
+   "source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf"
+  }
+ },
+ "founded_evidence": "18 maart 1900. Een groep vrienden richt AFC Ajax op in Café Oost-Indië",
+ "founded_source_url": "https://www.ajax.nl/club/historie/",
+ "founded_year": 1900,
+ "key": "eredivisie--afc-ajax",
+ "league": "Eredivisie",
+ "name": "AFC Ajax NV",
+ "notes": "Latest accounts are 2025/26 (year to 30 June 2026, published 25 Sep 2026): net revenue EUR 188.3m, net profit EUR 2.0m (2024/25: revenue EUR 178.1m, net loss EUR 37.3m), equity EUR 191.0m, cash EUR 26.7m. Operating result is Ajax's 'bedrijfsresultaat vóór afschrijving en resultaat vergoedingssommen' (before player-registration amortisation and transfer result); after those items the operating result was EUR 8.468m. Revenue breakdown is not in matchday/broadcast/commercial form: the club reports Voetbal EUR 104.543m (incl. UEFA premiums 43.521m, season tickets 14.553m, business seats/skyboxes 23.968m), Partnerships 42.541m, Televisie 11.367m, Merchandising 26.085m, Overige 3.743m (note 24, annual report p.110) - left null rather than re-mapped. Shareholdings are from the AFM register as reproduced in the annual report (p.61); evidence phrases for them span table cells in the PDF. Stadium capacity: the ArenA site only says 'ruim 55.000 stoelen' (more than 55,000), no exact figure found on a citable page. Ajax owns 13.2% of the ArenA ('De JCA is voor 13,2 procent eigendom van Ajax', annual report p.42); a new 15-year partnership agreement with the ArenA was signed in June 2025. Ziggo has said it will not renew the main shirt sponsorship after 2026/27. A bank credit facility exists (fully undrawn at 30 June 2026) but its size is not stated. No valuation (Ajax is not in Forbes' list; market capitalisation not recorded). No ownership transactions or institutional deals since 2015 found. TikTok: the report says Ajax has 'ruim 10 miljoen' followers across @afcajax and @ajaxvrouwen (approximate, not recorded). No average attendance figure found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "De grootste aandeelhouder is de Vereniging AFC Ajax met 73% van",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Vereniging AFC Ajax (Vereniging Amsterdamsche Football Club \"Ajax\")",
+   "since_year": 1998,
+   "source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf",
+   "stake_pct": 73,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Goldman Sachs Asset Management B.V. 5,29",
+   "institutional": true,
+   "investor_type": "institutional",
+   "kind": "fund",
+   "name": "Goldman Sachs Asset Management B.V.",
+   "since_year": null,
+   "source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf",
+   "stake_pct": 5.29,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Citigroup Global Market Ltd. 4,16",
+   "institutional": true,
+   "investor_type": "institutional",
+   "kind": "company",
+   "name": "Citigroup Global Market Ltd.",
+   "since_year": null,
+   "source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf",
+   "stake_pct": 4.16,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Overige aandeelhouders 17,55",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "other",
+   "name": "Other shareholders (free float on Euronext Amsterdam)",
+   "since_year": null,
+   "source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf",
+   "stake_pct": 17.55,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf",
+ "ownership_summary": "AFC Ajax NV is listed on Euronext Amsterdam, but the members' association Vereniging AFC Ajax holds 73% of the shares plus a special share with veto rights; the AFM register of substantial holdings also lists Goldman Sachs Asset Management B.V. (5.29%) and Citigroup Global Market Ltd. (4.16%), with 17.55% held by other shareholders.",
+ "ownership_type": "member_owned",
+ "revenue": 188300000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "naar € 188,3 miljoen, hoofdzakelijk door hogere Europese premies",
+ "revenue_season": "2025-26",
+ "revenue_source_name": "AFC Ajax NV annual figures 2025/2026 (press release, 25 September 2026)",
+ "revenue_source_url": "https://www.ajax.nl/club/pers/persberichten/jaarcijfers-afc-ajax-nv-20252026/",
+ "short_name": "Ajax",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.ajax.nl/club/pers/persberichten/jaarcijfers-afc-ajax-nv-20252026/",
+  "https://www.ajax.nl/media/45peoljn/ajax-jaarverslag-2025_2026-def.pdf",
+  "https://www.ajax.nl/media/0k4ljz0e/persbericht-jaarcijfers-afc-ajax-nv-per-30-juni-2026-def.pdf",
+  "https://www.ajax.nl/club/organisatie/",
+  "https://www.ajax.nl/club/historie/",
+  "https://www.johancruijffarena.nl/ontdek-de-arena/onze-organisatie/",
+  "https://www.johancruijffarena.nl/ontdek-de-arena/spreekbeurt/",
+  "https://eredivisie.nl/competitie/clubs/ajax/",
+  "https://johancruijffarena.h5mag.com/jaarverslag_stadionamsterdamnv_2024-2025/over_jca"
+ ],
+ "sport": "football",
+ "stadium": "Johan Cruijff ArenA",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "Owned by Stadion Amsterdam NV, whose sole shareholder is Stichting Administratiekantoor Stadion Amsterdam; Ajax's annual report says Ajax owns 13.2% of the ArenA and the stadium's own report names the City of Amsterdam, Ajax and certificate holders as its partners.",
+  "evidence": "Stadion Amsterdam NV is eigenaar van de Johan Cruijff ArenA.",
+  "source_url": "https://www.johancruijffarena.nl/ontdek-de-arena/onze-organisatie/",
+  "value": "shared"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

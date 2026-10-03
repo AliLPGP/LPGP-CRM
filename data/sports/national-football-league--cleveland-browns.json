@@ -1,0 +1,151 @@
+{
+ "city": "Cleveland",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2012-08-02",
+   "date_text": "August 2012",
+   "evidence": "Lerner will sell 70 percent of the Browns to Haslam now, with the other 30 percent reverting to him four years after the closing date",
+   "headline": "Jimmy Haslam buys the Browns from Randy Lerner",
+   "investor": "Jimmy Haslam",
+   "investor_type": "individual",
+   "kind": "acquisition",
+   "seller": "Randy Lerner",
+   "source_name": "NFL.com",
+   "source_url": "https://www.nfl.com/news/cleveland-browns-sale-to-jimmy-haslam-complete-09000d5d82afebd3",
+   "stake_pct": 70,
+   "summary": "Pre-2015, kept as the current owners' entry: Lerner sold 70% at closing, with the other 30% passing to Haslam four years later. Forbes gives the price paid as $987M.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 600000000,
+   "currency": "USD",
+   "date": "2025-06-30",
+   "date_text": "June 2025",
+   "evidence": "the stadium project receives the $600 million as a \"performance grant\" towards the stadium",
+   "headline": "Ohio budget gives $600m to the Browns' enclosed stadium in Brook Park",
+   "investor": "State of Ohio",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "ClevelandBrowns.com",
+   "source_url": "https://www.clevelandbrowns.com/news/dee-jimmy-haslam-share-message-on-path-forward-for-new-enclosed-huntington-bank-field-following-state-budget-approval",
+   "stake_pct": null,
+   "summary": "Ohio's budget includes a $600m 'performance grant' toward a new enclosed Huntington Bank Field in Brook Park, repaid from incremental revenue; the Haslams describe a $2bn+ stadium and mixed-use investment with private development partners and Haslam Sports Group covers overruns.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "clevelandbrowns.com",
+ "facts": {
+  "chair": {
+   "evidence": "Dee and Jimmy Haslam Managing and Principal Partners",
+   "name": "Dee and Jimmy Haslam",
+   "source_url": "https://www.clevelandbrowns.com/team/front-office-roster/",
+   "title": "Managing and Principal Partners"
+  },
+  "chief_executive": {
+   "evidence": "Dave Jenkins President",
+   "name": "Dave Jenkins",
+   "source_url": "https://www.clevelandbrowns.com/team/front-office-roster/",
+   "title": "President"
+  },
+  "honours": {
+   "competition": "League championships (Forbes count)",
+   "evidence": "Championships",
+   "league_titles": 8,
+   "source_url": "https://www.forbes.com/teams/cleveland-browns/"
+  },
+  "operating_result": {
+   "amount": 110000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$110M",
+   "season": "2025",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/cleveland-browns/"
+  },
+  "wages": {
+   "amount": 392000000,
+   "currency": "USD",
+   "evidence": "$392M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/cleveland-browns/"
+  }
+ },
+ "founded_evidence": "The Cleveland Browns were born in 1944 when Cleveland businessman Arthur B. McBride acquired a franchise in the new All-America Football Conference that would begin play in 1946.",
+ "founded_source_url": "https://www.profootballhof.com/teams/cleveland-browns/team-history/",
+ "founded_year": 1944,
+ "key": "national-football-league--cleveland-browns",
+ "league": "National Football League",
+ "name": "Cleveland Browns",
+ "notes": "Revenue, operating income, player costs and value are Forbes estimates (2025 season; value calculated September 2026). Owner amount $987M is Forbes' 'Price Paid' (on the Forbes page, not the front-office page). Stadium (city-owned per secondary sources) capacity and owner, attendance, legal entity, social counts not found on a citable page.",
+ "owners": [
+  {
+   "amount": 987000000,
+   "currency": "USD",
+   "evidence": "Dee & Jimmy Haslam",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Dee and Jimmy Haslam (Haslam Sports Group)",
+   "since_year": 2012,
+   "source_url": "https://www.forbes.com/teams/cleveland-browns/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "JW Johnson Managing Partner Whitney Haslam Johnson Managing Partner",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "JW Johnson and Whitney Haslam Johnson",
+   "since_year": null,
+   "source_url": "https://www.clevelandbrowns.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.clevelandbrowns.com/team/front-office-roster/",
+ "ownership_summary": "Owned by Dee and Jimmy Haslam (Haslam Sports Group), Managing and Principal Partners since buying the team from Randy Lerner in 2012 (70% at closing, the remaining 30% four years later); JW Johnson and Whitney Haslam Johnson are managing partners. Haslam Sports Group is building a new enclosed stadium in Brook Park. No institutional minority stake is reported.",
+ "ownership_type": "individual_family",
+ "revenue": 720000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$720M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), NFL Team Valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/cleveland-browns/",
+ "short_name": "Browns",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/cleveland-browns/",
+  "https://www.profootballhof.com/teams/cleveland-browns/team-history/",
+  "https://www.clevelandbrowns.com/team/front-office-roster/",
+  "https://www.nfl.com/news/cleveland-browns-sale-to-jimmy-haslam-complete-09000d5d82afebd3",
+  "https://www.clevelandbrowns.com/news/dee-jimmy-haslam-share-message-on-path-forward-for-new-enclosed-huntington-bank-field-following-state-budget-approval"
+ ],
+ "sport": "american_football",
+ "stadium": "Huntington Bank Field",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": null,
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": "$9B",
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

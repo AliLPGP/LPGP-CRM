@@ -1,0 +1,176 @@
+{
+ "city": "Cologne",
+ "country": "Germany",
+ "deals": [
+  {
+   "amount": 15500000,
+   "currency": "EUR",
+   "date": "2016-08-17",
+   "date_text": "Prospectus dated 17 August 2016",
+   "evidence": "Wertpapierprospekt für die Emission von insgesamt EUR 15.500.000 Schuldverschreibungen",
+   "headline": "1. FC Köln GmbH & Co. KGaA issues up to €15.5m of 3.5% bonds due 2024",
+   "investor": "Bondholders (FC-Anleihe 2016|2024, public offer and exchange offer)",
+   "investor_type": "other",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "1. FC Köln bond prospectus (Wertpapierprospekt FC-Anleihen 2016|2024)",
+   "source_url": "https://assets.ctfassets.net/nurz7nsnha04/2C3GEthBL4OURaaP2YIgze/94591648cbbd94b050a99392ff0302ef/Anleihe_2016-2024_WPP_mUmschlag_online.pdf",
+   "stake_pct": null,
+   "summary": "Unsecured, unsubordinated 3.5% bonds 2016|2024 (a book-entry bond and a printed 'Schmuckanleihe') offered in Germany and Austria by exchange offer and public subscription, capped at €15.5m in total. The 2024/25 results say the club repaid €14m of interest-bearing financing that year.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 20000000,
+   "currency": "EUR",
+   "date": "2021-03-31",
+   "date_text": "31 March 2021",
+   "evidence": "Fußball-Bundesligist 1. FC Köln hat beim Land Nordrhein-Westfalen eine Landesbürgschaft in Höhe von 20 Millionen Euro beantragt.",
+   "headline": "1. FC Köln applies for a €20m state guarantee on a six-year house-bank loan",
+   "investor": "FC house bank, with a guarantee from the state of North Rhine-Westphalia",
+   "investor_type": "other",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "t-online (dpa)",
+   "source_url": "https://www.t-online.de/sport/fussball/bundesliga/id_89764382/nach-millionenverlust-1-fc-koeln-beantragt-landesbuergschaft.html",
+   "stake_pct": null,
+   "summary": "During the pandemic the club applied to North Rhine-Westphalia for a €20m state guarantee on a six-year loan from its house bank (interest only for two years, then €5m a year), alongside a working-capital line and a €5m loan.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "Raised until 30 June 2021",
+   "evidence": "Diese Kredite werden noch bis zum 30. Juni 2021 eingesammelt, am Ende soll ein zweistelliger Millionenbetrag stehen.",
+   "headline": "1. FC Köln raises mezzanine loans in the double-digit millions",
+   "investor": "Mezzanine lenders (unnamed)",
+   "investor_type": "private_credit",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "t-online (dpa)",
+   "source_url": "https://www.t-online.de/sport/fussball/bundesliga/id_89764382/nach-millionenverlust-1-fc-koeln-beantragt-landesbuergschaft.html",
+   "stake_pct": null,
+   "summary": "Subordinated mezzanine loans collected until 30 June 2021, targeting a double-digit million amount; the lenders get no say or influence, and the club stated it opposes selling shares to investors.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "fc.de",
+ "facts": {
+  "chair": {
+   "evidence": "Vor dem Anstoß der Partie gratulierte FC-Präsident Jörn Stobbe",
+   "name": "Jörn Stobbe",
+   "source_url": "https://fc.de/aktuelles/news/fc-familie-waechst-auf-160-000-mitglieder",
+   "title": "President of 1. Fußball-Club Köln 01/07 e.V. (elected 27 September 2025)"
+  },
+  "chief_executive": {
+   "evidence": "Geschäftsführer: Philipp Türoff (Sprecher der Geschäftsführung)",
+   "name": "Philipp Türoff",
+   "source_url": "https://fc.de/impressum",
+   "title": "Managing director, spokesman of the management (Sprecher der Geschäftsführung)"
+  },
+  "honours": {
+   "competition": "German championship (1962, 1964, 1978)",
+   "evidence": "Im Jahr 1978 wurde der 1. FC Köln e. V. Deutscher Meister und Pokalsieger und feierte damit seinen bisher größten Erfolg. Deutscher Meister wurde er zudem in den Jahren 1962 und 1964.",
+   "league_titles": 3,
+   "source_url": "https://assets.ctfassets.net/nurz7nsnha04/2C3GEthBL4OURaaP2YIgze/94591648cbbd94b050a99392ff0302ef/Anleihe_2016-2024_WPP_mUmschlag_online.pdf"
+  },
+  "kit_supplier": {
+   "evidence": "Der 1. FC Köln und sein Ausstatter adidas feiern gemeinsam",
+   "name": "adidas",
+   "source_url": "https://fc.de/aktuelles/news/zum-150-geburtstag-fc-und-adidas-ehren-willi-ostermann-mit-sondertrikot"
+  },
+  "legal_entity": {
+   "evidence": "1. FC Köln GmbH & Co. KGaA Franz-Kremer-Allee 1-3 50937 Köln Telefon: +49 221 99 1948 0 E-Mail: service@fc.de Amtsgericht Köln, HRB 37030",
+   "name": "1. FC Köln GmbH & Co. KGaA",
+   "registry": "Handelsregister, Amtsgericht Köln",
+   "registry_id": "HRB 37030",
+   "source_url": "https://fc.de/impressum"
+  },
+  "shirt_sponsor": {
+   "evidence": "hat sein ursprünglich bis 2025 laufendes Engagement als Haupt- und Trikotpartner vorzeitig bis zum 30. Juni 2028 verlängert",
+   "name": "REWE Group",
+   "source_url": "https://fc.de/aktuelles/news/fc-und-rewe-group-verlaengern-partnerschaft-vorzeitig"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Kölner Sportstätten GmbH, a wholly owned subsidiary of the City of Cologne; 1. FC Köln is the main tenant under a 10-year lease that started on 1 July 2024.",
+   "evidence": "Als eine hundertprozentige Tochter der Stadt Köln ist die Kölner Sportstätten GmbH Eigentümerin von sechs Sportstätten",
+   "source_url": "https://www.koelnersportstaetten.de/wp-content/uploads/Koelner-Sportstaetten-GmbH-2024-Testatexemplar.pdf",
+   "value": "municipal"
+  }
+ },
+ "founded_evidence": "Am 13. Februar 1948 fusionierten die beiden Kölner Vereine Kölner Ballspiel-Club (KBC) von 1901 und die Spielvereinigung Sülz 07",
+ "founded_source_url": "https://assets.ctfassets.net/nurz7nsnha04/2C3GEthBL4OURaaP2YIgze/94591648cbbd94b050a99392ff0302ef/Anleihe_2016-2024_WPP_mUmschlag_online.pdf",
+ "founded_year": 1948,
+ "key": "bundesliga--1-fc-koln",
+ "league": "Bundesliga",
+ "name": "1. Fußball-Club Köln 01/07 e.V.",
+ "notes": "Revenue is the KGaA's preliminary 2024/25 figure (a 2. Bundesliga season; 2023/24 €159.0m); net result after tax €5.4m (2023/24 €11.8m), liabilities €32.2m and equity €29.4m at 30 June 2025 — the page gives no pre-tax result, wages, breakdown or net debt. The 2025/26 accounts are due at the members' meeting on 22 November 2026. Supervisory board chair of the KGaA: Lionel Souque (impressum). The 100% holding is stated in the 2016 bond prospectus; the club's 2025 page says it is free of investors. Earlier receivables sales (vorzeitiger Forderungsverkauf of sponsorship income) are mentioned on fc.de without amounts. No Forbes/Deloitte valuation, attendance or dated social counts found on citable pages.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Der 1. Fußball-Club Köln 01/07 e. V. ist alleiniger Kommanditaktionär und hält 100 % des Grundkapitals der Emittentin.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "1. Fußball-Club Köln 01/07 e.V. (members' association)",
+   "since_year": 2002,
+   "source_url": "https://assets.ctfassets.net/nurz7nsnha04/2C3GEthBL4OURaaP2YIgze/94591648cbbd94b050a99392ff0302ef/Anleihe_2016-2024_WPP_mUmschlag_online.pdf",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://fc.de/mitgliederversammlung-2025",
+ "ownership_summary": "The professional club is 1. FC Köln GmbH & Co. KGaA, spun out of the members' association in 2002; the association 1. Fußball-Club Köln 01/07 e.V. is its sole limited shareholder with 100% of the share capital and also owns 100% of the general partner, 1. FC Köln Verwaltungs GmbH (2016 bond prospectus). The club states it is free of investors; it had over 150,000 members in August 2025 and 160,000 in January 2026.",
+ "ownership_type": "member_owned",
+ "revenue": 150800000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Jahresumsatz: 150,8 Mio. EUR (Vorjahr: 159,0 Mio. EUR)",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "1. FC Köln GmbH & Co. KGaA results 2024/25 (members' meeting 27 Sep 2025, preliminary)",
+ "revenue_source_url": "https://fc.de/aktuelles/news/bilanz-2024-25-fc-meistert-zweitliga-jahr-sportlich-und-wirtschaftlich",
+ "short_name": "1. FC Köln",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://fc.de/aktuelles/news/bilanz-2024-25-fc-meistert-zweitliga-jahr-sportlich-und-wirtschaftlich",
+  "https://fc.de/aktuelles/news/naechster-schritt-zur-wirtschaftlichen-erholung",
+  "https://fc.de/mitgliederversammlung-2025",
+  "https://fc.de/aktuelles/news/so-lief-die-mitgliederversammlung-2025",
+  "https://fc.de/aktuelles/news/fc-familie-waechst-auf-160-000-mitglieder",
+  "https://fc.de/impressum",
+  "https://assets.ctfassets.net/nurz7nsnha04/2C3GEthBL4OURaaP2YIgze/94591648cbbd94b050a99392ff0302ef/Anleihe_2016-2024_WPP_mUmschlag_online.pdf",
+  "https://fc.de/service/rund-um-den-fc/dokumente-und-downloads",
+  "https://www.rheinenergiestadion.de/",
+  "https://www.koelnersportstaetten.de/wp-content/uploads/Koelner-Sportstaetten-GmbH-2024-Testatexemplar.pdf",
+  "https://fc.de/aktuelles/news/fc-und-rewe-group-verlaengern-partnerschaft-vorzeitig",
+  "https://fc.de/aktuelles/news/zum-150-geburtstag-fc-und-adidas-ehren-willi-ostermann-mit-sondertrikot",
+  "https://www.t-online.de/sport/fussball/bundesliga/id_89764382/nach-millionenverlust-1-fc-koeln-beantragt-landesbuergschaft.html"
+ ],
+ "sport": "football",
+ "stadium": "RheinEnergieSTADION",
+ "stadium_capacity": 49698,
+ "stadium_capacity_evidence": "Fußball (national): 49.698 Plätze",
+ "stadium_capacity_source_url": "https://www.rheinenergiestadion.de/",
+ "stadium_owner": {
+  "detail": "Owned by Kölner Sportstätten GmbH, a wholly owned subsidiary of the City of Cologne; 1. FC Köln is the main tenant under a 10-year lease that started on 1 July 2024.",
+  "evidence": "Als eine hundertprozentige Tochter der Stadt Köln ist die Kölner Sportstätten GmbH Eigentümerin von sechs Sportstätten",
+  "source_url": "https://www.koelnersportstaetten.de/wp-content/uploads/Koelner-Sportstaetten-GmbH-2024-Testatexemplar.pdf",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

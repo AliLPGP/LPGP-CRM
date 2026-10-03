@@ -1,0 +1,119 @@
+{
+ "city": "Carson",
+ "country": "United States",
+ "deals": [],
+ "domain": "lagalaxy.com",
+ "facts": {
+  "chief_executive": {
+   "evidence": "Tom Braun, President of Business Operations and Chief Operating Officer",
+   "name": "Tom Braun",
+   "source_url": "https://www.lagalaxy.com/club/staff",
+   "title": "President of Business Operations and Chief Operating Officer"
+  },
+  "honours": {
+   "competition": "MLS Cup",
+   "evidence": "capturing a record six MLS Cups (2002, 2005, 2011, 2012, 2014 and 2024)",
+   "league_titles": 6,
+   "source_url": "https://www.aegworldwide.com/divisions/sports/la-galaxy"
+  },
+  "kit_supplier": {
+   "evidence": "the VeloCITY Kit by adidas",
+   "name": "adidas",
+   "source_url": "https://www.mlssoccer.com/news/la-galaxy-unveil-the-velocity-kit"
+  },
+  "operating_result": {
+   "amount": 2000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "Revenue: $106 million | Operating Income: $2 million",
+   "season": "2025",
+   "source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026",
+   "source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/"
+  },
+  "shirt_sponsor": {
+   "evidence": "Herbalife Nutrition continue as the official nutrition partner, presenting partner and jersey partner of the LA Galaxy",
+   "name": "Herbalife",
+   "source_url": "https://www.lagalaxy.com/news/la-galaxy-and-herbalife-nutrition-continue-longest-running-jersey-sponsorship-in"
+  },
+  "stadium_owner": {
+   "detail": "Owned and operated by AEG, the Galaxy's owner; part of a $150 million privately financed 125-acre complex on the campus of California State University, Dominguez Hills (Carson)",
+   "evidence": "Dignity Health Sports Park is owned and operated by AEG.",
+   "source_url": "https://www.dignityhealthsportspark.com/careers",
+   "value": "club"
+  }
+ },
+ "founded_evidence": "the Galaxy were founded in June 1994 before playing their first-ever game in April 1996",
+ "founded_source_url": "https://www.lagalaxy.com/news/la-galaxy-and-herbalife-announce-record-10-year-extension",
+ "founded_year": 1994,
+ "key": "major-league-soccer--la-galaxy",
+ "league": "Major League Soccer",
+ "name": "LA Galaxy",
+ "notes": "Replaces the earlier record's Wikipedia capacity (27,000) and the si.com valuation. Forbes is cited through its Internet Archive snapshot because forbes.com article pages refuse automated fetches; the live Forbes team page (forbes.com/teams/la-galaxy/) shows the same $1.08B value, $106M revenue and $2M operating income, calculated May 2026, though its footnote labels them '2024-2025 season' while the MLS list's methodology says the estimates reflect the 2025 season (EBITDA basis, playoffs and MLS distributions excluded). Sportico's February 2026 valuation is $1.17B (+5%), as reported on mlssoccer.com. Capacity is stated differently by the operator: 25,174 in AEG's September 2025 boilerplate (used), 27,000 in the body of that same release and on AEG's site, 26,000 on the stadium's venue page, and 'slightly over 24,000' on the Galaxy's stadium FAQ. Since 2025 RBC / City National Bank is the jersey-sleeve partner (Herbalife on the front since 2007). No ownership transaction, minority investment, or debt or stadium financing since 2015 was found; the club and Forbes name no owner other than Anschutz/AEG (Sportico lists Anschutz Entertainment Group as principal owner), and The Anschutz Company ended its 2012-13 sale process for AEG in March 2013. Anschutz's 1998 purchase predates 2015, so it is recorded on the owner row rather than as a deal. Not found on a citable page: the registered legal entity, average attendance, and social-media follower counts (Instagram, Facebook and X profile pages could not be read).",
+ "owners": [
+  {
+   "amount": 26000000,
+   "currency": "USD",
+   "evidence": "has bought Major League Soccer’s Los Angeles Galaxy for $26 million",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Philip F. Anschutz (through Anschutz Entertainment Group, AEG, a wholly owned subsidiary of The Anschutz Company)",
+   "since_year": 1998,
+   "source_url": "https://www.latimes.com/archives/la-xpm-1998-oct-22-sp-35144-story.html",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.lagalaxy.com/club/staff",
+ "ownership_summary": "The Galaxy are owned by Philip F. Anschutz, who bought the club for $26 million in October 1998, and are held through Anschutz Entertainment Group (AEG), a wholly owned subsidiary of The Anschutz Company; AEG also owns and operates the club's stadium. No minority or institutional investor in the club is reported.",
+ "ownership_type": "individual_family",
+ "revenue": 106000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenue: $106 million | Operating Income: $2 million",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026",
+ "revenue_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "short_name": "LA Galaxy",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.latimes.com/archives/la-xpm-1998-oct-22-sp-35144-story.html",
+  "https://www.lagalaxy.com/club/staff",
+  "https://www.lagalaxy.com/club/partners",
+  "https://www.lagalaxy.com/club/faq/stadium",
+  "https://www.lagalaxy.com/news/la-galaxy-and-herbalife-announce-record-10-year-extension",
+  "https://www.lagalaxy.com/news/la-galaxy-and-herbalife-nutrition-continue-longest-running-jersey-sponsorship-in",
+  "https://www.lagalaxy.com/news/anschutz-company-retain-ownership-aeg",
+  "https://www.mlssoccer.com/news/la-galaxy-unveil-the-velocity-kit",
+  "https://www.aegworldwide.com/divisions/sports/la-galaxy",
+  "https://www.dignityhealthsportspark.com/careers",
+  "https://www.dignityhealthsportspark.com/about/about-us",
+  "https://www.dignityhealthsportspark.com/about/venues/soccer-stadium",
+  "https://www.dignityhealthsportspark.com/news/detail/aeg-names-adam-duvendeck-general-manager-of-dignity-health-sports-park",
+  "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+  "https://www.forbes.com/teams/la-galaxy/",
+  "https://www.mlssoccer.com/news/sportico-mls-team-values-continue-to-climb",
+  "https://www.sportico.com/feature/mls-soccer-team-value-ranking-1234689586/",
+  "https://d3data.sportico.com/MLSValuations2024/MLSValuations2026.csv"
+ ],
+ "sport": "football",
+ "stadium": "Dignity Health Sports Park",
+ "stadium_capacity": 25174,
+ "stadium_capacity_evidence": "includes a 25,174-seat stadium for soccer, football, and concerts",
+ "stadium_capacity_source_url": "https://www.dignityhealthsportspark.com/news/detail/aeg-names-adam-duvendeck-general-manager-of-dignity-health-sports-park",
+ "stadium_owner": {
+  "detail": "Owned and operated by AEG, the Galaxy's owner; part of a $150 million privately financed 125-acre complex on the campus of California State University, Dominguez Hills (Carson)",
+  "evidence": "Dignity Health Sports Park is owned and operated by AEG.",
+  "source_url": "https://www.dignityhealthsportspark.com/careers",
+  "value": "club"
+ },
+ "valuation": 1080000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "with the LA Galaxy ($1.08 billion)",
+ "valuation_source_name": "Forbes, The Most Valuable MLS Teams 2026",
+ "valuation_source_url": "https://web.archive.org/web/20261001230249/https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "valuation_year": 2026
+}

@@ -1,0 +1,281 @@
+{
+ "city": "Madrid",
+ "country": "Spain",
+ "deals": [
+  {
+   "amount": 575000000,
+   "currency": "EUR",
+   "date": "2019-04-12",
+   "date_text": "12 April 2019",
+   "evidence": "El Real Madrid ha cerrado el crédito para la remodelación del estadio Santiago Bernabéu por 575 millones de euros, a un plazo de 30 años y un interés fijo de 2,5%",
+   "headline": "EUR 575m, 30-year Bernabéu renovation loan at 2.5% fixed",
+   "investor": "Notes issued in the US via JPMorgan and Bank of America; Santander, Société Générale and CaixaBank also took part",
+   "investor_type": "institutional",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Cinco Días, 12 Apr 2019",
+   "source_url": "https://cincodias.elpais.com/cincodias/2019/04/12/mercados/1555092466_192764.html",
+   "stake_pct": null,
+   "summary": "The board closed EUR 575m of financing for the Bernabéu renovation: 30 years, 2.5% fixed, drawn in three tranches (July 2019/2020/2021), three years' grace, roughly EUR 29.5m a year from July 2023 to July 2049. It was a loan backed by a US notes issue placed by JPMorgan and Bank of America; secured by pledges on stadium revenues, not a mortgage.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 225000000,
+   "currency": "EUR",
+   "date": "2021-12-07",
+   "date_text": "7 December 2021 (drawn 31 May 2022)",
+   "evidence": "se ha estructurado a través de un préstamo pagadero a un plazo de 27 años y con un tipo de interés fijo del 1,53%",
+   "headline": "EUR 225m extension of the stadium loan, 27 years at 1.53% fixed",
+   "investor": "Lenders not named; structured by JP Morgan and Bank of America (Key Capital Partners adviser)",
+   "investor_type": "institutional",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Cinco Días, 8 Dec 2021",
+   "source_url": "https://cincodias.elpais.com/cincodias/2021/12/08/companias/1638969015_660604.html",
+   "stake_pct": null,
+   "summary": "After the November 2021 extraordinary assembly authorised it, Real Madrid signed a EUR 225m extension for works not in the original project (27 years, 1.53% fixed, repayments of about EUR 10.5m a year from July 2024 to July 2049).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 360000000,
+   "currency": "EUR",
+   "date": "2022-05-18",
+   "date_text": "Ratified by the board 18 May 2022, announced 19 May 2022",
+   "evidence": "Real Madrid will receive approximately €360m to be invested across any of the",
+   "headline": "Sixth Street and Legends pay about EUR 360m for a 20-year share of new Bernabéu businesses",
+   "investor": "Sixth Street (with Legends, majority-owned by Sixth Street)",
+   "investor_type": "private_credit",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Sixth Street press release",
+   "source_url": "https://sixthstreet.com/investment_announce/strategic-partnership-between-real-madrid-sixth-street-and-legends/",
+   "stake_pct": null,
+   "summary": "Real Madrid receives approximately EUR 360m; Sixth Street acquires the right to participate in the operation of certain new businesses of the Santiago Bernabéu for twenty years, and Legends helps run the venue. Press (Palco23, citing the FT) described it as 30% of the profits of those new businesses. No equity in the club changes hands.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 370000000,
+   "currency": "EUR",
+   "date": "2023-11-15",
+   "date_text": "15 November 2023 (authorised by the extraordinary assembly of 9 November 2023)",
+   "evidence": "370 millones de euros y un plazo de amortización de 30 años",
+   "headline": "Third Bernabéu loan, EUR 370m over 30 years; total stadium financing EUR 1,170m",
+   "investor": "Institutional investors via private debt placement (not named by the club)",
+   "investor_type": "institutional",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Real Madrid Informe Anual 2024-2025",
+   "source_url": "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf",
+   "stake_pct": null,
+   "summary": "Real Madrid signed a further EUR 370m loan for the works (30 years, 3-year grace, about EUR 26m a year from November 2027 to November 2053), taking stadium loans to EUR 1,170m at an average fixed rate of 3.2%. Cinco Días (citing Bloomberg) reported beforehand that the money would come from institutional investors through private placements.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "Reported 6 March 2026",
+   "evidence": "El fondo estadounidense Sixth Street ha forzado una revisión del acuerdo por 20 años firmado con el Real Madrid en 2022",
+   "headline": "Sixth Street forces a renegotiation of the 2022 Bernabéu agreement",
+   "investor": "Sixth Street",
+   "investor_type": "private_credit",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Vozpópuli, 6 Mar 2026",
+   "source_url": "https://www.vozpopuli.com/economia/empresas/sixth-street-fuerza-una-renegociacion-del-acuerdo-con-florentino-perez-por-el-bernabeu-.html",
+   "stake_pct": null,
+   "summary": "Vozpópuli reports that Sixth Street forced a revision of its 20-year Bernabéu deal: its participation is extended by almost a season to March 2043 and, per other sources, the total injection is cut by about EUR 30m; a EUR 32.5m payment tied to the stadium's official inauguration was never made.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "realmadrid.com",
+ "facts": {
+  "chair": {
+   "evidence": "being re-elected as president of Real Madrid until the year 2030",
+   "name": "Florentino Pérez",
+   "source_url": "https://www.realmadrid.com/en-US/news/club/latest-news/florentino-perez-07-06-2026",
+   "title": "President (re-elected June 2026 until 2030)"
+  },
+  "chief_executive": {
+   "evidence": "El director general del Real Madrid, José Ángel Sánchez",
+   "name": "José Ángel Sánchez",
+   "source_url": "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf",
+   "title": "Director general"
+  },
+  "honours": {
+   "competition": "La Liga (Spanish top flight); last title 2023-24",
+   "evidence": "Ligas 36",
+   "league_titles": 36,
+   "source_url": "https://www.realmadrid.com/es-ES/el-club/palmares/futbol"
+  },
+  "kit_supplier": {
+   "evidence": "El Real Madrid y adidas concluyeron la quinta temporada desde la renovación del contrato",
+   "name": "adidas",
+   "source_url": "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf"
+  },
+  "legal_entity": {
+   "evidence": "C.I.F. número G-28034718, está inscrita en el Registro de Entidades Deportivas de la Comunidad de Madrid, con el número 849",
+   "name": "Real Madrid Club de Fútbol",
+   "registry": "Registro de Entidades Deportivas de la Comunidad de Madrid (no. 849); id below is the CIF",
+   "registry_id": "G-28034718",
+   "source_url": "https://www.realmadrid.com/es-ES/legal/aviso-legal"
+  },
+  "net_debt": {
+   "amount": 9000000,
+   "as_of": "2026-06-30",
+   "currency": "EUR",
+   "evidence": "una deuda neta de 9 millones, excluido el proyecto del estadio",
+   "source_name": "Real Madrid CF 2025-26 results statement (net debt EXCLUDING the stadium redevelopment project; the stadium loan drawn was EUR 1,108.4m)",
+   "source_url": "https://www.realmadrid.com/es-ES/noticias/club/actualidad/el-real-madrid-cierra-la-temporada-2025-2026-con-los-mayores-ingresos-y-el-mayor-ebitda-de-su-historia-28-07-2026"
+  },
+  "operating_result": {
+   "amount": 287400000,
+   "basis": "EBITDA",
+   "currency": "EUR",
+   "evidence": "El resultado de explotación antes de amortizaciones (EBITDA) ha sido de 287,4 millones de euros",
+   "season": "2025-26",
+   "source_name": "Real Madrid CF 2025-26 results statement",
+   "source_url": "https://www.realmadrid.com/es-ES/noticias/club/actualidad/el-real-madrid-cierra-la-temporada-2025-2026-con-los-mayores-ingresos-y-el-mayor-ebitda-de-su-historia-28-07-2026"
+  },
+  "pretax_result": {
+   "amount": 31355000,
+   "currency": "EUR",
+   "evidence": "31.355",
+   "season": "2024-25",
+   "source_name": "Real Madrid Informe Anual 2024-2025, budget section: Resultado antes de Impuestos, Cierre 2024/25 (EUR thousand)",
+   "source_url": "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 319000000,
+   "commercial": 539000000,
+   "currency": "EUR",
+   "evidence": "Ingresos Estadio 175 363",
+   "matchday": 363000000,
+   "other": null,
+   "season": "2025-26",
+   "source_name": "Real Madrid CF 2025-26 results statement, table EVOLUCIÓN INGRESOS (Ingresos Estadio 363; Televisión y Competiciones Internacionales 319; Marketing 539; EUR m)",
+   "source_url": "https://www.realmadrid.com/es-ES/noticias/club/actualidad/el-real-madrid-cierra-la-temporada-2025-2026-con-los-mayores-ingresos-y-el-mayor-ebitda-de-su-historia-28-07-2026"
+  },
+  "shirt_sponsor": {
+   "evidence": "El Real Madrid y Emirates han renovado su alianza para que la mayor aerolínea internacional del mundo siga siendo patrocinador principal de nuestro club hasta 2031",
+   "name": "Emirates",
+   "source_url": "https://www.realmadrid.com/es-ES/noticias/club/patrocionadores/el-real-madrid-y-emirates-amplian-su-historica-alianza-hasta-2031-09-06-2026"
+  },
+  "wages": {
+   "amount": 514230000,
+   "currency": "EUR",
+   "evidence": "514.230",
+   "season": "2024-25",
+   "source_name": "Real Madrid Informe Anual 2024-2025, budget section: Gastos de Personal Deportivo y No Deportivo, Cierre 2024/25 (EUR thousand)",
+   "source_url": "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf"
+  }
+ },
+ "founded_evidence": "1902",
+ "founded_source_url": "https://www.laliga.com/clubes/real-madrid",
+ "founded_year": 1902,
+ "key": "la-liga--real-madrid-cf",
+ "league": "La Liga",
+ "name": "Real Madrid Club de Fútbol",
+ "notes": "Latest accounts: the 2025-26 accounts were formulated on 28 July 2026 and the club published a results statement (revenue EUR 1,221m / 1,221.3m, EBITDA EUR 287.4m, profit after tax EUR 26.3m, equity EUR 624.4m, cash EUR 82.8m, net debt excluding the stadium EUR 8.7m); the full 2025-26 report is not yet on the transparency page, so wages and pre-tax profit are 2024-25 figures from the Informe Anual 2024-2025 (EUR thousand: personnel 514,230; pre-tax 31,355; after tax 24,322). Stadium: the loans total EUR 1,170m (575 + 225 + 370), EUR 1,108.4m drawn at 30 June 2026; stadium-project net debt was EUR 1,312m at 30 June 2025. Cumulative renovation investment EUR 1,407.7m. Capacity after the renovation not found on an official page (Crónica Global says 'poco más de 83.000 asientos'), so left null; the stadium's legal owner is not stated on any page read, so stadium_owner is null. The proposed minority-stake sale (5%, reported up to 10%, in a new subsidiary) is a plan, not a transaction, so it is not in deals. Social total is CIES Football Observatory Weekly Post 548 (27 May 2026; Facebook, Instagram, TikTok, YouTube, X official accounts, May 2026), the world's highest; the per-platform counts are from the club's 2024-25 annual report (end of that season), which also gives 'más de 650 millones' across 14 platforms. Forbes 2026 also lists 36 domestic league titles, revenue $1.3B (EUR 1.2B) and operating income $245M (EUR 225M) for 2024-25, debt/value 16%. Replaced the earlier record's Wikipedia capacity (83,186) and Goal.com Deloitte revenue (EUR 1,161m) with the club's own figures.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "El Real Madrid es un club propiedad de sus socios.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Real Madrid members (socios)",
+   "since_year": null,
+   "source_url": "https://www.realmadrid.com/es-ES/noticias/club/actualidad/el-real-madrid-cierra-la-temporada-2025-2026-con-los-mayores-ingresos-y-el-mayor-ebitda-de-su-historia-28-07-2026",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.realmadrid.com/es-ES/noticias/club/actualidad/florentino-perez-societario-23-11-2025",
+ "ownership_summary": "Real Madrid Club de Fútbol is a members' association, not a company. Its socios own it (98,272 members at 30 June 2025) and elect the president; Florentino Pérez was re-elected in June 2026 until 2030. The club says it takes no outside equity. In November 2025 Pérez proposed moving the football business into a subsidiary the members would always control, which could admit one or more long-term investors for a minority stake (he cited 5%; later press reports say up to 10%), subject to an extraordinary assembly and a members' referendum. As of the latest reports read (June 2026) no investor had been named and no vote held. Sixth Street (with Legends) holds a 20-year right, agreed in 2022 for about EUR 360m, to share in certain new Bernabéu businesses; that is not equity in the club.",
+ "ownership_type": "member_owned",
+ "revenue": 1221000000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Los ingresos de explotación, sin contar traspasos de jugadores, han alcanzado los 1.221 millones de euros",
+ "revenue_season": "2025-26",
+ "revenue_source_name": "Real Madrid CF, 2025-26 results statement (accounts formulated by the board on 28 July 2026; operating revenue before player disposals)",
+ "revenue_source_url": "https://www.realmadrid.com/es-ES/noticias/club/actualidad/el-real-madrid-cierra-la-temporada-2025-2026-con-los-mayores-ingresos-y-el-mayor-ebitda-de-su-historia-28-07-2026",
+ "short_name": "Real Madrid",
+ "social_as_of": "2026-05",
+ "social_evidence": "Real Madrid (488 million followers)",
+ "social_followers": 488000000,
+ "social_platforms": [
+  {
+   "as_of": "2025-06",
+   "evidence": "somos líderes acumulando 203, 169, 93 y 65 millones de seguidores respectivamente",
+   "followers": 203000000,
+   "platform": "Instagram",
+   "source_url": "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf"
+  },
+  {
+   "as_of": "2025-06",
+   "evidence": "somos líderes acumulando 203, 169, 93 y 65 millones de seguidores respectivamente",
+   "followers": 169000000,
+   "platform": "Facebook",
+   "source_url": "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf"
+  },
+  {
+   "as_of": "2025-06",
+   "evidence": "somos líderes acumulando 203, 169, 93 y 65 millones de seguidores respectivamente",
+   "followers": 93000000,
+   "platform": "X",
+   "source_url": "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf"
+  },
+  {
+   "as_of": "2025-06",
+   "evidence": "somos líderes acumulando 203, 169, 93 y 65 millones de seguidores respectivamente",
+   "followers": 65000000,
+   "platform": "TikTok",
+   "source_url": "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf"
+  }
+ ],
+ "social_source_url": "https://football-observatory.com/IMG/sites/b5wp/2025/wp548/en/",
+ "sources": [
+  "https://www.realmadrid.com/es-ES/noticias/club/actualidad/el-real-madrid-cierra-la-temporada-2025-2026-con-los-mayores-ingresos-y-el-mayor-ebitda-de-su-historia-28-07-2026",
+  "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/core-content/assemblies/pages/generic-pages/el-club/transparencia/01-documentos-transparencia/Informe%20Anual%202025.pdf",
+  "https://www.realmadrid.com/es-ES/noticias/club/actualidad/florentino-perez-societario-23-11-2025",
+  "https://www.realmadrid.com/en-US/news/club/latest-news/florentino-perez-07-06-2026",
+  "https://www.forbes.com/teams/real-madrid/",
+  "https://sixthstreet.com/investment_announce/strategic-partnership-between-real-madrid-sixth-street-and-legends/",
+  "https://www.realmadrid.com/es-ES/el-club/transparencia",
+  "https://www.realmadrid.com/es-ES/legal/aviso-legal",
+  "https://www.realmadrid.com/es-ES/el-club/palmares/futbol",
+  "https://www.realmadrid.com/es-ES/noticias/club/patrocionadores/el-real-madrid-y-emirates-amplian-su-historica-alianza-hasta-2031-09-06-2026",
+  "https://www.laliga.com/clubes/real-madrid",
+  "https://cincodias.elpais.com/cincodias/2019/04/12/mercados/1555092466_192764.html",
+  "https://cincodias.elpais.com/cincodias/2021/12/08/companias/1638969015_660604.html",
+  "https://cincodias.elpais.com/companias/2023-10-26/el-real-madrid-pide-mas-prestamos-para-financiar-su-estadio.html",
+  "https://palco23.mundodeportivo.com/clubes/real-madrid-cierra-un-acuerdo-de-360-millones-para-desarrollar-eventos-en-el-santiago-bernabeu",
+  "https://www.vozpopuli.com/economia/empresas/sixth-street-fuerza-una-renegociacion-del-acuerdo-con-florentino-perez-por-el-bernabeu-.html",
+  "https://football-observatory.com/IMG/sites/b5wp/2025/wp548/en/",
+  "https://football-observatory.com/WeeklyPost548"
+ ],
+ "sport": "football",
+ "stadium": "Santiago Bernabéu",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": null,
+ "valuation": 9500000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$9.5B (€8.2B) Calculated May 2026",
+ "valuation_source_name": "Forbes, The World's Most Valuable Soccer Teams 2026 (enterprise value, calculated May 2026; #1)",
+ "valuation_source_url": "https://www.forbes.com/teams/real-madrid/",
+ "valuation_year": 2026
+}

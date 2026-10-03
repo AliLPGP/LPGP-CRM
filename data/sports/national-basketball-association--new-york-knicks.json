@@ -1,0 +1,181 @@
+{
+ "city": "New York",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 425000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": "2025",
+   "evidence": "the outstanding balance under the Knicks Revolving Credit Facility was $242 million",
+   "headline": "New York Knicks, LLC amends and restates $425M senior secured revolver",
+   "investor": "Syndicate of lenders (Knicks Revolving Credit Facility)",
+   "investor_type": "institutional",
+   "kind": "debt_financing",
+   "seller": null,
+   "source_name": "Madison Square Garden Sports Form 10-K (fiscal 2026)",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+   "stake_pct": null,
+   "summary": "In 2025 New York Knicks, LLC amended and restated its credit agreement for a $425M senior secured revolving credit facility expiring November 2030; $242M was drawn at 30 June 2026.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2026-09-30",
+   "date_text": "Board approval September 2026; completion expected 26 October 2026",
+   "evidence": "The board of Madison Square Garden Sports has approved the tax-free spinoff of the New York Rangers business from its New York Knicks business.",
+   "headline": "MSG Sports approves spinoff of the Rangers, leaving a Knicks-only listed company (MSGK)",
+   "investor": null,
+   "investor_type": null,
+   "kind": "other",
+   "seller": null,
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/finance/2026/msg-spinoff-new-york-knicks-rangers-1234946324/",
+   "stake_pct": null,
+   "summary": "MSGS's board approved the tax-free spinoff of the Rangers business; the Knicks company (with the Westchester Knicks) is to trade on the NYSE as MSGK. Sportico put MSG Sports' enterprise value at $11bn.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "nba.com/knicks",
+ "facts": {
+  "chair": {
+   "evidence": "Our Executive Chairman and Chief Executive Officer, James L. Dolan",
+   "name": "James L. Dolan",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+   "title": "Executive Chairman and Chief Executive Officer, Madison Square Garden Sports"
+  },
+  "chief_executive": {
+   "evidence": "Our Executive Chairman and Chief Executive Officer, James L. Dolan",
+   "name": "James L. Dolan",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+   "title": "Executive Chairman and Chief Executive Officer, Madison Square Garden Sports"
+  },
+  "honours": {
+   "competition": "NBA championship",
+   "evidence": "won three NBA Championships, including the 2026 NBA Championship",
+   "league_titles": 3,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm"
+  },
+  "legal_entity": {
+   "evidence": "New York Knicks, LLC and New York Rangers, LLC, each a wholly-owned subsidiary of the Company",
+   "name": "New York Knicks, LLC",
+   "registry": "SEC (subsidiary of Madison Square Garden Sports Corp., CIK 1636519)",
+   "registry_id": "1636519",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm"
+  },
+  "operating_result": {
+   "amount": 98000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$98M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/new-york-knicks/"
+  },
+  "revenue_breakdown": {
+   "broadcast": null,
+   "commercial": null,
+   "currency": "USD",
+   "evidence": "$193M",
+   "matchday": 193000000,
+   "other": null,
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): gate receipts incl. club seats",
+   "source_url": "https://www.forbes.com/teams/new-york-knicks/"
+  },
+  "stadium_owner": {
+   "detail": "The Garden is owned by Madison Square Garden Entertainment (a separately listed, Dolan-controlled company); the Knicks play under an Arena License Agreement with MSG Entertainment running 35 years to June 2055.",
+   "evidence": "The Arena License Agreements have a term of 35 years and expire in June 2055.",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+   "value": "private_third_party"
+  },
+  "wages": {
+   "amount": 190000000,
+   "currency": "USD",
+   "evidence": "$190M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate): player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/new-york-knicks/"
+  }
+ },
+ "founded_evidence": "\"YEARFOUNDED\":1946",
+ "founded_source_url": "https://www.nba.com/team/1610612752/knicks",
+ "founded_year": 1946,
+ "key": "national-basketball-association--new-york-knicks",
+ "league": "National Basketball Association",
+ "name": "New York Knicks",
+ "notes": "Listed parent: MSGS's fiscal-2026 10-K (year to 30 June 2026) reports Knicks and Rangers together (revenue $1,153,822k, operating income $28,868k, net income $7,759k), so no Knicks-only figure from accounts; club revenue/operating income/player costs/gate are Forbes 2024-25 estimates. Sportico's 2025 valuation is $9.85bn (and Knicks revenue $620M) vs Forbes $9.75bn. Forbes' page still shows 2 championships; NBA.com and the 10-K show 3 (1970, 1973, 2026). Capacity: Forbes 19,812, NBA.com 19,763. After the Rangers spinoff (expected 26 Oct 2026) the parent becomes the Knicks-only listed company (MSGK) — re-check name, ownership and accounts then. Front Office Sports lists the Knicks among teams with no private-equity connection; no institutional stake found. Attendance, jersey patch, kit supplier and social counts not found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "New York Knicks, LLC and New York Rangers, LLC, each a wholly-owned subsidiary of the Company",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "company",
+   "name": "Madison Square Garden Sports Corp. (NYSE: MSGS)",
+   "since_year": null,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "approximately 70.8% of the total voting power of all our outstanding common stock",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Dolan Family Group (controlling shareholders of MSGS)",
+   "since_year": null,
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+ "ownership_summary": "The Knicks (New York Knicks, LLC) are wholly owned by Madison Square Garden Sports Corp. (NYSE: MSGS), which is controlled by the Dolan family: as of 30 June 2026 the Dolan Family Group owned all Class B stock and about 3.0% of Class A, about 70.8% of voting power. MSGS's board approved spinning off the Rangers, expected 26 October 2026; MSG Sports is then renamed and trades as the Knicks company under MSGK, with James Dolan as chairman and CEO. Forbes records the purchase as 1997 for $300M (Cablevision era).",
+ "ownership_type": "public_listed",
+ "revenue": 532000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$532M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA Team Valuations 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/new-york-knicks/",
+ "short_name": "Knicks",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/new-york-knicks/",
+  "https://www.nba.com/team/1610612752/knicks",
+  "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+  "https://www.sportico.com/business/finance/2026/msg-spinoff-new-york-knicks-rangers-1234946324/",
+  "https://www.sportico.com/business/finance/2026/knicks-rangers-msg-sports-split-explainer-1234901440/",
+  "https://www.sportico.com/valuations/teams/2025/nba-team-values-2025-warriors-lakers-knicks-1234873773/"
+ ],
+ "sport": "basketball",
+ "stadium": "Madison Square Garden",
+ "stadium_capacity": 19812,
+ "stadium_capacity_evidence": "19,812",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/new-york-knicks/",
+ "stadium_owner": {
+  "detail": "The Garden is owned by Madison Square Garden Entertainment (a separately listed, Dolan-controlled company); the Knicks play under an Arena License Agreement with MSG Entertainment running 35 years to June 2055.",
+  "evidence": "The Arena License Agreements have a term of 35 years and expire in June 2055.",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/msgs-20260630.htm",
+  "value": "private_third_party"
+ },
+ "valuation": 9750000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$9.75B",
+ "valuation_source_name": "Forbes, NBA Team Valuations (calculated October 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/new-york-knicks/",
+ "valuation_year": 2025
+}

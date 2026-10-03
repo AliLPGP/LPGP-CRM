@@ -1,0 +1,184 @@
+{
+ "city": "Toulouse",
+ "country": "France",
+ "deals": [
+  {
+   "amount": 10691712,
+   "currency": "EUR",
+   "date": "2020-07-20",
+   "date_text": "July 2020 (officially announced Monday 20 July 2020)",
+   "evidence": "Toulouse Loisirs a cédé 113 762 actions de la société Toulouse Football Club à la société FootballCo B.V pour 10 691 712",
+   "headline": "RedBird Capital Partners buys 85% of Toulouse FC from Olivier Sadran",
+   "investor": "RedBird Capital Partners (via FootballCo B.V.)",
+   "investor_type": "private_equity",
+   "kind": "acquisition",
+   "seller": "Toulouse Loisirs (Olivier Sadran's holding company)",
+   "source_name": "LesViolets.Com (from Toulouse Loisirs' filed accounts); announcement date per La Tribune",
+   "source_url": "https://www.lesviolets.com/actu/info-lesvioletscom-voici-pour-quel-prix-olivier-sadran-a-vendu-le-tfc-a-redbird,64877.html",
+   "stake_pct": 85,
+   "summary": "After the club's relegation to Ligue 2, RedBird Capital Partners bought 85% of Toulouse FC from Olivier Sadran's holding company Toulouse Loisirs through the Dutch vehicle FootballCo B.V.; Sadran kept the rest (14.84% per the holding's accounts) and his board seat, and Damien Comolli became president. No price was announced; LesViolets.Com later read in Toulouse Loisirs' filed accounts that 113,762 TFC shares were sold for EUR 10,691,712.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "toulousefc.com",
+ "facts": {
+  "chair": {
+   "evidence": "Neil Chugani, qui a assuré la présidence par intérim durant cette transition, devient Président du Conseil",
+   "name": "Neil Chugani",
+   "source_url": "https://www.toulousefc.com/play/blog/2025/07/communique-du-mardi-8-juillet-2025",
+   "title": "Président du Conseil d'Administration (chair of the board, RedBird)"
+  },
+  "chief_executive": {
+   "evidence": "Olivier Cloarec au poste de Président",
+   "name": "Olivier Cloarec",
+   "source_url": "https://www.toulousefc.com/play/blog/2025/07/communique-du-mardi-8-juillet-2025",
+   "title": "Président (executive president, since 15 July 2025)"
+  },
+  "kit_supplier": {
+   "evidence": "Si la collaboration avec Nike nous a habitués à des tuniques assez originales",
+   "name": "Nike",
+   "source_url": "https://www.degaine.so/le-toulouse-fc-acte-le-retour-des-rayures-sur-son-maillot-domicile-2026-2027/"
+  },
+  "legal_entity": {
+   "evidence": "Numéro SIRET : 438 958 993 00018",
+   "name": "Toulouse Football Club (TFC), SAS",
+   "registry": "Registre du commerce et des sociétés (RCS), France",
+   "registry_id": "438 958 993",
+   "source_url": "https://www.toulousefc.com/mentions-legales"
+  },
+  "operating_result": {
+   "amount": -31337000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "DES OPÉRATIONS HORS MUTATION -31 337",
+   "season": "2024-25",
+   "source_name": "DNCG (LFP), Comptes individuels des clubs, saison 2024/2025 (résultat des opérations hors mutation: operating result before player-trading gains, after player amortisation)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "pretax_result": {
+   "amount": 2148000,
+   "currency": "EUR",
+   "evidence": "AVANT IMPÔT 2 148",
+   "season": "2024-25",
+   "source_name": "DNCG (LFP), Comptes individuels des clubs, saison 2024/2025 (résultat avant impôt)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 12872000,
+   "commercial": 8245000,
+   "currency": "EUR",
+   "evidence": "Droits audiovisuels 12 872 Sponsors - Publicité 8 245 Recettes matches 8 034 Autres produits 6 900",
+   "matchday": 8034000,
+   "other": 6900000,
+   "season": "2024-25",
+   "source_name": "DNCG (LFP), Comptes individuels des clubs, saison 2024/2025",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "la marque sera présente sur la face avant des maillots des équipes professionnelles masculine et féminine",
+   "name": "Casadora (Groupe Ramos), front of shirt from 2026-27",
+   "source_url": "https://www.toulousefc.com/play/blog/2026/06/le-toulouse-fc-accueille-casadora-comme-partenaire-majeur"
+  },
+  "stadium_owner": {
+   "detail": "Owned by Toulouse Métropole; the club plays there as tenant.",
+   "evidence": "faut-il agrandir le Stadium dont la métropole est propriétaire",
+   "source_url": "https://france3-regions.franceinfo.fr/occitanie/haute-garonne/toulouse/exclu-des-jo-2024-et-des-matchs-de-l-equipe-de-france-pour-cause-de-dimensions-insuffisantes-ce-stade-pourrait-bientot-etre-agrandi-3247201.html",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 32372000,
+   "currency": "EUR",
+   "evidence": "Rémunération du personnel chargée 32 372",
+   "season": "2024-25",
+   "source_name": "DNCG (LFP), Comptes individuels des clubs, saison 2024/2025 (rémunération du personnel chargée)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  }
+ },
+ "founded_evidence": "année de création en 1937",
+ "founded_source_url": "https://www.toulousefc.com/region/histoire",
+ "founded_year": 1937,
+ "key": "ligue-1--toulouse-fc",
+ "league": "Ligue 1",
+ "name": "Toulouse Football Club",
+ "notes": "Every earlier source (footballgroundmap.com) was replaced. The old record's capacity of 35,472 is not used. The capacity is now France 3's round figure of 33,000, and La Dépêche also writes 33,000; no exact official seat count was found on the club, Métropole or LFP pages. Revenue, the revenue split, wages, operating result and pre-tax result come from the DNCG's club-by-club accounts for 2024/25, the season to 30 June 2025. They cover the SAS plus the association, in thousands of euros, and revenue excludes player trading. On Toulouse's DNCG page, operating charges include player amortisation (EUR 10.706m) and agents' fees (EUR 1.378m). Its result from player trading was +EUR 34.304m and net result +EUR 2.252m. At 30 June 2025 the balance sheet showed shareholder current accounts of EUR 5.0m, financial debt of EUR 2.4m and cash of EUR 4.667m. No net-debt figure is stated, so net_debt is null. The valuation is Sportune's own revenue-multiple estimate, not a transaction price. Stakes: La Tribune (20 July 2020) and Sportico give 85% for RedBird and 15% kept by Sadran. LesViolets.Com, from Toulouse Loisirs' accounts, gives 14.84% for Toulouse Loisirs and the EUR 10,691,712 price. LesViolets is a specialist club news site, not a primary filing. The French registry still lists Toulouse Loisirs and the Association Toulouse Football Club as board members, Olivier Cloarec as president of the SAS and Neil Chugani as board chair. No later change of stake was found. La Dépêche (2 July 2025) quotes Chugani: the club is not for sale. The club dates its history to 1937, the creation of the original TFC; its history page also mentions the 1967 merger with Red Star, and the founding year of the present entity is not stated there. Honours: the club's history page lists Coupe de France wins in 1957 and 2023 and second-tier titles (1953, 1982, 2022), with no top-flight title, so the honours field is left null. No 2025-26 average attendance was found on a club or league page. La Dépêche quotes about 25,000 per match without a date basis, so attendance is null. No social follower counts with a date were found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "RedBird acquiert 85% des parts du club auprès de son propriétaire Olivier Sadran",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "fund",
+   "name": "RedBird Capital Partners (via FootballCo B.V.)",
+   "since_year": 2020,
+   "source_url": "https://www.latribune.fr/entreprises/business/2020-07-20/olivier-sadran-n-est-plus-le-president-du-toulouse-football-club-853136.html",
+   "stake_pct": 85,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "pour ne garder que 15% du capital",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Olivier Sadran (via Toulouse Loisirs)",
+   "since_year": 2001,
+   "source_url": "https://www.latribune.fr/entreprises/business/2020-07-20/olivier-sadran-n-est-plus-le-president-du-toulouse-football-club-853136.html",
+   "stake_pct": 15,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.latribune.fr/entreprises/business/2020-07-20/olivier-sadran-n-est-plus-le-president-du-toulouse-football-club-853136.html",
+ "ownership_summary": "Controlled by RedBird Capital Partners, the US private equity firm founded by Gerry Cardinale. It bought 85% from Olivier Sadran in July 2020 through the Dutch vehicle FootballCo B.V. Sadran keeps about 15% through his holding company Toulouse Loisirs and sits on the board. RedBird looked at selling in 2024-25 (an aborted deal with Otro Capital in January 2024, then talks with an Emirati fund in 2025), but no sale was completed. In July 2025 it said the club was not for sale.",
+ "ownership_type": "private_equity",
+ "revenue": 36051000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL PRODUITS HORS MUTATION 36 051",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "DNCG (LFP), Comptes individuels des clubs, saison 2024/2025 (total produits hors mutation, SAS + Association)",
+ "revenue_source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf",
+ "short_name": "Toulouse FC",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.toulousefc.com/region/histoire",
+  "https://www.toulousefc.com/mentions-legales",
+  "https://www.toulousefc.com/play/blog/2025/07/communique-du-mardi-8-juillet-2025",
+  "https://www.toulousefc.com/play/blog/2026/06/le-toulouse-fc-accueille-casadora-comme-partenaire-majeur",
+  "https://www.toulousefc.com/region",
+  "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf",
+  "https://sportune.20minutes.fr/combien-valent-les-clubs-de-la-ligue-1-400903/2",
+  "https://www.latribune.fr/entreprises/business/2020-07-20/olivier-sadran-n-est-plus-le-president-du-toulouse-football-club-853136.html",
+  "https://www.lesviolets.com/actu/info-lesvioletscom-voici-pour-quel-prix-olivier-sadran-a-vendu-le-tfc-a-redbird,64877.html",
+  "https://www.sportico.com/leagues/soccer/2020/toulouse-fc-sold-redbird-capital-1234609375/",
+  "https://www.ladepeche.fr/2025/07/02/tfc-le-club-nest-pas-a-vendre-reaffirme-neil-chugani-president-interimaire-qui-compte-rester-implique-une-fois-son-successeur-trouve-12801388.php",
+  "https://www.ladepeche.fr/2026/07/02/agrandissement-du-stadium-de-toulouse-pourquoi-le-projet-prend-leau-13443425.php",
+  "https://www.ladepeche.fr/2025/07/08/nouveau-president-du-tfc-lagrandissement-et-la-gestion-du-stadium-le-prochain-grand-projet-dolivier-cloarec-et-de-redbird-12813698.php",
+  "https://france3-regions.franceinfo.fr/occitanie/haute-garonne/toulouse/exclu-des-jo-2024-et-des-matchs-de-l-equipe-de-france-pour-cause-de-dimensions-insuffisantes-ce-stade-pourrait-bientot-etre-agrandi-3247201.html",
+  "https://www.degaine.so/le-toulouse-fc-acte-le-retour-des-rayures-sur-son-maillot-domicile-2026-2027/",
+  "https://recherche-entreprises.api.gouv.fr/search?q=438958993"
+ ],
+ "sport": "football",
+ "stadium": "Stadium de Toulouse",
+ "stadium_capacity": 33000,
+ "stadium_capacity_evidence": "Sa jauge est à 33 000 spectateurs",
+ "stadium_capacity_source_url": "https://france3-regions.franceinfo.fr/occitanie/haute-garonne/toulouse/exclu-des-jo-2024-et-des-matchs-de-l-equipe-de-france-pour-cause-de-dimensions-insuffisantes-ce-stade-pourrait-bientot-etre-agrandi-3247201.html",
+ "stadium_owner": {
+  "detail": "Owned by Toulouse Métropole; the club plays there as tenant.",
+  "evidence": "faut-il agrandir le Stadium dont la métropole est propriétaire",
+  "source_url": "https://france3-regions.franceinfo.fr/occitanie/haute-garonne/toulouse/exclu-des-jo-2024-et-des-matchs-de-l-equipe-de-france-pour-cause-de-dimensions-insuffisantes-ce-stade-pourrait-bientot-etre-agrandi-3247201.html",
+  "value": "municipal"
+ },
+ "valuation": 68000000,
+ "valuation_currency": "EUR",
+ "valuation_evidence": "11. Toulouse = 68 millions",
+ "valuation_source_name": "Sportune (estimate, revenue-multiple method, May 2026)",
+ "valuation_source_url": "https://sportune.20minutes.fr/combien-valent-les-clubs-de-la-ligue-1-400903/2",
+ "valuation_year": 2026
+}

@@ -1,0 +1,163 @@
+{
+ "city": "Washington, D.C.",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2023-06-22",
+   "date_text": "June 2023",
+   "evidence": "buying a roughly 5% stake in the parent company of the NBA’s Washington Wizards",
+   "headline": "Qatar Investment Authority buys about 5% of Monumental Sports & Entertainment",
+   "investor": "Qatar Investment Authority",
+   "investor_type": "sovereign_wealth",
+   "kind": "minority_investment",
+   "seller": null,
+   "source_name": "NBC Washington (AP)",
+   "source_url": "https://www.nbcwashington.com/news/sports/qatar-sovereign-wealth-fund-buying-stake-in-dcs-nba-nhl-and-wnba-teams/3371975/",
+   "stake_pct": 5,
+   "summary": "QIA agreed to buy roughly 5% of the parent of the Wizards, Capitals and Mystics as part of a $4.05 billion deal (AP, citing a person with knowledge).",
+   "valuation": 4050000000,
+   "valuation_currency": "USD",
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2025-12-17",
+   "date_text": "December 2025",
+   "evidence": "Monumental Sports & Entertainment (\"MSE\"), one of the nation's leading integrated sports, media, and entertainment companies, today announced Arctos Partners",
+   "headline": "Arctos joins Monumental as minority investor; QIA increases stake",
+   "investor": "Arctos Partners; Qatar Investment Authority",
+   "investor_type": "private_equity",
+   "kind": "minority_investment",
+   "seller": "Laurene Powell Jobs",
+   "source_name": "Monumental Sports & Entertainment",
+   "source_url": "https://monumentalsports.com/2025/12/monumental-sports-entertainment-announces-minority-investor-updates-to-accelerate-growth-and-innovation/",
+   "stake_pct": null,
+   "summary": "MSE announced Arctos as its newest minority investor and an increased QIA stake; The Athletic reported they were buying Laurene Powell Jobs' minority share, split undisclosed.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "nba.com/wizards",
+ "facts": {
+  "chair": {
+   "evidence": "said Ted Leonsis, Founder, Chairman, Managing Partner, and CEO of MSE",
+   "name": "Ted Leonsis",
+   "source_url": "https://monumentalsports.com/2025/12/monumental-sports-entertainment-announces-minority-investor-updates-to-accelerate-growth-and-innovation/",
+   "title": "Founder, Chairman, Managing Partner and CEO, Monumental Sports & Entertainment"
+  },
+  "chief_executive": {
+   "evidence": "said Ted Leonsis, Founder, Chairman, Managing Partner, and CEO of MSE",
+   "name": "Ted Leonsis",
+   "source_url": "https://monumentalsports.com/2025/12/monumental-sports-entertainment-announces-minority-investor-updates-to-accelerate-growth-and-innovation/",
+   "title": "CEO, Monumental Sports & Entertainment"
+  },
+  "honours": {
+   "competition": "NBA championship",
+   "evidence": "Championships 1",
+   "league_titles": 1,
+   "source_url": "https://www.forbes.com/teams/washington-wizards/"
+  },
+  "operating_result": {
+   "amount": 135000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "Earnings before interest, taxes, depreciation and amortization. $135M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/teams/washington-wizards/"
+  },
+  "wages": {
+   "amount": 164000000,
+   "currency": "USD",
+   "evidence": "Player Expenses 5 Includes benefits and bonuses. $164M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), player expenses",
+   "source_url": "https://www.forbes.com/teams/washington-wizards/"
+  }
+ },
+ "founded_evidence": null,
+ "founded_source_url": null,
+ "founded_year": null,
+ "key": "national-basketball-association--washington-wizards",
+ "league": "National Basketball Association",
+ "name": "Washington Wizards",
+ "notes": "Revenue, operating income, player expenses and valuation are Forbes estimates (Oct 2025 list, 2024-25 season). Stakes after the Dec 2025 deal undisclosed; Powell Jobs' exit per The Athletic (via Yahoo). MSE site blocks curl (Cloudflare) so its evidence may not re-fetch. Not found: founded year on a citable page (franchise began 1961 as Chicago Packers - unverified here), arena ownership, legal entity, socials, attendance, sponsors/kit. Research stopped early: web search budget exhausted and DuckDuckGo throttled.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "been majority owner of the Wizards since 2010",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Ted Leonsis",
+   "since_year": 2010,
+   "source_url": "https://www.nbcwashington.com/news/sports/qatar-sovereign-wealth-fund-buying-stake-in-dcs-nba-nhl-and-wnba-teams/3371975/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Qatar's sovereign wealth fund is buying a roughly 5% stake in the parent company",
+   "institutional": true,
+   "investor_type": "sovereign_wealth",
+   "kind": "state",
+   "name": "Qatar Investment Authority",
+   "since_year": 2023,
+   "source_url": "https://www.nbcwashington.com/news/sports/qatar-sovereign-wealth-fund-buying-stake-in-dcs-nba-nhl-and-wnba-teams/3371975/",
+   "stake_pct": null,
+   "valuation_at_entry": 4050000000
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "announced Arctos Partners (\"Arctos\"), as the organization's newest minority investor",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "fund",
+   "name": "Arctos Partners",
+   "since_year": 2025,
+   "source_url": "https://monumentalsports.com/2025/12/monumental-sports-entertainment-announces-minority-investor-updates-to-accelerate-growth-and-innovation/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://monumentalsports.com/2025/12/monumental-sports-entertainment-announces-minority-investor-updates-to-accelerate-growth-and-innovation/",
+ "ownership_summary": "Owned by Monumental Sports & Entertainment (MSE), led by founder, chairman, managing partner and CEO Ted Leonsis, majority owner of the Wizards since 2010. Qatar Investment Authority bought roughly 5% of MSE in 2023 at a $4.05bn valuation and increased its stake in December 2025, when Arctos Partners also joined as a minority investor, buying out Laurene Powell Jobs.",
+ "ownership_type": "consortium",
+ "revenue": 389000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenue and operating income are for 2024-25 season and net of revenue sharing and arena debt service.",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate)",
+ "revenue_source_url": "https://www.forbes.com/teams/washington-wizards/",
+ "short_name": "Wizards",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/washington-wizards/",
+  "https://monumentalsports.com/2025/12/monumental-sports-entertainment-announces-minority-investor-updates-to-accelerate-growth-and-innovation/",
+  "https://www.nbcwashington.com/news/sports/qatar-sovereign-wealth-fund-buying-stake-in-dcs-nba-nhl-and-wnba-teams/3371975/",
+  "https://sports.yahoo.com/articles/qatari-fund-private-equity-firm-204605826.html"
+ ],
+ "sport": "basketball",
+ "stadium": "Capital One Arena",
+ "stadium_capacity": 20333,
+ "stadium_capacity_evidence": "Seating Capacity 20,333",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/washington-wizards/",
+ "stadium_owner": null,
+ "valuation": 4700000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$4.7B Calculated October 2025",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/washington-wizards/",
+ "valuation_year": 2025
+}

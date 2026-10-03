@@ -1,0 +1,127 @@
+{
+ "city": "Winnipeg",
+ "country": "Canada",
+ "deals": [],
+ "domain": "winnipegjets.com",
+ "facts": {
+  "chair": {
+   "evidence": "Executive Chairman & Governor",
+   "name": "Mark Chipman",
+   "source_url": "https://www.tnse.com/our-company/our-people/",
+   "title": "Executive Chairman & Governor"
+  },
+  "chief_executive": {
+   "evidence": "President & Chief Operating Officer",
+   "name": "John Olfert",
+   "source_url": "https://www.tnse.com/our-company/our-people/",
+   "title": "President & Chief Operating Officer"
+  },
+  "legal_entity": {
+   "evidence": "The Winnipeg Jets Hockey Club, in conjunction with the National Hockey League",
+   "name": "Winnipeg Jets Hockey Club (True North Sports + Entertainment)",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.tnse.com/news/jets-and-nhl-announce-consolidation-of-winnipeg-jets-history/"
+  },
+  "operating_result": {
+   "amount": 26000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$26M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - EBITDA, net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/winnipeg-jets/"
+  },
+  "stadium_owner": {
+   "detail": "Built and run by the Jets' owner True North Sports + Entertainment (opened November 16, 2004 as MTS Centre); True North's history describes it as its own development, with private partners and three levels of government supporting construction.",
+   "evidence": "With the support of private partners and three levels of government, True North announces its plan to develop and build a new 15,000-seat arena on Portage Avenue.",
+   "source_url": "https://www.tnse.com/our-company/history/",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 103000000,
+   "currency": "USD",
+   "evidence": "$103M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/winnipeg-jets/"
+  }
+ },
+ "founded_evidence": "joining the 17 seasons the original Jets spent in the city after entering the NHL in 1979",
+ "founded_source_url": "https://www.tnse.com/news/jets-and-nhl-announce-consolidation-of-winnipeg-jets-history/",
+ "founded_year": 1979,
+ "key": "national-hockey-league--winnipeg-jets",
+ "league": "National Hockey League",
+ "name": "Winnipeg Jets Hockey Club",
+ "notes": "Revenue, operating income (EBITDA) and player expenses are Forbes estimates for 2024-25 (USD, net of revenue sharing and arena debt service); valuation is Forbes enterprise value calculated December 2025 (Forbes: owner True North Sports + Entertainment, purchased 2011 for $170M, shown on the page as '$170M'). Founded: since the Sept 24, 2026 consolidation the Jets' official history includes the original Jets (entered the NHL in 1979) and the Atlanta Thrashers (1999-2011); the current franchise relocated to Winnipeg in 2011 (first game Oct 9, 2011). NHL records now give firstSeasonId 19791980. Chipman's and Thomson's percentages are not stated on any citable page read. The 2011 Thrashers purchase predates the 2015 deal window and has no deal row. Arena capacity: True North's 2001-era plan was a '15,000-seat arena' and a 2006 AHL game drew a 'capacity crowd of 15,015'; the current hockey capacity was not found on canadalifecentre.ca, so stadium_capacity is null. Missing: capacity, stakes, social, attendance, sponsors, honours (none).",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Led by owners Mark Chipman and David Thomson, True North purchases and relocates the NHL’s Atlanta Thrashers franchise to Winnipeg.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Mark Chipman (The Megill-Stephenson Company Limited)",
+   "since_year": 2011,
+   "source_url": "https://www.tnse.com/our-company/history/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Led by owners Mark Chipman and David Thomson, True North purchases and relocates the NHL’s Atlanta Thrashers franchise to Winnipeg.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "David Thomson (Osmington Inc.)",
+   "since_year": 2011,
+   "source_url": "https://www.tnse.com/our-company/history/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.tnse.com/our-company/history/",
+ "ownership_summary": "Owned by True North Sports + Entertainment, led by owners Mark Chipman (Executive Chairman & Governor; The Megill-Stephenson Company Limited) and David Thomson (Osmington Inc.), which bought the Atlanta Thrashers in 2011 and moved them to Winnipeg. Their respective stakes are not published; no institutional fund holds a stake.",
+ "ownership_type": "individual_family",
+ "revenue": 187000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$187M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NHL team valuations, calculated December 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/winnipeg-jets/",
+ "short_name": "Winnipeg Jets",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/winnipeg-jets/",
+  "https://www.tnse.com/our-company/history/",
+  "https://www.tnse.com/our-company/our-people/",
+  "https://www.tnse.com/our-company/board-of-directors/",
+  "https://www.tnse.com/news/jets-and-nhl-announce-consolidation-of-winnipeg-jets-history/",
+  "https://www.tnse.com/our-portfolio/",
+  "https://www.nhl.com/jets/team/hockey-operations/",
+  "https://records.nhl.com/site/api/franchise"
+ ],
+ "sport": "ice_hockey",
+ "stadium": "Canada Life Centre",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": null,
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "Built and run by the Jets' owner True North Sports + Entertainment (opened November 16, 2004 as MTS Centre); True North's history describes it as its own development, with private partners and three levels of government supporting construction.",
+  "evidence": "With the support of private partners and three levels of government, True North announces its plan to develop and build a new 15,000-seat arena on Portage Avenue.",
+  "source_url": "https://www.tnse.com/our-company/history/",
+  "value": "club"
+ },
+ "valuation": 1350000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1.35B",
+ "valuation_source_name": "Forbes (enterprise value, calculated December 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/winnipeg-jets/",
+ "valuation_year": 2025
+}

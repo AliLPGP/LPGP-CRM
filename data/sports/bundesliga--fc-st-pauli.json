@@ -1,0 +1,161 @@
+{
+ "city": "Hamburg",
+ "country": "Germany",
+ "deals": [
+  {
+   "amount": 29178800,
+   "currency": "EUR",
+   "date": "2025-05-08",
+   "date_text": "Subscription mid-November 2024 to end of March 2025; result announced 8 May 2025",
+   "evidence": "Dieses Ziel hat die FCSP eG mit 29.178.800 Euro nahezu erreicht.",
+   "headline": "St. Pauli fan cooperative raises EUR 29.18m from 22,623 members to buy the majority of the Millerntor-Stadion",
+   "investor": "Football Cooperative St. Pauli von 2024 eG (22,623 members)",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "FC St. Pauli",
+   "source_url": "https://www.fcstpauli.com/news/fcsp-genossenschaft-nimmt-fast-29-2-millionen-euro-ein",
+   "stake_pct": null,
+   "summary": "The club's cooperative (Football Cooperative St. Pauli von 2024 eG), set up in spring 2024 as an alternative to outside investors, sold 34,328 shares (EUR 850 each) to 22,623 members for EUR 29,178,800, against a EUR 20m minimum needed to take the majority of the stadium operating company and a ~EUR 30m target.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2025-11-06",
+   "date_text": "6 November 2025",
+   "evidence": "Am Donnerstag (6.11.) wurde der Mehrheitserwerb an der Millerntor Stadion Betriebsgesellschaft (MSB) notariell beurkundet.",
+   "headline": "Fan cooperative becomes majority owner of the Millerntor-Stadion",
+   "investor": "Football Cooperative St. Pauli von 2024 eG",
+   "investor_type": "other",
+   "kind": "acquisition",
+   "seller": null,
+   "source_name": "FC St. Pauli",
+   "source_url": "https://www.fcstpauli.com/news/fcsp-genossenschaft-uebernimmt-offiziell-das-millerntor-stadion",
+   "stake_pct": null,
+   "summary": "The majority acquisition of Millerntor Stadion Betriebsgesellschaft (MSB) by the cooperative was notarised on 6 Nov 2025; the club says the money lets it fund investments such as expanding the training centre at Kollaustraße. The exact percentage and price were not stated on the page.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "fcstpauli.com",
+ "facts": {
+  "chair": {
+   "evidence": "Oke Göttlich (Präsident)",
+   "name": "Oke Göttlich",
+   "source_url": "https://www.fcstpauli.com/imprint",
+   "title": "President (Präsident), Fußball-Club St. Pauli v. 1910 e.V."
+  },
+  "kit_supplier": {
+   "evidence": "PUMA und der FC St. Pauli präsentieren die Trikots für die Saison 2026/27",
+   "name": "PUMA",
+   "source_url": "https://www.fcstpauli.com/news/puma-und-der-fc-st-pauli-praesentieren-die-trikots-fuer-die-saison-2026-27"
+  },
+  "legal_entity": {
+   "evidence": "AG Hamburg VR 1884",
+   "name": "Fußball-Club St. Pauli v. 1910 e.V.",
+   "registry": "Vereinsregister, Amtsgericht Hamburg",
+   "registry_id": "VR 1884",
+   "source_url": "https://www.fcstpauli.com/imprint"
+  },
+  "shirt_sponsor": {
+   "evidence": "Damit bleibt der Mobilfunkanbieter bis mindestens Ende der Saison 2027/28 Hauptsponsor bei den Kiezkickern.",
+   "name": "congstar",
+   "source_url": "https://www.fcstpauli.com/news/der-fc-st-pauli-und-hauptsponsor-congstar-verlangern-ihre-zusammenarbeit"
+  },
+  "stadium_owner": {
+   "detail": "Since 6 Nov 2025 the majority of the stadium operating company (Millerntor Stadion Betriebsgesellschaft, MSB) belongs to the club's fan cooperative, Football Cooperative St. Pauli von 2024 eG (about 22,000 member-investors); the holder of the remaining minority is not stated on the pages read.",
+   "evidence": "Die Football Cooperative St. Pauli eG ist ab sofort Mehrheitseigentümerin des Millerntor-Stadions.",
+   "source_url": "https://www.fcstpauli.com/news/fcsp-genossenschaft-uebernimmt-offiziell-das-millerntor-stadion",
+   "value": "shared"
+  }
+ },
+ "founded_evidence": "Erst 1910 traten die Kicker des Klubs dem Norddeutschen Fußball-Verband bei",
+ "founded_source_url": "https://www.fcstpauli.com/verein/organisation/historie/vereinshistorie",
+ "founded_year": 1910,
+ "key": "bundesliga--fc-st-pauli",
+ "league": "2. Bundesliga",
+ "name": "Fußball-Club St. Pauli v. 1910 e.V.",
+ "notes": "LEAGUE CHANGE: St. Pauli finished 18th (last) in the 2025/26 Bundesliga (final table on fcbayern.com's 2025/26 champions page) and its 2026/27 fixtures on fcstpauli.com are against 2. Bundesliga sides (Magdeburg, Darmstadt, Karlsruhe, Nürnberg, Hannover), so league is set to 2. Bundesliga; the key is unchanged. Founding: the official name carries 1910 (the year the football section joined the North German FA); the club's history page says the footballers split from the Hamburg-St. Pauli Turnverein and founded FC St. Pauli as a separate club in 1924. Revenue is the group's 'Umsatzerlöse und sonstige betriebliche Erträge' for 2024/25 (prior year EUR 80,032,723); group net profit (Jahresüberschuss) EUR 2,089,704 - after tax, so pretax_result is null; no wage, EBITDA or net-debt figure was published in that release. The cooperative's percentage of the stadium company and the purchase price are not stated on the pages read; the EUR 29.18m is the capital the cooperative raised. Management (Geschäftsleitung) is Andreas Bornemann (sport) and Patrick Mushatsi-Kareba (marketing/sales, merchandise & digital, since 2026); there is no CEO, so chief_executive is null. The 2011 EUR 8m fan bond was repaid at maturity on 30 June 2018 (pre-2015 issue, not listed as a deal). No valuation, attendance or social-follower figure with a citable page was found. The earlier record had no sourced fields.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Im Gegensatz zu unserem e.V. kann die FCSP eG daher Eigenkapital durch die Ausgabe von Genossenschaftsanteilen einwerben.",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Fußball-Club St. Pauli v. 1910 e.V. (members)",
+   "since_year": null,
+   "source_url": "https://fcspeg.com/1-eine-andere-finanzierung-ist-moeglich/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Am Donnerstag (6.11.) wurde der Mehrheitserwerb an der Millerntor Stadion Betriebsgesellschaft (MSB) notariell beurkundet.",
+   "institutional": false,
+   "investor_type": "other",
+   "kind": "members",
+   "name": "Football Cooperative St. Pauli von 2024 eG (majority of the Millerntor stadium company only, not of the club)",
+   "since_year": 2025,
+   "source_url": "https://www.fcstpauli.com/news/fcsp-genossenschaft-uebernimmt-offiziell-das-millerntor-stadion",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.fcstpauli.com/imprint",
+ "ownership_summary": "FC St. Pauli has not spun off its professional team: the club is the registered members' association Fußball-Club St. Pauli v. 1910 e.V., with marketing run through FC St. Pauli Vermarktungs GmbH & Co. KG. There is no outside investor in the club. Since November 2025 its fan cooperative (Football Cooperative St. Pauli von 2024 eG, which raised EUR 29.18m from 22,623 members) holds the majority of the Millerntor stadium company.",
+ "ownership_type": "member_owned",
+ "revenue": 102381443,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "Die Umsatzerlöse und sonstigen betrieblichen Erträge stiegen im abgeschlossenen Geschäftsjahr auf 102.381.443 Euro",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "FC St. Pauli, Bilanz Geschäftsjahr 2024/25 (group, published 15 Nov 2025)",
+ "revenue_source_url": "https://www.fcstpauli.com/news/bilanz-geschaeftsjahr-2425",
+ "short_name": "FC St. Pauli",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.fcstpauli.com/",
+  "https://www.fcstpauli.com/millerntor",
+  "https://www.fcstpauli.com/imprint",
+  "https://www.fcstpauli.com/verein/organisation/gremien/geschaeftsleitung",
+  "https://www.fcstpauli.com/verein/organisation/historie/vereinshistorie",
+  "https://www.fcstpauli.com/news/bilanz-geschaeftsjahr-2425",
+  "https://www.fcstpauli.com/news/fcsp-genossenschaft-uebernimmt-offiziell-das-millerntor-stadion",
+  "https://www.fcstpauli.com/news/fcsp-genossenschaft-nimmt-fast-29-2-millionen-euro-ein",
+  "https://www.fcstpauli.com/news/fcsp-genossenschaft-knackt-20-millionen-euro-grenze",
+  "https://www.fcstpauli.com/news/der-fc-st-pauli-und-hauptsponsor-congstar-verlangern-ihre-zusammenarbeit",
+  "https://www.fcstpauli.com/news/puma-und-der-fc-st-pauli-praesentieren-die-trikots-fuer-die-saison-2026-27",
+  "https://www.fcstpauli.com/news/ausfuhrliche-informationen-zur-ruckfuhrung-der-fc-st-pauli-anleihe",
+  "https://fcspeg.com/",
+  "https://fcspeg.com/1-eine-andere-finanzierung-ist-moeglich/",
+  "https://fcspeg.com/18-zweite-generalversammlung-fcspeg-weiter-auf-kurs/",
+  "https://web.archive.org/web/20260607194157/https://fcbayern.com/en/club/honours/german-championship/2025-2026-season"
+ ],
+ "sport": "football",
+ "stadium": "Millerntor-Stadion",
+ "stadium_capacity": 29546,
+ "stadium_capacity_evidence": "Seitdem fasst das Millerntor-Stadion 29.546 Zuschauer*innen.",
+ "stadium_capacity_source_url": "https://www.fcstpauli.com/millerntor",
+ "stadium_owner": {
+  "detail": "Since 6 Nov 2025 the majority of the stadium operating company (Millerntor Stadion Betriebsgesellschaft, MSB) belongs to the club's fan cooperative, Football Cooperative St. Pauli von 2024 eG (about 22,000 member-investors); the holder of the remaining minority is not stated on the pages read.",
+  "evidence": "Die Football Cooperative St. Pauli eG ist ab sofort Mehrheitseigentümerin des Millerntor-Stadions.",
+  "source_url": "https://www.fcstpauli.com/news/fcsp-genossenschaft-uebernimmt-offiziell-das-millerntor-stadion",
+  "value": "shared"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

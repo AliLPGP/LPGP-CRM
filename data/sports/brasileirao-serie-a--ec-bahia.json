@@ -1,0 +1,236 @@
+{
+ "city": "Salvador",
+ "country": "Brazil",
+ "deals": [
+  {
+   "amount": 321190000,
+   "currency": "BRL",
+   "date": "2023-05-03",
+   "date_text": "May 2023",
+   "evidence": "o City Football Group (CFG) adquiriu 90% da Sociedade Anônima de Futebol (SAF) do Bahia",
+   "headline": "City Football Group completes purchase of 90% of Bahia SAF",
+   "investor": "City Football Group",
+   "investor_type": "corporate",
+   "kind": "acquisition",
+   "seller": "Esporte Clube Bahia (Associação)",
+   "source_name": "City Football Group",
+   "source_url": "https://www.cityfootballgroup.com/post/bahia-becomes-13th-club-in-cfg-family",
+   "stake_pct": 90,
+   "summary": "CFG took 90% of the newly formed Esporte Clube Bahia S.A.F.; the association keeps 10%. CFG Brazil subscribed R$321.19m of capital, R$190m paid on signing and the rest payable within three years. Press reported the deal as worth about $200m (FOS, citing The Athletic). Members approved it with 99% on 3 Dec 2022.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 906718000,
+   "currency": "BRL",
+   "date": null,
+   "date_text": "2025 (communicated October 2025)",
+   "evidence": "no montante total de R$ 906.718",
+   "headline": "CFG converts R$906.7m of intercompany funding into an advance for future capital increase (AFAC)",
+   "investor": "City Football Group Brazil",
+   "investor_type": "corporate",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Esporte Clube Bahia S.A.F. demonstrações financeiras 2025 (auditadas, RSM), nota 1.3 / 16.2",
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf",
+   "stake_pct": null,
+   "summary": "During 2025 the controlling shareholder's intercompany funding of R$906.718m was reclassified as AFAC in equity, to be capitalised; R$131.19m of it pays up capital already subscribed, the rest awaits a shareholder resolution.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "esporteclubebahia.com.br",
+ "facts": {
+  "chief_executive": {
+   "evidence": "Chief Executive Officer Raul Aguirre",
+   "name": "Raul Aguirre",
+   "source_url": "https://www.cityfootballgroup.com/clubs/bahia",
+   "title": "CEO"
+  },
+  "honours": {
+   "competition": "Campeonato Brasileiro",
+   "evidence": "Campeonato Brasileiro 2 1959, 1988",
+   "league_titles": 2,
+   "source_url": "https://www.esporteclubebahia.com.br/titulos/"
+  },
+  "kit_supplier": {
+   "evidence": "Outro marco relevante de 2025 foi a formalização da parceria com a Puma",
+   "name": "Puma",
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Bahia-SAF-Relatorio-Anual-da-Sociedade-2025.pdf"
+  },
+  "legal_entity": {
+   "evidence": "49.723.699/0001-07, com sede no município de Camaçari",
+   "name": "Esporte Clube Bahia S.A.F.",
+   "registry": "CNPJ (Receita Federal, Brazil)",
+   "registry_id": "49.723.699/0001-07",
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf"
+  },
+  "operating_result": {
+   "amount": -152812000,
+   "basis": "operating profit",
+   "currency": "BRL",
+   "evidence": "Resultado antes do resultado financeiro (152.812)",
+   "season": "2025",
+   "source_name": "Esporte Clube Bahia S.A.F. demonstrações financeiras 2025 (auditadas, RSM)",
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf"
+  },
+  "pretax_result": {
+   "amount": -154624000,
+   "currency": "BRL",
+   "evidence": "Prejuízo do exercício (154.624)",
+   "season": "2025",
+   "source_name": "Esporte Clube Bahia S.A.F. demonstrações financeiras 2025 (auditadas, RSM) (no income tax line; loss for the year)",
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 185757000,
+   "commercial": 85628000,
+   "currency": "BRL",
+   "evidence": "Transmissão de imagem e de luvas (a) 185.757 112.788",
+   "matchday": 116810000,
+   "other": null,
+   "season": "2025",
+   "source_name": "Esporte Clube Bahia S.A.F. demonstrações financeiras 2025 (auditadas, RSM), nota 17 (receita bruta, before deductions)",
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf"
+  },
+  "stadium_owner": {
+   "detail": "State of Bahia stadium run under a public-private partnership by the concessionaire Fonte Nova Negócios e Participações S.A.; the contract, signed in 2010, runs to March 2028. Bahia plays there under a contract with the arena.",
+   "evidence": "A operação da Arena Fonte Nova acontece por meio de uma Parceria Público-Privada com o Governo do Estado da Bahia.",
+   "source_url": "https://www.bahianoticias.com.br/esportes/noticia/78157-relatorio-detalha-operacao-receitas-custos-e-contrato-da-arena-fonte-nova-em-2025-prejuizo-chega-a-rdollar-158-milhoes",
+   "value": "state"
+  },
+  "wages": {
+   "amount": 295606000,
+   "currency": "BRL",
+   "evidence": "Pessoal / encargos / benefícios (a) 295.606 269.217",
+   "season": "2025",
+   "source_name": "Esporte Clube Bahia S.A.F. demonstrações financeiras 2025 (auditadas, RSM), nota 18 (pessoal/encargos/benefícios in cost of activities; excludes R$15.969m G&A personnel)",
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf"
+  }
+ },
+ "founded_evidence": "Bahia, a historic Brazilian Serie A team established in 1931",
+ "founded_source_url": "https://www.cityfootballgroup.com/clubs/bahia",
+ "founded_year": 1931,
+ "key": "brasileirao-serie-a--ec-bahia",
+ "league": "Brasileirão Série A",
+ "name": "Esporte Clube Bahia S.A.F.",
+ "notes": "Accounts are calendar-year (2025) for Esporte Clube Bahia S.A.F., figures in R$ thousands in the PDF (converted to full units only by ×1000). Revenue is net revenue (receita líquida); gross revenue was R$393.338m; player-trading income (R$168.944m) sits in other operating income, not revenue. Stadium is branded 'Casa de Apostas Arena Fonte Nova'. Shirt sponsor not recorded: Viva Sorte Bet left the shirt in January 2026 and Esportiva Bet signed a three-month master deal in April 2026 (Máquina do Esporte); current sponsor unconfirmed. Attendance: the annual report says only 'média superior a 38 mil pagantes por partida' (no exact figure). Social counts are the annual report's approximate year-end-2025 figures. CFG's own owners (Newton/Sheikh Mansour majority, Silver Lake ~17%) hold Bahia only indirectly; no look-through stake is stated. The Libra–Mubadala Capital exclusivity (20% of league commercial rights) was not found as a closed transaction and is not recorded. Betting sponsors: a provisional measure (MP) announced 25 Sep 2026 bans betting operators and their advertising in Brazil from 6 Oct 2026 (Máquina/MKT Esportivo, 2 Oct 2026), so a betting-house shirt sponsor may not survive the season.",
+ "owners": [
+  {
+   "amount": 321190000,
+   "currency": "BRL",
+   "evidence": "City Football Group Brazil 321.190 (131.190) 190.000 254.799.000 90,0%",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "City Football Group (City Football Group Brazil)",
+   "since_year": 2023,
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf",
+   "stake_pct": 90,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Esporte Clube Bahia (Associação) 28.311 (1.585) 26.726 28.311.000 10,0%",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "members",
+   "name": "Esporte Clube Bahia (Associação)",
+   "since_year": 2023,
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf",
+   "stake_pct": 10,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "CFG is majority owned by Newton Investment and Development LLC, fully owned by His Highness Sheikh Mansour bin Zayed Al Nahyan",
+   "institutional": true,
+   "investor_type": "family_office",
+   "kind": "company",
+   "name": "Newton Investment and Development LLC (Sheikh Mansour bin Zayed Al Nahyan) — indirect, as majority owner of City Football Group",
+   "since_year": null,
+   "source_url": "https://www.cityfootballgroup.com/company/ownership",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "with a significant minority shareholding of nearly 17% held by US-based global technology investment firm, Silver Lake",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "fund",
+   "name": "Silver Lake — indirect, as minority shareholder of City Football Group",
+   "since_year": 2019,
+   "source_url": "https://www.cityfootballgroup.com/company/ownership",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf",
+ "ownership_summary": "City Football Group, through City Football Group Brazil, holds 90% of Esporte Clube Bahia S.A.F. since the SAF deal closed in May 2023; the members' association Esporte Clube Bahia keeps the other 10%. CFG itself is majority owned by Sheikh Mansour bin Zayed Al Nahyan's Newton Investment and Development LLC, with Silver Lake holding nearly 17%.",
+ "ownership_type": "corporate",
+ "revenue": 367570000,
+ "revenue_currency": "BRL",
+ "revenue_evidence": "Receita líquida das atividades 17 367.570",
+ "revenue_season": "2025",
+ "revenue_source_name": "Esporte Clube Bahia S.A.F. demonstrações financeiras 2025 (auditadas, RSM)",
+ "revenue_source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf",
+ "short_name": "Bahia",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [
+  {
+   "as_of": "2025-12",
+   "evidence": "aproximadamente 600 mil seguidores no TikTok e 2 milhões de seguidores no Instagram",
+   "followers": 2000000,
+   "platform": "Instagram",
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Bahia-SAF-Relatorio-Anual-da-Sociedade-2025.pdf"
+  },
+  {
+   "as_of": "2025-12",
+   "evidence": "aproximadamente 600 mil seguidores no TikTok e 2 milhões de seguidores no Instagram",
+   "followers": 600000,
+   "platform": "TikTok",
+   "source_url": "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Bahia-SAF-Relatorio-Anual-da-Sociedade-2025.pdf"
+  }
+ ],
+ "social_source_url": null,
+ "sources": [
+  "https://www.cityfootballgroup.com/clubs/bahia",
+  "https://www.cityfootballgroup.com/post/bahia-becomes-13th-club-in-cfg-family",
+  "https://www.cityfootballgroup.com/company/ownership",
+  "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Esporte-Clube-Bahia-SAF-Demonstracoes-Financeiras-e-Relatorio-dos-Auditores-Independentes.pdf",
+  "https://esporteclubebahia.com.br/wp-content/uploads/2026/04/Bahia-SAF-Relatorio-Anual-da-Sociedade-2025.pdf",
+  "https://www.cnnbrasil.com.br/esportes/futebol/flamengo-lidera-lista-de-clubes-mais-valiosos-do-brasil-veja-ranking/",
+  "https://frontofficesports.com/city-football-group-completes-200-million-takeover-of-brazilian-club-bahia/",
+  "https://www.bahianoticias.com.br/esportes/noticia/78157-relatorio-detalha-operacao-receitas-custos-e-contrato-da-arena-fonte-nova-em-2025-prejuizo-chega-a-rdollar-158-milhoes",
+  "https://www.esporteclubebahia.com.br/diretoria/",
+  "https://www.esporteclubebahia.com.br/titulos/",
+  "https://www.esporteclubebahia.com.br/governanca/",
+  "https://www.mktesportivo.com/2026/10/corinthians-avalia-patrocinios-pontuais-para-o-master-nas-10-rodadas-finais-do-brasileirao/",
+  "https://maquinadoesporte.com.br/futebol/bahia-anuncia-acordo-de-patrocinio-master-com-esportiva-bet-por-3-meses/"
+ ],
+ "sport": "football",
+ "stadium": "Arena Fonte Nova",
+ "stadium_capacity": 48902,
+ "stadium_capacity_evidence": "The team plays at the 48,902-capacity Arena Fonte Nova stadium",
+ "stadium_capacity_source_url": "https://www.cityfootballgroup.com/clubs/bahia",
+ "stadium_owner": {
+  "detail": "State of Bahia stadium run under a public-private partnership by the concessionaire Fonte Nova Negócios e Participações S.A.; the contract, signed in 2010, runs to March 2028. Bahia plays there under a contract with the arena.",
+  "evidence": "A operação da Arena Fonte Nova acontece por meio de uma Parceria Público-Privada com o Governo do Estado da Bahia.",
+  "source_url": "https://www.bahianoticias.com.br/esportes/noticia/78157-relatorio-detalha-operacao-receitas-custos-e-contrato-da-arena-fonte-nova-em-2025-prejuizo-chega-a-rdollar-158-milhoes",
+  "value": "state"
+ },
+ "valuation": 1783000000,
+ "valuation_currency": "BRL",
+ "valuation_evidence": "Bahia SAF – 1.783",
+ "valuation_source_name": "Sports Value (via CNN Brasil, 9 Dec 2025)",
+ "valuation_source_url": "https://www.cnnbrasil.com.br/esportes/futebol/flamengo-lidera-lista-de-clubes-mais-valiosos-do-brasil-veja-ranking/",
+ "valuation_year": 2025
+}

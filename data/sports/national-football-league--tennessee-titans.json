@@ -1,0 +1,150 @@
+{
+ "city": "Nashville, Tennessee",
+ "country": "United States",
+ "deals": [],
+ "domain": "tennesseetitans.com",
+ "facts": {
+  "chair": {
+   "evidence": "Controlling Owner/Co-Chairman, Board of Directors",
+   "name": "Amy Adams Strunk",
+   "source_url": "https://www.tennesseetitans.com/team/front-office-roster/",
+   "title": "Controlling Owner / Co-Chairman, Board of Directors"
+  },
+  "chief_executive": {
+   "evidence": "President and Chief Executive Officer",
+   "name": "Burke Nihill",
+   "source_url": "https://www.tennesseetitans.com/team/front-office-roster/",
+   "title": "President and Chief Executive Officer"
+  },
+  "honours": {
+   "competition": "AFL championships (1960, 1961, as the Houston Oilers); no Super Bowl",
+   "evidence": "The AFL championships Houston won in its first two years of play remain the only league titles the Oilers have claimed",
+   "league_titles": 2,
+   "source_url": "https://www.profootballhof.com/teams/tennessee-titans/team-history/"
+  },
+  "operating_result": {
+   "amount": 85000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "Revenue: $607 million | Operating Income: $85 million",
+   "season": "2025",
+   "source_name": "Forbes (estimate), The NFL's Most Valuable Teams 2026",
+   "source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Metropolitan Government of Nashville; a new enclosed Nissan Stadium is under construction, part-funded by PSL fees",
+   "evidence": "Venue Nissan Stadium Owner(s) City of Nashville",
+   "source_url": "https://www.forbes.com/teams/tennessee-titans/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 354000000,
+   "currency": "USD",
+   "evidence": "Player Expenses 5 Includes benefits and bonuses. $354M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), team profile: player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/tennessee-titans/"
+  }
+ },
+ "founded_evidence": "Founded as the Houston Oilers in 1960, the team moved to Tennessee in 1997",
+ "founded_source_url": "https://www.tennesseetitans.com/history",
+ "founded_year": 1960,
+ "key": "national-football-league--tennessee-titans",
+ "league": "National Football League",
+ "name": "Tennessee Titans",
+ "notes": "Revenue, operating income, player expenses and value are Forbes estimates for the 2025 season (list of 9 Sep 2026, via Wayback). Forbes: Debt/Value 11% (includes stadium debt), no amount. A new enclosed Nissan Stadium is being built; the project site says PSL fees fund part of construction but states no total cost or public bond figure on the pages read, so no stadium_financing deal is recorded. Ownership split among Bud Adams' heirs not stated; Susan Lewis is listed under Ownership without a family label. No ownership transaction or institutional stake since 2015 found. Legal entity, attendance and social counts not found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Controlling Owner/Co-Chairman, Board of Directors",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Amy Adams Strunk",
+   "since_year": null,
+   "source_url": "https://www.tennesseetitans.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Board of Directors Co-Chairman",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Kenneth S. Adams, IV",
+   "since_year": null,
+   "source_url": "https://www.tennesseetitans.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Barclay Adams",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Barclay Adams",
+   "since_year": null,
+   "source_url": "https://www.tennesseetitans.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Susan Lewis",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Susan Lewis",
+   "since_year": null,
+   "source_url": "https://www.tennesseetitans.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.tennesseetitans.com/team/front-office-roster/",
+ "ownership_summary": "Owned by the Adams family, heirs of founder K. S. \"Bud\" Adams Jr. (Forbes: franchise acquired 1959 for $25,000); Amy Adams Strunk is controlling owner and co-chair of the board, with Kenneth S. Adams IV co-chair and Barclay Adams and Susan Lewis on the ownership list. No stake split or institutional investor is stated on a citable page.",
+ "ownership_type": "individual_family",
+ "revenue": 607000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenue: $607 million | Operating Income: $85 million | Owner: Amy Adams Strunk",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The NFL's Most Valuable Teams 2026",
+ "revenue_source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+ "short_name": "Titans",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+  "https://www.forbes.com/teams/tennessee-titans/",
+  "https://www.tennesseetitans.com/history",
+  "https://www.tennesseetitans.com/team/front-office-roster/",
+  "https://www.profootballhof.com/teams/tennessee-titans/team-history/",
+  "https://newnissanstadium.com/faq/"
+ ],
+ "sport": "american_football",
+ "stadium": "Nissan Stadium",
+ "stadium_capacity": 69143,
+ "stadium_capacity_evidence": "Seating Capacity 69,143",
+ "stadium_capacity_source_url": "https://www.forbes.com/teams/tennessee-titans/",
+ "stadium_owner": {
+  "detail": "Owned by the Metropolitan Government of Nashville; a new enclosed Nissan Stadium is under construction, part-funded by PSL fees",
+  "evidence": "Venue Nissan Stadium Owner(s) City of Nashville",
+  "source_url": "https://www.forbes.com/teams/tennessee-titans/",
+  "value": "municipal"
+ },
+ "valuation": 8500000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$8.5 billion Tennessee Titans One-Year Change",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+ "valuation_year": 2026
+}

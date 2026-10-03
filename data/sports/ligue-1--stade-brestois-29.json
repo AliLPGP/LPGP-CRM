@@ -1,0 +1,164 @@
+{
+ "city": "Brest",
+ "country": "France",
+ "deals": [
+  {
+   "amount": 39000000,
+   "currency": "EUR",
+   "date": "2024-12-17",
+   "date_text": "Financing plan set out 17 December 2024; project stalled by litigation since October 2025",
+   "evidence": "ils seront prioritairement mobilisés pour rembourser l’emprunt bancaire de 39M€",
+   "headline": "Arkéa Park: EUR 39m bank loan in a ~EUR 106m new-stadium plan",
+   "investor": "Bank lenders (not named) to the Arkéa Park project company",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Stade Brestois 29 press release (project holders), 17 December 2024",
+   "source_url": "https://www.sb29.bzh/17-12-24-arkea-park-notre-interet-a-tous.php",
+   "stake_pct": null,
+   "summary": "The project holders (the Le Saint brothers) describe Arkéa Park, a 15,000-seat stadium planned in Guipavas, as mostly privately financed with public participation (Région Bretagne, Département du Finistère, Brest métropole) and a target budget of nearly EUR 106m; the project company's results would go first to repaying a EUR 39m bank loan, and all operating revenue (rents) would go to the club. An administrative court ruling in October 2025 halted the works; Brest métropole, the prefecture and the département said they maintained the project.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "sb29.bzh",
+ "facts": {
+  "attendance": {
+   "average": 14358,
+   "evidence": "Affluence moyenne (en 2025-26) : 14 358",
+   "season": "2025-26",
+   "source_name": "Sportune (20 Minutes), club data sheet",
+   "source_url": "https://sportune.20minutes.fr/football/equipe/stade-brestois-sb29"
+  },
+  "chair": {
+   "evidence": "Président et membre du conseil d'administration : Denis Le Saint",
+   "name": "Denis Le Saint",
+   "source_url": "https://www.sb29.bzh/structure-juridique.php",
+   "title": "Président du conseil d'administration"
+  },
+  "kit_supplier": {
+   "evidence": "les trois bandes blanches emblématiques de l’équipementier adidas",
+   "name": "adidas",
+   "source_url": "https://www.sb29.bzh/04-07-26-nouveau-maillot-domicile-202627.php"
+  },
+  "legal_entity": {
+   "evidence": "\"siren\":\"399739663\",\"siren_conserve\":null,\"nom_complet\":\"STADE BRESTOIS 29 (SB 29)\"",
+   "name": "STADE BRESTOIS 29 (SB 29) (SA à conseil d'administration)",
+   "registry": "French company register (SIRENE / RNE, via recherche-entreprises.api.gouv.fr)",
+   "registry_id": "399739663",
+   "source_url": "https://recherche-entreprises.api.gouv.fr/search?q=399739663"
+  },
+  "operating_result": {
+   "amount": 5896000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "(LOSS) 5 896",
+   "season": "2024-25",
+   "source_name": "DNCG/LFP, Individual club accounts 2024/2025 (operating result before player trading)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "pretax_result": {
+   "amount": 6628000,
+   "currency": "EUR",
+   "evidence": "PROFIT (LOSS) BEFORE TAX 6 628",
+   "season": "2024-25",
+   "source_name": "DNCG/LFP, Individual club accounts 2024/2025",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 61392000,
+   "commercial": 14506000,
+   "currency": "EUR",
+   "evidence": "Broadcasting rights 61 392 Sponsors - Advertising 14 506 Gate receipts 11 520 Other income 7 518",
+   "matchday": 11520000,
+   "other": 7518000,
+   "season": "2024-25",
+   "source_name": "DNCG/LFP, Individual club accounts 2024/2025 (gate receipts / broadcasting rights / sponsors-advertising / other income)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "stadium_owner": {
+   "detail": "A Brest métropole sports facility (listed among the metropole's équipements sportifs), occupied by the club; the club's own December 2024 statement says a renovation of Le Blé would have been paid entirely by Brest taxpayers. The planned replacement, Arkéa Park in Guipavas, would also sit on Brest métropole land and pass to the metropole at the end of a building lease.",
+   "evidence": "Le stade est occupé par le Stade Brestois et a été rénové en 2010 pour répondre aux besoins du club de football",
+   "source_url": "https://brest.fr/stade-francis-le-ble",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 43979000,
+   "currency": "EUR",
+   "evidence": "Total payroll 43 979",
+   "season": "2024-25",
+   "source_name": "DNCG/LFP, Individual club accounts 2024/2025",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  }
+ },
+ "founded_evidence": "Le Stade Brestois est né le 26 Juin 1950 de la fusion des patronages de Brest",
+ "founded_source_url": "https://www.sb29.bzh/historique.php",
+ "founded_year": 1950,
+ "key": "ligue-1--stade-brestois-29",
+ "league": "Ligue 1",
+ "name": "Stade Brestois 29",
+ "notes": "Revenue is DNCG's total non-transfer earnings for 2024-25 (EUR 94,936k, the Champions League season); the SA's own statutory turnover for the year is EUR 90.7m and net profit EUR 6.04m (French register). 2025-26 accounts not yet published. Breakdown uses DNCG categories. No valuation found: no transaction, no Forbes entry. The Le Saint stake (99%) is from ICI/Radio France (June 2026); no registry or club page states the split between the brothers. Shirt sponsor not stated on a page read (Crédit Mutuel Arkéa is a major partner and the naming partner of the planned stadium). No chief executive on a page read with a current date: the French register lists Gérard Le Saint as directeur général délégué; the club calls him vice-president of the board. Stadium capacity: the club gives 15,220; Brest métropole gives 16,160 spectators including 15,333 seated. Honours not recorded (no league title; no page read that states the club's honours list). No dated social follower count found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "les frères Le Saint, qui détiennent depuis dix ans 99% des parts du Stade Brestois",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Denis and Gérard Le Saint (Le Saint family)",
+   "since_year": null,
+   "source_url": "https://www.ici.fr/bretagne/finistere-29/brest/le-president-du-stade-brestois-ouvre-la-porte-a-des-investisseurs-8606795",
+   "stake_pct": 99,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.ici.fr/bretagne/finistere-29/brest/le-president-du-stade-brestois-ouvre-la-porte-a-des-investisseurs-8606795",
+ "ownership_summary": "Stade Brestois 29 SA is owned by brothers Denis and Gérard Le Saint, who run the family fruit, vegetable and fish wholesaler Le Saint; they hold 99% and have done for about ten years (ICI/Radio France, June 2026). Denis Le Saint has been president since May 2016. In 2026 he said for the first time that he was open to selling or bringing in investors; no transaction had been announced in the sources read.",
+ "ownership_type": "individual_family",
+ "revenue": 94936000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL NON-TRANSFER EARNINGS 94 936",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "DNCG/LFP, Individual club accounts 2024/2025 (Stade Brestois 29: SAS + association), total non-transfer earnings",
+ "revenue_source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+ "short_name": "Brest",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.sb29.bzh/historique.php",
+  "https://www.sb29.bzh/stade-francis-le-ble.php",
+  "https://brest.fr/stade-francis-le-ble",
+  "https://www.ici.fr/bretagne/finistere-29/brest/le-president-du-stade-brestois-ouvre-la-porte-a-des-investisseurs-8606795",
+  "https://www.sb29.bzh/17-12-24-arkea-park-notre-interet-a-tous.php",
+  "https://france3-regions.franceinfo.fr/bretagne/finistere/brest/nouveau-stade-de-brest-prefecture-metropole-ville-club-et-departement-maintiennent-le-projet-d-arkea-park-malgre-la-victoire-judiciaire-des-opposants-3238558.html",
+  "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+  "https://www.sb29.bzh/structure-juridique.php",
+  "https://www.sb29.bzh/04-07-26-nouveau-maillot-domicile-202627.php",
+  "https://recherche-entreprises.api.gouv.fr/search?q=399739663",
+  "https://sportune.20minutes.fr/football/equipe/stade-brestois-sb29",
+  "https://www.cm-arkea.com/arkea/banque/assurances/c_8741/en/our-sponsoring-activities",
+  "https://www.lesechos.fr/pme-regions/bretagne/football-le-futur-stade-de-brest-va-mobiliser-85-millions-deuros-1403612"
+ ],
+ "sport": "football",
+ "stadium": "Stade Francis-Le Blé",
+ "stadium_capacity": 15220,
+ "stadium_capacity_evidence": "Capacité : 15 220 places",
+ "stadium_capacity_source_url": "https://www.sb29.bzh/stade-francis-le-ble.php",
+ "stadium_owner": {
+  "detail": "A Brest métropole sports facility (listed among the metropole's équipements sportifs), occupied by the club; the club's own December 2024 statement says a renovation of Le Blé would have been paid entirely by Brest taxpayers. The planned replacement, Arkéa Park in Guipavas, would also sit on Brest métropole land and pass to the metropole at the end of a building lease.",
+  "evidence": "Le stade est occupé par le Stade Brestois et a été rénové en 2010 pour répondre aux besoins du club de football",
+  "source_url": "https://brest.fr/stade-francis-le-ble",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

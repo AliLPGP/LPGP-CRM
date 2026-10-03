@@ -251,16 +251,47 @@ export type ClubRow = Pick<SportsTeam, (typeof CLUB_ROW_FIELDS)[number]> & {
   institutional: number;
 };
 
+/** One sourced fact in a club's file (migration 0039): the value as the page
+ *  states it, the page, and the phrase on it. */
+export type ClubFact = {
+  source_url?: string | null;
+  source_name?: string | null;
+  evidence?: string | null;
+  season?: string | null;
+  as_of?: string | null;
+  currency?: string | null;
+  amount?: number | null;
+  average?: number | null;
+  name?: string | null;
+  title?: string | null;
+  value?: string | null;
+  detail?: string | null;
+  basis?: string | null;
+  registry?: string | null;
+  registry_id?: string | null;
+  league_titles?: number | null;
+  competition?: string | null;
+  matchday?: number | null;
+  broadcast?: number | null;
+  commercial?: number | null;
+  other?: number | null;
+};
+
 export type SportsTeam = Omit<DatasetTeam, "key" | "owners"> & {
   id: string;
   external_key: string | null;
   source: string;
   updated_at: string;
+  /** The rest of the club's file, one key per category; absent when no page states it. */
+  facts?: Record<string, ClubFact> | null;
+  founded_source_url?: string | null;
+  researched_at?: string | null;
 };
 
 export type TeamOwner = DatasetOwner & {
   id: string;
   team_id: string;
+  evidence?: string | null;
   investor_id: string | null;
   company_id: string | null;
 };

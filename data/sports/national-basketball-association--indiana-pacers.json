@@ -1,0 +1,190 @@
+{
+ "city": "Indianapolis",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "before November 2023 (date not disclosed)",
+   "evidence": "Rales previously purchased a 5% stake in the Pacers",
+   "headline": "Steven Rales buys first 5% of the Pacers",
+   "investor": "Steven Rales",
+   "investor_type": "individual",
+   "kind": "minority_investment",
+   "seller": "Simon family",
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/team-sales/2023/indiana-pacers-steven-rales-investment-1234748838/",
+   "stake_pct": 5,
+   "summary": "Rales' earlier 5% purchase was first reported by Sportico in Nov 2023; date and price not stated.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2023-11-30",
+   "date_text": "November 2023",
+   "evidence": "Billionaire Steven Rales has reached an agreement to purchase a 15% minority stake in the Indiana Pacers at a $3.47 billion valuation",
+   "headline": "Steven Rales to buy 15% of the Pacers at $3.47bn",
+   "investor": "Steven Rales",
+   "investor_type": "individual",
+   "kind": "minority_investment",
+   "seller": "Simon family (Herbert Simon)",
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/team-sales/2023/indiana-pacers-steven-rales-investment-1234748838/",
+   "stake_pct": 15,
+   "summary": "Rales agreed to buy a further 15% at a $3.47bn valuation, taking him to 20%, pending NBA approval; the deal includes a possible path to future control, with management remaining under Simon family control. Inside Indiana Business, citing Forbes, puts his total outlay for the 20% at $525.5m.",
+   "valuation": 3470000000,
+   "valuation_currency": "USD",
+   "verified": true
+  },
+  {
+   "amount": 360000000,
+   "currency": "USD",
+   "date": "2019-04-12",
+   "date_text": "April 2019",
+   "evidence": "The agreement includes $360 million for capital improvements",
+   "headline": "CIB approves 25-year Pacers agreement with $360m fieldhouse upgrade",
+   "investor": "Capital Improvement Board of Managers / State of Indiana / Pacers Sports & Entertainment",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Indiana Pacers (NBA.com)",
+   "source_url": "https://www.nba.com/pacers/news/cib-approves-new-25-year-agreement-pacers-sports-entertainment",
+   "stake_pct": null,
+   "summary": "The CIB approved a 25-year agreement including $360m of capital improvements: about $270m from state and CIB sources, $65m private investment from Pacers Sports & Entertainment and $25m from the City of Indianapolis.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "nba.com/pacers",
+ "facts": {
+  "chair": {
+   "evidence": "Herbert Simon, owner and governor of the Pacers",
+   "name": "Herbert Simon",
+   "source_url": "https://www.insideindianabusiness.com/articles/pacers-to-sell-15-ownership-stake-in-franchise-to-billionaire-steven-rales",
+   "title": "Owner and governor"
+  },
+  "chief_executive": {
+   "evidence": "said CEO of Pacers Sports & Entertainment Mel Raines",
+   "name": "Mel Raines",
+   "source_url": "https://www.nba.com/pacers/news/indiana-pacers-and-lucas-oil-announce-multi-year-jersey-patch-partnership",
+   "title": "CEO of Pacers Sports & Entertainment"
+  },
+  "legal_entity": {
+   "evidence": "Herb Simon, Owner of Pacers Sports & Entertainment",
+   "name": "Pacers Sports & Entertainment",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.nba.com/pacers/news/cib-approves-new-25-year-agreement-pacers-sports-entertainment"
+  },
+  "operating_result": {
+   "amount": 89000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$89M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/indiana-pacers/"
+  },
+  "shirt_sponsor": {
+   "evidence": "The Indiana Pacers and Lucas Oil, an iconic Indianapolis-based brand recognized globally for high-performance automotive products, today announced a new multi-year jersey patch partnership",
+   "name": "Lucas Oil",
+   "source_url": "https://www.nba.com/pacers/news/indiana-pacers-and-lucas-oil-announce-multi-year-jersey-patch-partnership"
+  },
+  "stadium_owner": {
+   "detail": "A Capital Improvement Board of Managers (Marion County/Indianapolis) facility; the Pacers have a 25-year agreement (2019) with $360m of capital improvements.",
+   "evidence": "one of the four CIB-managed facilities—Bankers Life Fieldhouse, Lucas Oil Stadium, Victory Field, and the Indiana Convention Center",
+   "source_url": "https://www.nba.com/pacers/news/cib-approves-new-25-year-agreement-pacers-sports-entertainment",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 169000000,
+   "currency": "USD",
+   "evidence": "$169M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/indiana-pacers/"
+  }
+ },
+ "founded_evidence": "Oct. 14, 1967: Any doubts about the city's interest in a professional basketball team were immediately dashed when the Pacers opened for business",
+ "founded_source_url": "https://www.nba.com/pacers/great-eight-home-openers-franchise-history",
+ "founded_year": 1967,
+ "key": "national-basketball-association--indiana-pacers",
+ "league": "National Basketball Association",
+ "name": "Indiana Pacers",
+ "notes": "Simon family stake = remainder after Rales' 20% (not stated as a % on a page, so null). The $525.5m Rales figure is Inside Indiana Business citing Forbes. No institutional fund stake found. Capacity 18,345 is from NBA.com's team data (JSON on the team page); Forbes lists no NBA championships (3 ABA titles not recorded as league_titles). Founded 1967 in the ABA (NBA.com 'Founded 1976' is the NBA entry). Whether Rales has moved toward control since 2023 not found. No social counts found. Forbes 2026 list not yet published.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "The Pacers are owned by the Simon family, which purchased the team in 1983 in an $11 million deal",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Simon family (Herbert Simon)",
+   "since_year": 1983,
+   "source_url": "https://www.sportico.com/business/team-sales/2023/indiana-pacers-steven-rales-investment-1234748838/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": 525500000,
+   "currency": "USD",
+   "evidence": "now owns 20% of the NBA team",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Steven Rales",
+   "since_year": 2023,
+   "source_url": "https://www.sportico.com/business/team-sales/2023/indiana-pacers-steven-rales-investment-1234748838/",
+   "stake_pct": 20,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.sportico.com/business/team-sales/2023/indiana-pacers-steven-rales-investment-1234748838/",
+ "ownership_summary": "Controlled by the Simon family (Herbert Simon, owner and governor), which bought the team in 1983 for about $11 million and manages it through Pacers Sports & Entertainment. Billionaire Steven Rales (Danaher co-founder) owns 20%: an earlier, undisclosed 5% plus 15% agreed in November 2023 at a $3.47bn valuation, with a possible path to future control. Front Office Sports says the team will eventually pass to Herb's son Stephen Simon.",
+ "ownership_type": "individual_family",
+ "revenue": 342000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$342M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), NBA team valuations (Oct 2025); net of revenue sharing and arena debt service",
+ "revenue_source_url": "https://www.forbes.com/teams/indiana-pacers/",
+ "short_name": "Pacers",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/indiana-pacers/",
+  "https://www.sportico.com/business/team-sales/2023/indiana-pacers-steven-rales-investment-1234748838/",
+  "https://www.insideindianabusiness.com/articles/pacers-to-sell-15-ownership-stake-in-franchise-to-billionaire-steven-rales",
+  "https://www.nba.com/pacers/news/cib-approves-new-25-year-agreement-pacers-sports-entertainment",
+  "https://www.nba.com/pacers/news/indiana-pacers-and-lucas-oil-announce-multi-year-jersey-patch-partnership",
+  "https://frontofficesports.com/the-nbas-expanding-private-equity-footprint/",
+  "https://www.nba.com/pacers/great-eight-home-openers-franchise-history",
+  "https://www.nba.com/team/1610612754/pacers"
+ ],
+ "sport": "basketball",
+ "stadium": "Gainbridge Fieldhouse",
+ "stadium_capacity": null,
+ "stadium_capacity_evidence": "\"ARENACAPACITY\":\"18345\"",
+ "stadium_capacity_source_url": null,
+ "stadium_owner": {
+  "detail": "A Capital Improvement Board of Managers (Marion County/Indianapolis) facility; the Pacers have a 25-year agreement (2019) with $360m of capital improvements.",
+  "evidence": "one of the four CIB-managed facilities—Bankers Life Fieldhouse, Lucas Oil Stadium, Victory Field, and the Indiana Convention Center",
+  "source_url": "https://www.nba.com/pacers/news/cib-approves-new-25-year-agreement-pacers-sports-entertainment",
+  "value": "municipal"
+ },
+ "valuation": 4200000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$4.2B",
+ "valuation_source_name": "Forbes (calculated October 2025)",
+ "valuation_source_url": "https://www.forbes.com/teams/indiana-pacers/",
+ "valuation_year": 2025
+}

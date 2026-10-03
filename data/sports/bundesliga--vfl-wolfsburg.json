@@ -1,0 +1,147 @@
+{
+ "city": "Wolfsburg",
+ "country": "Germany",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2001-05-23",
+   "date_text": "Spin-off approved 23 February 2001; GmbH founded 23 May 2001",
+   "evidence": "gründet sich drei Monate später offiziell die VfL Wolfsburg-Fußball GmbH mit der Volkswagen AG als Hauptgesellschafterin",
+   "headline": "Professional football spun off into VfL Wolfsburg-Fußball GmbH with Volkswagen as main shareholder",
+   "investor": "Volkswagen AG",
+   "investor_type": "corporate",
+   "kind": "acquisition",
+   "seller": "VfL Wolfsburg e.V.",
+   "source_name": "VfL Wolfsburg (club chronicle)",
+   "source_url": "https://www.vfl-wolfsburg.de/der-vfl/geschichte/chronik/2000-bis-2009",
+   "stake_pct": null,
+   "summary": "The members' club spun off its professional football into VfL Wolfsburg-Fußball GmbH, founded with Volkswagen AG as main shareholder. Volkswagen is now the 100% owner; the date it reached 100% and any price were not found on a citable page. Pre-2015, kept as the origin of the current ownership.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "vfl-wolfsburg.de",
+ "facts": {
+  "chair": {
+   "evidence": "Dr. Sebastian Rudolph Vorsitzender des Aufsichtsrats und Mitglied des Aufsichtsrats-Präsidiums der VfL Wolfsburg-Fußball GmbH",
+   "name": "Dr. Sebastian Rudolph",
+   "source_url": "https://www.vfl-wolfsburg.de/der-vfl/klub/aufsichtsrat",
+   "title": "Chairman of the Supervisory Board, VfL Wolfsburg-Fußball GmbH (head of group communications, Volkswagen AG)"
+  },
+  "chief_executive": {
+   "evidence": "Geschäftsführung Steffen Grupp, Dieter Hecking, Jens Klingfurt",
+   "name": "Steffen Grupp, Dieter Hecking, Jens Klingfurt",
+   "source_url": "https://www.vfl-wolfsburg.de/allgemeines/impressum",
+   "title": "Managing directors (Geschäftsführung, three members since June/July 2026; no chief executive named; Hecking is managing director for sport)"
+  },
+  "honours": {
+   "competition": "German championship (Bundesliga 2008/09)",
+   "evidence": "holt sensationell die Meisterschaft 2009 sowie 2015 den DFB-Pokal",
+   "league_titles": 1,
+   "source_url": "https://www.vfl-wolfsburg.de/der-vfl/geschichte"
+  },
+  "kit_supplier": {
+   "evidence": "mit unserem Ausrüster Nike umgesetzt werden",
+   "name": "Nike",
+   "source_url": "https://www.vfl-wolfsburg.de/newsdetails/news-detail/detail/news/zukunft-traegt-zinne-1"
+  },
+  "legal_entity": {
+   "evidence": "Registergericht Amtsgericht Braunschweig HRB 100486",
+   "name": "VfL Wolfsburg-Fußball GmbH",
+   "registry": "Handelsregister, Amtsgericht Braunschweig",
+   "registry_id": "HRB 100486",
+   "source_url": "https://www.vfl-wolfsburg.de/allgemeines/impressum"
+  },
+  "shirt_sponsor": {
+   "evidence": "tragen die Profiteams zu Beginn der Saison 2026/2027 den Schriftzug des neuen vollelektrischen ID. Polo auf der Brust",
+   "name": "Volkswagen (ID. Polo lettering at the start of 2026/27)",
+   "source_url": "https://www.vfl-wolfsburg.de/newsdetails/news-detail/detail/news/zukunft-traegt-zinne-1"
+  },
+  "stadium_owner": {
+   "detail": "Owned and operated by VfL Wolfsburg-Fußball GmbH (opened 13 December 2002; total project cost EUR 53m per the club).",
+   "evidence": "Eigentümerin: VfL Wolfsburg-Fußball GmbH",
+   "source_url": "https://www.vfl-wolfsburg.de/stadien/volkswagen-arena/stadioninformationen",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 120174000,
+   "currency": "EUR",
+   "evidence": "-43.900 -120.174",
+   "season": "2024-25",
+   "source_name": "DFL, Finanzkennzahlen: Clubs der 2. Bundesliga 2026-27, Geschäftsjahresende 2025 (VfL Wolfsburg column, last; single-entity accounts to 30.06.2025; '2. Personalaufwand', in T€)",
+   "source_url": "https://report.bundesliga.de/2425/de/_assets/downloads/clubs-der-2-bundesliga-2026-2027-geschaeftsjahresende-2025.pdf"
+  }
+ },
+ "founded_evidence": "Vereinsgründung: 12. September 1945",
+ "founded_source_url": "https://www.vfl-wolfsburg.de/der-vfl/klub",
+ "founded_year": 1945,
+ "key": "bundesliga--vfl-wolfsburg",
+ "league": "2. Bundesliga",
+ "name": "VfL Wolfsburg",
+ "notes": "League corrected: Wolfsburg lost the 2025/26 relegation play-off to SC Paderborn 07 (1:2 after extra time) and play the 2026/27 season in the 2. Bundesliga, ending 29 consecutive top-flight seasons (club chronicle: 'unterliegen die Wölfe beim SC Paderborn 07 nach Verlängerung mit 1:2 und müssen den bitteren Gang in Liga zwei antreten'); the DFL lists the club among the 2026-27 2. Bundesliga clubs. The key still says bundesliga. Revenue not found: the club publishes no annual report, Deloitte's Money League does not cover it, and the DFL's published club figures give 'Rohergebnis' (gross result) of EUR 238.854m for 2024/25, not revenue; the GmbH's accounts are in the Bundesanzeiger, which has no stable citable URL. The same DFL table (single-entity accounts, year to 30.06.2025, T€) gives a result after tax of -12,717 (evidence '2.265 -12.717') and an annual loss of -12,742 attributed in full to the other shareholder, leaving 0 - consistent with Volkswagen absorbing losses; no pre-tax or operating figure is stated, so those stay null. Press (t-online, 10 Mar 2026, citing the Deutsches Institut für Marketing) reports Volkswagen paid EUR 80m for the shirt and stadium-naming package in 2024/25 and EUR 70m for shirt sponsorship in 2025/26 - sponsorship, not ownership, so not recorded as deals. oe24 (May 2026, citing Bild) reports the budget from Volkswagen cut from EUR 80m to about EUR 55m after relegation and a control and profit-transfer agreement under which VW covers losses. The 100% stake is cited from t-online; the club itself calls VW 'Hauptsponsor und Eigner' (partner page) without a percentage. No Forbes/Sportico valuation exists. Stadium capacity uses the stadium page (28,917); the club info page gives a rounded 'Gesamtkapazität: 30.000'. Attendance and social follower counts not found on citable dated pages.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "den der Volkswagen-Konzern als hundertprozentiger Besitzer des Vereins betreibt",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Volkswagen AG",
+   "since_year": 2001,
+   "source_url": "https://www.t-online.de/sport/fussball/bundesliga/id_101162988/bundesliga-vw-muss-stellen-abbauen-und-investiert-in-vfl-wolfsburg.html",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.vfl-wolfsburg.de/der-vfl/business/partner",
+ "ownership_summary": "The professional club is VfL Wolfsburg-Fußball GmbH, spun off from the members' club in 2001 with Volkswagen AG as main shareholder; Volkswagen AG is now its sole owner and main sponsor, and the GmbH's losses are absorbed by the parent (its published 2024/25 figures attribute the whole loss to the shareholder).",
+ "ownership_type": "corporate",
+ "revenue": null,
+ "revenue_currency": null,
+ "revenue_evidence": null,
+ "revenue_season": null,
+ "revenue_source_name": null,
+ "revenue_source_url": null,
+ "short_name": "Wolfsburg",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.vfl-wolfsburg.de/der-vfl/klub",
+  "https://www.vfl-wolfsburg.de/der-vfl/klub/geschaeftsfuehrung",
+  "https://www.vfl-wolfsburg.de/der-vfl/klub/aufsichtsrat",
+  "https://www.vfl-wolfsburg.de/allgemeines/impressum",
+  "https://www.vfl-wolfsburg.de/der-vfl/business/partner",
+  "https://www.vfl-wolfsburg.de/der-vfl/geschichte",
+  "https://www.vfl-wolfsburg.de/der-vfl/geschichte/chronik/2000-bis-2009",
+  "https://www.vfl-wolfsburg.de/der-vfl/geschichte/chronik/2016-bis-heute",
+  "https://www.vfl-wolfsburg.de/stadien/volkswagen-arena/stadioninformationen",
+  "https://www.vfl-wolfsburg.de/newsdetails/news-detail/detail/news/zukunft-traegt-zinne-1",
+  "https://www.t-online.de/sport/fussball/bundesliga/id_101162988/bundesliga-vw-muss-stellen-abbauen-und-investiert-in-vfl-wolfsburg.html",
+  "https://report.bundesliga.de/2425/de/aktuelle-berichte/finanzkennzahlen.html",
+  "https://report.bundesliga.de/2425/de/_assets/downloads/clubs-der-2-bundesliga-2026-2027-geschaeftsjahresende-2025.pdf",
+  "https://www.oe24.at/sport/fussball/international/deutschland/bundesliga/so-teuer-wird-der-wolfsburg-abstieg-fuer-vw/680963140"
+ ],
+ "sport": "football",
+ "stadium": "Volkswagen Arena",
+ "stadium_capacity": 28917,
+ "stadium_capacity_evidence": "Zuschauerkapazität: 28.917 Plätze",
+ "stadium_capacity_source_url": "https://www.vfl-wolfsburg.de/stadien/volkswagen-arena/stadioninformationen",
+ "stadium_owner": {
+  "detail": "Owned and operated by VfL Wolfsburg-Fußball GmbH (opened 13 December 2002; total project cost EUR 53m per the club).",
+  "evidence": "Eigentümerin: VfL Wolfsburg-Fußball GmbH",
+  "source_url": "https://www.vfl-wolfsburg.de/stadien/volkswagen-arena/stadioninformationen",
+  "value": "club"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

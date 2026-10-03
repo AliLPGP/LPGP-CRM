@@ -1,0 +1,191 @@
+{
+ "city": "Monaco",
+ "country": "Monaco",
+ "deals": [
+  {
+   "amount": 55000000,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "2021 (Centre de Performance opened)",
+   "evidence": "qu’il a lui-même financé à hauteur de 55 millions d’euros",
+   "headline": "Owner-funded EUR 55m training centre (Centre de Performance)",
+   "investor": "Dmitry Rybolovlev",
+   "investor_type": "individual",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Monaco Tribune",
+   "source_url": "https://www.monaco-tribune.com/2024/01/pourquoi-las-monaco-na-cesse-de-prendre-de-la-valeur-depuis-2011-et-larrivee-de-dimitri-rybolovlev/",
+   "stake_pct": null,
+   "summary": "AS Monaco's Centre de Performance, in use since 2021, was financed by majority owner Dmitry Rybolovlev to the tune of EUR 55m (owner investment in club infrastructure, not a change of stake).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "asmonaco.com",
+ "facts": {
+  "chair": {
+   "evidence": "Président : Dmitry RYBOLOVLEV",
+   "name": "Dmitry Rybolovlev",
+   "source_url": "https://www.asmonaco.com/fr/club/organigramme-de-las-monaco",
+   "title": "President"
+  },
+  "chief_executive": {
+   "evidence": "Directeur Général : Thiago SCURO",
+   "name": "Thiago Scuro",
+   "source_url": "https://www.asmonaco.com/fr/club/organigramme-de-las-monaco",
+   "title": "Chief executive (Directeur Général)"
+  },
+  "honours": {
+   "competition": "French championship (Ligue 1 / Division 1)",
+   "evidence": "8 championnats de France",
+   "league_titles": 8,
+   "source_url": "https://www.asmonaco.com/fr/club/palmares"
+  },
+  "kit_supplier": {
+   "evidence": "L’AS Monaco et Mizuno sont heureux d’annoncer leur collaboration pour les cinq prochaines saisons.",
+   "name": "Mizuno (from 1 July 2025, five seasons)",
+   "source_url": "https://www.asmonaco.com/fr/news/mizuno-nouvel-equipementier-de-las-monaco"
+  },
+  "legal_entity": {
+   "evidence": "Dénomination : AS Monaco Football Club",
+   "name": "AS Monaco Football Club (société anonyme under Monaco law; FFF affiliation no. 091)",
+   "registry": "Monaco company (SA); registry number not published on the club's legal notice",
+   "registry_id": null,
+   "source_url": "https://www.asmonaco.com/fr/mentions-legales"
+  },
+  "operating_result": {
+   "amount": -34760000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "OPERATING RESULT (LOSS) -34 760",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Individual club accounts 2024/2025 (operating result before player trading, K EUR)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "pretax_result": {
+   "amount": -2749000,
+   "currency": "EUR",
+   "evidence": "PROFIT (LOSS) BEFORE TAX -2 749",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Individual club accounts 2024/2025 (profit before tax, K EUR)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 81529000,
+   "commercial": 22336000,
+   "currency": "EUR",
+   "evidence": "Broadcasting rights 81 529",
+   "matchday": 4740000,
+   "other": 8293000,
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Individual club accounts 2024/2025 (gate receipts, broadcasting rights, sponsors-advertising, other income; K EUR)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "le joaillier APM Monaco annoncent ce mercredi la prolongation de leur partenariat pour trois saisons supplémentaires, jusqu’en 2029",
+   "name": "APM Monaco (extended to 2029)",
+   "source_url": "https://sportune.20minutes.fr/as-monaco-trois-ans-de-plus-pour-le-sponsor-majeur-sur-le-maillot-403851"
+  },
+  "stadium_owner": {
+   "detail": "A Monegasque State facility in Fontvieille: the Prince's Government runs it through the Stadium Directorate and is modernising it (2025-2027 works led by the Public Works Directorate, full renovation by 2035). AS Monaco is the tenant and has its head office there. No page found states the title in so many words.",
+   "evidence": "les travaux de modernisation du Stade Louis-II ont été lancés cet été annonce le Gouvernement Princier dans un communiqué",
+   "source_url": "https://www.monaco-tribune.com/2025/08/la-premiere-phase-de-modernisation-du-stade-louis-ii-est-lancee/",
+   "value": "state"
+  },
+  "wages": {
+   "amount": 109408000,
+   "currency": "EUR",
+   "evidence": "Total payroll 109 408",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Individual club accounts 2024/2025 (total payroll, K EUR)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  }
+ },
+ "founded_evidence": "Créé le 23 août 1924",
+ "founded_source_url": "https://www.asmonaco.com/fr/club/histoire",
+ "founded_year": 1924,
+ "key": "ligue-1--as-monaco",
+ "league": "Ligue 1",
+ "name": "Association Sportive Monaco Football Club",
+ "notes": "Country corrected to Monaco: the club is a Monegasque société anonyme playing in the French league. Founding year is the club's own centenary date (23 August 1924); its statutes page separately gives 'Date de création : 1er août 1919' for the original sports society. Revenue and P&L facts are the DNCG 2024/25 individual club accounts (perimeter: SA under Monaco law + Association, K EUR); 'revenue' is total non-transfer earnings and excludes transfer income (transfer result -EUR 3.5m); the club reported a net profit of EUR 3.0m after a EUR 5.7m tax credit and EUR 46.2m exceptional items; financial debts EUR 158.0m and cash EUR 64.3m, but no net-debt figure is published so net_debt is blank. In January 2024 the majority shareholder retained The Raine Group to explore strategic alternatives for its stake (Monaco Tribune, Off The Pitch); 2026 press reports of a sale to Leonardo Maria Del Vecchio were denied by the club (Foot01, 24 February 2026). No published valuation (press figures were rumours only). Social count is the club's own 'more than 26 million' across networks (April 2025); no per-platform counts found. Stadium ownership by the State is inferred from the Government running and renovating the venue; a page stating the title outright was not reachable (stadelouis2.mc blocks automated access).",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "devient l’actionnaire majoritaire du club de la Principauté (66, 67 %)",
+   "institutional": true,
+   "investor_type": "family_office",
+   "kind": "family",
+   "name": "Dmitry Rybolovlev (family holding)",
+   "since_year": 2011,
+   "source_url": "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+   "stake_pct": 66.67,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "la Principauté conservant 33 % du capital",
+   "institutional": false,
+   "investor_type": "other",
+   "kind": "state",
+   "name": "Principality of Monaco",
+   "since_year": null,
+   "source_url": "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+   "stake_pct": 33,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+ "ownership_summary": "Russian billionaire Dmitry Rybolovlev has been majority shareholder since 2011 with two-thirds (66.67%) of the Monegasque SA, held for his family (statements come from his family office); the Principality of Monaco kept the remaining third (33%). In January 2024 the majority shareholder hired The Raine Group to explore strategic alternatives for its stake; no sale has been completed and the club denied sale reports in February 2026.",
+ "ownership_type": "individual_family",
+ "revenue": 116898000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL NON-TRANSFER EARNINGS 116 898",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "LFP / DNCG, Individual club accounts 2024/2025 season (AS Monaco, SA under Monaco law + Association; total non-transfer earnings, in K EUR)",
+ "revenue_source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+ "short_name": "AS Monaco",
+ "social_as_of": "2025-04",
+ "social_evidence": "suivi par plus de 26 millions de personnes sur les réseaux sociaux",
+ "social_followers": 26000000,
+ "social_platforms": [],
+ "social_source_url": "https://www.asmonaco.com/fr/news/mizuno-nouvel-equipementier-de-las-monaco",
+ "sources": [
+  "https://www.asmonaco.com/fr/club/histoire",
+  "https://www.asmonaco.com/fr/club/statuts",
+  "https://www.asmonaco.com/fr/club/stade-louis-ii",
+  "https://www.asmonaco.com/fr/club/organigramme-de-las-monaco",
+  "https://www.asmonaco.com/fr/club/palmares",
+  "https://www.asmonaco.com/fr/mentions-legales",
+  "https://www.asmonaco.com/fr/les-partenaires-de-l-as-monaco",
+  "https://www.asmonaco.com/fr/news/mizuno-nouvel-equipementier-de-las-monaco",
+  "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+  "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+  "https://www.monaco-tribune.com/en/2024/01/why-as-monaco-has-increased-in-value-since-dmitry-rybolovlev-took-over-in-2011/",
+  "https://www.monaco-tribune.com/2024/01/pourquoi-las-monaco-na-cesse-de-prendre-de-la-valeur-depuis-2011-et-larrivee-de-dimitri-rybolovlev/",
+  "https://offthepitch.com/a/tuesday-briefing-monaco-owner-dmitry-rybolovlev-explore-sale-club-hires-raine-group",
+  "https://www.foot01.com/monaco/las-monaco-dement-une-vente-du-club",
+  "https://www.monaco-tribune.com/2025/08/la-premiere-phase-de-modernisation-du-stade-louis-ii-est-lancee/",
+  "https://sportune.20minutes.fr/as-monaco-trois-ans-de-plus-pour-le-sponsor-majeur-sur-le-maillot-403851",
+  "https://www.sportstrategies.com/mizuno-devient-lequipementier-de-las-monaco-pour-les-cinq-prochaines-saisons/"
+ ],
+ "sport": "football",
+ "stadium": "Stade Louis-II",
+ "stadium_capacity": 16877,
+ "stadium_capacity_evidence": "Capacité : 16.877 places assises",
+ "stadium_capacity_source_url": "https://www.asmonaco.com/fr/club/stade-louis-ii",
+ "stadium_owner": {
+  "detail": "A Monegasque State facility in Fontvieille: the Prince's Government runs it through the Stadium Directorate and is modernising it (2025-2027 works led by the Public Works Directorate, full renovation by 2035). AS Monaco is the tenant and has its head office there. No page found states the title in so many words.",
+  "evidence": "les travaux de modernisation du Stade Louis-II ont été lancés cet été annonce le Gouvernement Princier dans un communiqué",
+  "source_url": "https://www.monaco-tribune.com/2025/08/la-premiere-phase-de-modernisation-du-stade-louis-ii-est-lancee/",
+  "value": "state"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

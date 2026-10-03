@@ -1,0 +1,131 @@
+{
+ "city": "Vancouver",
+ "country": "Canada",
+ "deals": [],
+ "domain": "whitecapsfc.com",
+ "facts": {
+  "chief_executive": {
+   "evidence": "Whitecaps CEO Axel Schuster said",
+   "name": "Axel Schuster",
+   "source_url": "https://www.sportsbusinessjournal.com/Articles/2026/09/24/whitecaps-ceo-remains-concerned-as-ownership-talks-yield-no-breakthrough/",
+   "title": "CEO"
+  },
+  "operating_result": {
+   "amount": -12000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "Revenue: $46 million | Operating Income: -$12 million Key Owners: Greg Kerfoot, Jeff Mallett",
+   "season": "2025",
+   "source_name": "Forbes (estimate)",
+   "source_url": "https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/"
+  },
+  "stadium_owner": {
+   "detail": "Owned and operated by PavCo (BC Pavilion Corporation), a British Columbia provincial Crown corporation; the club is a tenant.",
+   "evidence": "The 55,000-seat venue is owned and operated by PavCo, a provincial Crown corporation.",
+   "source_url": "https://www.sportsnet.ca/mls/article/whitecaps-ceo-says-sale-of-mls-team-no-closer-to-reality/",
+   "value": "state"
+  }
+ },
+ "founded_evidence": "The original Vancouver Whitecaps played their first ever match on May 5, 1974",
+ "founded_source_url": "https://www.whitecapsfc.com/club/history",
+ "founded_year": 1974,
+ "key": "major-league-soccer--vancouver-whitecaps-fc",
+ "league": "Major League Soccer",
+ "name": "Vancouver Whitecaps FC",
+ "notes": "Country corrected to Canada. Founded 1974 is the original NASL Whitecaps (club history page); MLS entry awarded 18 March 2009, first MLS season 2011 ('Vancouver would be the home of the 17th team in MLS'). Forbes' MLS 2026 article returns 403 to scripts; its text was read via a verbatim mirror (forbeseurope.uk), so the evidence check may fail on the forbes.com URL. Club ownership-status page: sale process announced December 2024, ownership group 'came together in 2008'. Sportsnet (Sept 2026): more than 100 groups expressed interest, no viable offer; Sportsnet reported (31 July 2026) an offer from a group led by Arthur Griffiths, and mentions another group that made an offer with interest in relocating the club to Nevada - neither is a completed transaction, so no deal rows. Stadium capacity 55,000 is BC Place's full capacity; the MLS configuration is smaller and no page read states it (earlier record's 22,120 came from Wikipedia and was dropped). No stake split among the four owners is published. Shirt sponsor, kit supplier, honours, attendance, legal entity and social counts not confirmed on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Kerfoot taking ownership of the Whitecaps on November 13, 2002",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Greg Kerfoot",
+   "since_year": 2002,
+   "source_url": "https://www.whitecapsfc.com/club/history",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "the current ownership group — including Greg Kerfoot, Steve Luczo, Jeff Mallett and former NBA star Steve Nash",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Steve Luczo",
+   "since_year": null,
+   "source_url": "https://www.sportsnet.ca/mls/article/whitecaps-ceo-says-sale-of-mls-team-no-closer-to-reality/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "the current ownership group — including Greg Kerfoot, Steve Luczo, Jeff Mallett and former NBA star Steve Nash",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Jeff Mallett",
+   "since_year": null,
+   "source_url": "https://www.sportsnet.ca/mls/article/whitecaps-ceo-says-sale-of-mls-team-no-closer-to-reality/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "the current ownership group — including Greg Kerfoot, Steve Luczo, Jeff Mallett and former NBA star Steve Nash",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Steve Nash",
+   "since_year": null,
+   "source_url": "https://www.sportsnet.ca/mls/article/whitecaps-ceo-says-sale-of-mls-team-no-closer-to-reality/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.sportsnet.ca/mls/article/whitecaps-ceo-says-sale-of-mls-team-no-closer-to-reality/",
+ "ownership_summary": "Owned by a group of individuals - Greg Kerfoot, Steve Luczo, Jeff Mallett and Steve Nash - that came together in 2008 (Kerfoot has owned the Whitecaps since 2002). The owners put the club up for sale in December 2024; as of September 2026 no sale had been agreed and the asking price is not public.",
+ "ownership_type": "consortium",
+ "revenue": 46000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenue: $46 million | Operating Income: -$12 million Key Owners: Greg Kerfoot, Jeff Mallett",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The Most Valuable MLS Teams 2026",
+ "revenue_source_url": "https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "short_name": "Whitecaps",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.whitecapsfc.com/club/ownership-status",
+  "https://www.whitecapsfc.com/club/history",
+  "https://www.sportsnet.ca/mls/article/whitecaps-ceo-says-sale-of-mls-team-no-closer-to-reality/",
+  "https://www.sportsbusinessjournal.com/Articles/2026/09/24/whitecaps-ceo-remains-concerned-as-ownership-talks-yield-no-breakthrough/",
+  "https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+  "https://www.bcplace.com/about",
+  "https://www.sportsnet.ca/mls/article/group-led-by-former-canucks-owner-arthur-griffiths-makes-offer-to-buy-whitecaps/"
+ ],
+ "sport": "football",
+ "stadium": "BC Place",
+ "stadium_capacity": 55000,
+ "stadium_capacity_evidence": "The 55,000-seat venue is owned and operated by PavCo, a provincial Crown corporation.",
+ "stadium_capacity_source_url": "https://www.sportsnet.ca/mls/article/whitecaps-ceo-says-sale-of-mls-team-no-closer-to-reality/",
+ "stadium_owner": {
+  "detail": "Owned and operated by PavCo (BC Pavilion Corporation), a British Columbia provincial Crown corporation; the club is a tenant.",
+  "evidence": "The 55,000-seat venue is owned and operated by PavCo, a provincial Crown corporation.",
+  "source_url": "https://www.sportsnet.ca/mls/article/whitecaps-ceo-says-sale-of-mls-team-no-closer-to-reality/",
+  "value": "state"
+ },
+ "valuation": 445000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "#29. $445 million Vancouver Whitecaps FC",
+ "valuation_source_name": "Forbes, The Most Valuable MLS Teams 2026",
+ "valuation_source_url": "https://www.forbes.com/sites/justinbirnbaum/2026/02/13/the-most-valuable-mls-teams-2026/",
+ "valuation_year": 2026
+}

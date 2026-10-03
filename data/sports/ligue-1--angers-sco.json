@@ -1,0 +1,172 @@
+{
+ "city": "Angers",
+ "country": "France",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "May 2018",
+   "evidence": "En mai 2018, Angers SCO et la Ville d’Angers signent un bail emphytéotique de 35 ans",
+   "headline": "Angers SCO takes a 35-year emphyteutic lease on Stade Raymond-Kopa from the City",
+   "investor": "Angers SCO",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": "City of Angers (Ville d'Angers)",
+   "source_name": "Angers SCO (club website, stadium page)",
+   "source_url": "https://angers-sco.fr/club/stade/",
+   "stake_pct": null,
+   "summary": "The club and the City of Angers signed a 35-year emphyteutic lease on the municipal stadium, giving the club scope to fund works; the Saint-Léonard stand was rebuilt from 2019 and opened for 2022-23, taking capacity to 19,800. No price or rent is published.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "angers-sco.fr",
+ "facts": {
+  "attendance": {
+   "average": 13100,
+   "evidence": "Avec une moyenne de plus de 13.100 spectateurs par match",
+   "season": "2024-25",
+   "source_name": "Angers SCO, interview with management board chairman Jérôme Negroni (May 2025): 'more than 13,100' per match",
+   "source_url": "https://angers-sco.fr/jerome-negroni-batir-un-club-sur-de-lamour-des-ideaux-et-un-ancrage/"
+  },
+  "chair": {
+   "evidence": "Saïd Chabane – Propriétaire / Président du Conseil de Surveillance",
+   "name": "Saïd Chabane",
+   "source_url": "https://angers-sco.fr/club/organisation/",
+   "title": "Owner and Chairman of the Supervisory Board (Président du Conseil de Surveillance)"
+  },
+  "chief_executive": {
+   "evidence": "Jérome Negroni – Président du Directoire",
+   "name": "Jérôme Negroni",
+   "source_url": "https://angers-sco.fr/club/organisation/",
+   "title": "Chairman of the Management Board (Président du Directoire)"
+  },
+  "kit_supplier": {
+   "evidence": "Le logo de notre équipementier Nike en doré sur l’autre côté du torse.",
+   "name": "Nike",
+   "source_url": "https://angers-sco.fr/plus-quun-maillot-un-symbole-de-notre-identite-de-notre-histoire-et-de-notre-passion-%e2%9a%ab%ef%b8%8f%e2%9a%aa%ef%b8%8f/"
+  },
+  "legal_entity": {
+   "evidence": "immatriculée au Registre du Commerce et des Sociétés d’Angers sous le numéro RCS Angers B 347 863 102",
+   "name": "ANGERS SCO (société anonyme, share capital EUR 497,835)",
+   "registry": "RCS Angers (French trade and companies register)",
+   "registry_id": "347 863 102",
+   "source_url": "https://angers-sco.fr/mentions-legales/"
+  },
+  "operating_result": {
+   "amount": -22016000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "OPERATING RESULT (LOSS) -22 016",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Individual club accounts 2024/2025 (operating result before player trading, K EUR)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "pretax_result": {
+   "amount": -5844000,
+   "currency": "EUR",
+   "evidence": "PROFIT (LOSS) BEFORE TAX -5 844",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Individual club accounts 2024/2025 (profit before tax, K EUR)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 9171000,
+   "commercial": 4040000,
+   "currency": "EUR",
+   "evidence": "Broadcasting rights 9 171",
+   "matchday": 4361000,
+   "other": 3017000,
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Individual club accounts 2024/2025 (gate receipts, broadcasting rights, sponsors-advertising, other income; K EUR)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  },
+  "stadium_owner": {
+   "detail": "The City of Angers has owned the ground since 1957; in May 2018 the club and the City signed a 35-year emphyteutic lease (bail emphytéotique) that lets the club carry out works, and the club rebuilt the Saint-Léonard stand (opened 2022). The club's organisation page describes the stadium built under Saïd Chabane as its own property.",
+   "evidence": "En mai 2018, Angers SCO et la Ville d’Angers signent un bail emphytéotique de 35 ans",
+   "source_url": "https://angers-sco.fr/club/stade/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 27164000,
+   "currency": "EUR",
+   "evidence": "Total payroll 27 164",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Individual club accounts 2024/2025 (total payroll, K EUR)",
+   "source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf"
+  }
+ },
+ "founded_evidence": "Fondé en 1919, la même année que la création de la Fédération Française de Football",
+ "founded_source_url": "https://angers-sco.fr/club/histoire/",
+ "founded_year": 1919,
+ "key": "ligue-1--angers-sco",
+ "league": "Ligue 1",
+ "name": "Angers SCO (Angers Sporting Club de l'Ouest)",
+ "notes": "Revenue and P&L facts are the DNCG 2024/25 individual club accounts (perimeter: SA + Association + Financière Le Buron + subsidiaries, K EUR; Angers was in Ligue 1 that season); 'revenue' is total non-transfer earnings, excluding a EUR 12.5m profit on player trading; financial debts EUR 10.9m and cash EUR 7.0m, but no net-debt figure is published. The club says 2025-26 player sales (EUR 20m, EUR 38m including Sidiki Cherif's permanent move) let it divide its debt by five, without giving amounts. The holding that carries the 99.1% is not named by the source; the register shows Chabane's Société Financière Cosnelle presiding Financière Le Buron, which is inside the DNCG perimeter. Chabane bought the club in 2011 for about USD 1.8m (Front Office Sports) / about EUR 1.7m (Sportune), before this file's 2015 deal window. Sale talk is not recorded as a deal or valuation: the 2022 sale (reported at USD 84m) collapsed; in September 2025 press reported a refused EUR 30m offer and an asking price of about EUR 50m, with the owner citing more than EUR 67m of non-sporting assets. Governance moved in 2025-26 from a board of directors to a supervisory board and management board. Attendance is the club's own 'more than 13,100' average for 2024-25 (recorded as 13,100; the club called it the second-highest in its history). No shirt sponsor named on a club page found; no social or honours figures recorded.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "qui détient via sa holding 99,1 % des actions du club angevin",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Saïd Chabane (via his holding company; Cosnelle group)",
+   "since_year": 2011,
+   "source_url": "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+   "stake_pct": 99.1,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+ "ownership_summary": "Owned since 2011 by Saïd Chabane, head of the Sarthe agri-food group Cosnelle, who holds 99.1% of the shares through his holding company and chairs the supervisory board; day-to-day management sits with a management board chaired by Jérôme Negroni. No institutional investor is on the register. A 2022 sale (reported at USD 84m) collapsed, and in 2025 the owner was reported to have turned down a EUR 30m offer while the club remains open to a buyer.",
+ "ownership_type": "individual_family",
+ "revenue": 20589000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL NON-TRANSFER EARNINGS 20 589",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "LFP / DNCG, Individual club accounts 2024/2025 season (Angers SCO, SA + Association + Financière Le Buron + subsidiaries; total non-transfer earnings, in K EUR)",
+ "revenue_source_url": "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+ "short_name": "Angers SCO",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://angers-sco.fr/club/histoire/",
+  "https://angers-sco.fr/club/stade/",
+  "https://angers-sco.fr/club/organisation/",
+  "https://angers-sco.fr/mentions-legales/",
+  "https://angers-sco.fr/bilan-de-la-saison-et-ambitions-pour-la-saison-2026-2027/",
+  "https://angers-sco.fr/plus-quun-maillot-un-symbole-de-notre-identite-de-notre-histoire-et-de-notre-passion-%e2%9a%ab%ef%b8%8f%e2%9a%aa%ef%b8%8f/",
+  "https://www.lfp.fr/assets/INDIVIDUAL_CLUBS_ACCOUNTS_2024_2025_8d1809bbad.pdf",
+  "https://recherche-entreprises.api.gouv.fr/search?q=347863102",
+  "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+  "https://frontofficesports.com/ligue-1-club-angers-set-to-be-sold-for-84m/",
+  "https://www.lequotidiendusport.fr/said-chabane-a-refuse-30-me-pour-le-sco-angers/",
+  "https://lessentieldeleco.fr/3386-sco-dangers-qui-est-pret-a-payer-50-millions-pour-racheter-le-club/",
+  "https://sportune.20minutes.fr/sport-business/football/om-psg-ol-losc-rc-lens-de-1-euro-a-100-millions-combien-ont-coute-les-clubs-de-ligue-1-a-leurs-proprietaires-412720/2",
+  "https://angers-sco.fr/jerome-negroni-batir-un-club-sur-de-lamour-des-ideaux-et-un-ancrage/",
+  "https://angers-sco.fr/record-daffluence-en-vue/"
+ ],
+ "sport": "football",
+ "stadium": "Stade Raymond-Kopa",
+ "stadium_capacity": 19800,
+ "stadium_capacity_evidence": "portant la capacité totale du stade à 19 800 places",
+ "stadium_capacity_source_url": "https://angers-sco.fr/club/stade/",
+ "stadium_owner": {
+  "detail": "The City of Angers has owned the ground since 1957; in May 2018 the club and the City signed a 35-year emphyteutic lease (bail emphytéotique) that lets the club carry out works, and the club rebuilt the Saint-Léonard stand (opened 2022). The club's organisation page describes the stadium built under Saïd Chabane as its own property.",
+  "evidence": "En mai 2018, Angers SCO et la Ville d’Angers signent un bail emphytéotique de 35 ans",
+  "source_url": "https://angers-sco.fr/club/stade/",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

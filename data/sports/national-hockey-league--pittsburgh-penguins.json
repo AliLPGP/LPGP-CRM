@@ -1,0 +1,178 @@
+{
+ "city": "Pittsburgh",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 900000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": "Late 2021",
+   "evidence": "FSG bought the Penguins in late 2021 for $900 million",
+   "headline": "Fenway Sports Group buys the Penguins for $900m",
+   "investor": "Fenway Sports Group",
+   "investor_type": "corporate",
+   "kind": "acquisition",
+   "seller": null,
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/team-sales/2026/nhl-approves-penguins-sale-hoffmann-family-1234936872/",
+   "stake_pct": null,
+   "summary": "FSG acquired a controlling interest in the Penguins in 2021, adding the team to a portfolio including the Boston Red Sox and Liverpool FC.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "date": "2025-12-19",
+   "date_text": "Agreed December 19, 2025; NHL approval June 23, 2026",
+   "evidence": "The enterprise value in the deal was $1.7 billion, according to someone familiar with the agreement.",
+   "headline": "Hoffmann family buys controlling interest in the Penguins from FSG",
+   "investor": "Hoffmann Family of Companies",
+   "investor_type": "private_equity",
+   "kind": "acquisition",
+   "seller": "Fenway Sports Group",
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/team-sales/2026/nhl-approves-penguins-sale-hoffmann-family-1234936872/",
+   "stake_pct": null,
+   "summary": "Definitive agreement announced December 2025; NHL Board of Governors approved unanimously June 23, 2026. Enterprise value $1.7bn per Sportico's source; FSG stays a minority shareholder for a period; the SportsNet Pittsburgh RSN equity transfers to the Hoffmanns. Allen & Co. and CAA Evolution advised FSG.",
+   "valuation": 1700000000,
+   "valuation_currency": "USD",
+   "verified": true
+  }
+ ],
+ "domain": "nhl.com/penguins",
+ "facts": {
+  "attendance": {
+   "average": 16635,
+   "evidence": "Average per-game attendance of 16,635 during the 2024-25 season",
+   "season": "2024-25",
+   "source_name": "Sportico",
+   "source_url": "https://www.sportico.com/business/team-sales/2026/nhl-approves-penguins-sale-hoffmann-family-1234936872/"
+  },
+  "chair": {
+   "evidence": "Chairman & Governor",
+   "name": "Geoff Hoffmann",
+   "source_url": "https://www.nhl.com/penguins/team/staff",
+   "title": "Chairman & Governor"
+  },
+  "chief_executive": {
+   "evidence": "President of Business Operations",
+   "name": "Marcel Braithwaite",
+   "source_url": "https://www.nhl.com/penguins/team/staff",
+   "title": "President of Business Operations"
+  },
+  "honours": {
+   "competition": "Stanley Cup",
+   "evidence": "won the Cup in 1991 and 1992, then again in 2009 and 2016",
+   "league_titles": 5,
+   "source_url": "https://www.nhl.com/news/second-six-expansion-changed-nhl-50-years-ago-289774952"
+  },
+  "legal_entity": {
+   "evidence": "trademarks of Pittsburgh Penguins LP",
+   "name": "Pittsburgh Penguins LP",
+   "registry": null,
+   "registry_id": null,
+   "source_url": "https://www.nhl.com/penguins/team/staff"
+  },
+  "operating_result": {
+   "amount": 60000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$60M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - EBITDA, net of revenue sharing and arena debt service",
+   "source_url": "https://www.forbes.com/teams/pittsburgh-penguins/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Sports & Exhibition Authority of Pittsburgh and Allegheny County and master leased to the Penguins",
+   "evidence": "is owned by the SEA and master leased to the Pittsburgh Penguins",
+   "source_url": "https://www.pgh-sea.com/index.php?path=fac-ppg",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 97000000,
+   "currency": "USD",
+   "evidence": "$97M",
+   "season": "2024-25",
+   "source_name": "Forbes (estimate) - player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/pittsburgh-penguins/"
+  }
+ },
+ "founded_evidence": "Penguins, Blues, Kings, North Stars, Seals, Flyers joined League on June 5, 1967",
+ "founded_source_url": "https://www.nhl.com/news/second-six-expansion-changed-nhl-50-years-ago-289774952",
+ "founded_year": 1967,
+ "key": "national-hockey-league--pittsburgh-penguins",
+ "league": "National Hockey League",
+ "name": "Pittsburgh Penguins",
+ "notes": "US team: no published accounts; revenue, operating income (EBITDA) and player expenses are Forbes estimates for 2024-25, valuation is Forbes enterprise value calculated December 2025 (before the Hoffmann sale closed; Forbes still lists FSG). Deal value: the release says terms were not disclosed; the $1.7bn enterprise value is Sportico's sourced report. Stake percentages not stated (\"controlling interest\"); FSG minority stake is described as temporary and may have ended. Capacity: the SEA page gives 18387 in key facts but 'approximately 18,087' in its text; the arena's FAQ says 18,187. Missing: social, shirt/kit sponsor, net debt, revenue breakdown (Forbes gate receipts $71M).",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "entered into a definitive agreement for the Hoffmanns to acquire a controlling interest in the Pittsburgh Penguins",
+   "institutional": true,
+   "investor_type": "private_equity",
+   "kind": "family",
+   "name": "Hoffmann Family of Companies",
+   "since_year": 2026,
+   "source_url": "https://www.nhl.com/penguins/news/hoffmann-family-to-acquire-controlling-interest-in-pittsburgh-penguins-from-fenway-sports-group",
+   "stake_pct": null,
+   "valuation_at_entry": 1700000000
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "will remain a minority shareholder for a period of time",
+   "institutional": true,
+   "investor_type": "corporate",
+   "kind": "company",
+   "name": "Fenway Sports Group",
+   "since_year": 2021,
+   "source_url": "https://www.nhl.com/penguins/news/hoffmann-family-to-acquire-controlling-interest-in-pittsburgh-penguins-from-fenway-sports-group",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.nhl.com/penguins/news/hoffmann-family-receives-unanimous-nhl-approval-to-acquire-pittsburgh-penguins",
+ "ownership_summary": "Controlled since June 2026 by Hoffmann Family of Companies, a Chicago-based family-owned private equity firm led by Geoff Hoffmann (Governor), which bought a controlling interest from Fenway Sports Group at a reported $1.7bn enterprise value; FSG, owner since late 2021, said it would remain a minority shareholder for a period of time.",
+ "ownership_type": "private_equity",
+ "revenue": 230000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$230M",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "Forbes (estimate), The Business of Hockey, December 2025",
+ "revenue_source_url": "https://www.forbes.com/teams/pittsburgh-penguins/",
+ "short_name": "Penguins",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/pittsburgh-penguins/",
+  "https://www.nhl.com/penguins/news/hoffmann-family-to-acquire-controlling-interest-in-pittsburgh-penguins-from-fenway-sports-group",
+  "https://www.nhl.com/penguins/news/hoffmann-family-receives-unanimous-nhl-approval-to-acquire-pittsburgh-penguins",
+  "https://www.sportico.com/business/team-sales/2026/nhl-approves-penguins-sale-hoffmann-family-1234936872/",
+  "https://www.nhl.com/penguins/team/staff",
+  "https://www.pgh-sea.com/index.php?path=fac-ppg",
+  "https://www.nhl.com/news/second-six-expansion-changed-nhl-50-years-ago-289774952"
+ ],
+ "sport": "ice_hockey",
+ "stadium": "PPG Paints Arena",
+ "stadium_capacity": 18387,
+ "stadium_capacity_evidence": "Total Number of Seats: 18387",
+ "stadium_capacity_source_url": "https://www.pgh-sea.com/index.php?path=fac-ppg",
+ "stadium_owner": {
+  "detail": "Owned by the Sports & Exhibition Authority of Pittsburgh and Allegheny County and master leased to the Penguins",
+  "evidence": "is owned by the SEA and master leased to the Pittsburgh Penguins",
+  "source_url": "https://www.pgh-sea.com/index.php?path=fac-ppg",
+  "value": "municipal"
+ },
+ "valuation": 1750000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$1.75B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/pittsburgh-penguins/",
+ "valuation_year": 2025
+}

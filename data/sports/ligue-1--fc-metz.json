@@ -1,0 +1,158 @@
+{
+ "city": "Metz",
+ "country": "France",
+ "deals": [
+  {
+   "amount": null,
+   "currency": null,
+   "date": null,
+   "date_text": "2018 (lease runs 2018-2068)",
+   "evidence": "bien que propriété de la ville de Metz, il est aujourd’hui détenu par le FC Metz via un bail emphytéotique de 50 ans (2018 à 2068)",
+   "headline": "FC Metz takes a 50-year emphyteutic lease on Stade Saint-Symphorien from the City of Metz",
+   "investor": "FC Metz",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": "City of Metz (lessor)",
+   "source_name": "FC Metz (club website, Infrastructures)",
+   "source_url": "https://www.fcmetz.com/club/infrastructures",
+   "stake_pct": null,
+   "summary": "The city-owned stadium has been held by the club under a 50-year emphyteutic lease since 2018 (to 2068). actu.fr reported in 2021 that the City of Metz asked for no financial consideration under this model. The club then rebuilt the south stand (opened 2021) and a south-west corner (2022).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "fcmetz.com",
+ "facts": {
+  "chair": {
+   "evidence": "Le projet ambitieux initié par le Président Bernard Serin",
+   "name": "Bernard Serin",
+   "source_url": "https://www.fcmetz.com/club/projet-de-club",
+   "title": "Président (chair and majority shareholder)"
+  },
+  "chief_executive": {
+   "evidence": "le FC Metz a officialisé la nomination d'Emmanuel Desplats, passé par Sochaux et Dijon, au poste de directeur général de la SASP",
+   "name": "Emmanuel Desplats",
+   "source_url": "https://www.republicain-lorrain.fr/sport/2026/06/22/fc-metz-emmanuel-desplats-succede-a-helene-schrub-comme-directeur-general",
+   "title": "Directeur général de la SASP (since June 2026, succeeding Hélène Schrub)"
+  },
+  "legal_entity": {
+   "evidence": "Raison sociale : SASP Football Club de METZ - 3 Allée Saint Symphorien - BP 40292 - 57006 METZ Cedex 1 Siret : 40369972100037",
+   "name": "SASP Football Club de Metz",
+   "registry": "French trade and companies register (RCS) - SIREN; SIRET 40369972100037 as stated on the club's legal notice",
+   "registry_id": "403699721",
+   "source_url": "https://www.fcmetz.com/mentions-legales"
+  },
+  "operating_result": {
+   "amount": -24507000,
+   "basis": "operating result before player trading (DNCG résultat des opérations hors mutation)",
+   "currency": "EUR",
+   "evidence": "RÉSULTAT DES OPÉRATIONS HORS MUTATION -24 507",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Comptes individuels des clubs, saison 2024/2025 (FC Metz, SASP + association; figures in k€)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "pretax_result": {
+   "amount": -551000,
+   "currency": "EUR",
+   "evidence": "RÉSULTAT AVANT IMPÔT -551",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Comptes individuels des clubs, saison 2024/2025 (FC Metz, SASP + association; figures in k€): résultat avant impôt (player trading added 28,713 k€)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 7384000,
+   "commercial": 7460000,
+   "currency": "EUR",
+   "evidence": "Droits audiovisuels 7 384 Sponsors - Publicité 7 460 Recettes matches 4 494 Autres produits 4 177",
+   "matchday": 4494000,
+   "other": 4177000,
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Comptes individuels des clubs, saison 2024/2025 (FC Metz, SASP + association; figures in k€): recettes matches / droits audiovisuels / sponsors-publicité / autres produits",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the City of Metz but held by FC Metz under a 50-year emphyteutic lease running from 2018 to 2068; the club has used the ground since 1932 and rebuilt the south (presidential) stand in 2021.",
+   "evidence": "bien que propriété de la ville de Metz, il est aujourd’hui détenu par le FC Metz via un bail emphytéotique de 50 ans (2018 à 2068)",
+   "source_url": "https://www.fcmetz.com/club/infrastructures",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 19976000,
+   "currency": "EUR",
+   "evidence": "Rémunération du personnel chargée 19 976",
+   "season": "2024-25",
+   "source_name": "LFP / DNCG, Comptes individuels des clubs, saison 2024/2025 (FC Metz, SASP + association; figures in k€): rémunération du personnel chargée (all staff pay including social charges)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  }
+ },
+ "founded_evidence": "Le 15 avril 1932, le CAM adhère au Groupement des Clubs Autorisés, l’ancêtre de la Ligue de Football Professionnel, et prend la dénomination de Football Club de Metz",
+ "founded_source_url": "https://www.fcmetz.com/histoire/histoire-du-club",
+ "founded_year": 1932,
+ "key": "ligue-1--fc-metz",
+ "league": "Ligue 1",
+ "name": "Football Club de Metz",
+ "notes": "Every earlier source (footballgroundmap) is replaced. League: the key says Ligue 1, but FC Metz was relegated at the end of 2025-26 and plays Ligue 2 in 2026-27 (France 3 Régions, 3 May 2026; Le Républicain Lorrain, June 2026); it was also a Ligue 2 club in 2024-25, the season the financials cover. Financials come from the LFP/DNCG individual club accounts for 2024/25 (k€, SASP plus association). On that PDF spread FC Metz (page 34) and Paris FC (page 35) share one page; the figures were assigned by column position, and FC Metz is the left-hand column. Pre-tax result -551 k€ and net result -550 k€: player trading (+28,713 k€) offset the -24,507 k€ operating result before transfers. The DNCG balance sheet shows financial debts of 3,939 k€ and cash of 8,064 k€; net debt is not stated, so it is left null. Serin's percentage stake is not published. The club's history page dates his move to majority owner to 2009, when he became president; Le Républicain Lorrain and France Bleu say spring 2008. Le Républicain Lorrain (26 Sep 2026) says Serin is waiting for a credible buyer for the club, and 2026 press headlines reported that Liverpool's owners (FSG) had quietly looked at it. No transaction has been announced, so no sale is recorded as a deal. Hélène Schrub, directrice générale since 2016, left in May 2026. No valuation, attendance average, sponsor or social-media count is stated on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Entré au capital du FC Metz dès 2006, Bernard Serin en devient actionnaire majoritaire (en rachetant une partie des parts de Carlo Molinari) en 2008",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Bernard Serin",
+   "since_year": 2008,
+   "source_url": "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+ "ownership_summary": "Bernard Serin, the Moselle industrialist who heads the John Cockerill group, controls FC Metz: he entered the capital in 2006, became majority shareholder in 2008 by buying part of Carlo Molinari's shares, and has been president since June 2009. No stake percentage or other shareholder is published. In September 2026 Serin was openly waiting for a credible buyer; no sale has been announced. Serin also owns and, since August 2025, chairs Belgian club RFC Seraing.",
+ "ownership_type": "individual_family",
+ "revenue": 23515000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL PRODUITS HORS MUTATION 23 515",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "LFP / DNCG, Comptes individuels des clubs, saison 2024/2025 (FC Metz, SASP + association; figures in k€): total produits hors mutation (revenue excluding player trading); FC Metz played 2024/25 in Ligue 2",
+ "revenue_source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf",
+ "short_name": "FC Metz",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.fcmetz.com/histoire/histoire-du-club",
+  "https://www.fcmetz.com/club/infrastructures",
+  "https://www.fcmetz.com/club/projet-de-club",
+  "https://www.fcmetz.com/mentions-legales",
+  "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf",
+  "https://www.republicain-lorrain.fr/sport/2025/11/21/milliardaires-fonds-d-investissement-a-qui-appartiennent-les-clubs-de-ligue-1",
+  "https://www.republicain-lorrain.fr/sport/2026/06/22/fc-metz-emmanuel-desplats-succede-a-helene-schrub-comme-directeur-general",
+  "https://www.republicain-lorrain.fr/sport/2026/09/26/dans-les-coulisses-de-la-vente-d-un-club-professionnel",
+  "https://lpost.be/bernard-serin-prend-la-presidence-du-rfc-seraing-en-remplacement-de-marc-sombreffe/",
+  "https://actu.fr/pays-de-la-loire/nantes_44109/fc-nantes-le-loyer-du-stade-de-la-beaujoire-renegocie-voici-ce-que-versent-les-autres-clubs_39161790.html",
+  "https://recherche-entreprises.api.gouv.fr/search?q=FC%20METZ&activite_principale=93.12Z",
+  "https://www.ici.fr/sports/football/fc-metz-la-decennie-du-president-serin-1558712958",
+  "https://www.republicain-lorrain.fr/sport/2025/11/21/bernard-serin-ouvert-a-la-multipropriete-pour-assurer-l-avenir-du-fc-metz"
+ ],
+ "sport": "football",
+ "stadium": "Stade Saint-Symphorien",
+ "stadium_capacity": 28786,
+ "stadium_capacity_evidence": "il dispose d’une capacité de 28 786 places",
+ "stadium_capacity_source_url": "https://www.fcmetz.com/club/infrastructures",
+ "stadium_owner": {
+  "detail": "Owned by the City of Metz but held by FC Metz under a 50-year emphyteutic lease running from 2018 to 2068; the club has used the ground since 1932 and rebuilt the south (presidential) stand in 2021.",
+  "evidence": "bien que propriété de la ville de Metz, il est aujourd’hui détenu par le FC Metz via un bail emphytéotique de 50 ans (2018 à 2068)",
+  "source_url": "https://www.fcmetz.com/club/infrastructures",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

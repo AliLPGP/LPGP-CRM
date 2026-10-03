@@ -1,0 +1,112 @@
+{
+ "city": "St. Louis",
+ "country": "United States",
+ "deals": [],
+ "domain": "mlb.com/cardinals",
+ "facts": {
+  "chair": {
+   "evidence": "Chairman and Principal Owner",
+   "name": "William O. DeWitt Jr.",
+   "source_url": "https://www.mlb.com/cardinals/team/front-office",
+   "title": "Chairman and Principal Owner"
+  },
+  "chief_executive": {
+   "evidence": "Bill DeWitt III has been named CEO of the Cardinals.",
+   "name": "William O. DeWitt III",
+   "source_url": "https://www.mlb.com/news/cardinals-announce-organizational-leadership-transition",
+   "title": "Chief executive officer"
+  },
+  "honours": {
+   "competition": "World Series",
+   "evidence": "winning 19 National League Pennants and 11 World Series Championships",
+   "league_titles": 11,
+   "source_url": "https://www.mlb.com/cardinals/ballpark/facts"
+  },
+  "operating_result": {
+   "amount": 33000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "$33M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), EBITDA net of revenue sharing and stadium debt service",
+   "source_url": "https://www.forbes.com/teams/st-louis-cardinals/"
+  },
+  "stadium_owner": {
+   "detail": "Forbes lists the St. Louis Cardinals as the owner of Busch Stadium (opened 2006).",
+   "evidence": "St Louis Cardinals",
+   "source_url": "https://www.forbes.com/teams/st-louis-cardinals/",
+   "value": "club"
+  },
+  "wages": {
+   "amount": 162000000,
+   "currency": "USD",
+   "evidence": "$162M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), player expenses incl. benefits and bonuses",
+   "source_url": "https://www.forbes.com/teams/st-louis-cardinals/"
+  }
+ },
+ "founded_evidence": "The Cardinals were founded in 1882 as an American Association Team called the St. Louis Brown Stockings.",
+ "founded_source_url": "https://www.mlb.com/cardinals/ballpark/facts",
+ "founded_year": 1882,
+ "key": "major-league-baseball--st-louis-cardinals",
+ "league": "Major League Baseball",
+ "name": "St. Louis Cardinals",
+ "notes": "Revenue, operating income and player expenses are Forbes estimates for the 2025 season; valuation is Forbes March 2026. The owner row's amount ($150M) is Forbes' 'Price Paid' for the 1996 purchase (the whole club, not the family's share); the family's percentage is not disclosed. Forbes lists Seating Capacity 44,383; MLB.com's guide gives 44,494 (used). No ownership transaction, minority investment or stadium financing since 2015 was found. Not found: legal entity, attendance, kit supplier, jersey patch sponsor, socials.",
+ "owners": [
+  {
+   "amount": 150000000,
+   "currency": "USD",
+   "evidence": "he and his immediate family acquired controlling interest in the team",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "DeWitt family (led by William O. DeWitt Jr.)",
+   "since_year": 1996,
+   "source_url": "https://www.mlb.com/cardinals/team/front-office/william-dewitt-jr",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.mlb.com/cardinals/team/front-office/william-dewitt-jr",
+ "ownership_summary": "Owned by an investment group led by Bill DeWitt Jr., which bought the club from Anheuser-Busch in 1996; the DeWitt family holds the controlling interest. In June 2026 DeWitt Jr. stayed principal owner and chairman and his son Bill DeWitt III became CEO. No private equity or other fund holder is on record.",
+ "ownership_type": "individual_family",
+ "revenue": 350000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "$350M",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), MLB team valuations 2026",
+ "revenue_source_url": "https://www.forbes.com/teams/st-louis-cardinals/",
+ "short_name": "Cardinals",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.forbes.com/teams/st-louis-cardinals/",
+  "https://www.espn.com/mlb/story/_/id/47979684/who-current-mlb-team-owners",
+  "https://www.mlb.com/cardinals/team/front-office/william-dewitt-jr",
+  "https://www.mlb.com/cardinals/team/front-office",
+  "https://www.mlb.com/news/cardinals-announce-organizational-leadership-transition",
+  "https://www.mlb.com/cardinals/ballpark/facts",
+  "https://www.mlb.com/news/featured/busch-stadium-guide-capacity-seating-chart-parking-and-more"
+ ],
+ "sport": "baseball",
+ "stadium": "Busch Stadium",
+ "stadium_capacity": 44494,
+ "stadium_capacity_evidence": "44,494",
+ "stadium_capacity_source_url": "https://www.mlb.com/news/featured/busch-stadium-guide-capacity-seating-chart-parking-and-more",
+ "stadium_owner": {
+  "detail": "Forbes lists the St. Louis Cardinals as the owner of Busch Stadium (opened 2006).",
+  "evidence": "St Louis Cardinals",
+  "source_url": "https://www.forbes.com/teams/st-louis-cardinals/",
+  "value": "club"
+ },
+ "valuation": 2750000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$2.75B",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://www.forbes.com/teams/st-louis-cardinals/",
+ "valuation_year": 2026
+}

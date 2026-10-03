@@ -1,0 +1,119 @@
+{
+ "city": "Jacksonville",
+ "country": "United States",
+ "deals": [
+  {
+   "amount": 1400000000,
+   "currency": "USD",
+   "date": null,
+   "date_text": "2025-2028",
+   "evidence": "The one-time capital expenditure direct spending impact of $1.4 billion",
+   "headline": "EverBank Stadium 'Stadium of the Future' renovation, $1.4 billion",
+   "investor": "Jacksonville Jaguars and City of Jacksonville",
+   "investor_type": "other",
+   "kind": "stadium_financing",
+   "seller": null,
+   "source_name": "Jacksonville Jaguars, Stadium of the Future FAQs",
+   "source_url": "https://www.jaguars.com/stadiumofthefuture/faqs/",
+   "stake_pct": null,
+   "summary": "Renovation of the city-owned EverBank Stadium; reduced capacity of 42,465 in 2026, 2027 home games in Orlando, plus a $300 million community benefits agreement ($150 million each from the Jaguars and the City). The page does not state the cost split of the stadium itself.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "jaguars.com",
+ "facts": {
+  "chief_executive": {
+   "evidence": "Lamping President",
+   "name": "Mark Lamping",
+   "source_url": "https://www.jaguars.com/team/front-office-roster/",
+   "title": "President"
+  },
+  "operating_result": {
+   "amount": 31000000,
+   "basis": "operating income (Forbes estimate)",
+   "currency": "USD",
+   "evidence": "Revenue: $591 million | Operating Income: $31 million | Owner: Shahid Khan",
+   "season": "2025",
+   "source_name": "Forbes (estimate), The NFL's Most Valuable Teams 2026",
+   "source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the City of Jacksonville",
+   "evidence": "Venue EverBank Stadium Owner(s) City of Jacksonville",
+   "source_url": "https://web.archive.org/web/20260920093454/https://www.forbes.com/teams/jacksonville-jaguars/",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 425000000,
+   "currency": "USD",
+   "evidence": "Player Expenses 5 Includes benefits and bonuses. $425M",
+   "season": "2025",
+   "source_name": "Forbes (estimate), team profile: player expenses incl. benefits and bonuses",
+   "source_url": "https://web.archive.org/web/20260920093454/https://www.forbes.com/teams/jacksonville-jaguars/"
+  }
+ },
+ "founded_evidence": "On November 30, 1993, at 4:12 p.m., an incredible four-year campaign was over.",
+ "founded_source_url": "https://www.profootballhof.com/teams/jacksonville-jaguars/team-history/",
+ "founded_year": 1993,
+ "key": "national-football-league--jacksonville-jaguars",
+ "league": "National Football League",
+ "name": "Jacksonville Jaguars",
+ "notes": "Revenue, operating income, player expenses and valuation are Forbes estimates (2026 list / profile, 2025 season). Capacity 67,862 is Forbes' pre-renovation figure; the club states 2026 capacity is 42,465 and the renovated stadium will seat more than 63,000. The city/team split of the $1.4bn renovation is not stated on a page I could read (The Athletic and ESPN blocked). Founding date is the NFL award to J. Wayne Weaver (franchise awarded 30 Nov 1993). No legal entity, kit supplier, honours, attendance or social counts found. No institutional investor found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Shad Khan Owner",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "individual",
+   "name": "Shad Khan",
+   "since_year": 2012,
+   "source_url": "https://www.jaguars.com/team/front-office-roster/",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://www.jaguars.com/news/jaguars-history-14157431",
+ "ownership_summary": "Owned by Shad (Shahid) Khan, who agreed to buy the club from founder Wayne Weaver on 29 November 2011 and took ownership in January 2012. No minority or institutional investor is stated on a citable page.",
+ "ownership_type": "individual_family",
+ "revenue": 591000000,
+ "revenue_currency": "USD",
+ "revenue_evidence": "Revenue: $591 million | Operating Income: $31 million | Owner: Shahid Khan",
+ "revenue_season": "2025",
+ "revenue_source_name": "Forbes (estimate), The NFL's Most Valuable Teams 2026",
+ "revenue_source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+ "short_name": "Jaguars",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+  "https://web.archive.org/web/20260920093454/https://www.forbes.com/teams/jacksonville-jaguars/",
+  "https://www.jaguars.com/team/front-office-roster/",
+  "https://www.jaguars.com/news/jaguars-history-14157431",
+  "https://www.profootballhof.com/teams/jacksonville-jaguars/team-history/",
+  "https://www.jaguars.com/stadiumofthefuture/faqs/"
+ ],
+ "sport": "american_football",
+ "stadium": "EverBank Stadium",
+ "stadium_capacity": 67862,
+ "stadium_capacity_evidence": "Seating Capacity 67,862",
+ "stadium_capacity_source_url": "https://web.archive.org/web/20260920093454/https://www.forbes.com/teams/jacksonville-jaguars/",
+ "stadium_owner": {
+  "detail": "Owned by the City of Jacksonville",
+  "evidence": "Venue EverBank Stadium Owner(s) City of Jacksonville",
+  "source_url": "https://web.archive.org/web/20260920093454/https://www.forbes.com/teams/jacksonville-jaguars/",
+  "value": "municipal"
+ },
+ "valuation": 8050000000,
+ "valuation_currency": "USD",
+ "valuation_evidence": "$8.05 billion Jacksonville Jaguars One-Year Change: 44%",
+ "valuation_source_name": "Forbes",
+ "valuation_source_url": "https://web.archive.org/web/20261001225240/https://www.forbes.com/sites/justinteitelbaum/2026/09/09/the-nfls-most-valuable-teams-2026/",
+ "valuation_year": 2026
+}

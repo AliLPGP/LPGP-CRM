@@ -1,0 +1,220 @@
+{
+ "city": "Vigo",
+ "country": "Spain",
+ "deals": [
+  {
+   "amount": 86641012.34,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "LaLiga Impulso allocation; liability at 30 June 2026",
+   "evidence": "siendo el importe total concedido al Club 86.641.012,34 euros.",
+   "headline": "Celta's LaLiga Impulso (CVC) participating loan: EUR 86.6m granted",
+   "investor": "LaLiga / CVC Capital Partners (LaLiga Impulso)",
+   "investor_type": "private_equity",
+   "kind": "league_stake",
+   "seller": null,
+   "source_name": "RC Celta de Vigo SAD annual accounts to 30 June 2026",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf",
+   "stake_pct": null,
+   "summary": "Celta's share of LaLiga's deal with CVC is a participating loan between LaLiga and the club with EUR 86.64m granted; the liability stood at EUR 55.24m at 30 June 2026 (EUR 50.31m a year earlier). The board says the Impulso funds are being used for, but do not fully cover, the Celta360 project.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  },
+  {
+   "amount": 10026148,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "Proposed September 2026 for the general meeting of 20 October 2026; subscription to 4 December 2026",
+   "evidence": "(10.026.148,00 €)",
+   "headline": "Celta proposes EUR 10m rights issue as first step of up-to-EUR 125m Celta360 financing",
+   "investor": "Existing shareholders (pre-emptive rights); a new minority investor only for unsubscribed shares",
+   "investor_type": "other",
+   "kind": "other",
+   "seller": null,
+   "source_name": "RC Celta board report on the capital increase (17 September 2026)",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/Informe-Ampliaci%C3%B3n-RCCV-17092026_signed-1-7.pdf",
+   "stake_pct": null,
+   "summary": "The board proposes issuing 15,752 new shares (nominal EUR 157,520 plus EUR 9,868,628 share premium) for EUR 10,026,148 to fund Celta360, the Afouteza training-ground, hotel, clinic and residence project; a new minority investor could take shares the current holders do not subscribe, and the board also seeks authority for further increases of up to half the share capital over three years.",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": true
+  }
+ ],
+ "domain": "rccelta.es",
+ "facts": {
+  "attendance": {
+   "average": 20007,
+   "evidence": "En competición de Liga fueron 380.127 espectadores los que asistieron a los 19 encuentros, a una media de 20.007 por partido.",
+   "season": "2025-26",
+   "source_name": "MARCA",
+   "source_url": "https://www.marca.com/futbol/celta/2026/06/17/obras-balaidos-rebajaron-asistencia-estadio-ultimo-ano.html"
+  },
+  "chair": {
+   "evidence": "Marián Mouriño",
+   "name": "Marián Mouriño",
+   "source_url": "https://rccelta.es/grupo-rccelta/organigrama/",
+   "title": "Presidenta (chair of the board)"
+  },
+  "kit_supplier": {
+   "evidence": "El Celta y Hummel presentan su nueva colección oficial para la temporada 2026/27",
+   "name": "Hummel",
+   "source_url": "https://rccelta.es/club/actualidad/el-celta-presenta-la-coleccion-oficial-completa-para-la-temporada-2026-27/"
+  },
+  "legal_entity": {
+   "evidence": "C.I.F.: A-36609105",
+   "name": "Real Club Celta de Vigo, S.A.D.",
+   "registry": "Registro Mercantil de Pontevedra (CIF)",
+   "registry_id": "A-36609105",
+   "source_url": "https://rccelta.es/aviso-legal/"
+  },
+  "operating_result": {
+   "amount": -9628375.66,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "(9.628.375,66)",
+   "season": "2025-26",
+   "source_name": "RC Celta de Vigo SAD annual accounts to 30 June 2026 (resultado de explotación)",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf"
+  },
+  "pretax_result": {
+   "amount": -10437116.02,
+   "currency": "EUR",
+   "evidence": "(10.437.116,02)",
+   "season": "2025-26",
+   "source_name": "RC Celta de Vigo SAD annual accounts to 30 June 2026 (resultado antes de impuestos)",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 72931327.02,
+   "commercial": null,
+   "currency": "EUR",
+   "evidence": "72.931.327,02",
+   "matchday": null,
+   "other": null,
+   "season": "2025-26",
+   "source_name": "RC Celta de Vigo SAD annual accounts to 30 June 2026 (ingresos por retransmisión)",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "Se trata del logotipo de Estrella Galicia, la empresa cervecera que patrocina al club olívico en su camiseta desde 2016.",
+   "name": "Estrella Galicia",
+   "source_url": "https://metropolitano.gal/celta-de-vigo/justifica-polemico-pegote-patrocinio-estrella-galicia-camisetas-paga-por-ello/"
+  },
+  "stadium_owner": {
+   "detail": "Municipal stadium owned by the Concello de Vigo; the club uses Balaídos, Barreiro and A Madroa free of charge under a 1992 agreement that a 30 January 2009 agreement with the Concello extended to 2034. A new Gol stand was under construction during 2025-26.",
+   "evidence": "La Sociedad utiliza el Estadio Municipal de Balaidos",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 69267863.18,
+   "currency": "EUR",
+   "evidence": "(69.267.863,18)",
+   "season": "2025-26",
+   "source_name": "RC Celta de Vigo SAD annual accounts to 30 June 2026 (gastos de personal)",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf"
+  }
+ },
+ "founded_evidence": "El 23 de agosto de 1923 nace el RC Celta de Vigo tras la fusión del Vigo Sporting y el Fortuna de Vigo",
+ "founded_source_url": "https://rccelta.es/club/historia/",
+ "founded_year": 1923,
+ "key": "la-liga--rc-celta-de-vigo",
+ "league": "La Liga",
+ "name": "Real Club Celta de Vigo, S.A.D.",
+ "notes": "Revenue, broadcast, wages and results are from the 2025-26 accounts as formulated and published for the 20 October 2026 general meeting (2024-25: revenue EUR 72.93m, operating loss EUR 0.27m, pre-tax loss EUR 6.49m, net loss EUR 4.63m). The P&L splits matchday (competitions EUR 4.35m, season tickets and members EUR 8.08m) and commercial (advertising EUR 14.62m, merchandising and other EUR 5.13m) lines, not summed here. The accounts state the company has no senior-management contracts, so no chief executive is recorded. Social counts are the 2025-26 figures in the club's non-financial information report (EINF). Capacity 24,870 is the club's stated figure; Balaídos was being rebuilt (new Gol stand) during 2025-26. Celta played the 2025-26 UEFA Europa League and is back in it in 2026-27 (club statements). No valuation found on a citable page.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Grupo Corporativo Ges, S.L. 67,92 %",
+   "institutional": false,
+   "investor_type": null,
+   "kind": "family",
+   "name": "Grupo Corporativo Ges, S.L. (Mouriño family; ultimate parent Corporativo Ges España, S.A. de C.V.)",
+   "since_year": 2006,
+   "source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf",
+   "stake_pct": 67.92,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf",
+ "ownership_summary": "Real Club Celta de Vigo, S.A.D. is controlled by the Mouriño family through Grupo Corporativo Ges, S.L. (Vigo), which held 67.92% of the shares at 30 June 2026; the ultimate parent is Corporativo Ges España, S.A. de C.V. (Campeche, Mexico). Carlos Mouriño bought the shares of then-president Horacio Gómez in 2006 and GES added Abanca's 24% in 2014 for EUR 5.5m; Marián Mouriño is club president and has been sole administrator of GES since late 2021 (EFE/Iusport put the family's control at 76% in July 2025). The remaining shares are spread among minority shareholders. There is no institutional equity holder: CVC money arrives through the LaLiga Impulso participating loan (EUR 86.6m granted), and in September 2026 the board proposed a EUR 10m rights issue, part of an up-to-EUR 125m Celta360 financing, that could let a new minority investor take any unsubscribed shares while keeping current control.",
+ "ownership_type": "individual_family",
+ "revenue": 105110883.19,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "105.110.883,19",
+ "revenue_season": "2025-26",
+ "revenue_source_name": "Real Club Celta de Vigo, S.A.D. annual accounts to 30 June 2026, as formulated (importe neto de la cifra de negocios)",
+ "revenue_source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf",
+ "short_name": "Celta Vigo",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [
+  {
+   "as_of": "2026-06",
+   "evidence": "4,55 millones",
+   "followers": 4550000,
+   "platform": "Facebook",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/EINF-RC-Celta-30.06.2026.pdf"
+  },
+  {
+   "as_of": "2026-06",
+   "evidence": "735.654",
+   "followers": 735654,
+   "platform": "Instagram",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/EINF-RC-Celta-30.06.2026.pdf"
+  },
+  {
+   "as_of": "2026-06",
+   "evidence": "560.730",
+   "followers": 560730,
+   "platform": "X (Twitter)",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/EINF-RC-Celta-30.06.2026.pdf"
+  },
+  {
+   "as_of": "2026-06",
+   "evidence": "10,49 millones",
+   "followers": 10490000,
+   "platform": "TikTok",
+   "source_url": "https://rccelta.es/app/uploads/2026/09/EINF-RC-Celta-30.06.2026.pdf"
+  }
+ ],
+ "social_source_url": null,
+ "sources": [
+  "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf",
+  "https://rccelta.es/app/uploads/2026/05/INFORME-CUENTAS-ANUALES-FORMULADAS-individuales-INFORME-AUDITOR%C3%8DA.pdf",
+  "https://rccelta.es/app/uploads/2026/09/EINF-RC-Celta-30.06.2026.pdf",
+  "https://rccelta.es/app/uploads/2026/09/Informe-Ampliaci%C3%B3n-RCCV-17092026_signed-1-7.pdf",
+  "https://rccelta.es/app/uploads/2026/09/Informe-Delegaci%C3%B3n-Facultades-Futura-Ampliaci%C3%B3n-RCCV-17092026_signed-1-6.pdf",
+  "https://rccelta.es/club/actualidad/el-celta-trabaja-en-una-ronda-de-financiacion-para-el-desarrollo-de-celta360/",
+  "https://rccelta.es/grupo-rccelta/junta-de-accionistas/",
+  "https://rccelta.es/grupo-rccelta/informacion-economica-presupuestaria-y-estadistica/",
+  "https://rccelta.es/club/historia/",
+  "https://rccelta.es/club/instalaciones/",
+  "https://rccelta.es/aviso-legal/",
+  "https://rccelta.es/grupo-rccelta/organigrama/",
+  "https://rccelta.es/club/actualidad/el-celta-presenta-la-coleccion-oficial-completa-para-la-temporada-2026-27/",
+  "https://metropolitano.gal/celta-de-vigo/justifica-polemico-pegote-patrocinio-estrella-galicia-camisetas-paga-por-ello/",
+  "https://www.marca.com/futbol/celta/2026/06/17/obras-balaidos-rebajaron-asistencia-estadio-ultimo-ano.html",
+  "https://iusport.com/art/140473/eeuu-mexico-singapur-asi-es-el-paisaje-inversor-de-los-clubes-espanoles"
+ ],
+ "sport": "football",
+ "stadium": "Estadio Abanca-Balaídos",
+ "stadium_capacity": 24870,
+ "stadium_capacity_evidence": "24.870 espectadores",
+ "stadium_capacity_source_url": "https://rccelta.es/club/instalaciones/",
+ "stadium_owner": {
+  "detail": "Municipal stadium owned by the Concello de Vigo; the club uses Balaídos, Barreiro and A Madroa free of charge under a 1992 agreement that a 30 January 2009 agreement with the Concello extended to 2034. A new Gol stand was under construction during 2025-26.",
+  "evidence": "La Sociedad utiliza el Estadio Municipal de Balaidos",
+  "source_url": "https://rccelta.es/app/uploads/2026/09/CCAA-Indivuduales-RC-Celta-30.06.2026.pdf",
+  "value": "municipal"
+ },
+ "valuation": null,
+ "valuation_currency": null,
+ "valuation_evidence": null,
+ "valuation_source_name": null,
+ "valuation_source_url": null,
+ "valuation_year": null
+}

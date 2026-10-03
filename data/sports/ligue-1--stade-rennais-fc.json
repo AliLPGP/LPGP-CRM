@@ -1,0 +1,185 @@
+{
+ "city": "Rennes",
+ "country": "France",
+ "deals": [
+  {
+   "amount": 110000000,
+   "currency": "EUR",
+   "date": null,
+   "date_text": "2025-26 season (extraordinary general meeting; reported 29 March 2026)",
+   "evidence": "du propriétaire François Pinault, a converti une dette de 110 millions",
+   "headline": "Pinault family's EPS converts EUR 110m of its loans to Stade Rennais into capital",
+   "investor": "Européenne pour la Promotion du Sport (EPS), Pinault family",
+   "investor_type": "family_office",
+   "kind": "other",
+   "seller": null,
+   "source_name": "Sportune (20 Minutes)",
+   "source_url": "https://sportune.20minutes.fr/le-stade-rennais-convertit-110-me-de-dette-en-capital-397390",
+   "stake_pct": null,
+   "summary": "At an extraordinary general meeting during the 2025-26 season, sole shareholder EPS (Européenne pour la Promotion du Sport), the Pinault family company, converted a EUR 110m debt it held on the club into equity; the club's share capital rose from EUR 77.5m to EUR 187.5m (the club's legal notice now gives capital of EUR 187,543,542.72).",
+   "valuation": null,
+   "valuation_currency": null,
+   "verified": false
+  }
+ ],
+ "domain": "staderennais.com",
+ "facts": {
+  "attendance": {
+   "average": 27765,
+   "evidence": "avec une affluence moyenne de 27 765 supporters par match",
+   "season": "2025-26",
+   "source_name": "Stade Rennais F.C., Nouveau record au Roazhon Park ! (3 June 2026)",
+   "source_url": "https://www.staderennais.com/actualites/roazhon-park/nouveau-record-au-roazhon-park"
+  },
+  "chair": {
+   "evidence": "administration : Nicolas DE TAVERNOST",
+   "name": "Nicolas de Tavernost",
+   "source_url": "https://www.staderennais.com/organigramme",
+   "title": "Président du Conseil d'administration (chair of the board)"
+  },
+  "chief_executive": {
+   "evidence": "M. Arnaud Pouille en qualité de Président Exécutif",
+   "name": "Arnaud Pouille",
+   "source_url": "https://www.staderennais.com/mentions-legales",
+   "title": "Président exécutif - Directeur général"
+  },
+  "kit_supplier": {
+   "evidence": "le Stade Rennais F.C. et PUMA lèvent le voile sur le nouveau maillot domicile",
+   "name": "Puma",
+   "source_url": "https://www.staderennais.com/actualites/club/maillot-domicile-20262027-un-hommage-vibrant-a-lame-rennaise"
+  },
+  "legal_entity": {
+   "evidence": "Société anonyme sportive professionnelle au capital de 187 543 542,72",
+   "name": "Stade Rennais F.C. (société anonyme sportive professionnelle)",
+   "registry": "Registre du commerce et des sociétés (RCS), France",
+   "registry_id": "344 366 232",
+   "source_url": "https://www.staderennais.com/mentions-legales"
+  },
+  "operating_result": {
+   "amount": -50162000,
+   "basis": "operating profit",
+   "currency": "EUR",
+   "evidence": "DES OPÉRATIONS HORS MUTATION -50 162",
+   "season": "2024-25",
+   "source_name": "DNCG (LFP), Comptes individuels des clubs, saison 2024/2025 (résultat des opérations hors mutation: operating result before player trading)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "revenue_breakdown": {
+   "broadcast": 21741000,
+   "commercial": 18664000,
+   "currency": "EUR",
+   "evidence": "Droits audiovisuels 21 741 Sponsors - Publicité 18 664 Recettes matches 9 628 Autres produits 43 346",
+   "matchday": 9628000,
+   "other": 43346000,
+   "season": "2024-25",
+   "source_name": "DNCG (LFP), Comptes individuels des clubs, saison 2024/2025",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  },
+  "shirt_sponsor": {
+   "evidence": "Partenaire historique du Stade Rennais FC depuis 2004, Samsic est fier",
+   "name": "Samsic",
+   "source_url": "https://www.staderennais.com/samsic"
+  },
+  "stadium_owner": {
+   "detail": "Owned by the Ville de Rennes; the club is the stadium's exclusive tenant.",
+   "evidence": "dont la Ville de Rennes est propriétaire",
+   "source_url": "https://www.staderennais.com/le-roazon-park",
+   "value": "municipal"
+  },
+  "wages": {
+   "amount": 116132000,
+   "currency": "EUR",
+   "evidence": "Rémunération du personnel chargée 116 132",
+   "season": "2024-25",
+   "source_name": "DNCG (LFP), Comptes individuels des clubs, saison 2024/2025 (rémunération du personnel chargée)",
+   "source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf"
+  }
+ },
+ "founded_evidence": "Tout a commencé le 10 mars 1901",
+ "founded_source_url": "https://histoire.staderennais.com/",
+ "founded_year": 1901,
+ "key": "ligue-1--stade-rennais-fc",
+ "league": "Ligue 1",
+ "name": "Stade Rennais F.C.",
+ "notes": "Every earlier source (footballgroundmap.com) was replaced. Capacity is now the club's own figure, 29,778 (the old record had 31,127 from an aggregator). Revenue, the revenue split, wages and the operating result come from the DNCG's club-by-club accounts for 2024/25, the season to 30 June 2025. They cover the SASP plus the ETP Odorico association, in thousands of euros, excluding player trading. Rennes's DNCG page uses a different layout from other clubs: player amortisation and agents' fees sit in the player-trading block, not in operating charges. Its result from player trading was +EUR 32.833m, financial result -EUR 8.025m and net result -EUR 26.997m. The page has no pre-tax line, so pretax_result is null; we do not add up figures. At 30 June 2025 the balance sheet showed shareholder current accounts of EUR 164.638m, financial debt of EUR 4.240m and cash of EUR 16.422m. No net-debt figure is stated, so net_debt is null. The valuation is Sportune's own revenue-multiple estimate, not a transaction price. Attendance is the club's figure for 2025-26 (95% full on average). Leadership is current as of the organigramme on 3 Oct 2026. Nicolas de Tavernost succeeded Guillaume Cerutti as board chair (club release, 22 May 2026); Cerutti had replaced Alban Gréget on 10 Oct 2025. The French registry lists N. Bellet de Tavernost as board chair and A. Pouille as directeur général. EPS's own registry number and its link to Artémis are not stated on any page read. The pages say only that EPS is the Pinault-owned sole shareholder and that Artémis took the club over in 1998. Honours: the club's history site gives three Coupe de France wins (1965, 1971, 2019) and no league title, so the league-titles field is left null. No social follower counts with a date were found.",
+ "owners": [
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "actionnaire unique du club breton, la société EPS (Européenne pour la Promotion du Sport) du propriétaire François Pinault",
+   "institutional": true,
+   "investor_type": "family_office",
+   "kind": "company",
+   "name": "Européenne pour la Promotion du Sport (EPS), Pinault family company",
+   "since_year": null,
+   "source_url": "https://sportune.20minutes.fr/le-stade-rennais-convertit-110-me-de-dette-en-capital-397390",
+   "stake_pct": 100,
+   "valuation_at_entry": null
+  },
+  {
+   "amount": null,
+   "currency": null,
+   "evidence": "Créé en 1901 et repris en 1998 par Artémis",
+   "institutional": true,
+   "investor_type": "family_office",
+   "kind": "family",
+   "name": "Groupe Artémis (Pinault family holding company), ultimate owner",
+   "since_year": 1998,
+   "source_url": "https://www.groupeartemis.com/fr/presentation/le-stade-rennais-fc",
+   "stake_pct": null,
+   "valuation_at_entry": null
+  }
+ ],
+ "ownership_source_url": "https://sportune.20minutes.fr/le-stade-rennais-convertit-110-me-de-dette-en-capital-397390",
+ "ownership_summary": "Owned outright by the Pinault family: its company Européenne pour la Promotion du Sport (EPS) is the club's sole shareholder, and Groupe Artémis, the Pinault family holding company, took the club over in 1998. In the 2025-26 season EPS converted EUR 110m of debt it held on the club into capital, lifting share capital from EUR 77.5m to EUR 187.5m. No outside or institutional minority investor is reported.",
+ "ownership_type": "individual_family",
+ "revenue": 93379000,
+ "revenue_currency": "EUR",
+ "revenue_evidence": "TOTAL PRODUITS HORS MUTATION 93 379",
+ "revenue_season": "2024-25",
+ "revenue_source_name": "DNCG (LFP), Comptes individuels des clubs, saison 2024/2025 (total produits hors mutation, SASP + Association ETP Odorico)",
+ "revenue_source_url": "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf",
+ "short_name": "Rennes",
+ "social_as_of": null,
+ "social_evidence": null,
+ "social_followers": null,
+ "social_platforms": [],
+ "social_source_url": null,
+ "sources": [
+  "https://www.staderennais.com/organigramme",
+  "https://www.staderennais.com/mentions-legales",
+  "https://www.staderennais.com/le-roazon-park",
+  "https://www.staderennais.com/identite",
+  "https://histoire.staderennais.com/",
+  "https://www.staderennais.com/samsic",
+  "https://www.staderennais.com/actualites/club/maillot-domicile-20262027-un-hommage-vibrant-a-lame-rennaise",
+  "https://www.staderennais.com/actualites/club/presidence-du-conseil-dadministration-du-stade-rennais-fc",
+  "https://www.staderennais.com/actualites/club/presidence-du-conseil-dadministration-du-stade-rennais-fc-0",
+  "https://www.staderennais.com/actualites/roazhon-park/nouveau-record-au-roazhon-park",
+  "https://www.groupeartemis.com/fr/presentation/le-stade-rennais-fc",
+  "https://www.groupeartemis.com/fr/presentation/groupe",
+  "https://www.lfp.fr/assets/COMPTES_INDIVIDUELS_CLUBS_2024_2025_fd389d1371.pdf",
+  "https://sportune.20minutes.fr/le-stade-rennais-convertit-110-me-de-dette-en-capital-397390",
+  "https://sportune.20minutes.fr/combien-valent-les-clubs-de-la-ligue-1-400903/2",
+  "https://sportune.20minutes.fr/combien-valent-les-clubs-de-la-ligue-1-400903",
+  "https://web.archive.org/web/20260404160624/https://www.ouest-france.fr/sport/football/stade-rennais/decryptage-au-stade-rennais-un-nouveau-remaniement-dans-la-direction-des-dettes-apurees-et-des-questions-en-suspens-e7ae242e-2c11-11f1-a0a4-5254d693e09d",
+  "https://recherche-entreprises.api.gouv.fr/search?q=344366232"
+ ],
+ "sport": "football",
+ "stadium": "Roazhon Park",
+ "stadium_capacity": 29778,
+ "stadium_capacity_evidence": "le Roazhon Park bâti en 1912, peut accueillir 29 778",
+ "stadium_capacity_source_url": "https://www.staderennais.com/le-roazon-park",
+ "stadium_owner": {
+  "detail": "Owned by the Ville de Rennes; the club is the stadium's exclusive tenant.",
+  "evidence": "dont la Ville de Rennes est propriétaire",
+  "source_url": "https://www.staderennais.com/le-roazon-park",
+  "value": "municipal"
+ },
+ "valuation": 233000000,
+ "valuation_currency": "EUR",
+ "valuation_evidence": "6. Rennes = 233 millions",
+ "valuation_source_name": "Sportune (estimate, revenue-multiple method, May 2026)",
+ "valuation_source_url": "https://sportune.20minutes.fr/combien-valent-les-clubs-de-la-ligue-1-400903/2",
+ "valuation_year": 2026
+}

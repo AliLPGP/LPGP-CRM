@@ -27,7 +27,7 @@ export default function LoginPage() {
         return;
       }
       const next = new URLSearchParams(window.location.search).get("next");
-      router.replace(next ? `/${next.replace(/^\//, "")}` : "/");
+      router.replace(next ? `/${next.replace(/^\//, "")}` : "/database");
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign-in failed");

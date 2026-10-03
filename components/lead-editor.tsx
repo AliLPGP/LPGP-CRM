@@ -93,7 +93,7 @@ export function LeadEditor({
     start(async () => {
       const res = await deleteLead(lead.id);
       if (res.ok) {
-        router.push("/");
+        router.push("/crm");
         router.refresh();
       } else {
         setError(res.error ?? "Could not delete");

@@ -196,7 +196,7 @@ const SECTIONS: Section[] = [
 ];
 
 const CRM: Item[] = [
-  { href: "/", label: "Command centre" },
+  { href: "/crm", label: "Command centre" },
   { href: "/pipeline", label: "Pipeline" },
   { href: "/leads", label: "Leads" },
   { href: "/leads/workspace", label: "Call workspace" },
@@ -206,7 +206,7 @@ const CRM: Item[] = [
   { href: "/import/leads", label: "Import leads" },
 ];
 
-const CRM_PATHS = ["/pipeline", "/leads", "/accounts", "/deals", "/events", "/import/leads"];
+const CRM_PATHS = ["/crm", "/pipeline", "/leads", "/accounts", "/deals", "/events", "/import/leads"];
 
 // --- Which section the page belongs to ------------------------------------------
 // One rule for the header and the pages: the matchers the desk shell already
@@ -228,7 +228,7 @@ function sectionOf(pathname: string, search: URLSearchParams | null): string | n
   const s = search ?? new URLSearchParams();
   for (const tab of INTEL_NAV) if (tab.match(pathname, s) && SECTION_OF_TAB[tab.label]) return SECTION_OF_TAB[tab.label];
   if (pathname.startsWith("/portfolio") || pathname.startsWith("/import")) return pathname.startsWith("/import/leads") ? "crm" : "tools";
-  if (pathname === "/" || CRM_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return "crm";
+  if (CRM_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return "crm";
   if (pathname.startsWith("/companies/") || pathname.startsWith("/funds/")) return null;
   return null;
 }
@@ -664,7 +664,7 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
               <Search className="h-3.5 w-3.5 opacity-70" />
               <span className="flex-1 text-left">Quick search</span>
             </button>
-            {[...SECTIONS, ...(crmShown ? [{ key: "crm", label: "Sales CRM", href: "/", blurb: "", columns: [{ items: CRM }] } as Section] : [])].map((s) => {
+            {[...SECTIONS, ...(crmShown ? [{ key: "crm", label: "Sales CRM", href: "/crm", blurb: "", columns: [{ items: CRM }] } as Section] : [])].map((s) => {
               const isOpen = section === s.key;
               return (
                 <div key={s.key} className="border-b border-[var(--rail-line)]">

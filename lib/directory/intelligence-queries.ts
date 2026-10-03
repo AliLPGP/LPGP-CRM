@@ -201,6 +201,7 @@ export async function getTeamOwners(teamIds: string[]): Promise<TeamOwner[]> {
       .from("sports_team_owners")
       .select("*")
       .in("team_id", ids)
+      .eq("current", true)
       .order("stake_pct", { ascending: false, nullsFirst: false });
     out.push(...((data as TeamOwner[]) ?? []));
   }
@@ -227,7 +228,7 @@ export async function getSportsInvestor(id: string): Promise<SportsInvestor | nu
 export async function teamsHeldBy(f: { companyId?: string; investorId?: string }): Promise<(TeamOwner & { team: SportsTeam })[]> {
   const supabase = getReadClient();
   if (!supabase || (!f.companyId && !f.investorId)) return [];
-  let q = supabase.from("sports_team_owners").select("*");
+  let q = supabase.from("sports_team_owners").select("*").eq("current", true);
   q = f.companyId ? q.eq("company_id", f.companyId) : q.eq("investor_id", f.investorId!);
   const { data } = await q.limit(200);
   const owners = (data as TeamOwner[]) ?? [];

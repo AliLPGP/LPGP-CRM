@@ -1,15 +1,14 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { getCompanyFunds, getProviderClients, listDirectoryListNames, listsForCompany } from "@/lib/directory/queries";
-import { fundClass } from "@/lib/directory/asset-classes";
+import { STRATEGY_BY_KEY, strategiesInFundName } from "@/lib/directory/strategies";
+import { ASSET_CLASS_BY_KEY, classOfGpType, classStatedByFundName, fundClass, isAssetClassKey, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { DEAL_KIND_LABEL } from "@/lib/directory/asset-classes";
 import { formatMoney, type Deal, type Signal } from "@/lib/directory/intelligence-types";
-import { performanceSample } from "@/lib/directory/investor-queries";
 import { getLpBook, type CurrencyTotal, type LpCommitment } from "@/lib/directory/lp-profile";
-import { getGpBackers } from "@/lib/directory/gp-profile";
+import { backersOver, getGpBackers } from "@/lib/directory/gp-profile";
 import { getProfilePortfolio, profileContacts, profileDeals, profileProviders, profileSignals, type ProfileCounts } from "@/lib/directory/profile-queries";
 import { similarFirms } from "@/lib/directory/similar-server";
-import { portcoHref } from "@/lib/directory/portco-intel";
 import { ROLE_PLURAL, type ProviderRole } from "@/lib/directory/providers";
 import { isOperatingRole } from "@/lib/directory/operating";
 import { headlineSize } from "@/components/directory/profile-sections";
@@ -19,6 +18,10 @@ import { AddToPipelineButton } from "@/components/add-to-pipeline-button";
 import { PortfolioButton } from "@/components/portfolio-button";
 import { ReportButton } from "@/components/report-button";
 import { CompanyLogo } from "@/components/company-logo";
+import { PortcoCard } from "@/components/story/portco-card";
+import { FundFamilies } from "@/components/story/fund-families";
+import { fundCards } from "@/lib/directory/fund-portfolio";
+import { fundStage } from "@/lib/directory/fund-match";
 import { PersonAvatar } from "@/components/person-avatar";
 import { dateLabel } from "@/components/intel/tables";
 import { ChapterNav, type ChapterLink } from "@/components/story/chapter-nav";
@@ -454,11 +457,10 @@ function NothingYet({ name, kind }: { name: string; kind: "LP" | "GP" | "SP" | "
 
 // --- A manager: who backs it, its funds, what it owns, what it does -----------
 
-export async function GpStory({ company, counts, base }: { company: Company; counts: ProfileCounts; base: string }) {
-  const [backing, funds, sample, portfolio, deals, providers, contacts, signals] = await Promise.all([
+export async function GpStory({ company, counts, base, cls = null, strategy = null }: { company: Company; counts: ProfileCounts; base: string; cls?: string | null; strategy?: string | null }) {
+  const [backing, funds, portfolio, deals, providers, contacts, signals] = await Promise.all([
     counts.asGp ? getGpBackers(company.id) : null,
     counts.funds ? getCompanyFunds(company.id) : Promise.resolve([]),
-    performanceSample(),
     counts.portcos ? getProfilePortfolio(company.id) : null,
     counts.deals ? profileDeals(company.id) : Promise.resolve([] as Deal[]),
     counts.providers ? profileProviders(company.id) : Promise.resolve([]),
@@ -469,8 +471,40 @@ export async function GpStory({ company, counts, base }: { company: Company; cou
   const chapters: ChapterLink[] = [];
   const blocks: React.ReactNode[] = [];
   let n = 0;
+  const allCards = await fundCards({ id: company.id, name }, funds, backing?.lpsByFund);
 
-  const backers = backing?.backers ?? [];
+  // Asset-class sub-tabs: a manager in several classes reads one class at a time. A fund sits in a
+  // class by its own name, else the manager's type; a holding by the fund it sits in, else the class
+  // its sponsor states; a deal by its own class. Nothing without a class is guessed into one.
+  const classOfFund = (f: { name: string; name_filed?: string | null }) => fundClass(f.name_filed ?? f.name, company.sub_type)?.key ?? null;
+  const fundCls = new Map(funds.map((f) => [f.id, classOfFund(f)]));
+  const holdingCls = new Map<string, string>();
+  for (const c of allCards) {
+    const k = classOfFund(c);
+    if (k) for (const h of c.companies) if (!holdingCls.has(h.id)) holdingCls.set(h.id, k);
+  }
+  const classCounts = new Map<string, number>();
+  for (const c of allCards) {
+    const k = classOfFund(c);
+    if (k) classCounts.set(k, (classCounts.get(k) ?? 0) + 1);
+  }
+  for (const d of deals) if (d.asset_class && isAssetClassKey(d.asset_class) && !classCounts.has(d.asset_class)) classCounts.set(d.asset_class, 0);
+  const classTabs = [...classCounts.entries()].sort((a, b) => b[1] - a[1]);
+  const picked = cls && classCounts.has(cls) && classTabs.length > 1 ? (cls as AssetClassKey) : null;
+  const inClass = picked ? ` in ${ASSET_CLASS_BY_KEY[picked].name.toLowerCase()}` : "";
+  const classCards = picked ? allCards.filter((c) => classOfFund(c) === picked) : allCards;
+  // Inside one class, the strategies its funds' own names state (direct lending, mezzanine, real estate debt...), one card each.
+  const strategyOfCard = (c: { name: string; name_filed?: string | null }) => (picked ? (strategiesInFundName(c.name_filed ?? c.name, picked).find((x) => x.axis === "strategy")?.key ?? null) : null);
+  const strategyGroups = new Map<string, typeof classCards>();
+  for (const c of classCards) {
+    const k = strategyOfCard(c);
+    if (k) strategyGroups.set(k, [...(strategyGroups.get(k) ?? []), c]);
+  }
+  const pickedStrategy = strategy && strategyGroups.has(strategy) ? strategy : null;
+  const cards = pickedStrategy ? (strategyGroups.get(pickedStrategy) ?? []) : classCards;
+  const commitmentCls = (c: { fund_id: string | null; fund_label?: string | null; fund_name?: string | null }) => (c.fund_id && fundCls.has(c.fund_id) ? fundCls.get(c.fund_id) : (classStatedByFundName(c.fund_label ?? c.fund_name) ?? classOfGpType(company.sub_type)));
+
+  const backers = backing ? (picked ? backersOver(backing, (c) => commitmentCls(c) === picked) : backing.backers) : [];
   if (backers.length) {
     n += 1;
     chapters.push({ id: "backers", label: "Investors", count: backers.length });
@@ -480,7 +514,7 @@ export async function GpStory({ company, counts, base }: { company: Company; cou
         id="backers"
         n={n}
         eyebrow="Who backs it"
-        title={`${plural(backers.length, "investor")} back ${name}.`}
+        title={`${plural(backers.length, "investor")} back ${name}${inClass}.`}
         lead="Limited partners that have disclosed commitments to its funds, most funds first, with what each committed and the net IRR it reports."
         more={backers.length > 9 ? { href: `${base}?view=backers`, label: `All ${num(backers.length)} investors` } : null}
       >
@@ -533,50 +567,66 @@ export async function GpStory({ company, counts, base }: { company: Company; cou
     );
   }
 
-  if (funds.length) {
+  if (cards.length) {
     n += 1;
-    chapters.push({ id: "funds", label: "Funds", count: funds.length });
-    const perf = new Map(sample.rows.map((r) => [r.fund_id, r]));
-    const lps = backing?.lpsByFund ?? new Map<string, number>();
-    const ranked = [...funds].sort((a, b) => (lps.get(b.id) ?? 0) - (lps.get(a.id) ?? 0) || (perf.get(b.id)?.lps ?? 0) - (perf.get(a.id)?.lps ?? 0) || (b.vintage_year ?? 0) - (a.vintage_year ?? 0) || a.name.localeCompare(b.name));
+    chapters.push({ id: "funds", label: "Funds", count: cards.length });
+    const active = cards.filter((f) => fundStage(f.status) === "active").length;
+    const closed = cards.filter((f) => fundStage(f.status) === "closed").length;
+    const reported = cards.filter((f) => f.irr != null).length;
     blocks.push(
       <Chapter
         key="funds"
         id="funds"
         n={n}
         eyebrow="Funds"
-        title={`${plural(funds.length, "fund")} on file.`}
-        lead="The ones investors report on first. Each opens the fund: who is in it and how it has done."
-        more={funds.length > 6 ? { href: `${base}?view=funds`, label: `All ${num(funds.length)} funds` } : null}
+        title={`${plural(cards.length, "fund")}${pickedStrategy ? ` in ${(STRATEGY_BY_KEY[pickedStrategy]?.name ?? pickedStrategy).toLowerCase()}` : inClass}${active || closed ? `: ${[active ? `${num(active)} active` : null, closed ? `${num(closed)} closed` : null].filter(Boolean).join(", ")}` : ""}.`}
+        lead={`One card per fund, however many vehicles filed it.${reported ? ` ${plural(reported, "fund")} with net IRR as its investors report it.` : ""} Each opens the fund: its performance, its companies, its investors.`}
+        more={reported ? { href: "/database/performance?tab=managers", label: "How managers compare" } : null}
       >
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {ranked.slice(0, 6).map((f) => {
-            const p = perf.get(f.id);
-            const cls = fundClass(f.name_filed ?? f.name, company.sub_type)?.key ?? null;
-            const lpCount = Math.max(lps.get(f.id) ?? 0, p?.lps ?? 0);
-            return (
-              <Link key={f.id} href={`/funds/${f.id}`} className="story-card flex flex-col p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <ClassIcon cls={cls} />
-                  <ArrowUpRight className="story-card-arrow h-4 w-4" />
-                </div>
-                <div className="mt-3 line-clamp-2 text-[15px] font-medium leading-snug">{f.name}</div>
-                <div className="mt-1 text-[12px] text-muted-foreground">{[f.vintage_year ? `Vintage ${f.vintage_year}` : null, f.vehicle_kind, f.domicile].filter(Boolean).join(" · ") || "Form ADV"}</div>
-                <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-4">
-                  {lpCount ? <Chip strong>{plural(lpCount, "LP")}</Chip> : null}
-                  {p?.net_irr_median != null ? <Chip>{fmtPct(p.net_irr_median)} net IRR</Chip> : null}
-                  {p?.multiple_median != null ? <Chip>{fmtMult(p.multiple_median)}</Chip> : null}
-                  {f.fund_size_usd ? <Chip>{formatUsd(f.fund_size_usd)}</Chip> : null}
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+        {picked && strategyGroups.size ? (
+          <div className="mb-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {[...strategyGroups.entries()]
+              .sort((a, b) => b[1].length - a[1].length)
+              .map(([k, fs]) => {
+                const on = pickedStrategy === k;
+                const irrs = fs.map((f) => f.irr).filter((v): v is number => v != null);
+                const companies = fs.reduce((t, f) => t + f.companies.length, 0);
+                return (
+                  <Link key={k} href={on ? `${base}?class=${picked}#funds` : `${base}?class=${picked}&strategy=${k}#funds`} scroll={false} className={`story-card flex flex-col p-4 ${on ? "story-card-hero" : ""}`} aria-current={on ? "true" : undefined}>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="text-[14.5px] font-medium leading-snug">{STRATEGY_BY_KEY[k]?.name ?? k}</span>
+                      {on ? <Chip strong>Showing</Chip> : <ArrowUpRight className="story-card-arrow h-4 w-4 shrink-0" />}
+                    </div>
+                    {STRATEGY_BY_KEY[k]?.blurb ? <p className="mt-1 line-clamp-2 text-[12px] text-muted-foreground">{STRATEGY_BY_KEY[k].blurb}</p> : null}
+                    <dl className="mt-auto grid grid-cols-3 gap-2 pt-4">
+                      <div>
+                        <dt className="text-[11px] text-muted-foreground">Funds</dt>
+                        <dd className="figure text-[15px]">{num(fs.length)}</dd>
+                      </div>
+                      {irrs.length ? (
+                        <div>
+                          <dt className="text-[11px] text-muted-foreground">Net IRR</dt>
+                          <dd className="figure text-[15px]">{fmtPct(median(irrs))}</dd>
+                        </div>
+                      ) : null}
+                      {companies ? (
+                        <div>
+                          <dt className="text-[11px] text-muted-foreground">Companies</dt>
+                          <dd className="figure text-[15px]">{num(companies)}</dd>
+                        </div>
+                      ) : null}
+                    </dl>
+                  </Link>
+                );
+              })}
+          </div>
+        ) : null}
+        <FundFamilies funds={cards} cls={picked ?? fundClass(company.name, company.sub_type)?.key ?? null} moreHref={`${base}?view=funds`} />
       </Chapter>,
     );
   }
 
-  const holdings = portfolio?.rows ?? [];
+  const holdings = (portfolio?.rows ?? []).filter((h) => !picked || (holdingCls.get(h.id) ?? classStatedByFundName(h.asset_class ?? null)) === picked);
   if (holdings.length) {
     n += 1;
     chapters.push({ id: "portfolio", label: "Portfolio", count: holdings.length });
@@ -588,49 +638,24 @@ export async function GpStory({ company, counts, base }: { company: Company; cou
         id="portfolio"
         n={n}
         eyebrow="Portfolio"
-        title={`${plural(holdings.length, "company", "companies")} in its portfolio.`}
+        title={`${plural(holdings.length, "company", "companies")} in its ${picked ? `${ASSET_CLASS_BY_KEY[picked].name.toLowerCase()} ` : ""}portfolio.`}
         lead={`${current ? `${num(current)} held now. ` : ""}The most recent investments first, with what was paid when a page states it.`}
         more={holdings.length > 12 ? { href: `${base}?view=portfolio`, label: `All ${num(holdings.length)} companies` } : null}
       >
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {recent.map((p) => {
-            const href = p.intel_key ? portcoHref(p.intel_key) : null;
-            const status = (p.status ?? "").toLowerCase();
-            const body = (
-              <>
-                <div className="flex items-center gap-3">
-                  <CompanyLogo name={p.name} domain={p.domain} size={34} />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[14px] font-medium">{p.name}</span>
-                    <span className="block truncate text-[11.5px] text-muted-foreground">{p.sector ?? p.hq ?? "—"}</span>
-                  </span>
-                </div>
-                <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                  {p.invested_year ? <Chip>{p.invested_year}</Chip> : null}
-                  {status ? <Chip strong={status.startsWith("current")}>{status.startsWith("current") ? "Held" : status.startsWith("realized") || status.startsWith("exit") ? "Exited" : p.status}</Chip> : null}
-                  {p.deal_value != null ? <Chip title={p.deal_value_basis ?? undefined}>{formatMoney(p.deal_value, p.deal_currency)}</Chip> : null}
-                </div>
-              </>
-            );
-            return href ? (
-              <Link key={p.id} href={href} className="story-card p-3.5">
-                {body}
-              </Link>
-            ) : (
-              <div key={p.id} className="story-card p-3.5">
-                {body}
-              </div>
-            );
-          })}
+          {recent.map((p) => (
+            <PortcoCard key={p.id} p={p} />
+          ))}
         </div>
       </Chapter>,
     );
   }
 
-  if (deals.length) {
+  const classDeals = picked ? deals.filter((d) => d.asset_class === picked) : deals;
+  if (classDeals.length) {
     n += 1;
-    chapters.push({ id: "deals", label: "Deals", count: dealCount(deals.length) });
-    blocks.push(<DealsChapter key="deals" id="deals" n={n} deals={deals} base={base} title={`What ${name} has been doing.`} />);
+    chapters.push({ id: "deals", label: "Deals", count: dealCount(classDeals.length) });
+    blocks.push(<DealsChapter key="deals" id="deals" n={n} deals={classDeals} base={base} title={`What ${name} has been doing${inClass}.`} />);
   }
 
   if (providers.length) {
@@ -693,6 +718,19 @@ export async function GpStory({ company, counts, base }: { company: Company; cou
   return (
     <>
       <ChapterNav chapters={chapters} />
+      {classTabs.length > 1 ? (
+        <nav className="chapter-nav-row mt-3" aria-label="Asset classes">
+          <Link href={base} scroll={false} className="chapter-pill" aria-current={picked ? undefined : "true"}>
+            All classes
+          </Link>
+          {classTabs.map(([k, count]) => (
+            <Link key={k} href={`${base}?class=${k}`} scroll={false} className="chapter-pill inline-flex items-center gap-1.5" aria-current={picked === k ? "true" : undefined}>
+              {ASSET_CLASS_BY_KEY[k as AssetClassKey]?.name ?? k}
+              {count ? <span className="chapter-pill-count">{num(count)}</span> : null}
+            </Link>
+          ))}
+        </nav>
+      ) : null}
       {blocks.length ? blocks : <NothingYet name={name} kind="GP" />}
     </>
   );

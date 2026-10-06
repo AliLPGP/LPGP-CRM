@@ -80,7 +80,7 @@ export default async function CompanyPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ tab?: string | string[]; view?: string | string[]; class?: string | string[]; n?: string | string[]; sort?: string | string[] }>;
+  searchParams: Promise<{ tab?: string | string[]; view?: string | string[]; class?: string | string[]; n?: string | string[]; sort?: string | string[]; strategy?: string | string[] }>;
 }) {
   const [{ id }, sp] = await Promise.all([params, searchParams]);
   const [company, counts] = await Promise.all([profileCompany(id), getProfileCounts(id)]);
@@ -106,7 +106,7 @@ export default async function CompanyPage({
           <span className="wordmark text-[10.5px] text-[var(--brass)]">{company.name} · Where it invests</span>
         </div>
         <Suspense fallback={<ChapterSkeleton />}>
-          <ClassFocus company={company} cls={cls} base={base} shown={shown} sort={sort} />
+          <ClassFocus company={company} cls={cls} base={base} shown={shown} sort={sort} strategy={one(sp.strategy) ?? null} />
         </Suspense>
       </StoryPage>
     );
@@ -175,7 +175,7 @@ export default async function CompanyPage({
       </Suspense>
 
       <Suspense fallback={<ChapterSkeleton />}>
-        <Story company={company} counts={counts} base={base} />
+        {company.category === "GP" ? <GpStory company={company} counts={counts} base={base} cls={cls ?? null} strategy={one(sp.strategy) ?? null} /> : <Story company={company} counts={counts} base={base} />}
       </Suspense>
 
       <Suspense fallback={null}>
@@ -236,9 +236,9 @@ const VIEW_TITLE: Record<View, (c: Company) => string> = {
   edit: () => "Edit details",
 };
 
-async function ClassFocus({ company, cls, base, shown, sort }: { company: Company; cls: string; base: string; shown?: number; sort: ClassSort }) {
+async function ClassFocus({ company, cls, base, shown, sort, strategy }: { company: Company; cls: string; base: string; shown?: number; sort: ClassSort; strategy: string | null }) {
   const book = await getLpBook(company.id);
-  return <LpClassView book={book} cls={cls} base={base} name={company.name} shown={shown} sort={sort} />;
+  return <LpClassView book={book} cls={cls} base={base} name={company.name} shown={shown} sort={sort} strategy={strategy} />;
 }
 
 async function Focus({ view, company }: { view: View; company: Company }) {

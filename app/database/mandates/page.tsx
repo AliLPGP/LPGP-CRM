@@ -98,7 +98,7 @@ export default async function MandatesPage({ searchParams }: { searchParams: Pro
 
   return (
     <IntelShell
-      crumbs={[{ href: "/database?book=LP&view=table", label: "Investors" }, { label: "Mandates & RFPs" }]}
+      crumbs={[{ href: "/database?book=LP", label: "Investors" }, { label: "Mandates & RFPs" }]}
       kicker="Investors"
       title="Mandates & RFPs"
       description="What investors say they will do over the next twelve months, in their own words: pacing plans in board papers, investment policy statements, RFP notices and interviews, one line per asset class with the page that states it. A ticket is shown in USD only; a figure the statement does not give is blank."

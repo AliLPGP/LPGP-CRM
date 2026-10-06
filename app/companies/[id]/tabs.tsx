@@ -10,7 +10,6 @@ import { getProfileCommitments, getProfileOfferings, getProfilePortfolio, profil
 import { LenderTable, OfferingTable } from "@/components/intel/filings-tables";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import { isOperatingRole } from "@/lib/directory/operating";
-import { similarFirms } from "@/lib/directory/similar-server";
 import type { DirectoryRecord } from "@/lib/directory/records";
 import { getSessionUser } from "@/lib/auth";
 import { getParticipationForCompany } from "@/lib/event-participants";
@@ -24,14 +23,12 @@ import { EditableField } from "@/components/editable-field";
 import { NotesPanel } from "@/components/notes-panel";
 import { DeleteButton } from "@/components/delete-button";
 import { Commitments, DealLedger } from "@/components/directory/profile-ledgers";
-import { AdvPanel, ConnectableBadge, FiledProviders, Overview, ProviderClients, SimilarFirms, type RoleRank } from "@/components/directory/profile-sections";
+import { ConnectableBadge, FiledProviders, ProviderClients, type RoleRank } from "@/components/directory/profile-sections";
 import { FundLineup } from "@/components/directory/fund-lineup";
-import { InvestorProfile, ManagerProfile } from "@/components/directory/investor-profile";
-import { LpClassView, LpOverview } from "@/components/directory/lp-overview";
-import { getLpBook } from "@/lib/directory/lp-profile";
+import { InvestorProfile } from "@/components/directory/investor-profile";
 import { OperatingPartners, PortfolioCompanies } from "@/components/directory/operators-portfolio";
 import { PeerBenchmark } from "@/components/directory/peer-benchmark";
-import { DealTable, SignalList } from "@/components/intel/tables";
+import { SignalList } from "@/components/intel/tables";
 import { Box, Empty, Src, Tag } from "@/components/intel/ui";
 
 // One async server component per tab of a firm's profile. Each reads only
@@ -62,100 +59,37 @@ export function TabSkeleton({ rows = 8 }: { rows?: number }) {
   );
 }
 
-const more = "text-[11.5px] text-muted-foreground hover:text-foreground";
 
-export async function OverviewTab({ company, dealCount, base }: { company: Company; dealCount: number; base: string }) {
-  const id = company.id;
-  const [contacts, deals, providers, signals, similar, user, book] = await Promise.all([
-    profileContacts(id),
-    profileDeals(id),
-    profileProviders(id),
-    profileSignals(id),
-    similarFirms(id),
-    getSessionUser(),
-    company.category === "LP" ? getLpBook(id) : Promise.resolve(null),
-  ]);
+/** An admin's edit of the firm's own fields, on its own page (`?view=edit`). */
+export async function EditTab({ company }: { company: Company }) {
+  const user = await getSessionUser();
   const meta = CATEGORIES[company.category];
-  const isAdmin = user?.role === "admin";
+  if (user?.role !== "admin") return <Empty>Only an admin can edit a firm&rsquo;s details.</Empty>;
   return (
-    <div className="space-y-4">
-    {book ? <LpOverview book={book} contacts={contacts.length} connectable={contacts.filter((c) => c.connectable).length} base={base} /> : null}
-    <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-      <div className="space-y-4">
-        <Overview company={company} />
-        {deals.length ? (
-          <Box title="Latest deals" count={dealCount} action={<Link href={`${base}?tab=deals`} className={more}>All deals</Link>} flush>
-            <DealTable deals={deals.slice(0, 6)} compact />
-          </Box>
-        ) : null}
-        {providers.length ? <FiledProviders rows={providers} /> : null}
-        <AdvPanel company={company} />
+    <Box title="Edit firm details">
+      <div className="divide-y" data-no-print>
+        <EditableField entity="company" id={company.id} field="sub_type" value={company.sub_type} label="Type" placeholder={meta.subTypes[0]} />
+        <EditableField entity="company" id={company.id} field="status" value={company.status} label="Status" placeholder="e.g. Active Allocator" />
+        <EditableField entity="company" id={company.id} field="website" value={company.website} label="Website" link="url" />
+        <EditableField entity="company" id={company.id} field="domain" value={company.domain} label="Domain" />
+        <EditableField entity="company" id={company.id} field="linkedin_url" value={company.linkedin_url} label="LinkedIn" link="url" />
+        <EditableField entity="company" id={company.id} field="country" value={company.country} label="Country" />
+        <EditableField entity="company" id={company.id} field="city" value={company.city} label="City" />
+        <EditableField entity="company" id={company.id} field="aum_usd" value={company.aum_usd?.toString()} label="AUM override (USD)" placeholder="only when no filing states it" />
+        <EditableField entity="company" id={company.id} field="description" value={company.description} label="Description" multiline placeholder="What does this firm do?" />
+        <div className="pt-3">
+          <DeleteButton kind="company" id={company.id} />
+        </div>
       </div>
-      <div className="space-y-4">
-        {signals.length ? (
-          <Box title="Signals" count={signals.length} action={<Link href={`${base}?tab=signals`} className={more}>All</Link>} flush>
-            <SignalList signals={signals} limit={5} />
-          </Box>
-        ) : null}
-        <SimilarFirms hits={similar} companyId={company.id} />
-        {contacts.length ? (
-          <Box title="Key people" count={contacts.length} action={<Link href={`${base}?tab=people`} className={more}>All</Link>} flush>
-            <ul className="divide-y">
-              {contacts.slice(0, 6).map((c) => (
-                <li key={c.id}>
-                  <Link href={`/contacts/${c.id}`} className="flex items-center gap-2.5 px-3 py-2 hover:bg-accent/40">
-                    <PersonAvatar name={c.full_name} size={26} />
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[12.5px] font-medium">{c.full_name ?? "—"}</span>
-                      <span className="block truncate text-[11px] text-muted-foreground">{c.job_title ?? "—"}</span>
-                    </span>
-                    {c.connectable ? <Mail className="h-3.5 w-3.5 text-[var(--success)]" /> : null}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Box>
-        ) : null}
-        {isAdmin ? (
-          <details className="rounded-[4px] border bg-card" data-no-print>
-            <summary className="cursor-pointer px-3 py-2 text-[12px] font-medium text-muted-foreground hover:text-foreground">Edit firm details</summary>
-            <div className="divide-y border-t px-3 pb-3">
-              <EditableField entity="company" id={company.id} field="sub_type" value={company.sub_type} label="Type" placeholder={meta.subTypes[0]} />
-              <EditableField entity="company" id={company.id} field="status" value={company.status} label="Status" placeholder="e.g. Active Allocator" />
-              <EditableField entity="company" id={company.id} field="website" value={company.website} label="Website" link="url" />
-              <EditableField entity="company" id={company.id} field="domain" value={company.domain} label="Domain" />
-              <EditableField entity="company" id={company.id} field="linkedin_url" value={company.linkedin_url} label="LinkedIn" link="url" />
-              <EditableField entity="company" id={company.id} field="country" value={company.country} label="Country" />
-              <EditableField entity="company" id={company.id} field="city" value={company.city} label="City" />
-              <EditableField entity="company" id={company.id} field="aum_usd" value={company.aum_usd?.toString()} label="AUM override (USD)" placeholder="only when no filing states it" />
-              <EditableField entity="company" id={company.id} field="description" value={company.description} label="Description" multiline placeholder="What does this firm do?" />
-              <div className="pt-3">
-                <DeleteButton kind="company" id={company.id} />
-              </div>
-            </div>
-          </details>
-        ) : null}
-      </div>
-    </div>
-    </div>
+    </Box>
   );
 }
 
-export async function InvestorTab({ company, cls, base }: { company: Company; cls?: string | null; base: string }) {
-  // One asset class asked for: that class's funds, managers and figures.
-  if (cls) {
-    const book = await getLpBook(company.id);
-    return <LpClassView book={book} cls={cls} base={base} />;
-  }
+export async function InvestorTab({ company }: { company: Company }) {
   // The researched investor profile and plans (migration 0033); null and
   // empty until the research job has been by, or on an older database.
   const [profile, plans, commitments] = await Promise.all([getInvestorProfile(company.id), getInvestorPlans(company.id), getProfileCommitments(company.id)]);
   return <InvestorProfile company={company} profile={profile} plans={plans} commitments={commitments.asLp} />;
-}
-
-export async function ManagerTab({ company }: { company: Company }) {
-  const funds = await getCompanyFunds(company.id);
-  return <ManagerProfile company={company} funds={funds} />;
 }
 
 export async function DealsTab({ company }: { company: Company }) {

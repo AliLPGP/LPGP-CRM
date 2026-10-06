@@ -1,5 +1,6 @@
-import { DeskSkeleton } from "@/components/intel/skeleton";
+import { StorySkeleton } from "@/components/story/story";
 
+// A firm or a fund: the story's own shape while the header's read lands.
 export default function Loading() {
-  return <DeskSkeleton stats={6} rows={8} />;
+  return <StorySkeleton />;
 }

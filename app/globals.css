@@ -1456,3 +1456,350 @@ main > * {
   --gold: #22c55e;
   --chart-bar: #16a34a;
 }
+
+@layer components {
+/* -- The story register ------------------------------------------------------ */
+/* Profiles (a firm, a fund) read as one story, top to bottom: a header that
+   says who this is in a sentence, three or four headline figures, then
+   numbered chapters, each a sentence for a title and cards for its content.
+   A sticky chapter bar replaces the tab row. Only chapters with data are
+   drawn. Larger type and rounder cards than the desk: this is the place a
+   reader lands, the desks are where they scan. */
+.story {
+  --radius: 0.875rem;
+  font-size: 14px;
+}
+.story-wrap {
+  margin-inline: auto;
+  max-width: 1240px;
+  padding-inline: 16px;
+  padding-block: 20px 72px;
+}
+@media (min-width: 768px) {
+  .story-wrap {
+    padding-inline: 28px;
+  }
+}
+.story-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--muted-foreground);
+  transition: color 120ms ease-out;
+}
+.story-back:hover {
+  color: var(--foreground);
+}
+.story-name {
+  font-size: clamp(28px, 4.2vw, 44px);
+  line-height: 1.04;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.story-lede {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+.story-lede strong {
+  color: var(--foreground);
+  font-weight: 550;
+}
+.story-logo {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--hairline-strong);
+}
+/* Headline figures: a row of large numbers, hairlines between, no boxes. */
+.story-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.story-figure {
+  padding: 16px 18px 15px;
+  border-left: 1px solid var(--border);
+  min-width: 0;
+  transition: background 120ms ease-out;
+}
+.story-figure:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+a.story-figure:hover {
+  background: var(--primary-soft);
+}
+.story-figure-value {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.story-figure-label {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--foreground);
+}
+.story-figure-basis {
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 639px) {
+  .story-figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .story-figure:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .story-figure:nth-child(n + 3) {
+    border-top: 1px solid var(--border);
+  }
+}
+
+/* The chapter bar: sticky under the header, one pill per chapter, the one
+   in view filled. It scrolls sideways on a phone. */
+.chapter-nav {
+  position: sticky;
+  top: 56px;
+  z-index: 30;
+  margin-inline: -16px;
+  padding: 10px 16px;
+  background: color-mix(in oklab, var(--background) 86%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+@media (min-width: 768px) {
+  .chapter-nav {
+    margin-inline: -28px;
+    padding-inline: 28px;
+  }
+}
+.chapter-nav-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.chapter-nav-row::-webkit-scrollbar {
+  display: none;
+}
+.chapter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  height: 32px;
+  padding: 0 13px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--muted-foreground);
+  background: var(--card);
+  transition: color 120ms ease-out, background 120ms ease-out, border-color 120ms ease-out;
+  white-space: nowrap;
+}
+.chapter-pill:hover {
+  color: var(--foreground);
+  border-color: var(--hairline-strong);
+}
+.chapter-pill[aria-current="true"] {
+  color: var(--background);
+  background: var(--foreground);
+  border-color: var(--foreground);
+}
+.chapter-pill .chapter-pill-count {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* A chapter: a numbered eyebrow, a sentence for a title, then its content. */
+.chapter {
+  scroll-margin-top: 120px;
+  padding-top: 44px;
+}
+.chapter-eyebrow {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.chapter-title {
+  margin-top: 8px;
+  font-size: clamp(20px, 2.3vw, 26px);
+  line-height: 1.18;
+  font-weight: 620;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+  max-width: 34ch;
+}
+.chapter-lead {
+  margin-top: 6px;
+  font-size: 13.5px;
+  color: var(--muted-foreground);
+  max-width: 72ch;
+  text-wrap: pretty;
+}
+.chapter-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--foreground);
+  white-space: nowrap;
+  transition: border-color 120ms ease-out, background 120ms ease-out;
+}
+.chapter-more:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+.chapter-more svg {
+  transition: transform 160ms ease-out;
+}
+.chapter-more:hover svg {
+  transform: translateX(2px);
+}
+
+/* Cards. One radius, one hairline, a lift and a blue edge on hover. */
+.story-card {
+  position: relative;
+  display: block;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition: border-color 140ms ease-out, transform 140ms ease-out, background 140ms ease-out;
+}
+a.story-card:hover,
+button.story-card:hover {
+  border-color: color-mix(in oklab, var(--primary) 55%, var(--border));
+  transform: translateY(-1px);
+}
+a.story-card:hover .story-card-arrow {
+  color: var(--foreground);
+  transform: translateX(2px);
+}
+.story-card-arrow {
+  color: var(--muted-foreground);
+  transition: transform 160ms ease-out, color 120ms ease-out;
+}
+.story-card-hero {
+  background:
+    radial-gradient(120% 140% at 100% 0%, var(--primary-soft), transparent 55%),
+    var(--card);
+}
+.icon-tile {
+  display: inline-grid;
+  place-items: center;
+  height: 38px;
+  width: 38px;
+  border-radius: 11px;
+  background: var(--primary-soft);
+  color: var(--brass);
+}
+.story-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 11.5px;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+.story-chip-strong {
+  border-color: transparent;
+  background: var(--primary-soft);
+  color: var(--foreground);
+}
+/* A share or magnitude: the one blue on a quiet track. */
+.meter {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--chart-track);
+  overflow: hidden;
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--chart-bar);
+}
+/* A list of rows inside a card: hairlines between, the whole row a link. */
+.story-rows > * + * {
+  border-top: 1px solid var(--border);
+}
+.story-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  min-width: 0;
+  transition: background 120ms ease-out;
+}
+a.story-row:hover {
+  background: color-mix(in oklab, var(--primary-soft) 60%, transparent);
+}
+/* A timeline: a hairline down the left, a dot per entry. */
+.timeline {
+  position: relative;
+  padding-left: 22px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--border);
+}
+.timeline-dot {
+  position: absolute;
+  left: -21px;
+  top: 7px;
+  height: 9px;
+  width: 9px;
+  border-radius: 999px;
+  background: var(--background);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+.avatar-stack > * + * {
+  margin-left: -8px;
+}
+.avatar-stack > * {
+  box-shadow: 0 0 0 2px var(--card);
+  border-radius: 7px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-card,
+  .story-card-arrow,
+  .chapter-more svg {
+    transition: none;
+  }
+  a.story-card:hover {
+    transform: none;
+  }
+}
+}

@@ -9,7 +9,8 @@ import type { DealSearchResult } from "@/lib/directory/intelligence-queries";
 import { cn } from "@/lib/utils";
 import { FacetChips, FacetMenu } from "./facet-menu";
 import { dateLabel } from "./tables";
-import { Box, Empty, Tag } from "./ui";
+import { Box, Empty } from "./ui";
+import { ClassIcon } from "@/components/story/story";
 
 // The Deals page: every sourced transaction, filtered and sorted in the
 // database, one page of rows at a time. The toolbar is the desk's: search,
@@ -151,58 +152,65 @@ export function DealLedger({
         onClearAll={() => setF((x) => ({ ...x, cls: null, kind: null, year: null }))}
       />
 
-      <div className={cn("sheen overflow-hidden rounded-[4px] border bg-card transition-opacity duration-150 ease-out", loading && "opacity-60")} aria-busy={loading || undefined}>
+      <div className={cn("overflow-hidden rounded-[14px] border bg-card transition-opacity duration-150 ease-out", loading && "opacity-60")} aria-busy={loading || undefined}>
         {rows.length ? (
-          <div className="desk-scroll">
-            <table className="desk-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Deal · investor → target</th>
-                  <th>Kind</th>
-                  <th>Class</th>
-                  <th className="num">Stake</th>
-                  <th className="num">Amount</th>
-                  <th className="num">Valuation</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((d) => {
-                  const c = ASSET_CLASS_BY_KEY[d.asset_class as AssetClassKey];
-                  return (
-                    <tr key={d.id} className="linked">
-                      <td className="whitespace-nowrap text-muted-foreground">{dateLabel(d.date, d.date_text)}</td>
-                      <td className="min-w-[260px] max-w-[380px]">
-                        <Link href={`/database/deals/${d.id}`} className="cover block truncate font-medium leading-snug" title={d.headline}>
-                          {d.headline}
-                        </Link>
-                        <div className="mt-0.5 truncate text-[11.5px] leading-snug">
-                          {d.investor_company_id ? (
-                            <Link href={`/companies/${d.investor_company_id}`}>{d.investor}</Link>
-                          ) : d.investor_id ? (
-                            <Link href={`/database/sports/investors/${d.investor_id}`}>{d.investor}</Link>
-                          ) : (
-                            <span>{d.investor}</span>
-                          )}
-                          {d.investor_type ? <span className="text-muted-foreground"> ({INVESTOR_TYPE_LABEL[d.investor_type] ?? d.investor_type})</span> : null}
-                          <span className="text-muted-foreground"> → </span>
-                          {d.target_team_id ? <Link href={`/database/sports/${d.target_team_id}`}>{d.target}</Link> : d.target_company_id ? <Link href={`/companies/${d.target_company_id}`}>{d.target}</Link> : <span>{d.target}</span>}
-                          <span className="text-muted-foreground">{[d.sport ? SPORT_LABEL[d.sport] ?? d.sport : null, d.target_country].filter(Boolean).map((s) => ` · ${s}`).join("")}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <Tag>{DEAL_KIND_LABEL[d.kind] ?? d.kind}</Tag>
-                      </td>
-                      <td>{c ? <Link href={`/database/asset-classes/${c.slug}`} className="tag hover:text-foreground">{c.short}</Link> : null}</td>
-                      <td className="num">{d.stake_pct != null ? `${d.stake_pct}%` : "—"}</td>
-                      <td className="num">{formatMoney(d.amount, d.currency)}</td>
-                      <td className="num">{formatMoney(d.valuation, d.valuation_currency)}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          <ol className="story story-rows">
+            {rows.map((d) => {
+              const c = ASSET_CLASS_BY_KEY[d.asset_class as AssetClassKey];
+              const when = d.date ? new Date(`${d.date}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }) : dateLabel(d.date, d.date_text);
+              return (
+                <li key={d.id} className="group relative">
+                  <div className="story-row items-start">
+                    <ClassIcon cls={d.asset_class} className="mt-0.5 h-9 w-9 shrink-0 rounded-[10px]" />
+                    <span className="min-w-0 flex-1">
+                      <Link href={`/database/deals/${d.id}`} className="line-clamp-2 text-[14.5px] font-semibold leading-snug after:absolute after:inset-0 after:content-['']" title={d.headline}>
+                        {d.headline}
+                      </Link>
+                      <span className="mt-1 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-1 text-[12.5px] text-muted-foreground">
+                        {d.investor_company_id ? (
+                          <Link href={`/companies/${d.investor_company_id}`} className="relative z-[1] text-foreground hover:underline">
+                            {d.investor}
+                          </Link>
+                        ) : d.investor_id ? (
+                          <Link href={`/database/sports/investors/${d.investor_id}`} className="relative z-[1] text-foreground hover:underline">
+                            {d.investor}
+                          </Link>
+                        ) : (
+                          <span className="text-foreground">{d.investor}</span>
+                        )}
+                        {d.investor_type ? <span>({INVESTOR_TYPE_LABEL[d.investor_type] ?? d.investor_type})</span> : null}
+                        <span aria-hidden>→</span>
+                        {d.target_team_id ? (
+                          <Link href={`/database/sports/${d.target_team_id}`} className="relative z-[1] text-foreground hover:underline">
+                            {d.target}
+                          </Link>
+                        ) : d.target_company_id ? (
+                          <Link href={`/companies/${d.target_company_id}`} className="relative z-[1] text-foreground hover:underline">
+                            {d.target}
+                          </Link>
+                        ) : (
+                          <span className="text-foreground">{d.target}</span>
+                        )}
+                        {[d.sport ? (SPORT_LABEL[d.sport] ?? d.sport) : null, d.target_country].filter(Boolean).map((x) => (
+                          <span key={x}>· {x}</span>
+                        ))}
+                      </span>
+                      <span className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                        <span className="story-chip">{when}</span>
+                        <span className="story-chip">{DEAL_KIND_LABEL[d.kind] ?? d.kind}</span>
+                        {c ? <span className="story-chip max-sm:hidden">{c.name}</span> : null}
+                      </span>
+                    </span>
+                    <span className="w-[130px] shrink-0 text-right">
+                      {d.amount != null ? <span className="figure block text-[15px]">{formatMoney(d.amount, d.currency)}</span> : d.stake_pct != null ? null : <span className="block text-[12px] text-muted-foreground">Amount not stated</span>}
+                      {d.stake_pct != null ? <span className="block text-[12px] text-muted-foreground">{d.amount != null ? "for " : ""}{d.stake_pct}% stake</span> : null}
+                      {d.valuation != null ? <span className="block text-[11.5px] text-muted-foreground">valued at {formatMoney(d.valuation, d.valuation_currency)}</span> : null}
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
         ) : (
           <Empty>
             {filtered || q ? (

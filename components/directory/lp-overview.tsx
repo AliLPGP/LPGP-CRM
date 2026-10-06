@@ -1,259 +1,203 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Box, Empty, Src, Stat, StatStrip } from "@/components/intel/ui";
+import { ArrowUpRight } from "lucide-react";
+import { CompanyLogo } from "@/components/company-logo";
+import { Chip, ClassIcon, Figure, Figures, Meter, MoreLink, fmtMult, fmtPct } from "@/components/story/story";
 import { ASSET_CLASS_BY_KEY, isAssetClassKey } from "@/lib/directory/asset-classes";
 import { formatMoney } from "@/lib/directory/intelligence-types";
-import type { CurrencyTotal, LpBook, LpClassSummary, LpCommitment } from "@/lib/directory/lp-profile";
+import type { LpBook, LpCommitment } from "@/lib/directory/lp-profile";
 import { formatUsd } from "@/lib/utils";
 
-// An LP's page opens on its book: what it has, where it invests, with whom,
-// and how those funds have done — every figure the LP's own disclosure, and
-// a card per asset class that opens that class's funds and managers.
+// One asset class of an LP's book, opened from its card: the funds it has
+// committed to in that class, each with its manager, what it committed and
+// how the fund has done as the LP reports it, then the managers behind them.
+// Every fund leads to the fund, every manager to the manager: the journey
+// goes on from here.
 
-const pct = (v: number | null | undefined) => (v == null ? "—" : `${Number(v).toFixed(1)}%`);
-const mult = (v: number | null | undefined) => (v == null ? "—" : `${Number(v).toFixed(2)}x`);
+const STEP = 60;
 
-function Totals({ totals, max = 2 }: { totals: CurrencyTotal[]; max?: number }) {
-  if (!totals.length) return <span className="text-muted-foreground">Amounts not disclosed</span>;
-  return (
-    <span className="figure">
-      {totals.slice(0, max).map((t, i) => (
-        <span key={t.currency}>
-          {i ? " · " : ""}
-          {formatMoney(t.amount, t.currency)}
-        </span>
-      ))}
-      {totals.length > max ? <span className="text-muted-foreground"> +{totals.length - max}</span> : null}
-    </span>
-  );
+function median(values: number[]): number | null {
+  if (!values.length) return null;
+  const s = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(s.length / 2);
+  return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
 }
 
-function ClassCard({ c, base }: { c: LpClassSummary; base: string }) {
-  const top = c.rows
-    .slice()
-    .sort((a, b) => (b.commitment_year ?? 0) - (a.commitment_year ?? 0))
-    .slice(0, 3);
-  return (
-    <Link href={`${base}?tab=investor&class=${c.key}`} className="sheen group block rounded-[4px] border bg-card p-3 transition-colors hover:bg-accent/40">
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0">
-          <div className="wordmark text-[10px] text-[var(--brass)]">{ASSET_CLASS_BY_KEY[c.key].short}</div>
-          <div className="display mt-1 truncate text-[15px]">{c.name}</div>
-        </div>
-        <ArrowRight className="mt-1 h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-      </div>
-      <dl className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
-        <div>
-          <dt className="desk-label">Funds</dt>
-          <dd className="figure text-[15px]">{c.funds}</dd>
-        </div>
-        <div>
-          <dt className="desk-label">Managers</dt>
-          <dd className="figure text-[15px]">{c.managers}</dd>
-        </div>
-        <div>
-          <dt className="desk-label defn" data-tip="Median of the net IRRs this LP itself reports for its funds in this class; blank when it reports none.">Net IRR</dt>
-          <dd className="figure text-[15px]">{pct(c.medianIrr)}</dd>
-        </div>
-      </dl>
-      <div className="mt-2 truncate text-[11.5px]">
-        <Totals totals={c.totals} />
-        {c.latestYear ? <span className="text-muted-foreground"> · latest {c.latestYear}</span> : null}
-      </div>
-      <ul className="mt-2 space-y-0.5 border-t pt-2 text-[11px] text-muted-foreground">
-        {top.map((r) => (
-          <li key={r.id} className="truncate">
-            {r.fund_label ?? "—"}
-            {r.gp_label ? <span className="text-muted-foreground/70"> · {r.gp_label}</span> : null}
-          </li>
-        ))}
-      </ul>
-    </Link>
-  );
-}
+export type ClassSort = "newest" | "irr" | "amount";
 
-export function LpOverview({ book, contacts, connectable, base }: { book: LpBook; contacts: number; connectable: number; base: string }) {
-  return (
-    <div className="space-y-4">
-
-      {book.classes.length ? (
-        <div>
-          <div className="mb-2 flex items-baseline justify-between">
-            <h2 className="text-[13px] font-medium">What it invests in</h2>
-            <span className="text-[11px] text-muted-foreground">
-              <span className="figure">{book.funds}</span> funds · <span className="figure">{book.managers}</span> managers · <span className="figure">{book.withPerformance}</span> with a reported IRR or multiple
-              {contacts ? <> · <span className="figure">{connectable}</span> of {contacts} people with an email</> : ""}
-              {book.unplaced ? ` · ${book.unplaced} not placed in a class` : ""}
-            </span>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {book.classes.map((c) => (
-              <ClassCard key={c.key} c={c} base={base} />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <Box title="What it invests in">
-          <Empty>
-            No disclosed commitment on file for this investor, so no asset class can be placed. The investor profile tab says what research would fill, and the commitments desk lists every LP that discloses.
-          </Empty>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-// --- The drill-down: one class, its funds, managers and figures ---------------
-
-function ManagerRollup({ rows }: { rows: LpCommitment[] }) {
-  const by = new Map<string, { id: string | null; name: string; n: number; totals: Map<string, number>; irr: number[] }>();
-  for (const c of rows) {
-    const name = c.gp_label ?? "Manager not on file";
-    const key = c.gp_company_id ?? `n:${name.toLowerCase()}`;
-    const e = by.get(key) ?? { id: c.gp_company_id, name, n: 0, totals: new Map<string, number>(), irr: [] as number[] };
-    e.n += 1;
-    if (c.amount != null && c.currency) e.totals.set(c.currency, (e.totals.get(c.currency) ?? 0) + Number(c.amount));
-    if (c.net_irr != null) e.irr.push(Number(c.net_irr));
-    by.set(key, e);
-  }
-  const list = [...by.values()].sort((a, b) => b.n - a.n || a.name.localeCompare(b.name));
-  return (
-    <Box title="Managers in this class" count={list.length} flush defn="The general partners behind the funds this LP has committed to in this class, most funds first.">
-      <div className="desk-scroll">
-        <table className="desk-table">
-          <thead>
-            <tr>
-              <th>Manager</th>
-              <th className="num">Funds</th>
-              <th className="num">Committed</th>
-              <th className="num">Net IRR (LP-reported)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list.map((m) => (
-              <tr key={m.id ?? m.name}>
-                <td className="font-medium">
-                  {m.id ? (
-                    <Link href={`/companies/${m.id}`} className="hover:underline">
-                      {m.name}
-                    </Link>
-                  ) : (
-                    <span className="text-muted-foreground">{m.name}</span>
-                  )}
-                </td>
-                <td className="num">{m.n}</td>
-                <td className="num">
-                  {m.totals.size ? [...m.totals.entries()].map(([ccy, v], i) => <span key={ccy}>{i ? " · " : ""}{formatMoney(v, ccy)}</span>) : "—"}
-                </td>
-                <td className="num">{m.irr.length ? pct(m.irr.sort((a, b) => a - b)[Math.floor(m.irr.length / 2)]) : "—"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </Box>
-  );
-}
-
-export function LpClassView({ book, cls, base }: { book: LpBook; cls: string; base: string }) {
+export function LpClassView({ book, cls, base, name, shown, sort = "newest" }: { book: LpBook; cls: string; base: string; name: string; shown?: number; sort?: ClassSort }) {
   const summary = isAssetClassKey(cls) ? book.classes.find((c) => c.key === cls) : undefined;
   const meta = isAssetClassKey(cls) ? ASSET_CLASS_BY_KEY[cls] : null;
+  const limit = Math.max(STEP, shown ?? STEP);
+
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-1.5">
-        <Link href={`${base}?tab=investor`} className="tag hover:text-foreground">
+    <div>
+      <nav className="chapter-nav-row mt-6" aria-label="Asset classes">
+        <Link href={`${base}#invests`} className="chapter-pill">
           All classes
         </Link>
         {book.classes.map((c) => (
-          <Link key={c.key} href={`${base}?tab=investor&class=${c.key}`} className={c.key === cls ? "tag tag-strong" : "tag hover:text-foreground"}>
-            {c.name} <span className="figure ml-1 text-muted-foreground">{c.commitments}</span>
+          <Link key={c.key} href={`${base}?class=${c.key}`} className="chapter-pill" aria-current={c.key === cls ? "true" : undefined}>
+            {c.name} <span className="chapter-pill-count">{c.commitments.toLocaleString("en-US")}</span>
           </Link>
         ))}
-      </div>
+      </nav>
 
       {!summary ? (
-        <Box title={meta?.name ?? "Asset class"}>
-          <Empty>No disclosed commitment of this investor is placed in {meta?.name ?? "this class"}.</Empty>
-        </Box>
+        <div className="story-card mt-8 p-6 text-[14px] text-muted-foreground">No disclosed commitment of {name} is placed in {meta?.name ?? "this class"}.</div>
       ) : (
-        <>
-          <StatStrip>
-            <Stat label="Commitments" value={summary.commitments} basis={summary.latestYear ? `latest ${summary.latestYear}` : " "} />
-            <Stat label="Funds" value={summary.funds} basis={`${summary.managers} manager${summary.managers === 1 ? "" : "s"}`} />
-            <Stat label="Committed" value={<Totals totals={summary.totals} max={1} />} basis={summary.totals.length > 1 ? `and ${summary.totals.length - 1} more currenc${summary.totals.length === 2 ? "y" : "ies"}` : "stated amounts, own currency"} />
-            <Stat label="Net IRR" value={pct(summary.medianIrr)} basis={summary.withIrr ? `median of ${summary.withIrr} LP-reported` : "none reported"} defn="The median net IRR across the funds in this class for which this LP reports one. Never estimated." />
-            <Stat label="Multiple" value={mult(summary.medianMultiple)} basis="median, LP-reported" href={`/database/asset-classes/${summary.slug}`} />
-          </StatStrip>
-
-          <Box
-            title={`${summary.name}: the funds`}
-            count={summary.rows.length}
-            flush
-            defn="Each fund this LP has disclosed a commitment to in this class, with its manager, the amount in its own currency, and the performance figures the LP itself reports. The sample column is what every LP holding the fund reports, from the performance desk."
-          >
-            <div className="desk-scroll">
-              <table className="desk-table">
-                <thead>
-                  <tr>
-                    <th>Fund</th>
-                    <th>Manager</th>
-                    <th className="num">Year</th>
-                    <th className="num">Committed</th>
-                    <th className="num">Net IRR</th>
-                    <th className="num">Multiple</th>
-                    <th className="num">Called</th>
-                    <th className="num">Sample IRR</th>
-                    <th>Source</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {summary.rows
-                    .slice()
-                    .sort((a, b) => (b.commitment_year ?? 0) - (a.commitment_year ?? 0) || (a.fund_label ?? "").localeCompare(b.fund_label ?? ""))
-                    .map((c) => {
-                      const called = c.contributed != null && c.amount != null && Number(c.amount) > 0 ? (Number(c.contributed) / Number(c.amount)) * 100 : null;
-                      return (
-                        <tr key={c.id} className="align-top">
-                          <td className="max-w-[340px] font-medium">
-                            {c.fund_id ? (
-                              <Link href={`/funds/${c.fund_id}`} className="hover:underline">
-                                {c.fund_label ?? "—"}
-                              </Link>
-                            ) : (
-                              (c.fund_label ?? "—")
-                            )}
-                          </td>
-                          <td className="max-w-[220px] text-muted-foreground">
-                            {c.gp_company_id ? (
-                              <Link href={`/companies/${c.gp_company_id}`} className="hover:underline">
-                                {c.gp_label ?? "—"}
-                              </Link>
-                            ) : (
-                              (c.gp_label ?? "—")
-                            )}
-                          </td>
-                          <td className="num text-muted-foreground">{c.commitment_year ?? c.commitment_date_text ?? "—"}</td>
-                          <td className="num">{c.amount != null && c.currency ? formatMoney(c.amount, c.currency) : c.amount_usd != null ? formatUsd(c.amount_usd) : <span className="text-[11px] text-muted-foreground">{c.amount_text ?? "Undisclosed"}</span>}</td>
-                          <td className="num" title={c.as_of ? `as of ${c.as_of}` : undefined}>{pct(c.net_irr)}</td>
-                          <td className="num">{mult(c.multiple)}</td>
-                          <td className="num">{called != null ? `${called.toFixed(0)}%` : "—"}</td>
-                          <td className="num text-muted-foreground" title={c.sample ? `${c.sample.lps} LP${c.sample.lps === 1 ? "" : "s"} report this fund` : undefined}>
-                            {c.sample?.net_irr_median != null ? pct(c.sample.net_irr_median) : "—"}
-                          </td>
-                          <td className="whitespace-nowrap">
-                            <Src url={c.source_url} name={c.disclosure_type ?? "source"} asOf={c.as_of} />
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
-          </Box>
-
-          <ManagerRollup rows={summary.rows} />
-        </>
+        <ClassBody rows={summary.rows} summary={summary} base={base} name={name} limit={limit} sort={sort} />
       )}
     </div>
+  );
+}
+
+const SORTS: { key: ClassSort; label: string }[] = [
+  { key: "newest", label: "Newest" },
+  { key: "irr", label: "Best net IRR" },
+  { key: "amount", label: "Largest commitment" },
+];
+
+function ClassBody({ rows, summary, base, name, limit, sort }: { rows: LpCommitment[]; summary: NonNullable<LpBook["classes"][number]>; base: string; name: string; limit: number; sort: ClassSort }) {
+  const byYear = (a: LpCommitment, b: LpCommitment) => (b.commitment_year ?? 0) - (a.commitment_year ?? 0) || (a.fund_label ?? "").localeCompare(b.fund_label ?? "");
+  // Best IRR: funds it reports a figure for, highest first, then the rest by year.
+  // Largest: within the currency most of its amounts are in, never across currencies.
+  const mainCcy = summary.totals[0]?.currency ?? null;
+  const sorted = [...rows].sort(
+    sort === "irr"
+      ? (a, b) => (b.net_irr != null ? 1 : 0) - (a.net_irr != null ? 1 : 0) || Number(b.net_irr ?? 0) - Number(a.net_irr ?? 0) || byYear(a, b)
+      : sort === "amount"
+        ? (a, b) => (b.currency === mainCcy ? 1 : 0) - (a.currency === mainCcy ? 1 : 0) || Number(b.amount ?? 0) - Number(a.amount ?? 0) || byYear(a, b)
+        : byYear,
+  );
+  const sortHref = (k: ClassSort) => `${base}?class=${summary.key}${k === "newest" ? "" : `&sort=${k}`}#funds`;
+  const first = rows.reduce<number | null>((y, c) => (c.commitment_year != null && (y == null || c.commitment_year < y) ? c.commitment_year : y), null);
+  const topIrr = Math.max(1, ...rows.map((c) => (c.net_irr != null ? Number(c.net_irr) : 0)));
+
+  const managers = new Map<string, { id: string | null; name: string; n: number; irr: number[]; latest: number | null }>();
+  for (const c of rows) {
+    const label = c.gp_label ?? "Manager not on file";
+    const key = c.gp_company_id ?? `n:${label.toLowerCase()}`;
+    const e = managers.get(key) ?? { id: c.gp_company_id, name: label, n: 0, irr: [], latest: null };
+    e.n += 1;
+    if (c.net_irr != null) e.irr.push(Number(c.net_irr));
+    if (c.commitment_year != null) e.latest = Math.max(e.latest ?? 0, c.commitment_year);
+    managers.set(key, e);
+  }
+  const mgrs = [...managers.values()].sort((a, b) => b.n - a.n || a.name.localeCompare(b.name));
+  const most = mgrs[0]?.n ?? 1;
+
+  return (
+    <>
+      <div className="mt-10 flex items-start gap-4">
+        <ClassIcon cls={summary.key} className="h-12 w-12 rounded-[14px]" />
+        <div className="min-w-0">
+          <h2 className="chapter-title mt-0" style={{ maxWidth: "40ch" }}>
+            {name} has committed to {summary.funds.toLocaleString("en-US")} {summary.name.toLowerCase()} funds with {summary.managers.toLocaleString("en-US")} managers{first ? ` since ${first}` : ""}.
+          </h2>
+          <p className="chapter-lead">Every fund below opens the fund itself, and every manager its own story. Figures are the LP&rsquo;s own; nothing is estimated or converted.</p>
+        </div>
+      </div>
+
+      <Figures>
+        {summary.totals.map((t) => (
+          <Figure key={t.currency} label={`Committed in ${t.currency}`} value={formatMoney(t.amount, t.currency)} basis={`${t.n.toLocaleString("en-US")} stated amounts`} />
+        ))}
+        {summary.medianIrr != null ? <Figure label="Median net IRR" value={fmtPct(summary.medianIrr)} basis={`of ${summary.withIrr.toLocaleString("en-US")} funds it reports`} /> : null}
+        {summary.medianMultiple != null ? <Figure label="Median multiple" value={fmtMult(summary.medianMultiple)} basis="as it reports" /> : null}
+        {summary.latestYear ? <Figure label="Latest commitment" value={summary.latestYear} /> : null}
+      </Figures>
+
+      <section className="chapter" id="funds">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <div className="chapter-eyebrow">The funds</div>
+            <h3 className="chapter-title">Every {summary.name.toLowerCase()} fund in its book.</h3>
+          </div>
+          <div className="chapter-nav-row" role="group" aria-label="Sort the funds">
+            {SORTS.map((s) => (
+              <Link key={s.key} href={sortHref(s.key)} scroll={false} className="chapter-pill" aria-current={sort === s.key ? "true" : undefined}>
+                {s.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className="story-card story-rows mt-5 overflow-hidden">
+          {sorted.slice(0, limit).map((c) => {
+            const called = c.contributed != null && c.amount != null && Number(c.amount) > 0 ? (Number(c.contributed) / Number(c.amount)) * 100 : null;
+            const inner = (
+              <>
+                <CompanyLogo name={c.gp_label ?? c.fund_label ?? "?"} size={34} />
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[14px] font-medium">{c.fund_label ?? "—"}</span>
+                  <span className="block truncate text-[12px] text-muted-foreground">
+                    {[c.gp_label, c.commitment_year ?? c.commitment_date_text, called != null ? `${Math.round(called)}% called` : null].filter(Boolean).join(" · ")}
+                  </span>
+                </span>
+                <span className="figure hidden w-[110px] text-right text-[13px] md:block">
+                  {c.amount != null && c.currency ? formatMoney(c.amount, c.currency) : c.amount_usd != null ? formatUsd(c.amount_usd) : <span className="text-[11.5px] text-muted-foreground">{c.amount_text ?? "Undisclosed"}</span>}
+                </span>
+                <span className="hidden w-[140px] sm:block">{c.net_irr != null ? <Meter pct={(Math.max(0, Number(c.net_irr)) / topIrr) * 100} /> : null}</span>
+                <span className="figure w-[60px] text-right text-[13.5px]" title={c.as_of ? `as of ${c.as_of}` : undefined}>
+                  {c.net_irr != null ? fmtPct(c.net_irr) : <span className="text-muted-foreground">—</span>}
+                </span>
+                <span className="figure hidden w-[52px] text-right text-[12px] text-muted-foreground lg:block">{c.multiple != null ? fmtMult(c.multiple) : ""}</span>
+              </>
+            );
+            return c.fund_id ? (
+              <Link key={c.id} href={`/funds/${c.fund_id}`} className="story-row">
+                {inner}
+              </Link>
+            ) : (
+              <div key={c.id} className="story-row">
+                {inner}
+              </div>
+            );
+          })}
+        </div>
+        {sorted.length > limit ? (
+          <div className="mt-4 flex justify-center">
+            <MoreLink href={`${base}?class=${summary.key}${sort === "newest" ? "" : `&sort=${sort}`}&n=${limit + STEP}`}>Show {Math.min(STEP, sorted.length - limit)} more of {(sorted.length - limit).toLocaleString("en-US")}</MoreLink>
+          </div>
+        ) : null}
+      </section>
+
+      <section className="chapter" id="class-managers">
+        <div className="chapter-eyebrow">The managers</div>
+        <h3 className="chapter-title">Who it backs in {summary.name.toLowerCase()}.</h3>
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {mgrs.slice(0, 24).map((m) => {
+            const body = (
+              <>
+                <div className="flex items-center gap-3">
+                  <CompanyLogo name={m.name} size={34} />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[14px] font-medium">{m.name}</span>
+                    <span className="block text-[12px] text-muted-foreground">
+                      {m.n.toLocaleString("en-US")} fund{m.n === 1 ? "" : "s"}
+                      {m.latest ? ` · latest ${m.latest}` : ""}
+                    </span>
+                  </span>
+                  {m.id ? <ArrowUpRight className="story-card-arrow h-4 w-4 shrink-0" /> : null}
+                </div>
+                <div className="mt-3 flex items-center gap-3">
+                  <Meter pct={(m.n / most) * 100} className="flex-1" />
+                  {m.irr.length ? <Chip>{fmtPct(median(m.irr))} IRR</Chip> : null}
+                </div>
+              </>
+            );
+            return m.id ? (
+              <Link key={m.id} href={`/companies/${m.id}`} className="story-card p-3.5">
+                {body}
+              </Link>
+            ) : (
+              <div key={m.name} className="story-card p-3.5">
+                {body}
+              </div>
+            );
+          })}
+        </div>
+        {mgrs.length > 24 ? <p className="mt-3 text-[12.5px] text-muted-foreground">And {(mgrs.length - 24).toLocaleString("en-US")} more, each in the fund list above.</p> : null}
+      </section>
+    </>
   );
 }

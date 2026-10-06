@@ -18,8 +18,8 @@ import { cn } from "@/lib/utils";
 type Tab = { key: string; label: string; href: string; icon: typeof Landmark; nav: string };
 
 const TABS: Tab[] = [
-  { key: "investors", label: "Investors", href: "/database?book=LP&view=table", icon: Landmark, nav: "Investors" },
-  { key: "managers", label: "Managers", href: "/database?book=GP&view=table", icon: Briefcase, nav: "Fund managers" },
+  { key: "investors", label: "Investors", href: "/database?book=LP", icon: Landmark, nav: "Investors" },
+  { key: "managers", label: "Managers", href: "/database?book=GP", icon: Briefcase, nav: "Fund managers" },
   { key: "funds", label: "Funds", href: "/funds", icon: Layers, nav: "Funds" },
   { key: "performance", label: "Performance", href: "/database/performance", icon: TrendingUp, nav: "Performance" },
 ];

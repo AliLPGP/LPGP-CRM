@@ -135,7 +135,7 @@ export default async function WorkflowPage({ params }: { params: Promise<{ slug:
       {k === "market_intelligence" ? (
         <>
           <StatStrip>
-            <Stat label="Firms" value={i.total.toLocaleString("en-US")} basis={`${i.books.GP} managers · ${i.books.LP} LPs · ${i.books.SP} providers`} href="/database?view=table" />
+            <Stat label="Firms" value={i.total.toLocaleString("en-US")} basis={`${i.books.GP} managers · ${i.books.LP} LPs · ${i.books.SP} providers`} href="/database?view=list" />
             <Stat label="Regulatory AUM" value={formatUsd(i.raum.sum)} basis={`${i.raum.firms} SEC filers, brand totals once`} />
             <Stat label="Funds" value={i.funds.toLocaleString("en-US")} basis="named on Form ADV" href="/funds" />
             <Stat label="Deals" value={d.deals.length.toLocaleString("en-US")} basis="sourced transactions" href="/database/deals" />

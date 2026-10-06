@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Bookmark, BookmarkPlus, Download, LayoutGrid, Loader2, Rows3, Sparkles, Trash2, Upload, X } from "lucide-react";
+import { Bookmark, BookmarkPlus, Download, List, Loader2, Sheet, Sparkles, Trash2, Upload, X } from "lucide-react";
 import { deleteSavedSearch, saveSearch } from "@/lib/directory/actions";
 import { interpretThesisWithAi } from "@/lib/directory/ai-actions";
 import {
@@ -213,10 +213,11 @@ export function Discover({
   const ready = load.dir != null && (dir.searchReady || !wantsSearch);
   const q = params.get("q") ?? "";
   const viewParam = params.get("view");
-  // The URL's view wins; with none asked for, a phone reads cards and
-  // anything wider the ledger. Derived from the viewport, never set by it.
+  // The list is the default on every screen; the dense table is one click
+  // away for a reader who wants every column (never on a phone). Old
+  // `view=cards` links land on the list.
   const phone = usePhone();
-  const view: View = viewParam === "cards" ? "cards" : viewParam === "table" ? "table" : phone ? "cards" : "table";
+  const view: View = viewParam === "table" && !phone ? "table" : "cards";
   const results = useResults(dir, filters);
   const everything = overview.insights;
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -362,7 +363,7 @@ export function Discover({
             <ThesisBar key={q} initial={q} onSubmit={submitThesis} pending={aiPending} aiReady={aiReady} examples />
 
             <div className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-[var(--border)] pt-4 sm:grid-cols-3 lg:grid-cols-6">
-              <Figure label="Firms" value={compact(everything.total)} sub="across four books" onClick={() => navigate(EMPTY_FILTERS, { push: true, view: "table" })} />
+              <Figure label="Firms" value={compact(everything.total)} sub="across four books" onClick={() => navigate(EMPTY_FILTERS, { push: true, view: "list" })} />
               <Figure label="General partners" value={compact(everything.books.GP)} sub={`${n(everything.filers)} with Form ADV providers`} onClick={() => navigate({ ...EMPTY_FILTERS, books: ["GP"] }, { push: true })} />
               <Figure label="Limited partners" value={compact(everything.books.LP)} sub="pensions, SWFs, insurers, E&Fs" onClick={() => navigate({ ...EMPTY_FILTERS, books: ["LP"] }, { push: true })} />
               <Figure label="Decision-makers" value={compact(everything.people)} sub={`${n(everything.connectable)} with a direct email`} onClick={() => navigate({ ...EMPTY_FILTERS, hasContacts: true }, { push: true })} />
@@ -444,15 +445,15 @@ export function Discover({
               <div className="inline-flex h-8 overflow-hidden rounded-[4px] border bg-card" role="group" aria-label="Layout">
                 {(
                   [
-                    ["table", Rows3, "Table"],
-                    ["cards", LayoutGrid, "Cards"],
+                    ["cards", List, "List"],
+                    ["table", Sheet, "Table"],
                   ] as const
                 ).map(([v, Icon, label]) => (
                   <button
                     key={v}
                     type="button"
-                    // The table is the default off a phone, so there the URL only names the cards; a phone writes either, since its default is the cards.
-                    onClick={() => navigate(filters, { view: v === "table" && !isEmptyQuery(filters) && !phone ? null : v })}
+                    // The list is the default, so the URL only names it when nothing else would keep the results view open.
+                    onClick={() => navigate(filters, { view: v === "cards" ? (isEmptyQuery(filters) ? "list" : null) : v })}
                     className={cn("grid w-8 place-items-center transition-colors", view === v ? "bg-foreground text-background" : "text-muted-foreground hover:bg-accent hover:text-foreground")}
                     aria-pressed={view === v}
                     title={label}

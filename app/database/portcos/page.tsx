@@ -3,12 +3,12 @@ import { CompanyLogo } from "@/components/company-logo";
 import { Columns, DEAL_KIND_ORDER, KIND_HUE, ShareBar } from "@/components/intel/charts";
 import { IntelShell } from "@/components/intel/shell";
 import { dateLabel, ShowMore } from "@/components/intel/tables";
-import { Bar, Box, Empty, Src, Stat, StatStrip, Tag } from "@/components/intel/ui";
+import { Bar, Box, Empty, Src, Stat, StatStrip } from "@/components/intel/ui";
 import { UrlFacets } from "@/components/intel/url-facets";
 import { DEAL_KIND_LABEL } from "@/lib/directory/asset-classes";
 import { getPortcoIntel } from "@/lib/directory/filings-queries";
 import { AMOUNT_BASIS_LABEL, formatMoney } from "@/lib/directory/intelligence-types";
-import { financeLead, operationsLead, portcoHref } from "@/lib/directory/portco-intel";
+import { portcoHref } from "@/lib/directory/portco-intel";
 import { dealCountsFor, getPortcoSummary, searchPortcos } from "@/lib/directory/portco-queries";
 import { DEAL_BASIS_LABEL } from "@/lib/directory/portfolio";
 
@@ -145,100 +145,67 @@ export default async function PortcosPage({ searchParams }: { searchParams: Prom
           defn="A hundred at a time, most recent investment first (largest stated deal first when sorted by value, which keeps only companies with one). Search narrows by company, sector or country."
         >
           {rows.length ? (
-            <div className="desk-scroll">
-              <table className="desk-table">
-                <thead>
-                  <tr>
-                    <th>Company</th>
-                    <th>Sponsor</th>
-                    <th>Sector</th>
-                    <th>HQ</th>
-                    <th className="num">Since</th>
-                    <th>Status</th>
-                    <th className="num">Deal value</th>
-                    <th className="num defn" data-tip="As a filing, the company, the sponsor or major press states it, with its period. UK figures may come from accounts filed at Companies House.">Revenue</th>
-                    <th>CFO · COO</th>
-                    <th className="num">Deals</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((r) => {
-                    const ci = r.intel_key ? intel.get(r.intel_key) : undefined;
-                    const cfo = financeLead(ci);
-                    const coo = operationsLead(ci);
-                    return (
-                      <tr key={r.id} className={r.intel_key ? "linked" : undefined}>
-                        <td className="min-w-[200px] max-w-[300px]">
-                          <span className="flex items-center gap-2">
-                            <CompanyLogo name={r.name} domain={r.domain} size={18} />
-                            {r.intel_key ? (
-                              <Link href={portcoHref(r.intel_key)} className="cover truncate font-medium" title={r.name}>
-                                {r.name}
-                              </Link>
-                            ) : (
-                              <span className="truncate font-medium" title={r.name}>
-                                {r.name}
-                              </span>
-                            )}
-                          </span>
-                        </td>
-                        <td className="max-w-[180px] truncate" title={r.gp?.name ?? undefined}>
-                          <Link href={`/companies/${r.gp_company_id}?tab=portfolio`}>{r.gp?.name ?? "Sponsor"}</Link>
-                        </td>
-                        <td className="max-w-[160px] truncate text-muted-foreground" title={r.sector ?? undefined}>{r.sector ?? "—"}</td>
-                        <td className="max-w-[160px] truncate text-muted-foreground" title={r.hq ?? undefined}>{r.hq ?? "—"}</td>
-                        <td className="num text-muted-foreground">
-                          {r.invested_year ?? "—"}
-                          {r.exit_year ? <span> → {r.exit_year}</span> : null}
-                        </td>
-                        <td>{r.status ? <Tag>{r.status}</Tag> : <span className="text-muted-foreground">—</span>}</td>
-                        <td className="num whitespace-nowrap">
-                          {r.deal_value != null ? (
-                            <>
-                              {formatMoney(r.deal_value, r.deal_currency)}
-                              <div className="text-[10px] text-muted-foreground">{DEAL_BASIS_LABEL[r.deal_value_basis ?? "unspecified"] ?? "as reported"}</div>
-                            </>
+            <ol className="story story-rows">
+              {rows.map((r) => {
+                const ci = r.intel_key ? intel.get(r.intel_key) : undefined;
+                const revenue = ci?.revenue_stated ?? ci?.revenue ?? null;
+                const deals = (r.intel_key && counts.get(r.intel_key)) || 0;
+                const status = (r.status ?? "").toLowerCase();
+                const held = status.startsWith("current");
+                const exited = status.startsWith("realized") || status.startsWith("realised") || status.startsWith("exit");
+                return (
+                  <li key={r.id} className="group relative">
+                    <div className="story-row">
+                      <span className="story-logo shrink-0" style={{ borderRadius: 11 }}>
+                        <CompanyLogo name={r.name} domain={r.domain} size={40} />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="flex min-w-0 items-baseline gap-2">
+                          {r.intel_key ? (
+                            <Link href={portcoHref(r.intel_key)} className="truncate text-[14.5px] font-semibold after:absolute after:inset-0 after:content-['']" title={r.name}>
+                              {r.name}
+                            </Link>
                           ) : (
-                            "—"
+                            <span className="truncate text-[14.5px] font-semibold" title={r.name}>
+                              {r.name}
+                            </span>
                           )}
-                        </td>
-                        <td className="num whitespace-nowrap">
-                          {ci?.revenue_stated != null || ci?.revenue != null ? (
-                            <>
-                              {formatMoney(ci.revenue_stated ?? ci.revenue, ci.revenue_stated != null ? ci.revenue_currency : ci.currency)}
-                              <div className="text-[10px] text-muted-foreground">{ci.revenue_stated != null ? (ci.revenue_period ?? "as stated") : `accounts ${ci.accounts_period_end ?? ""}`}</div>
-                            </>
-                          ) : (
-                            "—"
-                          )}
-                        </td>
-                        <td className="max-w-[220px] text-[11.5px]">
-                          {cfo || coo ? (
-                            <>
-                              {cfo ? (
-                                <div className="truncate" title={cfo.title}>
-                                  <span className="text-muted-foreground">CFO </span>
-                                  {cfo.name}
-                                </div>
-                              ) : null}
-                              {coo ? (
-                                <div className="truncate" title={coo.title}>
-                                  <span className="text-muted-foreground">COO </span>
-                                  {coo.name}
-                                </div>
-                              ) : null}
-                            </>
-                          ) : (
-                            <span className="text-muted-foreground">—</span>
-                          )}
-                        </td>
-                        <td className="num">{(r.intel_key && counts.get(r.intel_key)) || "—"}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                          {r.sector ? <span className="truncate text-[12.5px] text-muted-foreground">{r.sector}</span> : null}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[12.5px] text-muted-foreground">
+                          Backed by{" "}
+                          <Link href={`/companies/${r.gp_company_id}#portfolio`} className="relative z-[1] text-foreground hover:underline">
+                            {r.gp?.name ?? "its sponsor"}
+                          </Link>
+                          {r.invested_year ? ` since ${r.invested_year}` : ""}
+                          {r.exit_year ? `, exited ${r.exit_year}` : ""}
+                          {r.hq ? ` · ${r.hq}` : ""}
+                        </span>
+                      </span>
+                      <span className="hidden items-center gap-1.5 md:flex">
+                        {held ? <span className="story-chip story-chip-strong">Held</span> : exited ? <span className="story-chip">Exited</span> : null}
+                        {deals ? <span className="story-chip">{deals} deal{deals === 1 ? "" : "s"}</span> : null}
+                      </span>
+                      <span className="w-[120px] shrink-0 text-right">
+                        {r.deal_value != null ? (
+                          <>
+                            <span className="figure block text-[14px]">{formatMoney(r.deal_value, r.deal_currency)}</span>
+                            <span className="block text-[10.5px] text-muted-foreground">{DEAL_BASIS_LABEL[r.deal_value_basis ?? "unspecified"] ?? "as reported"}</span>
+                          </>
+                        ) : revenue != null ? (
+                          <>
+                            <span className="figure block text-[14px]">{formatMoney(revenue, ci?.revenue_stated != null ? ci?.revenue_currency : ci?.currency)}</span>
+                            <span className="block text-[10.5px] text-muted-foreground">revenue</span>
+                          </>
+                        ) : (
+                          <span className="text-[12px] text-muted-foreground">No price stated</span>
+                        )}
+                      </span>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
           ) : filtered ? (
             <Empty>
               No portfolio company matches this cut.{" "}

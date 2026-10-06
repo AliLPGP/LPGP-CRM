@@ -27,16 +27,16 @@ const SECTIONS: Section[] = [
   {
     key: "investors",
     label: "Investors",
-    href: "/database?book=LP&view=table",
+    href: "/database?book=LP",
     blurb: "Limited partners: who they are, what they allocate, what they plan to do next.",
     columns: [
       {
         heading: "Search",
         items: [
-          { href: "/database?book=LP&view=table", label: "Advanced search", note: "Type, allocation, geography, ticket" },
-          { href: "/database?book=LP&sort=newest&view=table", label: "Newly added" },
-          { href: "/database?book=LP&sort=updated&view=table", label: "Recently updated" },
-          { href: "/database?book=LP,SP&itype=investment_consultant&view=table", label: "Investment consultants" },
+          { href: "/database?book=LP", label: "Advanced search", note: "Type, allocation, geography, ticket" },
+          { href: "/database?book=LP&sort=newest", label: "Newly added" },
+          { href: "/database?book=LP&sort=updated", label: "Recently updated" },
+          { href: "/database?book=LP,SP&itype=investment_consultant", label: "Investment consultants" },
         ],
       },
       {
@@ -52,15 +52,15 @@ const SECTIONS: Section[] = [
   {
     key: "managers",
     label: "Fund managers",
-    href: "/database?book=GP&view=table",
+    href: "/database?book=GP",
     blurb: "General partners by asset class, strategy and what they have raised.",
     columns: [
       {
         heading: "Search",
         items: [
-          { href: "/database?book=GP&view=table", label: "Advanced search", note: "Strategy, sector, raised per class" },
-          { href: "/database?book=GP&sort=newest&view=table", label: "Newly added" },
-          { href: "/database?book=GP&sort=updated&view=table", label: "Recently updated" },
+          { href: "/database?book=GP", label: "Advanced search", note: "Strategy, sector, raised per class" },
+          { href: "/database?book=GP&sort=newest", label: "Newly added" },
+          { href: "/database?book=GP&sort=updated", label: "Recently updated" },
         ],
       },
       {
@@ -119,25 +119,25 @@ const SECTIONS: Section[] = [
   {
     key: "providers",
     label: "Service providers",
-    href: "/database?book=SP&view=table",
+    href: "/database?book=SP",
     blurb: "The firms funds and transactions retain, with the managers that file them.",
     columns: [
       {
         heading: "Fund services",
         items: [
-          { href: "/database?book=SP&view=table", label: "Advanced search" },
-          { href: "/database?book=SP&itype=placement_agent&view=table", label: "Placement agents" },
-          { href: "/database?book=SP&itype=law_firm&view=table", label: "Law firms" },
-          { href: "/database?book=SP&itype=fund_administrator&view=table", label: "Fund administrators" },
-          { href: "/database?book=SP&itype=prime_broker&view=table", label: "Prime brokers" },
-          { href: "/database?book=SP&itype=auditor&view=table", label: "Auditors" },
-          { href: "/database?book=SP&itype=custodian&view=table", label: "Custodians" },
+          { href: "/database?book=SP", label: "Advanced search" },
+          { href: "/database?book=SP&itype=placement_agent", label: "Placement agents" },
+          { href: "/database?book=SP&itype=law_firm", label: "Law firms" },
+          { href: "/database?book=SP&itype=fund_administrator", label: "Fund administrators" },
+          { href: "/database?book=SP&itype=prime_broker", label: "Prime brokers" },
+          { href: "/database?book=SP&itype=auditor", label: "Auditors" },
+          { href: "/database?book=SP&itype=custodian", label: "Custodians" },
         ],
       },
       {
         heading: "Transaction services",
         items: [
-          { href: "/database?book=SP&itype=bank&view=table", label: "Banks & financial advisors" },
+          { href: "/database?book=SP&itype=bank", label: "Banks & financial advisors" },
           { href: "/database/lenders", label: "Debt providers", note: "Loan books as filed" },
           { href: "/database/market", label: "League tables", note: "Who serves the most managers" },
         ],

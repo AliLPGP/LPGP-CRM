@@ -23,7 +23,7 @@ const FUND_DEAL_KINDS = new Set(["fund_close", "fundraise"]);
 export const INTEL_NAV: { href: string; label: string; match: (path: string, search: URLSearchParams) => boolean }[] = [
   { href: "/database", label: "Overview", match: (p, s) => p === "/database" && !s.toString() },
   {
-    href: "/database?book=LP&view=table",
+    href: "/database?book=LP",
     label: "Investors",
     match: (p, s) =>
       (p === "/database" && (bookOf(s) === "LP" || s.get("itype") === "investment_consultant")) ||
@@ -32,7 +32,7 @@ export const INTEL_NAV: { href: string; label: string; match: (path: string, sea
       (p.startsWith("/database/signals") && s.get("kind") === "news"),
   },
   {
-    href: "/database?book=GP&view=table",
+    href: "/database?book=GP",
     label: "Fund managers",
     match: (p, s) =>
       (p === "/database" && bookOf(s) === "GP") ||
@@ -49,7 +49,7 @@ export const INTEL_NAV: { href: string; label: string; match: (path: string, sea
   },
   { href: "/database/performance?tab=funds", label: "Performance", match: (p) => p.startsWith("/database/performance") },
   {
-    href: "/database?book=SP&view=table",
+    href: "/database?book=SP",
     label: "Service providers",
     match: (p, s) =>
       (p === "/database" && bookOf(s) === "SP") || p.startsWith("/database/market") || p.startsWith("/database/providers") || p.startsWith("/database/lenders"),

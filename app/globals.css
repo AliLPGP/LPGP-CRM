@@ -1684,6 +1684,8 @@ a.story-figure:hover {
 .story-card {
   position: relative;
   display: block;
+  /* A grid or flex child: may shrink below its longest unbreakable line, so a long name truncates instead of widening the page. */
+  min-width: 0;
   border-radius: 14px;
   border: 1px solid var(--border);
   background: var(--card);

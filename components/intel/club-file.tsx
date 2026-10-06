@@ -7,8 +7,12 @@ import { formatMoney, type ClubFact } from "@/lib/directory/intelligence-types";
 
 const fmt = (n: number | null | undefined) => (n == null ? "—" : n.toLocaleString("en-US"));
 
-function rows(facts: Record<string, ClubFact>): { label: string; value: string; src: ClubFact }[] {
-  const out: { label: string; value: string; src: ClubFact }[] = [];
+export type ClubFileRow = { label: string; value: string; src: ClubFact };
+
+/** The club file as label, value and source, in the order a reader asks. */
+export function clubFileRows(facts: Record<string, ClubFact> | null | undefined): ClubFileRow[] {
+  if (!facts) return [];
+  const out: ClubFileRow[] = [];
   const f = facts;
   const money = (x: ClubFact | undefined, label: string, note?: (x: ClubFact) => string | null) => {
     if (!x || x.amount == null) return;
@@ -39,8 +43,9 @@ function rows(facts: Record<string, ClubFact>): { label: string; value: string; 
   return out;
 }
 
+/** The club file as a desk box, for dense screens. */
 export function ClubFile({ facts }: { facts: Record<string, ClubFact> | null | undefined }) {
-  const list = facts ? rows(facts) : [];
+  const list = clubFileRows(facts);
   if (!list.length) return null;
   return (
     <Box title="Club file" count={list.length} flush defn="What the club's accounts, its own site and the press state beyond the headline figures. Every row carries the page that states it.">

@@ -1,5 +1,5 @@
-import { DeskSkeleton } from "@/components/intel/skeleton";
+import { StorySkeleton } from "@/components/story/story";
 
 export default function Loading() {
-  return <DeskSkeleton stats={4} rows={8} />;
+  return <StorySkeleton />;
 }

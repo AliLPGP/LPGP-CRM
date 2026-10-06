@@ -242,7 +242,14 @@ boundaries and keeps comment text ASCII.
   and rewrites its owners, upserts its deals (`deal:<club>:<investor>:<date>`)
   and the investors in sport they name. `components/intel/club-file.tsx`
   draws the facts on the club page. The sports desk wears green
-  (`data-accent="sports"` on the frame, tokens in `globals.css`).
+  (`data-accent="sports"` on the frame, tokens in `globals.css`). The desk,
+  a club and an investor in sport are stories like every other record
+  (`components/story/sports-cards.tsx`): sport tabs (`?sport=`) and league
+  cards (`?league=`) narrow the clubs, investors, deals and news below them;
+  clubs and investors are cards that open their pages; a club reads its
+  ownership (institutional money first, each owner leading to the directory
+  firm or the sports investor), its file, deals, following, fact check and
+  league; the dense club table stays at `?view=table`.
 - **The LP book** (`lib/directory/lp-profile.ts`, `components/directory/
   lp-overview.tsx`) — an LP's story opens on what it has disclosed: a card per
   asset class (share of its commitments, funds, managers, stated amounts per
@@ -271,7 +278,7 @@ boundaries and keeps comment text ASCII.
   manager → the LPs backing it (`lib/directory/gp-profile.ts`). An LP tells
   where it invests, its managers, its track record, its latest commitments,
   its people; a GP who backs it, its funds, portfolio, deals, providers,
-  people; an SP its clients. A fund page tells who is in it, how it has done
+  people; an SP its clients. There is no "similar firms" chapter. A fund page tells who is in it, how it has done
   as they report it, its manager and sibling funds, providers, filings, and
   its researched terms only when any are filled. Search results (Discover's
   default view) and the deals and portfolio desks list records as story rows

@@ -17,7 +17,7 @@ import type { RoleRank } from "@/components/directory/profile-sections";
 import { BackLink, ChapterSkeleton, Chip, FiguresSkeleton, Meter, StoryPage, fmtPct } from "@/components/story/story";
 import type { Company } from "@/lib/types";
 import { ClientsTab, DealsTab, EditTab, EventsTab, FundsTab, InvestorTab, NotesTab, PeersTab, PeopleTab, PortfolioTab, ProvidersTab, SignalsTab, TabSkeleton } from "./tabs";
-import { GpStory, HeroActions, HeroFigures, LpStory, OtherStory, SimilarChapter } from "./story";
+import { GpStory, HeroActions, HeroFigures, LpStory, OtherStory } from "./story";
 
 export const dynamic = "force-dynamic";
 
@@ -179,10 +179,6 @@ export default async function CompanyPage({
       </Suspense>
 
       <Suspense fallback={null}>
-        <SimilarChapter companyId={company.id} />
-      </Suspense>
-
-      <Suspense fallback={null}>
         <Further company={company} counts={counts} base={base} />
       </Suspense>
     </StoryPage>
@@ -201,7 +197,6 @@ async function Further({ company, counts, base }: { company: Company; counts: Pr
   if (counts.deals) links.push({ href: `${base}?view=deals`, label: "Deals, raises and books", count: counts.deals });
   if (counts.events) links.push({ href: `${base}?view=events`, label: "Our events", count: counts.events });
   links.push({ href: `${base}?view=notes`, label: "Notes", count: counts.notes });
-  links.push({ href: `${base}?view=peers`, label: "Peer benchmark" });
   if (user?.role === "admin") links.push({ href: `${base}?view=edit`, label: "Edit details" });
   return (
     <section className="chapter" aria-label="More on file">

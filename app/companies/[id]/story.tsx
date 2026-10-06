@@ -8,12 +8,11 @@ import { formatMoney, type Deal, type Signal } from "@/lib/directory/intelligenc
 import { getLpBook, type CurrencyTotal, type LpCommitment } from "@/lib/directory/lp-profile";
 import { backersOver, getGpBackers } from "@/lib/directory/gp-profile";
 import { getProfilePortfolio, profileContacts, profileDeals, profileProviders, profileSignals, type ProfileCounts } from "@/lib/directory/profile-queries";
-import { similarFirms } from "@/lib/directory/similar-server";
 import { ROLE_PLURAL, type ProviderRole } from "@/lib/directory/providers";
 import { isOperatingRole } from "@/lib/directory/operating";
 import { headlineSize } from "@/components/directory/profile-sections";
 import { ClassifyControl } from "@/components/directory/profile-actions";
-import { AddToListButton, FindSimilarButton } from "@/components/directory/profile-actions";
+import { AddToListButton } from "@/components/directory/profile-actions";
 import { AddToPipelineButton } from "@/components/add-to-pipeline-button";
 import { PortfolioButton } from "@/components/portfolio-button";
 import { ReportButton } from "@/components/report-button";
@@ -74,7 +73,6 @@ export async function HeroActions({ company }: { company: Company }) {
       <PortfolioButton id={company.id} initial={company.in_portfolio} />
       <AddToPipelineButton companyId={company.id} />
       <AddToListButton companyId={company.id} lists={lists} onLists={onLists.map((l) => l.id)} />
-      <FindSimilarButton companyId={company.id} />
       <ReportButton />
     </div>
   );
@@ -179,28 +177,6 @@ function DealsChapter({ id, n, deals, base, title }: { id: string; n: number; de
   );
 }
 
-/** Firms like this one, at the end of the story. Reads the directory index, so it streams last. */
-export async function SimilarChapter({ companyId }: { companyId: string }) {
-  const hits = await similarFirms(companyId, 6);
-  if (!hits.length) return null;
-  return (
-    <Chapter id="similar" eyebrow="Similar" title="Firms like this one" lead="By profile, type, size, place and the providers they share.">
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {hits.map((h) => (
-          <Link key={h.record.id} href={`/companies/${h.record.id}`} className="story-card flex items-start gap-3 p-3.5">
-            <CompanyLogo name={h.record.name} domain={h.record.domain} size={36} />
-            <span className="min-w-0 flex-1">
-              <span className="block truncate text-[14px] font-medium">{h.record.name}</span>
-              <span className="block truncate text-[12px] text-muted-foreground">{h.record.subType ?? h.record.category}</span>
-              {h.reasons[0] ? <span className="mt-1 block truncate text-[11.5px] text-muted-foreground">{h.reasons[0]}</span> : null}
-            </span>
-            <ArrowUpRight className="story-card-arrow h-4 w-4 shrink-0" />
-          </Link>
-        ))}
-      </div>
-    </Chapter>
-  );
-}
 
 // --- An LP: where it invests, with whom, how it has done ---------------------
 

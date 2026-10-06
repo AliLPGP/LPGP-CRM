@@ -87,3 +87,51 @@ export const getGpBackers = cache(async (companyId: string): Promise<GpBackers> 
     .sort((a, b) => b.commitments - a.commitments || (b.latest ?? 0) - (a.latest ?? 0) || a.name.localeCompare(b.name));
   return { backers, commitments: rows, lpsByFund: new Map([...lpsByFundSets].map(([k, v]) => [k, v.size])) };
 });
+
+/**
+ * The same backers counted over a subset of the commitments (one asset
+ * class's funds, say): commitments, funds, totals per currency, years and
+ * IRRs re-added from the rows kept, the LP's type and domain carried over.
+ */
+export function backersOver(full: GpBackers, keep: (c: NamedCommitment) => boolean): Backer[] {
+  const known = new Map(full.backers.map((b) => [b.id ?? `n:${b.name.toLowerCase()}`, b]));
+  const by = new Map<string, Backer & { _totals: Map<string, CurrencyTotal>; _funds: Set<string> }>();
+  for (const c of full.commitments) {
+    if (!keep(c)) continue;
+    const name = c.lp_label ?? c.lp_name ?? "Investor not named";
+    const key = c.lp_company_id ?? `n:${name.toLowerCase()}`;
+    const k = known.get(key);
+    const e: Backer & { _totals: Map<string, CurrencyTotal>; _funds: Set<string> } = by.get(key) ?? {
+      id: c.lp_company_id,
+      name,
+      type: k?.type ?? null,
+      domain: k?.domain ?? null,
+      commitments: 0,
+      funds: [] as string[],
+      totals: [] as CurrencyTotal[],
+      first: null,
+      latest: null,
+      irrs: [] as number[],
+      _totals: new Map<string, CurrencyTotal>(),
+      _funds: new Set<string>(),
+    };
+    e.commitments += 1;
+    const fund = c.fund_label ?? c.fund_name;
+    if (fund) e._funds.add(fund);
+    if (c.amount != null && c.currency) {
+      const t = e._totals.get(c.currency) ?? { currency: c.currency, amount: 0, n: 0 };
+      t.amount += Number(c.amount);
+      t.n += 1;
+      e._totals.set(c.currency, t);
+    }
+    if (c.commitment_year != null) {
+      e.first = e.first == null ? c.commitment_year : Math.min(e.first, c.commitment_year);
+      e.latest = e.latest == null ? c.commitment_year : Math.max(e.latest, c.commitment_year);
+    }
+    if (c.net_irr != null) e.irrs.push(Number(c.net_irr));
+    by.set(key, e);
+  }
+  return [...by.values()]
+    .map(({ _totals, _funds, ...b }) => ({ ...b, funds: [..._funds], totals: [..._totals.values()].sort((a, z) => z.n - a.n || z.amount - a.amount) }))
+    .sort((a, b) => b.commitments - a.commitments || (b.latest ?? 0) - (a.latest ?? 0) || a.name.localeCompare(b.name));
+}

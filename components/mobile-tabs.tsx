@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { Briefcase, Landmark, Layers, Menu, TrendingUp } from "lucide-react";
+import { Briefcase, Building2, Landmark, Layers, Menu } from "lucide-react";
 import { INTEL_NAV } from "@/components/intel/shell";
 import { openMobileMenu, startNavigation } from "@/components/top-nav";
 import { cn } from "@/lib/utils";
@@ -21,7 +21,7 @@ const TABS: Tab[] = [
   { key: "investors", label: "Investors", href: "/database?book=LP", icon: Landmark, nav: "Investors" },
   { key: "managers", label: "Managers", href: "/database?book=GP", icon: Briefcase, nav: "Fund managers" },
   { key: "funds", label: "Funds", href: "/funds", icon: Layers, nav: "Funds" },
-  { key: "performance", label: "Performance", href: "/database/performance", icon: TrendingUp, nav: "Performance" },
+  { key: "companies", label: "Companies", href: "/database/portcos", icon: Building2, nav: "Companies & deals" },
 ];
 
 /** The tab the page belongs to, by the header's own matchers; null when it is none of the four. */

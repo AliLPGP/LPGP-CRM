@@ -2,7 +2,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { CompanyLogo } from "@/components/company-logo";
 import { Chip, ClassIcon, Figure, Figures, Meter, MoreLink, fmtMult, fmtPct } from "@/components/story/story";
-import { ASSET_CLASS_BY_KEY, isAssetClassKey } from "@/lib/directory/asset-classes";
+import { ASSET_CLASS_BY_KEY, isAssetClassKey, type AssetClassKey } from "@/lib/directory/asset-classes";
+import { STRATEGY_BY_KEY, strategiesInFundName } from "@/lib/directory/strategies";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import type { LpBook, LpCommitment } from "@/lib/directory/lp-profile";
 import { formatUsd } from "@/lib/utils";
@@ -24,7 +25,7 @@ function median(values: number[]): number | null {
 
 export type ClassSort = "newest" | "irr" | "amount";
 
-export function LpClassView({ book, cls, base, name, shown, sort = "newest" }: { book: LpBook; cls: string; base: string; name: string; shown?: number; sort?: ClassSort }) {
+export function LpClassView({ book, cls, base, name, shown, sort = "newest", strategy = null }: { book: LpBook; cls: string; base: string; name: string; shown?: number; sort?: ClassSort; strategy?: string | null }) {
   const summary = isAssetClassKey(cls) ? book.classes.find((c) => c.key === cls) : undefined;
   const meta = isAssetClassKey(cls) ? ASSET_CLASS_BY_KEY[cls] : null;
   const limit = Math.max(STEP, shown ?? STEP);
@@ -45,7 +46,7 @@ export function LpClassView({ book, cls, base, name, shown, sort = "newest" }: {
       {!summary ? (
         <div className="story-card mt-8 p-6 text-[14px] text-muted-foreground">No disclosed commitment of {name} is placed in {meta?.name ?? "this class"}.</div>
       ) : (
-        <ClassBody rows={summary.rows} summary={summary} base={base} name={name} limit={limit} sort={sort} />
+        <ClassBody rows={summary.rows} summary={summary} base={base} name={name} limit={limit} sort={sort} strategy={strategy} />
       )}
     </div>
   );
@@ -57,7 +58,26 @@ const SORTS: { key: ClassSort; label: string }[] = [
   { key: "amount", label: "Largest commitment" },
 ];
 
-function ClassBody({ rows, summary, base, name, limit, sort }: { rows: LpCommitment[]; summary: NonNullable<LpBook["classes"][number]>; base: string; name: string; limit: number; sort: ClassSort }) {
+/** The strategy a fund's own name states within its class ("Direct lending", "Mezzanine"), or null when the name states none. */
+function strategyOf(c: LpCommitment, cls: AssetClassKey): string | null {
+  return strategiesInFundName(c.fund_label ?? c.fund_name, cls).find((s) => s.axis === "strategy")?.key ?? null;
+}
+
+const UNSTATED = "unstated";
+
+function ClassBody({ rows: all, summary, base, name, limit, sort, strategy }: { rows: LpCommitment[]; summary: NonNullable<LpBook["classes"][number]>; base: string; name: string; limit: number; sort: ClassSort; strategy: string | null }) {
+  // The strategies the fund names in this class state, one card each; a click narrows everything below to it.
+  const cls = summary.key as AssetClassKey;
+  const groups = new Map<string, LpCommitment[]>();
+  for (const c of all) {
+    const k = strategyOf(c, cls) ?? UNSTATED;
+    groups.set(k, [...(groups.get(k) ?? []), c]);
+  }
+  const named = [...groups.entries()].filter(([k]) => k !== UNSTATED).sort((a, b) => b[1].length - a[1].length);
+  const picked = strategy && groups.has(strategy) ? strategy : null;
+  const rows = picked ? (groups.get(picked) ?? []) : all;
+  const pickedName = picked ? (picked === UNSTATED ? "funds whose name states no strategy" : (STRATEGY_BY_KEY[picked]?.name ?? picked)) : null;
+  const q = (k: string | null, extra = "") => `${base}?class=${summary.key}${k ? `&strategy=${k}` : ""}${extra}`;
   const byYear = (a: LpCommitment, b: LpCommitment) => (b.commitment_year ?? 0) - (a.commitment_year ?? 0) || (a.fund_label ?? "").localeCompare(b.fund_label ?? "");
   // Best IRR: funds it reports a figure for, highest first, then the rest by year.
   // Largest: within the currency most of its amounts are in, never across currencies.
@@ -69,7 +89,7 @@ function ClassBody({ rows, summary, base, name, limit, sort }: { rows: LpCommitm
         ? (a, b) => (b.currency === mainCcy ? 1 : 0) - (a.currency === mainCcy ? 1 : 0) || Number(b.amount ?? 0) - Number(a.amount ?? 0) || byYear(a, b)
         : byYear,
   );
-  const sortHref = (k: ClassSort) => `${base}?class=${summary.key}${k === "newest" ? "" : `&sort=${k}`}#funds`;
+  const sortHref = (k: ClassSort) => `${q(picked, k === "newest" ? "" : `&sort=${k}`)}#funds`;
   const first = rows.reduce<number | null>((y, c) => (c.commitment_year != null && (y == null || c.commitment_year < y) ? c.commitment_year : y), null);
   const topIrr = Math.max(1, ...rows.map((c) => (c.net_irr != null ? Number(c.net_irr) : 0)));
 
@@ -107,11 +127,58 @@ function ClassBody({ rows, summary, base, name, limit, sort }: { rows: LpCommitm
         {summary.latestYear ? <Figure label="Latest commitment" value={summary.latestYear} /> : null}
       </Figures>
 
+      {named.length ? (
+        <section className="chapter" id="strategies">
+          <div className="chapter-eyebrow">Strategies</div>
+          <h3 className="chapter-title">How its {summary.name.toLowerCase()} splits by strategy.</h3>
+          <p className="chapter-lead">By what each fund&rsquo;s own name states. Pick one to see only its funds and managers.</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {[...named, ...(groups.has(UNSTATED) ? [[UNSTATED, groups.get(UNSTATED)!] as [string, LpCommitment[]]] : [])].map(([k, rs]) => {
+              const on = picked === k;
+              const irr = median(rs.filter((c) => c.net_irr != null).map((c) => Number(c.net_irr)));
+              const mgrs = new Set(rs.map((c) => c.gp_company_id ?? c.gp_label ?? "")).size;
+              const share = (rs.length / all.length) * 100;
+              return (
+                <Link key={k} href={on ? `${q(null)}#strategies` : `${q(k)}#funds`} scroll={false} className={`story-card flex flex-col p-4 ${on ? "story-card-hero" : ""}`} aria-current={on ? "true" : undefined}>
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-[14.5px] font-medium leading-snug">{k === UNSTATED ? "Not stated in the name" : (STRATEGY_BY_KEY[k]?.name ?? k)}</span>
+                    {on ? <Chip strong>Showing</Chip> : <ArrowUpRight className="story-card-arrow h-4 w-4 shrink-0" />}
+                  </div>
+                  {k !== UNSTATED && STRATEGY_BY_KEY[k]?.blurb ? <p className="mt-1 line-clamp-2 text-[12px] text-muted-foreground">{STRATEGY_BY_KEY[k].blurb}</p> : null}
+                  <dl className="mt-auto grid grid-cols-3 gap-2 pt-4">
+                    <div>
+                      <dt className="text-[11px] text-muted-foreground">Funds</dt>
+                      <dd className="figure text-[15px]">{rs.length.toLocaleString("en-US")}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-[11px] text-muted-foreground">Managers</dt>
+                      <dd className="figure text-[15px]">{mgrs.toLocaleString("en-US")}</dd>
+                    </div>
+                    {irr != null ? (
+                      <div>
+                        <dt className="text-[11px] text-muted-foreground">Net IRR</dt>
+                        <dd className="figure text-[15px]">{fmtPct(irr)}</dd>
+                      </div>
+                    ) : null}
+                  </dl>
+                  <Meter pct={share} className="mt-3" />
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
+
       <section className="chapter" id="funds">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <div className="chapter-eyebrow">The funds</div>
-            <h3 className="chapter-title">Every {summary.name.toLowerCase()} fund in its book.</h3>
+            <h3 className="chapter-title">{pickedName ? `${rows.length.toLocaleString("en-US")} ${pickedName === "funds whose name states no strategy" ? pickedName : `${pickedName.toLowerCase()} funds`}.` : `Every ${summary.name.toLowerCase()} fund in its book.`}</h3>
+            {picked ? (
+              <Link href={`${q(null)}#strategies`} scroll={false} className="mt-1 inline-block text-[12.5px] text-muted-foreground hover:text-foreground">
+                Show every {summary.name.toLowerCase()} fund
+              </Link>
+            ) : null}
           </div>
           <div className="chapter-nav-row" role="group" aria-label="Sort the funds">
             {SORTS.map((s) => (
@@ -156,14 +223,14 @@ function ClassBody({ rows, summary, base, name, limit, sort }: { rows: LpCommitm
         </div>
         {sorted.length > limit ? (
           <div className="mt-4 flex justify-center">
-            <MoreLink href={`${base}?class=${summary.key}${sort === "newest" ? "" : `&sort=${sort}`}&n=${limit + STEP}`}>Show {Math.min(STEP, sorted.length - limit)} more of {(sorted.length - limit).toLocaleString("en-US")}</MoreLink>
+            <MoreLink href={q(picked, `${sort === "newest" ? "" : `&sort=${sort}`}&n=${limit + STEP}`)}>Show {Math.min(STEP, sorted.length - limit)} more of {(sorted.length - limit).toLocaleString("en-US")}</MoreLink>
           </div>
         ) : null}
       </section>
 
       <section className="chapter" id="class-managers">
         <div className="chapter-eyebrow">The managers</div>
-        <h3 className="chapter-title">Who it backs in {summary.name.toLowerCase()}.</h3>
+        <h3 className="chapter-title">Who it backs in {pickedName && picked !== UNSTATED ? pickedName.toLowerCase() : summary.name.toLowerCase()}.</h3>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {mgrs.slice(0, 24).map((m) => {
             const body = (

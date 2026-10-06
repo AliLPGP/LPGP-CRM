@@ -102,21 +102,6 @@ const SECTIONS: Section[] = [
     ],
   },
   {
-    key: "performance",
-    label: "Performance",
-    href: "/database/performance?tab=funds",
-    blurb: "Net IRR, multiples, DPI and RVPI as the investors themselves report them.",
-    columns: [
-      {
-        items: [
-          { href: "/database/performance?tab=funds", label: "Best performing funds" },
-          { href: "/database/performance?tab=managers", label: "Best performing managers" },
-          { href: "/database/performance?tab=benchmark", label: "Market benchmarks", note: "Published figures per class and strategy" },
-        ],
-      },
-    ],
-  },
-  {
     key: "providers",
     label: "Service providers",
     href: "/database?book=SP",
@@ -161,38 +146,6 @@ const SECTIONS: Section[] = [
       },
     ],
   },
-  {
-    key: "tools",
-    label: "Tools",
-    href: "/database/workflows",
-    blurb: "The desk's workflows, people, lists and imports.",
-    columns: [
-      {
-        heading: "Workflows",
-        items: [
-          { href: "/database/workflows/market-intelligence", label: "Market intelligence" },
-          { href: "/database/workflows/deal-sourcing", label: "Deal sourcing" },
-          { href: "/database/workflows/deal-execution", label: "Deal execution" },
-          { href: "/database/workflows/due-diligence", label: "Due diligence" },
-          { href: "/database/workflows/fundraising", label: "Fundraising" },
-          { href: "/database/workflows/benchmarking", label: "Benchmarking" },
-          { href: "/database/workflows/business-development", label: "Business development" },
-          { href: "/database/workflows/asset-allocation", label: "Asset allocation" },
-          { href: "/database/workflows/portfolio-management", label: "Portfolio management" },
-          { href: "/database/workflows/networking", label: "Networking" },
-        ],
-      },
-      {
-        heading: "Yours",
-        items: [
-          { href: "/contacts", label: "People" },
-          { href: "/database/lists", label: "Target lists" },
-          { href: "/portfolio", label: "Watchlist" },
-          { href: "/import", label: "Import", note: "Master directory and datasets" },
-        ],
-      },
-    ],
-  },
 ];
 
 const CRM: Item[] = [
@@ -204,30 +157,34 @@ const CRM: Item[] = [
   { href: "/deals", label: "My deals" },
   { href: "/events", label: "Event performance" },
   { href: "/import/leads", label: "Import leads" },
+  { href: "/contacts", label: "People" },
+  { href: "/database/lists", label: "Target lists" },
+  { href: "/portfolio", label: "Watchlist" },
+  { href: "/import", label: "Import", note: "Master directory and datasets" },
 ];
 
-const CRM_PATHS = ["/crm", "/pipeline", "/leads", "/accounts", "/deals", "/events", "/import/leads"];
+const CRM_PATHS = ["/crm", "/pipeline", "/leads", "/accounts", "/deals", "/events", "/import", "/portfolio"];
 
 // --- Which section the page belongs to ------------------------------------------
 // One rule for the header and the pages: the matchers the desk shell already
-// keeps. Tools covers what the shell lists as workflows, people and lists.
+// keeps. Performance is read on the fund and manager pages it belongs to, so
+// its desk counts as Funds; people, lists, the watchlist and imports sit in
+// the Sales menu; the workflows are reached from the pages, not the bar.
 
 const SECTION_OF_TAB: Record<string, string> = {
   Investors: "investors",
   "Fund managers": "managers",
   Funds: "funds",
-  Performance: "performance",
+  Performance: "funds",
   "Service providers": "providers",
   "Companies & deals": "companies",
-  Workflows: "tools",
-  People: "tools",
-  Lists: "tools",
+  People: "crm",
+  Lists: "crm",
 };
 
 function sectionOf(pathname: string, search: URLSearchParams | null): string | null {
   const s = search ?? new URLSearchParams();
   for (const tab of INTEL_NAV) if (tab.match(pathname, s) && SECTION_OF_TAB[tab.label]) return SECTION_OF_TAB[tab.label];
-  if (pathname.startsWith("/portfolio") || pathname.startsWith("/import")) return pathname.startsWith("/import/leads") ? "crm" : "tools";
   if (CRM_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return "crm";
   if (pathname.startsWith("/companies/") || pathname.startsWith("/funds/")) return null;
   return null;

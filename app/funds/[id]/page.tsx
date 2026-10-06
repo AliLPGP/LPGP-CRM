@@ -16,6 +16,10 @@ import type { FundPerformanceRow } from "@/lib/directory/investor-queries";
 import { normalizeRole, PROVIDER_ROLES, ROLE_LABEL } from "@/lib/directory/providers";
 import { getCompanyFunds, nameCommitments, type DisclosedCommitment, type NamedCommitment } from "@/lib/directory/queries";
 import { getFundDetails, getFundFormD } from "@/lib/fund-details";
+import { fundCards, fundHoldings } from "@/lib/directory/fund-portfolio";
+import { FUND_STAGE_LABEL, fundKey, fundStage } from "@/lib/directory/fund-match";
+import { FundFamilies } from "@/components/story/fund-families";
+import { PortcoCard } from "@/components/story/portco-card";
 import { getFund } from "@/lib/queries";
 import { getReadClient } from "@/lib/supabase/server";
 import { formatUsd } from "@/lib/utils";
@@ -36,10 +40,11 @@ const num = (v: unknown): number | null => (v == null || v === "" || Number.isNa
 const PERF_COLUMNS = "lps, net_irr_median, net_irr_min, net_irr_max, multiple_median, multiple_min, multiple_max, dpi_median, rvpi_median, called_pct_median, as_of, lps_with_cash, sources";
 
 /** The fund's row in `fund_performance` (migrations 0033/0034), read with the anon client; null on an older database or any error. */
-async function fundPerformance(fundId: string): Promise<Perf | null> {
+async function fundPerformance(fundIds: string[]): Promise<Perf | null> {
   const supabase = getReadClient();
   if (!supabase) return null;
-  const { data, error } = await supabase.from("fund_performance_mv").select(PERF_COLUMNS).eq("fund_id", fundId).limit(1);
+  // One fund filed as several vehicles: the vehicle the most investors report on speaks for it.
+  const { data, error } = await supabase.from("fund_performance_mv").select(PERF_COLUMNS).in("fund_id", fundIds).order("lps", { ascending: false }).limit(1);
   const r = (data as Record<string, unknown>[] | null)?.[0];
   if (error || !r) return null;
   return {
@@ -65,11 +70,11 @@ const LP_COLUMNS = "id, lp_company_id, gp_company_id, fund_id, lp_name, gp_name,
 const LP_PERF_COLUMNS = `${LP_COLUMNS}, asset_class, contributed, distributed, remaining_value, net_irr, multiple, as_of`;
 
 /** The LPs on file for this fund, named. The 0019 performance columns are asked for first; an older database answers with an error and the base columns are read instead. */
-async function fundInvestors(fundId: string): Promise<NamedCommitment[]> {
+async function fundInvestors(fundIds: string[]): Promise<NamedCommitment[]> {
   const supabase = getReadClient();
   if (!supabase) return [];
-  const full = await supabase.from("commitments").select(LP_PERF_COLUMNS).eq("fund_id", fundId).limit(1000);
-  const base = full.error ? await supabase.from("commitments").select(LP_COLUMNS).eq("fund_id", fundId).limit(1000) : full;
+  const full = await supabase.from("commitments").select(LP_PERF_COLUMNS).in("fund_id", fundIds).limit(1000);
+  const base = full.error ? await supabase.from("commitments").select(LP_COLUMNS).in("fund_id", fundIds).limit(1000) : full;
   if (base.error || !base.data) return [];
   const rows = await nameCommitments(base.data as unknown as DisclosedCommitment[]);
   // Largest first within each currency; amounts in different currencies are never compared.
@@ -93,14 +98,28 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   const fund = await getFund(id);
   if (!fund) notFound();
 
-  const [investors, details, formD, perf, offerings, siblings] = await Promise.all([
-    fundInvestors(id),
+  const manager = fund.manager ? { id: fund.manager.id, name: fund.manager.name } : null;
+  const [details, formD, offerings, siblings] = await Promise.all([
     getFundDetails(id),
     getFundFormD(id),
-    fundPerformance(id),
     getFundOfferings({ fundId: id, pooledOnly: false, limit: 50 }),
-    fund.manager ? getCompanyFunds(fund.manager.id) : Promise.resolve([]),
+    manager ? getCompanyFunds(manager.id) : Promise.resolve([]),
   ]);
+  // The same fund filed more than once (a parallel vehicle, a second spelling) reads as one.
+  const key = fundKey(fund.name);
+  const vehicles = siblings.filter((f) => f.id === id || (key && fundKey(f.name) === key));
+  const ids = [...new Set([id, ...vehicles.map((v) => v.id)])];
+  const [investors, perf, holdings, cards] = await Promise.all([
+    fundInvestors(ids),
+    fundPerformance(ids),
+    fundHoldings(vehicles.length ? vehicles : [fund], manager),
+    manager ? fundCards(manager, siblings.filter((f) => !ids.includes(f.id))) : Promise.resolve([]),
+  ]);
+  // Companies the manager's portfolio puts in this fund by name; the programme-level ones are told apart.
+  const named = holdings.filter((h) => h.match === "fund");
+  const programme = holdings.filter((h) => h.match === "programme");
+  const heldNow = named.filter((h) => (h.status ?? "").toLowerCase().startsWith("current")).length;
+  const stage = fundStage(fund.status ?? vehicles.find((v) => v.status)?.status);
   const disclosed = investors.filter((c) => c.source !== "sample");
   const reporting = disclosed.filter((c) => c.net_irr != null || c.multiple != null || c.contributed != null || c.distributed != null || c.remaining_value != null);
   const providers = (Array.isArray(fund.service_providers) ? fund.service_providers : [])
@@ -112,9 +131,9 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   const researched = details && details.research_state !== "no_public_data" && [details.overview, details.fundraising_status, details.target_size, details.management_fee_pct, details.carried_interest_pct, details.term_years, details.legal_structure].some((v) => v != null && v !== "");
 
   const size =
-    fund.fund_size_usd != null
+    fund.fund_size_usd != null && fund.fund_size_usd > 0
       ? { value: formatUsd(fund.fund_size_usd), basis: "fund size, USD as filed" }
-      : fund.target_size_usd != null
+      : fund.target_size_usd != null && fund.target_size_usd > 0
         ? { value: formatUsd(fund.target_size_usd), basis: "target, USD" }
         : details?.target_size != null
           ? { value: formatMoney(details.target_size, details.target_currency), basis: "target, as researched" }
@@ -128,14 +147,15 @@ export default async function FundPage({ params, searchParams }: { params: Promi
     chapters.push({ id, label, count });
     return n;
   };
+  // The order a client reads a fund in: how it has done, what it owns, who is in it, the manager's other funds, then the paper trail.
+  const nPerf = perf || reporting.length ? next("performance", "Performance", null) : 0;
+  const nPortfolio = holdings.length ? next("portfolio", "Companies", holdings.length) : 0;
   const nInvestors = disclosed.length ? next("investors", "Investors", disclosed.length) : 0;
-  const nPerf = perf || reporting.length ? next("performance", "Performance", perf?.lps ?? reporting.length) : 0;
-  const others = siblings.filter((f) => f.id !== fund.id);
-  const nManager = fund.manager ? next("manager", "Manager", null) : 0;
-  const nProviders = providers.length ? next("providers", "Providers", providers.length) : 0;
-  const nFilings = offerings.length || formD || fund.source === "form_adv" ? next("filings", "Filings", offerings.length || null) : 0;
+  const nManager = cards.length ? next("manager", "Other funds", cards.length) : 0;
+  const nSources = offerings.length || formD || fund.source === "form_adv" || providers.length ? next("sources", "Sources", null) : 0;
   const nTerms = researched ? next("terms", "Terms", null) : 0;
   const topIrr = Math.max(1, ...reporting.map((c) => (c.net_irr != null ? Number(c.net_irr) : 0)));
+  const vintage = fund.vintage_year ?? vehicles.find((v) => v.vintage_year)?.vintage_year ?? null;
 
   return (
     <StoryPage>
@@ -147,20 +167,21 @@ export default async function FundPage({ params, searchParams }: { params: Promi
           <h1 className="story-name mt-2">{fund.name}</h1>
           <p className="story-lede mt-3">
             <strong>
-              {fund.vintage_year ? `A ${fund.vintage_year} ` : "A "}
-              {clsName ? `${clsName.toLowerCase()} ` : ""}fund{managerName ? ` managed by ${managerName}` : ""}
-              {fund.domicile ? `, domiciled in ${fund.domicile}` : ""}.
+              {vintage ? `A ${vintage} ` : "A "}
+              {clsName ? `${clsName.toLowerCase()} ` : ""}fund{managerName ? ` managed by ${managerName}` : ""}.
             </strong>{" "}
-            {disclosed.length
-              ? `${disclosed.length} limited partner${disclosed.length === 1 ? " has" : "s have"} disclosed a commitment to it${perf?.net_irr_median != null ? `, and the ones that report put its net IRR at a median of ${perf.net_irr_median}%` : ""}.`
-              : "No limited partner has disclosed a commitment to it yet."}
+            {[
+              perf?.net_irr_median != null ? `Its investors report a median net IRR of ${perf.net_irr_median}%.` : null,
+              named.length ? `It has invested in ${named.length} compan${named.length === 1 ? "y" : "ies"} on file.` : null,
+            ]
+              .filter(Boolean)
+              .join(" ")}
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-1.5">
-            {fund.status ? <Chip strong>{fund.status}</Chip> : null}
-            {fund.vehicle_kind ? <Chip>{fund.vehicle_kind}</Chip> : null}
-            {fund.currency ? <Chip>{fund.currency} class</Chip> : null}
+            {stage ? <Chip strong={stage === "active"}>{FUND_STAGE_LABEL[stage]}</Chip> : null}
             {fund.geography ? <Chip>{fund.geography}</Chip> : null}
-            {fund.name_filed && fund.name_filed !== fund.name ? <Chip title="As named on the manager's Form ADV">Filed as {fund.name_filed}</Chip> : null}
+            {fund.currency ? <Chip>{fund.currency}</Chip> : null}
+            {vehicles.length > 1 ? <Chip title={vehicles.map((v) => v.name).join(" · ")}>{vehicles.length} vehicles</Chip> : null}
           </div>
         </div>
         {fund.manager ? (
@@ -176,18 +197,95 @@ export default async function FundPage({ params, searchParams }: { params: Promi
       </header>
 
       <Figures>
+        {perf?.net_irr_median != null ? <Figure label="Net IRR, median" value={`${perf.net_irr_median}%`} basis={irrRange ?? `${perf.lps} investor${perf.lps === 1 ? "" : "s"} reporting`} href="#performance" /> : null}
+        {perf?.multiple_median != null ? <Figure label="Multiple, median" value={`${perf.multiple_median}x`} basis={perf.as_of ? `as of ${dateLabel(perf.as_of)}` : undefined} href="#performance" /> : null}
+        {named.length ? <Figure label="Companies" value={named.length} basis={heldNow ? `${heldNow} still held` : "as its manager lists them"} href="#portfolio" /> : null}
         {size ? <Figure label="Size" value={size.value} basis={size.basis} /> : null}
-        {fund.vintage_year ? <Figure label="Vintage" value={fund.vintage_year} basis={details?.fundraising_status ?? undefined} /> : null}
-        {disclosed.length ? <Figure label="Investors on file" value={disclosed.length} basis={reporting.length ? `${reporting.length} report performance` : undefined} href="#investors" /> : null}
-        {perf?.net_irr_median != null ? <Figure label="Median net IRR" value={`${perf.net_irr_median}%`} basis={irrRange ?? `${perf.lps} LP${perf.lps === 1 ? "" : "s"} reporting`} href="#performance" /> : null}
-        {perf?.multiple_median != null ? <Figure label="Median multiple" value={`${perf.multiple_median}x`} basis={perf.as_of ? `as of ${dateLabel(perf.as_of)}` : undefined} href="#performance" /> : null}
-        {formD?.amount_sold != null ? <Figure label="Sold on Form D" value={formatMoney(formD.amount_sold, "USD")} basis={formD.offering_amount != null ? `of ${formatMoney(formD.offering_amount, "USD")} offered` : undefined} href="#filings" /> : null}
+        {vintage ? <Figure label="Vintage" value={vintage} /> : null}
+        {disclosed.length ? <Figure label="Investors on file" value={disclosed.length} href="#investors" /> : null}
       </Figures>
 
       <ChapterNav chapters={chapters} />
 
+      {nPerf ? (
+        <Chapter
+          id="performance"
+          n={nPerf}
+          eyebrow="Performance"
+          title={perf?.net_irr_median != null ? `A median net IRR of ${perf.net_irr_median}%.` : "How its investors report it."}
+          lead="Each investor's own figure as of its own date. DPI, RVPI and the share called are arithmetic on each one's stated cash; nothing is estimated."
+          more={{ href: "/database/performance?tab=funds", label: "How other funds compare" }}
+        >
+          {perf && (perf.dpi_median != null || perf.rvpi_median != null || perf.called_pct_median != null) ? (
+            <Figures>
+              {perf.dpi_median != null ? <Figure label="DPI, median" value={`${perf.dpi_median.toFixed(2)}x`} basis="distributed ÷ contributed" /> : null}
+              {perf.rvpi_median != null ? <Figure label="RVPI, median" value={`${perf.rvpi_median.toFixed(2)}x`} basis="remaining ÷ contributed" /> : null}
+              {perf.called_pct_median != null ? <Figure label="Called, median" value={`${Math.round(perf.called_pct_median)}%`} basis="contributed ÷ commitment" /> : null}
+            </Figures>
+          ) : null}
+          {reporting.length ? (
+            <div className="story-card story-rows mt-5 overflow-hidden">
+              {[...reporting]
+                .sort((a, b) => Number(b.net_irr ?? -999) - Number(a.net_irr ?? -999))
+                .map((c) => (
+                  <div key={c.id} className="story-row">
+                    <CompanyLogo name={c.lp_label ?? c.lp_name ?? "?"} size={30} />
+                    <span className="min-w-0 flex-1">
+                      {c.lp_company_id ? (
+                        <Link href={`/companies/${c.lp_company_id}`} className="block truncate text-[14px] font-medium hover:underline">
+                          {c.lp_label ?? c.lp_name}
+                        </Link>
+                      ) : (
+                        <span className="block truncate text-[14px] font-medium">{c.lp_label ?? c.lp_name}</span>
+                      )}
+                      <span className="block truncate text-[12px] text-muted-foreground">
+                        {[c.as_of ? `as of ${dateLabel(c.as_of)}` : null, c.contributed != null ? `${formatMoney(c.contributed, c.currency)} in` : null, c.distributed != null ? `${formatMoney(c.distributed, c.currency)} out` : null].filter(Boolean).join(" · ")}
+                      </span>
+                    </span>
+                    <span className="hidden w-[160px] sm:block">{c.net_irr != null ? <Meter pct={(Math.max(0, Number(c.net_irr)) / topIrr) * 100} /> : null}</span>
+                    <span className="figure w-[60px] text-right text-[14px]">{c.net_irr != null ? `${c.net_irr}%` : "—"}</span>
+                    <span className="figure w-[52px] text-right text-[12px] text-muted-foreground">{c.multiple != null ? `${c.multiple}x` : ""}</span>
+                    <Src url={c.source_url} name="source" />
+                  </div>
+                ))}
+            </div>
+          ) : null}
+        </Chapter>
+      ) : null}
+
+      {nPortfolio ? (
+        <Chapter
+          id="portfolio"
+          n={nPortfolio}
+          eyebrow="Companies"
+          title={named.length ? `${named.length} compan${named.length === 1 ? "y" : "ies"} in this fund.` : "Companies in its programme."}
+          lead={`As ${managerName ?? "the manager"}'s own portfolio names the fund behind each holding. Each opens the company.`}
+          more={fund.manager ? { href: `/companies/${fund.manager.id}?view=portfolio`, label: "The whole portfolio" } : null}
+        >
+          {named.length ? (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {named.map((h) => (
+                <PortcoCard key={h.id} p={h} />
+              ))}
+            </div>
+          ) : null}
+          {programme.length ? (
+            <>
+              <p className={`chapter-lead ${named.length ? "mt-8" : ""}`}>
+                {programme.length === 1 ? "One more company is" : `${programme.length} more companies are`} listed under the {[...new Set(programme.map((h) => h.fund_name))].slice(0, 2).join(" and ")} programme, which this fund belongs to. The manager does not say which of the programme&rsquo;s funds made {programme.length === 1 ? "that investment" : "each investment"}.
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {programme.map((h) => (
+                  <PortcoCard key={h.id} p={h} note={<Chip title={`Listed under "${h.fund_name}"`}>Programme</Chip>} />
+                ))}
+              </div>
+            </>
+          ) : null}
+        </Chapter>
+      ) : null}
+
       {nInvestors ? (
-        <Chapter id="investors" n={nInvestors} eyebrow="Who's in it" title={`${disclosed.length} investor${disclosed.length === 1 ? " is" : "s are"} in this fund.`} lead="Limited partners whose own reports, board papers or holdings lists name it, with what each committed in its own currency and the figures it reports.">
+        <Chapter id="investors" n={nInvestors} eyebrow="Investors" title={`${disclosed.length} investor${disclosed.length === 1 ? " has" : "s have"} disclosed a commitment.`} lead="From each investor's own reports, in its own currency.">
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {disclosed.map((c, i) => {
               const name = c.lp_label ?? c.lp_name ?? "Investor not named";
@@ -233,101 +331,14 @@ export default async function FundPage({ params, searchParams }: { params: Promi
         </Chapter>
       ) : null}
 
-      {nPerf ? (
-        <Chapter
-          id="performance"
-          n={nPerf}
-          eyebrow="Performance"
-          title={perf?.net_irr_median != null ? `A median net IRR of ${perf.net_irr_median}%, as its investors report it.` : "How its investors report it."}
-          lead="Each investor's own figure as of its own date, in its own currency. DPI, RVPI and the share called are arithmetic on each one's stated cash; nothing is estimated."
-        >
-          {perf ? (
-            <Figures>
-              {perf.dpi_median != null ? <Figure label="DPI, median" value={`${perf.dpi_median.toFixed(2)}x`} basis="distributed ÷ contributed" /> : null}
-              {perf.rvpi_median != null ? <Figure label="RVPI, median" value={`${perf.rvpi_median.toFixed(2)}x`} basis="remaining ÷ contributed" /> : null}
-              {perf.called_pct_median != null ? <Figure label="Called, median" value={`${Math.round(perf.called_pct_median)}%`} basis="contributed ÷ commitment" /> : null}
-              <Figure label="Investors reporting" value={perf.lps} basis={`${perf.lps_with_cash} with cash figures`} />
-            </Figures>
-          ) : null}
-          {reporting.length ? (
-            <div className="story-card story-rows mt-5 overflow-hidden">
-              {[...reporting]
-                .sort((a, b) => Number(b.net_irr ?? -999) - Number(a.net_irr ?? -999))
-                .map((c) => (
-                  <div key={c.id} className="story-row">
-                    <CompanyLogo name={c.lp_label ?? c.lp_name ?? "?"} size={30} />
-                    <span className="min-w-0 flex-1">
-                      {c.lp_company_id ? (
-                        <Link href={`/companies/${c.lp_company_id}`} className="block truncate text-[14px] font-medium hover:underline">
-                          {c.lp_label ?? c.lp_name}
-                        </Link>
-                      ) : (
-                        <span className="block truncate text-[14px] font-medium">{c.lp_label ?? c.lp_name}</span>
-                      )}
-                      <span className="block truncate text-[12px] text-muted-foreground">
-                        {[c.as_of ? `as of ${dateLabel(c.as_of)}` : null, c.contributed != null ? `${formatMoney(c.contributed, c.currency)} in` : null, c.distributed != null ? `${formatMoney(c.distributed, c.currency)} out` : null].filter(Boolean).join(" · ")}
-                      </span>
-                    </span>
-                    <span className="hidden w-[160px] sm:block">{c.net_irr != null ? <Meter pct={(Math.max(0, Number(c.net_irr)) / topIrr) * 100} /> : null}</span>
-                    <span className="figure w-[60px] text-right text-[14px]">{c.net_irr != null ? `${c.net_irr}%` : "—"}</span>
-                    <span className="figure w-[52px] text-right text-[12px] text-muted-foreground">{c.multiple != null ? `${c.multiple}x` : ""}</span>
-                    <Src url={c.source_url} name="source" />
-                  </div>
-                ))}
-            </div>
-          ) : null}
-        </Chapter>
-      ) : null}
-
       {nManager && fund.manager ? (
-        <Chapter
-          id="manager"
-          n={nManager}
-          eyebrow="The manager"
-          title={`${fund.manager.name}${others.length ? ` runs ${others.length} other fund${others.length === 1 ? "" : "s"} on file` : ""}.`}
-          more={{ href: `/companies/${fund.manager.id}`, label: `${fund.manager.name}'s story` }}
-        >
-          {others.length ? (
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              {others
-                .sort((a, b) => (b.vintage_year ?? 0) - (a.vintage_year ?? 0) || a.name.localeCompare(b.name))
-                .slice(0, 8)
-                .map((f) => (
-                  <Link key={f.id} href={`/funds/${f.id}`} className="story-card p-3.5">
-                    <ClassIcon cls={classStatedByFundName(f.name_filed ?? f.name) ?? cls} className="h-8 w-8 rounded-[9px]" />
-                    <div className="mt-3 line-clamp-2 text-[13.5px] font-medium leading-snug">{f.name}</div>
-                    <div className="mt-1 text-[12px] text-muted-foreground">{f.vintage_year ? `Vintage ${f.vintage_year}` : (f.vehicle_kind ?? "Form ADV")}</div>
-                  </Link>
-                ))}
-            </div>
-          ) : (
-            <Link href={`/companies/${fund.manager.id}`} className="story-card flex items-center gap-3 p-4">
-              <CompanyLogo name={fund.manager.name} domain={fund.manager.domain} size={40} />
-              <span className="text-[14px] font-medium">{fund.manager.name}</span>
-            </Link>
-          )}
+        <Chapter id="manager" n={nManager} eyebrow="Other funds" title={`${fund.manager.name}'s other funds.`} more={{ href: `/companies/${fund.manager.id}`, label: fund.manager.name }}>
+          <FundFamilies funds={cards} cls={cls} moreHref={`/companies/${fund.manager.id}?view=funds`} />
         </Chapter>
       ) : null}
 
-      {nProviders ? (
-        <Chapter id="providers" n={nProviders} eyebrow="Service providers" title="Who services it." lead={`As ${managerName ?? "the manager"} names them for this fund on Form ADV Schedule D.`}>
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {providers.map((p) => (
-              <Link key={`${p.role}:${p.key}`} href={`/database/providers/${p.key}`} className="story-card flex items-center gap-3 p-3.5">
-                <CompanyLogo name={p.brand} domain={brandDomain(p.key)} size={34} />
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[11.5px] text-muted-foreground">{ROLE_LABEL[p.norm]}</span>
-                  <span className="block truncate text-[14px] font-medium">{p.brand}</span>
-                </span>
-                <ArrowUpRight className="story-card-arrow h-4 w-4" />
-              </Link>
-            ))}
-          </div>
-        </Chapter>
-      ) : null}
-
-      {nFilings ? (
-        <Chapter id="filings" n={nFilings} eyebrow="Filings" title="What it has filed.">
+      {nSources ? (
+        <Chapter id="sources" n={nSources} eyebrow="Sources" title="Filings and service providers.">
           <div className="grid gap-3 lg:grid-cols-2">
             {formD ? (
               <div className="story-card p-4">
@@ -363,6 +374,19 @@ export default async function FundPage({ params, searchParams }: { params: Promi
                 </p>
               </div>
             ) : null}
+            {providers.length ? (
+              <div className="story-card p-4 lg:col-span-2">
+                <div className="text-[12px] text-muted-foreground">Service providers, as named on Form ADV Schedule D</div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {providers.map((p) => (
+                    <Link key={`${p.role}:${p.key}`} href={`/database/providers/${p.key}`} className="story-chip inline-flex items-center gap-1.5 hover:text-foreground">
+                      <CompanyLogo name={p.brand} domain={brandDomain(p.key)} size={16} />
+                      {p.brand} <span className="text-muted-foreground">· {ROLE_LABEL[p.norm]}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
           {offerings.length > 1 ? (
             <div className="desk mt-4">
@@ -375,7 +399,7 @@ export default async function FundPage({ params, searchParams }: { params: Promi
       ) : null}
 
       {nTerms ? (
-        <Chapter id="terms" n={nTerms} eyebrow="Terms and strategy" title="What its documents say.">
+        <Chapter id="terms" n={nTerms} eyebrow="Terms" title="What its documents say.">
           <div className="desk">
             <FundProfileSections fund={fund} details={details} formD={formD} />
           </div>

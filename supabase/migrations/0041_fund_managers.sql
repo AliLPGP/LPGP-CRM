@@ -193,6 +193,8 @@ begin
   select distinct on (p.fund_id) p.fund_id, g.company_id, case when p.src = 'fund_name' then 'fund_prefix' else 'prefix' end, p.cand, p.src, p.source_url
     from ingest.fm_pref p join ingest.fm_gpdir g on g.key = p.key
    where (p.k > 1 or not (p.key = any (stop))) and length(p.key) >= 4
+     -- a one-word name read off the fund's own title only when its filing names nobody
+     and (p.k > 1 or p.src <> 'fund_name' or not exists (select 1 from ingest.fm_cand c where c.fund_id = p.fund_id))
      and not exists (select 1 from ingest.fm_pick q where q.fund_id = p.fund_id)
    order by p.fund_id, p.rnk, p.k desc;
   get diagnostics n_prefix = row_count;
@@ -212,6 +214,11 @@ begin
      and c.cand !~* '^(n/?a|none|not applicable|see )'
    order by c.fund_id, c.rnk, length(c.cand);
   delete from ingest.fm_new where length(key) < 3;
+  create index on ingest.fm_new (key);
+  drop table if exists ingest.fm_mgr;
+  create table ingest.fm_mgr as
+  select e eid, id from public.companies, unnest(external_ids) e where e like 'fundmgr:%';
+  create index on ingest.fm_mgr (eid);
   insert into public.companies (name, category, source, sources, description, external_ids)
   select distinct on (n.key) ingest.nice_name(n.firm_name), 'GP',
          case when n.src = 'commitment_gp' then 'lp_disclosure' else 'sec_form_d' end,
@@ -221,13 +228,16 @@ begin
          array['fundmgr:' || n.key]
     from ingest.fm_new n join public.funds f on f.id = n.fund_id
    where not exists (select 1 from ingest.fm_dir d where d.key = n.key)
-     and not exists (select 1 from public.companies c where 'fundmgr:' || n.key = any (c.external_ids))
+     and not exists (select 1 from ingest.fm_mgr m where m.eid = 'fundmgr:' || n.key)
    order by n.key, (n.src = 'commitment_gp') desc;
+  insert into ingest.fm_mgr
+  select e, id from public.companies, unnest(external_ids) e
+   where e like 'fundmgr:%' and created_at > now() - interval '1 minute' and not exists (select 1 from ingest.fm_mgr m where m.eid = e);
   insert into ingest.fm_pick
   select n.fund_id, coalesce(d.company_id, c.id), 'created', n.cand, n.src, n.source_url
     from ingest.fm_new n
     left join ingest.fm_dir d on d.key = n.key
-    left join public.companies c on d.key is null and ('fundmgr:' || n.key) = any (c.external_ids)
+    left join ingest.fm_mgr c on d.key is null and c.eid = 'fundmgr:' || n.key
    where coalesce(d.company_id, c.id) is not null
   on conflict (fund_id) do nothing;
   get diagnostics n_created = row_count;
@@ -251,6 +261,7 @@ begin
   commit;
   drop table if exists ingest.fm_pref;
   drop table if exists ingest.fm_adv;
+  drop table if exists ingest.fm_mgr;
   commit;
 end $$;
 

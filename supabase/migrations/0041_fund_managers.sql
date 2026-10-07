@@ -23,7 +23,11 @@
 -- ingest.funds_without_manager for research.
 --
 -- Run: call ingest.link_fund_managers();  (idempotent; commits per step, so
--- schedule it with pg_cron rather than inside the API's statement limit.)
+-- schedule it with pg_cron rather than inside the API's statement limit.
+-- The cron role's own statement limit covers the whole CALL, so a run that
+-- hits it resumes with call ingest.link_fund_managers(n) from step n:
+-- 1 candidates, 2 name tables, 3 name/stem, 4 roster, 5 prefix, 6 created,
+-- 7 write.)
 
 create table if not exists ingest.fund_manager_links (
   fund_id uuid primary key,
@@ -54,14 +58,15 @@ create or replace function ingest.fm_brand(p text) returns text language sql imm
     '\s+((capital|investment|asset|fund|investment fund|portfolio|wealth)\s+)?(management|managers?|advisors|advisers|advisory|partners|company|co\.?|group)(\s+(company|co\.?|group))?\s*$', '', 'i')), '')
 $$;
 
-create or replace procedure ingest.link_fund_managers()
+drop procedure if exists ingest.link_fund_managers();
+create or replace procedure ingest.link_fund_managers(p_from int default 1)
 language plpgsql as $$
 declare n_name int; n_stem int; n_roster int; n_prefix int; n_created int; n_left int;
   stop text[] := array['capital','global','private','partners','first','american','north','south','east','west','new','united','general','national','international','credit','equity','real','growth','venture','ventures','fund','funds','investment','investments','strategic','opportunity','opportunities','income','infrastructure','energy','digital','blue','green','black','white','silver','gold','summit','main','alpha','core','prime','crown','eagle','harbor','harbour','lake','river','park','bridge','stone','oak','pine','cedar','maple','atlas','apex','vista','one','two','three','the','series','spv','co','management','asset','assets','family','select','special','senior','secured','direct','diversified','opportunistic','value','partners','holdings','group','master','feeder','offshore','onshore','parallel','access','select'];
 begin
-  perform set_config('statement_timeout', '0', false);
 
   -- 1. What each manager-less fund's documents name.
+  if p_from <= 1 then
   drop table if exists ingest.fm_cand;
   create table ingest.fm_cand (fund_id uuid, cand text, rnk int, src text, source_url text, key text, skey text, bkey text);
   insert into ingest.fm_cand (fund_id, cand, rnk, src, source_url)
@@ -86,8 +91,10 @@ begin
   update ingest.fm_cand set key = public.firm_key(cand), skey = public.firm_key(ingest.fm_stem(cand)), bkey = public.firm_key(ingest.fm_brand(cand));
   create index on ingest.fm_cand (fund_id);
   commit;
+  end if;
 
   -- 2. Every name a directory firm or roster adviser goes by.
+  if p_from <= 2 then
   drop table if exists ingest.fm_dir;
   create table ingest.fm_dir as
   select distinct on (key) key, company_id from (
@@ -105,9 +112,18 @@ begin
   create unique index on ingest.fm_gpdir (key);
   drop table if exists ingest.fm_pick;
   create table ingest.fm_pick (fund_id uuid primary key, company_id uuid, method text, cand text, src text, source_url text);
+  drop table if exists ingest.fm_advkey;
+  create table ingest.fm_advkey as
+  select public.firm_key(name) key, crd, private_fund_gav gav from public.adv_advisers where company_id is null
+  union
+  select public.firm_key(legal_name), crd, private_fund_gav from public.adv_advisers where company_id is null and legal_name is not null;
+  create index on ingest.fm_advkey (key);
   commit;
+  end if;
 
   -- 3a. The stated name is a firm we hold.
+  if p_from <= 3 then
+  truncate ingest.fm_pick;
   insert into ingest.fm_pick
   select distinct on (c.fund_id) c.fund_id, d.company_id, 'name', c.cand, c.src, c.source_url
     from ingest.fm_cand c join ingest.fm_dir d on d.key = c.key
@@ -122,16 +138,20 @@ begin
    order by c.fund_id, c.rnk;
   get diagnostics n_stem = row_count;
   commit;
+  end if;
 
   -- 3c. An SEC-registered or exempt reporting adviser not yet in the
   -- directory: promote it from the roster (same record promote_advisers makes).
+  if p_from <= 4 then
   drop table if exists ingest.fm_adv;
   create table ingest.fm_adv as
   select distinct on (c.fund_id) c.fund_id, a.crd, c.cand, c.src, c.source_url
-    from ingest.fm_cand c
-    join public.adv_advisers a on a.company_id is null and public.firm_key(a.name) in (c.key, c.skey)
+    from (select fund_id, cand, src, source_url, rnk, key k from ingest.fm_cand
+          union all
+          select fund_id, cand, src, source_url, rnk, skey from ingest.fm_cand where skey is distinct from key) c
+    join ingest.fm_advkey a on a.key = c.k and length(c.k) >= 4
    where not exists (select 1 from ingest.fm_pick p where p.fund_id = c.fund_id)
-   order by c.fund_id, c.rnk, a.private_fund_gav desc nulls last;
+   order by c.fund_id, c.rnk, a.gav desc nulls last;
   insert into public.companies (name, category, sub_type, website, domain, city, state, country, source, sec_crd, external_ids, adv_firm_type, adv_last_filed,
     adv_employee_count, private_fund_count, private_fund_gross_assets, regulatory_aum_usd, adv_source_url, description)
   select ingest.nice_name(a.name), 'GP', ingest.adviser_type(a),
@@ -154,10 +174,12 @@ begin
   on conflict (fund_id) do nothing;
   get diagnostics n_roster = row_count;
   commit;
+  end if;
 
   -- 3d. The longest directory manager whose name opens the stated name, then
   -- the fund's own name ("Blue Owl Real Estate Net Lease … Fund" → Blue Owl).
   -- A one-word manager name counts only when it is not a common word.
+  if p_from <= 5 then
   drop table if exists ingest.fm_pref;
   create table ingest.fm_pref as
   select x.fund_id, x.cand, x.src, x.source_url, x.rnk, public.firm_key(array_to_string(w[1:k], ' ')) key, k
@@ -175,9 +197,11 @@ begin
    order by p.fund_id, p.rnk, p.k desc;
   get diagnostics n_prefix = row_count;
   commit;
+  end if;
 
   -- 4. The stated firm is new to us: a GP record named as the filing or LP
   -- document names it (vehicle tail off), one per firm across all its funds.
+  if p_from <= 6 then
   drop table if exists ingest.fm_new;
   create table ingest.fm_new as
   select distinct on (c.fund_id) c.fund_id, c.cand, c.src, c.source_url,
@@ -208,6 +232,7 @@ begin
   on conflict (fund_id) do nothing;
   get diagnostics n_created = row_count;
   commit;
+  end if;
 
   -- 5. Write the links: the fund, its filings, and the commitments into it.
   update public.funds f set company_id = p.company_id, manager_name = coalesce(f.manager_name, p.cand)

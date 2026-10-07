@@ -333,6 +333,24 @@ begin
   commit;
 end $$;
 
+-- One slice per pg_cron tick, so no CALL meets the cron role's statement
+-- limit: set ingest.fund_manager_run.step to 1 (or 0 to first undo the
+-- created firms) and schedule 'call ingest.fund_manager_step()' every
+-- minute; it idles once the step passes 8.
+create table if not exists ingest.fund_manager_run (step int not null);
+insert into ingest.fund_manager_run (step) select 99 where not exists (select 1 from ingest.fund_manager_run);
+
+create or replace procedure ingest.fund_manager_step()
+language plpgsql as $$
+declare s int;
+begin
+  select step into s from ingest.fund_manager_run limit 1;
+  if s is null or s > 8 then return; end if;
+  if s = 0 then call ingest.unlink_created_fund_managers(); else call ingest.link_fund_managers(s, s); end if;
+  update ingest.fund_manager_run set step = s + 1;
+  commit;
+end $$;
+
 -- Deleting or merging a company checks every credit position for it.
 create index if not exists credit_positions_borrower_company_idx on public.credit_positions (borrower_company_id) where borrower_company_id is not null;
 

@@ -230,7 +230,8 @@ export const STRATEGIES: Strategy[] = [
     /\b(mid[\s-]?market|middle\s+market|lower\s+mid|small[\s-]cap\s+buyout)\b/i,
     ["mid-market buyout fundraising", "middle market PE returns", "middle market deal multiples"]),
   S("pe_growth", "private_equity", "Growth equity", "Minority and structured growth capital.",
-    /\b(GROWTH\s+(EQUITY|CAPITAL|PARTNERS|FUND|INVESTORS)|EXPANSION\s+CAPITAL)\b/,
+    // LP reports abbreviate ("Growth Eqty Fd", "Growth Opps"): the words are still the fund's own.
+    /\b(GROWTH\s+(EQUITY|EQTY|CAPITAL|PARTNERS|PRTNRS|FUND|FD|INVESTORS|OPPS|OPPORTUNIT(Y|IES))|EXPANSION\s+CAPITAL)\b/,
     /\b(growth\s+equity|growth\s+capital|expansion\s+capital)\b/i,
     ["growth equity fundraising", "growth equity returns"]),
   S("pe_balanced", "private_equity", "Balanced", "Mixed buyout, growth and venture mandates in one vehicle.",
@@ -376,6 +377,39 @@ export function strategiesInFundName(name: string | null | undefined, classKey: 
 export function strategiesInFirmText(text: string | null | undefined, classKey: AssetClassKey): Strategy[] {
   if (!text) return [];
   return STRATEGIES_BY_CLASS[classKey].filter((s) => s.firmText.test(text));
+}
+
+/** Where a fund's strategy came from: a researched profile (a page that
+ *  states it), the fund's own name, or the one strategy its manager's own
+ *  words state in that class. The record always says which. */
+export type StrategyBasis = "researched" | "name" | "manager";
+
+export type PlacedStrategy = { key: string; basis: StrategyBasis };
+
+export const STRATEGY_BASIS_LABEL: Record<StrategyBasis, string> = {
+  researched: "researched",
+  name: "by name",
+  manager: "by manager",
+};
+
+/** The one strategy a manager's own vertical or overview states within a
+ *  class; null when it states none, or several (a multi-strategy manager
+ *  says nothing about any one fund). */
+export function managerStrategyIn(text: string | null | undefined, classKey: AssetClassKey): string | null {
+  const hits = strategiesInFirmText(text, classKey).filter((s) => s.axis === "strategy");
+  return hits.length === 1 ? hits[0].key : null;
+}
+
+/** A fund's strategy: its researched profile first (any class's strategy:
+ *  a venture fund in an LP's private-equity programme is still venture), then
+ *  what its own name states in its class, then the one strategy its manager
+ *  states. Null when nothing says. */
+export function placeStrategy(o: { researched?: string | null; name?: string | null; classKey: AssetClassKey; managerText?: string | null }): PlacedStrategy | null {
+  if (o.researched && STRATEGY_BY_KEY[o.researched]?.axis === "strategy") return { key: o.researched, basis: "researched" };
+  const named = strategiesInFundName(o.name, o.classKey).find((s) => s.axis === "strategy");
+  if (named) return { key: named.key, basis: "name" };
+  const managed = managerStrategyIn(o.managerText, o.classKey);
+  return managed ? { key: managed, basis: "manager" } : null;
 }
 
 export const METRIC_LABEL: Record<string, string> = {

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { getCompanyFunds, getProviderClients, listDirectoryListNames, listsForCompany } from "@/lib/directory/queries";
-import { STRATEGY_BY_KEY, strategiesInFundName } from "@/lib/directory/strategies";
+import { STRATEGY_BY_KEY, placeStrategy } from "@/lib/directory/strategies";
+import { researchedStrategies } from "@/lib/directory/fund-strategy";
 import { ASSET_CLASS_BY_KEY, classOfGpType, classStatedByFundName, fundClass, isAssetClassKey, type AssetClassKey } from "@/lib/directory/asset-classes";
 import { DEAL_KIND_LABEL } from "@/lib/directory/asset-classes";
 import { formatMoney, type Deal, type Signal } from "@/lib/directory/intelligence-types";
@@ -469,8 +470,10 @@ export async function GpStory({ company, counts, base, cls = null, strategy = nu
   const picked = cls && classCounts.has(cls) && classTabs.length > 1 ? (cls as AssetClassKey) : null;
   const inClass = picked ? ` in ${ASSET_CLASS_BY_KEY[picked].name.toLowerCase()}` : "";
   const classCards = picked ? allCards.filter((c) => classOfFund(c) === picked) : allCards;
-  // Inside one class, the strategies its funds' own names state (direct lending, mezzanine, real estate debt...), one card each.
-  const strategyOfCard = (c: { name: string; name_filed?: string | null }) => (picked ? (strategiesInFundName(c.name_filed ?? c.name, picked).find((x) => x.axis === "strategy")?.key ?? null) : null);
+  // Inside one class, a card per strategy its funds are placed in (researched profile, else the fund's own name): direct lending, mezzanine, real estate debt...
+  const researched = picked ? await researchedStrategies(classCards.map((c) => c.id)) : new Map<string, string>();
+  const strategyOfCard = (c: { id: string; name: string; name_filed?: string | null }) =>
+    picked ? (placeStrategy({ researched: researched.get(c.id), name: c.name_filed ?? c.name, classKey: picked })?.key ?? null) : null;
   const strategyGroups = new Map<string, typeof classCards>();
   for (const c of classCards) {
     const k = strategyOfCard(c);

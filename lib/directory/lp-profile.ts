@@ -3,6 +3,8 @@ import { cache } from "react";
 import { getReadClient } from "../supabase/server";
 import { chunk } from "../supabase/paged";
 import { ASSET_CLASSES, ASSET_CLASS_BY_KEY, type AssetClassKey } from "./asset-classes";
+import { researchedStrategies } from "./fund-strategy";
+import { placeStrategy, type StrategyBasis } from "./strategies";
 import { commitmentClass } from "./intelligence-queries";
 import { performanceSample, type FundPerformanceRow } from "./investor-queries";
 import { getProfileCommitments } from "./profile-queries";
@@ -20,6 +22,9 @@ export type LpCommitment = NamedCommitment & {
   cls: AssetClassKey | null;
   /** What the LPs that hold this fund report, across all of them. */
   sample: FundPerformanceRow | null;
+  /** How the fund invests: its researched profile, else its own name, else its manager's one stated strategy. */
+  strategy: string | null;
+  strategyBasis: StrategyBasis | null;
 };
 
 export type CurrencyTotal = { currency: string; amount: number; n: number };
@@ -105,21 +110,32 @@ export const getLpBook = cache(async (companyId: string): Promise<LpBook> => {
   // programme say nothing; one read for every manager in the book.
   const supabase = getReadClient();
   const gpType = new Map<string, string | null>();
+  const gpText = new Map<string, string>();
   const gpIds = [...new Set(disclosed.map((c) => c.gp_company_id).filter((v): v is string => Boolean(v)))];
   if (supabase && gpIds.length) {
     for (const ids of chunk(gpIds, 150)) {
-      const { data } = await supabase.from("companies").select("id, sub_type").in("id", ids);
-      for (const r of (data ?? []) as { id: string; sub_type: string | null }[]) gpType.set(r.id, r.sub_type);
+      const { data } = await supabase.from("companies").select("id, sub_type, directory_vertical, description").in("id", ids);
+      for (const r of (data ?? []) as { id: string; sub_type: string | null; directory_vertical: string | null; description: string | null }[]) {
+        gpType.set(r.id, r.sub_type);
+        gpText.set(r.id, [r.directory_vertical, r.description].filter(Boolean).join(" "));
+      }
     }
   }
-  const { rows: sample } = await performanceSample();
+  const [{ rows: sample }, researched] = await Promise.all([performanceSample(), researchedStrategies(disclosed.map((c) => c.fund_id))]);
   const perf = new Map(sample.map((r) => [r.fund_id, r]));
 
-  const all: LpCommitment[] = disclosed.map((c) => ({
-    ...c,
-    cls: commitmentClass({ ...c, gp_type: c.gp_company_id ? gpType.get(c.gp_company_id) : null }),
-    sample: c.fund_id ? (perf.get(c.fund_id) ?? null) : null,
-  }));
+  const all: LpCommitment[] = disclosed.map((c) => {
+    const cls = commitmentClass({ ...c, gp_type: c.gp_company_id ? gpType.get(c.gp_company_id) : null });
+    const placed = cls
+      ? placeStrategy({
+          researched: c.fund_id ? researched.get(c.fund_id) : null,
+          name: c.fund_label ?? c.fund_name,
+          classKey: cls,
+          managerText: c.gp_company_id ? gpText.get(c.gp_company_id) : null,
+        })
+      : null;
+    return { ...c, cls, sample: c.fund_id ? (perf.get(c.fund_id) ?? null) : null, strategy: placed?.key ?? null, strategyBasis: placed?.basis ?? null };
+  });
   const byClass = new Map<AssetClassKey, LpCommitment[]>();
   for (const c of all) if (c.cls) byClass.set(c.cls, [...(byClass.get(c.cls) ?? []), c]);
   const classes = ASSET_CLASSES.filter((k) => byClass.has(k.key))

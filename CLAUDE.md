@@ -263,6 +263,18 @@ boundaries and keeps comment text ASCII.
   estimated, amounts never cross currencies, and a fund with no reported
   figure has none. The researched investor profile (0033) still fills the
   type, AUM, allocations, preferences and plans once the research has run.
+- **Where a fund's strategy comes from** (`placeStrategy` in `strategies.ts`,
+  `researchedStrategies` in `fund-strategy.ts`) — a fund is placed in a
+  strategy by its researched profile first (`fund_details.strategy_code`,
+  with the page that states it in `fund_details.sources.strategy_code`; any
+  class's strategy, so a venture fund in an LP's private-equity programme
+  reads as venture), then by what its own name states in its class (LP
+  reports' abbreviations such as "Growth Eqty", "Growth Opps" count), then by
+  the one strategy its manager's own vertical or overview states in that
+  class (none when it states several). The LP class view's strategy cards and
+  a manager's fund cards read it that way, and each LP card says how many of
+  its funds were placed by which ("212 researched · 40 by name"); what is
+  left is "Strategy not on file".
 - **The story register** (`components/story/`, `app/companies/[id]/story.tsx`,
   `globals.css` "The story register", in `@layer components` so utilities
   win) — where a reader lands on one record (a firm, a fund) it reads top to

@@ -2,8 +2,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { CompanyLogo } from "@/components/company-logo";
 import { Chip, ClassIcon, Figure, Figures, Meter, MoreLink, fmtMult, fmtPct } from "@/components/story/story";
-import { ASSET_CLASS_BY_KEY, isAssetClassKey, type AssetClassKey } from "@/lib/directory/asset-classes";
-import { STRATEGY_BY_KEY, strategiesInFundName } from "@/lib/directory/strategies";
+import { ASSET_CLASS_BY_KEY, isAssetClassKey } from "@/lib/directory/asset-classes";
+import { STRATEGY_BASIS_LABEL, STRATEGY_BY_KEY, type StrategyBasis } from "@/lib/directory/strategies";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import type { LpBook, LpCommitment } from "@/lib/directory/lp-profile";
 import { formatUsd } from "@/lib/utils";
@@ -58,25 +58,30 @@ const SORTS: { key: ClassSort; label: string }[] = [
   { key: "amount", label: "Largest commitment" },
 ];
 
-/** The strategy a fund's own name states within its class ("Direct lending", "Mezzanine"), or null when the name states none. */
-function strategyOf(c: LpCommitment, cls: AssetClassKey): string | null {
-  return strategiesInFundName(c.fund_label ?? c.fund_name, cls).find((s) => s.axis === "strategy")?.key ?? null;
+/** The strategy the fund is placed in (researched profile, else its own name, else its manager's one stated strategy), or null when nothing says. */
+const strategyOf = (c: LpCommitment): string | null => c.strategy;
+
+/** "212 researched · 40 by name": how a card's funds were placed. */
+function basisLine(rows: LpCommitment[]): string | null {
+  const n = new Map<StrategyBasis, number>();
+  for (const c of rows) if (c.strategyBasis) n.set(c.strategyBasis, (n.get(c.strategyBasis) ?? 0) + 1);
+  const parts = (["researched", "name", "manager"] as StrategyBasis[]).filter((b) => n.get(b)).map((b) => `${n.get(b)!.toLocaleString("en-US")} ${STRATEGY_BASIS_LABEL[b]}`);
+  return parts.length ? parts.join(" · ") : null;
 }
 
 const UNSTATED = "unstated";
 
 function ClassBody({ rows: all, summary, base, name, limit, sort, strategy }: { rows: LpCommitment[]; summary: NonNullable<LpBook["classes"][number]>; base: string; name: string; limit: number; sort: ClassSort; strategy: string | null }) {
   // The strategies the fund names in this class state, one card each; a click narrows everything below to it.
-  const cls = summary.key as AssetClassKey;
   const groups = new Map<string, LpCommitment[]>();
   for (const c of all) {
-    const k = strategyOf(c, cls) ?? UNSTATED;
+    const k = strategyOf(c) ?? UNSTATED;
     groups.set(k, [...(groups.get(k) ?? []), c]);
   }
   const named = [...groups.entries()].filter(([k]) => k !== UNSTATED).sort((a, b) => b[1].length - a[1].length);
   const picked = strategy && groups.has(strategy) ? strategy : null;
   const rows = picked ? (groups.get(picked) ?? []) : all;
-  const pickedName = picked ? (picked === UNSTATED ? "funds whose name states no strategy" : (STRATEGY_BY_KEY[picked]?.name ?? picked)) : null;
+  const pickedName = picked ? (picked === UNSTATED ? "funds with no strategy on file" : (STRATEGY_BY_KEY[picked]?.name ?? picked)) : null;
   const q = (k: string | null, extra = "") => `${base}?class=${summary.key}${k ? `&strategy=${k}` : ""}${extra}`;
   const byYear = (a: LpCommitment, b: LpCommitment) => (b.commitment_year ?? 0) - (a.commitment_year ?? 0) || (a.fund_label ?? "").localeCompare(b.fund_label ?? "");
   // Best IRR: funds it reports a figure for, highest first, then the rest by year.
@@ -131,7 +136,7 @@ function ClassBody({ rows: all, summary, base, name, limit, sort, strategy }: { 
         <section className="chapter" id="strategies">
           <div className="chapter-eyebrow">Strategies</div>
           <h3 className="chapter-title">How its {summary.name.toLowerCase()} splits by strategy.</h3>
-          <p className="chapter-lead">By what each fund&rsquo;s own name states. Pick one to see only its funds and managers.</p>
+          <p className="chapter-lead">By the fund&rsquo;s researched profile, else what its own name states, else the one strategy its manager says it runs; each card says how its funds were placed. Pick one to see only its funds and managers.</p>
           <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {[...named, ...(groups.has(UNSTATED) ? [[UNSTATED, groups.get(UNSTATED)!] as [string, LpCommitment[]]] : [])].map(([k, rs]) => {
               const on = picked === k;
@@ -141,10 +146,11 @@ function ClassBody({ rows: all, summary, base, name, limit, sort, strategy }: { 
               return (
                 <Link key={k} href={on ? `${q(null)}#strategies` : `${q(k)}#funds`} scroll={false} className={`story-card flex flex-col p-4 ${on ? "story-card-hero" : ""}`} aria-current={on ? "true" : undefined}>
                   <div className="flex items-start justify-between gap-2">
-                    <span className="text-[14.5px] font-medium leading-snug">{k === UNSTATED ? "Not stated in the name" : (STRATEGY_BY_KEY[k]?.name ?? k)}</span>
+                    <span className="text-[14.5px] font-medium leading-snug">{k === UNSTATED ? "Strategy not on file" : (STRATEGY_BY_KEY[k]?.name ?? k)}</span>
                     {on ? <Chip strong>Showing</Chip> : <ArrowUpRight className="story-card-arrow h-4 w-4 shrink-0" />}
                   </div>
                   {k !== UNSTATED && STRATEGY_BY_KEY[k]?.blurb ? <p className="mt-1 line-clamp-2 text-[12px] text-muted-foreground">{STRATEGY_BY_KEY[k].blurb}</p> : null}
+                  {k !== UNSTATED && basisLine(rs) ? <p className="mt-1 text-[11px] text-muted-foreground">{basisLine(rs)}</p> : null}
                   <dl className="mt-auto grid grid-cols-3 gap-2 pt-4">
                     <div>
                       <dt className="text-[11px] text-muted-foreground">Funds</dt>
@@ -173,7 +179,7 @@ function ClassBody({ rows: all, summary, base, name, limit, sort, strategy }: { 
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <div className="chapter-eyebrow">The funds</div>
-            <h3 className="chapter-title">{pickedName ? `${rows.length.toLocaleString("en-US")} ${pickedName === "funds whose name states no strategy" ? pickedName : `${pickedName.toLowerCase()} funds`}.` : `Every ${summary.name.toLowerCase()} fund in its book.`}</h3>
+            <h3 className="chapter-title">{pickedName ? `${rows.length.toLocaleString("en-US")} ${pickedName === "funds with no strategy on file" ? pickedName : `${pickedName.toLowerCase()} funds`}.` : `Every ${summary.name.toLowerCase()} fund in its book.`}</h3>
             {picked ? (
               <Link href={`${q(null)}#strategies`} scroll={false} className="mt-1 inline-block text-[12.5px] text-muted-foreground hover:text-foreground">
                 Show every {summary.name.toLowerCase()} fund

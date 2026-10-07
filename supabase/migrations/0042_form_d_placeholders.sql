@@ -47,3 +47,32 @@ update public.fund_offerings o set placement_agents = ingest.clean_agents(o.plac
 -- rebuilds the real ones under each agent's own name.
 delete from public.service_relationships
  where role = 'placement_agent' and source = 'sec_form_d' and ingest.fd_blank(provider_brand) is null;
+
+-- A social profile is not a firm's website. Form ADV and the directory
+-- workbook sometimes give a LinkedIn, Facebook, YouTube or Instagram page
+-- where the website belongs; the domain derived from it ("linkedin.com")
+-- then names a social network as the firm's domain. A LinkedIn company page
+-- is kept where it belongs; the website and domain stay blank until the
+-- firm's own site is found.
+create or replace function public.company_site_guard() returns trigger language plpgsql as $$
+declare social text := '(linkedin\.com|facebook\.com|fb\.com|youtube\.com|youtu\.be|instagram\.com|twitter\.com|(^|[/.])x\.com|tiktok\.com|crunchbase\.com|bloomberg\.com|wikipedia\.org|google\.[a-z.]+/|sites\.google)';
+begin
+  if new.website ~* social then
+    if new.website ~* 'linkedin\.com/(company|showcase|school)/' and new.linkedin_url is null then
+      new.linkedin_url := new.website;
+    end if;
+    new.website := null;
+    if new.domain ~* social or new.domain is not null and new.domain !~ '\.' then new.domain := null; end if;
+  end if;
+  if new.domain ~* '^(www\.)?(linkedin|facebook|fb|youtube|instagram|twitter|x|tiktok|crunchbase|bloomberg|wikipedia|google)\.[a-z.]+$' then
+    new.domain := null;
+  end if;
+  return new;
+end $$;
+
+drop trigger if exists company_site_guard on public.companies;
+create trigger company_site_guard before insert or update of website, domain on public.companies
+  for each row execute function public.company_site_guard();
+
+update public.companies set website = website
+ where coalesce(website, '') || ' ' || coalesce(domain, '') ~* '(linkedin|facebook|youtube|instagram|twitter|tiktok|crunchbase|bloomberg\.com|wikipedia)';

@@ -80,6 +80,8 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                   <tr>
                     <th>Borrower</th>
                     <th className="whitespace-nowrap">Instruments</th>
+                    <th className="defn" data-tip="The industry the lenders' schedules of investments file the borrower under.">Industry</th>
+                    <th className="defn" data-tip="Whether any lender also holds the borrower's equity, preferred equity or warrants, as its schedule lists them.">Equity</th>
                     <th className="num">Lenders</th>
                     <th className="num">Fair value</th>
                     <th className="num defn" data-tip="Turnover in the latest accounts filed at Companies House, in the filer's currency.">Turnover</th>
@@ -115,6 +117,10 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                         <td className="max-w-[260px] truncate whitespace-nowrap text-[11.5px] text-muted-foreground" title={b.instruments ?? undefined}>
                           {b.instruments ?? "—"}
                         </td>
+                        <td className="max-w-[200px] truncate whitespace-nowrap text-[11.5px]" title={b.industry ?? undefined}>
+                          {b.industry ?? "—"}
+                        </td>
+                        <td className="whitespace-nowrap text-[11.5px]">{b.instruments ? (/equity|warrant|stock|shares|\bunits?\b|\b(lp|membership|partnership) interests?\b/i.test(b.instruments) ? <Tag>Holds equity</Tag> : "No") : "—"}</td>
                         <td className="num">{b.lenders}</td>
                         <td className="num">{formatUsd(b.fair_value ?? 0)}</td>
                         <td className="num">

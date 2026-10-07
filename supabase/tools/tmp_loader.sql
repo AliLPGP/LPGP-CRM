@@ -13,6 +13,7 @@ begin
   perform set_config('statement_timeout', '55s', true);
   if kind = 'position_terms' then return ingest.load_position_terms(p); end if;
   if kind = 'portco_executives' then return ingest.load_portco_executives(p); end if;
+  if kind = 'portco_profiles' then return (public.portco_profile_upsert(p)->>'rows')::int; end if;
   if kind = 'adv_private_funds' and to_regprocedure('ingest.load_adv_private_funds(jsonb)') is not null then
     return ingest.load_adv_private_funds(p);
   end if;

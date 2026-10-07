@@ -141,10 +141,9 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   if (!fund) notFound();
 
   const manager = fund.manager ? { id: fund.manager.id, name: fund.manager.name } : null;
-  const [details, formD, offerings, siblings] = await Promise.all([
+  const [details, formD, siblings] = await Promise.all([
     getFundDetails(id),
     getFundFormD(id),
-    getFundOfferings({ fundId: id, pooledOnly: false, limit: 50 }),
     manager ? getCompanyFunds(manager.id) : Promise.resolve([]),
   ]);
   // The same fund filed more than once (a parallel vehicle, a second spelling) reads as one.
@@ -156,14 +155,26 @@ export default async function FundPage({ params, searchParams }: { params: Promi
     const k = fundKey(l.name);
     return k.length >= 6 && (k === key || vehicles.some((v) => fundKey(v.name) === k));
   });
-  const [investors, perf, holdings, cards, adv, book] = await Promise.all([
+  const [investors, perf, holdings, cards, adv, book, offeringSets] = await Promise.all([
     fundInvestors(ids),
     fundPerformance(ids),
     fundHoldings(vehicles.length ? vehicles : [fund], manager),
     manager ? fundCards(manager, siblings.filter((f) => !ids.includes(f.id))) : Promise.resolve([]),
     advFunds(ids),
     lender ? getLenderBook(lender.cik) : Promise.resolve([]),
+    // Every vehicle's Form Ds: the parallel vehicle often names the agent the main one does not.
+    Promise.all(ids.map((v) => getFundOfferings({ fundId: v, pooledOnly: false, limit: 50 }))),
   ]);
+  const offerings = [...new Map(offeringSets.flat().map((o) => [o.accession_no, o])).values()].sort((a, b) => (b.filing_date ?? "").localeCompare(a.filing_date ?? ""));
+  // What the latest Form D says about the fund itself: who runs it, where it sits, who sells it, what selling it costs.
+  const latestD = offerings[0] ?? null;
+  const roleOf = (re: RegExp) =>
+    [...new Set(offerings.flatMap((o) => (o.related_persons ?? []).filter((p) => re.test(p.clarification ?? "")).map((p) => p.name.replace(/^[-\s]+/, "").trim())))].filter(Boolean);
+  const investmentManagers = roleOf(/investment (manager|adviser|advisor)/i);
+  const generalPartners = roleOf(/general partner/i);
+  const commissions = offerings.map((o) => o.sales_commissions).find((v) => v != null && v > 0) ?? null;
+  const qpOnly = offerings.some((o) => (o.exemptions ?? []).includes("3C.7"));
+  const domicile = fund.domicile ?? (latestD?.jurisdiction ? latestD.jurisdiction.replace(/\b\w+/g, (w) => w[0] + w.slice(1).toLowerCase()) : null);
   const bookFv = book.reduce((t, p) => t + (p.fair_value ?? 0), 0);
   const bookCost = book.reduce((t, p) => t + (p.cost ?? 0), 0);
   const bookIndustries = new Set(book.map((p) => p.industry).filter(Boolean)).size;
@@ -209,19 +220,15 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   const irrRange = perf && perf.net_irr_min != null && perf.net_irr_max != null && perf.net_irr_min !== perf.net_irr_max ? `${perf.net_irr_min}% to ${perf.net_irr_max}%` : null;
 
   const chapters: ChapterLink[] = [];
-  let n = 0;
-  const next = (id: string, label: string, count?: number | null) => {
-    n += 1;
-    chapters.push({ id, label, count });
-    return n;
-  };
+  const next = (id: string, label: string, count?: number | null) => chapters.push({ id, label, count });
   // The order a client reads a fund in: how it has done, what it owns, who is in it, the manager's other funds, then the paper trail.
-  const nPerf = perf || reporting.length ? next("performance", "Performance", null) : 0;
+  const nPerf = next("performance", "Performance", null);
+  const nServices = providers.length || investmentManagers.length || generalPartners.length ? next("services", "Who services it", providers.length || null) : 0;
   const nPortfolio = holdings.length ? next("portfolio", "Companies", holdings.length) : 0;
   const nBook = book.length ? next("book", "Loan book", book.length) : 0;
   const nInvestors = disclosed.length ? next("investors", "Investors", disclosed.length) : 0;
   const nManager = cards.length ? next("manager", "Other funds", cards.length) : 0;
-  const nSources = offerings.length || formD || fund.source === "form_adv" || providers.length || adv.length ? next("sources", "Sources", null) : 0;
+  const nSources = offerings.length || formD || fund.source === "form_adv" || adv.length ? next("sources", "Sources", null) : 0;
   const nTerms = researched ? next("terms", "Terms", null) : 0;
   const topIrr = Math.max(1, ...reporting.map((c) => (c.net_irr != null ? Number(c.net_irr) : 0)));
   const vintage = fund.vintage_year ?? vehicles.find((v) => v.vintage_year)?.vintage_year ?? null;
@@ -272,6 +279,8 @@ export default async function FundPage({ params, searchParams }: { params: Promi
         {size ? <Figure label="Size" value={size.value} basis={size.basis} /> : null}
         {gav > 0 ? <Figure label="Gross assets" value={formatUsd(gav)} basis={`Form ADV${adv.length > 1 ? `, ${adv.length} vehicles` : ""}${advFiled ? `, filed ${dateLabel(advFiled)}` : ""}`} href="#sources" /> : null}
         {vintage ? <Figure label="Vintage" value={vintage} /> : null}
+        {domicile ? <Figure label="Domicile" value={domicile} basis={latestD?.entity_type ?? undefined} /> : null}
+        {commissions ? <Figure label="Sales commissions" value={formatUsd(commissions)} basis="as estimated on its Form D" href="#services" /> : null}
         {disclosed.length ? <Figure label="Investors on file" value={disclosed.length} href="#investors" /> : null}
       </Figures>
 
@@ -283,7 +292,11 @@ export default async function FundPage({ params, searchParams }: { params: Promi
           n={nPerf}
           eyebrow="Performance"
           title={perf?.net_irr_median != null ? `A median net IRR of ${perf.net_irr_median}%.` : "How its investors report it."}
-          lead="Each investor's own figure as of its own date. DPI, RVPI and the share called are arithmetic on each one's stated cash; nothing is estimated."
+          lead={
+            perf || reporting.length
+              ? "Each investor's own figure as of its own date. DPI, RVPI and the share called are arithmetic on each one's stated cash; nothing is estimated."
+              : `No investor has published a figure for this fund yet. A private fund's returns are public only when a public investor (a pension, a sovereign or super fund) reports its holding${latestD?.first_sale_pending ? "; its Form D says it had not yet made its first sale" : ""}. The figure appears here as soon as one does.`
+          }
           more={{ href: "/database/performance?tab=funds", label: "How other funds compare" }}
         >
           {perf && (perf.dpi_median != null || perf.rvpi_median != null || perf.called_pct_median != null) ? (
@@ -319,6 +332,46 @@ export default async function FundPage({ params, searchParams }: { params: Promi
                   </div>
                 ))}
             </div>
+          ) : null}
+        </Chapter>
+      ) : null}
+
+      {nServices ? (
+        <Chapter id="services" n={nServices} eyebrow="Who services it" title={providers.length ? `${providers.length} service provider${providers.length === 1 ? "" : "s"} on file.` : "Who runs and sells it."} lead="As its own filings name them: the general partner and investment manager on its Form D, its placement agents, and the auditor, administrator, custodian and prime broker its adviser reports on Form ADV.">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {generalPartners.map((g) => (
+              <div key={`gp:${g}`} className="story-card p-4">
+                <div className="text-[11.5px] text-muted-foreground">General partner</div>
+                <div className="mt-1 text-[14px] font-medium">{g}</div>
+                {latestD ? <div className="mt-2 text-[12px] text-muted-foreground">Form D, {dateLabel(latestD.filing_date)} <Src url={latestD.source_url} name="EDGAR" /></div> : null}
+              </div>
+            ))}
+            {investmentManagers.map((m) => (
+              <div key={`im:${m}`} className="story-card p-4">
+                <div className="text-[11.5px] text-muted-foreground">Investment manager</div>
+                <div className="mt-1 text-[14px] font-medium">{m}</div>
+                {latestD ? <div className="mt-2 text-[12px] text-muted-foreground">Form D, {dateLabel(latestD.filing_date)} <Src url={latestD.source_url} name="EDGAR" /></div> : null}
+              </div>
+            ))}
+            {providers.map((p) => (
+              <Link key={`${p.role}:${p.key}`} href={`/database/providers/${p.key}`} className="story-card flex items-center gap-3 p-4">
+                <CompanyLogo name={p.brand} domain={brandDomain(p.key)} size={32} />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[11.5px] text-muted-foreground">{ROLE_LABEL[p.norm]}</span>
+                  <span className="block truncate text-[14px] font-medium">{p.brand}</span>
+                  {p.norm === "placement_agent" && commissions ? <span className="block text-[12px] text-muted-foreground">{formatUsd(commissions)} sales commissions, as filed</span> : null}
+                </span>
+                <ArrowUpRight className="story-card-arrow h-4 w-4" />
+              </Link>
+            ))}
+          </div>
+          {!adv.length ? (
+            <p className="chapter-lead mt-5">
+              Its auditor, administrator and custodian are reported on its adviser&rsquo;s Form ADV. {vintage && vintage >= 2025 ? "The SEC's published Form ADV data runs to December 2024, so a fund launched since then is not in it yet." : "This fund is not matched to a Form ADV report yet."}
+            </p>
+          ) : null}
+          {qpOnly || latestD?.offering_indefinite ? (
+            <p className="mt-4 text-[12.5px] text-muted-foreground">{[qpOnly ? "Offered to qualified purchasers only (Investment Company Act 3(c)(7))" : null, latestD?.offering_indefinite ? "offering size indefinite" : null].filter(Boolean).join(" · ")}</p>
           ) : null}
         </Chapter>
       ) : null}
@@ -423,7 +476,7 @@ export default async function FundPage({ params, searchParams }: { params: Promi
       ) : null}
 
       {nSources ? (
-        <Chapter id="sources" n={nSources} eyebrow="Sources" title="Filings and service providers.">
+        <Chapter id="sources" n={nSources} eyebrow="Sources" title="The filings behind it.">
           <div className="grid gap-3 lg:grid-cols-2">
             {formD ? (
               <div className="story-card p-4">
@@ -498,19 +551,6 @@ export default async function FundPage({ params, searchParams }: { params: Promi
                     </dl>
                   </div>
                 ))}
-              </div>
-            ) : null}
-            {providers.length ? (
-              <div className="story-card p-4 lg:col-span-2">
-                <div className="text-[12px] text-muted-foreground">Service providers, as named on Form ADV Schedule D and Form D</div>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {providers.map((p) => (
-                    <Link key={`${p.role}:${p.key}`} href={`/database/providers/${p.key}`} className="story-chip inline-flex items-center gap-1.5 hover:text-foreground">
-                      <CompanyLogo name={p.brand} domain={brandDomain(p.key)} size={16} />
-                      {p.brand} <span className="text-muted-foreground">· {ROLE_LABEL[p.norm]}</span>
-                    </Link>
-                  ))}
-                </div>
               </div>
             ) : null}
           </div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { CompanyLogo } from "@/components/company-logo";
-import { OfferingTable } from "@/components/intel/filings-tables";
+import { OfferingTable, PositionTable } from "@/components/intel/filings-tables";
 import { FundProfile as FundProfileSections } from "@/components/intel/fund-profile";
 import { dateLabel } from "@/components/intel/tables";
 import { Box, Src } from "@/components/intel/ui";
@@ -10,7 +10,7 @@ import { ChapterNav, type ChapterLink } from "@/components/story/chapter-nav";
 import { BackLink, Chapter, Chip, ClassIcon, Figure, Figures, Meter, StoryPage } from "@/components/story/story";
 import { ASSET_CLASS_BY_KEY, classStatedByFundName, isAssetClassKey } from "@/lib/directory/asset-classes";
 import { brandDomain } from "@/lib/directory/brand-domains";
-import { getFundOfferings } from "@/lib/directory/filings-queries";
+import { getFundOfferings, getLenderBook, listCreditLenders } from "@/lib/directory/filings-queries";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import type { FundPerformanceRow } from "@/lib/directory/investor-queries";
 import { normalizeRole, providerBrand, PROVIDER_ROLES, ROLE_LABEL } from "@/lib/directory/providers";
@@ -151,13 +151,22 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   const key = fundKey(fund.name);
   const vehicles = siblings.filter((f) => f.id === id || (key && fundKey(f.name) === key));
   const ids = [...new Set([id, ...vehicles.map((v) => v.id)])];
-  const [investors, perf, holdings, cards, adv] = await Promise.all([
+  // A fund that files its own schedule of investments (a BDC) is the lender of that name.
+  const lender = (await listCreditLenders()).find((l) => {
+    const k = fundKey(l.name);
+    return k.length >= 6 && (k === key || vehicles.some((v) => fundKey(v.name) === k));
+  });
+  const [investors, perf, holdings, cards, adv, book] = await Promise.all([
     fundInvestors(ids),
     fundPerformance(ids),
     fundHoldings(vehicles.length ? vehicles : [fund], manager),
     manager ? fundCards(manager, siblings.filter((f) => !ids.includes(f.id))) : Promise.resolve([]),
     advFunds(ids),
+    lender ? getLenderBook(lender.cik) : Promise.resolve([]),
   ]);
+  const bookFv = book.reduce((t, p) => t + (p.fair_value ?? 0), 0);
+  const bookCost = book.reduce((t, p) => t + (p.cost ?? 0), 0);
+  const bookIndustries = new Set(book.map((p) => p.industry).filter(Boolean)).size;
   // Companies the manager's portfolio puts in this fund by name; the programme-level ones are told apart.
   const named = holdings.filter((h) => h.match === "fund");
   const programme = holdings.filter((h) => h.match === "programme");
@@ -209,6 +218,7 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   // The order a client reads a fund in: how it has done, what it owns, who is in it, the manager's other funds, then the paper trail.
   const nPerf = perf || reporting.length ? next("performance", "Performance", null) : 0;
   const nPortfolio = holdings.length ? next("portfolio", "Companies", holdings.length) : 0;
+  const nBook = book.length ? next("book", "Loan book", book.length) : 0;
   const nInvestors = disclosed.length ? next("investors", "Investors", disclosed.length) : 0;
   const nManager = cards.length ? next("manager", "Other funds", cards.length) : 0;
   const nSources = offerings.length || formD || fund.source === "form_adv" || providers.length || adv.length ? next("sources", "Sources", null) : 0;
@@ -341,6 +351,21 @@ export default async function FundPage({ params, searchParams }: { params: Promi
               </div>
             </>
           ) : null}
+        </Chapter>
+      ) : null}
+
+      {nBook && lender ? (
+        <Chapter
+          id="book"
+          n={nBook}
+          eyebrow="Loan book"
+          title={`${book.length.toLocaleString("en-US")} positions, ${formatUsd(bookFv)} at fair value.`}
+          lead={`Its own schedule of investments as of ${lender.latest_period ? dateLabel(lender.latest_period) : "its latest filing"}: every position with its instrument, terms, cost and mark${bookIndustries ? `, across ${bookIndustries} industries` : ""}. Marked at ${bookCost > 0 ? `${Math.round((bookFv / bookCost) * 100)}% of cost` : "—"}.`}
+          more={{ href: `/database/lenders/${lender.cik}`, label: "Full loan book" }}
+        >
+          <div className="desk">
+            <PositionTable rows={book} limit={25} />
+          </div>
         </Chapter>
       ) : null}
 

@@ -121,8 +121,10 @@ def main(index_url, out_path):
     borrower_industry = {}
     for table in re.findall(r'<table\b.*?</table>', doc, re.S | re.I):
         # only the schedule itself: a table that carries its column header
-        if 'contextRef' not in table or not re.search(r'>[^<]*\bMaturity\b', table, re.I):
+        if 'contextRef' not in table or not re.search(r'>[^<]*\b(Maturity|Industry|Fair\s+Value)\b', table, re.I):
             continue
+        in_schedule = False
+        heading_ok = False   # this table may use the carried heading: it has a Maturity column or headings of its own
         for r in re.findall(r'<tr\b[^>]*>(.*?)</tr>', table, re.S | re.I):
             cells, pos = [], 0
             for attrs, body in re.findall(r'<t[dh]\b([^>]*)>(.*?)</t[dh]>', r, re.S | re.I):
@@ -134,17 +136,24 @@ def main(index_url, out_path):
                 continue
             refs = set(re.findall(r'contextRef="([^"]+)"', r))
             inv = [c for c in refs if c in ctx and ctx[c][1] == latest]
-            if not inv and len(nonempty) >= 4 and any(re.search(r'\bmaturity\b', t.lower()) for _, t in nonempty):
+            low_all = ' '.join(t.lower() for _, t in nonempty)
+            if not inv and len(nonempty) >= 3 and not re.search(r'\d{1,3}(,\d{3})+|\d+\.\d+', low_all) and (
+                    re.search(r'\bmaturity\b', low_all) or (('fair value' in low_all) and re.search(r'principal|cost|par\b', low_all))):
+                in_schedule = True
+                heading_ok = heading_ok or bool(re.search(r'\bmaturity\b', low_all))
                 date_heads = [t.lower() for _, t in nonempty if re.search(r'\b(date|maturity|matures?)\b', t.lower())]
                 mat_k = next((k for k, t in enumerate(date_heads) if 'maturity' in t or 'matur' in t), None)
-                col_ind = next((p_ for p_, t in nonempty if t.lower().startswith('industry')), None)
+                col_ind = next((p_ for p_, t in nonempty if re.match(r'^(industry|sector)\b', t.lower())), col_ind)
                 head_width = pos
+                continue
+            if not in_schedule:
                 continue
             if not inv:
                 t0 = nonempty[0][1]
                 if len(nonempty) == 1 and not re.search(r'\d', t0) and 3 <= len(t0) < 80 \
                         and not NOT_INDUSTRY.search(t0) and not LEGAL.search(t0):
                     heading = t0
+                    heading_ok = True
                 continue
             ident = ctx[inv[0]][0]
             borrower = re.split(r'\s*\|\s*', ident)[0].strip().lower()
@@ -155,7 +164,7 @@ def main(index_url, out_path):
                     industry = None
                 if industry:
                     borrower_industry[borrower] = industry
-            if col_ind is None:
+            if col_ind is None and heading_ok:
                 industry = heading
             dates = [t for _, sp, t in cells if t and parse_date(t)[0] and re.search(r'[/A-Za-z-]', t)]
             mat = None
@@ -168,6 +177,11 @@ def main(index_url, out_path):
                 # schedule's own date (an acquisition never is)
                 later = [d_ for d_ in dates if parse_date(d_)[0] > latest]
                 mat = later[-1] if len(later) == 1 else None
+            if mat is None:
+                # a maturity written into the investment's description ("Due 11/2028", "maturity 6/30/2029")
+                row_text = ' '.join(t for _, _, t in cells if t)
+                m_due = re.search(r'\b(?:due|maturity(?: date)?|matur(?:es|ing))\s*:?\s*(\d{1,2}/\d{1,2}/\d{2,4}|\d{1,2}/\d{4}|[A-Z][a-z]{2,8}\.? \d{1,2}, \d{4}|[A-Z][a-z]{2,8}\.? \d{4})', row_text, re.I)
+                mat = m_due[1] if m_due else None
             iso, t = parse_date(mat)
             rec = out.setdefault(ident, {'identifier': ident, 'borrower': borrower, 'industry': None, 'maturity': None, 'maturity_text': None})
             rec['industry'] = rec['industry'] or industry

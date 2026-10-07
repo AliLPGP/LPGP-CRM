@@ -13,7 +13,7 @@ import { brandDomain } from "@/lib/directory/brand-domains";
 import { getFundOfferings } from "@/lib/directory/filings-queries";
 import { formatMoney } from "@/lib/directory/intelligence-types";
 import type { FundPerformanceRow } from "@/lib/directory/investor-queries";
-import { normalizeRole, PROVIDER_ROLES, ROLE_LABEL } from "@/lib/directory/providers";
+import { normalizeRole, providerBrand, PROVIDER_ROLES, ROLE_LABEL } from "@/lib/directory/providers";
 import { getCompanyFunds, nameCommitments, type DisclosedCommitment, type NamedCommitment } from "@/lib/directory/queries";
 import { getFundDetails, getFundFormD } from "@/lib/fund-details";
 import { fundCards, fundHoldings } from "@/lib/directory/fund-portfolio";
@@ -81,6 +81,48 @@ async function fundInvestors(fundIds: string[]): Promise<NamedCommitment[]> {
   return rows.sort((a, b) => (a.currency ?? "USD").localeCompare(b.currency ?? "USD") || (b.amount_usd ?? b.amount ?? 0) - (a.amount_usd ?? a.amount ?? 0));
 }
 
+/** The fund as its adviser reports it on Form ADV Schedule D 7.B.(1), one row per vehicle on file (migration 0046). */
+type AdvFund = {
+  adv_fund_id: string;
+  name: string;
+  adviser_crd: string | null;
+  submitted: string | null;
+  fund_type: string | null;
+  fund_type_other: string | null;
+  gross_asset_value: number | null;
+  minimum_investment: number | null;
+  owners: number | null;
+  pct_non_us: number | null;
+  annual_audit: boolean | null;
+  providers: { role: string; name: string; key?: string; brand?: string }[];
+};
+
+async function advFunds(fundIds: string[]): Promise<AdvFund[]> {
+  const supabase = getReadClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("adv_private_funds")
+    .select("adv_fund_id, name, adviser_crd, submitted, fund_type, fund_type_other, gross_asset_value, minimum_investment, owners, pct_non_us, annual_audit, providers")
+    .in("fund_id", fundIds)
+    .order("gross_asset_value", { ascending: false, nullsFirst: false })
+    .limit(20);
+  if (error || !data) return [];
+  return (data as Record<string, unknown>[]).map((r) => ({
+    adv_fund_id: String(r.adv_fund_id),
+    name: String(r.name),
+    adviser_crd: (r.adviser_crd as string | null) ?? null,
+    submitted: (r.submitted as string | null) ?? null,
+    fund_type: (r.fund_type as string | null) ?? null,
+    fund_type_other: (r.fund_type_other as string | null) ?? null,
+    gross_asset_value: num(r.gross_asset_value),
+    minimum_investment: num(r.minimum_investment),
+    owners: num(r.owners),
+    pct_non_us: num(r.pct_non_us),
+    annual_audit: (r.annual_audit as boolean | null) ?? null,
+    providers: Array.isArray(r.providers) ? (r.providers as AdvFund["providers"]) : [],
+  }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const fund = await getFund(id);
@@ -109,11 +151,12 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   const key = fundKey(fund.name);
   const vehicles = siblings.filter((f) => f.id === id || (key && fundKey(f.name) === key));
   const ids = [...new Set([id, ...vehicles.map((v) => v.id)])];
-  const [investors, perf, holdings, cards] = await Promise.all([
+  const [investors, perf, holdings, cards, adv] = await Promise.all([
     fundInvestors(ids),
     fundPerformance(ids),
     fundHoldings(vehicles.length ? vehicles : [fund], manager),
     manager ? fundCards(manager, siblings.filter((f) => !ids.includes(f.id))) : Promise.resolve([]),
+    advFunds(ids),
   ]);
   // Companies the manager's portfolio puts in this fund by name; the programme-level ones are told apart.
   const named = holdings.filter((h) => h.match === "fund");
@@ -122,7 +165,21 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   const stage = fundStage(fund.status ?? vehicles.find((v) => v.status)?.status);
   const disclosed = investors.filter((c) => c.source !== "sample");
   const reporting = disclosed.filter((c) => c.net_irr != null || c.multiple != null || c.contributed != null || c.distributed != null || c.remaining_value != null);
-  const providers = (Array.isArray(fund.service_providers) ? fund.service_providers : [])
+  // Every vehicle's providers, the adviser's Form ADV report and the placement agents its Form Ds name, once each.
+  const providerRows: { role: string; key: string; brand: string }[] = [
+    ...(Array.isArray(fund.service_providers) ? fund.service_providers : []),
+    ...vehicles.flatMap((v) => (Array.isArray(v.service_providers) ? v.service_providers : [])),
+    ...adv.flatMap((a) => a.providers.filter((p) => p.key && p.brand).map((p) => ({ role: p.role, key: p.key as string, brand: p.brand as string }))),
+    ...offerings.flatMap((o) =>
+      (o.placement_agents ?? []).flatMap((a) => {
+        const raw = a.broker_dealer || a.name;
+        if (!raw) return [];
+        const b = providerBrand(raw);
+        return [{ role: "placement_agent", key: b.key, brand: b.name }];
+      }),
+    ),
+  ];
+  const providers = [...new Map(providerRows.map((p) => [`${normalizeRole(p.role)}:${p.key}`, p])).values()]
     .map((p) => ({ ...p, norm: normalizeRole(p.role) }))
     .sort((a, b) => PROVIDER_ROLES.indexOf(a.norm as (typeof PROVIDER_ROLES)[number]) - PROVIDER_ROLES.indexOf(b.norm as (typeof PROVIDER_ROLES)[number]) || a.brand.localeCompare(b.brand));
   const cls = (fund.strategy && isAssetClassKey(fund.strategy) ? fund.strategy : null) ?? classStatedByFundName(fund.name_filed ?? fund.name);
@@ -130,6 +187,8 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   const managerName = fund.manager?.name ?? fund.manager_name ?? null;
   const researched = details && details.research_state !== "no_public_data" && [details.overview, details.fundraising_status, details.target_size, details.management_fee_pct, details.carried_interest_pct, details.term_years, details.legal_structure].some((v) => v != null && v !== "");
 
+  const gav = adv.reduce((t, a) => t + (a.gross_asset_value ?? 0), 0);
+  const advFiled = adv.map((a) => a.submitted).filter(Boolean).sort().at(-1) ?? null;
   const size =
     fund.fund_size_usd != null && fund.fund_size_usd > 0
       ? { value: formatUsd(fund.fund_size_usd), basis: "fund size, USD as filed" }
@@ -152,7 +211,7 @@ export default async function FundPage({ params, searchParams }: { params: Promi
   const nPortfolio = holdings.length ? next("portfolio", "Companies", holdings.length) : 0;
   const nInvestors = disclosed.length ? next("investors", "Investors", disclosed.length) : 0;
   const nManager = cards.length ? next("manager", "Other funds", cards.length) : 0;
-  const nSources = offerings.length || formD || fund.source === "form_adv" || providers.length ? next("sources", "Sources", null) : 0;
+  const nSources = offerings.length || formD || fund.source === "form_adv" || providers.length || adv.length ? next("sources", "Sources", null) : 0;
   const nTerms = researched ? next("terms", "Terms", null) : 0;
   const topIrr = Math.max(1, ...reporting.map((c) => (c.net_irr != null ? Number(c.net_irr) : 0)));
   const vintage = fund.vintage_year ?? vehicles.find((v) => v.vintage_year)?.vintage_year ?? null;
@@ -201,6 +260,7 @@ export default async function FundPage({ params, searchParams }: { params: Promi
         {perf?.multiple_median != null ? <Figure label="Multiple, median" value={`${perf.multiple_median}x`} basis={perf.as_of ? `as of ${dateLabel(perf.as_of)}` : undefined} href="#performance" /> : null}
         {named.length ? <Figure label="Companies" value={named.length} basis={heldNow ? `${heldNow} still held` : "as its manager lists them"} href="#portfolio" /> : null}
         {size ? <Figure label="Size" value={size.value} basis={size.basis} /> : null}
+        {gav > 0 ? <Figure label="Gross assets" value={formatUsd(gav)} basis={`Form ADV${adv.length > 1 ? `, ${adv.length} vehicles` : ""}${advFiled ? `, filed ${dateLabel(advFiled)}` : ""}`} href="#sources" /> : null}
         {vintage ? <Figure label="Vintage" value={vintage} /> : null}
         {disclosed.length ? <Figure label="Investors on file" value={disclosed.length} href="#investors" /> : null}
       </Figures>
@@ -374,9 +434,50 @@ export default async function FundPage({ params, searchParams }: { params: Promi
                 </p>
               </div>
             ) : null}
+            {adv.length ? (
+              <div className="story-card p-4">
+                <div className="text-[12px] text-muted-foreground">Form ADV Schedule D 7.B.(1), as its adviser reports it</div>
+                {adv.map((a) => (
+                  <div key={a.adv_fund_id} className="mt-3 border-t border-[var(--border)] pt-3 first:border-t-0 first:pt-0">
+                    <p className="font-mono text-[12px]">
+                      {a.name} <span className="text-muted-foreground">· {a.adv_fund_id}</span>
+                    </p>
+                    <dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-[13px]">
+                      <div>
+                        <dt className="text-[11px] text-muted-foreground">Gross assets</dt>
+                        <dd className="figure">{a.gross_asset_value != null ? formatUsd(a.gross_asset_value) : "—"}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-[11px] text-muted-foreground">Fund type</dt>
+                        <dd>{a.fund_type === "Other Private Fund" && a.fund_type_other ? a.fund_type_other : (a.fund_type ?? "—")}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-[11px] text-muted-foreground">Beneficial owners</dt>
+                        <dd className="figure">{a.owners != null ? a.owners.toLocaleString("en-US") : "—"}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-[11px] text-muted-foreground">Minimum investment</dt>
+                        <dd className="figure">{a.minimum_investment != null && a.minimum_investment > 0 ? formatUsd(a.minimum_investment) : "—"}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-[11px] text-muted-foreground">Owned outside the US</dt>
+                        <dd className="figure">{a.pct_non_us != null ? `${a.pct_non_us}%` : "—"}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-[11px] text-muted-foreground">Filed</dt>
+                        <dd>
+                          {a.submitted ? dateLabel(a.submitted) : "—"}{" "}
+                          {a.adviser_crd ? <Src url={`https://adviserinfo.sec.gov/firm/summary/${a.adviser_crd}`} name="IAPD" /> : null}
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                ))}
+              </div>
+            ) : null}
             {providers.length ? (
               <div className="story-card p-4 lg:col-span-2">
-                <div className="text-[12px] text-muted-foreground">Service providers, as named on Form ADV Schedule D</div>
+                <div className="text-[12px] text-muted-foreground">Service providers, as named on Form ADV Schedule D and Form D</div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {providers.map((p) => (
                     <Link key={`${p.role}:${p.key}`} href={`/database/providers/${p.key}`} className="story-chip inline-flex items-center gap-1.5 hover:text-foreground">

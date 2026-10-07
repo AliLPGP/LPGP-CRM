@@ -13,7 +13,10 @@
 
 const LEGAL = /\b(l\.?\s?p|lp|llc|ltd|limited|inc|scsp|scs|sca|sicav|raif|fpci|slp|sca sicar|sicar|scaf|gp|plc|s\.?a\.?r\.?l|sarl|s\.?a|ag|gmbh|bv|nv|ab|kg|co|company|the|fund|funds|fonds|holdings?|partnership)\b/g;
 /** A parallel or feeder vehicle's tag after the fund's number: VI-1, VII-A, VIII-B, IV-Z, "Parallel", "Feeder". */
-const PARALLEL = /(\b(?:[ivxlc]+|\d+))[-\s](?:\d{1,2}|[a-z])\b(?=\s*$)/;
+// A year-numbered series ("2025-A", "2025-C") is separate funds, not vehicles, so a four-digit number keeps its letter.
+const PARALLEL = /(\b(?:[ivxlc]+|\d{1,3}))[-\s](?:\d{1,2}|[a-z])\b(?=\s*$)/;
+/** "PF" / "PV" after the fund's number: a parallel fund or vehicle. */
+const PARALLEL_TAG = /\s(?:pf|pv)$/;
 const VEHICLE = /\b(parallel|feeder|aiv|co-?invest(?:ment)?|executive|employee|affiliates?|offshore|onshore|cayman|delaware|usd|eur|gbp|\(usd\)|\(eur\))\b/g;
 const NUMBERED = /\b([ivxlc]+|\d+)$/;
 
@@ -29,7 +32,7 @@ export function fundKey(name: string): string {
     .replace(/&/g, " and ")
     .replace(/[.,'’]/g, (m) => (m === "." ? "" : " "));
   s = s.replace(LEGAL, " ").replace(VEHICLE, " ").replace(/[^a-z0-9-]+/g, " ").replace(/\s+/g, " ").trim();
-  s = s.replace(PARALLEL, "$1").replace(/-/g, " ").replace(/\s+/g, " ").trim();
+  s = s.replace(PARALLEL_TAG, "").replace(PARALLEL, "$1").replace(/-/g, " ").replace(/\s+/g, " ").trim();
   return s;
 }
 

@@ -27,6 +27,8 @@ export type FundOffering = {
   general_partner: string | null;
   related_persons: { name: string; relationships: string[]; clarification: string | null }[];
   placement_agents: { name: string | null; crd: string | null; broker_dealer: string | null; bd_crd: string | null; states: string[] }[];
+  sales_commissions?: number | null;
+  exemptions?: string[] | null;
   asset_class: string | null;
   gp_company_id: string | null;
   gp_match: string | null;
@@ -36,7 +38,7 @@ export type FundOffering = {
 
 /** The columns the ledgers read; the rest of the filing stays on the server. */
 export const OFFERING_COLUMNS =
-  "id, accession_no, cik, issuer_name, entity_type, jurisdiction, state, year_of_inc, form, is_amendment, filing_date, first_sale_date, first_sale_pending, industry_group, fund_type, is_pooled, offering_amount, offering_indefinite, amount_sold, amount_remaining, investors_count, min_investment, general_partner, related_persons, placement_agents, asset_class, gp_company_id, gp_match, fund_id, source_url";
+  "id, accession_no, cik, issuer_name, entity_type, jurisdiction, state, year_of_inc, form, is_amendment, filing_date, first_sale_date, first_sale_pending, industry_group, fund_type, is_pooled, offering_amount, offering_indefinite, amount_sold, amount_remaining, investors_count, min_investment, general_partner, related_persons, placement_agents, sales_commissions, exemptions, asset_class, gp_company_id, gp_match, fund_id, source_url";
 
 export type CreditLender = {
   cik: string;

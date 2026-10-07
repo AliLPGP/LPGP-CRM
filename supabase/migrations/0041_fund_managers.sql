@@ -7,6 +7,8 @@
 -- that disclosed the commitment (commitments.gp_name). This links each fund
 -- to that firm:
 --
+--   0. the same fund already linked under another filing or an LP's list,
+--      or a GP entity that also files for a manager we hold;
 --   1. the stated name (or the stated name without its vehicle tail —
 --      "Mederi Capital GP, LLC" → "Mederi Capital") equals a directory firm
 --      or an SEC-roster adviser (firm_key: case, punctuation, legal forms);
@@ -18,21 +20,21 @@
 -- Service providers a filing lists (administrators, custodians, auditors,
 -- counsel, placement agents) are never taken for the manager. Every link is
 -- kept in ingest.fund_manager_links with its method, the name it read and
--- the page that states it, so any one can be audited or undone. Funds whose
--- documents name only individuals stay unlinked here; they are listed by
--- ingest.funds_without_manager for research.
+-- the page that states it, so any one can be audited or undone. A person's
+-- name never becomes a firm: funds whose documents name only individuals
+-- stay unlinked here, listed by ingest.funds_without_manager for research.
 --
 -- Run: call ingest.link_fund_managers();  (idempotent; commits per step, so
 -- schedule it with pg_cron rather than inside the API's statement limit.
--- The cron role's own statement limit covers the whole CALL, so a run that
--- hits it resumes with call ingest.link_fund_managers(n) from step n:
--- 1 candidates, 2 name tables, 3 name/stem, 4 roster, 5 prefix, 6 created,
--- 7 write.)
+-- The cron role's statement limit covers a whole CALL, so on a large backlog
+-- run it in slices with call ingest.link_fund_managers(from, to): 1 what the
+-- documents name, 2 directory names, 3 what linked funds say, 4 name picks,
+-- 5 roster, 6 prefix, 7 created firms, 8 write.)
 
 create table if not exists ingest.fund_manager_links (
   fund_id uuid primary key,
   company_id uuid not null,
-  method text not null,      -- name | stem | roster | prefix | fund_prefix | created
+  method text not null,      -- same_fund | name | sibling | stem | roster | prefix | fund_prefix | created
   stated_name text,
   source text,               -- commitment_gp | fund_manager_name | form_d_related
   source_url text,
@@ -59,42 +61,46 @@ create or replace function ingest.fm_brand(p text) returns text language sql imm
 $$;
 
 drop procedure if exists ingest.link_fund_managers();
-create or replace procedure ingest.link_fund_managers(p_from int default 1)
+drop procedure if exists ingest.link_fund_managers(int);
+create or replace procedure ingest.link_fund_managers(p_from int default 1, p_to int default 99)
 language plpgsql as $$
-declare n_name int; n_stem int; n_roster int; n_prefix int; n_created int; n_left int;
-  stop text[] := array['capital','global','private','partners','first','american','north','south','east','west','new','united','general','national','international','credit','equity','real','growth','venture','ventures','fund','funds','investment','investments','strategic','opportunity','opportunities','income','infrastructure','energy','digital','blue','green','black','white','silver','gold','summit','main','alpha','core','prime','crown','eagle','harbor','harbour','lake','river','park','bridge','stone','oak','pine','cedar','maple','atlas','apex','vista','one','two','three','the','series','spv','co','management','asset','assets','family','select','special','senior','secured','direct','diversified','opportunistic','value','partners','holdings','group','master','feeder','offshore','onshore','parallel','access','select'];
+declare n int; stats jsonb := '{}';
+  ent text := '\m(llc|l\.l\.c|lp|l\.p|llp|ltd|limited|inc|corp|corporation|company|management|capital|partners|advisors|advisers|gp|genpar|group|trust|sarl|s\.a\.r\.l|sas|gmbh|ag|plc|holdings|ventures|investments|asset|associates|s\.a|bv|b\.v|ab|as|kg|nv|pte|pty|fund)\M';
+  stop text[] := array['capital','global','private','partners','first','american','north','south','east','west','new','united','general','national','international','credit','equity','real','growth','venture','ventures','fund','funds','investment','investments','strategic','opportunity','opportunities','income','infrastructure','energy','digital','blue','green','black','white','silver','gold','summit','main','alpha','core','prime','crown','eagle','harbor','harbour','lake','river','park','bridge','stone','oak','pine','cedar','maple','atlas','apex','vista','one','two','three','the','series','spv','co','management','asset','assets','family','select','special','senior','secured','direct','diversified','opportunistic','value','holdings','group','master','feeder','offshore','onshore','parallel','access'];
 begin
-
-  -- 1. What each manager-less fund's documents name.
-  if p_from <= 1 then
+  -- 1. What each manager-less fund's documents name. A name with no
+  -- firm word ("Jane Smith") is a person: it may match a firm we hold,
+  -- but never becomes one.
+  if p_from <= 1 and p_to >= 1 then
   drop table if exists ingest.fm_cand;
-  create table ingest.fm_cand (fund_id uuid, cand text, rnk int, src text, source_url text, key text, skey text, bkey text);
-  insert into ingest.fm_cand (fund_id, cand, rnk, src, source_url)
-  select c.fund_id, c.gp_name, 0, 'commitment_gp', c.source_url
+  create table ingest.fm_cand (fund_id uuid, cand text, rnk int, src text, source_url text, is_firm boolean, key text, skey text, bkey text);
+  insert into ingest.fm_cand (fund_id, cand, rnk, src, source_url, is_firm)
+  select c.fund_id, c.gp_name, 0, 'commitment_gp', c.source_url, true
     from public.commitments c join public.funds f on f.id = c.fund_id
    where f.company_id is null and nullif(btrim(c.gp_name), '') is not null;
-  insert into ingest.fm_cand (fund_id, cand, rnk, src, source_url)
-  select f.id, f.manager_name, 2, 'fund_manager_name', f.source_url
+  insert into ingest.fm_cand (fund_id, cand, rnk, src, source_url, is_firm)
+  select f.id, f.manager_name, 2, 'fund_manager_name', f.source_url, f.manager_name ~* ent
     from public.funds f where f.company_id is null and nullif(btrim(f.manager_name), '') is not null;
-  insert into ingest.fm_cand (fund_id, cand, rnk, src, source_url)
+  insert into ingest.fm_cand (fund_id, cand, rnk, src, source_url, is_firm)
   select fund_id, cand,
          case when clar ~* 'investment (manager|advis)|management co|advis[eo]r|sponsor' then 1
               when clar ~* 'general partner|managing member|manager' then 2 else 3 end,
-         'form_d_related', source_url
-    from (select o.fund_id, o.source_url, coalesce(e->>'clarification', '') clar,
-                 btrim(regexp_replace(e->>'name', '^(\s*(-+|n/?a)\s*)+', '', 'i')) cand
+         'form_d_related', source_url, true
+    from (select o.fund_id, o.source_url, coalesce(e->>'clarification', '') clar, e->>'name' cand
             from public.fund_offerings o join public.funds f on f.id = o.fund_id and f.company_id is null
             cross join lateral jsonb_array_elements(case when jsonb_typeof(o.related_persons) = 'array' then o.related_persons else '[]'::jsonb end) e) x
-   where cand ~* '\m(llc|l\.l\.c|lp|l\.p|llp|ltd|limited|inc|corp|corporation|company|management|capital|partners|advisors|advisers|gp|group|trust|sarl|gmbh|ag|plc|holdings|ventures|investments|s\.a)\M'
+   where cand ~* ent
      and clar !~* 'administrat|custodian|auditor|counsel|placement|broker|transfer agent|distributor|depositary|director of the|trustee of';
-  delete from ingest.fm_cand where cand is null or length(btrim(cand)) < 3;
+  -- Filers' fillers before the name: "- ", "n/a ", "[none] ", a stray "LLC ".
+  update ingest.fm_cand set cand = btrim(regexp_replace(cand, '^(\s*(-+|n/?a|\[none\]|none|llc|l\.l\.c\.|lp|inc\.?)\s+)+', '', 'i'));
+  delete from ingest.fm_cand where cand is null or length(btrim(cand)) < 3 or cand ~* '^(n/?a|none|not applicable|see )';
   update ingest.fm_cand set key = public.firm_key(cand), skey = public.firm_key(ingest.fm_stem(cand)), bkey = public.firm_key(ingest.fm_brand(cand));
   create index on ingest.fm_cand (fund_id);
   commit;
   end if;
 
   -- 2. Every name a directory firm or roster adviser goes by.
-  if p_from <= 2 then
+  if p_from <= 2 and p_to >= 2 then
   drop table if exists ingest.fm_dir;
   create table ingest.fm_dir as
   select distinct on (key) key, company_id from (
@@ -110,8 +116,6 @@ begin
   select distinct on (public.firm_key(name)) public.firm_key(name) key, id company_id
     from public.companies where category = 'GP' and length(public.firm_key(name)) >= 4 order by public.firm_key(name), (sec_crd is null);
   create unique index on ingest.fm_gpdir (key);
-  drop table if exists ingest.fm_pick;
-  create table ingest.fm_pick (fund_id uuid primary key, company_id uuid, method text, cand text, src text, source_url text);
   drop table if exists ingest.fm_advkey;
   create table ingest.fm_advkey as
   select public.firm_key(name) key, crd, private_fund_gav gav from public.adv_advisers where company_id is null
@@ -121,28 +125,69 @@ begin
   commit;
   end if;
 
-  -- 3a. The stated name is a firm we hold.
-  if p_from <= 3 then
-  truncate ingest.fm_pick;
+  -- 3. What linked funds already tell us: a fund's name (the same fund filed
+  -- again, or listed by an LP, under a manager we hold) and the GP entities
+  -- its filings name ("Ares CIP Management II LLC" files for Ares funds).
+  -- A key counts only when every linked fund carrying it has one manager.
+  if p_from <= 3 and p_to >= 3 then
+  drop table if exists ingest.fm_fundkey;
+  create table ingest.fm_fundkey as
+  select key, min(company_id::text)::uuid company_id from (
+    select public.firm_key(name) key, company_id from public.funds where company_id is not null
+  ) x where length(key) >= 8 group by key having count(distinct company_id) = 1;
+  create unique index on ingest.fm_fundkey (key);
+  drop table if exists ingest.fm_sib;
+  create table ingest.fm_sib as
+  select key, min(company_id::text)::uuid company_id from (
+    select public.firm_key(btrim(regexp_replace(e->>'name', '^(\s*(-+|n/?a|\[none\])\s*)+', '', 'i'))) key, f.company_id
+      from public.fund_offerings o join public.funds f on f.id = o.fund_id and f.company_id is not null
+      cross join lateral jsonb_array_elements(case when jsonb_typeof(o.related_persons) = 'array' then o.related_persons else '[]'::jsonb end) e
+     where (e->>'name') ~* ent and coalesce(e->>'clarification', '') !~* 'administrat|custodian|auditor|counsel|placement|broker|transfer agent|distributor|depositary|director of the|trustee of'
+    union all
+    select public.firm_key(manager_name), company_id from public.funds where company_id is not null and manager_name ~* ent
+  ) x where length(key) >= 6 group by key having count(distinct company_id) = 1;
+  create unique index on ingest.fm_sib (key);
+  commit;
+  end if;
+
+  -- 4. Picks that rest on a name we hold.
+  if p_from <= 4 and p_to >= 4 then
+  drop table if exists ingest.fm_pick;
+  create table ingest.fm_pick (fund_id uuid primary key, company_id uuid, method text, cand text, src text, source_url text);
+  -- 4a. The same fund, already linked under another filing or LP list.
+  insert into ingest.fm_pick
+  select f.id, k.company_id, 'same_fund', f.name, 'fund_name', f.source_url
+    from public.funds f join ingest.fm_fundkey k on k.key = public.firm_key(f.name) where f.company_id is null;
+  get diagnostics n = row_count; stats := stats || jsonb_build_object('same_fund', n);
+  -- 4b. The stated name is a firm we hold.
   insert into ingest.fm_pick
   select distinct on (c.fund_id) c.fund_id, d.company_id, 'name', c.cand, c.src, c.source_url
     from ingest.fm_cand c join ingest.fm_dir d on d.key = c.key
+   where not exists (select 1 from ingest.fm_pick p where p.fund_id = c.fund_id)
    order by c.fund_id, c.rnk;
-  get diagnostics n_name = row_count;
-  -- 3b. … once its vehicle tail ("Fund II GP, LLC") or trading tail ("Management") is off.
+  get diagnostics n = row_count; stats := stats || jsonb_build_object('name', n);
+  -- 4c. The stated GP entity also files for funds of a manager we hold.
+  insert into ingest.fm_pick
+  select distinct on (c.fund_id) c.fund_id, s.company_id, 'sibling', c.cand, c.src, c.source_url
+    from ingest.fm_cand c join ingest.fm_sib s on s.key = c.key
+   where length(coalesce(c.skey, '')) >= 4 and not (c.skey = any (stop))  -- not a bare "Fund GP, LLC"
+     and not exists (select 1 from ingest.fm_pick p where p.fund_id = c.fund_id)
+   order by c.fund_id, c.rnk;
+  get diagnostics n = row_count; stats := stats || jsonb_build_object('sibling', n);
+  -- 4d. … once its vehicle tail ("Fund II GP, LLC") or trading tail ("Management") is off.
   insert into ingest.fm_pick
   select distinct on (c.fund_id) c.fund_id, d.company_id, 'stem', c.cand, c.src, c.source_url
     from ingest.fm_cand c join ingest.fm_dir d on d.key in (c.skey, c.bkey)
    where length(d.key) >= 4 and not (d.key = any (stop))
      and not exists (select 1 from ingest.fm_pick p where p.fund_id = c.fund_id)
    order by c.fund_id, c.rnk;
-  get diagnostics n_stem = row_count;
+  get diagnostics n = row_count; stats := stats || jsonb_build_object('stem', n);
   commit;
   end if;
 
-  -- 3c. An SEC-registered or exempt reporting adviser not yet in the
+  -- 5. An SEC-registered or exempt reporting adviser not yet in the
   -- directory: promote it from the roster (same record promote_advisers makes).
-  if p_from <= 4 then
+  if p_from <= 5 and p_to >= 5 then
   drop table if exists ingest.fm_adv;
   create table ingest.fm_adv as
   select distinct on (c.fund_id) c.fund_id, a.crd, c.cand, c.src, c.source_url
@@ -172,14 +217,15 @@ begin
   select f.fund_id, a.company_id, 'roster', f.cand, f.src, f.source_url
     from ingest.fm_adv f join public.adv_advisers a on a.crd = f.crd where a.company_id is not null
   on conflict (fund_id) do nothing;
-  get diagnostics n_roster = row_count;
+  get diagnostics n = row_count; stats := stats || jsonb_build_object('roster', n);
   commit;
   end if;
 
-  -- 3d. The longest directory manager whose name opens the stated name, then
+  -- 6. The longest directory manager whose name opens the stated name, then
   -- the fund's own name ("Blue Owl Real Estate Net Lease … Fund" → Blue Owl).
-  -- A one-word manager name counts only when it is not a common word.
-  if p_from <= 5 then
+  -- A one-word manager name counts only when it is not a common word, and
+  -- off the fund's own title only when its filing names nobody.
+  if p_from <= 6 and p_to >= 6 then
   drop table if exists ingest.fm_pref;
   create table ingest.fm_pref as
   select x.fund_id, x.cand, x.src, x.source_url, x.rnk, public.firm_key(array_to_string(w[1:k], ' ')) key, k
@@ -193,27 +239,26 @@ begin
   select distinct on (p.fund_id) p.fund_id, g.company_id, case when p.src = 'fund_name' then 'fund_prefix' else 'prefix' end, p.cand, p.src, p.source_url
     from ingest.fm_pref p join ingest.fm_gpdir g on g.key = p.key
    where (p.k > 1 or not (p.key = any (stop))) and length(p.key) >= 4
-     -- a one-word name read off the fund's own title only when its filing names nobody
      and (p.k > 1 or p.src <> 'fund_name' or not exists (select 1 from ingest.fm_cand c where c.fund_id = p.fund_id))
      and not exists (select 1 from ingest.fm_pick q where q.fund_id = p.fund_id)
    order by p.fund_id, p.rnk, p.k desc;
-  get diagnostics n_prefix = row_count;
+  get diagnostics n = row_count; stats := stats || jsonb_build_object('prefix', n);
   commit;
   end if;
 
-  -- 4. The stated firm is new to us: a GP record named as the filing or LP
+  -- 7. The stated firm is new to us: a GP record named as the filing or LP
   -- document names it (vehicle tail off), one per firm across all its funds.
-  if p_from <= 6 then
+  -- A person is never made a firm.
+  if p_from <= 7 and p_to >= 7 then
   drop table if exists ingest.fm_new;
   create table ingest.fm_new as
   select distinct on (c.fund_id) c.fund_id, c.cand, c.src, c.source_url,
          coalesce(ingest.fm_stem(c.cand), c.cand) firm_name,
          public.firm_key(coalesce(ingest.fm_stem(c.cand), c.cand)) key
     from ingest.fm_cand c
-   where not exists (select 1 from ingest.fm_pick p where p.fund_id = c.fund_id)
-     and c.cand !~* '^(n/?a|none|not applicable|see )'
+   where c.is_firm and not exists (select 1 from ingest.fm_pick p where p.fund_id = c.fund_id)
    order by c.fund_id, c.rnk, length(c.cand);
-  delete from ingest.fm_new where length(key) < 3;
+  delete from ingest.fm_new where length(key) < 3 or key = any (stop);
   create index on ingest.fm_new (key);
   drop table if exists ingest.fm_mgr;
   create table ingest.fm_mgr as
@@ -240,11 +285,12 @@ begin
     left join ingest.fm_mgr c on d.key is null and c.eid = 'fundmgr:' || n.key
    where coalesce(d.company_id, c.id) is not null
   on conflict (fund_id) do nothing;
-  get diagnostics n_created = row_count;
+  get diagnostics n = row_count; stats := stats || jsonb_build_object('created', n);
   commit;
   end if;
 
-  -- 5. Write the links: the fund, its filings, and the commitments into it.
+  -- 8. Write the links: the fund, its filings, and the commitments into it.
+  if p_from <= 8 and p_to >= 8 then
   update public.funds f set company_id = p.company_id, manager_name = coalesce(f.manager_name, p.cand)
     from ingest.fm_pick p where p.fund_id = f.id and f.company_id is null;
   update public.fund_offerings o set gp_company_id = p.company_id, gp_match = coalesce(o.gp_match, 'fund_manager:' || p.method)
@@ -252,18 +298,43 @@ begin
   update public.commitments c set gp_company_id = f.company_id
     from public.funds f where f.id = c.fund_id and c.gp_company_id is null and f.company_id is not null;
   insert into ingest.fund_manager_links (fund_id, company_id, method, stated_name, source, source_url)
-  select fund_id, company_id, method, cand, src, source_url from ingest.fm_pick
+  select p.fund_id, p.company_id, p.method, p.cand, p.src, p.source_url
+    from ingest.fm_pick p join public.funds f on f.id = p.fund_id and f.company_id = p.company_id
   on conflict (fund_id) do update set company_id = excluded.company_id, method = excluded.method, stated_name = excluded.stated_name,
     source = excluded.source, source_url = excluded.source_url, linked_at = now();
-  select count(*) into n_left from public.funds where company_id is null;
-  insert into ingest.log (what, detail) values ('link_fund_managers', jsonb_build_object(
-    'name', n_name, 'stem', n_stem, 'roster', n_roster, 'prefix', n_prefix, 'created', n_created, 'left', n_left));
-  commit;
+  select count(*) into n from public.funds where company_id is null;
+  stats := stats || jsonb_build_object('left', n);
+  -- A pick table is spent once written; a later run starts from step 1.
+  drop table if exists ingest.fm_pick;
   drop table if exists ingest.fm_pref;
   drop table if exists ingest.fm_adv;
   drop table if exists ingest.fm_mgr;
   commit;
+  end if;
+  insert into ingest.log (what, detail) values ('link_fund_managers', stats || jsonb_build_object('from', p_from, 'to', p_to));
+  commit;
 end $$;
+
+-- Undo every link this procedure made by creating a firm, and the firms it
+-- created, so a better pass can relink those funds.
+create or replace procedure ingest.unlink_created_fund_managers()
+language plpgsql as $$
+begin
+  drop table if exists ingest.fm_undo;
+  create table ingest.fm_undo as
+  select id from public.companies where exists (select 1 from unnest(external_ids) e where e like 'fundmgr:%');
+  create unique index on ingest.fm_undo (id);
+  update public.funds f set company_id = null from ingest.fm_undo u where f.company_id = u.id;
+  update public.fund_offerings o set gp_company_id = null, gp_match = null from ingest.fm_undo u where o.gp_company_id = u.id;
+  update public.commitments c set gp_company_id = null from ingest.fm_undo u where c.gp_company_id = u.id;
+  delete from ingest.fund_manager_links l using ingest.fm_undo u where l.company_id = u.id;
+  commit;
+  delete from public.companies c using ingest.fm_undo u where c.id = u.id;
+  commit;
+end $$;
+
+-- Deleting or merging a company checks every credit position for it.
+create index if not exists credit_positions_borrower_company_idx on public.credit_positions (borrower_company_id) where borrower_company_id is not null;
 
 -- Funds still without a manager: their documents name only individuals (or
 -- nothing), so the manager has to be read from somewhere else.

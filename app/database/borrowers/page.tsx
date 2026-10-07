@@ -120,7 +120,7 @@ export default async function BorrowersPage({ searchParams }: { searchParams: Pr
                         <td className="max-w-[200px] truncate whitespace-nowrap text-[11.5px]" title={b.industry ?? undefined}>
                           {b.industry ?? "—"}
                         </td>
-                        <td className="whitespace-nowrap text-[11.5px]">{b.instruments ? (/equity|warrant/i.test(b.instruments) ? <Tag>Holds equity</Tag> : "No") : "—"}</td>
+                        <td className="whitespace-nowrap text-[11.5px]">{b.instruments ? (/equity|warrant|stock|shares|\bunits?\b|\b(lp|membership|partnership) interests?\b/i.test(b.instruments) ? <Tag>Holds equity</Tag> : "No") : "—"}</td>
                         <td className="num">{b.lenders}</td>
                         <td className="num">{formatUsd(b.fair_value ?? 0)}</td>
                         <td className="num">

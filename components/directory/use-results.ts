@@ -7,6 +7,7 @@ import { matches, type DirectoryFilters, type SortKey } from "@/lib/directory/fi
 import { EMPLOYEE_PRESETS } from "@/lib/directory/format";
 import { subregionOf, type Subregion, type Zone } from "@/lib/directory/geo";
 import type { DirectoryRecord } from "@/lib/directory/records";
+import { rowOrder } from "@/lib/directory/result-order";
 import { relevance } from "@/lib/directory/search";
 import { findSimilar } from "@/lib/directory/similar";
 import { AUM_BANDS, type Band } from "@/lib/directory/taxonomy";
@@ -59,25 +60,9 @@ export type Results = {
   seeds: DirectoryRecord[];
 };
 
-function completeness(r: DirectoryRecord): number {
-  return (
-    (r.description ? 3 : 0) +
-    (r.contacts ? 2 : 0) +
-    (r.domain ? 1 : 0) +
-    (r.subType ? 1 : 0) +
-    (r.aum != null ? 1 : 0) +
-    (r.adv ? 1 : 0) +
-    (r.providers.length ? 1 : 0)
-  );
-}
-
 function bump<K>(map: Map<K, number>, key: K) {
   map.set(key, (map.get(key) ?? 0) + 1);
 }
-
-const byName = (a: ResultRow, b: ResultRow) => a.record.name.localeCompare(b.record.name);
-const desc = (f: (r: DirectoryRecord) => number | null) => (a: ResultRow, b: ResultRow) =>
-  (f(b.record) ?? -Infinity) - (f(a.record) ?? -Infinity) || byName(a, b);
 
 /** Everything Discover shows for a set of filters, computed in one pass. */
 export function useResults(dir: Directory, filters: DirectoryFilters): Results {
@@ -161,22 +146,7 @@ export function useResults(dir: Directory, filters: DirectoryFilters): Results {
 
     const sort: SortKey =
       filters.sort ?? (candidates.mode === "similar" ? "similarity" : candidates.mode === "keywords" ? "relevance" : "complete");
-    const order: Record<SortKey, (a: ResultRow, b: ResultRow) => number> = {
-      relevance: (a, b) => (b.score ?? 0) - (a.score ?? 0) || desc((r) => r.aum)(a, b),
-      similarity: (a, b) => (b.score ?? 0) - (a.score ?? 0) || desc((r) => r.aum)(a, b),
-      // Best-documented firms first: a full profile is worth more on a first
-      // look than a big number from a single filing.
-      complete: desc((r) => completeness(r) * 1e15 + (r.aum ?? 0)),
-      aum: desc((r) => r.aum),
-      employees: desc((r) => r.employees),
-      founded: desc((r) => r.founded),
-      contacts: desc((r) => r.contacts),
-      // Epoch days; a record with no date sorts last.
-      newest: desc((r) => r.created),
-      updated: desc((r) => r.updated),
-      name: byName,
-    };
-    rows.sort(order[sort] ?? order.aum);
+    rows.sort(rowOrder(sort));
     return { rows, facets, mode: candidates.mode, sort, seeds: candidates.seeds };
   }, [candidates, filters, ctx]);
 }

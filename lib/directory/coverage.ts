@@ -3,8 +3,8 @@
 // researched when it carries the facts the other side of the market reads
 // it by, so an LP's book and a GP's book say the same things about each
 // other: an LP with the funds it committed to or the allocations and plans
-// it states (or a stated size and a team to call), a GP with a size and the
-// funds or portfolio it runs, a provider with the managers that file it.
+// it states (a size, a description and people say nothing about where it
+// invests), a GP with a size and the funds or portfolio it runs, a provider with the managers that file it.
 // Unclassified firms are never in a book, so they always wait.
 // Pure: safe on the client.
 
@@ -20,16 +20,16 @@ export const COVERAGE_LABEL: Record<Coverage, string> = {
 
 /** What each book needs, in a sentence, for the tab's lead. */
 export const COVERAGE_RULE =
-  "LPs need commitments, stated allocations or plans, or a stated size with three people on file; GPs a stated size with funds, portfolio or providers on file; providers the managers that file them.";
+  "LPs need commitments, stated allocations or plans on file; GPs a stated size with funds, portfolio or providers on file; providers the managers that file them.";
 
 export function isResearched(r: DirectoryRecord): boolean {
   switch (r.category) {
     case "LP":
-      return r.knownFunds > 0 || r.alloc.length > 0 || r.plans.length > 0 || (r.aum != null && r.contacts >= 3 && r.description != null);
+      return r.knownFunds > 0 || r.alloc.length > 0 || r.plans.length > 0;
     case "GP":
       return r.aum != null && (r.funds > 0 || r.portcos > 0 || r.providers.length > 0);
     case "SP":
-      return r.clientCount > 0 || (r.description != null && r.contacts >= 3);
+      return r.clientCount > 0;
     default:
       return false;
   }

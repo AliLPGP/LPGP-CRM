@@ -399,8 +399,8 @@ The app degrades gracefully when Supabase env vars are absent (shows a
   `filtersToParams`, written with `history.replaceState`).
 - `coverage.ts` decides which firms stand in the LP, GP and SP books and
   which wait in **Unresearched data** (`cov=thin`; `cov=all` shows both):
-  an LP needs commitments, stated allocations or plans, or a stated size with
-  three people and a description; a GP a stated size with funds, portfolio
+  an LP needs commitments, stated allocations or plans (a size, a
+  description and people are not enough); a GP a stated size with funds, portfolio
   or providers; a provider the managers that file it; unclassified firms
   always wait. The filter defaults to researched everywhere `matches` runs,
   Discover draws the three tabs with their counts, the home's figures count

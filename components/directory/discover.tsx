@@ -38,6 +38,7 @@ import { ColumnsButton, ResultsTable } from "./results-table";
 import { ThesisBar } from "./thesis-bar";
 import { compact, Figure } from "./viz";
 import { EMPTY_DIRECTORY, reloadDirectory, useDirectoryIndex } from "./use-directory";
+import { usePreview } from "./use-preview";
 import { useResults } from "./use-results";
 
 const SORTS: { key: SortKey; label: string }[] = [
@@ -290,6 +291,9 @@ export function Discover({
 
   const chips = describeFilters(filters, dir);
   const signature = filtersToParams(filters).toString();
+  // Until the index is in, the server's first page stands in for the results.
+  const preview = usePreview(overview.version, signature, !home && !ready);
+  const shown = ready ? { rows: results.rows, dir } : preview ? { rows: preview.rows, dir: preview.dir } : null;
   const showLeaders = filters.clientTypes.length > 0 || (filters.books.includes("SP") && filters.types.length > 0);
 
   // With nothing matching, which one filter costs the most results: the
@@ -435,6 +439,12 @@ export function Discover({
                 <>
                   <span className="figure">{n(results.rows.length)}</span> <span className="text-muted-foreground">firms</span>
                 </>
+              ) : preview ? (
+                // The server counted them already: the figure is true, the search and facets follow.
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="figure">{n(preview.total)}</span> <span className="text-muted-foreground">firms</span>
+                  <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" aria-label="Loading search and filters" />
+                </span>
               ) : (
                 <span className="inline-flex items-center gap-1.5 text-muted-foreground">
                   <Loader2 className="h-3 w-3 animate-spin" /> {loading}
@@ -509,13 +519,13 @@ export function Discover({
 
           {ready && showLeaders ? <ProviderLeaders dir={dir} filters={filters} /> : null}
 
-          {!ready ? (
+          {!shown ? (
             view === "cards" ? (
               <CardsSkeleton />
             ) : (
               <LedgerSkeleton label={loading} />
             )
-          ) : results.rows.length === 0 ? (
+          ) : shown.rows.length === 0 ? (
             <div className="sheen rounded-[4px] border bg-card px-4 py-8 text-center">
               <p className="text-[13px]">
                 No firm in the directory matches all of that
@@ -540,8 +550,8 @@ export function Discover({
           ) : view === "cards" ? (
             <ResultCards
               key={signature}
-              dir={dir}
-              rows={results.rows}
+              dir={shown.dir}
+              rows={shown.rows}
               query={filters.keywords}
               mode={results.mode}
               selected={selected}
@@ -552,8 +562,8 @@ export function Discover({
           ) : (
             <ResultsTable
               key={signature}
-              dir={dir}
-              rows={results.rows}
+              dir={shown.dir}
+              rows={shown.rows}
               sort={results.sort}
               onSort={(k) => navigate({ ...filters, sort: k })}
               query={filters.keywords}

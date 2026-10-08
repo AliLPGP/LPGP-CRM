@@ -50,8 +50,8 @@ begin
   with src as (
     select * from jsonb_to_recordset(p) as x(company_id uuid, first_name text, last_name text, job_title text, country text, linkedin_url text, ref text)
   ), up as (
-    insert into public.contacts as t (company_id, first_name, last_name, full_name, job_title, seniority, department, country, linkedin_url, source, external_ref)
-    select company_id, first_name, last_name, btrim(first_name || ' ' || last_name), job_title,
+    insert into public.contacts as t (company_id, first_name, last_name, job_title, seniority, department, country, linkedin_url, source, external_ref)
+    select company_id, first_name, last_name, job_title,
            public.title_seniority(job_title), public.title_department(job_title), nullif(country, ''), nullif(linkedin_url, ''), 'lusha', ref
       from src
      where company_id is not null and coalesce(first_name, '') <> '' and coalesce(last_name, '') <> '' and ref is not null

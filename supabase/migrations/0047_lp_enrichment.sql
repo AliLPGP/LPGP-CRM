@@ -3,7 +3,8 @@
 -- ingest.load_lp_firmographics fills an LP's blank LinkedIn page, headcount
 -- and description: LinkedIn and headcount as the contact database (Lusha)
 -- states them for the LP's own domain, the description as the LP's own
--- homepage words it (its meta description), with the page in `sources`.
+-- homepage words it (its meta description), with the page in `sources`, or as
+-- the contact database describes the firm when its site gives none (labelled so).
 -- Nothing a person or an earlier import set is overwritten.
 --
 -- ingest.load_lp_contacts adds the investment decision-makers the contact
@@ -18,7 +19,7 @@ language plpgsql as $$
 declare n int;
 begin
   with src as (
-    select * from jsonb_to_recordset(p) as x(id uuid, linkedin_url text, employee_count integer, description text, description_url text)
+    select * from jsonb_to_recordset(p) as x(id uuid, linkedin_url text, employee_count integer, description text, description_url text, description_source text)
   ), up as (
     update public.companies c set
       linkedin_url = coalesce(c.linkedin_url, nullif(s.linkedin_url, '')),
@@ -30,7 +31,7 @@ begin
         || case when c.employee_count is null and s.employee_count is not null
                 then jsonb_build_object('employee_count', jsonb_build_object('name', 'Lusha', 'kind', 'contact_database')) else '{}'::jsonb end
         || case when nullif(c.description, '') is null and nullif(s.description, '') is not null
-                then jsonb_build_object('description', jsonb_build_object('name', 'own website', 'kind', 'company', 'url', s.description_url)) else '{}'::jsonb end,
+                then jsonb_build_object('description', case when s.description_source = 'lusha' then jsonb_build_object('name', 'Lusha', 'kind', 'contact_database') else jsonb_build_object('name', 'own website', 'kind', 'company', 'url', s.description_url) end) else '{}'::jsonb end,
       updated_at = now()
     from src s
     where c.id = s.id

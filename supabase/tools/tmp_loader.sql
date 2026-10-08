@@ -16,6 +16,7 @@ begin
   if kind = 'lp_firmographics' then return ingest.load_lp_firmographics(p); end if;
   if kind = 'lp_contacts' then return ingest.load_lp_contacts(p); end if;
   if kind = 'portco_profiles' then return (public.portco_profile_upsert(p)->>'rows')::int; end if;
+  if kind = 'investor_profiles' then return (public.investor_profile_upsert(p)->>'investors')::int; end if;
   if kind = 'adv_private_funds' and to_regprocedure('ingest.load_adv_private_funds(jsonb)') is not null then
     return ingest.load_adv_private_funds(p);
   end if;

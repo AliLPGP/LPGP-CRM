@@ -1,0 +1,53 @@
+{
+ "lp_company_id": "033443fc-4638-479e-af34-8fd709cc1c4b",
+ "lp_name": "New York State Teachers' Retirement System",
+ "lp_type": "Public pension",
+ "country": "US",
+ "website": "https://www.nystrs.org",
+ "source_url": "https://nystrs.org/getmedia/a484bcee-b14d-4816-9600-70e1966187e2/RE_Equity_Commitments.pdf",
+ "source_title": "Real Estate Equity Commitments and Funding, Quarter Ended June 30, 2026",
+ "as_of": "2026-06-30",
+ "currency": "USD",
+ "asset_class": null,
+ "rows": [
+  {
+   "fund_name": "Cabot Industrial Value Fund VIII, L.P.",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": 150000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "real_estate",
+   "page": 1
+  },
+  {
+   "fund_name": "Blackstone Infrastructure Partners, L.P.",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": 150000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "infrastructure",
+   "page": 1
+  },
+  {
+   "fund_name": "KKR Global Infrastructure Investors V, SCSp",
+   "gp_name": null,
+   "vintage_year": null,
+   "commitment": 100000000,
+   "contributed": null,
+   "distributed": null,
+   "remaining_value": null,
+   "net_irr": null,
+   "multiple": null,
+   "asset_class": "infrastructure",
+   "page": 1
+  }
+ ]
+}

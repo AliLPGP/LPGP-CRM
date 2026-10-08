@@ -45,7 +45,7 @@ def main():
             "do $$",
             "declare v_lp uuid; f record;",
             "begin",
-            f"  v_lp := ingest.lp_company({q(d['lp_name'])}, {q(d['lp_type'])}, {q(d['country'])}, {q(d.get('website'))});",
+            (f"  v_lp := {q(d['lp_company_id'])}::uuid;" if d.get('lp_company_id') else f"  v_lp := ingest.lp_company({q(d['lp_name'])}, {q(d['lp_type'])}, {q(d['country'])}, {q(d.get('website'))});"),
         ]
         for r in d["rows"]:
             name = re.sub(r"\s+", " ", r["fund_name"]).strip()

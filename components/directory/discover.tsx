@@ -35,6 +35,7 @@ import { QuickLook } from "./quick-look";
 import { ResultCards } from "./result-cards";
 import { ResultInsights } from "./result-insights";
 import { ColumnsButton, ResultsTable } from "./results-table";
+import { COVERAGE_LABEL, COVERAGE_RULE } from "@/lib/directory/coverage";
 import { ThesisBar } from "./thesis-bar";
 import { compact, Figure } from "./viz";
 import { EMPTY_DIRECTORY, reloadDirectory, useDirectoryIndex } from "./use-directory";
@@ -366,10 +367,26 @@ export function Discover({
 
             <ThesisBar key={q} initial={q} onSubmit={submitThesis} pending={aiPending} aiReady={aiReady} examples />
 
-            <div className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-[var(--border)] pt-4 sm:grid-cols-3 lg:grid-cols-6">
-              <Figure label="Firms" value={compact(everything.total)} sub="across four books" onClick={() => navigate(EMPTY_FILTERS, { push: true, view: "list" })} />
-              <Figure label="General partners" value={compact(everything.books.GP)} sub={`${n(everything.filers)} with Form ADV providers`} onClick={() => navigate({ ...EMPTY_FILTERS, books: ["GP"] }, { push: true })} />
-              <Figure label="Limited partners" value={compact(everything.books.LP)} sub="pensions, SWFs, insurers, E&Fs" onClick={() => navigate({ ...EMPTY_FILTERS, books: ["LP"] }, { push: true })} />
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-[var(--border)] pt-4 sm:grid-cols-4 lg:grid-cols-7">
+              <Figure label="Firms" value={compact(everything.total)} sub="across four books" onClick={() => navigate({ ...EMPTY_FILTERS, coverage: "all" }, { push: true, view: "list" })} />
+              <Figure
+                label="General partners"
+                value={compact(everything.researched?.GP ?? everything.books.GP)}
+                sub={`researched, of ${n(everything.books.GP)} on file`}
+                onClick={() => navigate({ ...EMPTY_FILTERS, books: ["GP"] }, { push: true })}
+              />
+              <Figure
+                label="Limited partners"
+                value={compact(everything.researched?.LP ?? everything.books.LP)}
+                sub={`researched, of ${n(everything.books.LP)} on file`}
+                onClick={() => navigate({ ...EMPTY_FILTERS, books: ["LP"] }, { push: true })}
+              />
+              <Figure
+                label="Unresearched data"
+                value={compact(everything.thin ?? 0)}
+                sub="thin records, held back from the books"
+                onClick={() => navigate({ ...EMPTY_FILTERS, coverage: "thin" }, { push: true })}
+              />
               <Figure label="Decision-makers" value={compact(everything.people)} sub={`${n(everything.connectable)} with a direct email`} onClick={() => navigate({ ...EMPTY_FILTERS, hasContacts: true }, { push: true })} />
               <Figure label="Funds on file" value={compact(everything.funds)} sub="named on Form ADV Schedule D" />
               <Figure
@@ -413,6 +430,33 @@ export function Discover({
         />
       ) : (
         <>
+          {/* The books hold researched firms; the thin ones wait one tab over until research fills them. */}
+          <nav className="desk-tabs" aria-label="Researched or unresearched">
+            {(["researched", "thin", "all"] as const).map((c) => {
+              const next = { ...filters, coverage: c };
+              return (
+                <button
+                  key={c}
+                  type="button"
+                  className="desk-tab"
+                  data-active={filters.coverage === c ? "true" : undefined}
+                  aria-pressed={filters.coverage === c}
+                  onClick={() => navigate(next, { push: true, view: viewParam ?? (isEmptyQuery(next) ? "list" : null) })}
+                >
+                  {COVERAGE_LABEL[c]}
+                  {ready ? (
+                    <span className="count">{n(c === "all" ? results.facets.coverage.researched + results.facets.coverage.thin : results.facets.coverage[c])}</span>
+                  ) : null}
+                </button>
+              );
+            })}
+          </nav>
+          {filters.coverage === "thin" ? (
+            <p className="text-[12px] text-muted-foreground">
+              Firms held back from the LP, GP and SP books until research fills them. {COVERAGE_RULE} Unclassified firms always wait here.
+            </p>
+          ) : null}
+
           {ready ? <ResultInsights rows={results.rows} /> : <StripSkeleton />}
 
           {/* The toolbar every list screen shares: search · facets · sort · count · layout, columns, saved, export. */}

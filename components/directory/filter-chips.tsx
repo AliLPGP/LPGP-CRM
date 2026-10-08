@@ -3,6 +3,7 @@
 import { X } from "lucide-react";
 import { CATEGORIES } from "@/lib/categories";
 import { ASSET_CLASS_BY_KEY } from "@/lib/directory/asset-classes";
+import { COVERAGE_LABEL } from "@/lib/directory/coverage";
 import type { DirectoryFilters } from "@/lib/directory/filters";
 import { rangeLabel } from "@/lib/directory/format";
 import { ZONE_LABEL } from "@/lib/directory/geo";
@@ -31,6 +32,9 @@ const pct = (n: number) => `${n}%`;
 /** The filters as removable chips, in reading order. */
 export function describeFilters(f: DirectoryFilters, dir: Directory): Chip[] {
   const chips: Chip[] = [];
+  if (f.coverage !== "researched") {
+    chips.push({ key: `cov:${f.coverage}`, group: "Showing", label: COVERAGE_LABEL[f.coverage], remove: (x) => ({ ...x, coverage: "researched" }) });
+  }
   for (const id of f.like) {
     const name = dir.byId.get(id)?.name ?? "a firm";
     chips.push({ key: `like:${id}`, group: "Like", label: name, remove: (x) => ({ ...x, like: without(x.like, id) }) });

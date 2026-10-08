@@ -8,6 +8,7 @@ import { DEAL_KIND_LABEL } from "@/lib/directory/asset-classes";
 import { formatMoney, type Deal, type Signal } from "@/lib/directory/intelligence-types";
 import { getLpBook, type CurrencyTotal, type LpCommitment } from "@/lib/directory/lp-profile";
 import { backersOver, getGpBackers } from "@/lib/directory/gp-profile";
+import { getLpManagerLinks, getManagerLpLinks, type ManagerLink } from "@/lib/directory/manager-links";
 import { getProfilePortfolio, profileContacts, profileDeals, profileProviders, profileSignals, type ProfileCounts } from "@/lib/directory/profile-queries";
 import { ROLE_PLURAL, type ProviderRole } from "@/lib/directory/providers";
 import { isOperatingRole } from "@/lib/directory/operating";
@@ -179,10 +180,55 @@ function DealsChapter({ id, n, deals, base, title }: { id: string; n: number; de
 }
 
 
+/** Managers an investor works with beyond a disclosed commitment, or the investors a manager works with: the same rows from either end. */
+function LinksChapter({ id, n, links, side, name }: { id: string; n: number; links: ManagerLink[]; side: "managers" | "investors"; name: string }) {
+  const confirmed = links.filter((l) => l.confidence === "confirmed").length;
+  return (
+    <Chapter
+      id={id}
+      n={n}
+      eyebrow={side === "managers" ? "Managers it works with" : "Investors it works with"}
+      title={side === "managers" ? `${plural(links.length, "manager")} ${name} works with.` : `${plural(links.length, "investor")} work with ${name}.`}
+      lead={`Mandates, joint ventures, co-lending and other relationships the press, filings and the firms' own releases describe, each with its page. ${num(confirmed)} confirmed on the page, ${num(links.length - confirmed)} reported.`}
+    >
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {links.slice(0, 24).map((l) => {
+          const otherId = side === "managers" ? l.manager_company_id : l.lp_company_id;
+          const label = side === "managers" ? (l.counterparty ?? l.manager_name) : (l.counterparty ?? "Investor");
+          return (
+            <div key={l.id} className="story-card p-3.5">
+              <div className="flex items-start gap-2">
+                {otherId ? (
+                  <Link href={`/companies/${otherId}`} className="min-w-0 flex-1 truncate text-[14px] font-medium hover:underline">
+                    {label}
+                  </Link>
+                ) : (
+                  <span className="min-w-0 flex-1 truncate text-[14px] font-medium">{label}</span>
+                )}
+                <Chip>{l.confidence === "confirmed" ? "Confirmed" : "Reported"}</Chip>
+              </div>
+              {l.relationship ? <p className="mt-1 line-clamp-2 text-[12.5px] text-muted-foreground">{l.relationship}</p> : null}
+              <a href={l.source_url} target="_blank" rel="noreferrer" className="mt-2 inline-flex items-center gap-1 text-[11.5px] text-muted-foreground hover:text-foreground">
+                {l.source_name ?? new URL(l.source_url).hostname.replace(/^www\./, "")}
+                <ArrowUpRight className="h-3 w-3" />
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </Chapter>
+  );
+}
+
 // --- An LP: where it invests, with whom, how it has done ---------------------
 
 export async function LpStory({ company, counts, base }: { company: Company; counts: ProfileCounts; base: string }) {
-  const [book, contacts, signals] = await Promise.all([counts.asLpDisclosed ? getLpBook(company.id) : null, profileContacts(company.id), profileSignals(company.id)]);
+  const [book, contacts, signals, links] = await Promise.all([
+    counts.asLpDisclosed ? getLpBook(company.id) : null,
+    profileContacts(company.id),
+    profileSignals(company.id),
+    getLpManagerLinks(company.id),
+  ]);
   const name = company.name;
   const chapters: ChapterLink[] = [];
   const blocks: React.ReactNode[] = [];
@@ -398,6 +444,12 @@ export async function LpStory({ company, counts, base }: { company: Company; cou
     }
   }
 
+  if (links.length) {
+    n += 1;
+    chapters.push({ id: "works-with", label: "Works with", count: links.length });
+    blocks.push(<LinksChapter key="works-with" id="works-with" n={n} links={links} side="managers" name={name} />);
+  }
+
   if (contacts.length) {
     n += 1;
     chapters.push({ id: "people", label: "People", count: contacts.length });
@@ -435,7 +487,7 @@ function NothingYet({ name, kind }: { name: string; kind: "LP" | "GP" | "SP" | "
 // --- A manager: who backs it, its funds, what it owns, what it does -----------
 
 export async function GpStory({ company, counts, base, cls = null, strategy = null }: { company: Company; counts: ProfileCounts; base: string; cls?: string | null; strategy?: string | null }) {
-  const [backing, funds, portfolio, deals, providers, contacts, signals] = await Promise.all([
+  const [backing, funds, portfolio, deals, providers, contacts, signals, lpLinks] = await Promise.all([
     counts.asGp ? getGpBackers(company.id) : null,
     counts.funds ? getCompanyFunds(company.id) : Promise.resolve([]),
     counts.portcos ? getProfilePortfolio(company.id) : null,
@@ -443,6 +495,7 @@ export async function GpStory({ company, counts, base, cls = null, strategy = nu
     counts.providers ? profileProviders(company.id) : Promise.resolve([]),
     profileContacts(company.id),
     profileSignals(company.id),
+    getManagerLpLinks(company.id),
   ]);
   const name = company.name;
   const chapters: ChapterLink[] = [];
@@ -544,6 +597,12 @@ export async function GpStory({ company, counts, base, cls = null, strategy = nu
         </div>
       </Chapter>,
     );
+  }
+
+  if (lpLinks.length && !picked) {
+    n += 1;
+    chapters.push({ id: "works-with", label: "Works with", count: lpLinks.length });
+    blocks.push(<LinksChapter key="works-with" id="works-with" n={n} links={lpLinks} side="investors" name={name} />);
   }
 
   if (cards.length) {

@@ -8,6 +8,7 @@ import { canonicalCountry, subregionOf, SUBREGIONS, type Subregion, type Zone, Z
 import { PROVIDER_ROLES, type ProviderRole } from "./providers";
 import { providerPairs, type DirectoryBrand, type DirectoryRecord } from "./records";
 import { isAssetClassKey, type AssetClassKey } from "./asset-classes";
+import { coverageOf, isResearched, type Coverage } from "./coverage";
 
 export type ProviderFilter = { key: string; role: ProviderRole | null };
 
@@ -82,6 +83,8 @@ export type DirectoryFilters = {
   hasPlans: boolean;
   /** Show LPs that say they no longer invest in alternatives. */
   includeInactive: boolean;
+  /** Researched firms (the books), the thin ones waiting in "Unresearched data", or both. */
+  coverage: Coverage;
   /** Free-text terms ranked by relevance. */
   keywords: string;
   /** Company ids to find lookalikes of. */
@@ -127,6 +130,7 @@ export const EMPTY_FILTERS: DirectoryFilters = {
   allocMax: null,
   hasPlans: false,
   includeInactive: false,
+  coverage: "researched",
   keywords: "",
   like: [],
   sort: null,
@@ -171,7 +175,8 @@ export function hasStructuredFilters(f: DirectoryFilters): boolean {
     f.altsMax != null ||
     f.allocClass != null ||
     f.hasPlans ||
-    f.includeInactive
+    f.includeInactive ||
+    f.coverage !== "researched"
   );
 }
 
@@ -206,8 +211,9 @@ export function matches(
   r: DirectoryRecord,
   f: DirectoryFilters,
   ctx: FilterContext,
-  skip?: "books" | "types" | "zones" | "countries" | "adv" | "classes" | "strategies" | "sectors" | "prefRegions" | "typeCodes",
+  skip?: "books" | "types" | "zones" | "countries" | "adv" | "classes" | "strategies" | "sectors" | "prefRegions" | "typeCodes" | "coverage",
 ): boolean {
+  if (skip !== "coverage" && f.coverage !== "all" && isResearched(r) !== (f.coverage === "researched")) return false;
   if (skip !== "books" && f.books.length && !f.books.includes(r.category)) return false;
   if (skip !== "types" && f.types.length && !(r.subType && f.types.includes(r.subType))) return false;
   if (f.clientTypes.length) {
@@ -365,6 +371,7 @@ export function filtersFromParams(p: Params): DirectoryFilters {
     allocMax,
     hasPlans: has.has("plans"),
     includeInactive: p.get("inactive") === "1",
+    coverage: coverageOf(p.get("cov")),
     keywords: p.get("kw") ?? "",
     like: list(p.get("like")),
     sort: isSortKey(sort) ? sort : null,
@@ -409,6 +416,7 @@ export function filtersToParams(f: DirectoryFilters): URLSearchParams {
   set("alts", rangeParam(f.altsMin, f.altsMax));
   set("alloc", allocParam(f.allocClass, f.allocMin, f.allocMax));
   set("inactive", f.includeInactive ? "1" : null);
+  set("cov", f.coverage === "researched" ? null : f.coverage);
   set("kw", f.keywords.trim());
   set("like", f.like.join(","));
   set("sort", f.sort);

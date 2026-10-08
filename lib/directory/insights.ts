@@ -6,6 +6,7 @@
 // gross assets and LP total assets are different measures and never join it.
 
 import type { Category } from "../types";
+import { isResearched } from "./coverage";
 import { PROVIDER_ROLES, type ProviderRole } from "./providers";
 import { providerPairs, type DirectoryRecord } from "./records";
 
@@ -16,6 +17,10 @@ export type ProviderLeader = { brand: number; clients: number; share: number };
 export type Insights = {
   total: number;
   books: Record<Category, number>;
+  /** Firms per book that are researched enough to stand in it (coverage.ts). */
+  researched: Record<Category, number>;
+  /** Firms waiting in "Unresearched data". */
+  thin: number;
   people: number;
   connectable: number;
   funds: number;
@@ -62,6 +67,8 @@ function brandTotalSeen(r: DirectoryRecord, seen: Set<number>): boolean {
 
 export function summarize(records: DirectoryRecord[], leadersPerRole = 8): Insights {
   const books: Record<Category, number> = { LP: 0, GP: 0, SP: 0, UN: 0 };
+  const researched: Record<Category, number> = { LP: 0, GP: 0, SP: 0, UN: 0 };
+  let thin = 0;
   const types = new Map<string, number>();
   const countries = new Map<string, number>();
   const decades = new Map<number, number>();
@@ -81,6 +88,8 @@ export function summarize(records: DirectoryRecord[], leadersPerRole = 8): Insig
 
   for (const r of records) {
     books[r.category] += 1;
+    if (isResearched(r)) researched[r.category] += 1;
+    else thin += 1;
     people += r.contacts;
     connectable += r.connectable;
     funds += r.funds;
@@ -138,6 +147,8 @@ export function summarize(records: DirectoryRecord[], leadersPerRole = 8): Insig
   return {
     total: records.length,
     books,
+    researched,
+    thin,
     people,
     connectable,
     funds,

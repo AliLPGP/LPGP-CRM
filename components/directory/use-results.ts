@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import type { Category } from "@/lib/types";
 import type { AssetClassKey } from "@/lib/directory/asset-classes";
+import { isResearched } from "@/lib/directory/coverage";
 import { matches, type DirectoryFilters, type SortKey } from "@/lib/directory/filters";
 import { EMPLOYEE_PRESETS } from "@/lib/directory/format";
 import { subregionOf, type Subregion, type Zone } from "@/lib/directory/geo";
@@ -38,6 +39,8 @@ export type Facets = {
   aumBands: Map<string, number>;
   /** Firms per headcount band (format.ts), ignoring the headcount filter itself. */
   empBands: Map<string, number>;
+  /** Researched firms and thin ones under every other filter: the counts on the two tabs. */
+  coverage: { researched: number; thin: number };
 };
 
 /** The band a figure falls in: lower bound inclusive, upper exclusive, open-ended at the ends. */
@@ -113,6 +116,7 @@ export function useResults(dir: Directory, filters: DirectoryFilters): Results {
       regions: new Map(),
       aumBands: new Map(),
       empBands: new Map(),
+      coverage: { researched: 0, thin: 0 },
     };
     // `matches` can skip one of the list facets; the range facets are counted
     // against the same filters with that one range lifted. A record that
@@ -142,6 +146,7 @@ export function useResults(dir: Directory, filters: DirectoryFilters): Results {
       if (r.sectors.length && matches(r, filters, ctx, "sectors")) for (const k of r.sectors) bump(facets.sectors, k);
       if (r.regions.length && matches(r, filters, ctx, "prefRegions")) for (const k of r.regions) bump(facets.prefRegions, k);
       if (r.typeCode && matches(r, filters, ctx, "typeCodes")) bump(facets.typeCodes, r.typeCode);
+      if (matches(r, filters, ctx, "coverage")) facets.coverage[isResearched(r) ? "researched" : "thin"] += 1;
     }
 
     const sort: SortKey =

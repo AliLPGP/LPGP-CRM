@@ -250,6 +250,17 @@ boundaries and keeps comment text ASCII.
   ownership (institutional money first, each owner leading to the directory
   firm or the sports investor), its file, deals, following, fact check and
   league; the dense club table stays at `?view=table`.
+- **LP web profile and managers it works with** (0049, 0050) —
+  `ingest.load_lp_web` fills an LP's blank website, description, HQ,
+  LinkedIn and headcount (each with its page in `sources`) and adds the
+  leaders a researched page names (`source = 'web_research'`, name and title
+  only). `lp_manager_links` holds the managers an investor works with beyond
+  a disclosed commitment (mandate, joint venture, co-lending, a secondary it
+  led, a manager it bought), one row per investor, manager and relationship,
+  each with its page and `confidence` (`confirmed` = the page was read,
+  `reported` = a search result or secondary page says so). The LP's story
+  draws them as "Managers it works with", the manager's as "Investors it
+  works with" (`lib/directory/manager-links.ts`), so the two books agree.
 - **The LP book** (`lib/directory/lp-profile.ts`, `components/directory/
   lp-overview.tsx`) — an LP's story opens on what it has disclosed: a card per
   asset class (share of its commitments, funds, managers, stated amounts per
@@ -386,6 +397,14 @@ The app degrades gracefully when Supabase env vars are absent (shows a
   that index (`search.ts`, `filters.ts`, `similar.ts`, `market.ts`), so every
   facet click is instant. The URL is the state (`filtersFromParams` /
   `filtersToParams`, written with `history.replaceState`).
+- `coverage.ts` decides which firms stand in the LP, GP and SP books and
+  which wait in **Unresearched data** (`cov=thin`; `cov=all` shows both):
+  an LP needs commitments, stated allocations or plans, or a stated size with
+  three people and a description; a GP a stated size with funds, portfolio
+  or providers; a provider the managers that file it; unclassified firms
+  always wait. The filter defaults to researched everywhere `matches` runs,
+  Discover draws the three tabs with their counts, the home's figures count
+  researched firms, and the header has an "Unresearched data" section.
 - `thesis.ts` reads a plain-English search into filters with rules; whatever
   it can't place stays as ranked keywords. With `ANTHROPIC_API_KEY` set,
   `ai-actions.ts` has Claude re-read the same search into the same shape and

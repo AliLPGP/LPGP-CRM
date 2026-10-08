@@ -26,7 +26,7 @@ export const INTEL_NAV: { href: string; label: string; match: (path: string, sea
     href: "/database?book=LP",
     label: "Investors",
     match: (p, s) =>
-      (p === "/database" && (bookOf(s) === "LP" || s.get("itype") === "investment_consultant")) ||
+      (p === "/database" && s.get("cov") !== "thin" && (bookOf(s) === "LP" || s.get("itype") === "investment_consultant")) ||
       p.startsWith("/database/mandates") ||
       p.startsWith("/database/commitments") ||
       (p.startsWith("/database/signals") && s.get("kind") === "news"),
@@ -35,7 +35,7 @@ export const INTEL_NAV: { href: string; label: string; match: (path: string, sea
     href: "/database?book=GP",
     label: "Fund managers",
     match: (p, s) =>
-      (p === "/database" && bookOf(s) === "GP") ||
+      (p === "/database" && s.get("cov") !== "thin" && bookOf(s) === "GP") ||
       (p.startsWith("/database/asset-classes") && s.get("tab") !== "raises") ||
       (p.startsWith("/database/signals") && s.get("kind") !== "news"),
   },
@@ -52,7 +52,7 @@ export const INTEL_NAV: { href: string; label: string; match: (path: string, sea
     href: "/database?book=SP",
     label: "Service providers",
     match: (p, s) =>
-      (p === "/database" && bookOf(s) === "SP") || p.startsWith("/database/market") || p.startsWith("/database/providers") || p.startsWith("/database/lenders"),
+      (p === "/database" && s.get("cov") !== "thin" && bookOf(s) === "SP") || p.startsWith("/database/market") || p.startsWith("/database/providers") || p.startsWith("/database/lenders"),
   },
   // Sports is an asset class sold as deals: it lives here, beside the borrowers and portfolio companies.
   {
@@ -64,6 +64,8 @@ export const INTEL_NAV: { href: string; label: string; match: (path: string, sea
       p.startsWith("/database/borrowers") ||
       p.startsWith("/database/sports"),
   },
+  // Firms held back from the books until research fills them (coverage.ts); the book matchers above step aside for `cov=thin`.
+  { href: "/database?cov=thin", label: "Unresearched data", match: (p, s) => p === "/database" && s.get("cov") === "thin" },
   { href: "/database/workflows", label: "Workflows", match: (p) => p.startsWith("/database/workflows") },
   { href: "/contacts", label: "People", match: (p) => p.startsWith("/contacts") },
   { href: "/database/lists", label: "Lists", match: (p) => p.startsWith("/database/lists") },

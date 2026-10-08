@@ -130,6 +130,24 @@ const SECTIONS: Section[] = [
     ],
   },
   {
+    key: "unresearched",
+    label: "Unresearched data",
+    href: "/database?cov=thin",
+    blurb: "Firms held back from the books until research fills them: no commitments, allocations, funds or clients on file yet.",
+    columns: [
+      {
+        heading: "By book",
+        items: [
+          { href: "/database?cov=thin", label: "Everything unresearched" },
+          { href: "/database?cov=thin&book=LP", label: "Limited partners", note: "No commitments, allocations or plans yet" },
+          { href: "/database?cov=thin&book=GP", label: "Fund managers", note: "No size with funds or portfolio yet" },
+          { href: "/database?cov=thin&book=SP", label: "Service providers", note: "No manager clients on file yet" },
+          { href: "/database?cov=thin&book=UN", label: "Unclassified", note: "Not yet placed in a book" },
+        ],
+      },
+    ],
+  },
+  {
     key: "companies",
     label: "Companies & deals",
     href: "/database/deals",
@@ -178,6 +196,7 @@ const SECTION_OF_TAB: Record<string, string> = {
   Performance: "funds",
   "Service providers": "providers",
   "Companies & deals": "companies",
+  "Unresearched data": "unresearched",
   People: "crm",
   Lists: "crm",
 };

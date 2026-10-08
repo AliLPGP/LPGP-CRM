@@ -41,7 +41,7 @@ export function usePreview(version: string, signature: string, enabled: boolean)
   useEffect(() => {
     if (!enabled) return;
     let cancelled = false;
-    const url = `/api/directory/page?${signature}${signature ? "&" : ""}v=${encodeURIComponent(version)}`;
+    const url = `/api/directory/page?${signature}${signature ? "&" : ""}v=${encodeURIComponent(version)}&c=2`;
     fetch(url)
       .then((r) => (r.status === 200 ? (r.json() as Promise<PagePayload>) : null))
       .then((page) => {

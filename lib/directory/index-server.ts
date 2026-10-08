@@ -542,7 +542,7 @@ const cachedOverview = unstable_cache(
     if (!index.schemaReady) throw new NotReady();
     return buildOverview(index, version);
   },
-  ["directory-overview-v1"],
+  ["directory-overview-v2"],
   { tags: [DIRECTORY_TAG], revalidate: 86400 },
 );
 

@@ -25,7 +25,7 @@ export const COVERAGE_RULE =
 export function isResearched(r: DirectoryRecord): boolean {
   switch (r.category) {
     case "LP":
-      return r.knownFunds > 0 || r.alloc.length > 0 || r.plans.length > 0;
+      return r.knownFunds > 0 || r.alloc.length > 0 || r.statedAlloc || r.plans.length > 0;
     case "GP":
       return r.aum != null && (r.funds > 0 || r.portcos > 0 || r.providers.length > 0);
     case "SP":

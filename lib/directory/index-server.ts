@@ -88,7 +88,7 @@ type FundFold = {
 type ProfileRow = {
   company_id: string;
   investor_type: string | null;
-  allocations: { class?: string; current_pct?: number | null }[] | null;
+  allocations: { class?: string; current_pct?: number | null; target_pct?: number | null; current_usd?: number | null }[] | null;
   strategy_prefs: string[] | null;
   region_prefs: string[] | null;
   industry_prefs: string[] | null;
@@ -386,6 +386,10 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
       const pct = numberOrNull(a?.current_pct);
       if (a?.class && pct != null) alloc.push([a.class, pct]);
     }
+    // Any class with a stated figure (an actual share, a target or an amount) says where the LP invests.
+    const statedAlloc = (Array.isArray(profile?.allocations) ? profile.allocations : []).some(
+      (a) => a?.class && (numberOrNull(a.current_pct) != null || numberOrNull(a.target_pct) != null || numberOrNull(a.current_usd) != null),
+    );
 
     // Classes: a GP by its type and by any strategy its own words state; an
     // LP by what it allocates to or plans for. Strategies: a GP's within
@@ -450,6 +454,7 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
       discloses: disclosesFrom(c.discloses_commitments),
       portfolio: Boolean(c.in_portfolio),
       directory: c.source === "master_directory",
+      statedAlloc,
       providers: providersByClient.get(c.id) ?? [],
       clientCount: clientsByProvider.get(c.id)?.size ?? 0,
       funds: fundCount.get(c.id) ?? 0,
@@ -489,7 +494,7 @@ let pendingIndex: DirectoryIndex | null = null;
 // memory per instance (lib/supabase/big-cache.ts). The key's suffix is the
 // record shape: bump it with records.ts so a cached index from before a
 // field change is never unpacked by code expecting the new one.
-const cachedIndex = bigCache("directory-index-v8", buildIndex, {
+const cachedIndex = bigCache("directory-index-v9", buildIndex, {
   tags: [DIRECTORY_TAG],
   revalidate: 86400,
 });
@@ -542,7 +547,7 @@ const cachedOverview = unstable_cache(
     if (!index.schemaReady) throw new NotReady();
     return buildOverview(index, version);
   },
-  ["directory-overview-v3"],
+  ["directory-overview-v4"],
   { tags: [DIRECTORY_TAG], revalidate: 86400 },
 );
 

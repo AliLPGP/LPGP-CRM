@@ -49,6 +49,8 @@ export type DirectoryRecord = {
   portfolio: boolean;
   /** Came from the Master Directory workbook. */
   directory: boolean;
+  /** LP's researched profile states an actual share, a target or an amount for at least one asset class. */
+  statedAlloc: boolean;
   /** GP → providers it files: [brandIndex, roleIndex, …] flattened. */
   providers: number[];
   /** Distinct GPs whose filings name this firm (SPs linked to a brand). */
@@ -156,7 +158,7 @@ export function providerPairs(record: DirectoryRecord): { brand: number; role: P
 // Bump WIRE_VERSION whenever the tuple changes: it is part of the index URL,
 // so a page from one deploy never reads a cached payload from another.
 
-export const WIRE_VERSION = 2;
+export const WIRE_VERSION = 3;
 
 /** The index route, keyed by the directory version so an import busts the edge cache. */
 export function indexUrl(version: string): string {
@@ -220,6 +222,7 @@ const ADV_SHIFT = 2;
 const DISCLOSES_SHIFT = 4;
 /** Bits 6–7: active in alternatives (0 unknown, 1 yes, 2 no). */
 const ACTIVE_SHIFT = 6;
+const FLAG_STATED_ALLOC = 256;
 
 function tri(v: boolean | null): number {
   return v == null ? 0 : v ? 1 : 2;
@@ -277,7 +280,8 @@ export function packIndex(index: DirectoryIndex): PackedIndex {
       (r.directory ? FLAG_DIRECTORY : 0) |
       ((r.adv === "Registered" ? 1 : r.adv === "ERA" ? 2 : 0) << ADV_SHIFT) |
       (tri(r.discloses) << DISCLOSES_SHIFT) |
-      (tri(r.activeAlts) << ACTIVE_SHIFT);
+      (tri(r.activeAlts) << ACTIVE_SHIFT) |
+      (r.statedAlloc ? FLAG_STATED_ALLOC : 0);
     const full: Packed = [
       packId(r.id), r.name, r.category, intern(r.subType), r.domain, intern(r.city), intern(r.state), intern(r.country), intern(r.zone),
       flags, r.aum, intern(r.aumKind), r.employees, r.founded, r.contacts, r.connectable, r.description, r.created, r.updated,
@@ -349,6 +353,7 @@ export function recordUnpacker(packed: PackedIndex): (w: PackedIndex["records"][
       discloses: untri((flags >> DISCLOSES_SHIFT) & 3),
       portfolio: (flags & FLAG_PORTFOLIO) !== 0,
       directory: (flags & FLAG_DIRECTORY) !== 0,
+      statedAlloc: (flags & FLAG_STATED_ALLOC) !== 0,
       providers: p[28] ?? [],
       clientCount: p[29] ?? 0,
       funds: p[30] ?? 0,

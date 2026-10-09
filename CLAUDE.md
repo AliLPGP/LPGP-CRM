@@ -272,8 +272,13 @@ boundaries and keeps comment text ASCII.
   behind them. A commitment is placed by the LP's own programme, else the
   fund's name, else the manager's type (`commitmentClass`); nothing is
   estimated, amounts never cross currencies, and a fund with no reported
-  figure has none. The researched investor profile (0033) still fills the
-  type, AUM, allocations, preferences and plans once the research has run.
+  figure has none. The researched investor profile (0033) is told after the
+  book as its own chapters (`components/story/investor-chapters.tsx`):
+  **Allocation** (a card per class with a stated current or target share or
+  amount, the overview as its lead), **Plans** (the next twelve months) and
+  **Preferences** (strategies, regions, industries, practices, ticket), each
+  drawn only when the profile has it, so an LP researched without commitments
+  still reads as more than its people.
 - **Where a fund's strategy comes from** (`placeStrategy` in `strategies.ts`,
   `researchedStrategies` in `fund-strategy.ts`) — a fund is placed in a
   strategy by its researched profile first (`fund_details.strategy_code`,

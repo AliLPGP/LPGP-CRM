@@ -28,6 +28,8 @@ import { dateLabel } from "@/components/intel/tables";
 import { ChapterNav, type ChapterLink } from "@/components/story/chapter-nav";
 import { Chapter, Chip, ClassIcon, Figure, Figures, Meter, fmtMult, fmtPct } from "@/components/story/story";
 import { formatUsd } from "@/lib/utils";
+import { getInvestorPlans, getInvestorProfile } from "@/lib/directory/investor-queries";
+import { AllocationChapter, PlansChapter, PreferencesChapter, preferenceGroups, statedAllocations } from "@/components/story/investor-chapters";
 import type { Company, Contact } from "@/lib/types";
 
 // A firm's profile as one story. The header (page.tsx) draws from the firm's
@@ -223,11 +225,13 @@ function LinksChapter({ id, n, links, side, name }: { id: string; n: number; lin
 // --- An LP: where it invests, with whom, how it has done ---------------------
 
 export async function LpStory({ company, counts, base }: { company: Company; counts: ProfileCounts; base: string }) {
-  const [book, contacts, signals, links] = await Promise.all([
+  const [book, contacts, signals, links, profile, plans] = await Promise.all([
     counts.asLpDisclosed ? getLpBook(company.id) : null,
     profileContacts(company.id),
     profileSignals(company.id),
     getLpManagerLinks(company.id),
+    getInvestorProfile(company.id),
+    getInvestorPlans(company.id),
   ]);
   const name = company.name;
   const chapters: ChapterLink[] = [];
@@ -442,6 +446,24 @@ export async function LpStory({ company, counts, base }: { company: Company; cou
         </Chapter>,
       );
     }
+  }
+
+  // The researched profile: its stated allocation, its plans, what it favours.
+  const allocations = statedAllocations(profile);
+  if (profile && allocations.length) {
+    n += 1;
+    chapters.push({ id: "allocation", label: "Allocation", count: allocations.length });
+    blocks.push(<AllocationChapter key="allocation" id="allocation" n={n} profile={profile} base={base} name={name} />);
+  }
+  if (plans.length) {
+    n += 1;
+    chapters.push({ id: "plans", label: "Plans", count: plans.length });
+    blocks.push(<PlansChapter key="plans" id="plans" n={n} plans={plans} base={base} name={name} />);
+  }
+  if (profile && preferenceGroups(profile).length) {
+    n += 1;
+    chapters.push({ id: "preferences", label: "Preferences" });
+    blocks.push(<PreferencesChapter key="preferences" id="preferences" n={n} profile={profile} name={name} />);
   }
 
   if (links.length) {

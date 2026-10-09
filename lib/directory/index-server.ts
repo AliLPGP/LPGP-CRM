@@ -327,18 +327,23 @@ async function buildIndex(version: string): Promise<DirectoryIndex> {
     for (const [k, v] of Object.entries(r?.plans ?? {})) plansByLp.set(k, strings(v));
   }
 
-  // What the investor research job has stated per LP (migration 0033). One
-  // plain select: a few thousand rows at most. Before the migration the
-  // table is missing and the read errors — that is an empty profile set,
-  // never a failed build.
+  // What the investor research job has stated per LP (migration 0033), paged:
+  // a plain select stops at the PostgREST cap of 1,000 rows and silently
+  // dropped every profile past it. Before the migration the table is missing
+  // and the read errors — that is an empty profile set, never a failed build.
   const profiles = new Map<string, ProfileRow>();
   if (schemaReady) {
-    const { data } = await supabase
-      .from("investor_profiles")
-      .select(
-        "company_id, investor_type, allocations, strategy_prefs, region_prefs, industry_prefs, ticket_min_usd, ticket_max_usd, active_in_alternatives",
-      );
-    for (const p of (data ?? []) as ProfileRow[]) if (p.company_id) profiles.set(p.company_id, p);
+    const rows = await fetchAll<ProfileRow>((from, to, first) =>
+      supabase
+        .from("investor_profiles")
+        .select(
+          "company_id, investor_type, allocations, strategy_prefs, region_prefs, industry_prefs, ticket_min_usd, ticket_max_usd, active_in_alternatives",
+          first ? { count: "exact" } : undefined,
+        )
+        .order("company_id")
+        .range(from, to),
+    );
+    for (const p of rows ?? []) if (p.company_id) profiles.set(p.company_id, p);
   }
 
   // Every fund once (~32k rows, paged in parallel), so a manager's search
@@ -494,7 +499,7 @@ let pendingIndex: DirectoryIndex | null = null;
 // memory per instance (lib/supabase/big-cache.ts). The key's suffix is the
 // record shape: bump it with records.ts so a cached index from before a
 // field change is never unpacked by code expecting the new one.
-const cachedIndex = bigCache("directory-index-v9", buildIndex, {
+const cachedIndex = bigCache("directory-index-v10", buildIndex, {
   tags: [DIRECTORY_TAG],
   revalidate: 86400,
 });
@@ -547,7 +552,7 @@ const cachedOverview = unstable_cache(
     if (!index.schemaReady) throw new NotReady();
     return buildOverview(index, version);
   },
-  ["directory-overview-v4"],
+  ["directory-overview-v5"],
   { tags: [DIRECTORY_TAG], revalidate: 86400 },
 );
 

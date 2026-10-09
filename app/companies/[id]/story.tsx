@@ -453,7 +453,15 @@ export async function LpStory({ company, counts, base }: { company: Company; cou
   if (profile && allocations.length) {
     n += 1;
     chapters.push({ id: "allocation", label: "Allocation", count: allocations.length });
-    blocks.push(<AllocationChapter key="allocation" id="allocation" n={n} profile={profile} base={base} name={name} />);
+    blocks.push(<AllocationChapter
+        key="allocation"
+        id="allocation"
+        n={n}
+        profile={profile}
+        base={base}
+        name={name}
+        fundsByClass={new Map((book?.classes ?? []).map((c) => [c.key, c.funds]))}
+      />);
   }
   if (plans.length) {
     n += 1;

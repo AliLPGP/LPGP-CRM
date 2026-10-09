@@ -28,7 +28,22 @@ export function statedAllocations(profile: InvestorProfile | null) {
   return (profile?.allocations ?? []).filter((a) => a.class && (a.current_pct != null || a.target_pct != null || a.current_usd != null));
 }
 
-export function AllocationChapter({ id, n, profile, base, name }: { id: string; n: number; profile: InvestorProfile; base: string; name: string }) {
+export function AllocationChapter({
+  id,
+  n,
+  profile,
+  base,
+  name,
+  fundsByClass,
+}: {
+  id: string;
+  n: number;
+  profile: InvestorProfile;
+  base: string;
+  name: string;
+  /** The LP's own disclosed funds per class (its book); a class card opens them only when there are some. */
+  fundsByClass: Map<string, number>;
+}) {
   const rows = statedAllocations(profile).sort((a, b) => (b.current_pct ?? b.target_pct ?? -1) - (a.current_pct ?? a.target_pct ?? -1) || (b.current_usd ?? 0) - (a.current_usd ?? 0));
   const src = profileSource(profile, "allocations");
   return (
@@ -43,7 +58,8 @@ export function AllocationChapter({ id, n, profile, base, name }: { id: string; 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {rows.map((a, i) => {
           const pct = a.current_pct ?? a.target_pct;
-          const href = isAssetClassKey(a.class) ? `/database/asset-classes/${ASSET_CLASS_BY_KEY[a.class].slug}` : null;
+          const funds = fundsByClass.get(a.class) ?? 0;
+          const href = funds ? `${base}?class=${a.class}` : null;
           const body = (
             <>
               <div className="flex items-start justify-between gap-3">
@@ -77,6 +93,9 @@ export function AllocationChapter({ id, n, profile, base, name }: { id: string; 
                   <dd className="figure text-[15px]">{a.as_of ? a.as_of.slice(0, 7) : "—"}</dd>
                 </div>
               </dl>
+              <div className="mt-auto border-t pt-3 text-[11.5px] text-muted-foreground" style={{ marginTop: 16 }}>
+                {funds ? `${funds} disclosed fund${funds === 1 ? "" : "s"} in this class` : "It does not disclose which funds it holds in this class"}
+              </div>
             </>
           );
           return href ? (

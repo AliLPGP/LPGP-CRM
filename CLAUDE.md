@@ -250,6 +250,12 @@ boundaries and keeps comment text ASCII.
   ownership (institutional money first, each owner leading to the directory
   firm or the sports investor), its file, deals, following, fact check and
   league; the dense club table stays at `?view=table`.
+- **GP funds from the web** (0051) — `ingest.load_gp_funds` adds the funds
+  a GP names on its own site, filings or LP reports that it has no row for
+  yet (`source = 'web_research'`, the page in `source_url`; vintage, size,
+  strategy and status only as the page states them, sizes only in US
+  dollars). A fund the firm already has under the same name is left as it
+  is; every fund's id comes back so its strategy can follow.
 - **LP web profile and managers it works with** (0049, 0050) —
   `ingest.load_lp_web` fills an LP's blank website, description, HQ,
   LinkedIn and headcount (each with its page in `sources`) and adds the

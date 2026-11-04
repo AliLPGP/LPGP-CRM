@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 /**
  * The LPGP mark: a rounded hexagon with a cube-face window on its left and a
  * diagonal cut that separates the right slab, drawn as inline SVG so it takes
@@ -8,10 +10,13 @@
  * favicon and the installable app's icons.
  */
 export function LpgpMark({ className }: { className?: string }) {
+  // One mask id per drawing: the page draws the mark twice (the sidebar and
+  // the phone bar), and a mask inside a hidden copy paints nothing for the other.
+  const mask = `lpgp-cut-${useId().replace(/:/g, "")}`;
   return (
     <svg viewBox="0 0 100 100" className={className} role="img" aria-label="LPGP" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <mask id="lpgp-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+        <mask id={mask} maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
           {/* the hexagon, corners rounded by the stroke */}
           <path d="M50 8 88 29V71L50 92 12 71V29Z" fill="#fff" stroke="#fff" strokeWidth="9" strokeLinejoin="round" />
           {/* the cube-face window */}
@@ -20,7 +25,7 @@ export function LpgpMark({ className }: { className?: string }) {
           <path d="M53 7 88 76" stroke="#000" strokeWidth="7" strokeLinecap="round" />
         </mask>
       </defs>
-      <rect width="100" height="100" fill="currentColor" mask="url(#lpgp-cut)" />
+      <rect width="100" height="100" fill="currentColor" mask={`url(#${mask})`} />
     </svg>
   );
 }

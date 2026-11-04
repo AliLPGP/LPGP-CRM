@@ -3,7 +3,35 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ChevronDown, Command, LogOut, Menu, Moon, Search, Settings, Shield, Sun, X } from "lucide-react";
+import {
+  BarChart3,
+  Bookmark,
+  Briefcase,
+  Building2,
+  CalendarDays,
+  ChevronDown,
+  Command,
+  Contact,
+  FileInput,
+  Gauge,
+  Handshake,
+  Kanban,
+  Landmark,
+  Layers,
+  ListChecks,
+  LogOut,
+  Menu,
+  Moon,
+  PhoneCall,
+  Search,
+  Settings,
+  Shield,
+  Sun,
+  Upload,
+  Users,
+  Wrench,
+  X,
+} from "lucide-react";
 import { LpgpMark } from "@/components/lpgp-mark";
 import { openCommandPalette } from "@/components/command-palette";
 import { INTEL_NAV } from "@/components/intel/shell";
@@ -11,39 +39,35 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { cn, initials } from "@/lib/utils";
 import type { SessionUser } from "@/lib/auth";
 
-// The product's header, laid out the way a private-markets data terminal is:
-// a section per kind of counterparty across the top, each opening a panel
-// of the searches and ledgers a desk uses for it, the quick search in the
-// middle, and the reader's own things on the right. Every page is listed
-// once — the panels are the whole map, so a page never needs a second menu.
-// The sales CRM rides along as one menu that can be put away, until it
-// moves to its own product.
+// The product's frame: a sidebar down the left and a search-first bar across
+// the top of the page column. The sidebar holds two workspaces, Research (the
+// directory and the market) and Sales (the CRM), behind one switch, so neither
+// hides inside the other's menu. A section opens in place to show the
+// searches and ledgers a desk uses for it; every page is listed once. On a
+// phone the same sidebar slides over the page from the bar's menu button and
+// the bottom tab bar's More.
 
+type Icon = typeof Landmark;
 type Item = { href: string; label: string; note?: string };
 type Column = { heading?: string; items: Item[] };
-type Section = { key: string; label: string; href: string; columns: Column[]; blurb: string };
+type Section = { key: string; label: string; href: string; icon: Icon; columns: Column[] };
+type Workspace = "research" | "sales";
 
 const SECTIONS: Section[] = [
   {
     key: "investors",
     label: "Investors",
     href: "/database?book=LP",
-    blurb: "Limited partners: who they are, what they allocate, what they plan to do next.",
+    icon: Landmark,
     columns: [
       {
-        heading: "Search",
         items: [
-          { href: "/database?book=LP", label: "Advanced search", note: "Type, allocation, geography, ticket" },
+          { href: "/database?book=LP", label: "Advanced search" },
           { href: "/database?book=LP&sort=newest", label: "Newly added" },
           { href: "/database?book=LP&sort=updated", label: "Recently updated" },
           { href: "/database?book=LP,SP&itype=investment_consultant", label: "Investment consultants" },
-        ],
-      },
-      {
-        heading: "Intelligence",
-        items: [
-          { href: "/database/mandates", label: "Mandates & RFPs", note: "Next twelve months, per asset class" },
-          { href: "/database/commitments", label: "Past investments", note: "Disclosed fund commitments" },
+          { href: "/database/mandates", label: "Mandates & RFPs" },
+          { href: "/database/commitments", label: "Past investments" },
           { href: "/database/signals?kind=news", label: "Investor news" },
         ],
       },
@@ -53,12 +77,11 @@ const SECTIONS: Section[] = [
     key: "managers",
     label: "Fund managers",
     href: "/database?book=GP",
-    blurb: "General partners by asset class, strategy and what they have raised.",
+    icon: Briefcase,
     columns: [
       {
-        heading: "Search",
         items: [
-          { href: "/database?book=GP", label: "Advanced search", note: "Strategy, sector, raised per class" },
+          { href: "/database?book=GP", label: "Advanced search" },
           { href: "/database?book=GP&sort=newest", label: "Newly added" },
           { href: "/database?book=GP&sort=updated", label: "Recently updated" },
         ],
@@ -83,20 +106,15 @@ const SECTIONS: Section[] = [
     key: "funds",
     label: "Funds",
     href: "/funds",
-    blurb: "Every fund on file: strategy, region, size, status and terms.",
+    icon: Layers,
     columns: [
       {
-        heading: "Search",
         items: [
-          { href: "/funds", label: "Advanced search", note: "Strategy, sector, region, size, status" },
+          { href: "/funds", label: "Advanced search" },
           { href: "/funds?strategy=pe_hybrid", label: "Evergreen & hybrid funds" },
-        ],
-      },
-      {
-        heading: "Fundraising",
-        items: [
           { href: "/database/deals?kind=fund_close", label: "Recently closed" },
-          { href: "/database/asset-classes/private-equity?tab=raises", label: "Form D filings", note: "US private offerings as filed" },
+          { href: "/database/asset-classes/private-equity?tab=raises", label: "Form D filings" },
+          { href: "/database/performance?tab=funds", label: "Performance" },
         ],
       },
     ],
@@ -105,7 +123,7 @@ const SECTIONS: Section[] = [
     key: "providers",
     label: "Service providers",
     href: "/database?book=SP",
-    blurb: "The firms funds and transactions retain, with the managers that file them.",
+    icon: Wrench,
     columns: [
       {
         heading: "Fund services",
@@ -123,26 +141,8 @@ const SECTIONS: Section[] = [
         heading: "Transaction services",
         items: [
           { href: "/database?book=SP&itype=bank", label: "Banks & financial advisors" },
-          { href: "/database/lenders", label: "Debt providers", note: "Loan books as filed" },
-          { href: "/database/market", label: "League tables", note: "Who serves the most managers" },
-        ],
-      },
-    ],
-  },
-  {
-    key: "unresearched",
-    label: "Unresearched data",
-    href: "/database?cov=thin",
-    blurb: "Firms held back from the books until research fills them: no commitments, allocations, funds or clients on file yet.",
-    columns: [
-      {
-        heading: "By book",
-        items: [
-          { href: "/database?cov=thin", label: "Everything unresearched" },
-          { href: "/database?cov=thin&book=LP", label: "Limited partners", note: "No commitments, allocations or plans yet" },
-          { href: "/database?cov=thin&book=GP", label: "Fund managers", note: "No size with funds or portfolio yet" },
-          { href: "/database?cov=thin&book=SP", label: "Service providers", note: "No manager clients on file yet" },
-          { href: "/database?cov=thin&book=UN", label: "Unclassified", note: "Not yet placed in a book" },
+          { href: "/database/lenders", label: "Debt providers" },
+          { href: "/database/market", label: "League tables" },
         ],
       },
     ],
@@ -151,11 +151,11 @@ const SECTIONS: Section[] = [
     key: "companies",
     label: "Companies & deals",
     href: "/database/deals",
-    blurb: "The transactions, the companies behind them and the news around them.",
+    icon: Building2,
     columns: [
       {
         items: [
-          { href: "/database/deals", label: "Deals", note: "Every sourced transaction" },
+          { href: "/database/deals", label: "Deals" },
           { href: "/database/portcos", label: "Portfolio companies" },
           { href: "/database/borrowers", label: "Borrowers" },
           { href: "/database/sports", label: "Sports" },
@@ -164,30 +164,54 @@ const SECTIONS: Section[] = [
       },
     ],
   },
+  { key: "people", label: "People", href: "/contacts", icon: Users, columns: [] },
 ];
 
-const CRM: Item[] = [
-  { href: "/crm", label: "Command centre" },
-  { href: "/pipeline", label: "Pipeline" },
-  { href: "/leads", label: "Leads" },
-  { href: "/leads/workspace", label: "Call workspace" },
-  { href: "/accounts", label: "Accounts" },
-  { href: "/deals", label: "My deals" },
-  { href: "/events", label: "Event performance" },
-  { href: "/import/leads", label: "Import leads" },
-  { href: "/contacts", label: "People" },
-  { href: "/database/lists", label: "Target lists" },
-  { href: "/portfolio", label: "Watchlist" },
-  { href: "/import", label: "Import", note: "Master directory and datasets" },
+/** The reader's own things, in both workspaces. */
+const YOURS: Section[] = [
+  { key: "lists", label: "Target lists", href: "/database/lists", icon: ListChecks, columns: [] },
+  { key: "watchlist", label: "Watchlist", href: "/portfolio", icon: Bookmark, columns: [] },
 ];
 
-const CRM_PATHS = ["/crm", "/pipeline", "/leads", "/accounts", "/deals", "/events", "/import", "/portfolio"];
+/** The data desk: what is still to research, and the imports that fill it. */
+const DATA: Section[] = [
+  {
+    key: "unresearched",
+    label: "Data coverage",
+    href: "/database?cov=thin",
+    icon: Gauge,
+    columns: [
+      {
+        items: [
+          { href: "/database?cov=thin", label: "Everything unresearched" },
+          { href: "/database?cov=thin&book=LP", label: "Limited partners" },
+          { href: "/database?cov=thin&book=GP", label: "Fund managers" },
+          { href: "/database?cov=thin&book=SP", label: "Service providers" },
+          { href: "/database?cov=thin&book=UN", label: "Unclassified" },
+        ],
+      },
+    ],
+  },
+  { key: "import", label: "Import", href: "/import", icon: Upload, columns: [] },
+];
 
-// --- Which section the page belongs to ------------------------------------------
-// One rule for the header and the pages: the matchers the desk shell already
-// keeps. Performance is read on the fund and manager pages it belongs to, so
-// its desk counts as Funds; people, lists, the watchlist and imports sit in
-// the Sales menu; the workflows are reached from the pages, not the bar.
+const SALES: Section[] = [
+  { key: "crm-home", label: "Command centre", href: "/crm", icon: Command, columns: [] },
+  { key: "pipeline", label: "Pipeline", href: "/pipeline", icon: Kanban, columns: [] },
+  { key: "leads", label: "Leads", href: "/leads", icon: Contact, columns: [] },
+  { key: "workspace", label: "Call workspace", href: "/leads/workspace", icon: PhoneCall, columns: [] },
+  { key: "accounts", label: "Accounts", href: "/accounts", icon: Handshake, columns: [] },
+  { key: "my-deals", label: "My deals", href: "/deals", icon: BarChart3, columns: [] },
+  { key: "events", label: "Event performance", href: "/events", icon: CalendarDays, columns: [] },
+  { key: "import-leads", label: "Import leads", href: "/import/leads", icon: FileInput, columns: [] },
+];
+
+const SALES_KEYS = new Set(SALES.map((s) => s.key));
+
+// --- Which item the page belongs to ---------------------------------------------
+// One rule for the sidebar and the pages: the matchers the desk shell already
+// keeps for the directory, then the plain paths of everything else. The
+// longest matching path wins, so the call workspace is not lit as Leads.
 
 const SECTION_OF_TAB: Record<string, string> = {
   Investors: "investors",
@@ -197,16 +221,24 @@ const SECTION_OF_TAB: Record<string, string> = {
   "Service providers": "providers",
   "Companies & deals": "companies",
   "Unresearched data": "unresearched",
-  People: "crm",
-  Lists: "crm",
+  People: "people",
+  Lists: "lists",
 };
+
+const PATH_ITEMS: Section[] = [...SALES, ...YOURS, ...DATA.filter((d) => d.key === "import")];
 
 function sectionOf(pathname: string, search: URLSearchParams | null): string | null {
   const s = search ?? new URLSearchParams();
   for (const tab of INTEL_NAV) if (tab.match(pathname, s) && SECTION_OF_TAB[tab.label]) return SECTION_OF_TAB[tab.label];
-  if (CRM_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return "crm";
-  if (pathname.startsWith("/companies/") || pathname.startsWith("/funds/")) return null;
-  return null;
+  let best: Section | null = null;
+  for (const it of PATH_ITEMS) {
+    if ((pathname === it.href || pathname.startsWith(`${it.href}/`)) && (!best || it.href.length > best.href.length)) best = it;
+  }
+  return best?.key ?? null;
+}
+
+function workspaceOf(key: string | null): Workspace {
+  return key && SALES_KEYS.has(key) ? "sales" : "research";
 }
 
 // --- Navigation in flight ----------------------------------------------------------
@@ -347,8 +379,6 @@ function ThemeIcon() {
   );
 }
 
-// --- Menus --------------------------------------------------------------------------
-
 /** Closes an open menu on a click outside it or on Escape. */
 function useDismiss(open: boolean, close: () => void) {
   const ref = useRef<HTMLDivElement>(null);
@@ -375,145 +405,6 @@ function isCurrent(href: string, pathname: string, search: URLSearchParams | nul
   if (!href.includes("?")) return href === pathname;
   const q = search?.toString() ?? "";
   return keyOf(href) === keyOf(q ? `${pathname}?${q}` : pathname);
-}
-
-function MenuLink({ item, onNavigate, on }: { item: Item; onNavigate: () => void; on?: boolean }) {
-  return (
-    <Link
-      href={item.href}
-      onClick={() => {
-        startNavigation(item.href);
-        onNavigate();
-      }}
-      className={cn("topnav-link", on && "is-on")}
-      aria-current={on ? "page" : undefined}
-    >
-      <span className="block text-[13px] font-medium leading-tight">{item.label}</span>
-      {item.note ? <span className="mt-0.5 block text-[11px] leading-tight text-[var(--rail-fg-dim)]">{item.note}</span> : null}
-    </Link>
-  );
-}
-
-function SectionPanel({ section, onNavigate, pathname, search }: { section: Section; onNavigate: () => void; pathname: string; search: URLSearchParams | null }) {
-  return (
-    <div className="topnav-panel" role="menu" aria-label={section.label}>
-      <div className="mx-auto flex max-w-[1480px] gap-8 px-5 py-5 md:px-7">
-        <div className="hidden w-56 shrink-0 lg:block">
-          <p className="wordmark text-[10px] text-[var(--brass)]">{section.label}</p>
-          <p className="mt-2 text-[12.5px] leading-relaxed text-[var(--rail-fg-dim)]">{section.blurb}</p>
-          <Link
-            href={section.href}
-            onClick={() => {
-              startNavigation(section.href);
-              onNavigate();
-            }}
-            className="topnav-link mt-2 -ml-2 inline-block text-[12.5px] font-medium"
-          >
-            Open {section.label.toLowerCase()} →
-          </Link>
-        </div>
-        <div className={cn("grid flex-1 gap-x-8 gap-y-5", section.columns.length > 1 ? "sm:grid-cols-2" : "sm:grid-cols-1 sm:max-w-sm")}>
-          {section.columns.map((col, i) => (
-            <div key={i}>
-              {col.heading ? <p className="wordmark mb-2 text-[9.5px] text-[var(--rail-fg-dim)]">{col.heading}</p> : null}
-              <ul className="space-y-0.5">
-                {col.items.map((it) => (
-                  <li key={it.href + it.label}>
-                    <MenuLink item={it} onNavigate={onNavigate} on={isCurrent(it.href, pathname, search)} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DesktopNav({ pathname, search }: { pathname: string; search: URLSearchParams | null }) {
-  const [open, setOpen] = useState<string | null>(null);
-  const close = () => setOpen(null);
-  const ref = useDismiss(open != null, close);
-  const current = sectionOf(pathname, search);
-  const leave = useRef<number | null>(null);
-  const enter = (key: string) => {
-    if (leave.current) window.clearTimeout(leave.current);
-    setOpen(key);
-  };
-  const scheduleClose = () => {
-    if (leave.current) window.clearTimeout(leave.current);
-    leave.current = window.setTimeout(() => setOpen(null), 160);
-  };
-  return (
-    <div
-      ref={ref}
-      className="relative hidden flex-1 items-stretch lg:flex"
-      onMouseLeave={scheduleClose}
-      onMouseEnter={() => leave.current && window.clearTimeout(leave.current)}
-      // Tabbing out of the bar and its panel closes the panel, as the pointer leaving does.
-      onBlur={(e) => {
-        if (open && !ref.current?.contains(e.relatedTarget as Node | null)) close();
-      }}
-    >
-      <ul className="flex items-stretch gap-0.5">
-        {SECTIONS.map((s) => {
-          const on = current === s.key;
-          const isOpen = open === s.key;
-          return (
-            <li key={s.key} className="flex items-stretch" onMouseEnter={() => enter(s.key)}>
-              <button
-                type="button"
-                onClick={() => setOpen(isOpen ? null : s.key)}
-                aria-expanded={isOpen}
-                aria-haspopup="menu"
-                className={cn("topnav-section", (on || isOpen) && "is-on")}
-              >
-                {s.label}
-                <ChevronDown className={cn("ml-1 h-3 w-3 opacity-60 transition-transform duration-150", isOpen && "rotate-180")} />
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-      {open ? <SectionPanel section={SECTIONS.find((s) => s.key === open)!} onNavigate={close} pathname={pathname} search={search} /> : null}
-    </div>
-  );
-}
-
-function CrmMenu({ pathname }: { pathname: string }) {
-  const [shown, toggle] = useCrmShown();
-  const [open, setOpen] = useState(false);
-  const close = () => setOpen(false);
-  const ref = useDismiss(open, close);
-  const on = sectionOf(pathname, null) === "crm";
-  if (!shown) return null;
-  return (
-    <div ref={ref} className="relative hidden lg:block">
-      <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-haspopup="menu" className={cn("topnav-section", (on || open) && "is-on")}>
-        <span className="wordmark mr-1.5 text-[9px] text-[var(--brass)]">CRM</span>
-        Sales
-        <ChevronDown className={cn("ml-1 h-3 w-3 opacity-60 transition-transform duration-150", open && "rotate-180")} />
-      </button>
-      {open ? (
-        <div className="topnav-dropdown right-0 w-64" role="menu">
-          <ul className="space-y-0.5 p-2">
-            {CRM.map((it) => (
-              <li key={it.href}>
-                <MenuLink item={it} onNavigate={close} on={pathname === it.href} />
-              </li>
-            ))}
-          </ul>
-          <div className="border-t border-[var(--rail-line)] px-3 py-2">
-            <button type="button" onClick={() => { toggle(); close(); }} className="text-[11.5px] text-[var(--rail-fg-dim)] hover:text-white">
-              Put the CRM away
-            </button>
-            <p className="mt-0.5 text-[10.5px] text-[var(--rail-fg-dim)]">It comes back from your account menu.</p>
-          </div>
-        </div>
-      ) : null}
-    </div>
-  );
 }
 
 function UserMenu({ user }: { user: SessionUser | null }) {
@@ -587,20 +478,188 @@ function UserMenu({ user }: { user: SessionUser | null }) {
   );
 }
 
-function SearchTrigger() {
+// --- The sidebar ------------------------------------------------------------------
+
+type NavState = { pathname: string; search: URLSearchParams | null; current: string | null; onNavigate: () => void };
+
+function NavItem({ section, nav, open, onToggle }: { section: Section; nav: NavState; open: boolean; onToggle: () => void }) {
+  const on = nav.current === section.key;
+  const Icon = section.icon;
+  const hasSub = section.columns.length > 0;
   return (
-    <button type="button" onClick={openCommandPalette} aria-label="Quick search" className="topnav-search">
-      <Search className="h-3.5 w-3.5 opacity-70" />
-      <span className="hidden flex-1 text-left sm:inline">Quick search</span>
-      <kbd className="hidden rounded border border-[var(--rail-line)] px-1 text-[10px] tabular sm:inline">⌘K</kbd>
-    </button>
+    <li>
+      <div className={cn("sidenav-item", on && "is-on")}>
+        <Link
+          href={section.href}
+          onClick={() => {
+            startNavigation(section.href);
+            nav.onNavigate();
+          }}
+          className="sidenav-main"
+          aria-current={on && !hasSub ? "page" : undefined}
+        >
+          <Icon className="h-4 w-4 shrink-0" strokeWidth={on ? 2.2 : 1.8} aria-hidden />
+          <span className="truncate">{section.label}</span>
+        </Link>
+        {hasSub ? (
+          <button
+            type="button"
+            onClick={onToggle}
+            aria-expanded={open}
+            aria-label={`${open ? "Hide" : "Show"} ${section.label.toLowerCase()} pages`}
+            className="sidenav-toggle"
+          >
+            <ChevronDown className={cn("h-3.5 w-3.5 transition-transform duration-150", open && "rotate-180")} />
+          </button>
+        ) : null}
+      </div>
+      {hasSub && open ? (
+        <div className="sidenav-sub fade-in-fast">
+          {section.columns.map((col, i) => (
+            <div key={i}>
+              {col.heading ? <p className="sidenav-subhead">{col.heading}</p> : null}
+              <ul>
+                {col.items.map((it) => {
+                  const cur = isCurrent(it.href, nav.pathname, nav.search);
+                  return (
+                    <li key={it.href + it.label}>
+                      <Link
+                        href={it.href}
+                        onClick={() => {
+                          startNavigation(it.href);
+                          nav.onNavigate();
+                        }}
+                        className={cn("sidenav-sublink", cur && "is-on")}
+                        aria-current={cur ? "page" : undefined}
+                      >
+                        {it.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </li>
   );
 }
 
-function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: string }) {
-  const open = useSyncExternalStore(subscribeDrawer, () => drawerOpen, () => false);
-  const [section, setSection] = useState<string | null>(null);
+function NavGroup({ label, items, nav }: { label: string; items: Section[]; nav: NavState }) {
+  // A section the reader opened or shut by hand stays that way; otherwise the
+  // page's own section is open and the rest are shut.
+  const [chosen, setChosen] = useState<Record<string, boolean>>({});
+  return (
+    <div className="sidenav-group">
+      <p className="sidenav-heading">{label}</p>
+      <ul className="space-y-px">
+        {items.map((s) => {
+          const open = chosen[s.key] ?? nav.current === s.key;
+          return <NavItem key={s.key} section={s} nav={nav} open={open} onToggle={() => setChosen({ ...chosen, [s.key]: !open })} />;
+        })}
+      </ul>
+    </div>
+  );
+}
+
+function WorkspaceSwitch({ value, onChange }: { value: Workspace; onChange: (w: Workspace) => void }) {
+  return (
+    <div className="ws-switch" role="group" aria-label="Workspace">
+      {(["research", "sales"] as const).map((w) => (
+        <button key={w} type="button" onClick={() => onChange(w)} aria-pressed={value === w} className={cn("ws-option", value === w && "is-on")}>
+          {w === "research" ? "Research" : "Sales"}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function SideBody({ pathname, search, onNavigate }: { pathname: string; search: URLSearchParams | null; onNavigate: () => void }) {
   const [crmShown] = useCrmShown();
+  const current = sectionOf(pathname, search);
+  // The workspace follows the page; a switch the reader flips holds until
+  // they move to another page.
+  const [picked, setPicked] = useState<{ path: string; ws: Workspace } | null>(null);
+  const derived = workspaceOf(current);
+  const ws: Workspace = !crmShown ? "research" : picked && picked.path === pathname ? picked.ws : derived;
+  const nav: NavState = { pathname, search, current, onNavigate };
+  return (
+    <div className="flex min-h-0 flex-1 flex-col">
+      {crmShown ? (
+        <div className="px-3 pb-3">
+          <WorkspaceSwitch value={ws} onChange={(w) => setPicked({ path: pathname, ws: w })} />
+        </div>
+      ) : null}
+      <nav className="sidenav-scroll" aria-label={ws === "sales" ? "Sales" : "Research"}>
+        {ws === "research" ? (
+          <>
+            <NavGroup label="Directory" items={SECTIONS} nav={nav} />
+            <NavGroup label="Your work" items={YOURS} nav={nav} />
+          </>
+        ) : (
+          <>
+            <NavGroup label="Sales" items={SALES} nav={nav} />
+            <NavGroup label="Your work" items={[SECTIONS.find((s) => s.key === "people")!, ...YOURS]} nav={nav} />
+          </>
+        )}
+        <NavGroup label="Data" items={DATA} nav={nav} />
+      </nav>
+    </div>
+  );
+}
+
+function Brand({ onClick }: { onClick?: () => void }) {
+  return (
+    <Link
+      href="/database"
+      onClick={() => {
+        startNavigation("/database");
+        onClick?.();
+      }}
+      className="group flex items-center gap-2.5 rounded-[8px] py-1"
+    >
+      {/* The mark and the name are white on the graphite rail; the blue is only the eyebrow line beneath. */}
+      <LpgpMark className="h-7 w-7 shrink-0 text-white" />
+      <span className="leading-none">
+        <span className="block text-[15px] font-bold tracking-tight text-white">LPGP</span>
+        <span className="wordmark mt-1 block whitespace-nowrap text-[9px] tracking-[0.16em] text-[var(--brass)]">Intelligence</span>
+      </span>
+    </Link>
+  );
+}
+
+/** The desktop sidebar: sticky, full height, from lg up. */
+function SideRow({ pathname, search }: { pathname: string; search: URLSearchParams | null }) {
+  return (
+    <aside className="rail sidenav hidden lg:flex" aria-label="Main menu">
+      <div className="px-5 pb-4 pt-4">
+        <Brand />
+      </div>
+      <SideBody pathname={pathname} search={search} onNavigate={() => {}} />
+    </aside>
+  );
+}
+
+function SideLive() {
+  const pathname = usePathname();
+  const search = useSearchParams();
+  return <SideRow pathname={pathname} search={search} />;
+}
+
+export function SideNav() {
+  const pathname = usePathname();
+  return (
+    <Suspense fallback={<SideRow pathname={pathname} search={null} />}>
+      <SideLive />
+    </Suspense>
+  );
+}
+
+// --- The phone drawer: the same sidebar, over the page ------------------------------
+
+function MobileDrawer({ pathname, search }: { pathname: string; search: URLSearchParams | null }) {
+  const open = useSyncExternalStore(subscribeDrawer, () => drawerOpen, () => false);
   const close = () => setDrawer(false);
   const closeRef = useRef<HTMLButtonElement>(null);
   // While the drawer is up the page behind it does not scroll, Escape puts it
@@ -622,65 +681,31 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
   return (
     <>
       {/* Wrapped: .topnav-icon is unlayered CSS, so lg:hidden on the button itself would lose to it. */}
-      <span className="lg:hidden">
+      <span className="flex items-center lg:hidden">
         <button type="button" onClick={() => setDrawer(true)} aria-label="Open menu" aria-expanded={open} className="topnav-icon">
           <Menu className="h-5 w-5" />
         </button>
       </span>
       {open ? (
-        <div className="rail topnav-drawer fixed inset-0 z-50 overflow-y-auto lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
-          <div className="flex items-center justify-between border-b border-[var(--rail-line)] px-4 py-3">
+        <div className="rail topnav-drawer fixed inset-0 z-50 flex flex-col overflow-y-auto lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
+          <div className="flex items-center justify-between px-4 py-3">
             <Brand onClick={close} />
             <button ref={closeRef} type="button" onClick={close} aria-label="Close menu" className="topnav-icon">
               <X className="h-5 w-5" />
             </button>
           </div>
-          <div className="px-3 py-3">
-            <button type="button" onClick={() => { close(); openCommandPalette(); }} className="topnav-search mb-3 w-full">
-              <Search className="h-3.5 w-3.5 opacity-70" />
-              <span className="flex-1 text-left">Quick search</span>
+          <div className="px-3 pb-3">
+            <button type="button" onClick={() => { close(); openCommandPalette(); }} className="topnav-search w-full">
+              <Search className="h-4 w-4 opacity-70" />
+              <span className="flex-1 text-left">Search firms, funds, people, deals</span>
             </button>
-            {[...SECTIONS, ...(crmShown ? [{ key: "crm", label: "Sales CRM", href: "/crm", blurb: "", columns: [{ items: CRM }] } as Section] : [])].map((s) => {
-              const isOpen = section === s.key;
-              return (
-                <div key={s.key} className="border-b border-[var(--rail-line)]">
-                  <button
-                    type="button"
-                    onClick={() => setSection(isOpen ? null : s.key)}
-                    aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between py-3 text-[14px] font-medium text-[var(--rail-fg)]"
-                  >
-                    {s.label}
-                    <ChevronDown className={cn("h-4 w-4 opacity-60 transition-transform duration-150", isOpen && "rotate-180")} />
-                  </button>
-                  {isOpen ? (
-                    <div className="fade-in-fast pb-3">
-                      {s.columns.map((col, i) => (
-                        <div key={i} className="mb-2">
-                          {col.heading ? <p className="wordmark mb-1 px-2 text-[9.5px] text-[var(--rail-fg-dim)]">{col.heading}</p> : null}
-                          <ul>
-                            {col.items.map((it) => (
-                              <li key={it.href + it.label}>
-                                <MenuLink item={it} onNavigate={close} on={pathname === it.href} />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })}
-            <div className="flex items-center justify-between py-3">
-              <Link href="/settings" onClick={() => { startNavigation("/settings"); close(); }} className="text-[13px] text-[var(--rail-fg)]">
-                Settings
-              </Link>
-              <div className="flex items-center gap-2">
-                <ThemeIcon />
-                <UserMenu user={user} />
-              </div>
-            </div>
+          </div>
+          <SideBody pathname={pathname} search={search} onNavigate={close} />
+          <div className="flex items-center justify-between border-t border-[var(--rail-line)] px-4 py-3">
+            <Link href="/settings" onClick={() => { startNavigation("/settings"); close(); }} className="text-[13px] text-[var(--rail-fg)]">
+              Settings
+            </Link>
+            <ThemeIcon />
           </div>
         </div>
       ) : null}
@@ -688,62 +713,54 @@ function MobileDrawer({ user, pathname }: { user: SessionUser | null; pathname: 
   );
 }
 
-function Brand({ onClick }: { onClick?: () => void }) {
+// --- The top bar: search first ------------------------------------------------------
+
+function SearchBar() {
   return (
-    <Link
-      href="/database"
-      onClick={() => {
-        startNavigation("/database");
-        onClick?.();
-      }}
-      className="group flex items-center gap-2.5 rounded-[4px] py-2"
-    >
-      {/* The mark and the name are white on the black bar; the blue is only the eyebrow line beneath. */}
-      <LpgpMark className="h-7 w-7 shrink-0 text-white" />
-      <span className="leading-none">
-        <span className="block text-[14px] font-bold tracking-tight text-white">LPGP Intelligence</span>
-        <span className="wordmark mt-0.5 hidden whitespace-nowrap text-[7.5px] tracking-[0.12em] text-[var(--brass)] xl:block">Private markets intelligence</span>
-      </span>
-    </Link>
+    <button type="button" onClick={openCommandPalette} aria-label="Search firms, funds, people and deals" className="topnav-search topbar-search">
+      <Search className="h-4 w-4 shrink-0 opacity-70" />
+      <span className="hidden flex-1 truncate text-left sm:inline">Search firms, funds, people, deals</span>
+      <kbd className="hidden rounded border border-[var(--rail-line)] px-1.5 py-px text-[10.5px] tabular sm:inline">⌘K</kbd>
+    </button>
   );
 }
 
-// The query string is read behind a Suspense boundary: a statically rendered
-// page (not-found, errors) gets the path-only answer and hydrates to the full
-// one, instead of failing the build over useSearchParams.
-function NavLive({ user }: { user: SessionUser | null }) {
-  const pathname = usePathname();
-  const search = useSearchParams();
-  return <NavRow user={user} pathname={pathname} search={search} />;
-}
-
-function NavRow({ user, pathname, search }: { user: SessionUser | null; pathname: string; search: URLSearchParams | null }) {
+function BarRow({ user, pathname, search }: { user: SessionUser | null; pathname: string; search: URLSearchParams | null }) {
   return (
-    <div className="mx-auto flex h-14 max-w-[1480px] items-stretch gap-3 px-4 md:px-6">
+    <div className="flex h-14 items-center gap-3 px-4 md:px-6 lg:px-8">
       <NavProgress pathname={pathname} search={search} />
-      <MobileDrawer user={user} pathname={pathname} />
-      <Brand />
-      <DesktopNav pathname={pathname} search={search} />
-      <div className="ml-auto flex items-center gap-1.5">
-        <SearchTrigger />
-        <CrmMenu pathname={pathname} />
+      <MobileDrawer pathname={pathname} search={search} />
+      <span className="lg:hidden">
+        <Brand />
+      </span>
+      <div className="flex min-w-0 flex-1 justify-end lg:justify-start">
+        <SearchBar />
+      </div>
+      <div className="flex items-center gap-1.5">
         <span className="hidden lg:inline-flex">
           <ThemeIcon />
         </span>
-        <span className="hidden lg:inline-flex">
-          <UserMenu user={user} />
-        </span>
+        <UserMenu user={user} />
       </div>
     </div>
   );
 }
 
+function BarLive({ user }: { user: SessionUser | null }) {
+  const pathname = usePathname();
+  const search = useSearchParams();
+  return <BarRow user={user} pathname={pathname} search={search} />;
+}
+
+// The query string is read behind a Suspense boundary: a statically rendered
+// page (not-found, errors) gets the path-only answer and hydrates to the full
+// one, instead of failing the build over useSearchParams.
 export function TopNav({ user }: { user: SessionUser | null }) {
   const pathname = usePathname();
   return (
     <header className="rail topnav sticky top-0 z-40">
-      <Suspense fallback={<NavRow user={user} pathname={pathname} search={null} />}>
-        <NavLive user={user} />
+      <Suspense fallback={<BarRow user={user} pathname={pathname} search={null} />}>
+        <BarLive user={user} />
       </Suspense>
     </header>
   );

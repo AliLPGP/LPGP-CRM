@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { SalesPanel } from "@/components/story/sales-panel";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, Globe, Link2 } from "lucide-react";
@@ -163,24 +164,32 @@ export default async function CompanyPage({
             ) : null}
           </div>
         </div>
-        <div className="w-full md:w-auto">
+      </header>
+
+      {/* The story on the left; beside it from xl up, the sales panel and the actions. */}
+      <div className="story-split mt-2">
+        <div className="min-w-0">
+          <Suspense fallback={<FiguresSkeleton />}>
+            <HeroFigures company={company} counts={counts} base={base} />
+          </Suspense>
+
+          <Suspense fallback={<ChapterSkeleton />}>
+            {company.category === "GP" ? <GpStory company={company} counts={counts} base={base} cls={cls ?? null} strategy={one(sp.strategy) ?? null} /> : <Story company={company} counts={counts} base={base} />}
+          </Suspense>
+
+          <Suspense fallback={null}>
+            <Further company={company} counts={counts} base={base} />
+          </Suspense>
+        </div>
+        <aside className="story-aside order-first space-y-3 xl:order-none xl:mt-8" aria-label="Actions and sales">
           <Suspense fallback={<div className="h-9" />}>
             <HeroActions company={company} />
           </Suspense>
-        </div>
-      </header>
-
-      <Suspense fallback={<FiguresSkeleton />}>
-        <HeroFigures company={company} counts={counts} base={base} />
-      </Suspense>
-
-      <Suspense fallback={<ChapterSkeleton />}>
-        {company.category === "GP" ? <GpStory company={company} counts={counts} base={base} cls={cls ?? null} strategy={one(sp.strategy) ?? null} /> : <Story company={company} counts={counts} base={base} />}
-      </Suspense>
-
-      <Suspense fallback={null}>
-        <Further company={company} counts={counts} base={base} />
-      </Suspense>
+          <Suspense fallback={<div className="sales-panel h-32" />}>
+            <SalesPanel companyId={company.id} />
+          </Suspense>
+        </aside>
+      </div>
     </StoryPage>
   );
 }

@@ -542,9 +542,13 @@ an account within a day.
   escape hatch, restructure instead.
 - The intelligence screens (`/database/*`, `/companies/[id]`, `/funds`,
   `/contacts`) wear the **desk** register on top of Nocturne: the `.desk`
-  wrapper (`IntelShell` in `components/intel/shell.tsx`) drops the radius to
-  8px, flattens surfaces and sets 13px type; `.desk-table` for dense ledgers,
-  `.desk-label` small caps, `.desk-tabs` underline tabs, `.defn` for a hover
+  wrapper (`IntelShell` in `components/intel/shell.tsx`) sets the radius to
+  8px, flattens surfaces and sets 13.5px type; a screen opens with the blue
+  eyebrow, a 30px bold title and a 14px lead (`IntelShell` and the CRM's
+  `PageHeader` alike), then the stat cards (`StatStrip`/`Stat`, one card per
+  figure, sentence-case label, 24px mono value), the toolbar (36px controls,
+  `deskButton`/`deskPrimary`) and the ledger in a rounded `Box`; `.desk-table` for dense ledgers,
+  `.desk-label` small caps (11px, 0.06em), `.desk-tabs` underline tabs, `.defn` for a hover
   definition, `.tag`, `.kv`. Primitives in `components/intel/ui.tsx` (`Box`,
   `Stat`, `StatStrip`, `Src`, `Tag`, `SubTabs`, `Bar`). Every figure that
   came from a page shows its `Src`.

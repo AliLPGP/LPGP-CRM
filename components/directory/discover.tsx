@@ -56,10 +56,10 @@ const SORTS: { key: SortKey; label: string }[] = [
 ];
 
 /** A toolbar button: the facet buttons' own shape, so the row reads as one. */
-const TOOL = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-50";
+const TOOL = "inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-50";
 
 /** The one "show more" button style, used here for the relax-a-filter offers. */
-const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent max-md:min-h-10";
+const MORE = "rounded-lg border bg-card px-2.5 py-1 text-[12px] hover:bg-accent max-md:min-h-10";
 
 /** A menu's open panel: the header's own fade-and-rise, off under reduced motion. */
 const POP = "animate-[topnav-in_160ms_ease-out] motion-reduce:animate-none";
@@ -117,7 +117,7 @@ function SavedMenu({ saved, onPick, userId, isAdmin }: { saved: SavedSearch[]; o
       {open ? (
         <>
           <button className="fixed inset-0 z-30 cursor-default" aria-label="Close" onClick={() => setOpen(false)} />
-          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 w-80 overflow-hidden rounded-[4px] border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]")}>
+          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 w-80 overflow-hidden rounded-lg border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]")}>
             <ul className="max-h-80 overflow-y-auto py-1">
               {saved.map((s) => (
                 <li key={s.id} className="group flex items-center gap-2 px-3 py-1.5 hover:bg-accent">
@@ -145,7 +145,7 @@ function SavedMenu({ saved, onPick, userId, isAdmin }: { saved: SavedSearch[]; o
                           router.refresh();
                         })
                       }
-                      className="rounded-[3px] p-1 text-muted-foreground opacity-0 hover:text-destructive focus-visible:opacity-100 group-hover:opacity-100"
+                      className="rounded-md p-1 text-muted-foreground opacity-0 hover:text-destructive focus-visible:opacity-100 group-hover:opacity-100"
                       aria-label={`Delete ${s.name}`}
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -318,7 +318,7 @@ export function Discover({
   const empty = ready ? dir.records.length === 0 : everything.total === 0;
   if (empty) {
     return (
-      <div className="stand rounded-[4px] px-6 py-14 text-center">
+      <div className="stand rounded-lg px-6 py-14 text-center">
         <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
         <div className="relative">
           <p className="wordmark text-[11px] text-[var(--brass)]">LPGP Intelligence</p>
@@ -346,7 +346,7 @@ export function Discover({
       {home ? (
         // The stand: the one black panel, for the home only — the search
         // first, the scale of the book right under it.
-        <section className="stand rounded-[4px] px-5 pb-5 pt-5 md:px-7 md:pb-6 md:pt-6">
+        <section className="stand rounded-lg px-5 pb-5 pt-5 md:px-7 md:pb-6 md:pt-6">
           <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
           <div className="relative space-y-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
@@ -400,7 +400,7 @@ export function Discover({
       ) : null}
 
       {!overview.schemaReady ? (
-        <div className="rounded-[4px] border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-3 py-2 text-[12.5px]">
+        <div className="rounded-lg border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-3 py-2 text-[12.5px]">
           Some directory features are off until the directory SQL runs — see the setup steps above, then{" "}
           <Link href="/import/directory" className="font-medium underline underline-offset-2">
             import the workbook
@@ -410,7 +410,7 @@ export function Discover({
       ) : null}
 
       {load.phase === "failed" ? (
-        <div className="rounded-[4px] border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-3 py-2 text-[12.5px]">
+        <div className="rounded-lg border border-[var(--warning)]/40 bg-[var(--warning-soft)] px-3 py-2 text-[12.5px]">
           The directory index could not be loaded ({load.error}).{" "}
           <button type="button" onClick={() => reloadDirectory(overview.version)} className="font-medium underline underline-offset-2">
             Try again
@@ -468,7 +468,7 @@ export function Discover({
               <select
                 value={results.sort}
                 onChange={(e) => navigate({ ...filters, sort: e.target.value as SortKey })}
-                className="h-8 rounded-[4px] border border-input bg-card px-2 text-[12.5px] text-foreground outline-none"
+                className="h-8 rounded-lg border border-input bg-card px-2 text-[12.5px] text-foreground outline-none"
                 aria-label="Sort"
               >
                 {sorts.map((s) => (
@@ -496,7 +496,7 @@ export function Discover({
               )}
             </span>
             <div className="ml-auto flex flex-wrap items-center gap-1.5">
-              <div className="inline-flex h-8 overflow-hidden rounded-[4px] border bg-card" role="group" aria-label="Layout">
+              <div className="inline-flex h-8 overflow-hidden rounded-lg border bg-card" role="group" aria-label="Layout">
                 {(
                   [
                     ["cards", List, "List"],
@@ -570,7 +570,7 @@ export function Discover({
               <LedgerSkeleton label={loading} />
             )
           ) : shown.rows.length === 0 ? (
-            <div className="sheen rounded-[4px] border bg-card px-4 py-8 text-center">
+            <div className="sheen rounded-lg border bg-card px-4 py-8 text-center">
               <p className="text-[13px]">
                 No firm in the directory matches all of that
                 {relax.length ? " — the nearest cut is one filter away." : chips.length ? "." : " — try fewer words."}
@@ -635,7 +635,7 @@ export function Discover({
             </button>
           </div>
           {lushaOpen ? (
-            <div className={cn(POP, "rounded-[4px] border bg-card p-3")}>
+            <div className={cn(POP, "rounded-lg border bg-card p-3")}>
               <DashboardSearch lushaReady={lushaReady} adminReady={adminReady} />
             </div>
           ) : null}
@@ -656,7 +656,7 @@ export function Discover({
       />
 
       {notice ? (
-        <div className={cn(POP, "fixed bottom-20 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-[4px] border bg-popover px-3 py-2 text-[12.5px] shadow-[var(--shadow-pop)] max-lg:bottom-[calc(var(--mobile-tabs)+1rem)]")}>
+        <div className={cn(POP, "fixed bottom-20 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-lg border bg-popover px-3 py-2 text-[12.5px] shadow-[var(--shadow-pop)] max-lg:bottom-[calc(var(--mobile-tabs)+1rem)]")}>
           {notice}
           <button type="button" onClick={() => setNotice(null)} className="text-muted-foreground hover:text-foreground" aria-label="Dismiss">
             <X className="h-3.5 w-3.5" />

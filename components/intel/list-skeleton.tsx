@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 // figures drop in.
 
 function Bone({ className }: { className: string }) {
-  return <Skeleton className={`rounded-[3px] bg-muted/70 ${className}`} />;
+  return <Skeleton className={`rounded-md bg-muted/70 ${className}`} />;
 }
 
 function Rows({ rows, columns }: { rows: number; columns: number }) {
@@ -26,7 +26,7 @@ function Rows({ rows, columns }: { rows: number; columns: number }) {
 
 function Panel({ rows, columns, title = true }: { rows: number; columns: number; title?: boolean }) {
   return (
-    <div className="rounded-[4px] border bg-card">
+    <div className="rounded-lg border bg-card">
       {title ? (
         <div className="border-b px-3 py-2.5">
           <Bone className="h-2.5 w-28" />
@@ -82,9 +82,9 @@ export function ListSkeleton({
         </div>
       ) : null}
       {stats > 0 ? (
-        <div className="stat-strip grid rounded-[4px] border bg-card">
+        <div className="stat-strip grid gap-3">
           {Array.from({ length: stats }, (_, i) => (
-            <div key={i} className="space-y-2 border-l px-3 py-2.5 first:border-l-0">
+            <div key={i} className="space-y-2.5 rounded-xl border bg-card px-4 py-3.5">
               <Bone className="h-2.5 w-20" />
               <Bone className="h-5 w-16" />
               <Bone className="h-2.5 w-24" />

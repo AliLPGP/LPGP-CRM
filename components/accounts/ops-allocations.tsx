@@ -76,7 +76,7 @@ export function OpsAllocations({
       {/* Money */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {[...totals.entries()].map(([currency, t]) => (
-          <div key={currency} className="rounded-2xl border bg-card p-4">
+          <div key={currency} className="rounded-xl border bg-card p-4">
             <p className="eyebrow">Contracted ({currency})</p>
             <p className="mt-2 text-2xl font-semibold tabular tracking-tight">
               {formatOpsMoney(t.contracted, currency)}

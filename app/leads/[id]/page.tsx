@@ -31,13 +31,13 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
   const canEdit = Boolean(isAdmin || (user && lead.owner_id === user.id));
 
   return (
-    <div className="mx-auto max-w-5xl px-4 md:px-6 py-8 space-y-6">
+    <div className="mx-auto max-w-5xl px-4 md:px-6 lg:px-8 py-8 space-y-6">
       <Link href="/leads" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-4 w-4" /> Leads
       </Link>
 
       {/* Header */}
-      <div className="sheen rounded-2xl border bg-card p-6">
+      <div className="sheen rounded-xl border bg-card p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="eyebrow">Lead</p>
@@ -91,7 +91,7 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
       </div>
 
       {opsDeals.length ? (
-        <section className="sheen rounded-2xl border bg-card p-5">
+        <section className="sheen rounded-xl border bg-card p-5">
           <h2 className="mb-1 font-semibold">In the ops panel</h2>
           <p className="mb-4 text-sm text-muted-foreground">
             This company already has signed business in the tracker.
@@ -101,11 +101,11 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
       ) : null}
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <section className="sheen lg:col-span-2 rounded-2xl border bg-card p-5">
+        <section className="sheen lg:col-span-2 rounded-xl border bg-card p-5">
           <h2 className="font-semibold mb-4">Lead details</h2>
           <LeadEditor lead={lead} canEdit={canEdit} isAdmin={isAdmin} profiles={profiles} />
         </section>
-        <section className="sheen rounded-2xl border bg-card p-5 h-fit">
+        <section className="sheen rounded-xl border bg-card p-5 h-fit">
           <h2 className="font-semibold mb-3">Notes</h2>
           <NotesPanel entityType="lead" entityId={lead.id} notes={notes} />
         </section>

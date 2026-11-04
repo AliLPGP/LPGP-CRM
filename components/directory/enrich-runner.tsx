@@ -76,7 +76,7 @@ export function EnrichRunner({ gps, lushaReady, aiReady }: { gps: EnrichFirm[]; 
   const withPortfolio = gps.filter((g) => g.portcos > 0).length;
 
   return (
-    <section className="sheen rounded-2xl border bg-card">
+    <section className="sheen rounded-xl border bg-card">
       <div className="border-b px-5 py-4">
         <p className="eyebrow">Enrich the GP book</p>
         <h2 className="display mt-0.5 text-lg">Operating partners and portfolio companies</h2>

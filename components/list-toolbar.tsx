@@ -40,7 +40,7 @@ export function ListToolbar({
             onChange={(e) => search.onChange(e.target.value)}
             placeholder={search.placeholder}
             aria-label={search.placeholder}
-            className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-2 text-[12.5px] outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring"
+            className="h-8 w-full rounded-lg border border-input bg-card pl-8 pr-2 text-[12.5px] outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring"
           />
         </label>
         {/* On a phone the facets and the sort are one row that scrolls sideways; wider, they sit in the bar as before. */}
@@ -76,7 +76,7 @@ export function SortSelect<T extends string>({
         value={value}
         onChange={(e) => onChange(e.target.value as T)}
         aria-label={label}
-        className="h-8 appearance-none rounded-[4px] border bg-card pl-2.5 pr-7 text-[12.5px] text-muted-foreground outline-none transition-colors hover:bg-accent focus-visible:border-ring"
+        className="h-8 appearance-none rounded-lg border bg-card pl-2.5 pr-7 text-[12.5px] text-muted-foreground outline-none transition-colors hover:bg-accent focus-visible:border-ring"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -104,7 +104,7 @@ export function ShowMore({
   if (remaining <= 0) return null;
   return (
     <div className={cn("flex items-center gap-2 px-1", className)}>
-      <button type="button" onClick={onClick} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] transition-colors hover:bg-accent max-md:min-h-10">
+      <button type="button" onClick={onClick} className="rounded-lg border bg-card px-2.5 py-1 text-[12px] transition-colors hover:bg-accent max-md:min-h-10">
         Show {Math.min(step, remaining).toLocaleString("en-US")} more
       </button>
       <span className="text-[12px] text-muted-foreground">{remaining.toLocaleString("en-US")} not shown</span>

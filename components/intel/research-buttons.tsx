@@ -6,7 +6,7 @@ import { Loader2, Search, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /** The desk's button shape, so a research button sits level with the toolbar's. */
-const DESK = "h-8 rounded-[4px] px-2.5 text-[12px] font-medium shadow-none";
+const DESK = "h-8 rounded-lg px-2.5 text-[12px] font-medium shadow-none";
 
 // The buttons that run the in-app research jobs. Each posts to a route that
 // searches the web on the server with the app's own Anthropic key and saves

@@ -65,7 +65,7 @@ export default async function LenderPage({ params, searchParams }: { params: Pro
           <Src url={lender.source_url} name={`${lender.latest_form ?? "Filing"} on EDGAR`} className="text-[12px]" />
           <form action={base} className="flex items-center gap-1.5">
             {period && period !== lender.latest_period ? <input type="hidden" name="as_of" value={period} /> : null}
-            <input id="book-search" name="q" defaultValue={q ?? ""} placeholder="Borrower or instrument…" className="h-8 w-52 rounded-[4px] border bg-card px-2.5 text-[12px] outline-none focus:border-foreground" />
+            <input id="book-search" name="q" defaultValue={q ?? ""} placeholder="Borrower or instrument…" className="h-8 w-52 rounded-lg border bg-card px-2.5 text-[12px] outline-none focus:border-foreground" />
           </form>
         </>
       }

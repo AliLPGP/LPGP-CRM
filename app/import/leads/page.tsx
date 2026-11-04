@@ -13,7 +13,7 @@ export default async function ImportLeadsPage() {
   const [user, profiles] = await Promise.all([getSessionUser(), listProfiles()]);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6 px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-4xl space-y-6 px-4 py-8 md:px-6 lg:px-8">
       <PageHeader
         eyebrow="Sales CRM"
         title="Import leads"

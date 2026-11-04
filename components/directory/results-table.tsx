@@ -21,7 +21,7 @@ import type { ResultRow } from "./use-results";
 const PAGE = 50;
 
 /** The one "show more" button every desk list ends with. */
-const MORE = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent max-md:min-h-10";
+const MORE = "rounded-lg border bg-card px-2.5 py-1 text-[12px] hover:bg-accent max-md:min-h-10";
 
 /** The menu's open panel: the header's own fade-and-rise, off under reduced motion. */
 const POP = "animate-[topnav-in_160ms_ease-out] motion-reduce:animate-none";
@@ -254,8 +254,8 @@ export function ColumnsButton({ mode }: { mode: "all" | "keywords" | "similar" }
     const on = columnOn(c, choice, classes);
     const label = c.key === "match" ? (mode === "similar" ? "Match" : "Fit") : c.label;
     return (
-      <button key={c.key} type="button" onClick={() => setOn(c.key, !on)} aria-pressed={on} className="flex w-full items-center gap-2 rounded-[3px] px-2 py-1 text-left text-[12.5px] hover:bg-accent">
-        <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border", on ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
+      <button key={c.key} type="button" onClick={() => setOn(c.key, !on)} aria-pressed={on} className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-left text-[12.5px] hover:bg-accent">
+        <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[4px] border", on ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
           {on ? <Check className="h-2.5 w-2.5" /> : null}
         </span>
         <span className="flex-1">{label}</span>
@@ -270,14 +270,14 @@ export function ColumnsButton({ mode }: { mode: "all" | "keywords" | "similar" }
         type="button"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
-        className="inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+        className="inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
       >
         <Columns3 className="h-3.5 w-3.5" /> Columns
       </button>
       {open ? (
         <>
           <button className="fixed inset-0 z-30 cursor-default" aria-label="Close" onClick={() => setOpen(false)} />
-          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 max-h-[70vh] w-64 overflow-y-auto rounded-[4px] border bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-pop)]")}>
+          <div className={cn(POP, "absolute right-0 top-[calc(100%+4px)] z-40 max-h-[70vh] w-64 overflow-y-auto rounded-lg border bg-popover p-1.5 text-popover-foreground shadow-[var(--shadow-pop)]")}>
             <p className="desk-label px-2 pb-1 pt-1">Show columns</p>
             {fixed.map(row)}
             <p className="desk-label mt-2 px-2 pb-1 pt-1">Per asset class</p>
@@ -285,7 +285,7 @@ export function ColumnsButton({ mode }: { mode: "all" | "keywords" | "similar" }
               What a manager&apos;s fund names state. Raised is the sum of stated fund sizes as filed, in USD — never an estimate. On by default for a filtered class.
             </p>
             {perClass.map(row)}
-            <button type="button" onClick={() => onChange(NO_CHOICE)} className="mt-1 w-full rounded-[3px] px-2 py-1 text-left text-[12px] text-muted-foreground hover:bg-accent hover:text-foreground">
+            <button type="button" onClick={() => onChange(NO_CHOICE)} className="mt-1 w-full rounded-md px-2 py-1 text-left text-[12px] text-muted-foreground hover:bg-accent hover:text-foreground">
               Reset to default
             </button>
           </div>
@@ -352,7 +352,7 @@ function NamesCell({ names, tags }: { names: string[]; tags?: boolean }) {
 }
 
 /** A quiet icon button at the row's end; shown on hover, always reachable by keyboard. */
-const ROW_ICON = "grid h-6 w-6 place-items-center rounded-[3px] text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100";
+const ROW_ICON = "grid h-6 w-6 place-items-center rounded-md text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100";
 
 /**
  * Discover's results as a desk ledger. Fifty at a time; it's keyed by the
@@ -557,7 +557,7 @@ export function ResultsTable({
 
   return (
     <div className="space-y-2">
-      <div className="sheen rounded-[4px] border bg-card max-md:overflow-x-auto">
+      <div className="sheen rounded-lg border bg-card max-md:overflow-x-auto">
         {/* lead-2: on a phone the firm column (the second, after the checkbox) is the one held at the left edge. */}
         <table className="desk-table lead-2">
           <thead>

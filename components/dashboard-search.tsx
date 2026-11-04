@@ -151,7 +151,7 @@ export function DashboardSearch({
   const hasDbResults = companies.length > 0 || contacts.length > 0;
 
   return (
-    <div className="sheen rounded-2xl border bg-card p-5 md:p-6">
+    <div className="sheen rounded-xl border bg-card p-5 md:p-6">
       <div className="flex items-center gap-2">
         <Search className="h-4 w-4 text-muted-foreground" />
         <span className="eyebrow">Search the database</span>

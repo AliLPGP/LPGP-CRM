@@ -3,7 +3,7 @@ import { HeaderSkeleton, StatRowSkeleton, ToolbarSkeleton } from "@/components/s
 
 export default function Loading() {
   return (
-    <div className="mx-auto max-w-[110rem] space-y-6 px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-[110rem] space-y-6 px-4 py-8 md:px-6 lg:px-8">
       <HeaderSkeleton />
       <StatRowSkeleton count={5} />
       <div className="space-y-3">

@@ -35,7 +35,7 @@ export default function CommandCentre() {
   return (
     <Suspense
       fallback={
-        <div className="mx-auto max-w-[95rem] space-y-6 px-4 py-8 md:px-6" aria-busy="true" aria-label="Loading">
+        <div className="mx-auto max-w-[95rem] space-y-6 px-4 py-8 md:px-6 lg:px-8" aria-busy="true" aria-label="Loading">
           <HeaderSkeleton actions={2} />
           <StatRowSkeleton count={5} />
           <div className="grid gap-4 lg:grid-cols-2">
@@ -70,7 +70,7 @@ async function CommandCentreBody() {
   const first = user?.name ? user.name.split(" ")[0] : null;
 
   return (
-    <div className="mx-auto max-w-[95rem] space-y-6 px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-[95rem] space-y-6 px-4 py-8 md:px-6 lg:px-8">
       <PageHeader
         eyebrow="Sales CRM"
         title={first ? `${greeting(now)}, ${first}` : greeting(now)}

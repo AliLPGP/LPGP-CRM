@@ -114,14 +114,14 @@ export function DiscoverOverview({
               key={book}
               type="button"
               onClick={() => apply({ books: [book] })}
-              className="sheen group flex flex-col rounded-[4px] border bg-card p-4 text-left transition-colors hover:border-foreground/30"
+              className="sheen group flex flex-col rounded-lg border bg-card p-4 text-left transition-colors hover:border-foreground/30"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="desk-label">{CATEGORIES[book].name}</p>
                   <p className="figure mt-2 text-[30px] leading-none">{count.toLocaleString("en-US")}</p>
                 </div>
-                <span className="figure rounded-[3px] border px-1.5 py-0.5 text-[11px] text-muted-foreground">{Math.round(share * 100)}%</span>
+                <span className="figure rounded-md border px-1.5 py-0.5 text-[11px] text-muted-foreground">{Math.round(share * 100)}%</span>
               </div>
               <p className="mt-2 text-[12px] leading-snug text-muted-foreground">{BOOK_LINE[book]}</p>
               <div className="mt-3 space-y-1">
@@ -194,7 +194,7 @@ export function DiscoverOverview({
                 onClick={() => setRole(r)}
                 aria-pressed={role === r}
                 className={cn(
-                  "rounded-[4px] border px-2 py-0.5 text-[12px] transition-colors",
+                  "rounded-lg border px-2 py-0.5 text-[12px] transition-colors",
                   role === r ? "border-foreground bg-foreground text-background" : "bg-card text-muted-foreground hover:text-foreground",
                 )}
               >
@@ -310,12 +310,12 @@ export function DiscoverOverview({
       <div className="grid gap-4 lg:grid-cols-3">
         <Box title="Research on file · general partners" action={<BoxLink href="/contacts">Open contacts</BoxLink>}>
           <div className="grid grid-cols-2 gap-3">
-            <button type="button" onClick={() => apply({ books: ["GP"], hasOperators: true })} className="rounded-[4px] border p-3 text-left hover:bg-accent/40">
+            <button type="button" onClick={() => apply({ books: ["GP"], hasOperators: true })} className="rounded-lg border p-3 text-left hover:bg-accent/40">
               <Briefcase className="h-4 w-4 text-[var(--brass)]" />
               <p className="figure mt-2 text-[22px]">{insights.operators.toLocaleString("en-US")}</p>
               <p className="text-[11.5px] text-muted-foreground">operating partners at GPs</p>
             </button>
-            <button type="button" onClick={() => apply({ books: ["GP"], hasPortcos: true })} className="rounded-[4px] border p-3 text-left hover:bg-accent/40">
+            <button type="button" onClick={() => apply({ books: ["GP"], hasPortcos: true })} className="rounded-lg border p-3 text-left hover:bg-accent/40">
               <Sparkles className="h-4 w-4 text-[var(--brass)]" />
               <p className="figure mt-2 text-[22px]">{insights.portcos.toLocaleString("en-US")}</p>
               <p className="text-[11.5px] text-muted-foreground">portfolio companies</p>

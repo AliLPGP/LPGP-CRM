@@ -3,9 +3,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 /** An account page: back link, header card, the tab bar, then the first tab's floor. */
 export default function Loading() {
   return (
-    <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 md:px-6 lg:px-8">
       <Skeleton className="h-4 w-20" />
-      <div className="rounded-2xl border bg-card p-5 md:p-6">
+      <div className="rounded-xl border bg-card p-5 md:p-6">
         <div className="flex items-start gap-4">
           <Skeleton className="h-14 w-14 rounded-xl" />
           <div className="flex-1 space-y-2.5">

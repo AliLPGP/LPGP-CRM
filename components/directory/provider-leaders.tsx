@@ -59,7 +59,7 @@ export function ProviderLeaders({ dir, filters }: { dir: Directory; filters: Dir
   if (filters.clientTypes.length) params.set("type", filters.clientTypes.join(","));
 
   return (
-    <section className="sheen rounded-[4px] border bg-card">
+    <section className="sheen rounded-lg border bg-card">
       <header className="flex flex-wrap items-center gap-2 border-b px-3 py-2">
         <h3 className="desk-label text-foreground">
           {ROLE_PLURAL[role]} named on Form ADV by {league.covered.toLocaleString("en-US")} {scopeLabel} managers

@@ -92,7 +92,7 @@ export function DirectorySetupPanel({
 
   if (!isAdmin) {
     return (
-      <div className="flex items-start gap-3 rounded-2xl border bg-card p-4 text-sm">
+      <div className="flex items-start gap-3 rounded-xl border bg-card p-4 text-sm">
         <Database className="mt-0.5 h-4 w-4 shrink-0 text-[var(--brass)]" />
         <p className="text-muted-foreground">
           The intelligence database is still being set up. An admin needs to run the directory SQL and import the
@@ -112,7 +112,7 @@ export function DirectorySetupPanel({
       : "Set up the intelligence database";
 
   return (
-    <section className="sheen overflow-hidden rounded-2xl border bg-card">
+    <section className="sheen overflow-hidden rounded-xl border bg-card">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4 md:px-6">
         <div>
           <p className="eyebrow">Setup</p>

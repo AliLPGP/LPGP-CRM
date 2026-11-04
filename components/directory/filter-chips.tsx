@@ -213,7 +213,7 @@ export function FilterChips({
   return (
     <div className="flex flex-wrap items-center gap-1.5 text-[12px]">
       {chips.map((c) => (
-        <span key={c.key} className="inline-flex max-w-full items-center gap-1 whitespace-nowrap rounded-[4px] border bg-card py-0.5 pl-2 pr-1">
+        <span key={c.key} className="inline-flex max-w-full items-center gap-1 whitespace-nowrap rounded-lg border bg-card py-0.5 pl-2 pr-1">
           <span className="text-muted-foreground">{c.group}</span>
           <span className="truncate">{c.label}</span>
           <button

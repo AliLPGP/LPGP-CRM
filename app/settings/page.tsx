@@ -54,11 +54,11 @@ export default async function SettingsPage() {
   const ops = isOpsConfigured() ? await pingOps() : null;
 
   return (
-    <div className="mx-auto max-w-3xl px-4 md:px-6 py-8 space-y-8">
+    <div className="mx-auto max-w-3xl px-4 md:px-6 lg:px-8 py-8 space-y-8">
       <PageHeader eyebrow="Sales CRM" title="Settings" description="Appearance, connections and data setup." />
 
       {/* Appearance */}
-      <section className="sheen rounded-2xl border bg-card p-5">
+      <section className="sheen rounded-xl border bg-card p-5">
         <h2 className="font-semibold">Appearance</h2>
         <p className="text-sm text-muted-foreground mt-0.5 mb-3">
           Switch between light and dark. Your choice is remembered on this device.
@@ -67,7 +67,7 @@ export default async function SettingsPage() {
       </section>
 
       {/* Connections */}
-      <section className="sheen rounded-2xl border bg-card p-5">
+      <section className="sheen rounded-xl border bg-card p-5">
         <h2 className="font-semibold">Connections</h2>
         <div className="mt-2 divide-y">
           <StatusRow
@@ -92,7 +92,7 @@ export default async function SettingsPage() {
       </section>
 
       {/* Ops panel */}
-      <section className="sheen rounded-2xl border bg-card p-5">
+      <section className="sheen rounded-xl border bg-card p-5">
         <div className="flex items-center gap-2">
           <span className="grid h-7 w-7 place-items-center rounded-lg bg-[var(--ops-soft)] text-[var(--ops)]">
             <Radar className="h-3.5 w-3.5" />
@@ -171,7 +171,7 @@ export default async function SettingsPage() {
       </section>
 
       {/* Database setup */}
-      <section className="sheen rounded-2xl border bg-card p-5">
+      <section className="sheen rounded-xl border bg-card p-5">
         <h2 className="font-semibold">Database</h2>
         <p className="text-sm text-muted-foreground mt-0.5">
           Run the schema once in the Supabase SQL editor to create the tables this CRM uses.

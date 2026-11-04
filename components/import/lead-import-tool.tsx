@@ -161,7 +161,7 @@ export function LeadImportTool({
   return (
     <div className="space-y-5">
       {/* Step 1 — file */}
-      <section className="rounded-2xl border bg-card p-5">
+      <section className="rounded-xl border bg-card p-5">
         <StepHeading n={1} title="Choose a spreadsheet" done={Boolean(sheet)} />
         {!sheet ? (
           <div className="mt-4">
@@ -224,7 +224,7 @@ export function LeadImportTool({
       {sheet ? (
         <>
           {/* Step 2 — mapping */}
-          <section className="rounded-2xl border bg-card p-5">
+          <section className="rounded-xl border bg-card p-5">
             <StepHeading n={2} title="Match your columns" done={hasCompany} />
             <p className="mt-1 text-sm text-muted-foreground">
               We&apos;ve guessed from your headers. Change anything that looks wrong — set a column
@@ -283,7 +283,7 @@ export function LeadImportTool({
           </section>
 
           {/* Step 3 — preview & options */}
-          <section className="rounded-2xl border bg-card p-5">
+          <section className="rounded-xl border bg-card p-5">
             <StepHeading n={3} title="Check and import" />
 
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
@@ -478,8 +478,8 @@ function ImportSummaryCard({
 }) {
   return (
     <div className="space-y-4">
-      <section className="rounded-2xl border bg-card p-6 text-center">
-        <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-[var(--success-soft)] text-[var(--success)]">
+      <section className="rounded-xl border bg-card p-6 text-center">
+        <span className="mx-auto grid h-14 w-14 place-items-center rounded-xl bg-[var(--success-soft)] text-[var(--success)]">
           <BadgeCheck className="h-7 w-7" />
         </span>
         <h2 className="mt-4 text-xl font-semibold">
@@ -504,7 +504,7 @@ function ImportSummaryCard({
       </section>
 
       {summary.opsMatches.length ? (
-        <section className="rounded-2xl border border-[var(--ops)]/40 bg-[var(--ops-soft)]/60 p-5">
+        <section className="rounded-xl border border-[var(--ops)]/40 bg-[var(--ops-soft)]/60 p-5">
           <div className="flex items-center gap-2">
             <Radar className="h-4 w-4 text-[var(--ops)]" />
             <h3 className="font-semibold">
@@ -532,7 +532,7 @@ function ImportSummaryCard({
       ) : null}
 
       {summary.errors.length ? (
-        <section className="rounded-2xl border border-destructive/40 bg-destructive/5 p-4">
+        <section className="rounded-xl border border-destructive/40 bg-destructive/5 p-4">
           <p className="flex items-center gap-2 text-sm font-semibold text-destructive">
             <TriangleAlert className="h-4 w-4" /> Some rows had problems
           </p>

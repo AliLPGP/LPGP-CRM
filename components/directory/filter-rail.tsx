@@ -35,7 +35,7 @@ import type { Directory } from "./use-directory";
 /** A menu's open panel: the header's own fade-and-rise, off under reduced motion. */
 const POP = "animate-[topnav-in_160ms_ease-out] motion-reduce:animate-none";
 
-const INPUT = "h-8 w-full rounded-[4px] border border-input bg-background px-2 text-[12.5px] outline-none focus-visible:border-ring";
+const INPUT = "h-8 w-full rounded-lg border border-input bg-background px-2 text-[12.5px] outline-none focus-visible:border-ring";
 
 const opt = (key: string, label: string, count: number): FacetOption => ({ key, label, count });
 
@@ -227,9 +227,9 @@ function Option({
       onClick={onClick}
       title={title}
       aria-pressed={on}
-      className={cn("flex w-full items-center gap-2 rounded-[3px] px-1.5 py-1 text-left text-[12.5px] hover:bg-accent max-md:min-h-10 max-md:text-[14px]", count === 0 && !on && "opacity-50")}
+      className={cn("flex w-full items-center gap-2 rounded-md px-1.5 py-1 text-left text-[12.5px] hover:bg-accent max-md:min-h-10 max-md:text-[14px]", count === 0 && !on && "opacity-50")}
     >
-      <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border max-md:h-4 max-md:w-4", on ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
+      <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[4px] border max-md:h-4 max-md:w-4", on ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
         {on ? <Check className="h-2.5 w-2.5" /> : null}
       </span>
       <span className="min-w-0 flex-1 truncate">{label}</span>
@@ -345,7 +345,7 @@ function ProviderPicker({ dir, onAdd }: { dir: Directory; onAdd: (key: string, r
               onAdd(b.key, role || null);
               setQ("");
             }}
-            className="flex w-full items-center gap-2 rounded-[3px] px-1.5 py-1 text-left text-[12.5px] hover:bg-accent"
+            className="flex w-full items-center gap-2 rounded-md px-1.5 py-1 text-left text-[12.5px] hover:bg-accent"
           >
             <Plus className="h-3.5 w-3.5 text-muted-foreground" />
             <span className="min-w-0 flex-1 truncate">{b.name}</span>
@@ -543,7 +543,7 @@ export function MoreFilters({
               {filters.providers.length ? (
                 <div className="mb-2 flex flex-wrap gap-1">
                   {filters.providers.map((p) => (
-                    <span key={`${p.key}:${p.role ?? ""}`} className="inline-flex items-center gap-1 rounded-[4px] border bg-card py-0.5 pl-2 pr-1 text-[12px]">
+                    <span key={`${p.key}:${p.role ?? ""}`} className="inline-flex items-center gap-1 rounded-lg border bg-card py-0.5 pl-2 pr-1 text-[12px]">
                       {dir.brandByKey.get(p.key)?.name ?? p.key}
                       {p.role ? <span className="text-muted-foreground">· {ROLE_LABEL[p.role].toLowerCase()}</span> : null}
                       <button
@@ -639,7 +639,7 @@ export function MoreFilters({
         <button
           type="button"
           onClick={() => set(MORE_BLANK)}
-          className="rounded-[4px] px-2 py-1 text-[12px] text-muted-foreground hover:text-foreground max-md:h-11 max-md:px-3 max-md:text-[13px]"
+          className="rounded-lg px-2 py-1 text-[12px] text-muted-foreground hover:text-foreground max-md:h-11 max-md:px-3 max-md:text-[13px]"
           disabled={!count}
         >
           Clear these
@@ -647,7 +647,7 @@ export function MoreFilters({
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="rounded-[4px] bg-primary px-3 py-1 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover max-md:h-11 max-md:flex-1 max-md:text-[14px]"
+          className="rounded-lg bg-primary px-3 py-1 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover max-md:h-11 max-md:flex-1 max-md:text-[14px]"
         >
           Done
         </button>
@@ -667,13 +667,13 @@ export function MoreFilters({
         aria-expanded={open}
         aria-haspopup="dialog"
         className={cn(
-          "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] transition-colors hover:bg-accent",
+          "inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12.5px] transition-colors hover:bg-accent",
           count ? "border-foreground/60 text-foreground" : "text-muted-foreground",
         )}
       >
         <SlidersHorizontal className="h-3.5 w-3.5" />
         More filters
-        {count ? <span className="figure rounded-[3px] bg-primary px-1 text-[10.5px] leading-4 text-primary-foreground">{count}</span> : null}
+        {count ? <span className="figure rounded-md bg-primary px-1 text-[10.5px] leading-4 text-primary-foreground">{count}</span> : null}
         <ChevronDown className={cn("h-3 w-3 opacity-60 transition-transform", open && "rotate-180")} />
       </button>
       {open ? (
@@ -693,7 +693,7 @@ export function MoreFilters({
           <div
             role="dialog"
             aria-label="More filters"
-            className={cn(POP, "absolute top-[calc(100%+4px)] z-40 rounded-[4px] border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]", alignRight ? "right-0" : "left-0")}
+            className={cn(POP, "absolute top-[calc(100%+4px)] z-40 rounded-lg border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]", alignRight ? "right-0" : "left-0")}
             style={{ width: `min(${PANEL_WIDTH}px, calc(100vw - 32px))` }}
           >
             {panel}

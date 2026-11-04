@@ -755,23 +755,23 @@
    neutral token is re-pointed inside it, so a card, an input or a button
    nested in the stand reads correctly without knowing where it is. */
 .stand {
-  --background: #000000;
+  --background: #0e0e11;
   --foreground: #f2f2f2;
-  --card: #0b0b0c;
+  --card: #16161a;
   --card-foreground: #f2f2f2;
-  --popover: #111113;
+  --popover: #16161a;
   --popover-foreground: #f2f2f2;
-  --secondary: #161618;
+  --secondary: #1b1b20;
   --secondary-foreground: #f2f2f2;
-  --muted: #141416;
-  --muted-foreground: #9a9a9f;
-  --border: #222326;
+  --muted: #18181c;
+  --muted-foreground: #a1a1aa;
+  --border: #26262c;
   --input: #333336;
   --primary: #1f3feb;
   --primary-foreground: #ffffff;
   --primary-hover: #3556f5;
   --primary-soft: rgba(31, 63, 235, 0.16);
-  --accent: #161618;
+  --accent: #1b1b20;
   --accent-foreground: #f2f2f2;
   --ring: #3556f5;
   --brand: #f2f2f2;
@@ -779,7 +779,7 @@
   --brand-2: #1f3feb;
   --brass: #6e84f3;
   --chart-bar: #1f3feb;
-  --chart-track: #1c1c1f;
+  --chart-track: #1d1d21;
   --hairline: rgba(255, 255, 255, 0.08);
   --hairline-strong: rgba(255, 255, 255, 0.18);
   --sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
@@ -789,8 +789,8 @@
   isolation: isolate;
   overflow: hidden;
   color: var(--foreground);
-  background-color: #000000;
-  box-shadow: inset 0 0 0 1px #222326;
+  background-color: #0e0e11;
+  box-shadow: inset 0 0 0 1px #1c1c21;
 }
 .stand::after {
   content: "";
@@ -820,7 +820,7 @@
   --shadow-card: none;
   --shadow-pop: 0 12px 32px -12px rgba(0, 0, 0, 0.28);
   --sheen: linear-gradient(180deg, transparent, transparent);
-  font-size: 13px;
+  font-size: 13.5px;
 }
 .dark .desk {
   --shadow-pop: 0 16px 40px -14px rgba(0, 0, 0, 0.7);
@@ -837,9 +837,9 @@
 /* Small caps label: the column header, the section eyebrow, the key in a
    key-value row. */
 .desk-label {
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted-foreground);
 }
@@ -848,23 +848,23 @@
 .desk-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12.5px;
+  font-size: 13.5px;
 }
 .desk-table th {
-  padding: 7px 10px;
+  padding: 11px 14px;
   text-align: left;
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted-foreground);
-  background: color-mix(in oklab, var(--muted) 55%, transparent);
+  background: transparent;
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 .desk-table td {
-  padding: 7px 10px;
-  border-bottom: 1px solid var(--border);
+  padding: 11px 14px;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
   vertical-align: middle;
   transition: background-color 120ms ease-out;
 }
@@ -886,7 +886,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  background: color-mix(in oklab, var(--muted) 55%, var(--card));
+  background: var(--card);
 }
 .desk-table .num {
   text-align: right;
@@ -954,8 +954,8 @@
 .desk-tab {
   position: relative;
   flex-shrink: 0;
-  padding: 9px 12px;
-  font-size: 12.5px;
+  padding: 11px 12px;
+  font-size: 13.5px;
   font-weight: 500;
   color: var(--muted-foreground);
   white-space: nowrap;
@@ -1047,18 +1047,18 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 1px 6px;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  font-size: 10.5px;
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: var(--secondary);
+  font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: 0.02em;
   color: var(--muted-foreground);
   white-space: nowrap;
 }
 .tag-strong {
   color: var(--foreground);
-  border-color: color-mix(in oklab, var(--foreground) 30%, var(--border));
+  background: var(--primary-soft);
 }
 
 /* Key / value rows in a profile's fact panel. */
@@ -1089,7 +1089,7 @@
 
 /* The stat strip: as many cells as fit at 150px; two columns on a phone (below). */
 .stat-strip {
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
 }
 
 /* A magnitude bar: the one blue, a quiet track. */
@@ -1477,18 +1477,13 @@ main > * {
     flex-shrink: 0;
   }
 
-  /* The stat strip in two columns, ruled between and beneath the first pair. */
+  /* The stat cards in two columns. */
   .stat-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
   .stat-strip > * {
     min-width: 0; /* a cell's desktop floor (min-w-[200px]) would overrun two columns */
-  }
-  .stat-strip > :nth-child(odd) {
-    border-left: 0;
-  }
-  .stat-strip > :nth-child(n + 3) {
-    border-top: 1px solid var(--border);
   }
 
   /* Crumbs keep their last two; an ellipsis stands for the rest. */

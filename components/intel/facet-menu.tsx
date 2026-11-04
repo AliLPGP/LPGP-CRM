@@ -19,8 +19,8 @@ export type FacetOption = { key: string; label: string; count: number };
 export type FacetGroup = { label: string; options: FacetOption[] };
 
 /** The sheet's own Done: full width and a thumb tall; the dropdown's is the 12px button. */
-const DONE = "rounded-[4px] bg-primary px-3 py-1 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover max-md:h-11 max-md:flex-1 max-md:text-[14px]";
-const CLEAR = "rounded-[4px] px-2 py-1 text-[12px] text-muted-foreground hover:text-foreground max-md:h-11 max-md:px-3 max-md:text-[13px]";
+const DONE = "rounded-lg bg-primary px-3 py-1 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover max-md:h-11 max-md:flex-1 max-md:text-[14px]";
+const CLEAR = "rounded-lg px-2 py-1 text-[12px] text-muted-foreground hover:text-foreground max-md:h-11 max-md:px-3 max-md:text-[13px]";
 
 export function FacetMenu({
   label,
@@ -91,7 +91,7 @@ export function FacetMenu({
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search"
-            className="h-8 w-full rounded-[4px] border border-input bg-background pl-7 pr-2 text-[12.5px] outline-none focus-visible:border-ring"
+            className="h-8 w-full rounded-lg border border-input bg-background pl-7 pr-2 text-[12.5px] outline-none focus-visible:border-ring"
           />
         </div>
       ) : null}
@@ -111,9 +111,9 @@ export function FacetMenu({
                     role="option"
                     aria-selected={checked}
                     onClick={() => toggle(o.key)}
-                    className="flex w-full items-center gap-2 rounded-[3px] px-2 py-1 text-left text-[12.5px] hover:bg-accent max-md:min-h-10 max-md:text-[14px]"
+                    className="flex w-full items-center gap-2 rounded-md px-2 py-1 text-left text-[12.5px] hover:bg-accent max-md:min-h-10 max-md:text-[14px]"
                   >
-                    <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[3px] border max-md:h-4 max-md:w-4", checked ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
+                    <span className={cn("grid h-3.5 w-3.5 shrink-0 place-items-center rounded-[4px] border max-md:h-4 max-md:w-4", checked ? "border-primary bg-primary text-primary-foreground" : "border-input")}>
                       {checked ? <Check className="h-2.5 w-2.5" /> : null}
                     </span>
                     <span className="min-w-0 flex-1 truncate">{o.label}</span>
@@ -144,12 +144,12 @@ export function FacetMenu({
         aria-expanded={open}
         aria-haspopup="listbox"
         className={cn(
-          "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] transition-colors hover:bg-accent",
+          "inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12.5px] transition-colors hover:bg-accent",
           on ? "border-foreground/60 text-foreground" : "text-muted-foreground",
         )}
       >
         {label}
-        {on ? <span className="figure rounded-[3px] bg-primary px-1 text-[10.5px] leading-4 text-primary-foreground">{selected.length}</span> : null}
+        {on ? <span className="figure rounded-md bg-primary px-1 text-[10.5px] leading-4 text-primary-foreground">{selected.length}</span> : null}
         <ChevronDown className={cn("h-3 w-3 opacity-60 transition-transform", open && "rotate-180")} />
       </button>
       {open ? (
@@ -166,7 +166,7 @@ export function FacetMenu({
             document.body,
           )
         ) : (
-          <div className="absolute left-0 top-[calc(100%+4px)] z-40 rounded-[4px] border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]" style={{ width }} role="listbox" aria-label={label}>
+          <div className="absolute left-0 top-[calc(100%+4px)] z-40 rounded-lg border bg-popover text-popover-foreground shadow-[var(--shadow-pop)]" style={{ width }} role="listbox" aria-label={label}>
             {panel}
           </div>
         )
@@ -181,7 +181,7 @@ export function FacetChips({ chips, onClearAll }: { chips: { key: string; label:
   return (
     <div className="flex flex-wrap items-center gap-1.5 text-[12px]">
       {chips.map((c) => (
-        <span key={c.key} className="inline-flex items-center gap-1 rounded-[4px] border bg-card py-0.5 pl-2 pr-1 max-md:py-1.5">
+        <span key={c.key} className="inline-flex items-center gap-1 rounded-lg border bg-card py-0.5 pl-2 pr-1 max-md:py-1.5">
           {c.label}
           <button type="button" onClick={c.remove} aria-label={`Remove ${c.label}`} className="rounded p-0.5 text-muted-foreground hover:text-foreground max-md:p-1.5">
             <X className="h-3 w-3" />

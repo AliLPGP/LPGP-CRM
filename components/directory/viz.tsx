@@ -25,7 +25,7 @@ export function Panel({
   bodyClassName?: string;
 }) {
   return (
-    <section className={cn("sheen flex min-w-0 flex-col overflow-hidden rounded-2xl border bg-card", className)}>
+    <section className={cn("sheen flex min-w-0 flex-col overflow-hidden rounded-xl border bg-card", className)}>
       <header className="flex items-start justify-between gap-3 px-5 pt-4 pb-3">
         <div className="min-w-0">
           {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}

@@ -221,7 +221,7 @@ function ContactCard({
   }
 
   return (
-    <li className="lift rounded-2xl border bg-card p-4">
+    <li className="lift rounded-xl border bg-card p-4">
       <div className="flex items-start gap-3">
         <span
           className={cn(

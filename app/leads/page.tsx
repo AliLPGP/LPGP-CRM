@@ -20,7 +20,7 @@ export default async function LeadsPage() {
   const now = new Date().getTime();
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 md:px-6 lg:px-8">
       <PageHeader
         eyebrow="Sales CRM"
         title="Leads"

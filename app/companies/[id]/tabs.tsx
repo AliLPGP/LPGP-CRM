@@ -39,9 +39,9 @@ import { Box, Empty, Src, Tag } from "@/components/intel/ui";
 
 /** What a tab looks like while its rows are on the way: one boxed ledger, quietly pulsing. */
 export function TabSkeleton({ rows = 8 }: { rows?: number }) {
-  const bone = "animate-pulse rounded-[3px] bg-muted/70";
+  const bone = "animate-pulse rounded-md bg-muted/70";
   return (
-    <div className="rounded-[4px] border bg-card" aria-busy="true" aria-label="Loading">
+    <div className="rounded-lg border bg-card" aria-busy="true" aria-label="Loading">
       <div className="border-b px-3 py-2.5">
         <div className={`${bone} h-2.5 w-28`} />
       </div>

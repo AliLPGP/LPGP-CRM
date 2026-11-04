@@ -122,7 +122,7 @@ export function AccountsBrowser({
           title="No accounts match these filters"
           description={`${accounts.length} sponsor accounts are on the book; none carry every filter you have set.`}
           action={
-            <button type="button" onClick={clearAll} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+            <button type="button" onClick={clearAll} className="rounded-lg border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
               Clear filters
             </button>
           }
@@ -152,7 +152,7 @@ function AccountCard({
 }) {
   const poc = account.primary_contact;
   return (
-    <Link href={`/accounts/${account.id}`} className="lift group flex flex-col rounded-2xl border bg-card p-4">
+    <Link href={`/accounts/${account.id}`} className="lift group flex flex-col rounded-xl border bg-card p-4">
       <div className="flex items-start gap-3">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent text-[13px] font-semibold text-accent-foreground">
           {initials(account.name)}

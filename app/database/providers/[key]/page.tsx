@@ -98,7 +98,7 @@ export default async function ProviderPage({ params }: { params: Promise<{ key: 
       description={`Named by ${clients.toLocaleString("en-US")} managers in their Form ADV Schedule D filings, across ${funds.toLocaleString("en-US")} private funds. Counts are distinct managers per brand, never filing rows.`}
       actions={
         brand.companyId ? (
-          <Link href={`/companies/${brand.companyId}`} className="inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12px] font-medium hover:bg-accent">
+          <Link href={`/companies/${brand.companyId}`} className="inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12px] font-medium hover:bg-accent">
             Directory profile <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         ) : null

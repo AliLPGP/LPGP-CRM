@@ -16,14 +16,14 @@ export const metadata = { title: "Import — LPGP Intelligence" };
 export default async function ImportPage() {
   const [user, last] = await Promise.all([getSessionUser(), getLastDirectoryImport()]);
   return (
-    <div className="mx-auto max-w-4xl px-4 md:px-6 py-8 space-y-10">
+    <div className="mx-auto max-w-4xl px-4 md:px-6 lg:px-8 py-8 space-y-10">
       <PageHeader
         eyebrow="Intelligence database"
         title="Import data"
         description="Bring your book into the CRM. Companies are created and de-duplicated automatically; re-uploading updates what's already there instead of duplicating it."
       />
 
-      <section className="sheen flex flex-col gap-4 rounded-2xl border bg-card p-5 sm:flex-row sm:items-center">
+      <section className="sheen flex flex-col gap-4 rounded-xl border bg-card p-5 sm:flex-row sm:items-center">
         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent text-accent-foreground">
           <Database className="h-5 w-5" />
         </span>

@@ -16,10 +16,10 @@ import { cn, formatUsd } from "@/lib/utils";
 // needs the browser.
 
 /** The one "Show N more" button style every desk screen uses. */
-export const MORE_BUTTON = "rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent disabled:opacity-50";
+export const MORE_BUTTON = "rounded-lg border bg-card px-2.5 py-1 text-[12px] hover:bg-accent disabled:opacity-50";
 
 /** A desk action button, level with the facet menus (h-8). */
-export const DESK_BUTTON = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12px] hover:bg-accent disabled:pointer-events-none disabled:opacity-50";
+export const DESK_BUTTON = "inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12px] hover:bg-accent disabled:pointer-events-none disabled:opacity-50";
 
 /**
  * A tab's content. It fades in over 160 ms (nothing else on a profile is
@@ -114,7 +114,7 @@ export function Overview({ company }: { company: Company }) {
         {lines.length ? (
           <div>
             <div className="desk-label">Service lines</div>
-            <ul className="mt-1.5 divide-y rounded-[4px] border">
+            <ul className="mt-1.5 divide-y rounded-lg border">
               {lines.map((l) => (
                 <li key={l.name} className="px-3 py-2">
                   <p className="text-[12.5px] font-medium">{l.name}</p>
@@ -407,7 +407,7 @@ export function SimilarFirms({ hits, companyId }: { hits: SimilarHit[]; companyI
                 <span className="block truncate text-[12.5px] font-medium">{h.record.name}</span>
                 {h.reasons[0] ? <span className="block truncate text-[11px] text-muted-foreground">{h.reasons[0]}</span> : null}
               </span>
-              <CategoryBadge category={h.record.category} className="rounded-[3px] px-1.5 py-0 text-[10px]" />
+              <CategoryBadge category={h.record.category} className="rounded-md px-1.5 py-0 text-[10px]" />
               <span className="figure w-6 text-right text-[11px] text-muted-foreground">{h.score}</span>
             </Link>
           </li>

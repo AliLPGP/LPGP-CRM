@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 // where the bones were.
 export default function Loading() {
   return (
-    <div className="mx-auto max-w-[1480px] space-y-4 px-4 py-5 md:px-6" aria-busy="true" aria-label="Loading">
+    <div className="mx-auto max-w-[1480px] space-y-4 px-4 py-5 md:px-6 lg:px-8" aria-busy="true" aria-label="Loading">
       <Skeleton className="h-3 w-40" />
       <div className="space-y-2">
         <Skeleton className="h-3 w-24" />

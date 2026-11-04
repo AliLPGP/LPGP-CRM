@@ -3,13 +3,13 @@ import { HeaderSkeleton, PanelSkeleton, StatRowSkeleton, ToolbarSkeleton } from 
 
 export default function Loading() {
   return (
-    <div className="mx-auto max-w-[95rem] space-y-6 px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-[95rem] space-y-6 px-4 py-8 md:px-6 lg:px-8">
       <HeaderSkeleton />
       <StatRowSkeleton count={5} />
       <PanelSkeleton height="h-[300px]" />
       <div className="space-y-3">
         <ToolbarSkeleton facets={3} />
-        <div className="rounded-2xl border bg-card">
+        <div className="rounded-xl border bg-card">
           {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="grid grid-cols-[1fr_auto] items-center gap-3 border-b px-4 py-3 last:border-b-0 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_auto]">
               <div className="space-y-1.5">

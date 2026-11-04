@@ -32,7 +32,7 @@ export function StatRowSkeleton({ count = 4 }: { count?: number }) {
   return (
     <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))" }}>
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="rounded-2xl border bg-card px-5 py-4">
+        <div key={i} className="rounded-xl border bg-card px-5 py-4">
           <Skeleton className="h-3 w-20" />
           <Skeleton className="mt-3 h-7 w-24" />
           <Skeleton className="mt-2.5 h-3 w-32" />
@@ -45,11 +45,11 @@ export function StatRowSkeleton({ count = 4 }: { count?: number }) {
 export function ToolbarSkeleton({ facets = 3, action = false }: { facets?: number; action?: boolean }) {
   return (
     <div className="flex flex-wrap items-center gap-1.5">
-      <Skeleton className="h-8 w-full rounded-[4px] sm:w-64" />
+      <Skeleton className="h-8 w-full rounded-lg sm:w-64" />
       {Array.from({ length: facets }).map((_, i) => (
-        <Skeleton key={i} className="h-8 w-20 rounded-[4px]" />
+        <Skeleton key={i} className="h-8 w-20 rounded-lg" />
       ))}
-      <Skeleton className="h-8 w-28 rounded-[4px]" />
+      <Skeleton className="h-8 w-28 rounded-lg" />
       <Skeleton className="h-3 w-16" />
       {action ? <Skeleton className="ml-auto h-9 w-28 rounded-md" /> : null}
     </div>
@@ -58,7 +58,7 @@ export function ToolbarSkeleton({ facets = 3, action = false }: { facets?: numbe
 
 export function TableSkeleton({ rows = 10, columns = 6 }: { rows?: number; columns?: number }) {
   return (
-    <div className="overflow-hidden rounded-2xl border bg-card">
+    <div className="overflow-hidden rounded-xl border bg-card">
       <div className="flex gap-6 border-b px-5 py-3">
         {Array.from({ length: columns }).map((_, i) => (
           <Skeleton key={i} className="h-3 w-16" />
@@ -81,7 +81,7 @@ export function CardGridSkeleton({ count = 6, height = "h-44" }: { count?: numbe
   return (
     <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
       {Array.from({ length: count }).map((_, i) => (
-        <Skeleton key={i} className={`${height} rounded-2xl`} />
+        <Skeleton key={i} className={`${height} rounded-xl`} />
       ))}
     </div>
   );
@@ -89,7 +89,7 @@ export function CardGridSkeleton({ count = 6, height = "h-44" }: { count?: numbe
 
 export function PanelSkeleton({ height = "h-[280px]" }: { height?: string }) {
   return (
-    <div className={`rounded-2xl border bg-card p-5 ${height}`}>
+    <div className={`rounded-xl border bg-card p-5 ${height}`}>
       <Skeleton className="h-4 w-32" />
       <Skeleton className="mt-2 h-3 w-48" />
       <div className="mt-5 space-y-3">

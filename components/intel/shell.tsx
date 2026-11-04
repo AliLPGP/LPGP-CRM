@@ -138,17 +138,17 @@ export function IntelShell({
   nav?: boolean;
 }) {
   return (
-    <div className={cn("desk mx-auto space-y-4 px-4 py-5 md:px-6", wide ? "max-w-[1480px]" : "max-w-6xl")}>
+    <div className={cn("desk mx-auto space-y-5 px-4 py-6 md:px-6 lg:px-8 lg:py-7", wide ? "max-w-[1480px]" : "max-w-6xl")}>
       {nav ? <IntelNav /> : null}
       {crumbs ? <Crumbs items={crumbs} /> : null}
       {title ? (
-        <header className="flex flex-wrap items-end justify-between gap-3">
+        <header className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
-            {kicker ? <div className="wordmark mb-1.5">{kicker}</div> : null}
-            <h1 className="display text-[22px] leading-tight md:text-[26px]">{title}</h1>
-            {description ? <p className="mt-1 max-w-3xl text-[12.5px] text-muted-foreground">{description}</p> : null}
+            {kicker ? <div className="wordmark mb-2">{kicker}</div> : null}
+            <h1 className="display text-[26px] font-bold leading-tight md:text-[30px]">{title}</h1>
+            {description ? <p className="mt-1.5 max-w-3xl text-[14px] text-muted-foreground">{description}</p> : null}
           </div>
-          {actions ? <div className="flex flex-wrap items-center gap-1.5">{actions}</div> : null}
+          {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
         </header>
       ) : null}
       {tabs}

@@ -229,7 +229,7 @@ export function ListDetail({
       </div>
 
       {rows.length === 0 ? (
-        <div className="sheen rounded-2xl border bg-card px-6 py-14 text-center">
+        <div className="sheen rounded-xl border bg-card px-6 py-14 text-center">
           <p className="font-semibold">This list is empty</p>
           <p className="mt-1 text-sm text-muted-foreground">
             Search in Discover, tick the firms you want, then choose <span className="font-medium">Add to list</span>.
@@ -239,7 +239,7 @@ export function ListDetail({
           </Button>
         </div>
       ) : (
-        <div className="sheen overflow-hidden rounded-2xl border bg-card">
+        <div className="sheen overflow-hidden rounded-xl border bg-card">
           {selected.size ? (
             <div className="flex items-center gap-3 border-b bg-accent/40 px-5 py-2.5 text-sm">
               <span className="font-medium">{selected.size} selected</span>

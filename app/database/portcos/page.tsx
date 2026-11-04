@@ -131,7 +131,7 @@ export default async function PortcosPage({ searchParams }: { searchParams: Prom
         right={
           <a
             href={`/api/directory/portcos/export${sp.sponsor ? `?sponsor=${sp.sponsor}` : ""}`}
-            className="inline-flex h-8 items-center rounded-[4px] border bg-card px-2.5 text-[12px] font-medium hover:bg-accent"
+            className="inline-flex h-8 items-center rounded-lg border bg-card px-2.5 text-[12px] font-medium hover:bg-accent"
             title="The sheet: name, status, class, deal type, sector, country, website, email, description, business model, CEO, CFO, COO, managing director, employees, revenue, EBITDA, value creation plan, notes and sources"
           >
             Download sheet

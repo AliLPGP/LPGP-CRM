@@ -44,7 +44,7 @@ export default async function AccountsPage() {
   const latest = yearTotals.filter((t) => t.year === latestYear);
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 md:px-6 lg:px-8">
       <PageHeader
         eyebrow="Sales CRM"
         title="Accounts"

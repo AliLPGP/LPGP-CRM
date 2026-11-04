@@ -7,6 +7,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LpgpMark } from "@/components/lpgp-mark";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -39,15 +40,14 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen grid place-items-center px-4">
       <div className="w-full max-w-sm">
-        <div className="flex items-center gap-2.5 justify-center mb-6">
-          <span className="grid place-items-center h-8 w-8 rounded-md bg-primary text-primary-foreground text-[13px] font-bold tracking-tight">
-            LP
-          </span>
-          <span className="text-lg font-semibold tracking-tight">
-            LPGP <span className="text-muted-foreground font-normal">Connect</span>
+        <div className="mb-6 flex items-center justify-center gap-2.5">
+          <LpgpMark className="h-8 w-8 text-foreground" />
+          <span className="leading-none">
+            <span className="block text-lg font-bold tracking-tight">LPGP</span>
+            <span className="wordmark mt-1 block text-[9.5px] tracking-[0.16em] text-brass">Intelligence</span>
           </span>
         </div>
-        <div className="sheen rounded-2xl border bg-card p-6">
+        <div className="sheen rounded-xl border bg-card p-6">
           <h1 className="text-lg font-semibold">Sign in</h1>
           <p className="text-sm text-muted-foreground mt-0.5">Access your pipeline and the database.</p>
           <form onSubmit={submit} className="mt-5 space-y-3">

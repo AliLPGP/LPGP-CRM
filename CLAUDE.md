@@ -304,9 +304,9 @@ boundaries and keeps comment text ASCII.
   is in a sentence (`identity()`), chips, the actions, a row of large
   headline figures (`Figures`/`Figure`, only those with data), then numbered
   chapters (`Chapter`: eyebrow, a sentence for a title, a lead, "see all")
-  with a sticky pill bar (`ChapterNav`, scroll-spy) in place of tabs. Only
+  with a sticky underline tab bar (`ChapterNav`, scroll-spy) in place of tabs; from xl up the sales panel (`components/story/sales-panel.tsx`: stage, owner, call-back, last touch, account) and the actions sit beside the story, sticky. Only
   chapters with data are drawn; a record with none says what would fill it.
-  Cards are `story-card` (14 px radius, a blue edge and a 1 px lift on
+  Cards are `story-card` (12 px radius, a blue edge and a 1 px lift on
   hover), magnitudes are `Meter` (the blue), asset classes wear an icon
   (`ClassIcon`), never a hue. Every card leads on: LP → asset class → fund →
   manager → the LPs backing it (`lib/directory/gp-profile.ts`). An LP tells
@@ -320,7 +320,7 @@ boundaries and keeps comment text ASCII.
   on the right) rather than wide tables; Discover keeps the table one click
   away. The desk register stays for dense ledgers behind "see all".
 - **Taxonomy** (`lib/directory/taxonomy.ts`, with `asset-classes.ts` and `strategies.ts`) — the vocabulary a private-markets data product searches by, at its level of detail: nine asset classes (natural resources is its own class since 0033-era code), strategies on a **strategy** axis (buyout, growth, co-investment, direct lending, core / core-plus / value-add / opportunistic, seed / early stage, …) and a **sector** axis (property types, infrastructure sectors, the industries a PE fund names), investor types (public and private pensions, superannuation, insurers, endowments, foundations, sovereign wealth, DFIs, banks, asset and wealth managers, single and multi family offices, fund of funds, consultants…), manager and provider types, core industries with industry focus, target regions above `geo.ts`'s HQ subregions, AUM / ticket / fund-size bands, and the mandate vocabulary. Every classifier reads words the record carries — a sub-type, a fund's legal name, a firm's own overview, a stated focus — and places nothing those words do not say. The Discover index carries the result per firm (`typeCode`, `classes`, `strategies`, `sectors`, `regions`, `knownFunds`, allocation and ticket figures, `plans`, and per-class `raised` from stated fund sizes in the last ten years), the rail filters by it, the results table has a column registry with a chooser (`discover.columns` in localStorage, per-viewer), and the funds page facets by strategy, sector, region, size band and status. No dry powder: nobody states it and we do not estimate.
-- **Header** (`components/top-nav.tsx`) — the product's navigation is the black top bar: one panel per section (investors, fund managers, funds, service providers split into fund and transaction services, companies & deals), the quick search, and the sales CRM as one menu that a reader can put away (`nav:crm` in localStorage) until it moves to its own product; people, target lists, the watchlist and imports sit in that menu. Performance and the workflows have no panel: performance is read on the fund and manager pages it belongs to (each links on to `/database/performance`), and the phone's bottom bar carries Investors, Managers, Funds and Companies. The section a page belongs to is decided by `INTEL_NAV`'s matchers in `components/intel/shell.tsx` (the performance desk counts as Funds); `IntelShell` no longer draws section tabs by default.
+- **Navigation** (`components/top-nav.tsx`) — the product's frame is a graphite sidebar down the left (`SideNav`, sticky, from lg up) and a search-first bar across the top of the page column (`TopNav`: the search that opens the command palette, theme, account). The sidebar has two workspaces behind one switch, **Research** (Directory: investors, fund managers, funds, service providers, companies & deals, people) and **Sales** (command centre, pipeline, leads, call workspace, accounts, my deals, event performance, import leads), with "Your work" (target lists, watchlist) and "Data" (data coverage = the unresearched books, import) in both. The workspace follows the page (`workspaceOf(sectionOf(...))`); a switch the reader flips holds until they move page. A section opens in place to list its own pages, the page's own section open by default. Putting the CRM away (`nav:crm` in localStorage, from the account menu) hides the switch and the Sales workspace. On a phone the same sidebar body is the bar's drawer, and the bottom bar carries Investors, Managers, Funds and Companies. Which item a page lights is decided by `INTEL_NAV`'s matchers in `components/intel/shell.tsx` (the performance desk counts as Funds), then the longest matching plain path.
 - **Funds, folded and staged** (`lib/directory/fund-match.ts`, `fund-portfolio.ts`, `components/story/fund-families.tsx`) — one fund filed several times (parallel vehicles, a second spelling: "Nordic Capital Fund XI", "Nordic Capital XI", "… Fund XI, L.P.") is one card: `fundKey` folds legal forms, vehicle tags ("VI-1", "(A)", "Parallel", "Feeder") and punctuation, and `foldFunds` keeps the vehicle investors report on as the lead. `fundStage(status)` reads the filed status as Active (raising or investing) or Closed; a fund with no filed status is "Other funds", never guessed into either. A fund's companies come from the sponsor's own portfolio (`portfolio_companies.fund_name`): `matchFund` joins a holding to a fund when the names agree once folded (the sponsor's name may be missing from the stated one: "Fund VIII" is Nordic Capital's), and a programme with no fund number ("Foundation") joins its numbered funds only as a programme match, labelled as such. `fundCards` builds the cards (median net IRR and multiple from `fund_performance_mv`, LPs, companies); a manager's page groups them Active / Closed / Other, and a fund page reads performance → companies → investors (all vehicles of the fund together) → the manager's other funds → sources (Form D, Form ADV, providers) → researched terms. A size of zero is a blank in the filing and is not shown.
 - **Class sub-tabs and strategy cards** — a manager in more than one asset class gets a row of class pills under the chapter bar (`?class=`): funds (by the fund's own name, else the manager's type), investors (`backersOver` recounts them over that class's commitments), portfolio companies (by the fund they sit in, else the class the sponsor states) and deals (their own class) narrow to it. Inside a class, a card per strategy the funds' own names state (direct lending, real estate debt, mezzanine, CLOs…; `strategiesInFundName`, strategy axis) filters the funds (`&strategy=`); an LP's class view (`?class=`) has the same strategy cards over its commitments, with "Not stated in the name" for the rest. A portfolio company's page (`/database/portcos/[key]`) is a story too: backers (with the fund each invested through, linked when `holdingFunds` finds it), the company's sourced facts, people, investments, filed accounts, loan books and news.
 - **The demo standard** — every list screen is held to one shape: a
@@ -543,13 +543,15 @@ an account within a day.
 - The intelligence screens (`/database/*`, `/companies/[id]`, `/funds`,
   `/contacts`) wear the **desk** register on top of Nocturne: the `.desk`
   wrapper (`IntelShell` in `components/intel/shell.tsx`) drops the radius to
-  4px, flattens surfaces and sets 13px type; `.desk-table` for dense ledgers,
+  8px, flattens surfaces and sets 13px type; `.desk-table` for dense ledgers,
   `.desk-label` small caps, `.desk-tabs` underline tabs, `.defn` for a hover
   definition, `.tag`, `.kv`. Primitives in `components/intel/ui.tsx` (`Box`,
   `Stat`, `StatStrip`, `Src`, `Tag`, `SubTabs`, `Bar`). Every figure that
   came from a page shows its `Src`.
 - The theme is **"Nocturne"** (`app/globals.css`), the brand site's own look:
-  pure black, white lettering, one electric blue (`#1F3FEB`). **Dark is the
+  near-black graphite (`#08080a` page, `#111114` cards, `#0e0e11` rail),
+  white lettering, one electric blue (`#1F3FEB`). One radius scale: 8 px on
+  the desks, 10 px elsewhere, 12 px on story cards. **Dark is the
   default** (the layout's theme script: a stored choice wins, else dark);
   light is the same drawing on white. `--primary` is the blue in both modes
   with `--primary-hover` and `--primary-soft` (the blue at 12–16 %, the tint
@@ -559,9 +561,9 @@ an account within a day.
   text. Nothing warm: `--ops` is a teal, the semantics are green and red.
   Depth comes from a **light-line** (the `.sheen` top hairline, white at low
   alpha on black and black at low alpha on white), never from a drop shadow;
-  the popover's `--shadow-pop` is the one shadow left. The rail (the header)
-  is always black in both modes, re-points the neutral and brand tokens
-  inside itself, and carries a 1 px `#1F2023` bottom edge; the mark and the
+  the popover's `--shadow-pop` is the one shadow left. The rail (the sidebar
+  and the top bar) is always graphite in both modes, re-points the neutral and
+  brand tokens inside itself, and carries a 1 px `#1C1C21` edge; the mark and the
   name are white on it, the blue only on the eyebrow beneath.
 - `.display` is tight sans for titles; `.figure` is tabular mono for money and
   counts; `.wordmark` is the site's eyebrow — JetBrains Mono, 10.5 px,

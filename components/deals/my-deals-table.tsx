@@ -114,7 +114,7 @@ export function MyDealsTable({
         noun="deals"
         actions={
           opsPanelUrl ? (
-            <a href={opsPanelUrl} target="_blank" rel="noreferrer" className="inline-flex h-8 items-center gap-1 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+            <a href={opsPanelUrl} target="_blank" rel="noreferrer" className="inline-flex h-8 items-center gap-1 rounded-lg border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
               Ops panel <ExternalLink className="h-3 w-3" />
             </a>
           ) : null
@@ -136,13 +136,13 @@ export function MyDealsTable({
           title="No deals match these filters"
           description={`${deals.length} of your deals are on file; none carry every filter you have set.`}
           action={
-            <button type="button" onClick={clearAll} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+            <button type="button" onClick={clearAll} className="rounded-lg border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
               Clear filters
             </button>
           }
         />
       ) : (
-        <section className="sheen rounded-2xl border bg-card">
+        <section className="sheen rounded-xl border bg-card">
           <ul className="divide-y">
             {filtered.slice(0, shown).map(({ deal, ownership, claimedAt }) => (
               <li key={deal.id} className="px-4 py-3.5 transition-colors duration-[120ms] hover:bg-muted/30">

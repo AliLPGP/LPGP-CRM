@@ -6,13 +6,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 // on its way to the browser, so figures and rows drop in where they belong.
 
 export function Bone({ className, style }: { className: string; style?: React.CSSProperties }) {
-  return <Skeleton className={`rounded-[3px] bg-muted/70 ${className}`} style={style} />;
+  return <Skeleton className={`rounded-md bg-muted/70 ${className}`} style={style} />;
 }
 
 /** The stat strip's six figures. */
 export function StripSkeleton() {
   return (
-    <div className="stat-strip grid rounded-[4px] border bg-card" aria-hidden>
+    <div className="stat-strip grid rounded-lg border bg-card" aria-hidden>
       {Array.from({ length: 6 }, (_, i) => (
         <div key={i} className="space-y-2 border-l px-3 py-2.5 first:border-l-0">
           <Bone className="h-2.5 w-20" />
@@ -57,7 +57,7 @@ export function ToolbarSkeleton() {
 /** The ledger: a header row and `rows` covered rows. */
 export function LedgerSkeleton({ rows = 14, label }: { rows?: number; label?: string }) {
   return (
-    <div className="rounded-[4px] border bg-card" aria-busy="true" aria-label={label ?? "Loading"}>
+    <div className="rounded-lg border bg-card" aria-busy="true" aria-label={label ?? "Loading"}>
       <div className="flex items-center gap-3 border-b px-3 py-2.5">
         <Bone className="h-3.5 w-3.5" />
         <Bone className="h-2.5 w-24" />
@@ -91,7 +91,7 @@ export function CardsSkeleton({ count = 9 }: { count?: number }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3" aria-busy="true" aria-label="Loading">
       {Array.from({ length: count }, (_, i) => (
-        <div key={i} className="space-y-3 rounded-[4px] border bg-card p-3">
+        <div key={i} className="space-y-3 rounded-lg border bg-card p-3">
           <div className="flex items-center gap-2.5">
             <Bone className="h-8 w-8" />
             <div className="flex-1 space-y-1.5">

@@ -88,11 +88,11 @@ export default async function AssetClassPage({
           {isAdmin ? <ResearchClassButton assetClass={cls.key} kind="deals" aiReady={aiReady} /> : null}
           {isAdmin ? <ResearchClassButton assetClass={cls.key} kind="benchmarks" aiReady={aiReady} /> : null}
           {isSports ? (
-            <Link href="/database/sports" className="rounded-[4px] border bg-card px-2.5 py-1.5 text-[12px] font-medium hover:bg-accent">
+            <Link href="/database/sports" className="rounded-lg border bg-card px-2.5 py-1.5 text-[12px] font-medium hover:bg-accent">
               Open the sports desk
             </Link>
           ) : (
-            <Link href={`/database?book=GP&type=${encodeURIComponent(cls.gpTypes[0] ?? "")}`} className="rounded-[4px] border bg-card px-2.5 py-1.5 text-[12px] font-medium hover:bg-accent">
+            <Link href={`/database?book=GP&type=${encodeURIComponent(cls.gpTypes[0] ?? "")}`} className="rounded-lg border bg-card px-2.5 py-1.5 text-[12px] font-medium hover:bg-accent">
               Search these managers
             </Link>
           )}

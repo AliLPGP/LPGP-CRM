@@ -60,7 +60,7 @@ export function Modal({
         aria-modal="true"
         className={cn(
           "modal-panel relative w-full flex flex-col bg-card border shadow-2xl",
-          "rounded-t-2xl sm:rounded-2xl max-h-[92dvh] sm:max-h-[85dvh]",
+          "rounded-t-2xl sm:rounded-xl max-h-[92dvh] sm:max-h-[85dvh]",
           SIZE[size],
           className,
         )}

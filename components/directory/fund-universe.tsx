@@ -201,7 +201,7 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
 
   if (!rows.length) {
     return (
-      <div className="sheen rounded-2xl border bg-card px-6 py-14 text-center text-sm text-muted-foreground">
+      <div className="sheen rounded-xl border bg-card px-6 py-14 text-center text-sm text-muted-foreground">
         No funds on file yet. Importing the Master Directory loads every fund managers name on Form ADV.
       </div>
     );
@@ -228,7 +228,7 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
         </div>
       </section>
 
-      <div className="sheen space-y-3 rounded-2xl border bg-card p-4">
+      <div className="sheen space-y-3 rounded-xl border bg-card p-4">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
@@ -280,7 +280,7 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
 
       <div className="grid gap-3 sm:grid-cols-3">
         {COLUMNS.map((role) => (
-          <div key={role} className="rounded-2xl border bg-card p-4">
+          <div key={role} className="rounded-xl border bg-card p-4">
             <p className="eyebrow">Top {ROLE_LABEL[role].toLowerCase()}s · these funds</p>
             <div className="mt-2 space-y-1">
               {(topProviders.get(role) ?? []).map(([b, n]) => (
@@ -300,7 +300,7 @@ export function FundUniverse({ data }: { data: PackedFundUniverse }) {
         ))}
       </div>
 
-      <div className="sheen overflow-hidden rounded-2xl border bg-card">
+      <div className="sheen overflow-hidden rounded-xl border bg-card">
         <div className="flex items-center justify-between border-b px-5 py-3 text-sm">
           <span>
             <span className="figure">{filtered.length.toLocaleString("en-US")}</span>{" "}

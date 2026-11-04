@@ -17,7 +17,7 @@ export default async function AdminPage() {
   const user = await getSessionUser();
   if (!user || user.role !== "admin") {
     return (
-      <div className="mx-auto max-w-2xl px-4 md:px-6 py-16 text-center">
+      <div className="mx-auto max-w-2xl px-4 md:px-6 lg:px-8 py-16 text-center">
         <ShieldAlert className="mx-auto h-8 w-8 text-muted-foreground" />
         <h1 className="mt-3 text-xl font-semibold">Admins only</h1>
         <p className="mt-1 text-muted-foreground">
@@ -35,7 +35,7 @@ export default async function AdminPage() {
   const [leads, profiles] = await Promise.all([listLeads(), listProfiles()]);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 md:px-6 py-8 space-y-8">
+    <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 py-8 space-y-8">
       <PageHeader
         eyebrow="Admin"
         title="Team & assignments"
@@ -43,7 +43,7 @@ export default async function AdminPage() {
       />
 
       {/* Team */}
-      <section className="sheen rounded-2xl border bg-card p-5">
+      <section className="sheen rounded-xl border bg-card p-5">
         <h2 className="font-semibold mb-3">Team ({profiles.length})</h2>
         <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {profiles.map((p) => (
@@ -74,7 +74,7 @@ export default async function AdminPage() {
       </section>
 
       {/* Assign leads */}
-      <section className="sheen rounded-2xl border bg-card overflow-hidden">
+      <section className="sheen rounded-xl border bg-card overflow-hidden">
         <div className="px-5 py-3.5 border-b">
           <h2 className="font-semibold">Leads ({leads.length})</h2>
         </div>

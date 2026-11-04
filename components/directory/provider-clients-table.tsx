@@ -55,7 +55,7 @@ export function ProviderClientsTable({
 
   return (
     <>
-      <div className="sheen rounded-[4px] border bg-card">
+      <div className="sheen rounded-lg border bg-card">
         <div className="desk-scroll">
           <table className="desk-table">
             <thead>
@@ -104,7 +104,7 @@ export function ProviderClientsTable({
                             <Link href={`/companies/${r.id}`} className="font-medium hover:underline">
                               {r.name}
                             </Link>
-                            {r.category !== "GP" ? <CategoryBadge category={r.category} className="rounded-[3px] px-1.5 py-0 text-[10px]" /> : null}
+                            {r.category !== "GP" ? <CategoryBadge category={r.category} className="rounded-md px-1.5 py-0 text-[10px]" /> : null}
                             {r.subType ? <span className="text-[11px] text-muted-foreground">{r.subType}</span> : null}
                           </div>
                           <p className="mt-0.5 text-[11px] text-muted-foreground">{locationLabel(r) ?? ""}</p>

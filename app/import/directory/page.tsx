@@ -41,7 +41,7 @@ export default async function DirectoryImportPage() {
   const last = setup.lastImport;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 md:px-6 py-8 space-y-6">
+    <div className="mx-auto max-w-5xl px-4 md:px-6 lg:px-8 py-8 space-y-6">
       <Link href="/import" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="h-3.5 w-3.5" /> Import
       </Link>

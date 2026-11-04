@@ -213,7 +213,7 @@ export default async function PerformancePage({ searchParams }: { searchParams: 
             right={
               <a
                 href={exportHref}
-                className="inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12px] font-medium hover:bg-accent"
+                className="inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12px] font-medium hover:bg-accent"
                 title="The funds tab under the current filters, as CSV. Fund size is USD as filed; every other figure is LP-reported or arithmetic on LP-reported figures."
               >
                 <Download className="h-3.5 w-3.5" /> Export
@@ -417,7 +417,7 @@ export default async function PerformancePage({ searchParams }: { searchParams: 
           <ul className="mt-3 grid gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
             {ASSET_CLASSES.map((c) => (
               <li key={c.key}>
-                <Link href={`/database/asset-classes/${c.slug}`} className="flex items-baseline gap-2 rounded-[4px] border bg-background/40 px-3 py-2 text-[12.5px] hover:bg-accent/40">
+                <Link href={`/database/asset-classes/${c.slug}`} className="flex items-baseline gap-2 rounded-lg border bg-background/40 px-3 py-2 text-[12.5px] hover:bg-accent/40">
                   <span className="font-medium">{c.name}</span>
                   <span className="truncate text-[11px] text-muted-foreground">benchmarks and strategies</span>
                 </Link>

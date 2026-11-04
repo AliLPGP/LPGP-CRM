@@ -65,7 +65,7 @@ export function SeriesRevenueChart({
             <div className="flex items-baseline justify-between gap-3">
               <span className="flex min-w-0 items-center gap-2 text-sm">
                 <span
-                  className="h-2.5 w-2.5 shrink-0 rounded-[3px]"
+                  className="h-2.5 w-2.5 shrink-0 rounded-md"
                   style={{ background: color }}
                   aria-hidden
                 />

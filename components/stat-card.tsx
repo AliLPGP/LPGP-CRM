@@ -21,8 +21,8 @@ export function StatCard({
   className?: string;
 }) {
   const inner = (
-    <div className={cn("sheen h-full rounded-2xl border bg-card px-5 py-4", href && "lift", className)}>
-      <p className="eyebrow truncate">{label}</p>
+    <div className={cn("sheen h-full rounded-xl border bg-card px-5 py-4", href && "lift", className)}>
+      <p className="truncate text-[13px] font-medium text-muted-foreground">{label}</p>
       <p className="figure mt-2.5 text-[1.75rem] leading-none">{value}</p>
       <p className="mt-2 truncate text-[12.5px] text-muted-foreground" title={basis}>
         {basis || "—"}

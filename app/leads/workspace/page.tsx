@@ -17,7 +17,7 @@ export default async function WorkspacePage() {
 
   if (!isSupabaseConfigured()) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-10 md:px-6">
+      <div className="mx-auto max-w-3xl px-4 py-10 md:px-6 lg:px-8">
         <SetupNotice />
       </div>
     );

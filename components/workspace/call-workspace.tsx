@@ -196,7 +196,7 @@ function QueueEmpty({
   return (
     <div className="grid flex-1 place-items-center p-10">
       <div className="max-w-sm text-center">
-        <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-primary/10 text-primary">
+        <span className="mx-auto grid h-14 w-14 place-items-center rounded-xl bg-primary/10 text-primary">
           {finished ? <Check className="h-7 w-7" /> : <Inbox className="h-7 w-7" />}
         </span>
         <h2 className="mt-4 text-lg font-semibold">
@@ -239,7 +239,7 @@ function LeadPane({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-2xl border bg-card p-5">
+      <div className="rounded-xl border bg-card p-5">
         <div className="flex items-start gap-4">
           <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-accent text-lg font-semibold text-accent-foreground">
             {initials(lead.company_name)}
@@ -332,7 +332,7 @@ function LeadPane({
       <TeammateStrip teammates={teammates} />
 
       {lead.next_step ? (
-        <div className="rounded-2xl border bg-card p-4">
+        <div className="rounded-xl border bg-card p-4">
           <p className="eyebrow">Next step</p>
           <p className="mt-1 text-sm">{lead.next_step}</p>
           {lead.next_step_date ? (
@@ -401,7 +401,7 @@ function ContactRow({
 /** The ops-panel context strip — what this sponsor already pays for. */
 function OpsStrip({ ops }: { ops: OpsLeadSummary }) {
   return (
-    <div className="rounded-2xl border border-[var(--ops)]/35 bg-[var(--ops-soft)] p-4">
+    <div className="rounded-xl border border-[var(--ops)]/35 bg-[var(--ops-soft)] p-4">
       <div className="flex items-center gap-2">
         <Radar className="h-4 w-4 text-[var(--ops)]" />
         <p className="text-sm font-semibold">Live in the ops panel</p>
@@ -438,7 +438,7 @@ function OpsStrip({ ops }: { ops: OpsLeadSummary }) {
 function TeammateStrip({ teammates }: { teammates: LeadWithRefs[] }) {
   if (!teammates.length) return null;
   return (
-    <div className="rounded-2xl border border-[var(--brand)]/30 bg-[var(--accent)]/40 p-4">
+    <div className="rounded-xl border border-[var(--brand)]/30 bg-[var(--accent)]/40 p-4">
       <p className="flex items-center gap-2 text-sm font-semibold">
         <User className="h-4 w-4 text-[var(--brand)]" />
         Also in the pipeline
@@ -488,7 +488,7 @@ function Timeline({ leadId }: { leadId: string }) {
   const rows = loaded?.leadId === leadId ? loaded.rows : null;
 
   return (
-    <div className="rounded-2xl border bg-card p-4">
+    <div className="rounded-xl border bg-card p-4">
       <p className="eyebrow">History</p>
       {rows === null ? (
         <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -656,7 +656,7 @@ function CallPane({
   return (
     <div className="space-y-4 lg:sticky lg:top-[4.25rem] lg:self-start">
       {/* Dialer */}
-      <div className="rounded-2xl border bg-card p-4">
+      <div className="rounded-xl border bg-card p-4">
         <div className="flex items-center gap-3">
           {tel ? (
             <a
@@ -697,7 +697,7 @@ function CallPane({
       </div>
 
       {/* Outcome */}
-      <div className="rounded-2xl border bg-card p-4">
+      <div className="rounded-xl border bg-card p-4">
         <p className="eyebrow">Outcome</p>
         <div className="mt-2.5 grid grid-cols-2 gap-2">
           {DISPOSITIONS.map((d) => {
@@ -734,7 +734,7 @@ function CallPane({
       </div>
 
       {/* Notes */}
-      <div className="rounded-2xl border bg-card p-4">
+      <div className="rounded-xl border bg-card p-4">
         <div className="flex items-center justify-between">
           <p className="eyebrow">Call notes</p>
           <span className="text-[10px] text-muted-foreground">⌘↵ to save</span>

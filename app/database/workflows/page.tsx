@@ -17,9 +17,9 @@ export default function WorkflowsPage() {
     >
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {WORKFLOWS.map((w) => (
-          <Link key={w.key} href={`/database/workflows/${w.slug}`} className="sheen group flex flex-col gap-2 rounded-[4px] border bg-card p-4 transition-colors hover:bg-accent/40">
+          <Link key={w.key} href={`/database/workflows/${w.slug}`} className="sheen group flex flex-col gap-2 rounded-lg border bg-card p-4 transition-colors hover:bg-accent/40">
             <div className="flex items-center gap-2.5">
-              <span className="grid h-8 w-8 place-items-center rounded-[4px] border bg-background text-foreground">
+              <span className="grid h-8 w-8 place-items-center rounded-lg border bg-background text-foreground">
                 <WorkflowIcon name={w.icon} className="h-4 w-4" />
               </span>
               <span className="display text-[15px]">{w.name}</span>

@@ -36,7 +36,7 @@ export type UrlSort = {
   defaultKey: string;
 };
 
-const BUTTON = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] transition-colors hover:bg-accent";
+const BUTTON = "inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12.5px] transition-colors hover:bg-accent";
 
 /** The values a facet's param carries, as a list. */
 export function facetValues(params: URLSearchParams, param: string): string[] {
@@ -199,7 +199,7 @@ function SearchBox({ param, placeholder, width = "w-56", value, onCommit }: { pa
         }}
         placeholder={placeholder}
         aria-label={placeholder}
-        className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-7 text-[12.5px] outline-none focus-visible:border-ring"
+        className="h-8 w-full rounded-lg border border-input bg-card pl-8 pr-7 text-[12.5px] outline-none focus-visible:border-ring"
       />
       {text ? (
         <button

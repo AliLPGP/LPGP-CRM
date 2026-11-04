@@ -18,13 +18,13 @@ export default function Loading() {
       </div>
       <div className="grid flex-1 gap-4 p-4 md:p-6 lg:grid-cols-[1.15fr_1fr] xl:grid-cols-[1.25fr_1fr]">
         <div className="space-y-4">
-          <Skeleton className="h-56 rounded-2xl" />
-          <Skeleton className="h-40 rounded-2xl" />
+          <Skeleton className="h-56 rounded-xl" />
+          <Skeleton className="h-40 rounded-xl" />
         </div>
         <div className="space-y-4">
-          <Skeleton className="h-20 rounded-2xl" />
-          <Skeleton className="h-52 rounded-2xl" />
-          <Skeleton className="h-64 rounded-2xl" />
+          <Skeleton className="h-20 rounded-xl" />
+          <Skeleton className="h-52 rounded-xl" />
+          <Skeleton className="h-64 rounded-xl" />
         </div>
       </div>
     </div>

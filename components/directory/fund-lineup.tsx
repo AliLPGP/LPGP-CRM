@@ -122,7 +122,7 @@ export function FundLineup({
               onChange={(e) => setQ(e.target.value)}
               placeholder="Fund or provider…"
               aria-label="Search the lineup"
-              className="h-8 w-52 rounded-[4px] border border-input bg-card pl-7 pr-2 text-[12.5px] outline-none focus-visible:border-ring"
+              className="h-8 w-52 rounded-lg border border-input bg-card pl-7 pr-2 text-[12.5px] outline-none focus-visible:border-ring"
             />
           </div>
         ) : null}

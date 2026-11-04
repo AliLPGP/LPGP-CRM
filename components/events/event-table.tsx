@@ -160,7 +160,7 @@ export function EventTable({
         }
       />
 
-      <section className="sheen rounded-2xl border bg-card">
+      <section className="sheen rounded-xl border bg-card">
         {/* Inferred-series nudge. The page guesses from the event's name; this
             is how a guess becomes a stored fact. */}
         {inferred.length ? (
@@ -212,7 +212,7 @@ export function EventTable({
                 title="No events match these filters"
                 description={`${events.length} events are in the ops panel; none carry every filter you have set.`}
                 action={
-                  <button type="button" onClick={clearAll} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+                  <button type="button" onClick={clearAll} className="rounded-lg border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
                     Clear filters
                   </button>
                 }
@@ -241,7 +241,7 @@ function SeriesChip({ series }: { series: SeriesId | null }) {
   if (!series) {
     return (
       <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
-        <span className="h-2 w-2 rounded-[3px] bg-muted-foreground/40" aria-hidden />
+        <span className="h-2 w-2 rounded-[2px] bg-muted-foreground/40" aria-hidden />
         Unassigned
       </span>
     );
@@ -250,7 +250,7 @@ function SeriesChip({ series }: { series: SeriesId | null }) {
   return (
     <span className="inline-flex min-w-0 items-center gap-1.5 text-[11px] text-muted-foreground">
       <span
-        className="h-2 w-2 shrink-0 rounded-[3px]"
+        className="h-2 w-2 shrink-0 rounded-[2px]"
         style={{ background: SERIES_COLOR[series] }}
         aria-hidden
       />

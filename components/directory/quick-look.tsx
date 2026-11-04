@@ -15,8 +15,8 @@ import { findSimilar } from "@/lib/directory/similar";
 import { cn } from "@/lib/utils";
 import type { Directory } from "./use-directory";
 
-const PRIMARY = "inline-flex h-8 items-center gap-1.5 rounded-[4px] bg-primary px-3 text-[12.5px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover";
-const OUTLINE = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-3 text-[12.5px] hover:bg-accent";
+const PRIMARY = "inline-flex h-8 items-center gap-1.5 rounded-lg bg-primary px-3 text-[12.5px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover";
+const OUTLINE = "inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-3 text-[12.5px] hover:bg-accent";
 
 /**
  * A firm at a glance, slid in over the results: enough to decide whether to
@@ -78,7 +78,7 @@ export function QuickLook({
           <div className="stand-grid pointer-events-none absolute inset-0" aria-hidden />
           <div className="relative flex items-center justify-between">
             <span className="wordmark text-[10.5px] text-[var(--brass)]">Quick look</span>
-            <button type="button" onClick={onClose} className="rounded-[4px] p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground" aria-label="Close">
+            <button type="button" onClick={onClose} className="rounded-lg p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground" aria-label="Close">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -87,7 +87,7 @@ export function QuickLook({
             <div className="min-w-0">
               <h2 className="display text-xl leading-tight">{r.name}</h2>
               <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
-                <CategoryBadge category={r.category} className="rounded-[3px]" />
+                <CategoryBadge category={r.category} className="rounded-md" />
                 {r.subType ? <Tag strong>{r.subType}</Tag> : null}
                 {r.adv ? <Tag>{r.adv === "ERA" ? "Exempt reporting adviser" : "SEC-registered adviser"}</Tag> : null}
               </div>
@@ -134,7 +134,7 @@ export function QuickLook({
           )}
 
           {r.contacts ? (
-            <div className="flex items-center gap-3 rounded-[4px] border px-3 py-2">
+            <div className="flex items-center gap-3 rounded-lg border px-3 py-2">
               {r.connectable ? <Mail className="h-4 w-4 text-[var(--success)]" /> : <Users className="h-4 w-4 text-muted-foreground" />}
               <span>
                 <span className="font-medium">
@@ -157,7 +157,7 @@ export function QuickLook({
                         <Link
                           key={b.key}
                           href={`/database/providers/${b.key}`}
-                          className="inline-flex items-center gap-1.5 rounded-[4px] border bg-background/60 py-0.5 pl-0.5 pr-2 text-xs hover:bg-accent"
+                          className="inline-flex items-center gap-1.5 rounded-lg border bg-background/60 py-0.5 pl-0.5 pr-2 text-xs hover:bg-accent"
                         >
                           <CompanyLogo name={b.name} domain={brandDomain(b.key, b.companyId ? dir.byId.get(b.companyId)?.domain : null)} size={18} />
                           {b.name}
@@ -177,7 +177,7 @@ export function QuickLook({
               <ul className="mt-2 space-y-0.5">
                 {similar.map((h) => (
                   <li key={h.record.id}>
-                    <Link href={`/companies/${h.record.id}`} className="flex items-center gap-3 rounded-[4px] px-1.5 py-1.5 hover:bg-accent">
+                    <Link href={`/companies/${h.record.id}`} className="flex items-center gap-3 rounded-lg px-1.5 py-1.5 hover:bg-accent">
                       <CompanyLogo name={h.record.name} domain={h.record.domain} size={24} />
                       <span className="min-w-0 flex-1">
                         <span className="block truncate font-medium">{h.record.name}</span>

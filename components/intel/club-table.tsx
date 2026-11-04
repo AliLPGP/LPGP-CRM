@@ -85,7 +85,7 @@ export function ClubTable({ clubs }: { clubs: ClubRow[] }) {
       <div className="flex flex-wrap items-center gap-1.5">
         <div className="relative w-56">
           <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Club, city, investor…" aria-label="Search clubs" className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-7 text-[12.5px] outline-none focus-visible:border-ring" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Club, city, investor…" aria-label="Search clubs" className="h-8 w-full rounded-lg border border-input bg-card pl-8 pr-7 text-[12.5px] outline-none focus-visible:border-ring" />
           {q ? (
             <button type="button" aria-label="Clear search" onClick={() => setQ("")} className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-muted-foreground hover:text-foreground">
               <X className="h-3 w-3" />
@@ -95,7 +95,7 @@ export function ClubTable({ clubs }: { clubs: ClubRow[] }) {
         <FacetMenu label="League" groups={[{ label: "", options: leagues.map(([k, n]) => ({ key: k, label: k, count: n })) }]} selected={leagues_} onChange={setLeagues} width={260} />
         <FacetMenu label="Ownership" groups={[{ label: "", options: ownerTypes.map(([k, n]) => ({ key: k, label: OWNERSHIP_TYPE_LABEL[k] ?? k, count: n })) }]} selected={owners_} onChange={setOwners} searchable={false} width={220} />
         <FacetMenu label="Cap table" groups={[{ label: "", options: [{ key: "1", label: "Institutional money on the cap table", count: backedCount }] }]} selected={backed_} onChange={setBacked} searchable={false} width={260} />
-        <label className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent" title="Sort">
+        <label className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent" title="Sort">
           <ArrowDownWideNarrow className="h-3.5 w-3.5" />
           <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="bg-transparent text-[12.5px] text-foreground outline-none" aria-label="Sort by">
             <option value="revenue">Revenue</option>
@@ -122,7 +122,7 @@ export function ClubTable({ clubs }: { clubs: ClubRow[] }) {
         }}
       />
 
-      <div className="sheen overflow-hidden rounded-[4px] border bg-card">
+      <div className="sheen overflow-hidden rounded-lg border bg-card">
         <div className="flex items-center justify-between border-b px-3 py-2 text-[12px]">
           <span className="desk-label text-foreground">Clubs</span>
           <span className="text-[11px] text-muted-foreground">Figures as each source states them; hover a figure for its season or year.</span>

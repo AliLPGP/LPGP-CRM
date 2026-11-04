@@ -251,7 +251,7 @@ function RecordDealForm({
     return (
       <Modal open onClose={onClose} size="sm">
         <div className="p-6 text-center">
-          <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[var(--success-soft)] text-[var(--success)]">
+          <span className="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-[var(--success-soft)] text-[var(--success)]">
             <BadgeCheck className="h-6 w-6" />
           </span>
           <h2 className="mt-3 font-semibold">

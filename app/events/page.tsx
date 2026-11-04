@@ -21,7 +21,7 @@ export default async function EventPerformancePage() {
   const pct = totals.target > 0 ? Math.round((totals.actual / totals.target) * 100) : null;
 
   return (
-    <div className="mx-auto max-w-[95rem] space-y-6 px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-[95rem] space-y-6 px-4 py-8 md:px-6 lg:px-8">
       <PageHeader
         eyebrow="Sales CRM"
         title="Event performance"
@@ -70,7 +70,7 @@ export default async function EventPerformancePage() {
           </StatRow>
 
           {/* Portfolio roll-up */}
-          <section className="sheen rounded-2xl border bg-card p-5">
+          <section className="sheen rounded-xl border bg-card p-5">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <div>
                 <h2 className="font-semibold">Revenue by portfolio</h2>

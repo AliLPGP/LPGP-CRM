@@ -3,7 +3,7 @@
 // figures drop in where they belong.
 
 function Bone({ className }: { className: string }) {
-  return <div className={`animate-pulse rounded-[3px] bg-muted/70 ${className}`} />;
+  return <div className={`animate-pulse rounded-md bg-muted/70 ${className}`} />;
 }
 
 export function DeskSkeleton({ stats = 5, rows = 10 }: { stats?: number; rows?: number }) {
@@ -20,7 +20,7 @@ export function DeskSkeleton({ stats = 5, rows = 10 }: { stats?: number; rows?: 
         <Bone className="h-7 w-72" />
         <Bone className="h-3 w-[36rem] max-w-full" />
       </div>
-      <div className="grid rounded-[4px] border bg-card" style={{ gridTemplateColumns: `repeat(auto-fit, minmax(150px, 1fr))` }}>
+      <div className="grid rounded-lg border bg-card" style={{ gridTemplateColumns: `repeat(auto-fit, minmax(150px, 1fr))` }}>
         {Array.from({ length: stats }, (_, i) => (
           <div key={i} className="space-y-2 border-l px-3 py-2.5 first:border-l-0">
             <Bone className="h-2.5 w-20" />
@@ -30,7 +30,7 @@ export function DeskSkeleton({ stats = 5, rows = 10 }: { stats?: number; rows?: 
         ))}
       </div>
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-        <div className="rounded-[4px] border bg-card">
+        <div className="rounded-lg border bg-card">
           <div className="border-b px-3 py-2.5">
             <Bone className="h-2.5 w-28" />
           </div>
@@ -47,7 +47,7 @@ export function DeskSkeleton({ stats = 5, rows = 10 }: { stats?: number; rows?: 
         </div>
         <div className="space-y-4">
           {[0, 1].map((i) => (
-            <div key={i} className="rounded-[4px] border bg-card">
+            <div key={i} className="rounded-lg border bg-card">
               <div className="border-b px-3 py-2.5">
                 <Bone className="h-2.5 w-24" />
               </div>

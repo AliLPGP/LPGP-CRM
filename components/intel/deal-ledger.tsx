@@ -120,7 +120,7 @@ export function DealLedger({
             onChange={(e) => setQ(e.target.value)}
             placeholder="Investor, target, words…"
             aria-label="Search deals"
-            className="h-8 w-full rounded-[4px] border border-input bg-card pl-8 pr-7 text-[12.5px] outline-none focus-visible:border-ring"
+            className="h-8 w-full rounded-lg border border-input bg-card pl-8 pr-7 text-[12.5px] outline-none focus-visible:border-ring"
           />
           {q ? (
             <button type="button" aria-label="Clear search" onClick={() => setQ("")} className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-muted-foreground hover:text-foreground">
@@ -131,7 +131,7 @@ export function DealLedger({
         <FacetMenu label="Asset class" groups={[{ label: "", options: classOptions }]} selected={cls ? [cls] : []} onChange={(next) => setCls(one(cls ? [cls] : [], next))} searchable={false} width={220} />
         <FacetMenu label="Kind" groups={[{ label: "", options: kindOptions }]} selected={kind ? [kind] : []} onChange={(next) => setKind(one(kind ? [kind] : [], next))} searchable={false} width={240} />
         <FacetMenu label="Year" groups={[{ label: "", options: yearOptions }]} selected={year ? [String(year)] : []} onChange={(next) => setYear(Number(one(year ? [String(year)] : [], next)) || null)} searchable={false} width={180} />
-        <label className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent" title="Sort">
+        <label className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent" title="Sort">
           <ArrowDownWideNarrow className="h-3.5 w-3.5" />
           <select value={sort} onChange={(e) => setSort(e.target.value as Sort)} className="bg-transparent text-[12.5px] text-foreground outline-none" aria-label="Sort by">
             <option value="date">Newest</option>
@@ -230,7 +230,7 @@ export function DealLedger({
         )}
         {rows.length < total ? (
           <div className="border-t px-3 py-2">
-            <button type="button" disabled={more || loading} onClick={showMore} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent disabled:opacity-50">
+            <button type="button" disabled={more || loading} onClick={showMore} className="rounded-lg border bg-card px-2.5 py-1 text-[12px] hover:bg-accent disabled:opacity-50">
               {more ? "Loading…" : `Show ${Math.min(PAGE, total - rows.length)} more`}
               {!more ? <span className="ml-1 text-muted-foreground">of {(total - rows.length).toLocaleString("en-US")} left</span> : null}
             </button>

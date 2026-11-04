@@ -24,7 +24,7 @@ export const dynamic = "force-dynamic";
 const TABS = ["profile", "events", "notes"] as const;
 type Tab = (typeof TABS)[number];
 
-const ACTION = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border bg-card px-2.5 text-[12px] hover:bg-accent";
+const ACTION = "inline-flex h-8 items-center gap-1.5 rounded-lg border bg-card px-2.5 text-[12px] hover:bg-accent";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -77,7 +77,7 @@ export default async function ContactProfile({ params, searchParams }: { params:
             <span className="mt-1 flex flex-wrap items-center gap-1.5 text-[11.5px] font-normal tracking-normal">
               {contact.company ? (
                 <Link href={`/companies/${contact.company.id}`} className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground">
-                  <CategoryBadge category={contact.company.category} className="rounded-[3px] px-1.5 py-0 text-[10px]" />
+                  <CategoryBadge category={contact.company.category} className="rounded-md px-1.5 py-0 text-[10px]" />
                   {contact.company.name}
                 </Link>
               ) : null}
@@ -161,7 +161,7 @@ export default async function ContactProfile({ params, searchParams }: { params:
                 <ul className="divide-y">
                   {coverageFields.map(([label, value]) => (
                     <li key={label} className="flex items-center gap-2.5 px-3 py-1.5 text-[12.5px]">
-                      <span className={cn("grid h-4 w-4 shrink-0 place-items-center rounded-[3px] border", value ? "border-foreground bg-foreground text-background" : "text-muted-foreground")}>
+                      <span className={cn("grid h-4 w-4 shrink-0 place-items-center rounded-[4px] border", value ? "border-foreground bg-foreground text-background" : "text-muted-foreground")}>
                         {value ? <Check className="h-2.5 w-2.5" /> : <Minus className="h-2.5 w-2.5" />}
                       </span>
                       <span className={value ? "" : "text-muted-foreground"}>{label}</span>
@@ -179,7 +179,7 @@ export default async function ContactProfile({ params, searchParams }: { params:
                   <ContactEvents rows={events.slice(0, 5)} />
                 </Box>
               ) : null}
-              <details className="rounded-[4px] border bg-card" data-no-print>
+              <details className="rounded-lg border bg-card" data-no-print>
                 <summary className="cursor-pointer px-3 py-2 text-[12px] font-medium text-muted-foreground hover:text-foreground">Remove this contact</summary>
                 <div className="border-t px-3 py-3">
                   <p className="mb-2 text-[11.5px] text-muted-foreground">Removes the person from the database. Their firm and notes on it stay.</p>

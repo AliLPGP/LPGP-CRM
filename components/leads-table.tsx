@@ -167,7 +167,7 @@ export function LeadsTable({
             description={`${leads.length} leads are in the book; none carry every filter you have set.`}
             action={
               anyFilter ? (
-                <button type="button" onClick={clearAll} className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+                <button type="button" onClick={clearAll} className="rounded-lg border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
                   Clear filters
                 </button>
               ) : null
@@ -175,7 +175,7 @@ export function LeadsTable({
           />
         )
       ) : (
-        <div className="sheen overflow-hidden rounded-2xl border bg-card">
+        <div className="sheen overflow-hidden rounded-xl border bg-card">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="text-muted-foreground">

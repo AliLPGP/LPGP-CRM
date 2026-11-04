@@ -6,13 +6,13 @@ import { cn } from "@/lib/utils";
 //
 // One scale throughout: a header strip or a stat cell is `px-3 py-2`, a body
 // is `p-3`, a control is 32px tall (`h-8`) and 12.5px type, a label is
-// `.desk-label`, a figure is `.figure`, and the one radius is 4px.
+// `.desk-label`, a figure is `.figure`, and the radius is the desk's 8px.
 
 /** The one button on the desk: a quiet outlined pill (the #333 border on black), 12px type. Export, columns, "Show more". */
-export const deskButton = "inline-flex h-8 items-center gap-1.5 rounded-[4px] border border-input bg-card px-2.5 text-[12px] transition-colors hover:bg-accent disabled:cursor-default disabled:opacity-50";
+export const deskButton = "inline-flex h-9 items-center gap-1.5 rounded-lg border border-input bg-card px-3 text-[13px] font-medium transition-colors hover:bg-accent disabled:cursor-default disabled:opacity-50";
 
 /** The desk's primary button: the blue with white text. One per screen, for the action that moves things. */
-export const deskPrimary = "inline-flex h-8 items-center gap-1.5 rounded-[4px] bg-primary px-3 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-primary-hover disabled:cursor-default disabled:opacity-50";
+export const deskPrimary = "inline-flex h-9 items-center gap-1.5 rounded-lg bg-primary px-3.5 text-[13px] font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:cursor-default disabled:opacity-50";
 
 /** A boxed section with a quiet header strip. */
 export function Box({
@@ -37,17 +37,17 @@ export function Box({
   defn?: string;
 }) {
   return (
-    <section id={id} className={cn("sheen scroll-mt-16 rounded-[4px] border bg-card", className)}>
+    <section id={id} className={cn("sheen scroll-mt-16 rounded-lg border bg-card", className)}>
       {title ? (
-        <header className="flex min-h-9 items-center gap-2 border-b px-3 py-2">
-          <h2 className={cn("desk-label text-foreground", defn && "defn")} data-tip={defn}>
+        <header className="flex min-h-11 items-center gap-2 border-b px-4 py-2.5">
+          <h2 className={cn("text-[13.5px] font-semibold text-foreground", defn && "defn")} data-tip={defn}>
             {title}
           </h2>
           {count != null ? <span className="figure text-[11px] font-medium text-muted-foreground">{typeof count === "number" ? count.toLocaleString("en-US") : count}</span> : null}
           {action ? <div className="ml-auto flex items-center gap-1.5">{action}</div> : null}
         </header>
       ) : null}
-      <div className={flush ? "" : "p-3"}>{children}</div>
+      <div className={flush ? "" : "p-4"}>{children}</div>
     </section>
   );
 }
@@ -70,15 +70,15 @@ export function Stat({
 }) {
   const body = (
     <>
-      <div className={cn("desk-label truncate", defn && "defn")} data-tip={defn}>
+      <div className={cn("truncate text-[12.5px] text-muted-foreground", defn && "defn")} data-tip={defn}>
         {label}
       </div>
-      <div className="figure mt-1 truncate text-[19px] leading-none">{value}</div>
-      {/* The basis line is always drawn, so every cell in a strip is the same height. */}
-      <div className="mt-1 truncate text-[11px] text-muted-foreground">{basis ?? " "}</div>
+      <div className="figure mt-2 truncate text-[24px] leading-none">{value}</div>
+      {/* The basis line is always drawn, so every card in a strip is the same height. */}
+      <div className="mt-1.5 truncate text-[12px] text-muted-foreground">{basis ?? " "}</div>
     </>
   );
-  const cls = cn("block min-w-0 border-l border-border px-3 py-2 first:border-l-0", href && "transition-colors hover:bg-accent/40", className);
+  const cls = cn("stat-card sheen block min-w-0 rounded-xl border bg-card px-4 py-3.5", href && "transition-colors hover:border-[color-mix(in_oklab,var(--primary)_55%,var(--border))]", className);
   return href ? (
     <Link href={href} className={cls}>
       {body}
@@ -88,10 +88,10 @@ export function Stat({
   );
 }
 
-/** A row of Stats, ruled between. */
+/** A row of Stats, each its own card. */
 export function StatStrip({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("stat-strip sheen grid rounded-[4px] border bg-card", className)}>
+    <div className={cn("stat-strip grid gap-3", className)}>
       {children}
     </div>
   );
@@ -126,7 +126,7 @@ export function Tag({ children, strong, className, title }: { children: React.Re
 /** Nothing to show, said plainly: one sentence on why, and the one action that fills it. */
 export function Empty({ children, action, className }: { children: React.ReactNode; action?: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("px-3 py-6 text-center text-[12.5px] text-muted-foreground", className)}>
+    <div className={cn("px-4 py-8 text-center text-[13px] text-muted-foreground", className)}>
       <p className="mx-auto max-w-md">{children}</p>
       {action ? <div className="mt-2.5 flex justify-center gap-1.5">{action}</div> : null}
     </div>
@@ -170,10 +170,10 @@ export function Toolbar({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-wrap items-center gap-1.5", className)}>
+    <div className={cn("flex flex-wrap items-center gap-2", className)}>
       {search ? <div className="min-w-[180px] flex-1 basis-48 sm:max-w-xs">{search}</div> : null}
       {children ? <div className="flex flex-wrap items-center gap-1.5">{children}</div> : null}
-      {count != null ? <div className="figure px-1 text-[11px] font-medium text-muted-foreground">{count}</div> : null}
+      {count != null ? <div className="figure px-1 text-[12px] font-medium text-muted-foreground">{count}</div> : null}
       {right ? <div className="ml-auto flex flex-wrap items-center gap-1.5">{right}</div> : null}
     </div>
   );

@@ -66,7 +66,7 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
   const linked = deals.length > 0;
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 md:px-6">
+    <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 md:px-6 lg:px-8">
       <Link
         href="/accounts"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -75,7 +75,7 @@ export default async function AccountPage({ params }: { params: Promise<{ id: st
       </Link>
 
       {/* Header */}
-      <header className="sheen rounded-2xl border bg-card p-5 md:p-6">
+      <header className="sheen rounded-xl border bg-card p-5 md:p-6">
         <div className="flex flex-wrap items-start gap-4">
           <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-accent text-lg font-semibold text-accent-foreground">
             {initials(account.name)}

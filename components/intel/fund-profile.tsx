@@ -130,7 +130,7 @@ export function FundProfile({ fund, details, formD }: { fund: Fund; details: Fun
             </table>
           ) : null}
           {hasFormD ? (
-            <div className="mt-3 rounded-[4px] border bg-background/40 p-2.5">
+            <div className="mt-3 rounded-lg border bg-background/40 p-2.5">
               <div className="desk-label">As filed on SEC Form D</div>
               <p className="mt-1 text-[12.5px]">
                 {[

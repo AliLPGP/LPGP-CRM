@@ -113,7 +113,7 @@ function AddToListModal({
     });
   }
 
-  const row = "flex cursor-pointer items-center gap-3 rounded-[4px] border px-3 py-2 text-sm";
+  const row = "flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 text-sm";
 
   return (
     <Modal open={open} onClose={onClose} size="sm">
@@ -186,7 +186,7 @@ function PipelineModal({ open, onClose, result }: { open: boolean; onClose: () =
 }
 
 /** One action in the floating bar. */
-const ACTION = "inline-flex h-7 items-center gap-1.5 rounded-[4px] px-2 text-[12.5px] hover:bg-accent disabled:pointer-events-none disabled:opacity-50";
+const ACTION = "inline-flex h-7 items-center gap-1.5 rounded-lg px-2 text-[12.5px] hover:bg-accent disabled:pointer-events-none disabled:opacity-50";
 
 /** What a selection can become: a list, a pipeline, a lookalike search, a file. Floats over the results while anything is ticked. */
 export function BulkBar({
@@ -221,7 +221,7 @@ export function BulkBar({
   return (
     <>
       {/* Under lg it sits above the bottom tab bar. */}
-      <div className="animate-[topnav-in_160ms_ease-out] sticky bottom-4 z-30 mx-auto flex w-fit max-w-full flex-wrap items-center gap-1 rounded-[4px] border bg-popover px-2 py-1.5 shadow-[var(--shadow-pop)] motion-reduce:animate-none max-lg:bottom-[calc(var(--mobile-tabs)+1rem)]">
+      <div className="animate-[topnav-in_160ms_ease-out] sticky bottom-4 z-30 mx-auto flex w-fit max-w-full flex-wrap items-center gap-1 rounded-lg border bg-popover px-2 py-1.5 shadow-[var(--shadow-pop)] motion-reduce:animate-none max-lg:bottom-[calc(var(--mobile-tabs)+1rem)]">
         <span className="px-1.5 text-[12.5px] font-medium">
           <span className="figure">{ids.length}</span> selected
         </span>
@@ -254,7 +254,7 @@ export function BulkBar({
             <Trash2 className="h-3.5 w-3.5" /> Delete
           </button>
         ) : null}
-        <button type="button" onClick={onClear} className="ml-1 grid h-7 w-7 place-items-center rounded-[4px] text-muted-foreground hover:bg-accent hover:text-foreground" aria-label="Clear selection">
+        <button type="button" onClick={onClear} className="ml-1 grid h-7 w-7 place-items-center rounded-lg text-muted-foreground hover:bg-accent hover:text-foreground" aria-label="Clear selection">
           <X className="h-3.5 w-3.5" />
         </button>
       </div>

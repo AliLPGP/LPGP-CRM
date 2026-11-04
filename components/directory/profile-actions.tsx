@@ -128,7 +128,7 @@ export function ClassifyControl({ companyId }: { companyId: string }) {
   const router = useRouter();
   // Desk register: a dashed 4px box, the three books as desk buttons.
   return (
-    <div className="flex flex-wrap items-center gap-2 rounded-[4px] border border-dashed bg-card px-3 py-2 text-[12.5px]">
+    <div className="flex flex-wrap items-center gap-2 rounded-lg border border-dashed bg-card px-3 py-2 text-[12.5px]">
       <span className="text-muted-foreground">Unclassified in the Master Directory. Place it in a book:</span>
       {CATEGORY_ORDER.map((c) => (
         <button
@@ -143,7 +143,7 @@ export function ClassifyControl({ companyId }: { companyId: string }) {
               else router.refresh();
             })
           }
-          className="inline-flex h-8 items-center rounded-[4px] border bg-card px-2.5 text-[12px] font-medium hover:bg-accent disabled:pointer-events-none disabled:opacity-50"
+          className="inline-flex h-8 items-center rounded-lg border bg-card px-2.5 text-[12px] font-medium hover:bg-accent disabled:pointer-events-none disabled:opacity-50"
         >
           {CATEGORIES[c].name}
         </button>

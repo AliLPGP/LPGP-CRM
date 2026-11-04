@@ -217,7 +217,7 @@ export function DirectoryImport({
 
   if (!isAdmin) {
     return (
-      <div className="rounded-2xl border bg-card p-6 text-sm text-muted-foreground">
+      <div className="rounded-xl border bg-card p-6 text-sm text-muted-foreground">
         Only admins can import the Master Directory. Ask an admin, or have your email added to{" "}
         <code className="font-mono text-xs">ADMIN_EMAILS</code>.
       </div>
@@ -244,7 +244,7 @@ export function DirectoryImport({
           if (file) void readFile(file);
         }}
         className={cn(
-          "sheen flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed bg-card px-6 py-10 text-center transition-colors",
+          "sheen flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed bg-card px-6 py-10 text-center transition-colors",
           dragging && "border-[var(--brass)] bg-accent/40",
         )}
       >
@@ -277,7 +277,7 @@ export function DirectoryImport({
 
       {parsed && stats ? (
         <div className="space-y-5">
-          <div className="sheen rounded-2xl border bg-card">
+          <div className="sheen rounded-xl border bg-card">
             <div className="flex flex-wrap items-center gap-2 border-b px-5 py-3.5">
               <FileSpreadsheet className="h-4 w-4 text-muted-foreground" />
               <h2 className="font-semibold">{parsed.fileName}</h2>
@@ -305,7 +305,7 @@ export function DirectoryImport({
           </div>
 
           <div className="grid gap-4 lg:grid-cols-2">
-            <div className="rounded-2xl border bg-card p-5">
+            <div className="rounded-xl border bg-card p-5">
               <div className="flex items-center gap-2">
                 <GitMerge className="h-4 w-4 text-muted-foreground" />
                 <h3 className="font-semibold">Duplicates merged</h3>
@@ -330,7 +330,7 @@ export function DirectoryImport({
               </p>
             </div>
 
-            <div className="rounded-2xl border bg-card p-5">
+            <div className="rounded-xl border bg-card p-5">
               <h3 className="font-semibold">How existing records are treated</h3>
               <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                 <li>
@@ -354,7 +354,7 @@ export function DirectoryImport({
           </div>
 
           {sampleCount > 0 ? (
-            <label className="flex cursor-pointer items-start gap-3 rounded-2xl border bg-card p-4 text-sm">
+            <label className="flex cursor-pointer items-start gap-3 rounded-xl border bg-card p-4 text-sm">
               <input
                 type="checkbox"
                 className="mt-0.5 h-4 w-4 accent-[var(--primary)]"
@@ -408,7 +408,7 @@ export function DirectoryImport({
       ) : null}
 
       {outcome ? (
-        <div className="sheen rounded-2xl border bg-card p-5">
+        <div className="sheen rounded-xl border bg-card p-5">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="h-5 w-5 text-[var(--success)]" />
             <h2 className="font-semibold">Directory imported</h2>

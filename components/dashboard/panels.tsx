@@ -30,7 +30,7 @@ export function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <section className="sheen flex min-h-[280px] flex-col rounded-2xl border bg-card p-5">
+    <section className="sheen flex min-h-[280px] flex-col rounded-xl border bg-card p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="font-semibold">{title}</h2>
@@ -58,7 +58,7 @@ export function TodaysCalls({ queue, now, limit = 8 }: { queue: LeadWithRefs[]; 
           title="Nothing to call"
           description="Every open lead you own has been worked, or none is assigned to you yet. Import a list or add a lead to fill the queue."
           action={
-            <Link href="/import/leads" className="rounded-[4px] border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
+            <Link href="/import/leads" className="rounded-lg border bg-card px-2.5 py-1 text-[12px] hover:bg-accent">
               Import leads
             </Link>
           }

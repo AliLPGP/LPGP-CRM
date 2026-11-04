@@ -51,7 +51,7 @@ function PosterSkeleton({ error, onRetry }: { error: string | null; onRetry: () 
       ) : null}
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5" aria-busy={!error} aria-label="Loading">
         {Array.from({ length: 5 }, (_, i) => (
-          <section key={i} className="sheen flex flex-col overflow-hidden rounded-2xl border bg-card">
+          <section key={i} className="sheen flex flex-col overflow-hidden rounded-xl border bg-card">
             <header className="space-y-1.5 border-b px-4 py-3">
               <Bone className="h-2.5 w-20" />
               <Bone className="h-4 w-28" />
@@ -166,7 +166,7 @@ export function MarketMap({ version }: { version: string }) {
         />
       ) : tab === "providers" ? (
         <>
-          <div className="sheen space-y-4 rounded-2xl border bg-card p-5">
+          <div className="sheen space-y-4 rounded-xl border bg-card p-5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="eyebrow mr-1 w-24">Role</span>
               {PROVIDER_ROLES.map((r) => (
@@ -218,7 +218,7 @@ export function MarketMap({ version }: { version: string }) {
             </div>
           </div>
 
-          <div className="grid gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-3">
+          <div className="grid gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-3">
             {[
               { label: "Managers in scope", value: scope.length.toLocaleString("en-US"), sub: "filing Form ADV provider links" },
               { label: `Naming ${ROLE_PLURAL[role].toLowerCase()}`, value: league.covered.toLocaleString("en-US"), sub: `${league.rows.length} distinct providers` },
@@ -232,7 +232,7 @@ export function MarketMap({ version }: { version: string }) {
             ))}
           </div>
 
-          <div className="sheen overflow-hidden rounded-2xl border bg-card">
+          <div className="sheen overflow-hidden rounded-xl border bg-card">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead className="bg-muted/40 text-xs text-muted-foreground">
@@ -358,7 +358,7 @@ function Landscape({
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {segments.map((s) => (
-          <div key={s.type} className="sheen flex flex-col rounded-2xl border bg-card">
+          <div key={s.type} className="sheen flex flex-col rounded-xl border bg-card">
             <div className="flex items-baseline justify-between gap-2 border-b px-4 py-3">
               <h3 className="font-semibold">{s.type}</h3>
               <span className="tabular text-xs text-muted-foreground">{s.count}</span>
@@ -415,7 +415,7 @@ function ProviderPoster({
       {leagues.map((l) => {
         const max = l.rows[0]?.clients ?? 1;
         return (
-          <section key={l.role} className="sheen flex flex-col overflow-hidden rounded-2xl border bg-card">
+          <section key={l.role} className="sheen flex flex-col overflow-hidden rounded-xl border bg-card">
             <header className="border-b px-4 py-3">
               <p className="eyebrow">{l.covered.toLocaleString("en-US")} managers</p>
               <h3 className="display mt-0.5 text-[15px]">{ROLE_PLURAL[l.role]}</h3>

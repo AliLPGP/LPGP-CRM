@@ -26,7 +26,7 @@ export function DatasetLoader({
   const fmt = (n: number) => n.toLocaleString("en-US");
 
   return (
-    <section id="dataset" className="sheen scroll-mt-16 rounded-2xl border bg-card">
+    <section id="dataset" className="sheen scroll-mt-16 rounded-xl border bg-card">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4">
         <div>
           <p className="eyebrow">Intelligence dataset</p>

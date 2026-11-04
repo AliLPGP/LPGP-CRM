@@ -29,7 +29,7 @@ export type OperatorRow = {
   source: string | null;
 };
 
-const INPUT = "h-8 rounded-[4px] border border-input bg-card px-2 text-[12.5px] outline-none focus-visible:border-ring";
+const INPUT = "h-8 rounded-lg border border-input bg-card px-2 text-[12.5px] outline-none focus-visible:border-ring";
 
 async function post(url: string, body: unknown): Promise<{ ok: boolean; message: string }> {
   try {
@@ -107,7 +107,7 @@ export function OperatingPartners({
                   href={c.linkedin_url.startsWith("http") ? c.linkedin_url : `https://${c.linkedin_url}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-[4px] p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
+                  className="rounded-lg p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
                   aria-label={`${c.full_name} on LinkedIn`}
                 >
                   <Link2 className="h-3.5 w-3.5" />
@@ -311,7 +311,7 @@ export function PortfolioCompanies({
                 else if (c.exit_year) facts.push({ k: "Exited", v: String(c.exit_year) });
                 if (c.fund_name) facts.push({ k: "Fund", v: c.fund_name });
                 return (
-                  <li key={c.id} className="group relative rounded-[4px] border bg-background/40 p-2.5">
+                  <li key={c.id} className="group relative rounded-lg border bg-background/40 p-2.5">
                     <div className="flex items-start gap-2.5">
                       <CompanyLogo name={c.name} domain={c.domain} size={32} />
                       <div className="min-w-0 flex-1">
